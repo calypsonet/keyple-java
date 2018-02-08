@@ -1,4 +1,4 @@
-package org.keyple.calypso.commands.dto;
+package org.keyple.commands.dto;
 
 /**
  * The Class Ratification. In contact mode, the session is always immediately

@@ -1,10 +1,10 @@
-package org.keyple.calypso.commands.utils;
+package org.keyple.commands.utils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.keyple.calypso.commands.CalypsoCommands;
-import org.keyple.calypso.commands.dto.CalypsoRequest;
+import org.keyple.commands.CalypsoCommands;
+import org.keyple.commands.dto.CalypsoRequest;
 import org.keyple.commands.InconsistentCommandException;
 import org.keyple.seproxy.ApduRequest;
 

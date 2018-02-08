@@ -1,4 +1,4 @@
-package org.keyple.calypso.commands.csm;
+package org.keyple.commands.csm;
 
 /**
  * This enumeration registers all revisions of CSM.

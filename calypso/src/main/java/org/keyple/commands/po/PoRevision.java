@@ -1,4 +1,4 @@
-package org.keyple.calypso.commands.po;
+package org.keyple.commands.po;
 
 /**
  * This enumeration registers the Calypso revisions of PO.

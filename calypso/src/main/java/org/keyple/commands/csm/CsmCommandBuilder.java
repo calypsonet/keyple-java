@@ -1,6 +1,6 @@
-package org.keyple.calypso.commands.csm;
+package org.keyple.commands.csm;
 
-import org.keyple.calypso.commands.CalypsoCommands;
+import org.keyple.commands.CalypsoCommands;
 import org.keyple.commands.ApduCommandBuilder;
 import org.keyple.seproxy.ApduRequest;
 

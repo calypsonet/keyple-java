@@ -1,6 +1,6 @@
-package org.keyple.calypso.commands.dto;
+package org.keyple.commands.dto;
 
-import org.keyple.calypso.commands.CalypsoCommands;
+import org.keyple.commands.CalypsoCommands;
 
 /**
  * The Class CalypsoRequest.

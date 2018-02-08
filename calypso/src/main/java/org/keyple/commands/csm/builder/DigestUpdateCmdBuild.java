@@ -1,10 +1,10 @@
-package org.keyple.calypso.commands.csm.builder;
+package org.keyple.commands.csm.builder;
 
-import org.keyple.calypso.commands.CalypsoCommands;
-import org.keyple.calypso.commands.csm.CsmCommandBuilder;
-import org.keyple.calypso.commands.csm.CsmRevision;
-import org.keyple.calypso.commands.dto.CalypsoRequest;
-import org.keyple.calypso.commands.utils.RequestUtils;
+import org.keyple.commands.CalypsoCommands;
+import org.keyple.commands.csm.CsmCommandBuilder;
+import org.keyple.commands.csm.CsmRevision;
+import org.keyple.commands.dto.CalypsoRequest;
+import org.keyple.commands.utils.RequestUtils;
 import org.keyple.commands.InconsistentCommandException;
 import org.keyple.seproxy.ApduRequest;
 

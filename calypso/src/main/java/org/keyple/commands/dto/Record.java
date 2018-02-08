@@ -1,4 +1,4 @@
-package org.keyple.calypso.commands.dto;
+package org.keyple.commands.dto;
 
 /**
  * The Class Record. The data in the files are organized in records of equal

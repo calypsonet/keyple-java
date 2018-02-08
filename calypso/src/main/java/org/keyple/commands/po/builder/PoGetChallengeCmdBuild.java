@@ -1,11 +1,11 @@
-package org.keyple.calypso.commands.po.builder;
+package org.keyple.commands.po.builder;
 
-import org.keyple.calypso.commands.CalypsoCommands;
-import org.keyple.calypso.commands.dto.CalypsoRequest;
-import org.keyple.calypso.commands.po.PoCommandBuilder;
-import org.keyple.calypso.commands.po.PoRevision;
-import org.keyple.calypso.commands.po.SendableInSession;
-import org.keyple.calypso.commands.utils.RequestUtils;
+import org.keyple.commands.CalypsoCommands;
+import org.keyple.commands.dto.CalypsoRequest;
+import org.keyple.commands.po.PoCommandBuilder;
+import org.keyple.commands.po.PoRevision;
+import org.keyple.commands.po.SendableInSession;
+import org.keyple.commands.utils.RequestUtils;
 import org.keyple.commands.InconsistentCommandException;
 import org.keyple.seproxy.ApduRequest;
 

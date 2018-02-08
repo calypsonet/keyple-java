@@ -1,4 +1,4 @@
-package org.keyple.calypso.commands.dto;
+package org.keyple.commands.dto;
 
 /**
  * The Class POChallenge. Challenge return by a PO Get Challenge APDU command

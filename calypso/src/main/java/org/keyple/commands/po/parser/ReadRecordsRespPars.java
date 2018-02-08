@@ -1,10 +1,10 @@
 
-package org.keyple.calypso.commands.po.parser;
+package org.keyple.commands.po.parser;
 
 import java.util.List;
 
-import org.keyple.calypso.commands.dto.Record;
-import org.keyple.calypso.commands.utils.ResponseUtils;
+import org.keyple.commands.dto.Record;
+import org.keyple.commands.utils.ResponseUtils;
 import org.keyple.commands.ApduResponseParser;
 import org.keyple.seproxy.ApduResponse;
 

@@ -1,4 +1,4 @@
-package org.keyple.calypso.commands.dto;
+package org.keyple.commands.dto;
 
 /**
  * The Class KVC. KVC: Key Version and Category. Arbitrary value identifying a

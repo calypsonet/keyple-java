@@ -1,4 +1,4 @@
-package org.keyple.calypso.commands.po;
+package org.keyple.commands.po;
 
 /**
  * The Interface SendableInSession.

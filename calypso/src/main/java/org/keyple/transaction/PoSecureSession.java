@@ -1,4 +1,4 @@
-package org.keyple.calypso.transaction;
+package org.keyple.transaction;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,27 +10,27 @@ import java.util.Map;
 import javax.xml.bind.DatatypeConverter; // TODO => warning: not available on Android, so PC debugging only
 
 import org.apache.commons.lang3.ArrayUtils;
-import org.keyple.calypso.commands.csm.CsmRevision;
-import org.keyple.calypso.commands.csm.builder.CsmGetChallengeCmdBuild;
-import org.keyple.calypso.commands.csm.builder.DigestAuthenticateCmdBuild;
-import org.keyple.calypso.commands.csm.builder.DigestCloseCmdBuild;
-import org.keyple.calypso.commands.csm.builder.DigestInitCmdBuild;
-import org.keyple.calypso.commands.csm.builder.DigestUpdateCmdBuild;
-import org.keyple.calypso.commands.csm.builder.SelectDiversifierCmdBuild;
-import org.keyple.calypso.commands.csm.parser.CsmGetChallengeRespPars;
-import org.keyple.calypso.commands.csm.parser.DigestAuthenticateRespPars;
-import org.keyple.calypso.commands.csm.parser.DigestCloseRespPars;
-import org.keyple.calypso.commands.csm.parser.DigestInitRespPars;
-import org.keyple.calypso.commands.csm.parser.DigestUpdateRespPars;
-import org.keyple.calypso.commands.po.PoCommandBuilder;
-import org.keyple.calypso.commands.po.PoRevision;
-import org.keyple.calypso.commands.po.SendableInSession;
-import org.keyple.calypso.commands.po.builder.CloseSessionCmdBuild;
-import org.keyple.calypso.commands.po.builder.OpenSessionCmdBuild;
-import org.keyple.calypso.commands.po.builder.PoGetChallengeCmdBuild;
-import org.keyple.calypso.commands.po.parser.CloseSessionRespPars;
-import org.keyple.calypso.commands.po.parser.GetDataFciRespPars;
-import org.keyple.calypso.commands.po.parser.OpenSessionRespPars;
+import org.keyple.commands.csm.CsmRevision;
+import org.keyple.commands.csm.builder.CsmGetChallengeCmdBuild;
+import org.keyple.commands.csm.builder.DigestAuthenticateCmdBuild;
+import org.keyple.commands.csm.builder.DigestCloseCmdBuild;
+import org.keyple.commands.csm.builder.DigestInitCmdBuild;
+import org.keyple.commands.csm.builder.DigestUpdateCmdBuild;
+import org.keyple.commands.csm.builder.SelectDiversifierCmdBuild;
+import org.keyple.commands.csm.parser.CsmGetChallengeRespPars;
+import org.keyple.commands.csm.parser.DigestAuthenticateRespPars;
+import org.keyple.commands.csm.parser.DigestCloseRespPars;
+import org.keyple.commands.csm.parser.DigestInitRespPars;
+import org.keyple.commands.csm.parser.DigestUpdateRespPars;
+import org.keyple.commands.po.PoCommandBuilder;
+import org.keyple.commands.po.PoRevision;
+import org.keyple.commands.po.SendableInSession;
+import org.keyple.commands.po.builder.CloseSessionCmdBuild;
+import org.keyple.commands.po.builder.OpenSessionCmdBuild;
+import org.keyple.commands.po.builder.PoGetChallengeCmdBuild;
+import org.keyple.commands.po.parser.CloseSessionRespPars;
+import org.keyple.commands.po.parser.GetDataFciRespPars;
+import org.keyple.commands.po.parser.OpenSessionRespPars;
 import org.keyple.commands.ApduCommandBuilder;
 import org.keyple.commands.InconsistentCommandException;
 import org.keyple.seproxy.ApduRequest;
@@ -39,11 +39,7 @@ import org.keyple.seproxy.ProxyReader;
 import org.keyple.seproxy.SeRequest;
 import org.keyple.seproxy.SeResponse;
 import org.keyple.seproxy.ReaderEvent.EventType;
-import org.keyple.seproxy.exceptions.ChannelStateReaderException;
-import org.keyple.seproxy.exceptions.IOReaderException;
-import org.keyple.seproxy.exceptions.InvalidApduReaderException;
-import org.keyple.seproxy.exceptions.TimeoutReaderException;
-import org.keyple.seproxy.exceptions.UnexpectedReaderException;
+import org.keyple.seproxy.exceptions.*;
 
 /**
  * A non-encrypted secure session with a Calypso
@@ -217,7 +213,7 @@ public class PoSecureSession {
      */
     public SeResponse processIdentification(byte[] poAid, List<SendableInSession> poCommandsOutsideSession)
             throws UnexpectedReaderException, IOReaderException, ChannelStateReaderException,
-            InvalidApduReaderException, TimeoutReaderException, InconsistentCommandException {
+            InvalidApduReaderException, TimeoutReaderException, InconsistentCommandException, InconsistentParameterValueException {
 
    	
     	// Get PO ApduRequest List from SendableInSession List
@@ -300,7 +296,7 @@ public class PoSecureSession {
      */
     public SeResponse processOpening(OpenSessionCmdBuild openCommand, List<SendableInSession> poCommandsInsideSession)
             throws UnexpectedReaderException, IOReaderException, ChannelStateReaderException,
-            InvalidApduReaderException, TimeoutReaderException, InconsistentCommandException {
+            InvalidApduReaderException, TimeoutReaderException, InconsistentCommandException, InconsistentParameterValueException {
 
     	// Get PO ApduRequest List from SendableInSession List
 //        List<ApduRequest> poApduRequestList = this.getApduRequestListFromSendableInSessionListTo(poCommandsInsideSession);
@@ -447,7 +443,7 @@ public class PoSecureSession {
      */
     public SeResponse processProceeding(List<SendableInSession> poCommandsInsideSession)
             throws IOReaderException, UnexpectedReaderException, ChannelStateReaderException,
-            InvalidApduReaderException, TimeoutReaderException, InconsistentCommandException {
+            InvalidApduReaderException, TimeoutReaderException, InconsistentCommandException, InconsistentParameterValueException {
 
     	// Get PO ApduRequest List from SendableInSession List
         List<ApduRequest> poApduRequestList = this.getApduRequestListFromSendableInSessionListTo(poCommandsInsideSession);
@@ -522,7 +518,7 @@ public class PoSecureSession {
 // TODO - prévoir une variante pour enchainer plusieurs session d'affilées (la commande de ratification étant un nouveau processOpening)
     public SeResponse processClosing(List<SendableInSession> poCommandsInsideSession, List<ApduResponse> poAnticipatedResponseInsideSession, PoCommandBuilder ratificationCommand)
             throws IOReaderException, UnexpectedReaderException, ChannelStateReaderException,
-            InvalidApduReaderException, TimeoutReaderException, InconsistentCommandException {
+            InvalidApduReaderException, TimeoutReaderException, InconsistentCommandException, InconsistentParameterValueException {
     	
     	// Get PO ApduRequest List from SendableInSession List - for the first PO exchange
         List<ApduRequest> poApduRequestList = this.getApduRequestListFromSendableInSessionListTo(poCommandsInsideSession);
@@ -649,7 +645,7 @@ public class PoSecureSession {
     /**
      * Gets the PO Revision.
      *
-     * @return the PoPlainSecureSession_OLD.poRevision
+     * @return the PoSecureSession_OLD.poRevision
      */
     public PoRevision getRevision() {
     	// TODO checks if poRevision initialized
@@ -659,7 +655,7 @@ public class PoSecureSession {
     /**
      * Checks if the PO transaction is successful.
      *
-     * @return the PoPlainSecureSession_OLD.transactionResult
+     * @return the PoSecureSession_OLD.transactionResult
      */
     public boolean isSuccessful() {
     	// TODO checks if transaction state is "closed"
@@ -687,5 +683,22 @@ public class PoSecureSession {
      */
     private static boolean isBitEqualsOne(byte thebyte, int position) {
         return (1 == ((thebyte >> position) & 1));
+    }
+
+    // TODO: Clean that mess. It's only to allow the current code to build
+    public SeResponse processOpening(OpenSessionCmdBuild openCommand, SendableInSession[] poCommandsInsideSession) throws InconsistentCommandException, UnexpectedReaderException, InconsistentParameterValueException, ChannelStateReaderException, InvalidApduReaderException, TimeoutReaderException, IOReaderException {
+        return processOpening(openCommand, Arrays.asList(poCommandsInsideSession));
+    }
+
+    public SeResponse processIdentification(byte[] poAid, SendableInSession[] poCommandsOutsideSession) throws InconsistentCommandException, UnexpectedReaderException, InconsistentParameterValueException, ChannelStateReaderException, InvalidApduReaderException, TimeoutReaderException, IOReaderException {
+        return processIdentification(poAid, Arrays.asList(poCommandsOutsideSession));
+    }
+
+    public SeResponse processProceeding(SendableInSession  []poCommandsInsideSession) throws InconsistentCommandException, UnexpectedReaderException, InconsistentParameterValueException, ChannelStateReaderException, InvalidApduReaderException, TimeoutReaderException, IOReaderException {
+        return processProceeding(Arrays.asList(poCommandsInsideSession));
+    }
+
+    public SeResponse processClosing(SendableInSession[] poCommandsInsideSession, ApduResponse[] poAnticipatedResponseInsideSession, PoCommandBuilder ratificationCommand) throws InconsistentCommandException, UnexpectedReaderException, InconsistentParameterValueException, ChannelStateReaderException, InvalidApduReaderException, TimeoutReaderException, IOReaderException {
+        return processClosing(Arrays.asList(poCommandsInsideSession), Arrays.asList(poAnticipatedResponseInsideSession), ratificationCommand);
     }
 }

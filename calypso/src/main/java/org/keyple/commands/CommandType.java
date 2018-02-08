@@ -1,4 +1,4 @@
-package org.keyple.calypso.commands;
+package org.keyple.commands;
 
 /**
  * This enumeration registers the types of the commands .

@@ -1,4 +1,4 @@
-package org.keyple.calypso.commands.dto;
+package org.keyple.commands.dto;
 
 /**
  * The Class AID. AID: Application Identifier as defined in ISO/IEC 7816-4.

@@ -36,5 +36,10 @@
 			<artifactId>smartCardIOPlugin</artifactId>
 			<version>1.0.1-SNAPSHOT</version>
 		</dependency>
-	</dependencies>
+        <dependency> <!-- TODO: DROP IT -->
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.4</version>
+        </dependency>
+    </dependencies>
 </project>

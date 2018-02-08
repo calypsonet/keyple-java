@@ -1,4 +1,4 @@
-package org.keyple.calypso.commands.po.parser;
+package org.keyple.commands.po.parser;
 
 import org.keyple.commands.ApduResponseParser;
 import org.keyple.seproxy.ApduResponse;

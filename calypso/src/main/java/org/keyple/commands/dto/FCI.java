@@ -1,5 +1,5 @@
 
-package org.keyple.calypso.commands.dto;
+package org.keyple.commands.dto;
 
 /**
  * The Class FCI. FCI: file control information

@@ -1,4 +1,4 @@
-package org.keyple.calypso.commands.csm.parser;
+package org.keyple.commands.csm.parser;
 
 import org.keyple.commands.ApduResponseParser;
 import org.keyple.seproxy.ApduResponse;

@@ -1,16 +1,16 @@
-package org.keyple.calypso.commands.utils;
+package org.keyple.commands.utils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.keyple.calypso.commands.dto.FCI;
-import org.keyple.calypso.commands.dto.KIF;
-import org.keyple.calypso.commands.dto.KVC;
-import org.keyple.calypso.commands.dto.POChallenge;
-import org.keyple.calypso.commands.dto.POHalfSessionSignature;
-import org.keyple.calypso.commands.dto.Record;
-import org.keyple.calypso.commands.dto.SecureSession;
-import org.keyple.calypso.commands.dto.StartupInformation;
+import org.keyple.commands.dto.FCI;
+import org.keyple.commands.dto.KIF;
+import org.keyple.commands.dto.KVC;
+import org.keyple.commands.dto.POChallenge;
+import org.keyple.commands.dto.POHalfSessionSignature;
+import org.keyple.commands.dto.Record;
+import org.keyple.commands.dto.SecureSession;
+import org.keyple.commands.dto.StartupInformation;
 
 /**
  * This class eases the parse of APDUResponses into objects.

@@ -1,4 +1,4 @@
-package org.keyple.calypso.commands.dto;
+package org.keyple.commands.dto;
 
 /**
  * The Class SamChallenge. Challenge return by the CSM Get Challenge APDU

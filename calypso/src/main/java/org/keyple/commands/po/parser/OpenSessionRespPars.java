@@ -1,8 +1,8 @@
-package org.keyple.calypso.commands.po.parser;
+package org.keyple.commands.po.parser;
 
-import org.keyple.calypso.commands.dto.SecureSession;
-import org.keyple.calypso.commands.po.PoRevision;
-import org.keyple.calypso.commands.utils.ResponseUtils;
+import org.keyple.commands.dto.SecureSession;
+import org.keyple.commands.po.PoRevision;
+import org.keyple.commands.utils.ResponseUtils;
 import org.keyple.commands.ApduResponseParser;
 import org.keyple.seproxy.ApduResponse;
 
