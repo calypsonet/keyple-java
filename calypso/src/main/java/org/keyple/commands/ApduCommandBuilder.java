@@ -1,5 +1,6 @@
 package org.keyple.commands;
 
+//import org.keyple.calypso.commands.CalypsoCommands;
 import org.keyple.seproxy.ApduRequest;
 
 //
@@ -13,14 +14,14 @@ import org.keyple.seproxy.ApduRequest;
  *
  */
 
-// TODO: Drop it ? pterr's removed it
 public abstract class ApduCommandBuilder {
 
     /**
      * the reference of the command in the matrix array enumeration, in order to
      * get the name and the response parser class of the command.
      */
-    protected CalypsoCommands commandReference;
+//    protected CalypsoCommands commandReference;
+    protected CommandsTable commandReference;
 
     /** the byte array APDU request. */
     protected ApduRequest request;
@@ -34,19 +35,20 @@ public abstract class ApduCommandBuilder {
      * @param request
      *            request
      */
-    public ApduCommandBuilder(CalypsoCommands commandReference, ApduRequest request) {
+//    public ApduCommandBuilder(CalypsoCommands commandReference, ApduRequest request) {
+      public ApduCommandBuilder(CommandsTable commandReference, ApduRequest request) {
         this.commandReference = commandReference;
         this.request = request;
     }
 
 
-    /**
-     * Instantiates a new apdu command builder.
-     * @param reference Command reference for builder
-     */
-    public ApduCommandBuilder(CalypsoCommands reference) {
-        commandReference = reference;
-    }
+//    /**
+//     * Instantiates a new apdu command builder.
+//     * @param reference Command reference for builder
+//     */
+//    public ApduCommandBuilder(CalypsoCommands reference) {
+//        commandReference = reference;
+//    }
 
     /**
      * Gets the name.
@@ -62,9 +64,10 @@ public abstract class ApduCommandBuilder {
      * Gets the apdu response parser class.
      *
      * @return the corresponding ApduResponseParser class of the APDU command
-     *         from the CalypsoCommands information
+     *         from the CommandsTable information
      */
-    public final Class<?> getApduResponseParserClass() {
+//    public final Class<?> getApduResponseParserClass() {
+      public final Class<ApduResponseParser> getApduResponseParserClass() {
         return commandReference.getResponseParserClass();
     }
 

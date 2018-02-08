@@ -19,7 +19,6 @@ import org.keyple.seproxy.ApduResponse;
  * @author Ixxi
  *
  */
-// TODO: Drop it ? pterr's removed it
 public abstract class ApduResponseParser {
 
     /** the byte array APDU response. */
