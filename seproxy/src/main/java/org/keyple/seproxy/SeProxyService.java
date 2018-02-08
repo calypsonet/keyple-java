@@ -12,7 +12,7 @@ import java.util.List;
  */
 public final class SeProxyService {
 
-    /** singleton’s instance of SeProxyService */
+    /** singleton instance of SeProxyService */
     private static SeProxyService uniqueInstance = new SeProxyService();
 
     /** version number of the SE Proxy Service API */

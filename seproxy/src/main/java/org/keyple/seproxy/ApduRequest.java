@@ -13,7 +13,7 @@ the command). */
 
     /** a ‘case 4’ flag in order to explicitly specify, if it’s expected that the APDU command returns data →
     * this flag is required to manage revision 2.4 Calypso Portable Objects and ‘S1Dx’ SAMs that presents a
-    * behaviour not compliant with ISO 7816-3 in contacts mode (not returning the 61XYh status).
+    * behaviour not compliant with ISO 7816-3 in contacts mode (not returning the 61XYh status). 
     */
     private boolean case4;
 
@@ -25,7 +25,8 @@ push to the ProxyReader.
      * @param case4 the case 4
      */
     public ApduRequest(byte[] bytes, boolean case4) {
-        this.bytes = bytes;
+        super();
+        this.bytes = (bytes == null ? null : bytes.clone());
         this.case4 = case4;
     }
 
@@ -35,7 +36,7 @@ push to the ProxyReader.
      * @return the data of the APDU request.
      */
     public byte[] getbytes() {
-        return bytes;
+        return bytes.clone();
     }
 
     /**

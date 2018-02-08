@@ -14,9 +14,9 @@ status of the command).*/
     private boolean successful;
 
     /** The status code. */
-    private byte[] statusCode;
+    private byte[] statusCode; // TODO - to delete
 
-
+    
     /**
      * the constructor called by a ProxyReader in order to build the APDU command response to push to a
      * ticketing application.
@@ -25,10 +25,10 @@ status of the command).*/
      * @param successful the successful
      */
     public ApduResponse(byte[] bytes, boolean successful) {
-        this.bytes = bytes;
+        this.bytes = (bytes == null ? null : bytes.clone());
         this.successful = successful;
     }
-
+    
     /**
      * the constructor called by a ProxyReader in order to build the APDU command response to push to a
 ticketing application.
@@ -37,10 +37,10 @@ ticketing application.
      * @param successful the successful
      * @param statusCode the status code
      */
-    public ApduResponse(byte[] bytes, boolean successful, byte[] statusCode) {
-        this.bytes = bytes;
+    public ApduResponse(byte[] bytes, boolean successful, byte[] statusCode) { // TODO - to delete
+        this.bytes = (bytes == null ? null : bytes.clone());
         this.successful = successful;
-        this.statusCode = statusCode;
+        this.statusCode = (statusCode == null ? null : statusCode.clone());
     }
 
     /**
@@ -49,6 +49,7 @@ ticketing application.
      * @return the data of the APDU response.
      */
     public byte[] getbytes() {
+//        return bytes.clone();
         return bytes;
     }
 
@@ -66,8 +67,8 @@ ticketing application.
      *
      * @return the status code
      */
-    public byte[] getStatusCode() {
-        return statusCode;
+    public byte[] getStatusCode() { // TODO - to delete
+        return statusCode.clone();
     }
 
 }

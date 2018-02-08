@@ -19,7 +19,8 @@ public abstract class ObservableReader implements ProxyReader {
     private List<ReaderObserver> readerObservers = new ArrayList<ReaderObserver>();
 
     /**
-     *
+     * This method shall be called only from a terminal application implementing ObservableReader
+     * 
      * add a ReaderObserver to the list of registered ReaderObserver for the
      * selected ObservableReader.
      *
@@ -31,6 +32,8 @@ public abstract class ObservableReader implements ProxyReader {
     }
 
     /**
+     * This method shall be called only from a terminal application implementing ObservableReader
+     * 
      * remove a ReaderObserver from the list of registered ReaderObserver for
      * the selected ObservableReader.
      *
@@ -41,19 +44,35 @@ public abstract class ObservableReader implements ProxyReader {
         this.readerObservers.remove(calledback);
     }
 
+//    /**
+//     * push a ReaderEvent of the selected ObservableReader to its registered
+//     * ReaderObserver.
+//     *
+//     * @param event
+//     *            the event
+//     */
+//    protected void notifyObservers(ReaderEvent event) {
+//        synchronized (this.readerObservers) {
+//            for (ReaderObserver observer : this.readerObservers) {
+//                observer.notify(event);
+//            }
+//        }
+//    }
+    
     /**
-     * push a ReaderEvent of the selected ObservableReader to its registered
-     * ReaderObserver.
+     * This method shall be called only from a SE Proxy plugin by a reader implementing ObservableReader
+     * 
+     * push a ReaderEvent of the selected ObservableReader to its registered ReaderObserver.
      *
      * @param event
      *            the event
      */
-    protected void notifyObservers(ReaderEvent event) {
-        synchronized (this.readerObservers) {
-            for (ReaderObserver observer : this.readerObservers) {
-                observer.notify(event);
-            }
-        }
+    public final void notifyObservers(ReaderEvent event){
+      synchronized (readerObservers) { // TODO Ixxi a mis un verrou sans l'expliquer, s'agit de s'assurer que la liste des observer n'évolue pas lorsqu'on la parcourt?
+      for (ReaderObserver observer : readerObservers) {
+          observer.notify(event);
+      }
+  }
     }
 
 }

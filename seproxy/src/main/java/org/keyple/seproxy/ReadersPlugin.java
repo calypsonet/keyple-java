@@ -12,6 +12,9 @@ import org.keyple.seproxy.exceptions.IOReaderException;
  */
 public interface ReadersPlugin {
 
+	// TODO - possibility to force implementatiosn to be singleton?
+	// TODO - add ObservablePlugin interface
+	
     /**
      * Gets the name.
      *

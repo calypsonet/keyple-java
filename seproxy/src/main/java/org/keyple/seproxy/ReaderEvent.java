@@ -24,7 +24,7 @@ public class ReaderEvent {
     }
 
     /** the reader pushing the notification. */
-    private NotifierReader reader;
+    private ObservableReader reader;
 
     /** the type of the notified event. */
     private EventType event;
@@ -37,7 +37,7 @@ public class ReaderEvent {
      * @param event
      *            the event
      */
-    public ReaderEvent(NotifierReader reader, EventType event) {
+    public ReaderEvent(ObservableReader reader, EventType event) {
         this.reader = reader;
         this.event = event;
     }
@@ -47,7 +47,7 @@ public class ReaderEvent {
      *
      * @return the reader notifying the event.
      */
-    public NotifierReader getReader() {
+    public ObservableReader getReader() {
         return reader;
     }
 
