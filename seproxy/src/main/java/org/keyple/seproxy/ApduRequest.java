@@ -25,7 +25,6 @@ push to the ProxyReader.
      * @param case4 the case 4
      */
     public ApduRequest(byte[] bytes, boolean case4) {
-        super();
         this.bytes = bytes;
         this.case4 = case4;
     }
