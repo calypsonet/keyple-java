@@ -13,7 +13,7 @@ import java.util.List;
  */
 public abstract class ObservableReader implements ProxyReader {
 
-    // TODO: Resync the synchronization logic around here.
+    // TODO: Rethink the synchronization logic around here.
     // It can be thread safe or not, but it can't be a bit of both, i.e. if we synchronize in notifyObservers, we should
     // also do it in (at|de)tachObserver. The code as it is is pretty useless.
 
