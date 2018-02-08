@@ -13,6 +13,11 @@ import java.util.List;
  */
 public abstract class ObservableReader implements ProxyReader {
 
+    // TODO: Resync the synchronization logic around here.
+    // It can be thread safe or not, but it can't be a bit of both, i.e. if we synchronize in notifyObservers, we should
+    // also do it in (at|de)tachObserver. The code as it is is pretty useless.
+
+
     /**
      * an array referencing the registered ReaderObserver of the Reader.
      */
@@ -44,35 +49,18 @@ public abstract class ObservableReader implements ProxyReader {
         this.readerObservers.remove(calledback);
     }
 
-//    /**
-//     * push a ReaderEvent of the selected ObservableReader to its registered
-//     * ReaderObserver.
-//     *
-//     * @param event
-//     *            the event
-//     */
-//    protected void notifyObservers(ReaderEvent event) {
-//        synchronized (this.readerObservers) {
-//            for (ReaderObserver observer : this.readerObservers) {
-//                observer.notify(event);
-//            }
-//        }
-//    }
-    
     /**
      * This method shall be called only from a SE Proxy plugin by a reader implementing ObservableReader
-     * 
      * push a ReaderEvent of the selected ObservableReader to its registered ReaderObserver.
      *
-     * @param event
-     *            the event
+     * @param event the event
      */
-    public final void notifyObservers(ReaderEvent event){
-      synchronized (readerObservers) { // TODO Ixxi a mis un verrou sans l'expliquer, s'agit de s'assurer que la liste des observer n'évolue pas lorsqu'on la parcourt?
-      for (ReaderObserver observer : readerObservers) {
-          observer.notify(event);
-      }
-  }
+    public void notifyObservers(ReaderEvent event) {
+        synchronized (readerObservers) {
+            for (ReaderObserver observer : readerObservers) {
+                observer.notify(event);
+            }
+        }
     }
 
 }
