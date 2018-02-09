@@ -1,11 +1,7 @@
 package org.keyple.calypso.transaction;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import javax.xml.bind.DatatypeConverter; // TODO => warning: not available on Android, so PC debugging only
 
@@ -20,14 +16,11 @@ import org.keyple.calypso.commands.csm.builder.SelectDiversifierCmdBuild;
 import org.keyple.calypso.commands.csm.parser.CsmGetChallengeRespPars;
 import org.keyple.calypso.commands.csm.parser.DigestAuthenticateRespPars;
 import org.keyple.calypso.commands.csm.parser.DigestCloseRespPars;
-import org.keyple.calypso.commands.csm.parser.DigestInitRespPars;
-import org.keyple.calypso.commands.csm.parser.DigestUpdateRespPars;
 import org.keyple.calypso.commands.po.PoCommandBuilder;
 import org.keyple.calypso.commands.po.PoRevision;
 import org.keyple.calypso.commands.po.SendableInSession;
 import org.keyple.calypso.commands.po.builder.CloseSessionCmdBuild;
 import org.keyple.calypso.commands.po.builder.OpenSessionCmdBuild;
-import org.keyple.calypso.commands.po.builder.PoGetChallengeCmdBuild;
 import org.keyple.calypso.commands.po.parser.CloseSessionRespPars;
 import org.keyple.calypso.commands.po.parser.GetDataFciRespPars;
 import org.keyple.calypso.commands.po.parser.OpenSessionRespPars;
@@ -360,7 +353,7 @@ public class PoSecureSession {
 		
         // Browse other PO commands to compute CSM digest        
         if ((poCommandsInsideSession != null) && !poCommandsInsideSession.isEmpty() && (poCommandsInsideSession.size()>1)) {
-        	// TODO => rajouter un contrôle afin de vérifier que poApduResponseList a même taille que poApduRequestList
+        	// TODO => rajouter un contrï¿½le afin de vï¿½rifier que poApduResponseList a mï¿½me taille que poApduRequestList
         	for(int i = 1; i < poApduRequestList.size(); i++) { // The loop starts after the Open Session for the first command send in session
             	// Build "Digest Update" command for each PO APDU Request
             	System.out.println("\t========= Opening ========== Generate CSM cmd request - Digest Update for PO request : " + DatatypeConverter.printHexBinary((new DigestUpdateCmdBuild(csmRevision, false, poApduRequestList.get(i).getbytes())).getApduRequest().getbytes()));
@@ -463,7 +456,7 @@ public class PoSecureSession {
         List<ApduResponse> poApduResponseList = poResponse.getApduResponses();
         
         // Browse all exchanged PO commands to compute CSM digest
-    	// TODO => rajouter un contrôle afin de vérifier que poApduResponseList a même taille que poApduRequestList
+    	// TODO => rajouter un contrï¿½le afin de vï¿½rifier que poApduResponseList a mï¿½me taille que poApduRequestList
         for(int i = 0; i < poApduRequestList.size(); i++) {        	
         	// Build "Digest Update" command for each PO APDU Request
         	System.out.println("\t========= Continuation ===== Generate CSM cmd request - Digest Update for PO request : " + DatatypeConverter.printHexBinary((new DigestUpdateCmdBuild(csmRevision, false, poApduRequestList.get(i).getbytes())).getApduRequest().getbytes()));
@@ -519,7 +512,7 @@ public class PoSecureSession {
      *             the inconsistent command exception
      */
 //    public SeResponse processClosing(List<SendableInSession> poCommandsInsideSession, CloseSessionCmdBuild closeCommand, PoGetChallengeCmdBuild ratificationCommand)
-// TODO - prévoir une variante pour enchainer plusieurs session d'affilées (la commande de ratification étant un nouveau processOpening)
+// TODO - prï¿½voir une variante pour enchainer plusieurs session d'affilï¿½es (la commande de ratification ï¿½tant un nouveau processOpening)
     public SeResponse processClosing(List<SendableInSession> poCommandsInsideSession, List<ApduResponse> poAnticipatedResponseInsideSession, PoCommandBuilder ratificationCommand)
             throws IOReaderException, UnexpectedReaderException, ChannelStateReaderException,
             InvalidApduReaderException, TimeoutReaderException, InconsistentCommandException {
@@ -542,7 +535,7 @@ public class PoSecureSession {
         	if (poApduRequestList.size() == poAnticipatedResponseInsideSession.size()) {
                 
                 // Browse "ANTICIPATED" exchanges of PO commands to compute CSM digest
-            	// TODO => rajouter un contrôle afin de vérifier que poApduResponseList a même taille que poApduRequestList
+            	// TODO => rajouter un contrï¿½le afin de vï¿½rifier que poApduResponseList a mï¿½me taille que poApduRequestList
                 for(int i = 0; i < poApduRequestList.size(); i++) {   
                 	// TODO => optimization with Digest Update Multiple - conditions : (CSM revision >= 3) && (poApduRequestLength + poApduRequestLength <= 250)
                 	

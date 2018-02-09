@@ -31,12 +31,12 @@ public class KeypleTest_ObservablePoTransaction implements ReaderObserver {
 		System.out.print("\n\nEvent - " + event.getReader().getName() + " - ");
 		switch (event.getEventType())
 		{
-		  case SE_INSERTED:
+		  case EventType.SE_INSERTED:
 			System.out.println("SE INSERTED");	
 			System.out.println("\nStart processing of a Calypso PO");
 			operatePoTransaction();
 		    break;        
-		  case SE_REMOVAL:
+		  case EventType.SE_REMOVAL:
 			System.out.println("SE REMOVED");	
 			System.out.println("\nWait for Calypso PO");
 		    break;        
