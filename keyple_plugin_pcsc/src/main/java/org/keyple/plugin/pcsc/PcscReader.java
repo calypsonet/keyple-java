@@ -55,7 +55,7 @@ public class PcscReader extends ObservableReader implements ConfigurableReader {
         this.channel = null;
         this.settings = new HashMap<String, String>();
         
-        // TODO je n'ai pas compris l'implémentation Ixxi
+        // TODO je n'ai pas compris l'implÃ©mentation Ixxi
 //        EventThread eventThread = new EventThread(this);
 //        this.readerThread = new Thread(eventThread);
 //        this.readerThread.start();
@@ -70,7 +70,7 @@ public class PcscReader extends ObservableReader implements ConfigurableReader {
     @SuppressWarnings("deprecation")
 	protected void finalize() throws Throwable {
     	readerThread.stopPolling();
-    	readerThread.stop(); // TODO faut-il quand même fermer la thread
+    	readerThread.stop(); // TODO faut-il quand mÃªme fermer la thread
     }
     
     
@@ -84,7 +84,7 @@ public class PcscReader extends ObservableReader implements ConfigurableReader {
             InvalidApduReaderException, IOReaderException, TimeoutReaderException, UnexpectedReaderException {
         List<ApduResponse> apduResponseList = new ArrayList<ApduResponse>();
 
-        if (isSEPresent()) { //TODO si vrai ET pas vrai => retourne un SeResponse vide de manière systématique - return new SeResponse(false, fciDataSelected, apduResponseList); 
+        if (isSEPresent()) { //TODO si vrai ET pas vrai => retourne un SeResponse vide de maniÃ¨re systÃ©matique - return new SeResponse(false, fciDataSelected, apduResponseList); 
             try {
                 this.prepareAndConnectToTerminalAndSetChannel();
             } catch (CardException e) {
@@ -273,22 +273,22 @@ public class PcscReader extends ObservableReader implements ConfigurableReader {
     }
 
     /*
-TODO Paramètres PC/SC dont le support est à intégré
-  paramètre 'Protocol'   pouvant prendre les valeurs String 'T0', 'T1', 'Tx'
-  paramètre 'Mode'       pouvant prendre les valeurs String 'Shared', 'Exclusive', 'Direct'
-  paramètre 'Disconnect' pouvant prendre les valeurs String 'Leave', 'Reset', 'Unpower', 'Eject'
-Il s'agit des valeurs de paramètre définies par le standard 'PC/SC'.
+TODO ParamÃ¨tres PC/SC dont le support est Ã  intÃ©grÃ©
+  paramÃ¨tre 'Protocol'   pouvant prendre les valeurs String 'T0', 'T1', 'Tx'
+  paramÃ¨tre 'Mode'       pouvant prendre les valeurs String 'Shared', 'Exclusive', 'Direct'
+  paramÃ¨tre 'Disconnect' pouvant prendre les valeurs String 'Leave', 'Reset', 'Unpower', 'Eject'
+Il s'agit des valeurs de paramÃ¨tre dÃ©finies par le standard 'PC/SC'.
 
-Si on traduit ses paramètres pour l'API SmartCard IO cela donne:
-  pour 'Protocol' : javax.smartcardio.CardTerminal.connect(String protocol) paramétré avec "T=0" si 'T0', "T=1" si 'T1', "*" si 'Tx' => voir définition https://docs.oracle.com/javase/6/docs/jre/api/security/smartcardio/spec/javax/smartcardio/CardTerminal.html#connect(java.lang.String)
-  le comportement par défaut pour 'Protocol' doit être 'Tx'
+Si on traduit ses paramÃ¨tres pour l'API SmartCard IO cela donne:
+  pour 'Protocol' : javax.smartcardio.CardTerminal.connect(String protocol) paramÃ©trÃ© avec "T=0" si 'T0', "T=1" si 'T1', "*" si 'Tx' => voir dÃ©finition https://docs.oracle.com/javase/6/docs/jre/api/security/smartcardio/spec/javax/smartcardio/CardTerminal.html#connect(java.lang.String)
+  le comportement par dÃ©faut pour 'Protocol' doit Ãªtre 'Tx'
   
-  paramètre 'Mode' : le comportement par défaut pour 'Protocol' doit être 'Exclusive', dans ce cas une exclusivité d'accès est gérée via javax.smartcardio.Card.beginExclusive() et endExclusive() cf. https://docs.oracle.com/javase/6/docs/jre/api/security/smartcardio/spec/javax/smartcardio/Card.html#beginExclusive()
-  sinon le 'Mode' doit être considéré comme 'Shared'
-à vérifier avec Jean-Pierre Fortune, le mode 'Direct' ne devrait pas être supporté pour un ProxyReader.transmit(), (l'envoi de commandes directes de paramétrage du lecteur PC/SC devrait se faire avec un setParameter spécial)
+  paramÃ¨tre 'Mode' : le comportement par dÃ©faut pour 'Protocol' doit Ãªtre 'Exclusive', dans ce cas une exclusivitÃ© d'accÃ¨s est gÃ©rÃ©e via javax.smartcardio.Card.beginExclusive() et endExclusive() cf. https://docs.oracle.com/javase/6/docs/jre/api/security/smartcardio/spec/javax/smartcardio/Card.html#beginExclusive()
+  sinon le 'Mode' doit Ãªtre considÃ©rÃ© comme 'Shared'
+Ã  vÃ©rifier avec Jean-Pierre Fortune, le mode 'Direct' ne devrait pas Ãªtre supportÃ© pour un ProxyReader.transmit(), (l'envoi de commandes directes de paramÃ©trage du lecteur PC/SC devrait se faire avec un setParameter spÃ©cial)
 
-Pour 'Disconnect', un paramétrage 'Reset', fera que la commande javax.smartcardio.Carddisconnect(boolean reset) sera paramétrée à 'true' si 'Reset', à 'false' si 'Unpower'
-Les valeurs 'Leave' et 'Eject' ne serait pas gérée.
+Pour 'Disconnect', un paramÃ©trage 'Reset', fera que la commande javax.smartcardio.Carddisconnect(boolean reset) sera paramÃ©trÃ©e Ã  'true' si 'Reset', Ã  'false' si 'Unpower'
+Les valeurs 'Leave' et 'Eject' ne serait pas gÃ©rÃ©e.
 
      */
     @Override
@@ -313,7 +313,7 @@ Les valeurs 'Leave' et 'Eject' ne serait pas gérée.
      *         card insertion or removal detection
      *
      */
-//    public class EventThread implements Runnable { // TODO implémentation Ixxi, pas compris
+//    public class EventThread implements Runnable { // TODO implÃ©mentation Ixxi, pas compris
     public class EventThread extends Thread {
         PcscReader reader;
 
@@ -321,7 +321,7 @@ Les valeurs 'Leave' et 'Eject' ne serait pas gérée.
             this.reader = reader;
         }
 
-        // TODO vérifier conditions de fermeture
+        // TODO vÃ©rifier conditions de fermeture
         private volatile boolean running = true;
         public void stopPolling() {
         	running = false;

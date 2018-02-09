@@ -1,6 +1,7 @@
 package org.keyple.calypso.transaction;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.xml.bind.DatatypeConverter; // TODO => warning: not available on Android, so PC debugging only
