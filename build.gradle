@@ -60,7 +60,7 @@ spotless {
         // available versions are: https://bintray.com/diffplug/opensource/spotless-ext-eclipse-jdt
     }
     format 'yaml', {
-        target '**/*.yml', '**/*.md'
+        target '**/*.yml', '**/*.md', '**/*.gradle'
         indentWithSpaces()
         endWithNewline()
     }
