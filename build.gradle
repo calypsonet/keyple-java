@@ -14,7 +14,7 @@ allprojects {
 spotless {
     java {
         target '**/*.java'
-        licenseHeader('Licensed under Apache-2.0 $YEAR').yearSeparator(', ')
+        //licenseHeader('Licensed under Keyple project, Copyright CNA $YEAR').yearSeparator(', ')
 
         // Obviously, you can't specify both licenseHeader and licenseHeaderFile at the same time
 
