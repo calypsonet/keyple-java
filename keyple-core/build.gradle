@@ -24,9 +24,9 @@ pmd {
             "java-migrating",
             "java-logging-java",
             // "java-controversial"  // 8 issues
-            //"java-sunsecure"       // 1 issue
+            // "java-sunsecure"      // 1 issue
             // "java-junit"          // 1 issue
-            //"java-optimizations"   // 44 issues
+            // "java-optimizations"  // 44 issues
             // "java-naming",        // 9 issues
             // "java-coupling"       // 2 issues
             // "java-design"         // 19 issues
