@@ -1,4 +1,4 @@
-package seproxy;
+package org.keyple.seproxy;
 
 import static org.junit.Assert.*;
 

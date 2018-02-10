@@ -1,4 +1,4 @@
-package seproxy;
+package org.keyple.seproxy;
 
 import org.junit.Test;
 import org.keyple.seproxy.ReaderEvent;
