@@ -24,26 +24,22 @@ public class FCI {
     /**
      * Instantiates a new FCI.
      *
-     * @param dfName
-     *            the df name
-     * @param fciProprietaryTemplate
-     *            the fci proprietary template
-     * @param fciIssuerDiscretionaryData
-     *            the fci issuer discretionary data
-     * @param applicationSN
-     *            the application SN
-     * @param startupInformation
-     *            the startup information
+     * @param dfName the df name
+     * @param fciProprietaryTemplate the fci proprietary template
+     * @param fciIssuerDiscretionaryData the fci issuer discretionary data
+     * @param applicationSN the application SN
+     * @param startupInformation the startup information
      */
-    public FCI(byte[] dfName, byte[] fciProprietaryTemplate, byte[] fciIssuerDiscretionaryData, byte[] applicationSN,
-            StartupInformation startupInformation) {
+    public FCI(byte[] dfName, byte[] fciProprietaryTemplate, byte[] fciIssuerDiscretionaryData,
+            byte[] applicationSN, StartupInformation startupInformation) {
         if (dfName != null) {
             this.dfName = dfName.clone();
         }
 
-        this.fciProprietaryTemplate = (fciProprietaryTemplate == null ? null : fciProprietaryTemplate.clone());
-        this.fciIssuerDiscretionaryData = (fciIssuerDiscretionaryData == null ? null
-                : fciIssuerDiscretionaryData.clone());
+        this.fciProprietaryTemplate =
+                (fciProprietaryTemplate == null ? null : fciProprietaryTemplate.clone());
+        this.fciIssuerDiscretionaryData =
+                (fciIssuerDiscretionaryData == null ? null : fciIssuerDiscretionaryData.clone());
         this.applicationSN = (applicationSN == null ? null : applicationSN.clone());
         this.startupInformation = startupInformation;
     }
@@ -63,7 +59,8 @@ public class FCI {
      * @return the fci issuer discretionary data
      */
     public byte[] getFciIssuerDiscretionaryData() {
-        return (this.fciIssuerDiscretionaryData == null ? null : this.fciIssuerDiscretionaryData.clone());
+        return (this.fciIssuerDiscretionaryData == null ? null
+                : this.fciIssuerDiscretionaryData.clone());
     }
 
     /**

@@ -9,8 +9,7 @@ import org.keyple.commands.InconsistentCommandException;
 import org.keyple.seproxy.ApduRequest;
 
 /**
- * This class provides the dedicated constructor to build the CSM Get Challenge
- * APDU command.
+ * This class provides the dedicated constructor to build the CSM Get Challenge APDU command.
  *
  * @author Ixxi
  *
@@ -23,12 +22,9 @@ public class CsmGetChallengeCmdBuild extends CsmCommandBuilder {
     /**
      * Instantiates a new CsmGetChallengeCmdBuild.
      *
-     * @param revision
-     *            of the CSM (SAM)
-     * @param expectedResponseLength
-     *            the expected response length
-     * @throws InconsistentCommandException
-     *             the inconsistent command exception
+     * @param revision of the CSM (SAM)
+     * @param expectedResponseLength the expected response length
+     * @throws InconsistentCommandException the inconsistent command exception
      */
     public CsmGetChallengeCmdBuild(CsmRevision revision, byte expectedResponseLength)
             throws InconsistentCommandException {
@@ -43,17 +39,16 @@ public class CsmGetChallengeCmdBuild extends CsmCommandBuilder {
         byte p1 = 0x00;
         byte p2 = 0x00;
 
-        CalypsoRequest calypsoRequest = new CalypsoRequest(cla, command, p1, p2, null, expectedResponseLength);
+        CalypsoRequest calypsoRequest =
+                new CalypsoRequest(cla, command, p1, p2, null, expectedResponseLength);
         request = RequestUtils.constructAPDURequest(calypsoRequest);
     }
 
     /**
      * Instantiates a new csm get challenge cmd build.
      *
-     * @param request
-     *            the request
-     * @throws InconsistentCommandException
-     *             the inconsistent command exception
+     * @param request the request
+     * @throws InconsistentCommandException the inconsistent command exception
      */
     public CsmGetChallengeCmdBuild(ApduRequest request) throws InconsistentCommandException {
         super(command, request);

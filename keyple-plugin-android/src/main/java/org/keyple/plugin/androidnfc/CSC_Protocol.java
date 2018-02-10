@@ -5,13 +5,13 @@ package org.keyple.plugin.androidnfc;
  */
 
 public class CSC_Protocol {
-        public static final byte ISOA = 0x01;
-        public static final byte Innovatron = 0x02;
-        public static final byte CalypsoB = 0x03;
-        public static final byte Mifare = 0x04;
-        public static final byte ISOA_3 = 0x05;
-        public static final byte ISOB = 0x06;
-        public static final byte CalypsoA = 0x07;
-        public static final byte NoCard = 0x0F;
+    public static final byte ISOA = 0x01;
+    public static final byte Innovatron = 0x02;
+    public static final byte CalypsoB = 0x03;
+    public static final byte Mifare = 0x04;
+    public static final byte ISOA_3 = 0x05;
+    public static final byte ISOB = 0x06;
+    public static final byte CalypsoA = 0x07;
+    public static final byte NoCard = 0x0F;
 
 }

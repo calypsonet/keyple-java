@@ -10,10 +10,9 @@ import org.keyple.seproxy.ApduRequest;
 
 // TODO: Auto-generated Javadoc
 /**
- * This class provides the dedicated constructor to build the CSM Digest Update
- * APDU command. This command have to be sent twice for each command executed
- * during a session. First time for the command sent and second time for the
- * answer received
+ * This class provides the dedicated constructor to build the CSM Digest Update APDU command. This
+ * command have to be sent twice for each command executed during a session. First time for the
+ * command sent and second time for the answer received
  *
  * @author Ixxi
  *
@@ -27,15 +26,10 @@ public class DigestUpdateCmdBuild extends CsmCommandBuilder {
     /**
      * Instantiates a new DigestUpdateCmdBuild.
      *
-     * @param revision
-     *            of the CSM(SAM)
-     * @param encryptedSession
-     *            the encrypted session
-     * @param digestData
-     *            all bytes from command sent by the PO or response from the
-     *            command
-     * @throws InconsistentCommandException
-     *             the inconsistent command exception
+     * @param revision of the CSM(SAM)
+     * @param encryptedSession the encrypted session
+     * @param digestData all bytes from command sent by the PO or response from the command
+     * @throws InconsistentCommandException the inconsistent command exception
      */
     public DigestUpdateCmdBuild(CsmRevision revision, boolean encryptedSession, byte[] digestData)
             throws InconsistentCommandException {
@@ -61,10 +55,8 @@ public class DigestUpdateCmdBuild extends CsmCommandBuilder {
     /**
      * Instantiates a new digest update cmd build.
      *
-     * @param request
-     *            the request
-     * @throws InconsistentCommandException
-     *             the inconsistent command exception
+     * @param request the request
+     * @throws InconsistentCommandException the inconsistent command exception
      */
     public DigestUpdateCmdBuild(ApduRequest request) throws InconsistentCommandException {
         super(command, request);

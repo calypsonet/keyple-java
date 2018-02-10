@@ -1,5 +1,9 @@
 package org.keyple.plugin.androidnfc;
 
+import java.util.ArrayList;
+import java.util.List;
+import org.keyple.seproxy.ProxyReader;
+import org.keyple.seproxy.ReadersPlugin;
 import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -11,31 +15,25 @@ import android.nfc.tech.MifareClassic;
 import android.provider.Settings;
 import android.util.Log;
 
-import org.keyple.seproxy.ProxyReader;
-import org.keyple.seproxy.ReadersPlugin;
-
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by ixxi on 15/01/2018.
  */
 
-public class AndroidNFCPlugin implements ReadersPlugin{
+public class AndroidNFCPlugin implements ReadersPlugin {
 
-    public static final byte        NOReader = 0x00;
-    public static final byte        ReaderNFC = 0x01;
+    public static final byte NOReader = 0x00;
+    public static final byte ReaderNFC = 0x01;
 
-    private static boolean          mTagDiscovered;
-    private  static byte            mReader = NOReader;
-    private static Activity         mCurrentActivity;
-    private static Context          mCurrentContext;
+    private static boolean mTagDiscovered;
+    private static byte mReader = NOReader;
+    private static Activity mCurrentActivity;
+    private static Context mCurrentContext;
 
     // NFC
-    private static NfcAdapter       mNfcAdapter;
-    private static PendingIntent    mPendingIntent;
-    private static IntentFilter[]   mNfcIntentFiltersArray;
-    private static String[][]       mNfcTechListsArray;
+    private static NfcAdapter mNfcAdapter;
+    private static PendingIntent mPendingIntent;
+    private static IntentFilter[] mNfcIntentFiltersArray;
+    private static String[][] mNfcTechListsArray;
 
     private List<ProxyReader> readers = new ArrayList<ProxyReader>();
 
@@ -56,7 +54,9 @@ public class AndroidNFCPlugin implements ReadersPlugin{
      *
      * @return the type of reader(NO_READER, READER_NFC).
      */
-    public  byte getTypeReader(){return mReader;}
+    public byte getTypeReader() {
+        return mReader;
+    }
 
     /**
      * the constructor to determine the plugin.
@@ -64,7 +64,8 @@ public class AndroidNFCPlugin implements ReadersPlugin{
      * @param myActivity the activity associated to the NFC reader
      * @param myContext the context asssociated to the NFC reader
      */
-    public AndroidNFCPlugin(Activity myActivity, Context myContext){ // TODO - to define it as a singleton
+    public AndroidNFCPlugin(Activity myActivity, Context myContext) { // TODO - to define it as a
+                                                                      // singleton
         mReader = NOReader;
         mCurrentActivity = myActivity;
         mCurrentContext = myContext;
@@ -74,23 +75,16 @@ public class AndroidNFCPlugin implements ReadersPlugin{
         mNfcAdapter = NfcAdapter.getDefaultAdapter(myContext);
 
         // NFC Plugin has to have 0 or 1 reader
-        if (mNfcAdapter == null)
-        {
-            //NFC plugin has no reader
-        }
-        else
-        {
-            //  NFC enabled ?
-            if (!mNfcAdapter.isEnabled())
-            {
+        if (mNfcAdapter == null) {
+            // NFC plugin has no reader
+        } else {
+            // NFC enabled ?
+            if (!mNfcAdapter.isEnabled()) {
                 // Open Wireless Settings to activate NFC
                 Intent myIntent = new Intent(Settings.ACTION_WIRELESS_SETTINGS);
-                try
-                {
+                try {
                     mCurrentActivity.startActivity(myIntent);
-                }
-                catch (Exception e)
-                {
+                } catch (Exception e) {
                     Log.e(TAG, e.getMessage());
                 }
 
@@ -100,21 +94,23 @@ public class AndroidNFCPlugin implements ReadersPlugin{
             }
 
             // NFC - Start waiting for chip
-            mPendingIntent = PendingIntent.getActivity(mCurrentContext, 0, new Intent(mCurrentContext, mCurrentActivity.getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
+            mPendingIntent = PendingIntent.getActivity(mCurrentContext, 0,
+                    new Intent(mCurrentContext, mCurrentActivity.getClass())
+                            .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP),
+                    0);
 
-            final IntentFilter nfcintentFilter = new IntentFilter(NfcAdapter.ACTION_TECH_DISCOVERED);
-            try
-            {
+            final IntentFilter nfcintentFilter =
+                    new IntentFilter(NfcAdapter.ACTION_TECH_DISCOVERED);
+            try {
                 nfcintentFilter.addDataType("*/*");
-            }
-            catch (IntentFilter.MalformedMimeTypeException e)
-            {
+            } catch (IntentFilter.MalformedMimeTypeException e) {
                 throw new RuntimeException("fail", e);
             }
-            mNfcIntentFiltersArray = new IntentFilter[] { nfcintentFilter };
+            mNfcIntentFiltersArray = new IntentFilter[] {nfcintentFilter};
 
             // List of techno (IsoDep, Mifare).(List to extend with other techno : Mifare UL...)
-            mNfcTechListsArray = new String[][] {new String[]{IsoDep.class.getName()}, new String[]{MifareClassic.class.getName()}};
+            mNfcTechListsArray = new String[][] {new String[] {IsoDep.class.getName()},
+                    new String[] {MifareClassic.class.getName()}};
 
             // Creation of the NFC plugin
             AndroidNFCReader myNFCReaderInstance = AndroidNFCReader.getInstance();
@@ -128,21 +124,19 @@ public class AndroidNFCPlugin implements ReadersPlugin{
     }
 
     /**
-     *  the activity comes to the foreground
+     * the activity comes to the foreground
      */
-    public static void Resume()
-    {
-        if (mReader == ReaderNFC)
-        {
-            mNfcAdapter.enableForegroundDispatch(mCurrentActivity, mPendingIntent, mNfcIntentFiltersArray, mNfcTechListsArray);
+    public static void Resume() {
+        if (mReader == ReaderNFC) {
+            mNfcAdapter.enableForegroundDispatch(mCurrentActivity, mPendingIntent,
+                    mNfcIntentFiltersArray, mNfcTechListsArray);
         }
     }
 
     /**
      * the current activity is left
      */
-    public static void Pause()
-    {
+    public static void Pause() {
         if (mReader == ReaderNFC)
             mNfcAdapter.disableForegroundDispatch(mCurrentActivity);
     }

@@ -1,8 +1,7 @@
 package org.keyple.calypso.commands.dto;
 
 /**
- * The Class SecureSession. A secure session is returned by a open secure
- * session command
+ * The Class SecureSession. A secure session is returned by a open secure session command
  */
 public class SecureSession {
 
@@ -30,29 +29,20 @@ public class SecureSession {
     /**
      * Instantiates a new SecureSession for a Calypso application revision 3
      *
-     * @param sessionChallenge
-     *            the session challenge return by the open secure session APDU
-     *            command
-     * @param previousSessionRatified
-     *            the previous session ratified
-     * @param manageSecureSessionAuthorized
-     *            the manage secure session authorized
-     * @param kif
-     *            the KIF from the response of the open secure session APDU
-     *            command
-     * @param kvc
-     *            the KVC from the response of the open secure session APDU
-     *            command
-     * @param originalData
-     *            the original data from the response of the open secure session
-     *            APDU command
-     * @param secureSessionData
-     *            the secure session data from the response of open secure
-     *            session APDU command
+     * @param sessionChallenge the session challenge return by the open secure session APDU command
+     * @param previousSessionRatified the previous session ratified
+     * @param manageSecureSessionAuthorized the manage secure session authorized
+     * @param kif the KIF from the response of the open secure session APDU command
+     * @param kvc the KVC from the response of the open secure session APDU command
+     * @param originalData the original data from the response of the open secure session APDU
+     *        command
+     * @param secureSessionData the secure session data from the response of open secure session
+     *        APDU command
      */
     // Rev 3.1
     public SecureSession(POChallenge sessionChallenge, boolean previousSessionRatified,
-            boolean manageSecureSessionAuthorized, KIF kif, KVC kvc, byte[] originalData, byte[] secureSessionData) {
+            boolean manageSecureSessionAuthorized, KIF kif, KVC kvc, byte[] originalData,
+            byte[] secureSessionData) {
         this.sessionChallenge = sessionChallenge;
         this.previousSessionRatified = previousSessionRatified;
         this.manageSecureSessionAuthorized = manageSecureSessionAuthorized;
@@ -65,26 +55,19 @@ public class SecureSession {
     /**
      * Instantiates a new SecureSession for a Calypso application revision 2.4
      *
-     * @param sessionChallenge
-     *            the session challenge return by the open secure session APDU
-     *            command
-     * @param previousSessionRatified
-     *            the previous session ratified
-     * @param manageSecureSessionAuthorized
-     *            the manage secure session authorized
-     * @param kvc
-     *            the KVC from the response of the open secure session APDU
-     *            command
-     * @param originalData
-     *            the original data from the response of the open secure session
-     *            APDU command
-     * @param secureSessionData
-     *            the secure session data from the response of open secure
-     *            session APDU command
+     * @param sessionChallenge the session challenge return by the open secure session APDU command
+     * @param previousSessionRatified the previous session ratified
+     * @param manageSecureSessionAuthorized the manage secure session authorized
+     * @param kvc the KVC from the response of the open secure session APDU command
+     * @param originalData the original data from the response of the open secure session APDU
+     *        command
+     * @param secureSessionData the secure session data from the response of open secure session
+     *        APDU command
      */
     // Rev 2.4
     public SecureSession(POChallenge sessionChallenge, boolean previousSessionRatified,
-            boolean manageSecureSessionAuthorized, KVC kvc, byte[] originalData, byte[] secureSessionData) {
+            boolean manageSecureSessionAuthorized, KVC kvc, byte[] originalData,
+            byte[] secureSessionData) {
         this.sessionChallenge = sessionChallenge;
         this.previousSessionRatified = previousSessionRatified;
         this.manageSecureSessionAuthorized = manageSecureSessionAuthorized;

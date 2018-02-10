@@ -1,10 +1,8 @@
 package org.keyple.seproxy;
 
-import org.junit.Test;
-import org.keyple.seproxy.ReaderEvent;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import org.junit.Test;
 
 public class ReaderEventTest {
 
@@ -23,13 +21,10 @@ public class ReaderEventTest {
 
     // TODO: Fix this test
     /*
-    @Test
-    public void testGetReader() {
-    	NotifierReader or = Mockito.mock(NotifierReader.class);
-        ReaderEvent event = new ReaderEvent(or, ReaderEvent.EventType.IO_ERROR);
-        Assert.assertEquals(or, event.getReader());
-    }
-    */
+     * @Test public void testGetReader() { NotifierReader or = Mockito.mock(NotifierReader.class);
+     * ReaderEvent event = new ReaderEvent(or, ReaderEvent.EventType.IO_ERROR);
+     * Assert.assertEquals(or, event.getReader()); }
+     */
 
     @Test
     public void testGetEvent() {

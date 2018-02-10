@@ -1,24 +1,19 @@
 package org.keyple.plugin.androidnfc;
 
 
+import static org.keyple.plugin.androidnfc.Tools.byteArrayToSHex;
+import java.util.ArrayList;
+import java.util.List;
+import org.keyple.seproxy.ApduRequest;
+import org.keyple.seproxy.ApduResponse;
+import org.keyple.seproxy.ProxyReader;
+import org.keyple.seproxy.SeRequest;
+import org.keyple.seproxy.SeResponse;
 import android.content.Intent;
-
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.nfc.tech.IsoDep;
 import android.util.Log;
-
-import org.keyple.seproxy.ApduRequest;
-import org.keyple.seproxy.ApduResponse;
-import org.keyple.seproxy.ProxyReader;
-
-import org.keyple.seproxy.SeRequest;
-import org.keyple.seproxy.SeResponse;
-
-import static org.keyple.plugin.androidnfc.Tools.byteArrayToSHex;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by ixxi on 15/01/2018.
@@ -26,28 +21,27 @@ import java.util.List;
 
 protected class AndroidNFCReader implements ProxyReader {
     // must be a singleton
-    
-    private static boolean          mTagDiscovered;
+
+    private static boolean mTagDiscovered;
 
     // NFC
-    private static NfcAdapter       mNfcAdapter;
-    private static IsoDep           mTagISO;
-    private static Tag              mNfcCurrentTag;
-    private String                  mName;
+    private static NfcAdapter mNfcAdapter;
+    private static IsoDep mTagISO;
+    private static Tag mNfcCurrentTag;
+    private String mName;
 
     public static final String TAG = "AndroidNFCReader";
 
     /**
      * Private constructor
      */
-    private AndroidNFCReader() {
-    }
+    private AndroidNFCReader() {}
 
     /**
      * initialization to determine the reader.
      *
      * @param nfcAdapter the instance of nfc adapter
-     * @param name       the name of nfc reader
+     * @param name the name of nfc reader
      */
     public void init(NfcAdapter nfcAdapter, String name) {
         this.mNfcAdapter = nfcAdapter;
@@ -100,25 +94,31 @@ protected class AndroidNFCReader implements ProxyReader {
             for (ApduRequest apduRequest : seApplicationRequest.getApduRequests()) {
                 Log.i(TAG, getName() + " : Sending : " + byteArrayToSHex(apduRequest.getbytes()));
                 try {
-                    sendReceiveAPDU(apduRequest.getbytes(), apduRequest.getbytes().length, listByteArraysDataOut, lenListByteArraysDataOut, statusWord);
+                    sendReceiveAPDU(apduRequest.getbytes(), apduRequest.getbytes().length,
+                            listByteArraysDataOut, lenListByteArraysDataOut, statusWord);
 
-                    Byte[] Bytes = listByteArraysDataOut.toArray(new Byte[listByteArraysDataOut.size()]);
+                    Byte[] Bytes =
+                            listByteArraysDataOut.toArray(new Byte[listByteArraysDataOut.size()]);
                     byteArrayDataOut = new byte[listByteArraysDataOut.size()];
                     int j = 0;
                     for (Byte b : Bytes)
                         byteArrayDataOut[j++] = b.byteValue();
 
-                    Log.i(TAG, getName() + " : Recept : " + byteArrayToSHex(byteArrayDataOut)
-                            + " statusCode : " + byteArrayToSHex(statusWord) + ",\n longueur:" + lenListByteArraysDataOut[0]);
+                    Log.i(TAG,
+                            getName() + " : Recept : " + byteArrayToSHex(byteArrayDataOut)
+                                    + " statusCode : " + byteArrayToSHex(statusWord)
+                                    + ",\n longueur:" + lenListByteArraysDataOut[0]);
 
                     // getResponse in case 4 type commmand
-                    hackCase4AndGetResponse(apduRequest.isCase4(), statusWord, listByteArraysDataOut/*, channel*/);
+                    hackCase4AndGetResponse(apduRequest.isCase4(), statusWord,
+                            listByteArraysDataOut/* , channel */);
 
                     apduResponseList.add(new ApduResponse(byteArrayDataOut, true, statusWord));
 
-                } /*catch (CardException e) {
-                    throw new ChannelStateReaderException(e.getMessage());
-                }*/ catch (NullPointerException e) {
+                } /*
+                   * catch (CardException e) { throw new
+                   * ChannelStateReaderException(e.getMessage()); }
+                   */ catch (NullPointerException e) {
                     Log.e(TAG, getName() + " : Error executing command", e);
                     apduResponseList.add(new ApduResponse(null, false, null));
                     break;
@@ -135,7 +135,7 @@ protected class AndroidNFCReader implements ProxyReader {
     }
 
     @Override
-    public boolean isSEPresent()/* throws ReaderException*/ {
+    public boolean isSEPresent()/* throws ReaderException */ {
         boolean sePresent = false;
         if (mTagISO != null)
             sePresent = true;
@@ -146,12 +146,14 @@ protected class AndroidNFCReader implements ProxyReader {
     /**
      * GetResponse in the case of type 4 command.
      *
-     * @param isCase4      command of type 4
-     * @param statusCode   code status of the getResponse
+     * @param isCase4 command of type 4
+     * @param statusCode code status of the getResponse
      * @param responseData data of the getResponse
      */
-    private void hackCase4AndGetResponse(boolean isCase4, byte[] statusCode, List<Byte> responseData/*,
-                                                CardChannel channel*/) /*throws CardException*/ {
+    private void hackCase4AndGetResponse(boolean isCase4, byte[] statusCode,
+            List<Byte> responseData/*
+                                    * , CardChannel channel
+                                    */) /* throws CardException */ {
 
 
         byte[] hackSW = new byte[2];
@@ -178,8 +180,8 @@ protected class AndroidNFCReader implements ProxyReader {
      *
      * @param aid the AID application
      */
-    private ApduResponse connect(byte[] aid) /*throws ChannelStateReaderException */ {
-        
+    private ApduResponse connect(byte[] aid) /* throws ChannelStateReaderException */ {
+
         long[] connectLenOut = new long[1];
         byte[] connectDataOut = null;
         byte[] connectStatusWord = new byte[2];
@@ -196,7 +198,8 @@ protected class AndroidNFCReader implements ProxyReader {
             System.arraycopy(aid, 0, command, 5, aid.length);
             Log.i(TAG, getName() + " : Send AID : " + Tools.byteArrayToSHex(command));
 
-            sendReceiveAPDU(command, command.length, listByteArrays, connectLenOut, connectStatusWord);
+            sendReceiveAPDU(command, command.length, listByteArrays, connectLenOut,
+                    connectStatusWord);
             Byte[] Bytes = listByteArrays.toArray(new Byte[listByteArrays.size()]);
             connectDataOut = new byte[listByteArrays.size()];
             int j = 0;
@@ -204,7 +207,14 @@ protected class AndroidNFCReader implements ProxyReader {
                 connectDataOut[j++] = b.byteValue();
 
             Log.i(TAG, getName() + " : Recept : " + byteArrayToSHex(connectDataOut));
-            ApduResponse fciResponse = new ApduResponse(connectDataOut, true, connectStatusWord);//new byte[] { (byte) 0x90, (byte) 0x00 });
+            ApduResponse fciResponse = new ApduResponse(connectDataOut, true, connectStatusWord);// new
+                                                                                                 // byte[]
+                                                                                                 // {
+                                                                                                 // (byte)
+                                                                                                 // 0x90,
+                                                                                                 // (byte)
+                                                                                                 // 0x00
+                                                                                                 // });
             return fciResponse;
         }
         return null;
@@ -229,8 +239,8 @@ protected class AndroidNFCReader implements ProxyReader {
     /**
      * Search of the tag/card
      *
-     * @param bCOM       used protocol
-
+     * @param bCOM used protocol
+     * 
      */
     public boolean searchCard(byte[] bCOM, byte[] dataOut, long[] lenDataOut) {
         boolean bRet = false;
@@ -251,7 +261,8 @@ protected class AndroidNFCReader implements ProxyReader {
 
             String myTagTechno[] = mNfcCurrentTag.getTechList();
             if (myTagTechno[0].matches(String.format("android.nfc.tech.IsoDep")) == true) {
-                if (myTagTechno[1].matches(String.format("android.nfc.tech.MifareClassic")) == true) {
+                if (myTagTechno[1]
+                        .matches(String.format("android.nfc.tech.MifareClassic")) == true) {
                     if (myTagTechno[2].matches(String.format("android.nfc.tech.NfcA")) == true) {
                         bCOM[0] = CSC_Protocol.ISOA;
                     }
@@ -274,7 +285,7 @@ protected class AndroidNFCReader implements ProxyReader {
                 // Serial number length
                 dataOut[(int) lenDataOut[0]++] = (byte) mNfcCurrentTag.getId().length;
 
-                // Serial number 
+                // Serial number
                 byte[] buffUID = mNfcCurrentTag.getId();
                 for (int i = 0; i < mNfcCurrentTag.getId().length; i++)
                     dataOut[(int) lenDataOut[0]++] = buffUID[i];
@@ -284,8 +295,7 @@ protected class AndroidNFCReader implements ProxyReader {
                 try {
                     histLength = (byte) mTagISO.getHistoricalBytes().length;
                 } catch (Exception e) {
-                }
-                ;
+                } ;
                 dataOut[(int) lenDataOut[0]++] = (byte) (histLength + 8);
                 lenDataOut[0] += 8;
 
@@ -294,7 +304,7 @@ protected class AndroidNFCReader implements ProxyReader {
                 for (int i = 0; i < histLength; i++)
                     dataOut[(int) lenDataOut[0]++] = hist[i];
             } else {
-                Log.i(TAG,"The protocol "+myTagTechno[0]+ " has to be implemented.");
+                Log.i(TAG, "The protocol " + myTagTechno[0] + " has to be implemented.");
                 bRet = false;
             }
 
@@ -305,10 +315,10 @@ protected class AndroidNFCReader implements ProxyReader {
                     Log.i(TAG, "Connected tag");
                     bRet = true;
                 } catch (Exception e) {
-                    Log.e(TAG, "Failed to communicate with NFC tag:" + (e.getMessage() != null ? e.getMessage() : "-"));
-                }
-                ;
-            } 
+                    Log.e(TAG, "Failed to communicate with NFC tag:"
+                            + (e.getMessage() != null ? e.getMessage() : "-"));
+                } ;
+            }
 
         }
 
@@ -336,21 +346,21 @@ protected class AndroidNFCReader implements ProxyReader {
 
         } catch (Exception e) {
             Log.e(TAG, "Disconnecting error");
-        }
-        ;
+        } ;
         mTagISO = null;
     }
 
     /**
      * Exchanges of APDU cmds with the ISO tag/card
      *
-     * @param dataIn          command to send
-     * @param lenDataIn       length of the command
+     * @param dataIn command to send
+     * @param lenDataIn length of the command
      * @param listByteDataOut received response
-     * @param lenDataOut      length of the response
-     * @param statusWord      status word of the response
+     * @param lenDataOut length of the response
+     * @param statusWord status word of the response
      */
-    public boolean sendReceiveAPDU(byte[] dataIn, long lenDataIn, List<Byte> listByteDataOut, long[] lenDataOut, byte[] statusWord) {
+    public boolean sendReceiveAPDU(byte[] dataIn, long lenDataIn, List<Byte> listByteDataOut,
+            long[] lenDataOut, byte[] statusWord) {
         int i;
         boolean bRet = false;
 

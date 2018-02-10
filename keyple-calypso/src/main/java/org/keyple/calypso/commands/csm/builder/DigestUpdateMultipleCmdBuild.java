@@ -10,8 +10,8 @@ import org.keyple.seproxy.ApduRequest;
 
 // TODO: Auto-generated Javadoc
 /**
- * This class provides the dedicated constructor to build the CSM Digest Update
- * Multiple APDU command.
+ * This class provides the dedicated constructor to build the CSM Digest Update Multiple APDU
+ * command.
  *
  * @author Ixxi
  *
@@ -24,14 +24,12 @@ public class DigestUpdateMultipleCmdBuild extends CsmCommandBuilder {
     /**
      * Instantiates a new DigestUpdateMultipleCmdBuild.
      *
-     * @param revision
-     *            the revision
-     * @param digestData
-     *            the digest data
-     * @throws InconsistentCommandException
-     *             the inconsistent command exception
+     * @param revision the revision
+     * @param digestData the digest data
+     * @throws InconsistentCommandException the inconsistent command exception
      */
-    public DigestUpdateMultipleCmdBuild(CsmRevision revision, byte[] digestData) throws InconsistentCommandException {
+    public DigestUpdateMultipleCmdBuild(CsmRevision revision, byte[] digestData)
+            throws InconsistentCommandException {
         super(command, null);
         if (revision != null) {
             this.defaultRevision = revision;
@@ -47,10 +45,8 @@ public class DigestUpdateMultipleCmdBuild extends CsmCommandBuilder {
     /**
      * Instantiates a new digest update multiple cmd build.
      *
-     * @param request
-     *            the request
-     * @throws InconsistentCommandException
-     *             the inconsistent command exception
+     * @param request the request
+     * @throws InconsistentCommandException the inconsistent command exception
      */
     public DigestUpdateMultipleCmdBuild(ApduRequest request) throws InconsistentCommandException {
         super(command, request);

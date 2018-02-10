@@ -14,10 +14,8 @@ public class POChallenge {
     /**
      * Instantiates a new POChallenge.
      *
-     * @param transactionCounter
-     *            the transaction counter
-     * @param randomNumber
-     *            the random number
+     * @param transactionCounter the transaction counter
+     * @param randomNumber the random number
      */
     public POChallenge(byte[] transactionCounter, byte[] randomNumber) {
         this.transactionCounter = (transactionCounter == null ? null : transactionCounter.clone());

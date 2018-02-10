@@ -6,9 +6,8 @@ import org.keyple.seproxy.ApduRequest;
 
 /**
  *
- * This abstract class extends ApduCommandBuilder, it has to be extended by all
- * CSM command builder classes, it manages the current default revision for PO
- * commands
+ * This abstract class extends ApduCommandBuilder, it has to be extended by all CSM command builder
+ * classes, it manages the current default revision for PO commands
  *
  * @author IXXI
  *

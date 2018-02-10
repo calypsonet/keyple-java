@@ -4,33 +4,30 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.smartcardio.CardException;
 import javax.smartcardio.CardTerminal;
 import javax.smartcardio.CardTerminals;
 import javax.smartcardio.TerminalFactory;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.keyple.seproxy.ProxyReader;
 import org.keyple.seproxy.ReadersPlugin;
-import org.keyple.seproxy.SeProxyService;
 import org.keyple.seproxy.exceptions.IOReaderException;
 
 public final class PcscPlugin implements ReadersPlugin {
-  
+
     /** singleton instance of SeProxyService */
     private static PcscPlugin uniqueInstance = new PcscPlugin();
 
-	
+
     static final Logger logger = LogManager.getLogger(PcscPlugin.class);
 
     private TerminalFactory factory = TerminalFactory.getDefault();
 
     private Map<String, ProxyReader> readers;
-    
-    
-    private PcscPlugin(){
+
+
+    private PcscPlugin() {
         this.readers = new HashMap<String, ProxyReader>();
     }
 
@@ -42,7 +39,7 @@ public final class PcscPlugin implements ReadersPlugin {
     public static PcscPlugin getInstance() {
         return uniqueInstance;
     }
-    
+
     @Override
     public String getName() {
         return "PcscPlugin";
@@ -51,16 +48,16 @@ public final class PcscPlugin implements ReadersPlugin {
     @Override
     public List<ProxyReader> getReaders() throws IOReaderException {
         CardTerminals terminals = getCardTerminals();
-        
-        if(terminals == null){
+
+        if (terminals == null) {
             logger.error("Not terminals found", new Throwable());
             throw new IOReaderException("Not terminals found", new Throwable());
         }
         try {
-            if(this.readers.isEmpty()){
+            if (this.readers.isEmpty()) {
                 for (CardTerminal terminal : terminals.list()) {
                     PcscReader reader = new PcscReader(terminal, terminal.getName());
-                    if(!this.readers.containsKey(reader.getName())){
+                    if (!this.readers.containsKey(reader.getName())) {
                         this.readers.put(reader.getName(), reader);
                     }
                 }
@@ -72,7 +69,7 @@ public final class PcscPlugin implements ReadersPlugin {
             logger.error("Terminal List not accessible", e);
             throw new IOReaderException(e.getMessage(), e);
         }
-        
+
         return new ArrayList<ProxyReader>(this.readers.values());
     }
 

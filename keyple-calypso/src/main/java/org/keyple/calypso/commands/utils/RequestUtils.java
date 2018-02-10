@@ -2,7 +2,6 @@ package org.keyple.calypso.commands.utils;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.keyple.calypso.commands.CalypsoCommands;
 import org.keyple.calypso.commands.dto.CalypsoRequest;
 import org.keyple.commands.InconsistentCommandException;
@@ -15,14 +14,12 @@ import org.keyple.seproxy.ApduRequest;
  */
 public class RequestUtils {
 
-    private RequestUtils() {
-    }
+    private RequestUtils() {}
 
     /**
      * Construct APDU request.
      *
-     * @param request
-     *            the request
+     * @param request the request
      * @return the APDU request
      */
     public static ApduRequest constructAPDURequest(CalypsoRequest request) {
@@ -49,10 +46,8 @@ public class RequestUtils {
     /**
      * Construct APDU request.
      *
-     * @param request
-     *            the request
-     * @param caseId
-     *            the case id
+     * @param request the request
+     * @param caseId the case id
      * @return the APDU request
      */
     public static ApduRequest constructAPDURequest(CalypsoRequest request, int caseId) {
@@ -87,17 +82,17 @@ public class RequestUtils {
 
         if (request.getDataIn().length != 0) {
             tableaubytesAdpuRequest.add(request.getLc());
-            for(int v=0;v < ((int)request.getLc());v++){
+            for (int v = 0; v < ((int) request.getLc()); v++) {
                 tableaubytesAdpuRequest.add(request.getDataIn()[v]);
             }
         }
-        
-        
+
+
         if (request.getLe() != 0x00 || request.isForceLe()) {
             if (localCaseId == 4) {
-                tableaubytesAdpuRequest.add((byte)0x00);
+                tableaubytesAdpuRequest.add((byte) 0x00);
             } else {
-                if(request.getLe() != 0x00|| request.isForceLe()){
+                if (request.getLe() != 0x00 || request.isForceLe()) {
                     tableaubytesAdpuRequest.add(request.getLe());
                 }
             }

@@ -9,8 +9,7 @@ import org.keyple.commands.InconsistentCommandException;
 import org.keyple.seproxy.ApduRequest;
 
 /**
- * This class provides the dedicated constructor to build the CSM Digest Init
- * APDU command.
+ * This class provides the dedicated constructor to build the CSM Digest Init APDU command.
  *
  * @author Ixxi
  *
@@ -23,22 +22,14 @@ public class DigestInitCmdBuild extends CsmCommandBuilder {
     /**
      * Instantiates a new DigestInitCmdBuild.
      *
-     * @param revision
-     *            of the CSM(SAM)
-     * @param verificationMode
-     *            the verification mode
-     * @param rev3_2Mode
-     *            the rev 3 2 mode
-     * @param workKeyRecordNumber
-     *            the work key record number
-     * @param workKeyKif
-     *            from the OpenSessionCmdBuild response
-     * @param workKeyKVC
-     *            from the OpenSessionCmdBuild response
-     * @param digestData
-     *            all data out from the OpenSessionCmdBuild response
-     * @throws InconsistentCommandException
-     *             the inconsistent command exception
+     * @param revision of the CSM(SAM)
+     * @param verificationMode the verification mode
+     * @param rev3_2Mode the rev 3 2 mode
+     * @param workKeyRecordNumber the work key record number
+     * @param workKeyKif from the OpenSessionCmdBuild response
+     * @param workKeyKVC from the OpenSessionCmdBuild response
+     * @param digestData all data out from the OpenSessionCmdBuild response
+     * @throws InconsistentCommandException the inconsistent command exception
      */
     public DigestInitCmdBuild(CsmRevision revision, boolean verificationMode, boolean rev3_2Mode,
             byte workKeyRecordNumber, byte workKeyKif, byte workKeyKVC, byte[] digestData)
@@ -77,7 +68,8 @@ public class DigestInitCmdBuild extends CsmCommandBuilder {
             dataIn[1] = workKeyKVC;
             System.arraycopy(digestData, 0, dataIn, 2, digestData.length);
         }
-        CalypsoRequest calypsoRequest = new CalypsoRequest(cla, CalypsoCommands.CSM_DIGEST_INIT, p1, p2, dataIn);
+        CalypsoRequest calypsoRequest =
+                new CalypsoRequest(cla, CalypsoCommands.CSM_DIGEST_INIT, p1, p2, dataIn);
         request = RequestUtils.constructAPDURequest(calypsoRequest);
 
     }
@@ -85,10 +77,8 @@ public class DigestInitCmdBuild extends CsmCommandBuilder {
     /**
      * Instantiates a new digest init cmd build.
      *
-     * @param request
-     *            the request
-     * @throws InconsistentCommandException
-     *             the inconsistent command exception
+     * @param request the request
+     * @throws InconsistentCommandException the inconsistent command exception
      */
     public DigestInitCmdBuild(ApduRequest request) throws InconsistentCommandException {
         super(command, request);

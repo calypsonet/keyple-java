@@ -11,8 +11,7 @@ public class KIF {
     /**
      * Instantiates a new KIF.
      *
-     * @param value
-     *            the value
+     * @param value the value
      */
     public KIF(byte value) {
         super();

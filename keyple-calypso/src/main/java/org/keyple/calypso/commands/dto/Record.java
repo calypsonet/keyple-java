@@ -1,8 +1,7 @@
 package org.keyple.calypso.commands.dto;
 
 /**
- * The Class Record. The data in the files are organized in records of equal
- * size.
+ * The Class Record. The data in the files are organized in records of equal size.
  */
 public class Record {
 
@@ -15,10 +14,8 @@ public class Record {
     /**
      * Instantiates a new Record.
      *
-     * @param data
-     *            the data
-     * @param recordNumber
-     *            the record number
+     * @param data the data
+     * @param recordNumber the record number
      */
     public Record(byte[] data, int recordNumber) {
         super();

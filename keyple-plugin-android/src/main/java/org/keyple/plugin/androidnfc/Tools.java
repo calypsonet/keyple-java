@@ -17,20 +17,16 @@ public class Tools {
      *
      * @param time_ms time
      */
-    public static void sleepThread(long time_ms)
-    {
+    public static void sleepThread(long time_ms) {
         long timer;
 
         timer = System.nanoTime();
-        try
-        {
-            while ((System.nanoTime() - timer)
-                    < (time_ms*1000000))
+        try {
+            while ((System.nanoTime() - timer) < (time_ms * 1000000))
                 Thread.sleep(10);
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             Log.e(TAG, e.getMessage());
-        };
+        } ;
     }
 
     /**
@@ -39,8 +35,7 @@ public class Tools {
      * @param myContext context
      * @param msg message to display
      */
-    public static void ToastErr(Context myContext, CharSequence msg)
-    {
+    public static void ToastErr(Context myContext, CharSequence msg) {
         Toast.makeText(myContext, msg, Toast.LENGTH_LONG).show();
     }
 
@@ -68,8 +63,8 @@ public class Tools {
      * @return byte array
      */
     public static byte[] shortToBytes(short s) {
-      //
-        return new byte[]{(byte)((s & 0xFF00)>>8), (byte)(s & 0x00FF)};
+        //
+        return new byte[] {(byte) ((s & 0xFF00) >> 8), (byte) (s & 0x00FF)};
     }
 
 }

@@ -2,7 +2,6 @@ package keyple.commands.csm.parser;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.hamcrest.core.IsNot;
 import org.junit.Assert;
 import org.junit.Test;
@@ -28,8 +27,8 @@ public class SelectDiversifierRespParsTest {
 
         SeResponse seResponse = Mockito.mock(SeResponse.class);
 
-        ApduResponse apduResponse = new ApduResponse(null, true, new byte[] { 90, 00 });
-        ApduResponse apduResponse1 = new ApduResponse(null, true, new byte[] { 80, 00 });
+        ApduResponse apduResponse = new ApduResponse(null, true, new byte[] {90, 00});
+        ApduResponse apduResponse1 = new ApduResponse(null, true, new byte[] {80, 00});
         ApduResponse apduResponse2 = new ApduResponse(null, true, null);
 
         list.add(apduResponse);
@@ -37,14 +36,17 @@ public class SelectDiversifierRespParsTest {
         list2.add(apduResponse2);
 
         Mockito.when(seResponse.getApduResponses()).thenReturn(list);
-        ApduResponseParser apduResponseParser = new SelectDiversifierRespPars(seResponse.getApduResponses().get(0));
+        ApduResponseParser apduResponseParser =
+                new SelectDiversifierRespPars(seResponse.getApduResponses().get(0));
 
-        Assert.assertArrayEquals(new byte[] { 90, 00 }, apduResponseParser.getApduResponse().getStatusCode());
+        Assert.assertArrayEquals(new byte[] {90, 00},
+                apduResponseParser.getApduResponse().getStatusCode());
 
         Mockito.when(seResponse.getApduResponses()).thenReturn(list1);
         apduResponseParser = new SelectDiversifierRespPars(seResponse.getApduResponses().get(0));
 
-        Assert.assertThat(apduResponseParser.getApduResponse().getStatusCode(), IsNot.not(new byte[] { 90, 00 }));
+        Assert.assertThat(apduResponseParser.getApduResponse().getStatusCode(),
+                IsNot.not(new byte[] {90, 00}));
         apduResponseParser = new SelectDiversifierRespPars(seResponse.getApduResponses().get(0));
 
     }

@@ -29,14 +29,14 @@ public class RequestUtilsTest {
     private byte[] dataIn;
 
     private byte option;
-    
+
     private byte optionExptected;
 
     private byte[] fci;
 
     @Test
     public void testConstructApduRequest() {
-        fci = new byte[] { (byte) 0x00, (byte) 0xCA, 0x00, 0x6F };
+        fci = new byte[] {(byte) 0x00, (byte) 0xCA, 0x00, 0x6F};
         isCase4 = false;
         ApduRequestExpected = new ApduRequest(fci, isCase4);
         cla = (byte) 0x00;
@@ -53,7 +53,7 @@ public class RequestUtilsTest {
 
     @Test
     public void testConstructApduRequestCase4() {
-        fci = new byte[] { (byte) 0x00, (byte) 0xCA, 0x00, 0x6F, 0x00 };
+        fci = new byte[] {(byte) 0x00, (byte) 0xCA, 0x00, 0x6F, 0x00};
         isCase4 = true;
         ApduRequestExpected = new ApduRequest(fci, isCase4);
         cla = (byte) 0x00;
@@ -71,14 +71,14 @@ public class RequestUtilsTest {
 
     @Test
     public void testConstructApduRequestData() {
-        fci = new byte[] { (byte) 0x00, (byte) 0xCA, 0x00, 0x6F, 0x02, 0x00, 0x00 };
+        fci = new byte[] {(byte) 0x00, (byte) 0xCA, 0x00, 0x6F, 0x02, 0x00, 0x00};
         isCase4 = false;
         ApduRequestExpected = new ApduRequest(fci, isCase4);
         cla = (byte) 0x00;
         ins = CalypsoCommands.PO_GET_DATA_FCI;
         pUn = 0x00;
         pDeux = 0x6F;
-        dataIn = new byte[] { 0x00, 0x00 };
+        dataIn = new byte[] {0x00, 0x00};
 
         request = new CalypsoRequest(cla, ins, pUn, pDeux, dataIn);
         ApduRequest ApduRequestActual = RequestUtils.constructAPDURequest(request);
@@ -93,10 +93,11 @@ public class RequestUtilsTest {
         ins = CalypsoCommands.PO_GET_DATA_FCI;
         pUn = 0x00;
         pDeux = 0x6F;
-        dataIn = new byte[] {(byte) 0xA8, 0x31, (byte) 0xC3, 0x3E, 0x00 };
+        dataIn = new byte[] {(byte) 0xA8, 0x31, (byte) 0xC3, 0x3E, 0x00};
         option = (byte) 0x01;
         optionExptected = (byte) 0x00;
-        fci = new byte[] { (byte) 0x00, (byte) 0xCA, 0x00, 0x6F, (byte) dataIn.length, (byte) 0xA8, 0x31, (byte) 0xC3, 0x3E, 0x00 , optionExptected };
+        fci = new byte[] {(byte) 0x00, (byte) 0xCA, 0x00, 0x6F, (byte) dataIn.length, (byte) 0xA8,
+                0x31, (byte) 0xC3, 0x3E, 0x00, optionExptected};
         ApduRequestExpected = new ApduRequest(fci, isCase4);
 
         request = new CalypsoRequest(cla, ins, pUn, pDeux, dataIn, option);

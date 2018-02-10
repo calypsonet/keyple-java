@@ -1,9 +1,9 @@
 package org.keyple.calypso.commands.dto;
 
 /**
- * The Class StartupInformation. The Calypso applications return the Startup
- * Information in the answer to the Select Application command. The Startup
- * Information contains several data fields (applicationType,software issuer...)
+ * The Class StartupInformation. The Calypso applications return the Startup Information in the
+ * answer to the Select Application command. The Startup Information contains several data fields
+ * (applicationType,software issuer...)
  */
 public class StartupInformation {
 
@@ -31,23 +31,17 @@ public class StartupInformation {
     /**
      * Instantiates a new StartupInformation.
      *
-     * @param bufferSize
-     *            the buffer size
-     * @param platform
-     *            the platform
-     * @param applicationType
-     *            the application type
-     * @param applicationSubtype
-     *            the application subtype
-     * @param softwareIssuer
-     *            the software issuer
-     * @param softwareVersion
-     *            the software version
-     * @param softwareRevision
-     *            the software revision
+     * @param bufferSize the buffer size
+     * @param platform the platform
+     * @param applicationType the application type
+     * @param applicationSubtype the application subtype
+     * @param softwareIssuer the software issuer
+     * @param softwareVersion the software version
+     * @param softwareRevision the software revision
      */
-    public StartupInformation(byte bufferSize, byte platform, byte applicationType, byte applicationSubtype,
-            byte softwareIssuer, byte softwareVersion, byte softwareRevision) {
+    public StartupInformation(byte bufferSize, byte platform, byte applicationType,
+            byte applicationSubtype, byte softwareIssuer, byte softwareVersion,
+            byte softwareRevision) {
         this.bufferSize = bufferSize;
         this.platform = platform;
         this.applicationType = applicationType;
@@ -84,9 +78,11 @@ public class StartupInformation {
             StartupInformation other;
             if (getClass() == obj.getClass()) {
                 other = (StartupInformation) obj;
-                if ((applicationSubtype != other.applicationSubtype) || (applicationType != other.applicationType)
+                if ((applicationSubtype != other.applicationSubtype)
+                        || (applicationType != other.applicationType)
                         || (bufferSize != other.bufferSize) || (platform != other.platform)
-                        || (softwareIssuer != other.softwareIssuer) || (softwareRevision != other.softwareRevision)
+                        || (softwareIssuer != other.softwareIssuer)
+                        || (softwareRevision != other.softwareRevision)
                         || (softwareVersion != other.softwareVersion)) {
                     isEquals = false;
                 }

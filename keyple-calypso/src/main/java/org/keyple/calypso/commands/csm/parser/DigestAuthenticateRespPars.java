@@ -4,8 +4,7 @@ import org.keyple.commands.ApduResponseParser;
 import org.keyple.seproxy.ApduResponse;
 
 /**
- * This class provides the dedicated constructor to parse the Digest
- * Authenticate response.
+ * This class provides the dedicated constructor to parse the Digest Authenticate response.
  *
  * @author Ixxi
  *
@@ -15,8 +14,7 @@ public class DigestAuthenticateRespPars extends ApduResponseParser {
     /**
      * Instantiates a new DigestAuthenticateRespPars.
      *
-     * @param response
-     *            from the CSM DigestAuthenticateCmdBuild
+     * @param response from the CSM DigestAuthenticateCmdBuild
      */
     public DigestAuthenticateRespPars(ApduResponse response) {
         super(response);
@@ -27,7 +25,8 @@ public class DigestAuthenticateRespPars extends ApduResponseParser {
      * Initializes the status table.
      */
     private void initStatusTable() {
-        statusTable.put(new byte[] { (byte) 0x90, (byte) 0x00 }, new StatusProperties(true, "Successful execution."));
+        statusTable.put(new byte[] {(byte) 0x90, (byte) 0x00},
+                new StatusProperties(true, "Successful execution."));
     }
 
 }

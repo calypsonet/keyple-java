@@ -1,8 +1,7 @@
 package org.keyple.calypso.commands.dto;
 
 /**
- * The Class SamChallenge. Challenge return by the CSM Get Challenge APDU
- * command
+ * The Class SamChallenge. Challenge return by the CSM Get Challenge APDU command
  */
 public class SamChallenge {
 
@@ -15,10 +14,8 @@ public class SamChallenge {
     /**
      * Instantiates a new SamChallenge.
      *
-     * @param transactionCounter
-     *            the transaction counter
-     * @param randomNumber
-     *            the random number
+     * @param transactionCounter the transaction counter
+     * @param randomNumber the random number
      */
     public SamChallenge(byte[] transactionCounter, byte[] randomNumber) {
         this.transactionCounter = (transactionCounter == null ? null : transactionCounter.clone());

@@ -27,81 +27,69 @@ public class NFCActivity extends Activity {
 
         txtView = (TextView) findViewById(R.id.textView_explanationNFC);
 
-        bouton= (Button) findViewById(R.id.start_button);
+        bouton = (Button) findViewById(R.id.start_button);
         bouton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                try
-                {
+                try {
                     // Start Reader thread
                     AndroidApp.getInstance().StartThread();
                     AndroidApp.getInstance().myThread.start();
-                }
-                catch (Exception reException)
-                {
+                } catch (Exception reException) {
                     Tools.ToastErr(NFCActivity.this, reException.getMessage());
                 }
             }
         });
 
         // Start Reader
-        try
-        {
+        try {
             mAndroidNFCPlugin = new AndroidNFCPlugin(this, this.getApplicationContext());
 
             // Determine if a NFC reader is present
-            if(mAndroidNFCPlugin.getTypeReader() == AndroidNFCPlugin.ReaderNFC) {
+            if (mAndroidNFCPlugin.getTypeReader() == AndroidNFCPlugin.ReaderNFC) {
                 // Start new NFC Reader thread
                 AndroidApp.getInstance().CreateThread(txtView, this, mAndroidNFCPlugin);
-            }else{
+            } else {
                 Tools.ToastErr(this, "No reader available");
                 onDestroy();
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             Tools.ToastErr(this, e.getMessage());
             onDestroy();
         }
     }
 
     @Override
-    public void onResume()
-    {
+    public void onResume() {
         super.onResume();
         AndroidNFCPlugin.Resume();
     }
 
     @Override
-    protected void onNewIntent(Intent intent)
-    {
+    protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         AndroidNFCReader.getInstance().NewIntent(intent);
     }
 
     @Override
     // Called when the system is about to start resuming another activity.
-    public void onPause()
-    {
+    public void onPause() {
         super.onPause();
         AndroidNFCPlugin.Pause();
     }
 
     @Override
     // Called before the activity is destroyed.
-    public void onDestroy()
-    {
+    public void onDestroy() {
         super.onDestroy();
-        try
-        {
+        try {
             AndroidApp.getInstance().myThread.EndThread();
 
             Tools.sleepThread(250);
-        }
-        catch (Exception e) {};
+        } catch (Exception e) {
+        } ;
         System.exit(0);
     }
 
 }
-

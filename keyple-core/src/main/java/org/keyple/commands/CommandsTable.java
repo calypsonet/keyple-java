@@ -6,10 +6,10 @@ public interface CommandsTable {
 
     public byte getInstructionByte();
 
-//    public Class<?> getCommandBuilderClass();
+    // public Class<?> getCommandBuilderClass();
     public Class<ApduCommandBuilder> getCommandBuilderClass();
 
-//    public Class<?> getResponseParserClass();
+    // public Class<?> getResponseParserClass();
     public Class<ApduResponseParser> getResponseParserClass();
 
 }

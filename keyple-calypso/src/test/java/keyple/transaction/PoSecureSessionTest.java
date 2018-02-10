@@ -4,21 +4,15 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import static org.mockito.Matchers.any;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import keyple.commands.utils.TestsUtilsResponseTabByteGenerator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.keyple.calypso.transaction.PoSecureSession;
-import org.keyple.commands.InconsistentCommandException;
 import org.keyple.calypso.commands.dto.AID;
 import org.keyple.calypso.commands.po.PoRevision;
 import org.keyple.calypso.commands.po.SendableInSession;
@@ -26,6 +20,8 @@ import org.keyple.calypso.commands.po.builder.OpenSessionCmdBuild;
 import org.keyple.calypso.commands.po.builder.PoGetChallengeCmdBuild;
 import org.keyple.calypso.commands.po.builder.ReadRecordsCmdBuild;
 import org.keyple.calypso.commands.po.parser.GetDataFciRespPars;
+import org.keyple.calypso.transaction.PoSecureSession;
+import org.keyple.commands.InconsistentCommandException;
 import org.keyple.seproxy.ApduResponse;
 import org.keyple.seproxy.ProxyReader;
 import org.keyple.seproxy.SeRequest;
@@ -35,6 +31,7 @@ import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
+import keyple.commands.utils.TestsUtilsResponseTabByteGenerator;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PoSecureSessionTest {
@@ -71,120 +68,152 @@ public class PoSecureSessionTest {
     private SeResponse responseOpenSessionError;
 
     @Before
-    public void setUp(){
-        samchallenge = new byte[] { 0x01, 0x02, 0x03, 0x04 };
+    public void setUp() {
+        samchallenge = new byte[] {0x01, 0x02, 0x03, 0x04};
 
-        ApduResponse apduResponse = TestsUtilsResponseTabByteGenerator.generateApduResponseOpenSessionCmd();
+        ApduResponse apduResponse =
+                TestsUtilsResponseTabByteGenerator.generateApduResponseOpenSessionCmd();
         List<ApduResponse> apduResponseList = new ArrayList<ApduResponse>();
         apduResponseList.add(apduResponse);
         responseOpenSession = new SeResponse(true, apduResponse, apduResponseList);
 
-        ApduResponse apduResponseErr = TestsUtilsResponseTabByteGenerator.generateApduResponseOpenSessionCmdError();
+        ApduResponse apduResponseErr =
+                TestsUtilsResponseTabByteGenerator.generateApduResponseOpenSessionCmdError();
         List<ApduResponse> apduResponseListErr = new ArrayList<ApduResponse>();
         apduResponseListErr.add(apduResponseErr);
         responseOpenSessionError = new SeResponse(true, apduResponseErr, apduResponseListErr);
 
 
 
-        ApduResponse apduResponseTerminalSessionSignature = TestsUtilsResponseTabByteGenerator.generateApduResponseTerminalSessionSignatureCmd();
+        ApduResponse apduResponseTerminalSessionSignature = TestsUtilsResponseTabByteGenerator
+                .generateApduResponseTerminalSessionSignatureCmd();
         List<ApduResponse> apduResponseTerminalSessionSignatureList = new ArrayList<ApduResponse>();
         apduResponseTerminalSessionSignatureList.add(apduResponseTerminalSessionSignature);
-        responseTerminalSessionSignature= new SeResponse(true, apduResponseTerminalSessionSignature, apduResponseTerminalSessionSignatureList);
+        responseTerminalSessionSignature = new SeResponse(true,
+                apduResponseTerminalSessionSignature, apduResponseTerminalSessionSignatureList);
 
-        ApduResponse apduResponseTerminalSessionSignatureErr = TestsUtilsResponseTabByteGenerator.generateApduResponseTerminalSessionSignatureCmdError();
-        List<ApduResponse> apduResponseTerminalSessionSignatureListErr = new ArrayList<ApduResponse>();
+        ApduResponse apduResponseTerminalSessionSignatureErr = TestsUtilsResponseTabByteGenerator
+                .generateApduResponseTerminalSessionSignatureCmdError();
+        List<ApduResponse> apduResponseTerminalSessionSignatureListErr =
+                new ArrayList<ApduResponse>();
         apduResponseTerminalSessionSignatureListErr.add(apduResponseTerminalSessionSignatureErr);
-        responseTerminalSessionSignatureError= new SeResponse(true, apduResponseTerminalSessionSignatureErr, apduResponseTerminalSessionSignatureListErr);
+        responseTerminalSessionSignatureError =
+                new SeResponse(true, apduResponseTerminalSessionSignatureErr,
+                        apduResponseTerminalSessionSignatureListErr);
 
 
 
-
-        ApduResponse apduResponseFci= TestsUtilsResponseTabByteGenerator.generateApduResponseFciCmd();
+        ApduResponse apduResponseFci =
+                TestsUtilsResponseTabByteGenerator.generateApduResponseFciCmd();
         List<ApduResponse> apduResponseFciList = new ArrayList<ApduResponse>();
         apduResponseFciList.add(apduResponseFci);
-        responseFci= new SeResponse(true, apduResponseFci, apduResponseFciList);
+        responseFci = new SeResponse(true, apduResponseFci, apduResponseFciList);
 
-        ApduResponse apduResponseFciErr= TestsUtilsResponseTabByteGenerator.generateApduResponseFciCmdError();
+        ApduResponse apduResponseFciErr =
+                TestsUtilsResponseTabByteGenerator.generateApduResponseFciCmdError();
         List<ApduResponse> apduResponseFciListErr = new ArrayList<ApduResponse>();
         apduResponseFciListErr.add(apduResponseFciErr);
-        responseFciError= new SeResponse(true, apduResponseFciErr, apduResponseFciListErr);
+        responseFciError = new SeResponse(true, apduResponseFciErr, apduResponseFciListErr);
     }
 
-    private void setBeforeTest(byte key) throws ChannelStateReaderException, InvalidApduReaderException, IOReaderException, TimeoutReaderException, UnexpectedReaderException, InconsistentParameterValueException {
+    private void setBeforeTest(byte key)
+            throws ChannelStateReaderException, InvalidApduReaderException, IOReaderException,
+            TimeoutReaderException, UnexpectedReaderException, InconsistentParameterValueException {
 
         poPlainSecrureSession = new PoSecureSession(poReader, csmSessionReader, key);
-        Mockito.when(poReader.transmit(Matchers.any(SeRequest.class))).thenReturn(responseOpenSession);
-        Mockito.when(csmSessionReader.transmit(Matchers.any(SeRequest.class))).thenReturn(responseOpenSession);
+        Mockito.when(poReader.transmit(Matchers.any(SeRequest.class)))
+                .thenReturn(responseOpenSession);
+        Mockito.when(csmSessionReader.transmit(Matchers.any(SeRequest.class)))
+                .thenReturn(responseOpenSession);
     }
 
     @Test
     public void processOpeningTestKif0xFFKey0x03noCmdInside()
             throws IOReaderException, UnexpectedReaderException, ChannelStateReaderException,
-            InvalidApduReaderException, TimeoutReaderException, InconsistentCommandException, InconsistentParameterValueException {
+            InvalidApduReaderException, TimeoutReaderException, InconsistentCommandException,
+            InconsistentParameterValueException {
 
         byte key = (byte) 0x03;
         this.setBeforeTest(key);
         byte sfi = (byte) 0x08;
         byte recordNumber = (byte) 0x01;
 
-        SeResponse seResponse2 = this.processOpeningTestKif0xFFKey(key, sfi, recordNumber, responseOpenSession.getApduResponses(), null);
+        SeResponse seResponse2 = this.processOpeningTestKif0xFFKey(key, sfi, recordNumber,
+                responseOpenSession.getApduResponses(), null);
 
         assertEquals(2, seResponse2.getApduResponses().size());
-        //Whitebox.getInternalState(seResponse2, "channelPreviouslyOpen").equals(true);
+        // Whitebox.getInternalState(seResponse2, "channelPreviouslyOpen").equals(true);
         assertNull(seResponse2.getFci());
-        assertArrayEquals(responseOpenSession.getApduResponses().get(0).getbytes(), seResponse2.getApduResponses().get(0).getbytes());
-        assertArrayEquals(responseOpenSession.getApduResponses().get(0).getStatusCode(), seResponse2.getApduResponses().get(0).getStatusCode());
-        assertArrayEquals(responseOpenSession.getApduResponses().get(0).getbytes(), seResponse2.getApduResponses().get(1).getbytes());
-        assertArrayEquals(responseOpenSession.getApduResponses().get(0).getStatusCode(), seResponse2.getApduResponses().get(1).getStatusCode());
+        assertArrayEquals(responseOpenSession.getApduResponses().get(0).getbytes(),
+                seResponse2.getApduResponses().get(0).getbytes());
+        assertArrayEquals(responseOpenSession.getApduResponses().get(0).getStatusCode(),
+                seResponse2.getApduResponses().get(0).getStatusCode());
+        assertArrayEquals(responseOpenSession.getApduResponses().get(0).getbytes(),
+                seResponse2.getApduResponses().get(1).getbytes());
+        assertArrayEquals(responseOpenSession.getApduResponses().get(0).getStatusCode(),
+                seResponse2.getApduResponses().get(1).getStatusCode());
     }
 
     @Test
     public void processOpeningTestKif0xFFKey0x01noCmdInside()
             throws IOReaderException, UnexpectedReaderException, ChannelStateReaderException,
-            InvalidApduReaderException, TimeoutReaderException, InconsistentCommandException, InconsistentParameterValueException {
+            InvalidApduReaderException, TimeoutReaderException, InconsistentCommandException,
+            InconsistentParameterValueException {
 
         byte key = (byte) 0x01;
         this.setBeforeTest(key);
         byte sfi = (byte) 0x08;
         byte recordNumber = (byte) 0x01;
 
-        SeResponse seResponse2 = this.processOpeningTestKif0xFFKey(key, sfi, recordNumber, responseOpenSession.getApduResponses(), null);
+        SeResponse seResponse2 = this.processOpeningTestKif0xFFKey(key, sfi, recordNumber,
+                responseOpenSession.getApduResponses(), null);
 
         assertEquals(2, seResponse2.getApduResponses().size());
-        //Whitebox.getInternalState(seResponse2, "channelPreviouslyOpen").equals(true);
+        // Whitebox.getInternalState(seResponse2, "channelPreviouslyOpen").equals(true);
         assertNull(seResponse2.getFci());
-        assertArrayEquals(responseOpenSession.getApduResponses().get(0).getbytes(), seResponse2.getApduResponses().get(0).getbytes());
-        assertArrayEquals(responseOpenSession.getApduResponses().get(0).getStatusCode(), seResponse2.getApduResponses().get(0).getStatusCode());
-        assertArrayEquals(responseOpenSession.getApduResponses().get(0).getbytes(), seResponse2.getApduResponses().get(1).getbytes());
-        assertArrayEquals(responseOpenSession.getApduResponses().get(0).getStatusCode(), seResponse2.getApduResponses().get(1).getStatusCode());
+        assertArrayEquals(responseOpenSession.getApduResponses().get(0).getbytes(),
+                seResponse2.getApduResponses().get(0).getbytes());
+        assertArrayEquals(responseOpenSession.getApduResponses().get(0).getStatusCode(),
+                seResponse2.getApduResponses().get(0).getStatusCode());
+        assertArrayEquals(responseOpenSession.getApduResponses().get(0).getbytes(),
+                seResponse2.getApduResponses().get(1).getbytes());
+        assertArrayEquals(responseOpenSession.getApduResponses().get(0).getStatusCode(),
+                seResponse2.getApduResponses().get(1).getStatusCode());
     }
 
     @Test
     public void processOpeningTestKif0xFFKey0x02noCmdInside()
             throws IOReaderException, UnexpectedReaderException, ChannelStateReaderException,
-            InvalidApduReaderException, TimeoutReaderException, InconsistentCommandException, InconsistentParameterValueException {
+            InvalidApduReaderException, TimeoutReaderException, InconsistentCommandException,
+            InconsistentParameterValueException {
 
         byte key = (byte) 0x02;
         this.setBeforeTest(key);
         byte sfi = (byte) 0x08;
         byte recordNumber = (byte) 0x01;
 
-        SeResponse seResponse2 = this.processOpeningTestKif0xFFKey(key, sfi, recordNumber, responseOpenSession.getApduResponses(), null);
+        SeResponse seResponse2 = this.processOpeningTestKif0xFFKey(key, sfi, recordNumber,
+                responseOpenSession.getApduResponses(), null);
 
         assertEquals(2, seResponse2.getApduResponses().size());
-        //Whitebox.getInternalState(seResponse2, "channelPreviouslyOpen").equals(true);
+        // Whitebox.getInternalState(seResponse2, "channelPreviouslyOpen").equals(true);
         assertNull(seResponse2.getFci());
-        assertArrayEquals(responseOpenSession.getApduResponses().get(0).getbytes(), seResponse2.getApduResponses().get(0).getbytes());
-        assertArrayEquals(responseOpenSession.getApduResponses().get(0).getStatusCode(), seResponse2.getApduResponses().get(0).getStatusCode());
-        assertArrayEquals(responseOpenSession.getApduResponses().get(0).getbytes(), seResponse2.getApduResponses().get(1).getbytes());
-        assertArrayEquals(responseOpenSession.getApduResponses().get(0).getStatusCode(), seResponse2.getApduResponses().get(1).getStatusCode());
+        assertArrayEquals(responseOpenSession.getApduResponses().get(0).getbytes(),
+                seResponse2.getApduResponses().get(0).getbytes());
+        assertArrayEquals(responseOpenSession.getApduResponses().get(0).getStatusCode(),
+                seResponse2.getApduResponses().get(0).getStatusCode());
+        assertArrayEquals(responseOpenSession.getApduResponses().get(0).getbytes(),
+                seResponse2.getApduResponses().get(1).getbytes());
+        assertArrayEquals(responseOpenSession.getApduResponses().get(0).getStatusCode(),
+                seResponse2.getApduResponses().get(1).getStatusCode());
     }
 
 
     @Test
     public void processOpeningTestKif0xFFKey0x03WithCmdInside()
             throws IOReaderException, UnexpectedReaderException, ChannelStateReaderException,
-            InvalidApduReaderException, TimeoutReaderException, InconsistentCommandException, InconsistentParameterValueException {
+            InvalidApduReaderException, TimeoutReaderException, InconsistentCommandException,
+            InconsistentParameterValueException {
 
         byte key = (byte) 0x03;
         this.setBeforeTest(key);
@@ -193,97 +222,116 @@ public class PoSecureSessionTest {
 
         SendableInSession[] poCommandsInsideSession = new SendableInSession[1];
 
-        poCommandsInsideSession[0] = new ReadRecordsCmdBuild(PoRevision.REV2_4, recordNumber, false, (byte) 0x08,
-                (byte) 0x00);
+        poCommandsInsideSession[0] = new ReadRecordsCmdBuild(PoRevision.REV2_4, recordNumber, false,
+                (byte) 0x08, (byte) 0x00);
 
-        SeResponse seResponse2 = this.processOpeningTestKif0xFFKey(key, sfi, recordNumber, responseOpenSession.getApduResponses(), poCommandsInsideSession);
+        SeResponse seResponse2 = this.processOpeningTestKif0xFFKey(key, sfi, recordNumber,
+                responseOpenSession.getApduResponses(), poCommandsInsideSession);
 
         assertEquals(3, seResponse2.getApduResponses().size());
-        //Whitebox.getInternalState(seResponse2, "channelPreviouslyOpen").equals(true);
+        // Whitebox.getInternalState(seResponse2, "channelPreviouslyOpen").equals(true);
         assertNull(seResponse2.getFci());
-        assertArrayEquals(responseOpenSession.getApduResponses().get(0).getbytes(), seResponse2.getApduResponses().get(0).getbytes());
-        assertArrayEquals(responseOpenSession.getApduResponses().get(0).getStatusCode(), seResponse2.getApduResponses().get(0).getStatusCode());
-        assertArrayEquals(responseOpenSession.getApduResponses().get(0).getbytes(), seResponse2.getApduResponses().get(1).getbytes());
-        assertArrayEquals(responseOpenSession.getApduResponses().get(0).getStatusCode(), seResponse2.getApduResponses().get(1).getStatusCode());
-        assertArrayEquals(responseOpenSession.getApduResponses().get(0).getbytes(), seResponse2.getApduResponses().get(2).getbytes());
-        assertArrayEquals(responseOpenSession.getApduResponses().get(0).getStatusCode(), seResponse2.getApduResponses().get(2).getStatusCode());
+        assertArrayEquals(responseOpenSession.getApduResponses().get(0).getbytes(),
+                seResponse2.getApduResponses().get(0).getbytes());
+        assertArrayEquals(responseOpenSession.getApduResponses().get(0).getStatusCode(),
+                seResponse2.getApduResponses().get(0).getStatusCode());
+        assertArrayEquals(responseOpenSession.getApduResponses().get(0).getbytes(),
+                seResponse2.getApduResponses().get(1).getbytes());
+        assertArrayEquals(responseOpenSession.getApduResponses().get(0).getStatusCode(),
+                seResponse2.getApduResponses().get(1).getStatusCode());
+        assertArrayEquals(responseOpenSession.getApduResponses().get(0).getbytes(),
+                seResponse2.getApduResponses().get(2).getbytes());
+        assertArrayEquals(responseOpenSession.getApduResponses().get(0).getStatusCode(),
+                seResponse2.getApduResponses().get(2).getStatusCode());
     }
 
-    @Test (expected = UnexpectedReaderException.class)
+    @Test(expected = UnexpectedReaderException.class)
     public void processOpeningTestKif0xFFKey0x03WithCmdInsideUnexpectedReaderException()
             throws IOReaderException, UnexpectedReaderException, ChannelStateReaderException,
-            InvalidApduReaderException, TimeoutReaderException, InconsistentCommandException, InconsistentParameterValueException {
+            InvalidApduReaderException, TimeoutReaderException, InconsistentCommandException,
+            InconsistentParameterValueException {
 
         byte key = (byte) 0x03;
         this.setBeforeTest(key);
-        Mockito.when(poReader.transmit(Matchers.any(SeRequest.class))).thenReturn(responseOpenSessionError);
+        Mockito.when(poReader.transmit(Matchers.any(SeRequest.class)))
+                .thenReturn(responseOpenSessionError);
         byte sfi = (byte) 0x08;
         byte recordNumber = (byte) 0x01;
 
         SendableInSession[] poCommandsInsideSession = new SendableInSession[1];
 
-        poCommandsInsideSession[0] = new ReadRecordsCmdBuild(PoRevision.REV2_4, recordNumber, false, (byte) 0x08,
-                (byte) 0x00);
+        poCommandsInsideSession[0] = new ReadRecordsCmdBuild(PoRevision.REV2_4, recordNumber, false,
+                (byte) 0x08, (byte) 0x00);
 
-        SeResponse seResponse2 = this.processOpeningTestKif0xFFKey(key, sfi, recordNumber, responseOpenSession.getApduResponses(), poCommandsInsideSession);
+        SeResponse seResponse2 = this.processOpeningTestKif0xFFKey(key, sfi, recordNumber,
+                responseOpenSession.getApduResponses(), poCommandsInsideSession);
 
     }
 
 
-    @Test (expected = InconsistentCommandException.class)
+    @Test(expected = InconsistentCommandException.class)
     public void processProceedingTestInconsitenteCommandException()
             throws IOReaderException, UnexpectedReaderException, ChannelStateReaderException,
-            InvalidApduReaderException, TimeoutReaderException, InconsistentCommandException, InconsistentParameterValueException {
+            InvalidApduReaderException, TimeoutReaderException, InconsistentCommandException,
+            InconsistentParameterValueException {
 
         this.setBeforeTest(this.defaultKeyIndex);
-        Mockito.when(csmSessionReader.transmit(Matchers.any(SeRequest.class))).thenReturn(responseOpenSessionError);
+        Mockito.when(csmSessionReader.transmit(Matchers.any(SeRequest.class)))
+                .thenReturn(responseOpenSessionError);
         byte recordNumber = (byte) 0x01;
 
         SendableInSession[] poCommandsInsideSession = new SendableInSession[1];
 
-        poCommandsInsideSession[0] = new ReadRecordsCmdBuild(PoRevision.REV2_4, recordNumber, false, (byte) 0x08,
-                (byte) 0x00);
+        poCommandsInsideSession[0] = new ReadRecordsCmdBuild(PoRevision.REV2_4, recordNumber, false,
+                (byte) 0x08, (byte) 0x00);
 
-        SeResponse seResponse2 = this.poPlainSecrureSession.processProceeding(Arrays.asList(poCommandsInsideSession));
+        SeResponse seResponse2 = this.poPlainSecrureSession
+                .processProceeding(Arrays.asList(poCommandsInsideSession));
     }
 
     @Test
-    public void processProceedingTest()
-            throws IOReaderException, UnexpectedReaderException, ChannelStateReaderException,
-            InvalidApduReaderException, TimeoutReaderException, InconsistentCommandException, InconsistentParameterValueException {
+    public void processProceedingTest() throws IOReaderException, UnexpectedReaderException,
+            ChannelStateReaderException, InvalidApduReaderException, TimeoutReaderException,
+            InconsistentCommandException, InconsistentParameterValueException {
 
         this.setBeforeTest(this.defaultKeyIndex);
         byte recordNumber = (byte) 0x01;
 
         SendableInSession[] poCommandsInsideSession = new SendableInSession[1];
 
-        poCommandsInsideSession[0] = new ReadRecordsCmdBuild(PoRevision.REV2_4, recordNumber, false, (byte) 0x08,
-                (byte) 0x00);
+        poCommandsInsideSession[0] = new ReadRecordsCmdBuild(PoRevision.REV2_4, recordNumber, false,
+                (byte) 0x08, (byte) 0x00);
 
-        SeResponse seResponse2 = this.poPlainSecrureSession.processProceeding(Arrays.asList(poCommandsInsideSession));
+        SeResponse seResponse2 = this.poPlainSecrureSession
+                .processProceeding(Arrays.asList(poCommandsInsideSession));
 
         assertEquals(1, seResponse2.getApduResponses().size());
-        //Whitebox.getInternalState(seResponse2, "channelPreviouslyOpen").equals(true);
+        // Whitebox.getInternalState(seResponse2, "channelPreviouslyOpen").equals(true);
         assertNull(seResponse2.getFci());
-        assertArrayEquals(responseOpenSession.getApduResponses().get(0).getbytes(), seResponse2.getApduResponses().get(0).getbytes());
-        assertArrayEquals(responseOpenSession.getApduResponses().get(0).getStatusCode(), seResponse2.getApduResponses().get(0).getStatusCode());
+        assertArrayEquals(responseOpenSession.getApduResponses().get(0).getbytes(),
+                seResponse2.getApduResponses().get(0).getbytes());
+        assertArrayEquals(responseOpenSession.getApduResponses().get(0).getStatusCode(),
+                seResponse2.getApduResponses().get(0).getStatusCode());
 
     }
 
 
-    @Test (expected = InvalidApduReaderException.class)
+    @Test(expected = InvalidApduReaderException.class)
     public void processClosingTestNoCmdInsideInvalidApduReaderException() throws Exception {
 
         this.setBeforeTest(this.defaultKeyIndex);
         SendableInSession[] poCommandsInsideSession = null;
 
-        Mockito.when(poReader.transmit(Matchers.any(SeRequest.class))).thenReturn(responseTerminalSessionSignatureError);
-        Mockito.when(csmSessionReader.transmit(Matchers.any(SeRequest.class))).thenReturn(responseTerminalSessionSignature);
+        Mockito.when(poReader.transmit(Matchers.any(SeRequest.class)))
+                .thenReturn(responseTerminalSessionSignatureError);
+        Mockito.when(csmSessionReader.transmit(Matchers.any(SeRequest.class)))
+                .thenReturn(responseTerminalSessionSignature);
 
-        PoGetChallengeCmdBuild ratificationCommand = new PoGetChallengeCmdBuild(this.poPlainSecrureSession.getRevision());
+        PoGetChallengeCmdBuild ratificationCommand =
+                new PoGetChallengeCmdBuild(this.poPlainSecrureSession.getRevision());
 
-        SeResponse seResponse2 = poPlainSecrureSession.processClosing(Arrays.asList(poCommandsInsideSession), null,
-                ratificationCommand);
+        SeResponse seResponse2 = poPlainSecrureSession
+                .processClosing(Arrays.asList(poCommandsInsideSession), null, ratificationCommand);
     }
 
     @Test
@@ -292,18 +340,24 @@ public class PoSecureSessionTest {
         this.setBeforeTest(this.defaultKeyIndex);
         SendableInSession[] poCommandsInsideSession = null;
 
-        Mockito.when(poReader.transmit(Matchers.any(SeRequest.class))).thenReturn(responseTerminalSessionSignature);
-        Mockito.when(csmSessionReader.transmit(Matchers.any(SeRequest.class))).thenReturn(responseTerminalSessionSignature);
+        Mockito.when(poReader.transmit(Matchers.any(SeRequest.class)))
+                .thenReturn(responseTerminalSessionSignature);
+        Mockito.when(csmSessionReader.transmit(Matchers.any(SeRequest.class)))
+                .thenReturn(responseTerminalSessionSignature);
 
-        PoGetChallengeCmdBuild ratificationCommand = new PoGetChallengeCmdBuild(this.poPlainSecrureSession.getRevision());
+        PoGetChallengeCmdBuild ratificationCommand =
+                new PoGetChallengeCmdBuild(this.poPlainSecrureSession.getRevision());
 
-        SeResponse seResponse2 = poPlainSecrureSession.processClosing(Arrays.asList(poCommandsInsideSession), null,
-                ratificationCommand);
+        SeResponse seResponse2 = poPlainSecrureSession
+                .processClosing(Arrays.asList(poCommandsInsideSession), null, ratificationCommand);
         assertEquals(1, seResponse2.getApduResponses().size());
-        //Whitebox.getInternalState(seResponse2, "channelPreviouslyOpen").equals(true);
+        // Whitebox.getInternalState(seResponse2, "channelPreviouslyOpen").equals(true);
         assertNull(seResponse2.getFci());
-        assertArrayEquals(responseTerminalSessionSignature.getApduResponses().get(0).getbytes(), seResponse2.getApduResponses().get(0).getbytes());
-        assertArrayEquals(responseTerminalSessionSignature.getApduResponses().get(0).getStatusCode(), seResponse2.getApduResponses().get(0).getStatusCode());
+        assertArrayEquals(responseTerminalSessionSignature.getApduResponses().get(0).getbytes(),
+                seResponse2.getApduResponses().get(0).getbytes());
+        assertArrayEquals(
+                responseTerminalSessionSignature.getApduResponses().get(0).getStatusCode(),
+                seResponse2.getApduResponses().get(0).getStatusCode());
     }
 
     @Test
@@ -313,54 +367,67 @@ public class PoSecureSessionTest {
         byte recordNumber = (byte) 0x01;
         SendableInSession[] poCommandsInsideSession = new SendableInSession[1];
 
-        Mockito.when(poReader.transmit(Matchers.any(SeRequest.class))).thenReturn(responseTerminalSessionSignature);
-        Mockito.when(csmSessionReader.transmit(Matchers.any(SeRequest.class))).thenReturn(responseTerminalSessionSignature);
+        Mockito.when(poReader.transmit(Matchers.any(SeRequest.class)))
+                .thenReturn(responseTerminalSessionSignature);
+        Mockito.when(csmSessionReader.transmit(Matchers.any(SeRequest.class)))
+                .thenReturn(responseTerminalSessionSignature);
 
-        poCommandsInsideSession[0] = new ReadRecordsCmdBuild(PoRevision.REV2_4, recordNumber, false, (byte) 0x08,
-                (byte) 0x00);
-        PoGetChallengeCmdBuild ratificationCommand = new PoGetChallengeCmdBuild(this.poPlainSecrureSession.getRevision());
+        poCommandsInsideSession[0] = new ReadRecordsCmdBuild(PoRevision.REV2_4, recordNumber, false,
+                (byte) 0x08, (byte) 0x00);
+        PoGetChallengeCmdBuild ratificationCommand =
+                new PoGetChallengeCmdBuild(this.poPlainSecrureSession.getRevision());
 
-        SeResponse seResponse2 = poPlainSecrureSession.processClosing(Arrays.asList(poCommandsInsideSession), null,
-                ratificationCommand);
+        SeResponse seResponse2 = poPlainSecrureSession
+                .processClosing(Arrays.asList(poCommandsInsideSession), null, ratificationCommand);
         assertEquals(2, seResponse2.getApduResponses().size());
-        //Whitebox.getInternalState(seResponse2, "channelPreviouslyOpen").equals(true);
+        // Whitebox.getInternalState(seResponse2, "channelPreviouslyOpen").equals(true);
         assertNull(seResponse2.getFci());
-        assertArrayEquals(responseTerminalSessionSignature.getApduResponses().get(0).getbytes(), seResponse2.getApduResponses().get(0).getbytes());
-        assertArrayEquals(responseTerminalSessionSignature.getApduResponses().get(0).getStatusCode(), seResponse2.getApduResponses().get(0).getStatusCode());
-        assertArrayEquals(responseTerminalSessionSignature.getApduResponses().get(0).getbytes(), seResponse2.getApduResponses().get(1).getbytes());
-        assertArrayEquals(responseTerminalSessionSignature.getApduResponses().get(0).getStatusCode(), seResponse2.getApduResponses().get(1).getStatusCode());
+        assertArrayEquals(responseTerminalSessionSignature.getApduResponses().get(0).getbytes(),
+                seResponse2.getApduResponses().get(0).getbytes());
+        assertArrayEquals(
+                responseTerminalSessionSignature.getApduResponses().get(0).getStatusCode(),
+                seResponse2.getApduResponses().get(0).getStatusCode());
+        assertArrayEquals(responseTerminalSessionSignature.getApduResponses().get(0).getbytes(),
+                seResponse2.getApduResponses().get(1).getbytes());
+        assertArrayEquals(
+                responseTerminalSessionSignature.getApduResponses().get(0).getStatusCode(),
+                seResponse2.getApduResponses().get(1).getStatusCode());
     }
 
 
     @Test
-    public void processIdentificationTest()
-            throws IOReaderException, UnexpectedReaderException, ChannelStateReaderException,
-            InvalidApduReaderException, TimeoutReaderException, InconsistentCommandException, InconsistentParameterValueException {
+    public void processIdentificationTest() throws IOReaderException, UnexpectedReaderException,
+            ChannelStateReaderException, InvalidApduReaderException, TimeoutReaderException,
+            InconsistentCommandException, InconsistentParameterValueException {
 
         this.setBeforeTest(this.defaultKeyIndex);
 
         Mockito.when(poReader.transmit(Matchers.any(SeRequest.class))).thenReturn(responseFci);
-        Mockito.when(csmSessionReader.transmit(Matchers.any(SeRequest.class))).thenReturn(responseFci);
+        Mockito.when(csmSessionReader.transmit(Matchers.any(SeRequest.class)))
+                .thenReturn(responseFci);
         byte recordNumber = (byte) 0x01;
 
         SendableInSession[] poCommandsInsideSession = new SendableInSession[1];
 
-        poCommandsInsideSession[0] = new ReadRecordsCmdBuild(PoRevision.REV2_4, recordNumber, false, (byte) 0x08,
-                (byte) 0x00);
+        poCommandsInsideSession[0] = new ReadRecordsCmdBuild(PoRevision.REV2_4, recordNumber, false,
+                (byte) 0x08, (byte) 0x00);
 
-        byte[] aid = new byte[] { 0x33, 0x4D, 0x54, 0x52, 0x2E, 0x49, 0x43, 0x41 };
-        SeResponse seResponse2 = this.poPlainSecrureSession.processIdentification(aid, Arrays.asList(poCommandsInsideSession));
+        byte[] aid = new byte[] {0x33, 0x4D, 0x54, 0x52, 0x2E, 0x49, 0x43, 0x41};
+        SeResponse seResponse2 = this.poPlainSecrureSession.processIdentification(aid,
+                Arrays.asList(poCommandsInsideSession));
 
         assertEquals(3, seResponse2.getApduResponses().size());
-        //Whitebox.getInternalState(seResponse2, "channelPreviouslyOpen").equals(true);
+        // Whitebox.getInternalState(seResponse2, "channelPreviouslyOpen").equals(true);
         assertNotNull(seResponse2.getFci());
-        assertArrayEquals(responseFci.getApduResponses().get(0).getbytes(), seResponse2.getApduResponses().get(0).getbytes());
-        assertArrayEquals(responseFci.getApduResponses().get(0).getStatusCode(), seResponse2.getApduResponses().get(0).getStatusCode());
+        assertArrayEquals(responseFci.getApduResponses().get(0).getbytes(),
+                seResponse2.getApduResponses().get(0).getbytes());
+        assertArrayEquals(responseFci.getApduResponses().get(0).getStatusCode(),
+                seResponse2.getApduResponses().get(0).getStatusCode());
 
     }
 
     @Test
-    public void computePoRevisionTest(){
+    public void computePoRevisionTest() {
 
         byte applicationTypeByte = (byte) 0x1F;
         PoRevision retourExpected = PoRevision.REV2_4;
@@ -379,11 +446,15 @@ public class PoSecureSessionTest {
 
     }
 
-    private SeResponse processOpeningTestKif0xFFKey(byte key, byte sfi, byte recordNumber, List<ApduResponse> apduExpected, SendableInSession[] poCommandsInsideSession)
+    private SeResponse processOpeningTestKif0xFFKey(byte key, byte sfi, byte recordNumber,
+            List<ApduResponse> apduExpected, SendableInSession[] poCommandsInsideSession)
             throws IOReaderException, UnexpectedReaderException, ChannelStateReaderException,
-            InvalidApduReaderException, TimeoutReaderException, InconsistentCommandException, InconsistentParameterValueException {
-        OpenSessionCmdBuild openCommand = new OpenSessionCmdBuild(PoRevision.REV2_4, key, samchallenge, sfi, recordNumber);
-        return poPlainSecrureSession.processOpening(openCommand, Arrays.asList(poCommandsInsideSession));
+            InvalidApduReaderException, TimeoutReaderException, InconsistentCommandException,
+            InconsistentParameterValueException {
+        OpenSessionCmdBuild openCommand =
+                new OpenSessionCmdBuild(PoRevision.REV2_4, key, samchallenge, sfi, recordNumber);
+        return poPlainSecrureSession.processOpening(openCommand,
+                Arrays.asList(poCommandsInsideSession));
 
     }
 }

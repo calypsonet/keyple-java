@@ -4,8 +4,8 @@ import org.keyple.commands.ApduResponseParser;
 import org.keyple.seproxy.ApduResponse;
 
 /**
- * This class provides status code properties and the getters to access to the
- * structured fields of a Digest Close response.
+ * This class provides status code properties and the getters to access to the structured fields of
+ * a Digest Close response.
  *
  * @author Ixxi
  *
@@ -18,8 +18,7 @@ public class DigestCloseRespPars extends ApduResponseParser {
     /**
      * Instantiates a new DigestCloseRespPars.
      *
-     * @param response
-     *            from the DigestCloseCmdBuild
+     * @param response from the DigestCloseCmdBuild
      */
     public DigestCloseRespPars(ApduResponse response) {
         super(response);
@@ -33,7 +32,8 @@ public class DigestCloseRespPars extends ApduResponseParser {
      * Initializes the status table.
      */
     private void initStatusTable() {
-        statusTable.put(new byte[] { (byte) 0x90, (byte) 0x00 }, new StatusProperties(true, "Successful execution."));
+        statusTable.put(new byte[] {(byte) 0x90, (byte) 0x00},
+                new StatusProperties(true, "Successful execution."));
     }
 
     /**

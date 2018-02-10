@@ -4,8 +4,8 @@ import org.keyple.commands.ApduResponseParser;
 import org.keyple.seproxy.ApduResponse;
 
 /**
- * This class provides status code properties and the getters to access to the
- * structured fields of a Digest Update response.
+ * This class provides status code properties and the getters to access to the structured fields of
+ * a Digest Update response.
  *
  * @author Ixxi
  *
@@ -17,8 +17,7 @@ public class DigestUpdateRespPars extends ApduResponseParser {
     /**
      * Instantiates a new DigestUpdateRespPars.
      *
-     * @param response
-     *            the response
+     * @param response the response
      */
     public DigestUpdateRespPars(ApduResponse response) {
         super(response);
@@ -32,7 +31,8 @@ public class DigestUpdateRespPars extends ApduResponseParser {
      * Initializes the status table.
      */
     private void initStatusTable() {
-        statusTable.put(new byte[] { (byte) 0x90, (byte) 0x00 }, new StatusProperties(true, "Successful execution."));
+        statusTable.put(new byte[] {(byte) 0x90, (byte) 0x00},
+                new StatusProperties(true, "Successful execution."));
     }
 
     public byte[] getProcessedData() {

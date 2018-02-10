@@ -7,14 +7,12 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-
 import org.keyple.seproxy.ApduResponse;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class ApduResponseParser. This abstract class has to be extended by all
- * PO and CSM response parser classes, it provides the generic getters to manage
- * response’s status.
+ * The Class ApduResponseParser. This abstract class has to be extended by all PO and CSM response
+ * parser classes, it provides the generic getters to manage response’s status.
  *
  * @author Ixxi
  *
@@ -31,10 +29,11 @@ public abstract class ApduResponseParser {
     /**
      * Instantiates a new apdu response parser.
      *
-     * @param responseToParse            APDUResponse to parse
-     * @param mapStatusProperties            informations for each status
+     * @param responseToParse APDUResponse to parse
+     * @param mapStatusProperties informations for each status
      */
-    protected ApduResponseParser(ApduResponse responseToParse, Map<byte[], StatusProperties> mapStatusProperties) {
+    protected ApduResponseParser(ApduResponse responseToParse,
+            Map<byte[], StatusProperties> mapStatusProperties) {
         this.response = responseToParse;
         this.statusTable = mapStatusProperties;
     }
@@ -42,8 +41,7 @@ public abstract class ApduResponseParser {
     /**
      * the generic abstract constructor to build a parser of the APDU response.
      *
-     * @param response
-     *            response to parse
+     * @param response response to parse
      */
     public ApduResponseParser(ApduResponse response) {
         this.response = response;
@@ -67,11 +65,12 @@ public abstract class ApduResponseParser {
     public final byte[] getStatusCode() {
         return response.getStatusCode();
     }
+
     /**
      * Checks if is successful.
      *
-     * @return if the status is successful from the statusTable according to the
-     *         current status code.
+     * @return if the status is successful from the statusTable according to the current status
+     *         code.
      */
     public final boolean isSuccessful() {
         for (Entry<byte[], StatusProperties> it : this.statusTable.entrySet()) {
@@ -86,8 +85,7 @@ public abstract class ApduResponseParser {
     /**
      * Gets the status information.
      *
-     * @return the ASCII message from the statusTable for the current status
-     *         code.
+     * @return the ASCII message from the statusTable for the current status code.
      */
     public final String getStatusInformation() {
         for (Entry<byte[], StatusProperties> it : this.statusTable.entrySet()) {
@@ -113,13 +111,11 @@ public abstract class ApduResponseParser {
         private String information;
 
         /**
-         * A map with the double byte of a status as key, and the successful
-         * property and ASCII text information as data.
+         * A map with the double byte of a status as key, and the successful property and ASCII text
+         * information as data.
          *
-         * @param successful
-         *            set successful status
-         * @param information
-         *            additional information
+         * @param successful set successful status
+         * @param information additional information
          */
         public StatusProperties(boolean successful, String information) {
             this.successful = successful;

@@ -9,41 +9,37 @@ import android.widget.TextView;
  * Created by ixxi on 12/01/2018.
  */
 
-public class AndroidApp extends Application{
+public class AndroidApp extends Application {
 
-    private static AndroidApp       myInstance = null;
-    private static Activity         myActivity;
-    public static ReaderThread      myThread;
+    private static AndroidApp myInstance = null;
+    private static Activity myActivity;
+    public static ReaderThread myThread;
     private static AndroidNFCPlugin myAndroidNFCPlugin;
-    private static TextView         myTxtView;
+    private static TextView myTxtView;
 
     @Override
-    public void onCreate()
-    {
+    public void onCreate() {
         super.onCreate();
         myInstance = this;
     }
 
-    public static AndroidApp getInstance()
-    {
+    public static AndroidApp getInstance() {
         return myInstance;
     }
 
-    public static void CreateThread(TextView txtView, Activity CurrentActivity, AndroidNFCPlugin androidNFCPlugin) throws Exception
-    {
+    public static void CreateThread(TextView txtView, Activity CurrentActivity,
+            AndroidNFCPlugin androidNFCPlugin) throws Exception {
         myActivity = CurrentActivity;
         myTxtView = txtView;
         myAndroidNFCPlugin = androidNFCPlugin;
         StartThread();
     }
 
-    public static void StartThread() throws Exception
-    {
-        if (myThread!=null)
+    public static void StartThread() throws Exception {
+        if (myThread != null)
             myThread = null;
         myThread = new ReaderThread(myTxtView, myActivity, myAndroidNFCPlugin);
     }
-
 
 
 

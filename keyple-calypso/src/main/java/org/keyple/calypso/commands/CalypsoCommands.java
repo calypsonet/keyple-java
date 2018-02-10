@@ -33,10 +33,9 @@ import org.keyple.commands.ApduResponseParser;
 import org.keyple.commands.CommandsTable;
 
 /**
- * This enumeration registers all the PO and CSM commands, that have to be
- * extended by all PO and CSM command builder classes. It provides the generic
- * getters to retrieve: the name of the command, the built APDURequest and, the
- * corresponding ApduResponseParser class.
+ * This enumeration registers all the PO and CSM commands, that have to be extended by all PO and
+ * CSM command builder classes. It provides the generic getters to retrieve: the name of the
+ * command, the built APDURequest and, the corresponding ApduResponseParser class.
  *
  * @author Ixxi
  *
@@ -44,18 +43,20 @@ import org.keyple.commands.CommandsTable;
 public enum CalypsoCommands implements CommandsTable {
 
     /** The po get data. */
-    PO_GET_DATA_FCI(CommandType.PO, "Get Data'FCI'", (byte) 0xCA, GetDataFciCmdBuild.class, GetDataFciRespPars.class),
+    PO_GET_DATA_FCI(CommandType.PO, "Get Data'FCI'", (byte) 0xCA, GetDataFciCmdBuild.class,
+            GetDataFciRespPars.class),
 
     /** The po open session. */
     PO_OPEN_SESSION(CommandType.PO, "Open Secure Session", (byte) 0x8A, OpenSessionCmdBuild.class,
             OpenSessionRespPars.class),
 
     /** The po close session. */
-    PO_CLOSE_SESSION(CommandType.PO, "Close Secure Session", (byte) 0x8E, CloseSessionCmdBuild.class,
-            CloseSessionRespPars.class),
+    PO_CLOSE_SESSION(CommandType.PO, "Close Secure Session", (byte) 0x8E,
+            CloseSessionCmdBuild.class, CloseSessionRespPars.class),
 
     /** The po read records. */
-    PO_READ_RECORDS(CommandType.PO, "Read Records", (byte) 0xB2, ReadRecordsCmdBuild.class, ReadRecordsRespPars.class),
+    PO_READ_RECORDS(CommandType.PO, "Read Records", (byte) 0xB2, ReadRecordsCmdBuild.class,
+            ReadRecordsRespPars.class),
 
     /** The po update record. */
     PO_UPDATE_RECORD(CommandType.PO, "Update Record", (byte) 0xDC, UpdateRecordCmdBuild.class,
@@ -70,15 +71,16 @@ public enum CalypsoCommands implements CommandsTable {
             PoGetChallengeRespPars.class),
 
     /** The csm select diversifier. */
-    CSM_SELECT_DIVERSIFIER(CommandType.CSM, "Select Diversifier", (byte) 0x14, SelectDiversifierCmdBuild.class,
-            SelectDiversifierRespPars.class),
+    CSM_SELECT_DIVERSIFIER(CommandType.CSM, "Select Diversifier", (byte) 0x14,
+            SelectDiversifierCmdBuild.class, SelectDiversifierRespPars.class),
 
     /** The csm get challenge. */
     CSM_GET_CHALLENGE(CommandType.CSM, "Get Challenge", (byte) 0x84, CsmGetChallengeCmdBuild.class,
             CsmGetChallengeRespPars.class),
 
     /** The csm digest init. */
-    CSM_DIGEST_INIT(CommandType.CSM, "Digest Init", (byte) 0x8A, DigestInitCmdBuild.class, DigestInitRespPars.class),
+    CSM_DIGEST_INIT(CommandType.CSM, "Digest Init", (byte) 0x8A, DigestInitCmdBuild.class,
+            DigestInitRespPars.class),
 
     /** The csm digest update. */
     CSM_DIGEST_UPDATE(CommandType.CSM, "Digest Update", (byte) 0x8C, DigestUpdateCmdBuild.class,
@@ -93,8 +95,8 @@ public enum CalypsoCommands implements CommandsTable {
             DigestCloseRespPars.class),
 
     /** The csm digest authenticate. */
-    CSM_DIGEST_AUTHENTICATE(CommandType.CSM, "Digest Authenticate", (byte) 0x82,  DigestAuthenticateCmdBuild.class,
-            DigestAuthenticateRespPars.class);
+    CSM_DIGEST_AUTHENTICATE(CommandType.CSM, "Digest Authenticate", (byte) 0x82,
+            DigestAuthenticateCmdBuild.class, DigestAuthenticateRespPars.class);
 
     /** The command type. */
     private CommandType commandType;
@@ -106,28 +108,24 @@ public enum CalypsoCommands implements CommandsTable {
     private byte instructionbyte;
 
     /** The command builder class. */
-//    private Class<?> commandBuilderClass;
+    // private Class<?> commandBuilderClass;
     private Class<ApduCommandBuilder> commandBuilderClass;
 
     /** The response parser class. */
-//    private Class<?> responseParserClass;
+    // private Class<?> responseParserClass;
     private Class<ApduResponseParser> responseParserClass;
 
     /**
      * The generic constructor of CalypsoCommands.
      *
-     * @param commandType
-     *            the command type
-     * @param name
-     *            the name
-     * @param instructionbyte
-     *            the instruction byte
-     * @param commandBuilderClass
-     *            the command builder class
-     * @param responseParserClass
-     *            the response parser class
+     * @param commandType the command type
+     * @param name the name
+     * @param instructionbyte the instruction byte
+     * @param commandBuilderClass the command builder class
+     * @param responseParserClass the response parser class
      */
-    private CalypsoCommands(CommandType commandType, String name, byte instructionbyte, Class<?> commandBuilderClass, Class<?> responseParserClass) { 
+    private CalypsoCommands(CommandType commandType, String name, byte instructionbyte,
+            Class<?> commandBuilderClass, Class<?> responseParserClass) {
         this.commandType = commandType;
         this.name = name;
         this.instructionbyte = instructionbyte;
@@ -167,8 +165,8 @@ public enum CalypsoCommands implements CommandsTable {
      *
      * @return the corresponding command builder class
      */
-//    public Class<?> getCommandBuilderClass() {
-      public Class<ApduCommandBuilder> getCommandBuilderClass() {
+    // public Class<?> getCommandBuilderClass() {
+    public Class<ApduCommandBuilder> getCommandBuilderClass() {
         return commandBuilderClass;
     }
 
@@ -177,8 +175,8 @@ public enum CalypsoCommands implements CommandsTable {
      *
      * @return the corresponding response parser class
      */
-//    public Class<?> getResponseParserClass() {
-      public Class<ApduResponseParser> getResponseParserClass() {
+    // public Class<?> getResponseParserClass() {
+    public Class<ApduResponseParser> getResponseParserClass() {
         return responseParserClass;
     }
 

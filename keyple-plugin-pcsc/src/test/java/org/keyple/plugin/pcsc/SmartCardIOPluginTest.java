@@ -1,18 +1,12 @@
 package org.keyple.plugin.pcsc;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.smartcardio.CardException;
-import javax.smartcardio.TerminalFactory;
-import javax.smartcardio.CardTerminals;
 import javax.smartcardio.CardTerminal;
-
+import javax.smartcardio.CardTerminals;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Before;
@@ -31,29 +25,29 @@ public class SmartCardIOPluginTest {
     @InjectMocks
     @Spy
     private PcscPlugin plugin;
-    
+
     PcscPlugin smartCardPluginSpyied;
-    
+
     @Mock
     CardTerminals cardTerminals;
 
     @Mock
     CardTerminal cardTerminal;
-    
+
     @Before
-    public void setUp() throws IOReaderException, CardException{
-//        smartCardPluginSpyied = spy(plugin);
+    public void setUp() throws IOReaderException, CardException {
+        // smartCardPluginSpyied = spy(plugin);
         when(plugin.getCardTerminals()).thenReturn(cardTerminals);
         List<CardTerminal> terms = new ArrayList<CardTerminal>();
         terms.add(cardTerminal);
         when(cardTerminals.list()).thenReturn(terms);
         when(cardTerminal.getName()).thenReturn("PcscPlugin");
     }
-    
+
     @Test
     public void testGetReaders() throws CardException, IOReaderException {
         assertEquals(plugin.getReaders().size(), 1);
         assertEquals("PcscPlugin", plugin.getName());
     }
-    
+
 }

@@ -6,8 +6,8 @@ import org.keyple.commands.ApduResponseParser;
 import org.keyple.seproxy.ApduResponse;
 
 /**
- * This class provides status code properties and the getters to access to the
- * structured fields of data from response of a Get Data response.
+ * This class provides status code properties and the getters to access to the structured fields of
+ * data from response of a Get Data response.
  *
  * @author Ixxi
  */
@@ -19,8 +19,7 @@ public class GetDataFciRespPars extends ApduResponseParser {
     /**
      * Instantiates a new PoFciRespPars.
      *
-     * @param response
-     *            the response from Get Data APDU commmand
+     * @param response the response from Get Data APDU commmand
      */
     public GetDataFciRespPars(ApduResponse response) {
         super(response);
@@ -34,13 +33,14 @@ public class GetDataFciRespPars extends ApduResponseParser {
      * Initializes the status table.
      */
     private void initStatusTable() {
-        statusTable.put(new byte[] { (byte) 0x6A, (byte) 0x88 },
-                new StatusProperties(false, "Data object not found (optional mode not available)."));
-        statusTable.put(new byte[] { (byte) 0x6B, (byte) 0x00 }, new StatusProperties(false,
+        statusTable.put(new byte[] {(byte) 0x6A, (byte) 0x88}, new StatusProperties(false,
+                "Data object not found (optional mode not available)."));
+        statusTable.put(new byte[] {(byte) 0x6B, (byte) 0x00}, new StatusProperties(false,
                 "P1 or P2 value not supported (<>004fh, 0062h, 006Fh, 00C0h, 00D0h, 0185h and 5F52h, according to availabl optional modes)."));
-        statusTable.put(new byte[] { (byte) 0x62, (byte) 0x83 },
-                new StatusProperties(true, "Successful execution, FCI request and DF is invalidated."));
-        statusTable.put(new byte[] { (byte) 0x90, (byte) 0x00 }, new StatusProperties(true, "Successful execution."));
+        statusTable.put(new byte[] {(byte) 0x62, (byte) 0x83}, new StatusProperties(true,
+                "Successful execution, FCI request and DF is invalidated."));
+        statusTable.put(new byte[] {(byte) 0x90, (byte) 0x00},
+                new StatusProperties(true, "Successful execution."));
     }
 
     public byte[] getDfName() {

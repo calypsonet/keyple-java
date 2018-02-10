@@ -10,8 +10,8 @@ import org.keyple.commands.InconsistentCommandException;
 import org.keyple.seproxy.ApduRequest;
 
 /**
- * The Class PoGetChallengeCmdBuild. This class provides the dedicated
- * constructor to build the PO Get Challenge.
+ * The Class PoGetChallengeCmdBuild. This class provides the dedicated constructor to build the PO
+ * Get Challenge.
  *
  * @author Ixxi
  *
@@ -23,8 +23,7 @@ public class PoGetChallengeCmdBuild extends PoCommandBuilder implements Sendable
     /**
      * Instantiates a new PoGetChallengeCmdBuild.
      *
-     * @param revision
-     *            the revision of the PO
+     * @param revision the revision of the PO
      */
     public PoGetChallengeCmdBuild(PoRevision revision) {
         super(command, null);

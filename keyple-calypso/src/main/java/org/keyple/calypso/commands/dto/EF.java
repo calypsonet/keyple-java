@@ -3,9 +3,8 @@ package org.keyple.calypso.commands.dto;
 import java.util.Arrays;
 
 /**
- * The Class EF. EF:Elementary File, as defined in ISO/IEC 7816-4. File
- * containing data. The types of EF defined by Calypso are: Linear,
- * Cyclic,Counters, Simulated Counter and Binary files.
+ * The Class EF. EF:Elementary File, as defined in ISO/IEC 7816-4. File containing data. The types
+ * of EF defined by Calypso are: Linear, Cyclic,Counters, Simulated Counter and Binary files.
  */
 public class EF {
 
@@ -27,22 +26,16 @@ public class EF {
     /**
      * Instantiates a new EF.
      */
-    public EF() {
-    }
+    public EF() {}
 
     /**
      * Instantiates a new EF.
      *
-     * @param lid
-     *            the lid
-     * @param sfi
-     *            the sfi
-     * @param fileType
-     *            the file type
-     * @param recSize
-     *            the rec size
-     * @param numberRec
-     *            the number rec
+     * @param lid the lid
+     * @param sfi the sfi
+     * @param fileType the file type
+     * @param recSize the rec size
+     * @param numberRec the number rec
      */
     public EF(byte[] lid, byte sfi, byte fileType, byte recSize, byte numberRec) {
         this.lid = (lid == null ? null : lid.clone());
@@ -86,20 +79,20 @@ public class EF {
      */
     public String getFileTypeName() {
         switch (fileType) {
-        case (byte) 0x00:
-            return "DF";
-        case (byte) 0x01:
-            return "Binary file";
-        case (byte) 0x02:
-            return "Linear file";
-        case (byte) 0x04:
-            return "Cyclic file";
-        case (byte) 0x08:
-            return "Simulated Counter file";
-        case (byte) 0x09:
-            return "Counter file";
-        default:
-            return "";
+            case (byte) 0x00:
+                return "DF";
+            case (byte) 0x01:
+                return "Binary file";
+            case (byte) 0x02:
+                return "Linear file";
+            case (byte) 0x04:
+                return "Cyclic file";
+            case (byte) 0x08:
+                return "Simulated Counter file";
+            case (byte) 0x09:
+                return "Counter file";
+            default:
+                return "";
         }
     }
 
@@ -143,8 +136,9 @@ public class EF {
         if (obj != null) {
             if (obj.getClass() == getClass()) {
                 EF other = (EF) obj;
-                if ((fileType != other.fileType) || !Arrays.equals(lid, other.lid) || numberRec != other.numberRec
-                        || recSize != other.recSize || sfi != other.sfi) {
+                if ((fileType != other.fileType) || !Arrays.equals(lid, other.lid)
+                        || numberRec != other.numberRec || recSize != other.recSize
+                        || sfi != other.sfi) {
                     isEquals = false;
                 }
             } else {
@@ -160,8 +154,7 @@ public class EF {
     /**
      * Sets the lid.
      *
-     * @param lid
-     *            the new lid
+     * @param lid the new lid
      */
     public void setLid(byte[] lid) {
         this.lid = (lid == null ? null : lid.clone());
@@ -170,8 +163,7 @@ public class EF {
     /**
      * Sets the sfi.
      *
-     * @param sfi
-     *            the new sfi
+     * @param sfi the new sfi
      */
     public void setSfi(byte sfi) {
         this.sfi = sfi;
@@ -180,8 +172,7 @@ public class EF {
     /**
      * Sets the file type.
      *
-     * @param fileType
-     *            the new file type
+     * @param fileType the new file type
      */
     public void setFileType(byte fileType) {
         this.fileType = fileType;
@@ -190,8 +181,7 @@ public class EF {
     /**
      * Sets the rec size.
      *
-     * @param recSize
-     *            the new rec size
+     * @param recSize the new rec size
      */
     public void setRecSize(byte recSize) {
         this.recSize = recSize;
@@ -200,8 +190,7 @@ public class EF {
     /**
      * Sets the number rec.
      *
-     * @param numberRec
-     *            the new number rec
+     * @param numberRec the new number rec
      */
     public void setNumberRec(byte numberRec) {
         this.numberRec = numberRec;

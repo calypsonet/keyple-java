@@ -2,7 +2,6 @@ package org.keyple.calypso.commands.utils;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.keyple.calypso.commands.dto.FCI;
 import org.keyple.calypso.commands.dto.KIF;
 import org.keyple.calypso.commands.dto.KVC;
@@ -29,8 +28,7 @@ public class ResponseUtils {
     /**
      * Method to get the FCI from the response.
      *
-     * @param apduResponse
-     *            the apdu response
+     * @param apduResponse the apdu response
      * @return the FCI template
      */
     public static FCI toFCI(byte[] apduResponse) {
@@ -47,7 +45,8 @@ public class ResponseUtils {
             int fciTemplateLength = apduResponse[5 + aidLength];
             int fixedPartOfFciTemplate = fciTemplateLength - 22;
             int firstbyteAid = 6 + aidLength + fixedPartOfFciTemplate;
-            int fciIssuerDiscretionaryDataLength = apduResponse[8 + aidLength + fixedPartOfFciTemplate];
+            int fciIssuerDiscretionaryDataLength =
+                    apduResponse[8 + aidLength + fixedPartOfFciTemplate];
             int firstbyteFciIssuerDiscretionaryData = 9 + aidLength + fixedPartOfFciTemplate;
             int applicationSNLength = apduResponse[10 + aidLength + fixedPartOfFciTemplate];
             int firstbyteApplicationSN = 11 + aidLength + fixedPartOfFciTemplate;
@@ -59,12 +58,14 @@ public class ResponseUtils {
             }
 
             if ((byte) 0xA5 == apduResponse[4 + aidLength]) {
-                fciProprietaryTemplate = subArray(apduResponse, firstbyteAid, firstbyteAid + fciTemplateLength);
+                fciProprietaryTemplate =
+                        subArray(apduResponse, firstbyteAid, firstbyteAid + fciTemplateLength);
             }
 
             if ((byte) 0xBF == apduResponse[6 + aidLength + fixedPartOfFciTemplate]
                     && ((byte) 0x0C == apduResponse[7 + aidLength + fixedPartOfFciTemplate])) {
-                fciIssuerDiscretionaryData = subArray(apduResponse, firstbyteFciIssuerDiscretionaryData,
+                fciIssuerDiscretionaryData = subArray(apduResponse,
+                        firstbyteFciIssuerDiscretionaryData,
                         firstbyteFciIssuerDiscretionaryData + fciIssuerDiscretionaryDataLength);
             }
 
@@ -76,20 +77,20 @@ public class ResponseUtils {
             if ((byte) 0x53 == apduResponse[19 + aidLength + fixedPartOfFciTemplate]) {
                 discretionaryData = subArray(apduResponse, firstbyteDiscretionaryData,
                         firstbyteDiscretionaryData + discretionaryDataLength);
-                startupInformation = new StartupInformation(discretionaryData[0], discretionaryData[1],
-                        discretionaryData[2], discretionaryData[3], discretionaryData[4], discretionaryData[5],
-                        discretionaryData[6]);
+                startupInformation = new StartupInformation(discretionaryData[0],
+                        discretionaryData[1], discretionaryData[2], discretionaryData[3],
+                        discretionaryData[4], discretionaryData[5], discretionaryData[6]);
             }
         }
 
-        return new FCI(dfName, fciProprietaryTemplate, fciIssuerDiscretionaryData, applicationSN, startupInformation);
+        return new FCI(dfName, fciProprietaryTemplate, fciIssuerDiscretionaryData, applicationSN,
+                startupInformation);
     }
 
     /**
      * Method to get a Secure Session from the response in revision 3.2 mode.
      *
-     * @param apduResponse
-     *            the apdu response
+     * @param apduResponse the apdu response
      * @return a SecureSession
      */
     public static SecureSession toSecureSessionRev32(byte[] apduResponse) {
@@ -103,15 +104,16 @@ public class ResponseUtils {
         int dataLength = apduResponse[11];
         byte[] data = subArray(apduResponse, 12, 12 + dataLength);
 
-        return new SecureSession(new POChallenge(subArray(apduResponse, 0, 3), subArray(apduResponse, 3, 8)),
-                previousSessionRatified, manageSecureSessionAuthorized, kif, kvc, data, apduResponse);
+        return new SecureSession(
+                new POChallenge(subArray(apduResponse, 0, 3), subArray(apduResponse, 3, 8)),
+                previousSessionRatified, manageSecureSessionAuthorized, kif, kvc, data,
+                apduResponse);
     }
 
     /**
      * Method to get a Secure Session from the response in revision 3 mode.
      *
-     * @param apduResponse
-     *            the apdu response
+     * @param apduResponse the apdu response
      * @return a SecureSession
      */
     public static SecureSession toSecureSessionRev3(byte[] apduResponse) {
@@ -124,16 +126,17 @@ public class ResponseUtils {
         int dataLength = apduResponse[7];
         byte[] data = subArray(apduResponse, 8, 8 + dataLength);
 
-        secureSession = new SecureSession(new POChallenge(subArray(apduResponse, 0, 3), subArray(apduResponse, 3, 4)),
-                previousSessionRatified, manageSecureSessionAuthorized, kif, kvc, data, apduResponse);
+        secureSession = new SecureSession(
+                new POChallenge(subArray(apduResponse, 0, 3), subArray(apduResponse, 3, 4)),
+                previousSessionRatified, manageSecureSessionAuthorized, kif, kvc, data,
+                apduResponse);
         return secureSession;
     }
 
     /**
      * Method to get a Secure Session from the response in revision 2 mode.
      *
-     * @param apduResponse
-     *            the apdu response
+     * @param apduResponse the apdu response
      * @return a SecureSession
      */
     public static SecureSession toSecureSessionRev2(byte[] apduResponse) {
@@ -150,7 +153,8 @@ public class ResponseUtils {
 
         // TODO selecting record data without length ?
 
-        secureSession = new SecureSession(new POChallenge(subArray(apduResponse, 1, 4), subArray(apduResponse, 4, 5)),
+        secureSession = new SecureSession(
+                new POChallenge(subArray(apduResponse, 1, 4), subArray(apduResponse, 4, 5)),
                 previousSessionRatified, manageSecureSessionAuthorized, kvc, data, apduResponse);
 
         return secureSession;
@@ -159,10 +163,8 @@ public class ResponseUtils {
     /**
      * Method to get the Records from the response.
      *
-     * @param apduResponse
-     *            the apdu response
-     * @param oneRecordOnly
-     *            the one record only
+     * @param apduResponse the apdu response
+     * @param oneRecordOnly the one record only
      * @return a Maps of Records
      */
     public static List<Record> toRecords(byte[] apduResponse, boolean oneRecordOnly) {
@@ -173,10 +175,12 @@ public class ResponseUtils {
             int i = 0;
             while (i < apduResponse.length) {
                 if (i + 2 + apduResponse[i + 1] > apduResponse.length - 1) {
-                    records.add(new Record(subArray(apduResponse, i + 2, apduResponse.length - 1), apduResponse[i]));
+                    records.add(new Record(subArray(apduResponse, i + 2, apduResponse.length - 1),
+                            apduResponse[i]));
                 } else {
                     records.add(
-                            new Record(subArray(apduResponse, i + 2, i + 2 + apduResponse[i + 1]), apduResponse[i]));
+                            new Record(subArray(apduResponse, i + 2, i + 2 + apduResponse[i + 1]),
+                                    apduResponse[i]));
                 }
                 // add data length to iterator
                 i += apduResponse[i + 1];
@@ -192,8 +196,7 @@ public class ResponseUtils {
     /**
      * Method to get the KVC from the response in revision 2 mode.
      *
-     * @param apduResponse
-     *            the apdu response
+     * @param apduResponse the apdu response
      * @return a KVC
      */
     public static KVC toKVCRev2(byte[] apduResponse) {
@@ -206,11 +209,10 @@ public class ResponseUtils {
     }
 
     /**
-     * Method to get the PO half session signature (the second half part of the
-     * signature necessary to close the session properly) from the response.
+     * Method to get the PO half session signature (the second half part of the signature necessary
+     * to close the session properly) from the response.
      *
-     * @param response
-     *            the response
+     * @param response the response
      * @return a POHalfSessionSignature
      */
     public static POHalfSessionSignature toPoHalfSessionSignature(byte[] response) {
@@ -229,10 +231,8 @@ public class ResponseUtils {
     /**
      * Checks if is bit equals one.
      *
-     * @param thebyte
-     *            the thebyte
-     * @param position
-     *            the position
+     * @param thebyte the thebyte
+     * @param position the position
      * @return true, if is bit equals one
      */
     private static boolean isBitEqualsOne(byte thebyte, int position) {

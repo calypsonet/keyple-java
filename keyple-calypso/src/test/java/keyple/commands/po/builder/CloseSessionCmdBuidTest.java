@@ -13,22 +13,25 @@ import org.keyple.seproxy.ApduRequest;
 
 public class CloseSessionCmdBuidTest {
 
-	Logger logger = LogManager.getLogger(CloseSessionCmdBuidTest.class);
+    Logger logger = LogManager.getLogger(CloseSessionCmdBuidTest.class);
 
-	@Test
-	public void closeSessionCmdBuild() throws InconsistentCommandException {
-		byte[] request2_4 = { (byte) 0x94, (byte) 0x8E, 0x00, 0x00, (byte) 0x04, (byte) 0xA8, 0x31, (byte) 0xC3, 0x3E };
-		byte[] request3_1 = { (byte) 0x00, (byte) 0x8E, (byte) 0x80, 0x00, (byte) 0x04, (byte) 0xA8, 0x31, (byte) 0xC3,
-				0x3E };
-		byte[] terminalSessionSiganture = { (byte) 0xA8, 0x31, (byte) 0xC3, 0x3E };
-		ApduCommandBuilder apduCommandBuilder = new CloseSessionCmdBuild(PoRevision.REV2_4,false,terminalSessionSiganture);
-		ApduRequest ApduRequest = apduCommandBuilder.getApduRequest();
+    @Test
+    public void closeSessionCmdBuild() throws InconsistentCommandException {
+        byte[] request2_4 = {(byte) 0x94, (byte) 0x8E, 0x00, 0x00, (byte) 0x04, (byte) 0xA8, 0x31,
+                (byte) 0xC3, 0x3E};
+        byte[] request3_1 = {(byte) 0x00, (byte) 0x8E, (byte) 0x80, 0x00, (byte) 0x04, (byte) 0xA8,
+                0x31, (byte) 0xC3, 0x3E};
+        byte[] terminalSessionSiganture = {(byte) 0xA8, 0x31, (byte) 0xC3, 0x3E};
+        ApduCommandBuilder apduCommandBuilder =
+                new CloseSessionCmdBuild(PoRevision.REV2_4, false, terminalSessionSiganture);
+        ApduRequest ApduRequest = apduCommandBuilder.getApduRequest();
 
-		Assert.assertArrayEquals(request2_4, ApduRequest.getbytes());
+        Assert.assertArrayEquals(request2_4, ApduRequest.getbytes());
 
-		apduCommandBuilder = new CloseSessionCmdBuild(PoRevision.REV3_1, true, terminalSessionSiganture);
-		ApduRequest = apduCommandBuilder.getApduRequest();
+        apduCommandBuilder =
+                new CloseSessionCmdBuild(PoRevision.REV3_1, true, terminalSessionSiganture);
+        ApduRequest = apduCommandBuilder.getApduRequest();
 
-		Assert.assertArrayEquals(request3_1, ApduRequest.getbytes());
-	}
+        Assert.assertArrayEquals(request3_1, ApduRequest.getbytes());
+    }
 }

@@ -4,9 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The Class SeProxyService. This singleton is the entry point of the SE Proxy
- * Service, its instance has to be called by a ticketing application in order to
- * establish a link with a SE’s application.
+ * The Class SeProxyService. This singleton is the entry point of the SE Proxy Service, its instance
+ * has to be called by a ticketing application in order to establish a link with a SE’s application.
  *
  * @author Ixxi
  */
@@ -24,8 +23,7 @@ public final class SeProxyService {
     /**
      * Instantiates a new SeProxyService.
      */
-    private SeProxyService() {
-    }
+    private SeProxyService() {}
 
     /**
      * Gets the single instance of SeProxyService.
@@ -48,8 +46,7 @@ public final class SeProxyService {
     /**
      * Sets the plugins.
      *
-     * @param plugins
-     *            the new plugins
+     * @param plugins the new plugins
      */
     public void setPlugins(List<ReadersPlugin> plugins) {
         this.plugins = plugins;

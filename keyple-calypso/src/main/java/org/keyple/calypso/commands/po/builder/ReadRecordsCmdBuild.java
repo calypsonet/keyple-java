@@ -10,8 +10,8 @@ import org.keyple.commands.InconsistentCommandException;
 import org.keyple.seproxy.ApduRequest;
 
 /**
- * The Class ReadRecordsCmdBuild. This class provides the dedicated constructor
- * to build the Read Records APDU command.
+ * The Class ReadRecordsCmdBuild. This class provides the dedicated constructor to build the Read
+ * Records APDU command.
  *
  * @author Ixxi
  *
@@ -24,22 +24,17 @@ public class ReadRecordsCmdBuild extends PoCommandBuilder implements SendableInS
     /**
      * Instantiates a new read records cmd build.
      *
-     * @param revision
-     *            the revision of the PO
-     * @param firstRecordNumber
-     *            the record number to read (or first record to read in case of
-     *            several records)
-     * @param readJustOneRecord
-     *            the read just one record
-     * @param sfi
-     *            the sfi top select
-     * @param expectedLength
-     *            the expected lenght of the record(s)
-     * @throws InconsistentCommandException
-     *             the inconsistent command exception
+     * @param revision the revision of the PO
+     * @param firstRecordNumber the record number to read (or first record to read in case of
+     *        several records)
+     * @param readJustOneRecord the read just one record
+     * @param sfi the sfi top select
+     * @param expectedLength the expected lenght of the record(s)
+     * @throws InconsistentCommandException the inconsistent command exception
      */
-    public ReadRecordsCmdBuild(PoRevision revision, byte firstRecordNumber, boolean readJustOneRecord, byte sfi,
-            byte expectedLength) throws InconsistentCommandException {
+    public ReadRecordsCmdBuild(PoRevision revision, byte firstRecordNumber,
+            boolean readJustOneRecord, byte sfi, byte expectedLength)
+            throws InconsistentCommandException {
         super(command, null);
         if (revision != null) {
             this.defaultRevision = revision;
@@ -57,7 +52,8 @@ public class ReadRecordsCmdBuild extends PoCommandBuilder implements SendableInS
             p2 = (byte) (p2 - (byte) 0x01);
         }
 
-        CalypsoRequest calypsoRequest = new CalypsoRequest(cla, command, p1, p2, dataIn, expectedLength);
+        CalypsoRequest calypsoRequest =
+                new CalypsoRequest(cla, command, p1, p2, dataIn, expectedLength);
         ApduRequest apduRequest = RequestUtils.constructAPDURequest(calypsoRequest);
         this.request = apduRequest;
     }
@@ -65,10 +61,8 @@ public class ReadRecordsCmdBuild extends PoCommandBuilder implements SendableInS
     /**
      * Instantiates a new read records cmd build.
      *
-     * @param request
-     *            the request
-     * @throws InconsistentCommandException
-     *             the inconsistent command exception
+     * @param request the request
+     * @throws InconsistentCommandException the inconsistent command exception
      */
     public ReadRecordsCmdBuild(ApduRequest request) throws InconsistentCommandException {
         super(command, request);

@@ -11,8 +11,8 @@ import org.keyple.seproxy.ApduRequest;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class UpdateRecordCmdBuild. This class provides the dedicated constructor
- * to build the Update Record APDU command.
+ * The Class UpdateRecordCmdBuild. This class provides the dedicated constructor to build the Update
+ * Record APDU command.
  *
  * @author Ixxi
  *
@@ -25,14 +25,14 @@ public class UpdateRecordCmdBuild extends PoCommandBuilder implements SendableIn
     /**
      * Instantiates a new UpdateRecordCmdBuild.
      *
-     * @param revision            the revision of the PO
-     * @param recordNumber            the record number to update
-     * @param sfi            the sfi to select
-     * @param newRecordData            the new record data to write
+     * @param revision the revision of the PO
+     * @param recordNumber the record number to update
+     * @param sfi the sfi to select
+     * @param newRecordData the new record data to write
      * @throws InconsistentCommandException the inconsistent command exception
      */
-    public UpdateRecordCmdBuild(PoRevision revision, byte recordNumber, byte sfi, byte[] newRecordData)
-            throws InconsistentCommandException {
+    public UpdateRecordCmdBuild(PoRevision revision, byte recordNumber, byte sfi,
+            byte[] newRecordData) throws InconsistentCommandException {
         super(command, null);
         if (revision != null) {
             this.defaultRevision = revision;

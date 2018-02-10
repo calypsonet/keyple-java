@@ -38,16 +38,11 @@ public class CalypsoRequest {
     /**
      * Instantiates a new CalypsoRequest.
      *
-     * @param cla
-     *            the CLA
-     * @param ins
-     *            the INS
-     * @param p1
-     *            the P1
-     * @param p2
-     *            the P2
-     * @param dataIn
-     *            the data in
+     * @param cla the CLA
+     * @param ins the INS
+     * @param p1 the P1
+     * @param p2 the P2
+     * @param dataIn the data in
      */
     public CalypsoRequest(byte cla, CalypsoCommands ins, byte p1, byte p2, byte[] dataIn) {
         this.cla = cla;
@@ -67,18 +62,12 @@ public class CalypsoRequest {
     /**
      * Instantiates a new CalypsoRequest.
      *
-     * @param ins
-     *            the INS
-     * @param cla
-     *            the CLA
-     * @param p1
-     *            the P1
-     * @param p2
-     *            the P2
-     * @param dataIn
-     *            the data in
-     * @param le
-     *            the Le
+     * @param ins the INS
+     * @param cla the CLA
+     * @param p1 the P1
+     * @param p2 the P2
+     * @param dataIn the data in
+     * @param le the Le
      */
     public CalypsoRequest(byte cla, CalypsoCommands ins, byte p1, byte p2, byte[] dataIn, byte le) {
         this.cla = cla;
@@ -100,8 +89,7 @@ public class CalypsoRequest {
     /**
      * Set the lc
      *
-     * @param lc
-     *            length
+     * @param lc length
      */
     public void setLc(byte lc) {
         this.lc = lc;

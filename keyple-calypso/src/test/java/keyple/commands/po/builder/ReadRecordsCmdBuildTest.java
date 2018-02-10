@@ -11,7 +11,7 @@ import org.keyple.seproxy.ApduRequest;
 
 public class ReadRecordsCmdBuildTest {
 
-    //Logger logger = Logger.getLogger(ReadRecordsCmdBuildTest.class);
+    // Logger logger = Logger.getLogger(ReadRecordsCmdBuildTest.class);
 
     byte record_number = 0x01;
 
@@ -32,18 +32,18 @@ public class ReadRecordsCmdBuildTest {
         byte p1 = firstRecordNumber;
         byte p2 = (byte) ((byte) (sfi * 8) + 5);
         byte[] dataIn = null;
-        
+
         // revision 2.4
-        byte[] request2_4 = { cla, cmd, p1, p2, 0x00 };
-        apduCommandBuilder = new ReadRecordsCmdBuild(PoRevision.REV2_4, record_number, readJustOneRecord, sfi,
-                expectedLenght);
+        byte[] request2_4 = {cla, cmd, p1, p2, 0x00};
+        apduCommandBuilder = new ReadRecordsCmdBuild(PoRevision.REV2_4, record_number,
+                readJustOneRecord, sfi, expectedLenght);
         ApduRequest = apduCommandBuilder.getApduRequest();
         Assert.assertArrayEquals(request2_4, ApduRequest.getbytes());
     }
 
     @Test
     public void readRecords_rev3_1() throws InconsistentCommandException {
-        
+
         byte cla = (byte) 0x00;
         byte cmd = (byte) 0xB2;
         byte firstRecordNumber = record_number;
@@ -52,12 +52,12 @@ public class ReadRecordsCmdBuildTest {
         byte p1 = firstRecordNumber;
         byte p2 = (byte) ((byte) (sfi * 8) + 5);
         byte[] dataIn = null;
-        
-        
+
+
         // revision 3.1
-        byte[] request3_1 = {  cla, cmd, p1, p2 ,0x00 };
-        apduCommandBuilder = new ReadRecordsCmdBuild(PoRevision.REV3_1, record_number, readJustOneRecord, sfi,
-                expectedLenght);
+        byte[] request3_1 = {cla, cmd, p1, p2, 0x00};
+        apduCommandBuilder = new ReadRecordsCmdBuild(PoRevision.REV3_1, record_number,
+                readJustOneRecord, sfi, expectedLenght);
         ApduRequest = apduCommandBuilder.getApduRequest();
         Assert.assertArrayEquals(request3_1, ApduRequest.getbytes());
     }
@@ -72,11 +72,11 @@ public class ReadRecordsCmdBuildTest {
         byte p1 = firstRecordNumber;
         byte p2 = (byte) ((byte) (sfi * 8) + 5);
         byte[] dataIn = null;
-        
+
         // revision 3.2
-        byte[] request3_2 = {  cla, cmd, p1, p2, 0x00 };
-        apduCommandBuilder = new ReadRecordsCmdBuild(PoRevision.REV3_2, record_number, readJustOneRecord, sfi,
-                expectedLenght);
+        byte[] request3_2 = {cla, cmd, p1, p2, 0x00};
+        apduCommandBuilder = new ReadRecordsCmdBuild(PoRevision.REV3_2, record_number,
+                readJustOneRecord, sfi, expectedLenght);
         ApduRequest = apduCommandBuilder.getApduRequest();
         Assert.assertArrayEquals(request3_2, ApduRequest.getbytes());
     }

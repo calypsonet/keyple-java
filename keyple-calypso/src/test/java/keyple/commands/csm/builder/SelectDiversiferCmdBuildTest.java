@@ -2,8 +2,6 @@ package keyple.commands.csm.builder;
 
 import java.util.ArrayList;
 import java.util.List;
-
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hamcrest.core.IsEqual;
@@ -41,7 +39,7 @@ public class SelectDiversiferCmdBuildTest {
 
     private SeResponse seResponseExpected;
 
-    private byte[] returnOK = { (byte) 0x90, 0x00 };
+    private byte[] returnOK = {(byte) 0x90, 0x00};
 
     private ApduResponse responseExpected = new ApduResponse(null, true, returnOK);
 
@@ -52,23 +50,28 @@ public class SelectDiversiferCmdBuildTest {
     private List<ApduRequest> ApduRequests2 = new ArrayList<ApduRequest>();
 
     @Test
-    public void selectDiviersifier() throws IOReaderException, UnexpectedReaderException, ChannelStateReaderException,
-            InvalidApduReaderException, TimeoutReaderException, InconsistentCommandException, InconsistentParameterValueException {
+    public void selectDiviersifier() throws IOReaderException, UnexpectedReaderException,
+            ChannelStateReaderException, InvalidApduReaderException, TimeoutReaderException,
+            InconsistentCommandException, InconsistentParameterValueException {
 
         ApduRequest apdu = apduCommandBuilder.getApduRequest();
         ApduRequests.add(apdu);
 
         seRequest = new SeRequest(null, ApduRequests, true);
-        list.add(new ApduResponse(
-                new byte[] { 0x6F, 0x22, (byte) 0x84, 0x08, 0x33, 0x4D, 0x54, 0x52, 0x2E, 0x49, 0x43, 0x41, (byte) 0xA5,
-                        0x16, (byte) 0xBF, 0x0C, 0x13, (byte) 0xC7, 0x08, 0x00, 0x00, 0x00, 0x00, 0x27, 0x4A,
-                        (byte) 0x9A, (byte) 0xB9, 0x53, 0x07, 0x0A, 0x3C, 0x11, 0x32, 0x14, 0x10, 0x01 },
-                true, new byte[] { (byte) 0x90, 0x00 }));
-        list.add(new ApduResponse(
-                new byte[] { 0x6F, 0x22, (byte) 0x84, 0x08, 0x33, 0x4D, 0x54, 0x52, 0x2E, 0x49, 0x43, 0x41, (byte) 0xA5,
-                        0x16, (byte) 0xBF, 0x0C, 0x13, (byte) 0xC7, 0x08, 0x00, 0x00, 0x00, 0x00, 0x27, 0x4A,
-                        (byte) 0x9A, (byte) 0xB9, 0x53, 0x07, 0x0A, 0x3C, 0x11, 0x32, 0x14, 0x10, 0x01 },
-                true, new byte[] { (byte) 0x80, 0x00 }));
+        list.add(
+                new ApduResponse(
+                        new byte[] {0x6F, 0x22, (byte) 0x84, 0x08, 0x33, 0x4D, 0x54, 0x52, 0x2E,
+                                0x49, 0x43, 0x41, (byte) 0xA5, 0x16, (byte) 0xBF, 0x0C, 0x13,
+                                (byte) 0xC7, 0x08, 0x00, 0x00, 0x00, 0x00, 0x27, 0x4A, (byte) 0x9A,
+                                (byte) 0xB9, 0x53, 0x07, 0x0A, 0x3C, 0x11, 0x32, 0x14, 0x10, 0x01},
+                        true, new byte[] {(byte) 0x90, 0x00}));
+        list.add(
+                new ApduResponse(
+                        new byte[] {0x6F, 0x22, (byte) 0x84, 0x08, 0x33, 0x4D, 0x54, 0x52, 0x2E,
+                                0x49, 0x43, 0x41, (byte) 0xA5, 0x16, (byte) 0xBF, 0x0C, 0x13,
+                                (byte) 0xC7, 0x08, 0x00, 0x00, 0x00, 0x00, 0x27, 0x4A, (byte) 0x9A,
+                                (byte) 0xB9, 0x53, 0x07, 0x0A, 0x3C, 0x11, 0x32, 0x14, 0x10, 0x01},
+                        true, new byte[] {(byte) 0x80, 0x00}));
 
         SeResponse seResponse = new SeResponse(true, null, list);
 

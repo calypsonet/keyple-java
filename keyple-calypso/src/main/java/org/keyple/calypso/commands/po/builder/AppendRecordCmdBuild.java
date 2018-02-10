@@ -11,8 +11,8 @@ import org.keyple.seproxy.ApduRequest;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class AppendRecordCmdBuild. This class provides the dedicated constructor
- * to build the Update Record APDU command.
+ * The Class AppendRecordCmdBuild. This class provides the dedicated constructor to build the Update
+ * Record APDU command.
  *
  * @author Ixxi
  *
@@ -25,28 +25,22 @@ public class AppendRecordCmdBuild extends PoCommandBuilder implements SendableIn
     /**
      * Instantiates a new append record cmd build.
      *
-     * @param commandeReference
-     *            the commande reference
-     * @param request
-     *            the request
-     * @throws InconsistentCommandException
-     *             the inconsistent command exception
+     * @param commandeReference the commande reference
+     * @param request the request
+     * @throws InconsistentCommandException the inconsistent command exception
      */
-    AppendRecordCmdBuild(CalypsoCommands commandeReference, ApduRequest request) throws InconsistentCommandException {
+    AppendRecordCmdBuild(CalypsoCommands commandeReference, ApduRequest request)
+            throws InconsistentCommandException {
         super(commandeReference, request);
     }
 
     /**
      * Instantiates a new UpdateRecordCmdBuild.
      *
-     * @param revision
-     *            the revision of the PO
-     * @param sfi
-     *            the sfi to select
-     * @param newRecordData
-     *            the new record data to write
-     * @throws InconsistentCommandException
-     *             the inconsistent command exception
+     * @param revision the revision of the PO
+     * @param sfi the sfi to select
+     * @param newRecordData the new record data to write
+     * @throws InconsistentCommandException the inconsistent command exception
      */
     public AppendRecordCmdBuild(PoRevision revision, byte sfi, byte[] newRecordData)
             throws InconsistentCommandException {
@@ -69,10 +63,8 @@ public class AppendRecordCmdBuild extends PoCommandBuilder implements SendableIn
     /**
      * Instantiates a new append record cmd build.
      *
-     * @param request
-     *            the request
-     * @throws InconsistentCommandException
-     *             the inconsistent command exception
+     * @param request the request
+     * @throws InconsistentCommandException the inconsistent command exception
      */
     public AppendRecordCmdBuild(ApduRequest request) throws InconsistentCommandException {
         super(CalypsoCommands.PO_APPEND_RECORD, request);

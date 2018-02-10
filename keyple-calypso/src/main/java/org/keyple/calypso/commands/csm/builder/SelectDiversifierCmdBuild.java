@@ -10,8 +10,7 @@ import org.keyple.seproxy.ApduRequest;
 
 // TODO: Auto-generated Javadoc
 /**
- * This class provides the dedicated constructor to build the CSM Select
- * Diversifier APDU command.
+ * This class provides the dedicated constructor to build the CSM Select Diversifier APDU command.
  *
  * @author Ixxi
  *
@@ -24,14 +23,12 @@ public class SelectDiversifierCmdBuild extends CsmCommandBuilder {
     /**
      * Instantiates a new SelectDiversifierCmdBuild.
      *
-     * @param revision
-     *            the CSM(SAM) revision
-     * @param diversifier
-     *            the application serial number
-     * @throws InconsistentCommandException
-     *             the inconsistent command exception
+     * @param revision the CSM(SAM) revision
+     * @param diversifier the application serial number
+     * @throws InconsistentCommandException the inconsistent command exception
      */
-    public SelectDiversifierCmdBuild(CsmRevision revision, byte[] diversifier) throws InconsistentCommandException {
+    public SelectDiversifierCmdBuild(CsmRevision revision, byte[] diversifier)
+            throws InconsistentCommandException {
         super(command, null);
         if (revision != null) {
             this.defaultRevision = revision;
@@ -51,10 +48,8 @@ public class SelectDiversifierCmdBuild extends CsmCommandBuilder {
     /**
      * Instantiates a new select diversifier cmd build.
      *
-     * @param request
-     *            the request
-     * @throws InconsistentCommandException
-     *             the inconsistent command exception
+     * @param request the request
+     * @throws InconsistentCommandException the inconsistent command exception
      */
     public SelectDiversifierCmdBuild(ApduRequest request) throws InconsistentCommandException {
         super(command, request);

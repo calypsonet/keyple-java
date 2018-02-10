@@ -1,9 +1,8 @@
 package org.keyple.calypso.commands.dto;
 
 /**
- * The Class AID. AID: Application Identifier as defined in ISO/IEC 7816-4.
- * Value unique in a portable object, allowing to unambiguously identify an
- * application.
+ * The Class AID. AID: Application Identifier as defined in ISO/IEC 7816-4. Value unique in a
+ * portable object, allowing to unambiguously identify an application.
  */
 public class AID {
 
@@ -13,8 +12,7 @@ public class AID {
     /**
      * Instantiates a new AID.
      *
-     * @param value
-     *            the byte value
+     * @param value the byte value
      */
     public AID(byte[] value) {
         this.value = (value == null ? null : value.clone());

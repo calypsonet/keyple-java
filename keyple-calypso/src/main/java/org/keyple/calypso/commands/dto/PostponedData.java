@@ -1,8 +1,8 @@
 package org.keyple.calypso.commands.dto;
 
 /**
- * The Class PostponedData. The postponed data is returned at the beginning of
- * the Close Secure Session response data.(in case of Store Value operation)
+ * The Class PostponedData. The postponed data is returned at the beginning of the Close Secure
+ * Session response data.(in case of Store Value operation)
  */
 public class PostponedData {
 
@@ -15,10 +15,8 @@ public class PostponedData {
     /**
      * Instantiates a new PostponedData.
      *
-     * @param hasPostponedData
-     *            the has postponed data
-     * @param postponedData
-     *            the postponed data
+     * @param hasPostponedData the has postponed data
+     * @param postponedData the postponed data
      */
     public PostponedData(boolean hasPostponedData, byte[] postponedData) {
         super();

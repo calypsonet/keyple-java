@@ -1,13 +1,12 @@
 package keyple.commands.po;
 
-import static org.junit.Assert.assertEquals;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.keyple.calypso.commands.po.PoRevision;
 import org.keyple.calypso.transaction.PoSecureSession;
 
-//@RunWith(MockitoJUnitRunner.class)
+// @RunWith(MockitoJUnitRunner.class)
 public class PoVersionTest {
 
     // @InjectMocks

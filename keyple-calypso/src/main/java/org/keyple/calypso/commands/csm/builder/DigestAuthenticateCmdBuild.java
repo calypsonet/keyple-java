@@ -10,8 +10,7 @@ import org.keyple.seproxy.ApduRequest;
 
 // TODO: Auto-generated Javadoc
 /**
- * This class provides the dedicated constructor to build the Digest
- * Authenticate APDU command.
+ * This class provides the dedicated constructor to build the Digest Authenticate APDU command.
  *
  * @author Ixxi
  *
@@ -24,14 +23,12 @@ public class DigestAuthenticateCmdBuild extends CsmCommandBuilder {
     /**
      * Instantiates a new DigestAuthenticateCmdBuild .
      *
-     * @param revision
-     *            of the CSM(SAM)
-     * @param signature
-     *            the signature
-     * @throws InconsistentCommandException
-     *             the inconsistent command exception
+     * @param revision of the CSM(SAM)
+     * @param signature the signature
+     * @throws InconsistentCommandException the inconsistent command exception
      */
-    public DigestAuthenticateCmdBuild(CsmRevision revision, byte[] signature) throws InconsistentCommandException {
+    public DigestAuthenticateCmdBuild(CsmRevision revision, byte[] signature)
+            throws InconsistentCommandException {
         super(command, null);
         if (revision != null) {
             this.defaultRevision = revision;
@@ -40,7 +37,8 @@ public class DigestAuthenticateCmdBuild extends CsmCommandBuilder {
             throw new InconsistentCommandException();
         }
         if (signature.length != 4 && signature.length != 8 && signature.length != 16) {
-            throw new InconsistentCommandException("Signature is not the right length : length is " + signature.length);
+            throw new InconsistentCommandException(
+                    "Signature is not the right length : length is " + signature.length);
         }
         byte cla = CsmRevision.S1D.equals(this.defaultRevision) ? (byte) 0x94 : (byte) 0x80;
         byte p1 = 0x00;
@@ -54,10 +52,8 @@ public class DigestAuthenticateCmdBuild extends CsmCommandBuilder {
     /**
      * Instantiates a new digest authenticate cmd build.
      *
-     * @param request
-     *            the request
-     * @throws InconsistentCommandException
-     *             the inconsistent command exception
+     * @param request the request
+     * @throws InconsistentCommandException the inconsistent command exception
      */
     public DigestAuthenticateCmdBuild(ApduRequest request) throws InconsistentCommandException {
         super(command, request);

@@ -1,8 +1,8 @@
 package org.keyple.calypso.commands.dto;
 
 /**
- * The Class KVC. KVC: Key Version and Category. Arbitrary value identifying a
- * key among several of the same type.
+ * The Class KVC. KVC: Key Version and Category. Arbitrary value identifying a key among several of
+ * the same type.
  */
 public class KVC {
 
@@ -12,8 +12,7 @@ public class KVC {
     /**
      * Instantiates a new KVC.
      *
-     * @param value
-     *            the value
+     * @param value the value
      */
     public KVC(byte value) {
         super();

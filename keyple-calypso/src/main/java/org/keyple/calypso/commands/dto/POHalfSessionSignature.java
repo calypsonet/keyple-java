@@ -2,8 +2,8 @@ package org.keyple.calypso.commands.dto;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class POHalfSessionSignature. Half session signature return by a close
- * secure session APDU command
+ * The Class POHalfSessionSignature. Half session signature return by a close secure session APDU
+ * command
  */
 public class POHalfSessionSignature {
 
@@ -16,10 +16,8 @@ public class POHalfSessionSignature {
     /**
      * Instantiates a new POHalfSessionSignature.
      *
-     * @param value
-     *            the value
-     * @param postponedData
-     *            the postponed data
+     * @param value the value
+     * @param postponedData the postponed data
      */
     public POHalfSessionSignature(byte[] value, byte[] postponedData) {
         super();
