@@ -3,7 +3,6 @@ package org.keyple.commands;
 // import org.keyple.calypso.commands.CalypsoCommands;
 import org.keyple.seproxy.ApduRequest;
 
-//
 /**
  * The Class ApduCommandBuilder. This abstract class has to be extended by all PO and CSM command
  * builder classes, it provides the generic getters to retrieve: the name of the command, the built

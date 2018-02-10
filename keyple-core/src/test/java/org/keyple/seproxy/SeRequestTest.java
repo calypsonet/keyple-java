@@ -1,8 +1,6 @@
 package org.keyple.seproxy;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 import java.util.ArrayList;
 import org.junit.Test;
 
@@ -34,7 +32,7 @@ public class SeRequestTest {
     public void testAskKeepChannelOpen() {
         SeRequest request = new SeRequest(new byte[] {(byte) 0x01, (byte) 0x02},
                 new ArrayList<ApduRequest>(), true);
-        assertEquals(true, request.askKeepChannelOpen());
+        assertTrue(request.askKeepChannelOpen());
     }
 
 }

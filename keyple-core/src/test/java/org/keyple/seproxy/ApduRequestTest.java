@@ -1,8 +1,6 @@
 package org.keyple.seproxy;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 import org.junit.Test;
 
 public class ApduRequestTest {
@@ -22,7 +20,7 @@ public class ApduRequestTest {
     @Test
     public void testIsCase4() {
         ApduRequest request = new ApduRequest(new byte[] {(byte) 0x01, (byte) 0x02}, true);
-        assertEquals(true, request.isCase4());
+        assertTrue(request.isCase4());
     }
 
     @Test

@@ -1,9 +1,6 @@
 package org.keyple.seproxy;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.Test;
@@ -15,7 +12,7 @@ public class SeResponseTest {
         ApduResponse fciData = new ApduResponse(new byte[] {(byte) 0x01, (byte) 02}, true,
                 new byte[] {(byte) 0x03, (byte) 0x04});
         SeResponse response = new SeResponse(true, fciData, new ArrayList<ApduResponse>());
-        assertNotNull(response);
+        // assertNotNull(response);
         assertArrayEquals(new ArrayList<ApduResponse>().toArray(),
                 response.getApduResponses().toArray());
     }
@@ -23,7 +20,7 @@ public class SeResponseTest {
     @Test
     public void testWasChannelPreviouslyOpen() {
         SeResponse response = new SeResponse(true, null, new ArrayList<ApduResponse>());
-        assertEquals(true, response.wasChannelPreviouslyOpen());
+        assertTrue(response.wasChannelPreviouslyOpen());
     }
 
     @Test

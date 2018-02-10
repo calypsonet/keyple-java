@@ -63,8 +63,8 @@ public class SeResponse {
     public SeResponse(boolean channelPreviouslyOpen, ApduResponse fci,
             List<ApduResponse> apduResponses, byte[] atr) {
         this.channelPreviouslyOpen = channelPreviouslyOpen;
-        this.fci = null;
-        this.atr = null;
+        // this.fci = null;
+        // this.atr = null;
         this.fci = fci;
         if (atr != null && atr.length > 0) {
             this.atr = atr.clone();

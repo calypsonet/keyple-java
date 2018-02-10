@@ -23,7 +23,7 @@ public class ApduResponseTest {
     public void testIsSuccessful() {
         ApduResponse response = new ApduResponse(new byte[] {(byte) 0x01, (byte) 0x02}, true,
                 new byte[] {(byte) 0x03, (byte) 0x04});
-        assertEquals(true, response.isSuccessful());
+        assertTrue(response.isSuccessful());
     }
 
     @Test
