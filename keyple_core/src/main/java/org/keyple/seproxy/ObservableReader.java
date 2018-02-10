@@ -68,7 +68,7 @@ public abstract class ObservableReader implements ProxyReader {
      *            the event
      */
     public final void notifyObservers(ReaderEvent event){
-      synchronized (readerObservers) { // TODO Ixxi a mis un verrou sans l'expliquer, s'agit de s'assurer que la liste des observer n'évolue pas lorsqu'on la parcourt?
+      synchronized (readerObservers) { // TODO Ixxi a mis un verrou sans l'expliquer, s'agit de s'assurer que la liste des observer n'Ã©volue pas lorsqu'on la parcourt?
       for (ReaderObserver observer : readerObservers) {
           observer.notify(event);
       }
