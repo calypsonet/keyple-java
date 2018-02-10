@@ -7,6 +7,8 @@
  * in the user guide at https://docs.gradle.org/4.5.1/userguide/multi_project_builds.html
  */
 
-rootProject.name = 'calypso_sdk_java'
-include 'keyple_core'
-include 'keyple_calypso'
+rootProject.name = 'calypso-sdk-java'
+
+include 'keyple-core'
+include 'keyple-calypso'
+include 'keyple-plugin-pcsc'

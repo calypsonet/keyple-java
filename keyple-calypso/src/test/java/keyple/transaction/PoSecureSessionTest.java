@@ -11,7 +11,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import keyple.commands.utils.TestsUtilsResponseTabByteGenerator;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -33,13 +34,12 @@ import org.keyple.seproxy.exceptions.*;
 import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.internal.util.reflection.Whitebox;
 import org.mockito.runners.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PoSecureSessionTest {
 
-    static final Logger logger = Logger.getLogger(PoSecureSessionTest.class);
+    static final Logger logger = LogManager.getLogger(PoSecureSessionTest.class);
 
     @Mock
     ProxyReader poReader;
@@ -130,7 +130,7 @@ public class PoSecureSessionTest {
         SeResponse seResponse2 = this.processOpeningTestKif0xFFKey(key, sfi, recordNumber, responseOpenSession.getApduResponses(), null);
 
         assertEquals(2, seResponse2.getApduResponses().size());
-        Whitebox.getInternalState(seResponse2, "channelPreviouslyOpen").equals(true);
+        //Whitebox.getInternalState(seResponse2, "channelPreviouslyOpen").equals(true);
         assertNull(seResponse2.getFci());
         assertArrayEquals(responseOpenSession.getApduResponses().get(0).getbytes(), seResponse2.getApduResponses().get(0).getbytes());
         assertArrayEquals(responseOpenSession.getApduResponses().get(0).getStatusCode(), seResponse2.getApduResponses().get(0).getStatusCode());
@@ -151,7 +151,7 @@ public class PoSecureSessionTest {
         SeResponse seResponse2 = this.processOpeningTestKif0xFFKey(key, sfi, recordNumber, responseOpenSession.getApduResponses(), null);
 
         assertEquals(2, seResponse2.getApduResponses().size());
-        Whitebox.getInternalState(seResponse2, "channelPreviouslyOpen").equals(true);
+        //Whitebox.getInternalState(seResponse2, "channelPreviouslyOpen").equals(true);
         assertNull(seResponse2.getFci());
         assertArrayEquals(responseOpenSession.getApduResponses().get(0).getbytes(), seResponse2.getApduResponses().get(0).getbytes());
         assertArrayEquals(responseOpenSession.getApduResponses().get(0).getStatusCode(), seResponse2.getApduResponses().get(0).getStatusCode());
@@ -172,7 +172,7 @@ public class PoSecureSessionTest {
         SeResponse seResponse2 = this.processOpeningTestKif0xFFKey(key, sfi, recordNumber, responseOpenSession.getApduResponses(), null);
 
         assertEquals(2, seResponse2.getApduResponses().size());
-        Whitebox.getInternalState(seResponse2, "channelPreviouslyOpen").equals(true);
+        //Whitebox.getInternalState(seResponse2, "channelPreviouslyOpen").equals(true);
         assertNull(seResponse2.getFci());
         assertArrayEquals(responseOpenSession.getApduResponses().get(0).getbytes(), seResponse2.getApduResponses().get(0).getbytes());
         assertArrayEquals(responseOpenSession.getApduResponses().get(0).getStatusCode(), seResponse2.getApduResponses().get(0).getStatusCode());
@@ -199,7 +199,7 @@ public class PoSecureSessionTest {
         SeResponse seResponse2 = this.processOpeningTestKif0xFFKey(key, sfi, recordNumber, responseOpenSession.getApduResponses(), poCommandsInsideSession);
 
         assertEquals(3, seResponse2.getApduResponses().size());
-        Whitebox.getInternalState(seResponse2, "channelPreviouslyOpen").equals(true);
+        //Whitebox.getInternalState(seResponse2, "channelPreviouslyOpen").equals(true);
         assertNull(seResponse2.getFci());
         assertArrayEquals(responseOpenSession.getApduResponses().get(0).getbytes(), seResponse2.getApduResponses().get(0).getbytes());
         assertArrayEquals(responseOpenSession.getApduResponses().get(0).getStatusCode(), seResponse2.getApduResponses().get(0).getStatusCode());
@@ -263,7 +263,7 @@ public class PoSecureSessionTest {
         SeResponse seResponse2 = this.poPlainSecrureSession.processProceeding(Arrays.asList(poCommandsInsideSession));
 
         assertEquals(1, seResponse2.getApduResponses().size());
-        Whitebox.getInternalState(seResponse2, "channelPreviouslyOpen").equals(true);
+        //Whitebox.getInternalState(seResponse2, "channelPreviouslyOpen").equals(true);
         assertNull(seResponse2.getFci());
         assertArrayEquals(responseOpenSession.getApduResponses().get(0).getbytes(), seResponse2.getApduResponses().get(0).getbytes());
         assertArrayEquals(responseOpenSession.getApduResponses().get(0).getStatusCode(), seResponse2.getApduResponses().get(0).getStatusCode());
@@ -300,7 +300,7 @@ public class PoSecureSessionTest {
         SeResponse seResponse2 = poPlainSecrureSession.processClosing(Arrays.asList(poCommandsInsideSession), null,
                 ratificationCommand);
         assertEquals(1, seResponse2.getApduResponses().size());
-        Whitebox.getInternalState(seResponse2, "channelPreviouslyOpen").equals(true);
+        //Whitebox.getInternalState(seResponse2, "channelPreviouslyOpen").equals(true);
         assertNull(seResponse2.getFci());
         assertArrayEquals(responseTerminalSessionSignature.getApduResponses().get(0).getbytes(), seResponse2.getApduResponses().get(0).getbytes());
         assertArrayEquals(responseTerminalSessionSignature.getApduResponses().get(0).getStatusCode(), seResponse2.getApduResponses().get(0).getStatusCode());
@@ -323,7 +323,7 @@ public class PoSecureSessionTest {
         SeResponse seResponse2 = poPlainSecrureSession.processClosing(Arrays.asList(poCommandsInsideSession), null,
                 ratificationCommand);
         assertEquals(2, seResponse2.getApduResponses().size());
-        Whitebox.getInternalState(seResponse2, "channelPreviouslyOpen").equals(true);
+        //Whitebox.getInternalState(seResponse2, "channelPreviouslyOpen").equals(true);
         assertNull(seResponse2.getFci());
         assertArrayEquals(responseTerminalSessionSignature.getApduResponses().get(0).getbytes(), seResponse2.getApduResponses().get(0).getbytes());
         assertArrayEquals(responseTerminalSessionSignature.getApduResponses().get(0).getStatusCode(), seResponse2.getApduResponses().get(0).getStatusCode());
@@ -352,7 +352,7 @@ public class PoSecureSessionTest {
         SeResponse seResponse2 = this.poPlainSecrureSession.processIdentification(aid, Arrays.asList(poCommandsInsideSession));
 
         assertEquals(3, seResponse2.getApduResponses().size());
-        Whitebox.getInternalState(seResponse2, "channelPreviouslyOpen").equals(true);
+        //Whitebox.getInternalState(seResponse2, "channelPreviouslyOpen").equals(true);
         assertNotNull(seResponse2.getFci());
         assertArrayEquals(responseFci.getApduResponses().get(0).getbytes(), seResponse2.getApduResponses().get(0).getbytes());
         assertArrayEquals(responseFci.getApduResponses().get(0).getStatusCode(), seResponse2.getApduResponses().get(0).getStatusCode());

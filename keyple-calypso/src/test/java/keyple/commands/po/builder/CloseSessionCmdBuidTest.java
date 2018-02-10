@@ -1,6 +1,8 @@
 package keyple.commands.po.builder;
 
-import org.apache.log4j.Logger;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Test;
 import org.keyple.calypso.commands.po.PoRevision;
@@ -11,7 +13,7 @@ import org.keyple.seproxy.ApduRequest;
 
 public class CloseSessionCmdBuidTest {
 
-	Logger logger = Logger.getLogger(CloseSessionCmdBuidTest.class);
+	Logger logger = LogManager.getLogger(CloseSessionCmdBuidTest.class);
 
 	@Test
 	public void closeSessionCmdBuild() throws InconsistentCommandException {

@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import keyple.commands.utils.TestsUtilsResponseTabByteGenerator;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.keyple.calypso.commands.po.PoRevision;
@@ -16,7 +17,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 @RunWith(MockitoJUnitRunner.class)
 public class OpenSessionRespParsTest {
 
-	Logger logger = Logger.getLogger(OpenSessionRespParsTest.class);
+	Logger logger = LogManager.getLogger(OpenSessionRespParsTest.class);
 
 	String msgParser;
 

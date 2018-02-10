@@ -3,7 +3,8 @@ package keyple.commands.po.parser;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Test;
 import org.keyple.commands.ApduResponseParser;
@@ -16,7 +17,7 @@ import org.mockito.Mockito;
 
 public class ReadRecordsRespParsTest {
 
-    Logger logger = Logger.getLogger(ReadRecordsRespParsTest.class);
+    Logger logger = LogManager.getLogger(ReadRecordsRespParsTest.class);
 
     SeRequest request;
 

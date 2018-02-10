@@ -3,7 +3,9 @@ package keyple.commands.csm.builder;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNot;
 import org.junit.Assert;
@@ -25,7 +27,7 @@ import org.mockito.Mockito;
 
 public class SelectDiversiferCmdBuildTest {
 
-    Logger logger = Logger.getLogger(SelectDiversiferCmdBuildTest.class);
+    Logger logger = LogManager.getLogger(SelectDiversiferCmdBuildTest.class);
 
     private byte[] dataIn;
 

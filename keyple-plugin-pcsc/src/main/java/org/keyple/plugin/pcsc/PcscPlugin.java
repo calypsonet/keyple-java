@@ -10,12 +10,12 @@ import javax.smartcardio.CardTerminal;
 import javax.smartcardio.CardTerminals;
 import javax.smartcardio.TerminalFactory;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.keyple.seproxy.ProxyReader;
 import org.keyple.seproxy.ReadersPlugin;
 import org.keyple.seproxy.SeProxyService;
 import org.keyple.seproxy.exceptions.IOReaderException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public final class PcscPlugin implements ReadersPlugin {
   
@@ -23,7 +23,7 @@ public final class PcscPlugin implements ReadersPlugin {
     private static PcscPlugin uniqueInstance = new PcscPlugin();
 
 	
-    static final Logger logger = LoggerFactory.getLogger(PcscPlugin.class);
+    static final Logger logger = LogManager.getLogger(PcscPlugin.class);
 
     private TerminalFactory factory = TerminalFactory.getDefault();
 

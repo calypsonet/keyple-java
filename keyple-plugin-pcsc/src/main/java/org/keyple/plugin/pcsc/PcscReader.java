@@ -13,6 +13,8 @@ import javax.smartcardio.CommandAPDU;
 import javax.smartcardio.ResponseAPDU;
 import javax.xml.bind.DatatypeConverter;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.keyple.seproxy.ApduRequest;
 import org.keyple.seproxy.ApduResponse;
 import org.keyple.seproxy.ConfigurableReader;
@@ -25,12 +27,10 @@ import org.keyple.seproxy.exceptions.IOReaderException;
 import org.keyple.seproxy.exceptions.InvalidApduReaderException;
 import org.keyple.seproxy.exceptions.TimeoutReaderException;
 import org.keyple.seproxy.exceptions.UnexpectedReaderException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class PcscReader extends ObservableReader implements ConfigurableReader {
 
-    static final Logger logger = LoggerFactory.getLogger(PcscReader.class);
+    static final Logger logger = LogManager.getLogger(PcscReader.class);
 
     private String name;
 

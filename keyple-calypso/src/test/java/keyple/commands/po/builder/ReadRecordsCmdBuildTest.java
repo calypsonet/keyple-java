@@ -1,6 +1,6 @@
 package keyple.commands.po.builder;
 
-import org.apache.log4j.Logger;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.keyple.calypso.commands.po.PoRevision;
