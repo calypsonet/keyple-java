@@ -42,25 +42,19 @@ pmd {
 spotless {
     java {
         target '**/*.java'
-        //licenseHeader('Licensed under Keyple project, Copyright CNA $YEAR').yearSeparator(', ')
 
-        // Obviously, you can't specify both licenseHeader and licenseHeaderFile at the same time
+        licenseHeaderFile '.build/spotless.license.txt'
 
-        importOrder 'java', 'javax', 'org', 'com', 'com.diffplug', ''	// A sequence of package names
-        // importOrderFile 'spotless.importorder'				// An import ordering file, exported from Eclipse
-        // As before, you can't specify both importOrder and importOrderFile at the same time
-        // You probably want an empty string at the end - all of the imports you didn't specify
-        // explicitly will go there.
+        importOrder 'java', 'javax', 'org', 'com', 'com.diffplug', ''
 
-        removeUnusedImports() // removes any unused imports
+        removeUnusedImports()
 
-        eclipse().configFile '.build/spotless.eclipseformat.xml'	// XML file dumped out by the Eclipse formatter
-        // If you have Eclipse preference or property files, you can use them too.
-        // eclipse('4.7.1') to specify a specific version of eclipse,
-        // available versions are: https://bintray.com/diffplug/opensource/spotless-ext-eclipse-jdt
+        eclipse().configFile '.build/spotless.eclipseformat.xml'
     }
-    format 'yaml', {
-        target '**/*.yml', '**/*.md', '**/*.gradle'
+
+    format 'misc', {
+        target '**/*.java', '**/*.gradle', '**/*.yml', '**/*.md'
+
         indentWithSpaces()
         endWithNewline()
     }

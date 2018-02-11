@@ -1,3 +1,9 @@
+/*
+ * Copyright 2018 Keyple - https://keyple.org/
+ *
+ * Licensed under GPL/MIT/Apache ???
+ */
+
 package keyple.transaction;
 
 import static org.junit.Assert.assertArrayEquals;

@@ -1,6 +1,9 @@
-/**
- * 
+/*
+ * Copyright 2018 Keyple - https://keyple.org/
+ *
+ * Licensed under GPL/MIT/Apache ???
  */
+
 package keyple.commands.utils;
 
 import org.keyple.seproxy.ApduResponse;
