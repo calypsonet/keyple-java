@@ -109,11 +109,11 @@ public enum CalypsoCommands implements CommandsTable {
 
     /** The command builder class. */
     // private Class<?> commandBuilderClass;
-    private Class<ApduCommandBuilder> commandBuilderClass;
+    private Class<? extends ApduCommandBuilder> commandBuilderClass;
 
     /** The response parser class. */
     // private Class<?> responseParserClass;
-    private Class<ApduResponseParser> responseParserClass;
+    private Class<? extends ApduResponseParser> responseParserClass;
 
     /**
      * The generic constructor of CalypsoCommands.
@@ -125,12 +125,13 @@ public enum CalypsoCommands implements CommandsTable {
      * @param responseParserClass the response parser class
      */
     private CalypsoCommands(CommandType commandType, String name, byte instructionbyte,
-            Class<?> commandBuilderClass, Class<?> responseParserClass) {
+            Class<? extends ApduCommandBuilder> commandBuilderClass,
+            Class<? extends ApduResponseParser> responseParserClass) {
         this.commandType = commandType;
         this.name = name;
         this.instructionbyte = instructionbyte;
-        this.commandBuilderClass = (Class<ApduCommandBuilder>) commandBuilderClass;
-        this.responseParserClass = (Class<ApduResponseParser>) responseParserClass;
+        this.commandBuilderClass = commandBuilderClass;
+        this.responseParserClass = responseParserClass;
     }
 
     /**
@@ -166,7 +167,7 @@ public enum CalypsoCommands implements CommandsTable {
      * @return the corresponding command builder class
      */
     // public Class<?> getCommandBuilderClass() {
-    public Class<ApduCommandBuilder> getCommandBuilderClass() {
+    public Class<? extends ApduCommandBuilder> getCommandBuilderClass() {
         return commandBuilderClass;
     }
 
@@ -176,7 +177,7 @@ public enum CalypsoCommands implements CommandsTable {
      * @return the corresponding response parser class
      */
     // public Class<?> getResponseParserClass() {
-    public Class<ApduResponseParser> getResponseParserClass() {
+    public Class<? extends ApduResponseParser> getResponseParserClass() {
         return responseParserClass;
     }
 

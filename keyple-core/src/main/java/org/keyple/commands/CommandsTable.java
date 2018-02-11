@@ -6,8 +6,8 @@ public interface CommandsTable {
 
     byte getInstructionByte();
 
-    Class<ApduCommandBuilder> getCommandBuilderClass();
+    Class<? extends ApduCommandBuilder> getCommandBuilderClass();
 
-    Class<ApduResponseParser> getResponseParserClass();
+    Class<? extends ApduResponseParser> getResponseParserClass();
 
 }

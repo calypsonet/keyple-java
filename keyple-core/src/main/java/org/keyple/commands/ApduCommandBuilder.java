@@ -62,7 +62,7 @@ public abstract class ApduCommandBuilder {
      *         information
      */
     // public final Class<?> getApduResponseParserClass() {
-    public final Class<ApduResponseParser> getApduResponseParserClass() {
+    public final Class<? extends ApduResponseParser> getApduResponseParserClass() {
         return commandReference.getResponseParserClass();
     }
 
