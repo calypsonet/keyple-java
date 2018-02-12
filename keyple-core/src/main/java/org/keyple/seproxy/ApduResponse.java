@@ -9,9 +9,9 @@
 package org.keyple.seproxy;
 
 /**
- * The Class APDUResponse. This class defines the elements of a single APDU command response:
+ * APDU response wrapper
  */
-public class ApduResponse {
+public class ApduResponse{
 
     /**
      * an array of the bytes of an APDU response (none structured, including the dataOut field and
