@@ -11,7 +11,7 @@ package org.keyple.seproxy;
 /**
  * APDU response wrapper
  */
-public class ApduResponse{
+public class ApduResponse {
 
     /**
      * an array of the bytes of an APDU response (none structured, including the dataOut field and

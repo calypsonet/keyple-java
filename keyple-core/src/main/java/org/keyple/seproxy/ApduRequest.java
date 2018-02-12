@@ -11,13 +11,13 @@ package org.keyple.seproxy;
 /**
  * APDU request wrapper
  */
-public class ApduRequest   {
+public class ApduRequest {
 
     /**
      * an array of the bytes of an APDU request (none structured, including the header and the
      * dataIn of the command).
      */
-    private byte[] bytes  ;
+    private byte[] bytes;
 
     /**
      * a ‘case 4’ flag in order to explicitly specify, if it’s expected that the APDU command
