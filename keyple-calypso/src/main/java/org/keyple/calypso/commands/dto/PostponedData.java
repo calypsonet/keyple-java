@@ -11,6 +11,8 @@ package org.keyple.calypso.commands.dto;
 /**
  * The Class PostponedData. The postponed data is returned at the beginning of the Close Secure
  * Session response data.(in case of Store Value operation)
+ *
+ * @deprecated Not used anywhere
  */
 public class PostponedData {
 

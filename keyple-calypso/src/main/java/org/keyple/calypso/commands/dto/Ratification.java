@@ -11,6 +11,8 @@ package org.keyple.calypso.commands.dto;
 /**
  * The Class Ratification. In contact mode, the session is always immediately ratified. In
  * contactless mode, it is possible to force the ratification by setting P1 to the value 80h.
+ *
+ * @deprecated Not used anywhere
  */
 public class Ratification {
 

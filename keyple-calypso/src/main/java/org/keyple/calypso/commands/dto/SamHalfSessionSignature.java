@@ -10,6 +10,8 @@ package org.keyple.calypso.commands.dto;
 
 /**
  * The Class SamHalfSessionSignature. Half session signature return by the digest close APDU command
+ *
+ * @deprecated Not used anywhere
  */
 public class SamHalfSessionSignature {
 

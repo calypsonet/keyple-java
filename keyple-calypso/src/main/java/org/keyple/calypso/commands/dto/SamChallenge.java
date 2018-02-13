@@ -10,6 +10,8 @@ package org.keyple.calypso.commands.dto;
 
 /**
  * The Class SamChallenge. Challenge return by the CSM Get Challenge APDU command
+ *
+ * @deprecated Not used anywhere
  */
 public class SamChallenge {
 
