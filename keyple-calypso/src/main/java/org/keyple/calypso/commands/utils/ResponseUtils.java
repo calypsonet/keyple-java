@@ -10,7 +10,6 @@ package org.keyple.calypso.commands.utils;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.keyple.calypso.commands.dto.KIF;
 import org.keyple.calypso.commands.dto.KVC;
 import org.keyple.calypso.commands.dto.POChallenge;
@@ -91,8 +90,8 @@ public class ResponseUtils {
             }
         }
 
-        return new GetDataFciRespPars.FCI(dfName, fciProprietaryTemplate, fciIssuerDiscretionaryData, applicationSN,
-                startupInformation);
+        return new GetDataFciRespPars.FCI(dfName, fciProprietaryTemplate,
+                fciIssuerDiscretionaryData, applicationSN, startupInformation);
     }
 
     /**

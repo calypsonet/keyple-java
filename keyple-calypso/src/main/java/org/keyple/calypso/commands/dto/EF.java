@@ -13,6 +13,7 @@ import java.util.Arrays;
 /**
  * The Class EF. EF:Elementary File, as defined in ISO/IEC 7816-4. File containing data. The types
  * of EF defined by Calypso are: Linear, Cyclic,Counters, Simulated Counter and Binary files.
+ * 
  * @deprecated Not used anywhere
  */
 public class EF {

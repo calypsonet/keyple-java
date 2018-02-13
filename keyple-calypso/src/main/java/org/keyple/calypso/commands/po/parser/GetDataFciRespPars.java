@@ -199,8 +199,8 @@ public class GetDataFciRespPars extends ApduResponseParser {
 
             this.fciProprietaryTemplate =
                     (fciProprietaryTemplate == null ? null : fciProprietaryTemplate.clone());
-            this.fciIssuerDiscretionaryData =
-                    (fciIssuerDiscretionaryData == null ? null : fciIssuerDiscretionaryData.clone());
+            this.fciIssuerDiscretionaryData = (fciIssuerDiscretionaryData == null ? null
+                    : fciIssuerDiscretionaryData.clone());
             this.applicationSN = (applicationSN == null ? null : applicationSN.clone());
             this.startupInformation = startupInformation;
         }
@@ -211,7 +211,8 @@ public class GetDataFciRespPars extends ApduResponseParser {
          * @return the fci proprietary template
          */
         public byte[] getFciProprietaryTemplate() {
-            return (this.fciProprietaryTemplate == null ? null : this.fciProprietaryTemplate.clone());
+            return (this.fciProprietaryTemplate == null ? null
+                    : this.fciProprietaryTemplate.clone());
         }
 
         /**
@@ -259,8 +260,8 @@ public class GetDataFciRespPars extends ApduResponseParser {
 
     /**
      * The Class StartupInformation. The Calypso applications return the Startup Information in the
-     * answer to the Select Application command. The Startup Information contains several data fields
-     * (applicationType,software issuer...)
+     * answer to the Select Application command. The Startup Information contains several data
+     * fields (applicationType,software issuer...)
      */
     public static class StartupInformation {
 
