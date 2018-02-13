@@ -65,7 +65,7 @@ public class ResponseUtilsTest {
                         (byte) 0xB7, 0x53, 0x07, 0x0A, 0x3C, 0x11, 0x32, 0x14, 0x10, 0x01};
         byte[] applicationSN =
                 new byte[] {0x00, 0x00, 0x00, 0x00, 0x27, 0x4A, (byte) 0x9A, (byte) 0xB7};
-        StartupInformation startupInfoExpected = new StartupInformation((byte) 0x0A, (byte) 0x3C,
+        GetDataFciRespPars.StartupInformation startupInfoExpected = new GetDataFciRespPars.StartupInformation((byte) 0x0A, (byte) 0x3C,
                 (byte) 0x11, (byte) 0x32, (byte) 0x14, (byte) 0x10, (byte) 0x01);
 
         GetDataFciRespPars.FCI fciExpected = new GetDataFciRespPars.FCI(aidExpected.getValue(), fciProprietaryTemplate,

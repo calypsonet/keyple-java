@@ -17,7 +17,6 @@ import org.keyple.calypso.commands.dto.POChallenge;
 import org.keyple.calypso.commands.dto.POHalfSessionSignature;
 import org.keyple.calypso.commands.dto.Record;
 import org.keyple.calypso.commands.dto.SecureSession;
-import org.keyple.calypso.commands.dto.StartupInformation;
 import org.keyple.calypso.commands.po.parser.GetDataFciRespPars;
 
 /**
@@ -41,7 +40,7 @@ public class ResponseUtils {
      * @return the FCI template
      */
     public static GetDataFciRespPars.FCI toFCI(byte[] apduResponse) {
-        StartupInformation startupInformation = null;
+        GetDataFciRespPars.StartupInformation startupInformation = null;
         byte firstResponseApdubyte = apduResponse[0];
         byte[] dfName = null;
         byte[] fciProprietaryTemplate = null;
@@ -86,7 +85,7 @@ public class ResponseUtils {
             if ((byte) 0x53 == apduResponse[19 + aidLength + fixedPartOfFciTemplate]) {
                 discretionaryData = subArray(apduResponse, firstbyteDiscretionaryData,
                         firstbyteDiscretionaryData + discretionaryDataLength);
-                startupInformation = new StartupInformation(discretionaryData[0],
+                startupInformation = new GetDataFciRespPars.StartupInformation(discretionaryData[0],
                         discretionaryData[1], discretionaryData[2], discretionaryData[3],
                         discretionaryData[4], discretionaryData[5], discretionaryData[6]);
             }
