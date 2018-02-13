@@ -14,7 +14,7 @@ package org.keyple.calypso.commands.dto;
 public class SecureSession {
 
     /** The session challenge. */
-    POChallenge sessionChallenge;
+    PoChallenge sessionChallenge;
 
     /** The previous session ratified boolean. */
     boolean previousSessionRatified;
@@ -48,7 +48,7 @@ public class SecureSession {
      *        APDU command
      */
     // Rev 3.1
-    public SecureSession(POChallenge sessionChallenge, boolean previousSessionRatified,
+    public SecureSession(PoChallenge sessionChallenge, boolean previousSessionRatified,
             boolean manageSecureSessionAuthorized, KIF kif, KVC kvc, byte[] originalData,
             byte[] secureSessionData) {
         this.sessionChallenge = sessionChallenge;
@@ -73,7 +73,7 @@ public class SecureSession {
      *        APDU command
      */
     // Rev 2.4
-    public SecureSession(POChallenge sessionChallenge, boolean previousSessionRatified,
+    public SecureSession(PoChallenge sessionChallenge, boolean previousSessionRatified,
             boolean manageSecureSessionAuthorized, KVC kvc, byte[] originalData,
             byte[] secureSessionData) {
         this.sessionChallenge = sessionChallenge;
@@ -89,7 +89,7 @@ public class SecureSession {
      *
      * @return the session challenge
      */
-    public POChallenge getSessionChallenge() {
+    public PoChallenge getSessionChallenge() {
         return sessionChallenge;
     }
 

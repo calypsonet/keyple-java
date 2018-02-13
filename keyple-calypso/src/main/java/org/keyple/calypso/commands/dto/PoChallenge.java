@@ -9,9 +9,9 @@
 package org.keyple.calypso.commands.dto;
 
 /**
- * The Class POChallenge. Challenge return by a PO Get Challenge APDU command
+ * The Class PoChallenge. Challenge return by a PO Get Challenge APDU command
  */
-public class POChallenge {
+public class PoChallenge {
 
     /** The transaction counter. */
     private byte[] transactionCounter;
@@ -20,12 +20,12 @@ public class POChallenge {
     private byte[] randomNumber;
 
     /**
-     * Instantiates a new POChallenge.
+     * Instantiates a new PoChallenge.
      *
      * @param transactionCounter the transaction counter
      * @param randomNumber the random number
      */
-    public POChallenge(byte[] transactionCounter, byte[] randomNumber) {
+    public PoChallenge(byte[] transactionCounter, byte[] randomNumber) {
         this.transactionCounter = (transactionCounter == null ? null : transactionCounter.clone());
         this.randomNumber = (randomNumber == null ? null : randomNumber.clone());
     }

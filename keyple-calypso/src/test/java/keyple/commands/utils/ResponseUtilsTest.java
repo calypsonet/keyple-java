@@ -198,7 +198,7 @@ public class ResponseUtilsTest {
         kif = new KIF((byte) 0x00);
         kvc = new KVC((byte) 0x00);
 
-        POChallenge poChallengeExpected = new POChallenge(transactionCounter, randomNumber);
+        PoChallenge poChallengeExpected = new PoChallenge(transactionCounter, randomNumber);
         boolean isPreviousSessionRatifiedExpected = true;
         boolean isManageSecureSessionAuthorizedExpected = false;
         byte[] originalData = new byte[] {};
@@ -233,7 +233,7 @@ public class ResponseUtilsTest {
         randomNumber = new byte[] {(byte) 0x53};
         kvc = new KVC((byte) 0x7E);
 
-        POChallenge poChallengeExpected = new POChallenge(transactionCounter, randomNumber);
+        PoChallenge poChallengeExpected = new PoChallenge(transactionCounter, randomNumber);
         boolean isPreviousSessionRatifiedExpected = false;
         boolean isManageSecureSessionAuthorizedExpected = false;
         byte[] originalData = null;
