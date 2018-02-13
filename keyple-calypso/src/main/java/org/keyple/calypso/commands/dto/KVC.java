@@ -11,6 +11,8 @@ package org.keyple.calypso.commands.dto;
 /**
  * The Class KVC. KVC: Key Version and Category. Arbitrary value identifying a key among several of
  * the same type.
+ *
+ * @deprecated Replace it by a byte directly
  */
 public class KVC {
 

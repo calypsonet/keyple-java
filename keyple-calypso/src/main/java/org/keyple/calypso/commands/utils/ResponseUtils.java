@@ -10,7 +10,7 @@ package org.keyple.calypso.commands.utils;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.keyple.calypso.commands.dto.FCI;
+
 import org.keyple.calypso.commands.dto.KIF;
 import org.keyple.calypso.commands.dto.KVC;
 import org.keyple.calypso.commands.dto.POChallenge;
@@ -18,6 +18,7 @@ import org.keyple.calypso.commands.dto.POHalfSessionSignature;
 import org.keyple.calypso.commands.dto.Record;
 import org.keyple.calypso.commands.dto.SecureSession;
 import org.keyple.calypso.commands.dto.StartupInformation;
+import org.keyple.calypso.commands.po.parser.GetDataFciRespPars;
 
 /**
  * This class eases the parse of APDUResponses into objects.
@@ -39,7 +40,7 @@ public class ResponseUtils {
      * @param apduResponse the apdu response
      * @return the FCI template
      */
-    public static FCI toFCI(byte[] apduResponse) {
+    public static GetDataFciRespPars.FCI toFCI(byte[] apduResponse) {
         StartupInformation startupInformation = null;
         byte firstResponseApdubyte = apduResponse[0];
         byte[] dfName = null;
@@ -91,7 +92,7 @@ public class ResponseUtils {
             }
         }
 
-        return new FCI(dfName, fciProprietaryTemplate, fciIssuerDiscretionaryData, applicationSN,
+        return new GetDataFciRespPars.FCI(dfName, fciProprietaryTemplate, fciIssuerDiscretionaryData, applicationSN,
                 startupInformation);
     }
 

@@ -12,6 +12,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.keyple.calypso.commands.dto.*;
 import org.keyple.calypso.commands.po.PoRevision;
+import org.keyple.calypso.commands.po.parser.GetDataFciRespPars;
 import org.keyple.calypso.commands.utils.ResponseUtils;
 
 // @RunWith(MockitoJUnitRunner.class)
@@ -67,9 +68,9 @@ public class ResponseUtilsTest {
         StartupInformation startupInfoExpected = new StartupInformation((byte) 0x0A, (byte) 0x3C,
                 (byte) 0x11, (byte) 0x32, (byte) 0x14, (byte) 0x10, (byte) 0x01);
 
-        FCI fciExpected = new FCI(aidExpected.getValue(), fciProprietaryTemplate,
+        GetDataFciRespPars.FCI fciExpected = new GetDataFciRespPars.FCI(aidExpected.getValue(), fciProprietaryTemplate,
                 fciIssuerDiscretionaryData, applicationSN, startupInfoExpected);
-        FCI fciTested = ResponseUtils.toFCI(apduResponse);
+        GetDataFciRespPars.FCI fciTested = ResponseUtils.toFCI(apduResponse);
 
         Assert.assertArrayEquals(fciExpected.getApplicationSN(), fciTested.getApplicationSN());
         Assert.assertArrayEquals(fciExpected.getFciIssuerDiscretionaryData(),

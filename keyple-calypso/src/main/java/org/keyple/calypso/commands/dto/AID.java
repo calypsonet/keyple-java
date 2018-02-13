@@ -11,6 +11,8 @@ package org.keyple.calypso.commands.dto;
 /**
  * The Class AID. AID: Application Identifier as defined in ISO/IEC 7816-4. Value unique in a
  * portable object, allowing to unambiguously identify an application.
+ *
+ * @deprecated The AID doesn't seem to be used anymore (except in tests)
  */
 public class AID {
 

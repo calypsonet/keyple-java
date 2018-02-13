@@ -10,6 +10,8 @@ package org.keyple.calypso.commands.dto;
 
 /**
  * The Class KIF. KIF:Key Identifier. Value identifying the type of key.
+ *
+ * @deprecated Replace it by a byte directly
  */
 public class KIF {
 
