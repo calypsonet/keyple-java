@@ -9,7 +9,7 @@
 package org.keyple.seproxy;
 
 /**
- * APDU request wrapper
+ * Single APDU request wrapper
  */
 public class ApduRequest {
 
