@@ -13,6 +13,8 @@ package org.keyple.calypso.commands.dto;
  * Transaction Counter (24 bit unsigned value) in its non-volatile memory, initialized with the
  * Calypso application, and which may only be decremented (reduced by 1) during the portable object
  * uses.
+ *
+ * @deprecated Not used anywhere
  */
 public class TransactionCounter {
 
