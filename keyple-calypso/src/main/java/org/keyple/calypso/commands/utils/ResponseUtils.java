@@ -8,10 +8,7 @@
 
 package org.keyple.calypso.commands.utils;
 
-import java.util.ArrayList;
-import java.util.List;
 import org.keyple.calypso.commands.dto.*;
-import org.keyple.calypso.commands.dto.PoChallenge;
 import org.keyple.calypso.commands.po.parser.GetDataFciRespPars;
 
 /**
@@ -164,39 +161,6 @@ public class ResponseUtils {
     }
 
     /**
-     * Method to get the Records from the response.
-     *
-     * @param apduResponse the apdu response
-     * @param oneRecordOnly the one record only
-     * @return a Maps of Records
-     */
-    public static List<Record> toRecords(byte[] apduResponse, boolean oneRecordOnly) {
-        List<Record> records = new ArrayList<Record>();
-        if (oneRecordOnly) {
-            records.add(new Record(apduResponse, 0));
-        } else {
-            int i = 0;
-            while (i < apduResponse.length) {
-                if (i + 2 + apduResponse[i + 1] > apduResponse.length - 1) {
-                    records.add(new Record(subArray(apduResponse, i + 2, apduResponse.length - 1),
-                            apduResponse[i]));
-                } else {
-                    records.add(
-                            new Record(subArray(apduResponse, i + 2, i + 2 + apduResponse[i + 1]),
-                                    apduResponse[i]));
-                }
-                // add data length to iterator
-                i += apduResponse[i + 1];
-                // add byte of data length to iterator
-                i++;
-                // add byte of num record to iterator
-                i++;
-            }
-        }
-        return records;
-    }
-
-    /**
      * Method to get the KVC from the response in revision 2 mode.
      *
      * @param apduResponse the apdu response
@@ -242,7 +206,15 @@ public class ResponseUtils {
         return (1 == ((thebyte >> position) & 1));
     }
 
-    private static byte[] subArray(byte[] source, int indexStart, int indexEnd) {
+    /**
+     * Create a sub-array from an array
+     *
+     * @param source     Source array
+     * @param indexStart Start index
+     * @param indexEnd   End index
+     * @return
+     */
+    public static byte[] subArray(byte[] source, int indexStart, int indexEnd) {
         byte[] res = new byte[indexEnd - indexStart];
         System.arraycopy(source, indexStart, res, 0, indexEnd - indexStart);
         return res;
