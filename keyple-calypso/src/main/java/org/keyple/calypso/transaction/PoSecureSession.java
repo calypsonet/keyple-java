@@ -13,7 +13,12 @@ import java.util.List;
 import javax.xml.bind.DatatypeConverter;
 import org.apache.commons.lang3.ArrayUtils;
 import org.keyple.calypso.commands.csm.CsmRevision;
-import org.keyple.calypso.commands.csm.builder.*;
+import org.keyple.calypso.commands.csm.builder.CsmGetChallengeCmdBuild;
+import org.keyple.calypso.commands.csm.builder.DigestAuthenticateCmdBuild;
+import org.keyple.calypso.commands.csm.builder.DigestCloseCmdBuild;
+import org.keyple.calypso.commands.csm.builder.DigestInitCmdBuild;
+import org.keyple.calypso.commands.csm.builder.DigestUpdateCmdBuild;
+import org.keyple.calypso.commands.csm.builder.SelectDiversifierCmdBuild;
 import org.keyple.calypso.commands.csm.parser.CsmGetChallengeRespPars;
 import org.keyple.calypso.commands.csm.parser.DigestAuthenticateRespPars;
 import org.keyple.calypso.commands.csm.parser.DigestCloseRespPars;
@@ -27,8 +32,16 @@ import org.keyple.calypso.commands.po.parser.GetDataFciRespPars;
 import org.keyple.calypso.commands.po.parser.OpenSessionRespPars;
 import org.keyple.commands.ApduCommandBuilder;
 import org.keyple.commands.InconsistentCommandException;
-import org.keyple.seproxy.*;
-import org.keyple.seproxy.exceptions.*;
+import org.keyple.seproxy.ApduRequest;
+import org.keyple.seproxy.ApduResponse;
+import org.keyple.seproxy.ProxyReader;
+import org.keyple.seproxy.SeRequest;
+import org.keyple.seproxy.SeResponse;
+import org.keyple.seproxy.exceptions.ChannelStateReaderException;
+import org.keyple.seproxy.exceptions.IOReaderException;
+import org.keyple.seproxy.exceptions.InvalidApduReaderException;
+import org.keyple.seproxy.exceptions.TimeoutReaderException;
+import org.keyple.seproxy.exceptions.UnexpectedReaderException;
 
 /**
  * Portable Object Secure Session.
