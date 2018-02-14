@@ -39,8 +39,7 @@ public class CloseSessionRespPars extends ApduResponseParser {
      * @param response the response
      * @return a PoHalfSessionSignature
      */
-    public static PoHalfSessionSignature toPoHalfSessionSignature(
-            byte[] response) {
+    public static PoHalfSessionSignature toPoHalfSessionSignature(byte[] response) {
         byte[] poHalfSessionSignatureTable = null;
         byte[] postponedData = null;
         if (response.length == 8) {
@@ -50,8 +49,7 @@ public class CloseSessionRespPars extends ApduResponseParser {
             poHalfSessionSignatureTable = ResponseUtils.subArray(response, 0, response.length);
         }
 
-        return new PoHalfSessionSignature(poHalfSessionSignatureTable,
-                postponedData);
+        return new PoHalfSessionSignature(poHalfSessionSignatureTable, postponedData);
     }
 
     /**

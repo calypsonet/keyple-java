@@ -9,7 +9,6 @@
 package org.keyple.calypso.commands.utils;
 
 import org.keyple.calypso.commands.dto.*;
-import org.keyple.calypso.commands.po.parser.CloseSessionRespPars;
 import org.keyple.calypso.commands.po.parser.GetDataFciRespPars;
 
 /**
