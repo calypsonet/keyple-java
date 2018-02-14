@@ -23,8 +23,10 @@ public class ApduResponse {
      */
     private final byte[] bytes;
 
-    /*** the success result of the processed APDU commandto allow chaining responses in a group of
-     * APDUs */
+    /***
+     * the success result of the processed APDU commandto allow chaining responses in a group of
+     * APDUs
+     */
     private boolean successful;
 
     /**

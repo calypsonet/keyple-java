@@ -168,7 +168,8 @@ public class SecureSession {
          * @param randomNumber the random number
          */
         public PoChallenge(byte[] transactionCounter, byte[] randomNumber) {
-            this.transactionCounter = (transactionCounter == null ? null : transactionCounter.clone());
+            this.transactionCounter =
+                    (transactionCounter == null ? null : transactionCounter.clone());
             this.randomNumber = (randomNumber == null ? null : randomNumber.clone());
         }
 
