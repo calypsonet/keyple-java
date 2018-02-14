@@ -9,6 +9,7 @@
 package org.keyple.calypso.commands.utils;
 
 import org.keyple.calypso.commands.dto.*;
+import org.keyple.calypso.commands.po.parser.CloseSessionRespPars;
 import org.keyple.calypso.commands.po.parser.GetDataFciRespPars;
 
 /**
@@ -176,26 +177,6 @@ public class ResponseUtils {
     }
 
     /**
-     * Method to get the PO half session signature (the second half part of the signature necessary
-     * to close the session properly) from the response.
-     *
-     * @param response the response
-     * @return a PoHalfSessionSignature
-     */
-    public static PoHalfSessionSignature toPoHalfSessionSignature(byte[] response) {
-        byte[] poHalfSessionSignatureTable = null;
-        byte[] postponedData = null;
-        if (response.length == 8) {
-            poHalfSessionSignatureTable = subArray(response, 4, response.length);
-            postponedData = subArray(response, 0, 4);
-        } else if (response.length == 4) {
-            poHalfSessionSignatureTable = subArray(response, 0, response.length);
-        }
-
-        return new PoHalfSessionSignature(poHalfSessionSignatureTable, postponedData);
-    }
-
-    /**
      * Checks if is bit equals one.
      *
      * @param thebyte the thebyte
@@ -209,9 +190,9 @@ public class ResponseUtils {
     /**
      * Create a sub-array from an array
      *
-     * @param source     Source array
+     * @param source Source array
      * @param indexStart Start index
-     * @param indexEnd   End index
+     * @param indexEnd End index
      * @return
      */
     public static byte[] subArray(byte[] source, int indexStart, int indexEnd) {

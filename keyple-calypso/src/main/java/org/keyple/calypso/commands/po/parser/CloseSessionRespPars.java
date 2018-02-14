@@ -8,17 +8,13 @@
 
 package org.keyple.calypso.commands.po.parser;
 
-import org.keyple.calypso.commands.dto.PoHalfSessionSignature;
 import org.keyple.calypso.commands.utils.ResponseUtils;
 import org.keyple.commands.ApduResponseParser;
 import org.keyple.seproxy.ApduResponse;
 
 /**
- * This class provides status code properties and the getters to access to the structured fields of
- * a Close Secure Session response.
- *
- * @author Ixxi
- *
+ * Close Secure Session (008E) response parser. See specs: Calypso / page 104 / 9.5.2 Close Secure
+ * Session
  */
 public class CloseSessionRespPars extends ApduResponseParser {
 
@@ -33,7 +29,29 @@ public class CloseSessionRespPars extends ApduResponseParser {
     public CloseSessionRespPars(ApduResponse response) {
         super(response);
         initStatusTable();
-        poHalfSessionSignature = ResponseUtils.toPoHalfSessionSignature(response.getbytes());
+        poHalfSessionSignature = toPoHalfSessionSignature(response.getbytes());
+    }
+
+    /**
+     * Method to get the PO half session signature (the second half part of the signature necessary
+     * to close the session properly) from the response.
+     *
+     * @param response the response
+     * @return a PoHalfSessionSignature
+     */
+    public static PoHalfSessionSignature toPoHalfSessionSignature(
+            byte[] response) {
+        byte[] poHalfSessionSignatureTable = null;
+        byte[] postponedData = null;
+        if (response.length == 8) {
+            poHalfSessionSignatureTable = ResponseUtils.subArray(response, 4, response.length);
+            postponedData = ResponseUtils.subArray(response, 0, 4);
+        } else if (response.length == 4) {
+            poHalfSessionSignatureTable = ResponseUtils.subArray(response, 0, response.length);
+        }
+
+        return new PoHalfSessionSignature(poHalfSessionSignatureTable,
+                postponedData);
     }
 
     /**
@@ -64,4 +82,55 @@ public class CloseSessionRespPars extends ApduResponseParser {
         return poHalfSessionSignature.getValue();
     }
 
+    /**
+     * The Class PoHalfSessionSignature. Half session signature return by a close secure session
+     * APDU command
+     */
+    public static class PoHalfSessionSignature {
+
+        /** The value. */
+        private byte[] value;
+
+        /** The postponed data. */
+        private byte[] postponedData;
+
+        /**
+         * Instantiates a new PoHalfSessionSignature.
+         *
+         * @param value the value
+         * @param postponedData the postponed data
+         */
+        public PoHalfSessionSignature(byte[] value, byte[] postponedData) {
+            super();
+            this.value = (value == null) ? null : value.clone();
+            this.postponedData = (postponedData == null ? null : postponedData.clone());
+        }
+
+        /**
+         * Gets the value.
+         *
+         * @return the value
+         */
+        public byte[] getValue() {
+            if (value != null) {
+                return value.clone();
+            } else {
+                return new byte[0];
+            }
+        }
+
+        /**
+         * Gets the postponed data.
+         *
+         * @return the postponed data
+         */
+        byte[] getPostponedData() {
+            if (postponedData != null) {
+                return postponedData.clone();
+            } else {
+                return new byte[0];
+            }
+        }
+
+    }
 }

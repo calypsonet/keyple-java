@@ -8,16 +8,14 @@
 
 package org.keyple.calypso.commands.po.parser;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.keyple.calypso.commands.utils.ResponseUtils;
 import org.keyple.commands.ApduResponseParser;
 import org.keyple.seproxy.ApduResponse;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
- * Read Records (00B2) response parser.
- * See specs: Calypso / page 89 / 9.4.7 Read Records
+ * Read Records (00B2) response parser. See specs: Calypso / page 89 / 9.4.7 Read Records
  */
 public class ReadRecordsRespPars extends ApduResponseParser {
 
@@ -52,12 +50,12 @@ public class ReadRecordsRespPars extends ApduResponseParser {
             int i = 0;
             while (i < apduResponse.length) {
                 if (i + 2 + apduResponse[i + 1] > apduResponse.length - 1) {
-                    records.add(new Record(ResponseUtils.subArray(apduResponse, i + 2, apduResponse.length - 1),
+                    records.add(new Record(
+                            ResponseUtils.subArray(apduResponse, i + 2, apduResponse.length - 1),
                             apduResponse[i]));
                 } else {
-                    records.add(
-                            new Record(ResponseUtils.subArray(apduResponse, i + 2, i + 2 + apduResponse[i + 1]),
-                                    apduResponse[i]));
+                    records.add(new Record(ResponseUtils.subArray(apduResponse, i + 2,
+                            i + 2 + apduResponse[i + 1]), apduResponse[i]));
                 }
                 // add data length to iterator
                 i += apduResponse[i + 1];
