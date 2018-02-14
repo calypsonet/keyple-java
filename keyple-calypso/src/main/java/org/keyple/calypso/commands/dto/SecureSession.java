@@ -23,7 +23,7 @@ public class SecureSession {
     boolean manageSecureSessionAuthorized;
 
     /** The kif. */
-    KIF kif = new KIF((byte) 0xFF);
+    byte kif = (byte) 0xFF;
 
     /** The kvc. */
     KVC kvc;
@@ -49,7 +49,7 @@ public class SecureSession {
      */
     // Rev 3.1
     public SecureSession(PoChallenge sessionChallenge, boolean previousSessionRatified,
-            boolean manageSecureSessionAuthorized, KIF kif, KVC kvc, byte[] originalData,
+            boolean manageSecureSessionAuthorized, byte kif, KVC kvc, byte[] originalData,
             byte[] secureSessionData) {
         this.sessionChallenge = sessionChallenge;
         this.previousSessionRatified = previousSessionRatified;
@@ -116,7 +116,7 @@ public class SecureSession {
      *
      * @return the kif
      */
-    public KIF getKIF() {
+    public byte getKIF() {
         return kif;
     }
 

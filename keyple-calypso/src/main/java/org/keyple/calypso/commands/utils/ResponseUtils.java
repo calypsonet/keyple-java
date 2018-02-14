@@ -99,7 +99,7 @@ public class ResponseUtils {
         boolean previousSessionRatified = isBitEqualsOne(flag, 0x00);
         boolean manageSecureSessionAuthorized = isBitEqualsOne(flag, 1);
 
-        KIF kif = new KIF(apduResponse[9]);
+        byte kif = apduResponse[9];
         KVC kvc = new KVC(apduResponse[10]);
         int dataLength = apduResponse[11];
         byte[] data = subArray(apduResponse, 12, 12 + dataLength);
@@ -121,7 +121,7 @@ public class ResponseUtils {
         boolean previousSessionRatified = apduResponse[4] == (byte) 0x01 ? true : false;
         boolean manageSecureSessionAuthorized = false;
 
-        KIF kif = new KIF(apduResponse[5]);
+        byte kif = apduResponse[5];
         KVC kvc = new KVC(apduResponse[6]);
         int dataLength = apduResponse[7];
         byte[] data = subArray(apduResponse, 8, 8 + dataLength);

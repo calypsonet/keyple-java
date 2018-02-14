@@ -42,7 +42,7 @@ public class ResponseUtilsTest {
 
     private byte[] randomNumber;
 
-    private KIF kif;
+    private byte kif;
 
     private KVC kvc;
 
@@ -195,7 +195,7 @@ public class ResponseUtilsTest {
 
         transactionCounter = new byte[] {(byte) 0x8F, 0x05, 0x75};
         randomNumber = new byte[] {0x1A, 0x00, 0x00, 0x00, 0x00};
-        kif = new KIF((byte) 0x00);
+        kif = 0x00;
         kvc = new KVC((byte) 0x00);
 
         PoChallenge poChallengeExpected = new PoChallenge(transactionCounter, randomNumber);
@@ -212,8 +212,7 @@ public class ResponseUtilsTest {
                 SecureSessionTested.getOriginalData());
         Assert.assertArrayEquals(SecureSessionExpected.getSecureSessionData(),
                 SecureSessionTested.getSecureSessionData());
-        Assert.assertEquals(SecureSessionExpected.getKIF().getValue(),
-                SecureSessionTested.getKIF().getValue());
+        Assert.assertEquals(SecureSessionExpected.getKIF(), SecureSessionTested.getKIF());
         Assert.assertEquals(SecureSessionExpected.getKVC().getValue(),
                 SecureSessionTested.getKVC().getValue());
         Assert.assertArrayEquals(SecureSessionExpected.getSessionChallenge().getRandomNumber(),
