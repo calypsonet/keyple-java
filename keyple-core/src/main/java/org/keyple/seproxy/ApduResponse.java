@@ -13,7 +13,7 @@ import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 
 /**
- * The Class APDUResponse. This class defines the elements of a single APDU command response:
+ * Single APDU response wrapper
  */
 public class ApduResponse {
 
@@ -23,9 +23,8 @@ public class ApduResponse {
      */
     private final byte[] bytes;
 
-    /**
-     * the success result of the processed APDU command.
-     */
+    /*** the success result of the processed APDU commandto allow chaining responses in a group of
+     * APDUs */
     private boolean successful;
 
     /**
