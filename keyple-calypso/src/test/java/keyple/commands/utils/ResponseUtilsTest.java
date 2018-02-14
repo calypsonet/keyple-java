@@ -56,7 +56,7 @@ public class ResponseUtilsTest {
                 0x0A, 0x3C, 0x11, 0x32, 0x14, 0x10, 0x01};
 
         aid = new byte[] {0x33, 0x4D, 0x54, 0x52, 0x2E, 0x49, 0x43, 0x41};
-        AID aidExpected = new AID(aid);
+        // AID aidExpected = new AID(aid);
         byte[] fciProprietaryTemplate = new byte[] {(byte) 0xBF, 0x0C, 0x13, (byte) 0xC7, 0x08,
                 0x00, 0x00, 0x00, 0x00, 0x27, 0x4A, (byte) 0x9A, (byte) 0xB7, 0x53, 0x07, 0x0A,
                 0x3C, 0x11, 0x32, 0x14, 0x10, 0x01};
@@ -69,9 +69,8 @@ public class ResponseUtilsTest {
                 new GetDataFciRespPars.StartupInformation((byte) 0x0A, (byte) 0x3C, (byte) 0x11,
                         (byte) 0x32, (byte) 0x14, (byte) 0x10, (byte) 0x01);
 
-        GetDataFciRespPars.FCI fciExpected =
-                new GetDataFciRespPars.FCI(aidExpected.getValue(), fciProprietaryTemplate,
-                        fciIssuerDiscretionaryData, applicationSN, startupInfoExpected);
+        GetDataFciRespPars.FCI fciExpected = new GetDataFciRespPars.FCI(aid, fciProprietaryTemplate,
+                fciIssuerDiscretionaryData, applicationSN, startupInfoExpected);
         GetDataFciRespPars.FCI fciTested = ResponseUtils.toFCI(apduResponse);
 
         Assert.assertArrayEquals(fciExpected.getApplicationSN(), fciTested.getApplicationSN());
