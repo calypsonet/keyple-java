@@ -8,11 +8,10 @@
 
 package org.keyple.seproxy;
 
+import static org.junit.Assert.*;
 import org.apache.commons.codec.binary.Hex;
 import org.junit.Assert;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 public class ApduResponseTest {
 

@@ -12,7 +12,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.keyple.calypso.commands.dto.*;
 import org.keyple.calypso.commands.po.PoRevision;
-import org.keyple.calypso.commands.po.parser.CloseSessionRespPars;
 import org.keyple.calypso.commands.po.parser.GetDataFciRespPars;
 import org.keyple.calypso.commands.utils.ResponseUtils;
 
@@ -299,42 +298,6 @@ public class ResponseUtilsTest {
         Assert.assertArrayEquals(
                 SecureSessionExpectedCaseThree.getSessionChallenge().getTransactionCounter(),
                 SecureSessionTestedCaseThree.getSessionChallenge().getTransactionCounter());
-    }
-
-    @Test
-    public void TestToPOHalfSessionSignature() {
-
-        apduResponse = new byte[] {(byte) 0x4D, (byte) 0xBD, (byte) 0xC9, 0x60};
-        apduResponseCaseTwo = new byte[] {(byte) 0xA8, 0x31, (byte) 0xC3, 0x3E, (byte) 0xA7, 0x21,
-                (byte) 0xC2, 0x2E};
-        apduResponseCaseThree = new byte[] {(byte) 0xA8, 0x31, (byte) 0xC3};
-
-        byte[] sessionSignature = new byte[] {(byte) 0x4D, (byte) 0xBD, (byte) 0xC9, 0x60};
-        byte[] sessionSignatureCaseTwo = new byte[] {(byte) 0xA7, 0x21, (byte) 0xC2, 0x2E};
-
-        // Case Length = 4
-        CloseSessionRespPars.PoHalfSessionSignature poHalfSessionSignatureExpected =
-                new CloseSessionRespPars.PoHalfSessionSignature(sessionSignature, null);
-        CloseSessionRespPars.PoHalfSessionSignature poHalfSessionSignatureTested =
-                CloseSessionRespPars.toPoHalfSessionSignature(apduResponse);
-
-        Assert.assertArrayEquals(poHalfSessionSignatureExpected.getValue(),
-                poHalfSessionSignatureTested.getValue());
-
-        // Case Length = 8
-        CloseSessionRespPars.PoHalfSessionSignature poHalfSessionSignatureExpectedCaseTwo =
-                new CloseSessionRespPars.PoHalfSessionSignature(sessionSignatureCaseTwo, null);
-        CloseSessionRespPars.PoHalfSessionSignature poHalfSessionSignatureTestedCaseTwo =
-                CloseSessionRespPars.toPoHalfSessionSignature(apduResponseCaseTwo);
-
-        Assert.assertArrayEquals(poHalfSessionSignatureExpectedCaseTwo.getValue(),
-                poHalfSessionSignatureTestedCaseTwo.getValue());
-
-        // Case Other
-        CloseSessionRespPars.PoHalfSessionSignature poHalfSessionSignatureTestedCaseThree =
-                CloseSessionRespPars.toPoHalfSessionSignature(apduResponseCaseThree);
-        Assert.assertEquals(poHalfSessionSignatureTestedCaseThree.getValue().length, 0);
-
     }
 
     @Test

@@ -8,10 +8,9 @@
 
 package org.keyple.seproxy;
 
+import java.util.regex.Pattern;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
-
-import java.util.regex.Pattern;
 
 /**
  * The Class APDUResponse. This class defines the elements of a single APDU command response:
@@ -38,8 +37,7 @@ public class ApduResponse {
 
 
     /**
-     * Chars we will ignore when loading a sample HEX string.
-     * It allows to copy/paste the specs APDU
+     * Chars we will ignore when loading a sample HEX string. It allows to copy/paste the specs APDU
      */
     private static final Pattern HEX_IGNORED_CHARS = Pattern.compile(" |h");
 
@@ -65,7 +63,7 @@ public class ApduResponse {
      * the constructor called by a ProxyReader in order to build the APDU command response to push
      * to a ticketing application.
      *
-     * @param bytes      the bytes
+     * @param bytes the bytes
      * @param successful the successful
      */
     public ApduResponse(byte[] bytes, boolean successful) {
@@ -77,7 +75,7 @@ public class ApduResponse {
      * the constructor called by a ProxyReader in order to build the APDU command response to push
      * to a ticketing application.
      *
-     * @param bytes      the bytes
+     * @param bytes the bytes
      * @param successful the successful
      * @param statusCode the status code
      * @deprecated Only {@link ApduResponse#ApduResponse(byte[], boolean)} should be used instead.
