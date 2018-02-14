@@ -105,7 +105,7 @@ public class ResponseUtils {
         byte[] data = subArray(apduResponse, 12, 12 + dataLength);
 
         return new SecureSession(
-                new PoChallenge(subArray(apduResponse, 0, 3), subArray(apduResponse, 3, 8)),
+                new SecureSession.PoChallenge(subArray(apduResponse, 0, 3), subArray(apduResponse, 3, 8)),
                 previousSessionRatified, manageSecureSessionAuthorized, kif, kvc, data,
                 apduResponse);
     }
@@ -127,7 +127,7 @@ public class ResponseUtils {
         byte[] data = subArray(apduResponse, 8, 8 + dataLength);
 
         secureSession = new SecureSession(
-                new PoChallenge(subArray(apduResponse, 0, 3), subArray(apduResponse, 3, 4)),
+                new SecureSession.PoChallenge(subArray(apduResponse, 0, 3), subArray(apduResponse, 3, 4)),
                 previousSessionRatified, manageSecureSessionAuthorized, kif, kvc, data,
                 apduResponse);
         return secureSession;
@@ -152,7 +152,7 @@ public class ResponseUtils {
         // TODO selecting record data without length ?
 
         secureSession = new SecureSession(
-                new PoChallenge(subArray(apduResponse, 1, 4), subArray(apduResponse, 4, 5)),
+                new SecureSession.PoChallenge(subArray(apduResponse, 1, 4), subArray(apduResponse, 4, 5)),
                 previousSessionRatified, false, kvc, null, apduResponse);
 
         return secureSession;
