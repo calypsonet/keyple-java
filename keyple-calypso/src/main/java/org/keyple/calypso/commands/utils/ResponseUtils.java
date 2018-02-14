@@ -180,9 +180,9 @@ public class ResponseUtils {
      * to close the session properly) from the response.
      *
      * @param response the response
-     * @return a POHalfSessionSignature
+     * @return a PoHalfSessionSignature
      */
-    public static POHalfSessionSignature toPoHalfSessionSignature(byte[] response) {
+    public static PoHalfSessionSignature toPoHalfSessionSignature(byte[] response) {
         byte[] poHalfSessionSignatureTable = null;
         byte[] postponedData = null;
         if (response.length == 8) {
@@ -192,7 +192,7 @@ public class ResponseUtils {
             poHalfSessionSignatureTable = subArray(response, 0, response.length);
         }
 
-        return new POHalfSessionSignature(poHalfSessionSignatureTable, postponedData);
+        return new PoHalfSessionSignature(poHalfSessionSignatureTable, postponedData);
     }
 
     /**

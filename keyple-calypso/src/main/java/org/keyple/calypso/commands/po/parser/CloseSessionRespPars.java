@@ -8,7 +8,7 @@
 
 package org.keyple.calypso.commands.po.parser;
 
-import org.keyple.calypso.commands.dto.POHalfSessionSignature;
+import org.keyple.calypso.commands.dto.PoHalfSessionSignature;
 import org.keyple.calypso.commands.utils.ResponseUtils;
 import org.keyple.commands.ApduResponseParser;
 import org.keyple.seproxy.ApduResponse;
@@ -23,7 +23,7 @@ import org.keyple.seproxy.ApduResponse;
 public class CloseSessionRespPars extends ApduResponseParser {
 
     /** The po half session signature. */
-    private POHalfSessionSignature poHalfSessionSignature;
+    private PoHalfSessionSignature poHalfSessionSignature;
 
     /**
      * Instantiates a new CloseSessionRespPars from the response.

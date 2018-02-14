@@ -312,25 +312,25 @@ public class ResponseUtilsTest {
         byte[] sessionSignatureCaseTwo = new byte[] {(byte) 0xA7, 0x21, (byte) 0xC2, 0x2E};
 
         // Case Length = 4
-        POHalfSessionSignature poHalfSessionSignatureExpected =
-                new POHalfSessionSignature(sessionSignature, null);
-        POHalfSessionSignature poHalfSessionSignatureTested =
+        PoHalfSessionSignature poHalfSessionSignatureExpected =
+                new PoHalfSessionSignature(sessionSignature, null);
+        PoHalfSessionSignature poHalfSessionSignatureTested =
                 ResponseUtils.toPoHalfSessionSignature(apduResponse);
 
         Assert.assertArrayEquals(poHalfSessionSignatureExpected.getValue(),
                 poHalfSessionSignatureTested.getValue());
 
         // Case Length = 8
-        POHalfSessionSignature poHalfSessionSignatureExpectedCaseTwo =
-                new POHalfSessionSignature(sessionSignatureCaseTwo, null);
-        POHalfSessionSignature poHalfSessionSignatureTestedCaseTwo =
+        PoHalfSessionSignature poHalfSessionSignatureExpectedCaseTwo =
+                new PoHalfSessionSignature(sessionSignatureCaseTwo, null);
+        PoHalfSessionSignature poHalfSessionSignatureTestedCaseTwo =
                 ResponseUtils.toPoHalfSessionSignature(apduResponseCaseTwo);
 
         Assert.assertArrayEquals(poHalfSessionSignatureExpectedCaseTwo.getValue(),
                 poHalfSessionSignatureTestedCaseTwo.getValue());
 
         // Case Other
-        POHalfSessionSignature poHalfSessionSignatureTestedCaseThree =
+        PoHalfSessionSignature poHalfSessionSignatureTestedCaseThree =
                 ResponseUtils.toPoHalfSessionSignature(apduResponseCaseThree);
         Assert.assertEquals(poHalfSessionSignatureTestedCaseThree.getValue().length, 0);
 
