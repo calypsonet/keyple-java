@@ -33,26 +33,6 @@ public class CloseSessionRespPars extends ApduResponseParser {
     }
 
     /**
-     * Method to get the PO half session signature (the second half part of the signature necessary
-     * to close the session properly) from the response.
-     *
-     * @param response the response
-     * @return a PoHalfSessionSignature
-     */
-    public static PoHalfSessionSignature toPoHalfSessionSignature(byte[] response) {
-        byte[] poHalfSessionSignatureTable = null;
-        byte[] postponedData = null;
-        if (response.length == 8) {
-            poHalfSessionSignatureTable = ResponseUtils.subArray(response, 4, response.length);
-            postponedData = ResponseUtils.subArray(response, 0, 4);
-        } else if (response.length == 4) {
-            poHalfSessionSignatureTable = ResponseUtils.subArray(response, 0, response.length);
-        }
-
-        return new PoHalfSessionSignature(poHalfSessionSignatureTable, postponedData);
-    }
-
-    /**
      * Initializes the status table.
      */
     private void initStatusTable() {
@@ -78,6 +58,30 @@ public class CloseSessionRespPars extends ApduResponseParser {
 
     public byte[] getSignatureLo() {
         return poHalfSessionSignature.getValue();
+    }
+
+    /**
+     * Method to get the PO half session signature (the second half part of the signature necessary
+     * to close the session properly) from the response.
+     *
+     * @param response the response
+     * @return a PoHalfSessionSignature
+     */
+    public static PoHalfSessionSignature toPoHalfSessionSignature(byte[] response) {
+        byte[] poHalfSessionSignatureTable = null;
+        byte[] postponedData = null;
+
+        // fclairamb(2018-02-14): Removed 2 bytes to the global response length;
+        final int size = response.length - 2;
+
+        if (size == 8) {
+            poHalfSessionSignatureTable = ResponseUtils.subArray(response, 4, size);
+            postponedData = ResponseUtils.subArray(response, 0, 4);
+        } else if (size == 4) {
+            poHalfSessionSignatureTable = ResponseUtils.subArray(response, 0, size);
+        }
+
+        return new PoHalfSessionSignature(poHalfSessionSignatureTable, postponedData);
     }
 
     /**
