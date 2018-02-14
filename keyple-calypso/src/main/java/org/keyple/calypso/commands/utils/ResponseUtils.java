@@ -100,7 +100,7 @@ public class ResponseUtils {
         boolean manageSecureSessionAuthorized = isBitEqualsOne(flag, 1);
 
         byte kif = apduResponse[9];
-        KVC kvc = new KVC(apduResponse[10]);
+        byte kvc = apduResponse[10];
         int dataLength = apduResponse[11];
         byte[] data = subArray(apduResponse, 12, 12 + dataLength);
 
@@ -122,7 +122,7 @@ public class ResponseUtils {
         boolean manageSecureSessionAuthorized = false;
 
         byte kif = apduResponse[5];
-        KVC kvc = new KVC(apduResponse[6]);
+        byte kvc = apduResponse[6];
         int dataLength = apduResponse[7];
         byte[] data = subArray(apduResponse, 8, 8 + dataLength);
 
@@ -142,10 +142,8 @@ public class ResponseUtils {
     public static SecureSession toSecureSessionRev2(byte[] apduResponse) {
         SecureSession secureSession;
         boolean previousSessionRatified = true;
-        boolean manageSecureSessionAuthorized = false;
 
-        KVC kvc = toKVCRev2(apduResponse);
-        byte[] data = null;
+        byte kvc = toKVCRev2(apduResponse);
 
         if (apduResponse.length < 6) {
             previousSessionRatified = false;
@@ -155,7 +153,7 @@ public class ResponseUtils {
 
         secureSession = new SecureSession(
                 new PoChallenge(subArray(apduResponse, 1, 4), subArray(apduResponse, 4, 5)),
-                previousSessionRatified, manageSecureSessionAuthorized, kvc, data, apduResponse);
+                previousSessionRatified, false, kvc, null, apduResponse);
 
         return secureSession;
     }
@@ -164,15 +162,11 @@ public class ResponseUtils {
      * Method to get the KVC from the response in revision 2 mode.
      *
      * @param apduResponse the apdu response
-     * @return a KVC
+     * @return a KVC byte
      */
-    public static KVC toKVCRev2(byte[] apduResponse) {
-        KVC kvcValue = null;
-        if (apduResponse.length > 4) {
-            kvcValue = new KVC(apduResponse[0]);
-        }
-
-        return kvcValue;
+    public static byte toKVCRev2(byte[] apduResponse) {
+        // TODO: Check that part: I replaced a (null) KVC by a 0x00
+        return apduResponse.length > 4 ? apduResponse[0] : 0x00;
     }
 
     /**

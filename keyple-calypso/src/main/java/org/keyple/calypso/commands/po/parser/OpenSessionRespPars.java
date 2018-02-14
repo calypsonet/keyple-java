@@ -179,7 +179,7 @@ public class OpenSessionRespPars extends ApduResponseParser {
     }
 
     public byte getSelectedKvc() {
-        return secureSession.getKVC().getValue();
+        return secureSession.getKVC();
     }
 
     public byte[] getRecordDataRead() {

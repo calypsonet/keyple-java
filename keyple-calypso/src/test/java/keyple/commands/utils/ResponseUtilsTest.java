@@ -44,7 +44,7 @@ public class ResponseUtilsTest {
 
     private byte kif;
 
-    private KVC kvc;
+    // private KVC kvc;
 
     @Test
     public void TestToFCI() {
@@ -195,7 +195,7 @@ public class ResponseUtilsTest {
         transactionCounter = new byte[] {(byte) 0x8F, 0x05, 0x75};
         randomNumber = new byte[] {0x1A, 0x00, 0x00, 0x00, 0x00};
         kif = 0x00;
-        kvc = new KVC((byte) 0x00);
+        byte kvc = (byte) 0x00;
 
         PoChallenge poChallengeExpected = new PoChallenge(transactionCounter, randomNumber);
         boolean isPreviousSessionRatifiedExpected = true;
@@ -212,8 +212,7 @@ public class ResponseUtilsTest {
         Assert.assertArrayEquals(SecureSessionExpected.getSecureSessionData(),
                 SecureSessionTested.getSecureSessionData());
         Assert.assertEquals(SecureSessionExpected.getKIF(), SecureSessionTested.getKIF());
-        Assert.assertEquals(SecureSessionExpected.getKVC().getValue(),
-                SecureSessionTested.getKVC().getValue());
+        Assert.assertEquals(SecureSessionExpected.getKVC(), SecureSessionTested.getKVC());
         Assert.assertArrayEquals(SecureSessionExpected.getSessionChallenge().getRandomNumber(),
                 SecureSessionTested.getSessionChallenge().getRandomNumber());
         Assert.assertArrayEquals(
@@ -229,7 +228,7 @@ public class ResponseUtilsTest {
 
         transactionCounter = new byte[] {(byte) 0x03, (byte) 0x0D, (byte) 0x14};
         randomNumber = new byte[] {(byte) 0x53};
-        kvc = new KVC((byte) 0x7E);
+        byte kvc = (byte) 0x7E;
 
         PoChallenge poChallengeExpected = new PoChallenge(transactionCounter, randomNumber);
         boolean isPreviousSessionRatifiedExpected = false;
@@ -243,8 +242,7 @@ public class ResponseUtilsTest {
 
         Assert.assertArrayEquals(SecureSessionExpected.getSecureSessionData(),
                 SecureSessionTested.getSecureSessionData());
-        Assert.assertEquals(SecureSessionExpected.getKVC().getValue(),
-                SecureSessionTested.getKVC().getValue());
+        Assert.assertEquals(SecureSessionExpected.getKVC(), SecureSessionTested.getKVC());
         Assert.assertArrayEquals(SecureSessionExpected.getSessionChallenge().getRandomNumber(),
                 SecureSessionTested.getSessionChallenge().getRandomNumber());
         Assert.assertArrayEquals(
@@ -265,8 +263,8 @@ public class ResponseUtilsTest {
 
         Assert.assertArrayEquals(SecureSessionExpectedCaseTwo.getSecureSessionData(),
                 SecureSessionTestedCaseTwo.getSecureSessionData());
-        Assert.assertEquals(SecureSessionExpectedCaseTwo.getKVC().getValue(),
-                SecureSessionTestedCaseTwo.getKVC().getValue());
+        Assert.assertEquals(SecureSessionExpectedCaseTwo.getKVC(),
+                SecureSessionTestedCaseTwo.getKVC());
         Assert.assertArrayEquals(
                 SecureSessionExpectedCaseTwo.getSessionChallenge().getRandomNumber(),
                 SecureSessionTestedCaseTwo.getSessionChallenge().getRandomNumber());
@@ -288,8 +286,8 @@ public class ResponseUtilsTest {
 
         Assert.assertArrayEquals(SecureSessionExpectedCaseThree.getSecureSessionData(),
                 SecureSessionTestedCaseThree.getSecureSessionData());
-        Assert.assertEquals(SecureSessionExpectedCaseThree.getKVC().getValue(),
-                SecureSessionTestedCaseThree.getKVC().getValue());
+        Assert.assertEquals(SecureSessionExpectedCaseThree.getKVC(),
+                SecureSessionTestedCaseThree.getKVC());
         Assert.assertArrayEquals(
                 SecureSessionExpectedCaseThree.getSessionChallenge().getRandomNumber(),
                 SecureSessionTestedCaseThree.getSessionChallenge().getRandomNumber());
@@ -302,10 +300,10 @@ public class ResponseUtilsTest {
     public void TestToKVCRev2() {
 
         apduResponse = new byte[] {(byte) 0x7E, (byte) 0x03, (byte) 0x0D, (byte) 0x14, (byte) 0x53};
-        KVC KVCRev2Expected = new KVC((byte) 0x7E);
-        KVC KVCRev2Tested = ResponseUtils.toKVCRev2(apduResponse);
+        byte KVCRev2Expected = (byte) 0x7E;
+        byte KVCRev2Tested = ResponseUtils.toKVCRev2(apduResponse);
 
-        Assert.assertEquals(KVCRev2Expected.getValue(), KVCRev2Tested.getValue());
+        Assert.assertEquals(KVCRev2Expected, KVCRev2Tested);
 
         apduResponseCaseTwo =
                 new byte[] {(byte) 0x7E, (byte) 0x03, (byte) 0x0D, (byte) 0x14, (byte) 0x53};
