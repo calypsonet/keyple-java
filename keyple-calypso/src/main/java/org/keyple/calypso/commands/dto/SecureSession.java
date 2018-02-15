@@ -13,8 +13,11 @@ package org.keyple.calypso.commands.dto;
  */
 public class SecureSession {
 
-    /** The session challenge. */
-    PoChallenge sessionChallenge;
+    /** Challenge transaction counter */
+    byte[] challengeTransactionCounter;
+
+    /** Challenge random number */
+    byte[] challengeRandomNumber;
 
     /** The previous session ratified boolean. */
     boolean previousSessionRatified;
@@ -37,7 +40,6 @@ public class SecureSession {
     /**
      * Instantiates a new SecureSession for a Calypso application revision 3
      *
-     * @param sessionChallenge the session challenge return by the open secure session APDU command
      * @param previousSessionRatified the previous session ratified
      * @param manageSecureSessionAuthorized the manage secure session authorized
      * @param kif the KIF from the response of the open secure session APDU command
@@ -48,10 +50,12 @@ public class SecureSession {
      *        APDU command
      */
     // Rev 3.1
-    public SecureSession(PoChallenge sessionChallenge, boolean previousSessionRatified,
-            boolean manageSecureSessionAuthorized, byte kif, byte kvc, byte[] originalData,
-            byte[] secureSessionData) {
-        this.sessionChallenge = sessionChallenge;
+    public SecureSession(byte[] challengeTransactionCounter, byte[] challengeRandomNumber,
+            boolean previousSessionRatified, boolean manageSecureSessionAuthorized, byte kif,
+            byte kvc, byte[] originalData, byte[] secureSessionData) {
+        // this.sessionChallenge = sessionChallenge;
+        this.challengeTransactionCounter = challengeTransactionCounter;
+        this.challengeRandomNumber = challengeRandomNumber;
         this.previousSessionRatified = previousSessionRatified;
         this.manageSecureSessionAuthorized = manageSecureSessionAuthorized;
         this.kif = kif;
@@ -63,7 +67,6 @@ public class SecureSession {
     /**
      * Instantiates a new SecureSession for a Calypso application revision 2.4
      *
-     * @param sessionChallenge the session challenge return by the open secure session APDU command
      * @param previousSessionRatified the previous session ratified
      * @param manageSecureSessionAuthorized the manage secure session authorized
      * @param kvc the KVC from the response of the open secure session APDU command
@@ -73,10 +76,11 @@ public class SecureSession {
      *        APDU command
      */
     // Rev 2.4
-    public SecureSession(PoChallenge sessionChallenge, boolean previousSessionRatified,
-            boolean manageSecureSessionAuthorized, byte kvc, byte[] originalData,
-            byte[] secureSessionData) {
-        this.sessionChallenge = sessionChallenge;
+    public SecureSession(byte[] challengeTransactionCounter, byte[] challengeRandomNumber,
+            boolean previousSessionRatified, boolean manageSecureSessionAuthorized, byte kvc,
+            byte[] originalData, byte[] secureSessionData) {
+        this.challengeTransactionCounter = challengeTransactionCounter;
+        this.challengeRandomNumber = challengeRandomNumber;
         this.previousSessionRatified = previousSessionRatified;
         this.manageSecureSessionAuthorized = manageSecureSessionAuthorized;
         this.kvc = kvc;
@@ -84,13 +88,12 @@ public class SecureSession {
         this.secureSessionData = (secureSessionData == null ? null : secureSessionData.clone());
     }
 
-    /**
-     * Gets the session challenge.
-     *
-     * @return the session challenge
-     */
-    public PoChallenge getSessionChallenge() {
-        return sessionChallenge;
+    public byte[] getChallengeTransactionCounter() {
+        return challengeTransactionCounter;
+    }
+
+    public byte[] getChallengeRandomNumber() {
+        return challengeRandomNumber;
     }
 
     /**
