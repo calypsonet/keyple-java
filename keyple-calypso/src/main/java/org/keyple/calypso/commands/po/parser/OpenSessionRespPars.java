@@ -78,7 +78,6 @@ public class OpenSessionRespPars extends ApduResponseParser {
      * @return a SecureSession
      */
     public static SecureSession toSecureSessionRev32(byte[] apduResponse) {
-
         byte flag = apduResponse[8];
         boolean previousSessionRatified = ResponseUtils.isBitSet(flag, 0x00);
         boolean manageSecureSessionAuthorized = ResponseUtils.isBitSet(flag, 1);
@@ -100,7 +99,6 @@ public class OpenSessionRespPars extends ApduResponseParser {
      * @return a SecureSession
      */
     public static SecureSession toSecureSessionRev3(byte[] apduResponse) {
-        SecureSession secureSession;
         boolean previousSessionRatified = apduResponse[4] == (byte) 0x01 ? true : false;
         boolean manageSecureSessionAuthorized = false;
 
