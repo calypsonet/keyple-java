@@ -14,28 +14,28 @@ package org.keyple.calypso.commands.dto;
 public class SecureSession {
 
     /** Challenge transaction counter */
-    byte[] challengeTransactionCounter;
+    private final byte[] challengeTransactionCounter;
 
     /** Challenge random number */
-    byte[] challengeRandomNumber;
+    private final byte[] challengeRandomNumber;
 
     /** The previous session ratified boolean. */
-    boolean previousSessionRatified;
+    private final boolean previousSessionRatified;
 
     /** The manage secure session authorized boolean. */
-    boolean manageSecureSessionAuthorized;
+    private final boolean manageSecureSessionAuthorized;
 
     /** The kif. */
-    byte kif = (byte) 0xFF;
+    private final byte kif;
 
     /** The kvc. */
-    byte kvc;
+    private final byte kvc;
 
     /** The original data. */
-    byte[] originalData;
+    private final byte[] originalData;
 
     /** The secure session data. */
-    byte[] secureSessionData;
+    private final byte[] secureSessionData;
 
     /**
      * Instantiates a new SecureSession for a Calypso application revision 3
@@ -49,11 +49,9 @@ public class SecureSession {
      * @param secureSessionData the secure session data from the response of open secure session
      *        APDU command
      */
-    // Rev 3.1
     public SecureSession(byte[] challengeTransactionCounter, byte[] challengeRandomNumber,
             boolean previousSessionRatified, boolean manageSecureSessionAuthorized, byte kif,
             byte kvc, byte[] originalData, byte[] secureSessionData) {
-        // this.sessionChallenge = sessionChallenge;
         this.challengeTransactionCounter = challengeTransactionCounter;
         this.challengeRandomNumber = challengeRandomNumber;
         this.previousSessionRatified = previousSessionRatified;
@@ -75,7 +73,6 @@ public class SecureSession {
      * @param secureSessionData the secure session data from the response of open secure session
      *        APDU command
      */
-    // Rev 2.4
     public SecureSession(byte[] challengeTransactionCounter, byte[] challengeRandomNumber,
             boolean previousSessionRatified, boolean manageSecureSessionAuthorized, byte kvc,
             byte[] originalData, byte[] secureSessionData) {
@@ -83,6 +80,7 @@ public class SecureSession {
         this.challengeRandomNumber = challengeRandomNumber;
         this.previousSessionRatified = previousSessionRatified;
         this.manageSecureSessionAuthorized = manageSecureSessionAuthorized;
+        this.kif = (byte) 0xFF;
         this.kvc = kvc;
         this.originalData = (originalData == null ? null : originalData.clone());
         this.secureSessionData = (secureSessionData == null ? null : secureSessionData.clone());
@@ -151,48 +149,5 @@ public class SecureSession {
      */
     public byte[] getSecureSessionData() {
         return secureSessionData.clone();
-    }
-
-    /**
-     * The Class PoChallenge. Challenge return by a PO Get Challenge APDU command
-     */
-    public static class PoChallenge {
-
-        /** The transaction counter. */
-        private byte[] transactionCounter;
-
-        /** The random number provide by the terminal */
-        private byte[] randomNumber;
-
-        /**
-         * Instantiates a new PoChallenge.
-         *
-         * @param transactionCounter the transaction counter
-         * @param randomNumber the random number
-         */
-        public PoChallenge(byte[] transactionCounter, byte[] randomNumber) {
-            this.transactionCounter =
-                    (transactionCounter == null ? null : transactionCounter.clone());
-            this.randomNumber = (randomNumber == null ? null : randomNumber.clone());
-        }
-
-        /**
-         * Gets the transaction counter.
-         *
-         * @return the transaction counter
-         */
-        public byte[] getTransactionCounter() {
-            return transactionCounter.clone();
-        }
-
-        /**
-         * Gets the random number.
-         *
-         * @return the random number
-         */
-        public byte[] getRandomNumber() {
-            return randomNumber.clone();
-        }
-
     }
 }

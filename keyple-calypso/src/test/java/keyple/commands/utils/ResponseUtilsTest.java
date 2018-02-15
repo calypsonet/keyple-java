@@ -229,8 +229,6 @@ public class ResponseUtilsTest {
         randomNumber = new byte[] {(byte) 0x53};
         byte kvc = (byte) 0x7E;
 
-        SecureSession.PoChallenge poChallengeExpected =
-                new SecureSession.PoChallenge(transactionCounter, randomNumber);
         boolean isPreviousSessionRatifiedExpected = false;
         boolean isManageSecureSessionAuthorizedExpected = false;
         byte[] originalData = null;
