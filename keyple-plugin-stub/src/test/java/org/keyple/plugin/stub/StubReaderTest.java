@@ -46,11 +46,11 @@ public class StubReaderTest {
     @Test
     public void testTransmitNull() throws IOReaderException {
         try {
-            stubReader.transmit(null).getApduResponses().size();
+            stubReader.transmit(null);
             fail("Should raise exception");
         } catch (IOReaderException e) {
             e.printStackTrace();
-            assert (e.getMessage().contains("null"));
+            assert (e.getMessage() != null);
         }
     }
 
@@ -70,7 +70,7 @@ public class StubReaderTest {
     public void testTimeout() {
         List<ApduRequest> apduRequests = new ArrayList<ApduRequest>();
         SeRequestSet seRequest = SeRequestSet.fromApduRequests(apduRequests);
-        stubReader.test_SetWillTimeout(true);
+        stubReader.configureWillTimeout(true);
 
         try {
             stubReader.transmit(seRequest);
@@ -86,7 +86,8 @@ public class StubReaderTest {
     public void testTransmitWithoutSE() {
         List<ApduRequest> apduRequests = new ArrayList<ApduRequest>();
         SeRequestSet seRequest = SeRequestSet.fromApduRequests(apduRequests);
-        stubReader.test_RemoveSE();
+        StubCalypsoSE se = new StubCalypsoSE();
+        stubReader.disconnect(se);
 
         try {
             stubReader.transmit(seRequest);
@@ -98,7 +99,7 @@ public class StubReaderTest {
 
     // Set wrong parameter
     @Test
-    public void testSetWrongParamater() {
+    public void testSetWrongParameter() {
         try {
             stubReader.setParameter("WRONG_PARAMETER", "a");
             fail("Should raise exception");
@@ -109,7 +110,7 @@ public class StubReaderTest {
 
     // Set A wrong parameter
     @Test
-    public void testSetWrongParamaters() {
+    public void testSetWrongParameters() {
         Map<String, String> parameters = new HashMap<String, String>();
         parameters.put("WRONG_PARAMETER", "d");
         parameters.put(StubReader.ALLOWED_PARAMETER_1, "a");

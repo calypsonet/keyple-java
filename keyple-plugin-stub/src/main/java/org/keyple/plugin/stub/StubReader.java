@@ -8,6 +8,7 @@
 
 package org.keyple.plugin.stub;
 
+import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,6 +25,7 @@ public class StubReader extends AbstractObservableReader implements Configurable
     private static final ILogger logger = SLoggerFactory.getLogger(StubReader.class);
 
     private boolean isSEPresent = false;
+    private ByteBuffer previousOpenApplication = null;
     private ByteBuffer aid;
 
     private Map<String, String> parameters = new HashMap<String, String>();
@@ -31,63 +33,111 @@ public class StubReader extends AbstractObservableReader implements Configurable
     public static final String ALLOWED_PARAMETER_1 = "parameter1";
     public static final String ALLOWED_PARAMETER_2 = "parameter2";
 
+    private StubSecureElement currentSE;
+
 
     @Override
     public String getName() {
         return "";
     }
 
+    /**
+     * Simulated transmit function with a stub Secured Element
+     * Only seRequest whose protocol flag corresponds to the Smart Card technology are executed
+     * Keep Channel Open parameter set to true will abort following seRequestElements
+     * @param seRequestSet : Set of commands to be sent
+     * @return SeResponseSet : set of resulting response
+     */
     @Override
-    public SeResponseSet transmit(SeRequestSet request) throws IOReaderException {
+    public SeResponseSet transmit(SeRequestSet seRequestSet) throws IOReaderException {
+        logger.info("Calling transmit on Keyple Stub Reader");
 
-        if (request == null) {
-            logger.error("SeRequestSet is null");
-            throw new IOReaderException("SeRequestSet is null");
+        if(!isSEPresent){
+            throw new IOReaderException("Secured Element is not present");
         }
 
-        if (!isSEPresent) {
-            throw new IOReaderException("SE is not present");
+        logger.info("APDU commands are simulated with StubCurrentElement : " + currentSE.getTech());
+        logger.info( "Size of APDU Requests : " + String.valueOf(seRequestSet.getElements().size()));
+
+        if(seRequestSet == null ){
+             throw new IOReaderException("se Request Set should not be null");
         }
 
-        if (test_WillTimeout) {
-            logger.info("Timeout test is enabled, transmit raises TimeoutException");
-            throw new IOReaderException("timeout while processing SeRequestSet");
+
+
+        // init response
+        List<SeResponse> seResponseElements = new ArrayList<SeResponse>();
+
+        // Filter requestElements whom protocol matches the current SE
+        List<SeRequest> seRequestElements = filterByProtocol(seRequestSet.getElements());
+
+        // no seRequestElements are left after filtering
+        if (seRequestElements.size() < 1) {
+            return new SeResponseSet(seResponseElements);
         }
 
-        boolean channelPreviouslyOpen;
-        ApduResponse fci;
-        List<ApduResponse> apduResponses = new ArrayList<ApduResponse>();
 
-        // Open channel commands
-        if (!test_ChannelIsOpen) {
-            channelPreviouslyOpen = false;
-            logger.debug("Logical channel is not open");
+        // process the request elements
+        for (int i = 0; i < seRequestElements.size(); i++) {
 
-            if (test_ApplicationError) {
-                logger.info(
-                        "Application error test is enabled, transmit will fail at open application");
-                fci = new ApduResponse(ByteBuffer.allocate(0), false);
-                return new SeResponseSet(channelPreviouslyOpen, fci, apduResponses);
-            } else {
-                logger.info("Logical channel is opened with aid : " + aid);
-                fci = new ApduResponse(ByteBuffer.allocate(0), true);
+            logger.info( "Processing seRequestElements # " + i);
+
+            SeRequest seRequestElement = seRequestElements.get(i);
+
+            // init response
+            List<ApduResponse> apduResponses = new ArrayList<ApduResponse>();
+            ApduResponse fciResponse = null;
+
+            try {
+
+                // Checking of the presence of the AID request in requests group
+                ByteBuffer aid = seRequestElement.getAidToSelect();
+                logger.info( "Connect to application, aid :" + ByteBufferUtils.toHex(aid));
+
+                // Open the application channel if not open yet
+                if (previousOpenApplication == null || previousOpenApplication != aid) {
+                    logger.info( "Connecting to application : " + aid);
+                    fciResponse = this.connectApplication(seRequestElement.getAidToSelect());
+                }else{
+                    logger.info( "Application was already open : " + aid);
+                }
+
+                // Send all apduRequest
+                for (ApduRequest apduRequest : seRequestElement.getApduRequests()) {
+                    apduResponses.add(currentSE.process(apduRequest));
+                }
+
+                // Add ResponseElements to global SeResponseSet
+                SeResponse out =
+                        new SeResponse(previousOpenApplication != null, fciResponse, apduResponses);
+                seResponseElements.add(out);
+
+                // Don't process more seRequestElement if asked
+                if (seRequestElement.keepChannelOpen()) {
+                    logger.info(
+                            "Keep Channel Open is set to true, abort further seRequestElement if any");
+                    saveChannelState(aid);
+                    break;
+                }
+
+                // For last element, close physical channel if asked
+                if (i == seRequestElements.size() - 1 && !seRequestElement.keepChannelOpen()) {
+                    disconnect(currentSE);
+                }
+
+            } catch (IOException e) {
+                logger.error( "Error executing command");
+                e.printStackTrace();
+                apduResponses.add(null);// add empty response
             }
-        } else {
-            channelPreviouslyOpen = true;
-            aid = ByteBuffer.allocate(0);
-            logger.info("Logical channel is already opened with aid : " + aid);
-            fci = new ApduResponse(aid, true);
+
         }
 
-
-        // Prepare succesfull responses
-        for (ApduRequest apduRequest : request.getApduRequests()) {
-            logger.debug("Processing request : " + apduRequest.toString());
-            apduResponses.add(new ApduResponse(ByteBuffer.allocate(0), true));
-        }
-
-        return new SeResponseSet(channelPreviouslyOpen, fci, apduResponses);
+        return new SeResponseSet(seResponseElements);
     }
+
+
+
 
 
 
@@ -130,33 +180,74 @@ public class StubReader extends AbstractObservableReader implements Configurable
 
 
     private boolean test_WillTimeout = false;
-    private boolean test_ApplicationError = false;
-    private boolean test_ChannelIsOpen = false;
 
-    public void test_InsertSE() {
+
+    protected void connect(StubSecureElement se) {
         isSEPresent = true;
-        logger.debug("Test - insert SE");
+        currentSE = se;
+        logger.info("Connect SE : " + se.getTech());
         notifyObservers(new ReaderEvent(this, ReaderEvent.EventType.SE_INSERTED));
     }
 
-    public void test_RemoveSE() {
+    protected void disconnect(StubSecureElement se) {
         isSEPresent = false;
-        logger.debug("Test - remove SE");
+        currentSE = null;
+        logger.info("Disconnect SE : " + se.getTech());
         notifyObservers(new ReaderEvent(this, ReaderEvent.EventType.SE_REMOVAL));
     }
 
-    public void test_SetWillTimeout(Boolean willTimeout) {
-        logger.debug("Test - set will timeout to " + willTimeout);
+    public void configureWillTimeout(Boolean willTimeout) {
+        logger.info("Configure test will timeout to " + willTimeout);
         test_WillTimeout = willTimeout;
     }
 
-    public void test_SetApplicationError(Boolean applicationError) {
-        logger.debug("Test - set applicationError to " + applicationError);
-        test_ApplicationError = applicationError;
+
+
+    private ApduResponse connectApplication(ByteBuffer aid) throws IOException {
+
+
+        ByteBuffer command = ByteBuffer.allocate(aid.limit() + 6);
+        command.put((byte) 0x00);
+        command.put((byte) 0xA4);
+        command.put((byte) 0x04);
+        command.put((byte) 0x00);
+        command.put((byte) aid.limit());
+        command.put(aid);
+        command.put((byte) 0x00);
+        command.position(0);
+
+        logger.info("Select application APDU: " + ByteBufferUtils.toHex(command));
+        return currentSE.process(new ApduRequest(command,false));
+
     }
 
-    public void test_SetChannelIsOpen(Boolean channelIsOpen) {
-        logger.debug("Test - set channelIsOpen to " + channelIsOpen);
-        test_ChannelIsOpen = channelIsOpen;
+
+    private List<SeRequest> filterByProtocol(List<SeRequest> seRequestElements) {
+
+
+        logger.info("Filtering # seRequestElements : " + seRequestElements.size());
+        List<SeRequest> filteredSRE = new ArrayList<SeRequest>();
+
+        for (SeRequest seRequestElement : seRequestElements) {
+
+            logger.info("Filtering seRequestElement whom protocol : "
+                    + seRequestElement.getProtocolFlag());
+
+            if (seRequestElement.getProtocolFlag() != null
+                    && seRequestElement.getProtocolFlag().equals(currentSE.getTech())) {
+                filteredSRE.add(seRequestElement);
+            }
+        }
+        logger.info("After Filter seRequestElement : " + filteredSRE.size());
+        return filteredSRE;
+    }
+
+
+    /**
+     * Keep the current channel open for further commands
+     */
+    private void saveChannelState(ByteBuffer aid) {
+        logger.info("Save application id for further commands");
+        previousOpenApplication = aid;
     }
 }
