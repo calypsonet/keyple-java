@@ -30,6 +30,9 @@ public class StubReaderTest {
     @Before
     public void SetUp() throws IOReaderException {
         stubReader = (StubReader) StubPlugin.getInstance().getReaders().get(0);
+        stubReader.configureWillTimeout(false);
+        stubReader.clearObservers();
+
     }
 
 
@@ -38,10 +41,6 @@ public class StubReaderTest {
         assert (stubReader.getName() != null);
     }
 
-    @Test
-    public void testIsPresent() throws IOReaderException {
-        assert (!stubReader.isSEPresent());
-    }
 
     @Test
     public void testTransmitNull() throws IOReaderException {
@@ -54,16 +53,6 @@ public class StubReaderTest {
         }
     }
 
-
-
-    @Test(expected = IOReaderException.class)
-    // if SE is not present, transmit fails
-    public void testTransmitSEnotPressent() throws IOReaderException {
-        List<ApduRequest> apduRequests = new ArrayList<ApduRequest>();
-        SeRequestSet seRequest = SeRequestSet.fromApduRequests(apduRequests);
-        assert (stubReader.transmit(seRequest).getApduResponses().size() == 0);
-
-    }
 
     // Timeout
     @Test
@@ -81,21 +70,6 @@ public class StubReaderTest {
 
     }
 
-    // SE is not present
-    @Test
-    public void testTransmitWithoutSE() {
-        List<ApduRequest> apduRequests = new ArrayList<ApduRequest>();
-        SeRequestSet seRequest = SeRequestSet.fromApduRequests(apduRequests);
-        StubCalypsoSE se = new StubCalypsoSE();
-        stubReader.disconnect(se);
-
-        try {
-            stubReader.transmit(seRequest);
-            fail("Should raise exception");
-        } catch (IOReaderException e) {
-            assert (e != null);
-        }
-    }
 
     // Set wrong parameter
     @Test

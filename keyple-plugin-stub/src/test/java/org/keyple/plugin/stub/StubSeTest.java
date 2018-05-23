@@ -54,20 +54,6 @@ public class StubSeTest {
 
     }
 
-    @Test
-    public void RemoveCalypso() throws IOReaderException {
-
-        stubReader.addObserver(new Observable.Observer<ReaderEvent>() {
-
-            @Override
-            public void update(Observable<? extends ReaderEvent> observable, ReaderEvent event) {
-                assert (event.getEventType() == ReaderEvent.EventType.SE_REMOVAL);
-            }
-        });
-
-        csc.removeFrom(stubReader);
-
-    }
 
 
 

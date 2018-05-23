@@ -59,16 +59,20 @@ public class StubReader extends AbstractObservableReader implements Configurable
     public SeResponseSet transmit(SeRequestSet seRequestSet) throws IOReaderException {
         logger.info("Calling transmit on Keyple Stub Reader");
 
+        if (seRequestSet == null) {
+            throw new IOReaderException("se Request Set should not be null");
+        }
+
         if (!isSEPresent) {
             throw new IOReaderException("Secured Element is not present");
         }
 
+        if (test_WillTimeout) {
+            throw new IOReaderException("Timeout while transmitting");
+        }
+
         logger.info("APDU commands are simulated with StubCurrentElement : " + currentSE.getTech());
         logger.info("Size of APDU Requests : " + String.valueOf(seRequestSet.getElements().size()));
-
-        if (seRequestSet == null) {
-            throw new IOReaderException("se Request Set should not be null");
-        }
 
 
 
@@ -202,9 +206,9 @@ public class StubReader extends AbstractObservableReader implements Configurable
      * @param se : Stub Secure Element to connect to
      */
     protected void disconnect(StubSecureElement se) {
+        logger.info("Disconnect SE : " + se.getTech());
         isSEPresent = false;
         currentSE = null;
-        logger.info("Disconnect SE : " + se.getTech());
         notifyObservers(new ReaderEvent(this, ReaderEvent.EventType.SE_REMOVAL));
     }
 
