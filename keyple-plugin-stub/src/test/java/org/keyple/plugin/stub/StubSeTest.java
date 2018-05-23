@@ -56,7 +56,6 @@ public class StubSeTest {
 
 
 
-
     @Test
     public void selectCalypsoApplication() throws IOReaderException {
 
