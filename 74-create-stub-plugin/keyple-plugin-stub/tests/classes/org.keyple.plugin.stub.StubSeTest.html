@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - Class org.keyple.plugin.stub.StubSeTest</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>Class org.keyple.plugin.stub.StubSeTest</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/org.keyple.plugin.stub.html">org.keyple.plugin.stub</a> &gt; StubSeTest</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">2</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">0.040s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Tests</a>
+</li>
+<li>
+<a href="#tab1">Standard error</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">InsertCalypso</td>
+<td class="success">0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">selectCalypsoApplication</td>
+<td class="success">0.039s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div id="tab1" class="tab">
+<h2>Standard error</h2>
+<span class="code">
+<pre>[Test worker] INFO org.keyple.plugin.stub.StubPlugin - Stub Reader list is empty, adding one reader
+[Test worker] INFO org.keyple.plugin.stub.StubReader - Configure test will timeout to false
+[Test worker] INFO org.keyple.seproxy.AbstractObservableReader - AbstractObservableReader: Adding an observer action=observable_reader.add_observer readerName=StubReader
+[Test worker] INFO org.keyple.plugin.stub.StubReader - Connect SE : android.nfc.tech.IsoDep
+[Test worker] INFO org.keyple.seproxy.AbstractObservableReader - AbstractObservableReader: Notifying of an event action=observable_reader.notify_observers event=SE_INSERTED readerName=StubReader
+[Test worker] INFO org.keyple.plugin.stub.StubReader - Calling transmit on Keyple Stub Reader
+[Test worker] INFO org.keyple.plugin.stub.StubReader - APDU commands are simulated with StubCurrentElement : android.nfc.tech.IsoDep
+[Test worker] INFO org.keyple.plugin.stub.StubReader - Size of APDU Requests : 1
+[Test worker] INFO org.keyple.plugin.stub.StubReader - Filtering # seRequestElements : 1
+[Test worker] INFO org.keyple.plugin.stub.StubReader - Filtering seRequestElement whom protocol : android.nfc.tech.IsoDep
+[Test worker] INFO org.keyple.plugin.stub.StubReader - After Filter seRequestElement : 1
+[Test worker] INFO org.keyple.plugin.stub.StubReader - Processing seRequestElements # 0
+[Test worker] INFO org.keyple.plugin.stub.StubReader - Connect to application, aid :A000000291A000000191
+[Test worker] INFO org.keyple.plugin.stub.StubReader - Connecting to application : java.nio.HeapByteBuffer[pos=0 lim=10 cap=10]
+[Test worker] INFO org.keyple.plugin.stub.StubReader - Select application APDU: 00A404000AA000000291A00000019100
+[Test worker] INFO org.keyple.plugin.stub.StubCalypsoSE - Processing command : 00A404000AA000000291A00000019100
+[Test worker] INFO org.keyple.plugin.stub.StubCalypsoSE - Result command : 6F25840BA000000291A00000019102A516BF0C13C70800000000C0E11FA653070A3C230C1410019000
+[Test worker] INFO org.keyple.plugin.stub.StubCalypsoSE - Processing command : 00B201A420
+[Test worker] INFO org.keyple.plugin.stub.StubCalypsoSE - Result command : 00000000000000000000000000000000000000000000000000000000000000009000
+[Test worker] INFO org.keyple.plugin.stub.StubCalypsoSE - Processing command : 00B201D430
+[Test worker] INFO org.keyple.plugin.stub.StubCalypsoSE - Result command : 0102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F202122232425262728292A2B2C2D2E2F309000
+[Test worker] INFO org.keyple.plugin.stub.StubCalypsoSE - Processing command : 00DC01D4300102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F202122232425262728292A2B2C2D2E2F30
+[Test worker] INFO org.keyple.plugin.stub.StubCalypsoSE - Result command : 9000
+[Test worker] INFO org.keyple.plugin.stub.StubReader - Disconnect SE : android.nfc.tech.IsoDep
+[Test worker] INFO org.keyple.seproxy.AbstractObservableReader - AbstractObservableReader: Notifying of an event action=observable_reader.notify_observers event=SE_REMOVAL readerName=StubReader
+[Test worker] INFO org.keyple.plugin.stub.StubReader - Configure test will timeout to false
+[Test worker] INFO org.keyple.seproxy.AbstractObservableReader - AbstractObservableReader: Adding an observer action=observable_reader.add_observer readerName=StubReader
+[Test worker] INFO org.keyple.plugin.stub.StubReader - Connect SE : android.nfc.tech.IsoDep
+[Test worker] INFO org.keyple.seproxy.AbstractObservableReader - AbstractObservableReader: Notifying of an event action=observable_reader.notify_observers event=SE_INSERTED readerName=StubReader
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="http://www.gradle.org">Gradle 4.7</a> at May 23, 2018 11:54:22 AM</p>
+</div>
+</div>
+</body>
+</html>
