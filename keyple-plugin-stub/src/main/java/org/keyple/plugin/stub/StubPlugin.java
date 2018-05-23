@@ -18,6 +18,9 @@ import org.keyple.seproxy.exceptions.IOReaderException;
 import com.github.structlog4j.ILogger;
 import com.github.structlog4j.SLoggerFactory;
 
+/**
+ * Allows to retrieve a {@link StubReader} {@link #getReaders() getReaders}
+ */
 public final class StubPlugin implements ReadersPlugin {
 
     private static final StubPlugin uniqueInstance = new StubPlugin();

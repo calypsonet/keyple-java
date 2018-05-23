@@ -1,25 +1,27 @@
+/*
+ * Copyright (c) 2018 Calypso Networks Association https://www.calypsonet-asso.org/
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License version 2.0 which accompanies this distribution, and is
+ * available at https://www.eclipse.org/org/documents/epl-2.0/EPL-2.0.html
+ */
+
 package org.keyple.plugin.stub;
 
-import com.github.structlog4j.ILogger;
-import com.github.structlog4j.SLoggerFactory;
+
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.keyple.example.common.AbstractLogicManager;
-import org.keyple.example.common.BasicCardAccessManager;
 import org.keyple.example.common.IsodepCardAccessManager;
 import org.keyple.seproxy.ReaderEvent;
-import org.keyple.seproxy.SeRequest;
-import org.keyple.seproxy.SeRequestSet;
 import org.keyple.seproxy.exceptions.IOReaderException;
 import org.keyple.util.Observable;
 import org.keyple.util.Topic;
 import org.mockito.junit.MockitoJUnitRunner;
-
-import java.util.ArrayList;
-
-import static org.junit.Assert.fail;
+import com.github.structlog4j.ILogger;
+import com.github.structlog4j.SLoggerFactory;
 
 @RunWith(MockitoJUnitRunner.class)
 public class StubSeTest {
@@ -38,10 +40,7 @@ public class StubSeTest {
     }
 
     @Test
-    public void InsertCalypso() throws IOReaderException{
-
-
-        final SeRequestSet emptyRequestSet = new SeRequestSet(new ArrayList<SeRequest>());
+    public void InsertCalypso() throws IOReaderException {
 
         stubReader.addObserver(new Observable.Observer<ReaderEvent>() {
             @Override
@@ -56,7 +55,7 @@ public class StubSeTest {
     }
 
     @Test
-    public void RemoveCalypso() throws IOReaderException{
+    public void RemoveCalypso() throws IOReaderException {
 
         stubReader.addObserver(new Observable.Observer<ReaderEvent>() {
 
@@ -73,28 +72,29 @@ public class StubSeTest {
 
 
     @Test
-    public void selectCalypso() throws IOReaderException{
+    public void selectCalypsoApplication() throws IOReaderException {
 
         final IsodepCardAccessManager cardAccessManager = new IsodepCardAccessManager();
         cardAccessManager.setPoReader(stubReader);
 
-        cardAccessManager.getTopic().addSubscriber(new Topic.Subscriber<AbstractLogicManager.Event>() {
-            @Override
-            public void update(AbstractLogicManager.Event event) {
-                logger.debug("Event received from CardAccessManager" + event.toString());
-            }
-        });
+        cardAccessManager.getTopic()
+                .addSubscriber(new Topic.Subscriber<AbstractLogicManager.Event>() {
+                    @Override
+                    public void update(AbstractLogicManager.Event event) {
+                        logger.debug("Event received from CardAccessManager" + event.toString());
+                    }
+                });
 
         stubReader.addObserver(new Observable.Observer<ReaderEvent>() {
             Integer i = 0;
 
             @Override
             public void update(Observable<? extends ReaderEvent> observable, ReaderEvent event) {
-                if(i == 0){
+                if (i == 0) {
                     assert (event.getEventType() == ReaderEvent.EventType.SE_INSERTED);
                     i++;
                     cardAccessManager.run();
-                }else{
+                } else {
                     assert (event.getEventType() == ReaderEvent.EventType.SE_REMOVAL);
                 }
 
@@ -107,8 +107,6 @@ public class StubSeTest {
         csc.insertInto(stubReader);
 
     }
-
-
 
 
 
