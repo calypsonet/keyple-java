@@ -24,9 +24,9 @@ import com.github.structlog4j.ILogger;
 import com.github.structlog4j.SLoggerFactory;
 
 @RunWith(MockitoJUnitRunner.class)
-public class StubSeTest {
+public class StubHoplinkPOTest {
 
-    private static final ILogger logger = SLoggerFactory.getLogger(StubSeTest.class);
+    private static final ILogger logger = SLoggerFactory.getLogger(StubHoplinkPOTest.class);
 
     StubReader stubReader;
     StubSecureElement csc;
@@ -36,7 +36,7 @@ public class StubSeTest {
         stubReader = (StubReader) StubPlugin.getInstance().getReaders().get(0);
         stubReader.configureWillTimeout(false);
         stubReader.clearObservers();
-        csc = new StubCalypsoSE();
+        csc = new StubHoplinkPO();
     }
 
     @Test
@@ -86,8 +86,6 @@ public class StubSeTest {
             }
 
         });
-
-
 
         csc.insertInto(stubReader);
 

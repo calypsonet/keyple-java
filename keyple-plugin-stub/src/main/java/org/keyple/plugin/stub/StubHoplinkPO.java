@@ -23,9 +23,9 @@ import com.github.structlog4j.SLoggerFactory;
  * 
  */
 
-public class StubCalypsoSE extends StubSecureElement {
+public class StubHoplinkPO extends StubSecureElement {
 
-    private static final ILogger logger = SLoggerFactory.getLogger(StubCalypsoSE.class);
+    private static final ILogger logger = SLoggerFactory.getLogger(StubHoplinkPO.class);
 
 
     String tech = "android.nfc.tech.IsoDep";
@@ -34,7 +34,7 @@ public class StubCalypsoSE extends StubSecureElement {
     private Map<String, String> commands;
 
 
-    public StubCalypsoSE() {
+    public StubHoplinkPO() {
 
         commands = new HashMap<String, String>();
         commands.put("00A404000A" + poAid + "00",
