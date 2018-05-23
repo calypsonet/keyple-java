@@ -75,5 +75,4 @@ abstract class TagTransceiver implements TagTechnology {
 
 
 
-
 }
