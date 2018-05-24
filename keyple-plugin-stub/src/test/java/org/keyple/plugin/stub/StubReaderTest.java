@@ -18,6 +18,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.keyple.seproxy.ApduRequest;
+import org.keyple.seproxy.SeRequest;
 import org.keyple.seproxy.SeRequestSet;
 import org.keyple.seproxy.exceptions.IOReaderException;
 import org.mockito.junit.MockitoJUnitRunner;
@@ -58,7 +59,8 @@ public class StubReaderTest {
     @Test
     public void testTimeout() {
         List<ApduRequest> apduRequests = new ArrayList<ApduRequest>();
-        SeRequestSet seRequest = SeRequestSet.fromApduRequests(apduRequests);
+
+        SeRequestSet seRequest = new SeRequestSet(new ArrayList<SeRequest>());
         stubReader.configureWillTimeout(true);
 
         try {
