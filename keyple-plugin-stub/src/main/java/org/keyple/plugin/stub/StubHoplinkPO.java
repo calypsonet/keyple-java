@@ -17,9 +17,9 @@ import com.github.structlog4j.ILogger;
 import com.github.structlog4j.SLoggerFactory;
 
 /**
- * Simulated Calypso PO embedded in a ISO Secured Element
- * You can add additional behaviour at runtime using
- * {@link #addCommand(String request, String response)} and {@link #removeCommand(String)}
+ * Simulated Calypso PO embedded in a ISO Secured Element You can add additional behaviour at
+ * runtime using {@link #addCommand(String request, String response)} and
+ * {@link #removeCommand(String)}
  * 
  */
 

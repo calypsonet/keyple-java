@@ -113,7 +113,8 @@ public class StubReader extends AbstractObservableReader implements Configurable
                     logger.info("Application was already open : " + aid);
                 }
 
-                if (previousOpenApplication !=null || (fciResponse!=null && fciResponse.isSuccessful())) {
+                if (previousOpenApplication != null
+                        || (fciResponse != null && fciResponse.isSuccessful())) {
                     // Send APDU
                     for (ApduRequest apduRequest : seRequest.getApduRequests()) {
                         // add APDU responses
