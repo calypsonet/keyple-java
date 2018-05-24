@@ -60,6 +60,7 @@ public class StubHoplinkPOTest {
 
         stubReader.addObserver(new Observable.Observer<ReaderEvent>() {
             Boolean inserted = false;
+
             @Override
             public void update(Observable<? extends ReaderEvent> observable, ReaderEvent event) {
                 if (!inserted) {
@@ -85,13 +86,12 @@ public class StubHoplinkPOTest {
         final IsodepCardAccessManager transmitTest = new IsodepCardAccessManager();
         transmitTest.setPoReader(stubReader);
 
-        transmitTest.getTopic()
-                .addSubscriber(new Topic.Subscriber<AbstractLogicManager.Event>() {
-                    @Override
-                    public void update(AbstractLogicManager.Event event) {
-                        logger.debug("Event received from CardAccessManager" + event.toString());
-                    }
-                });
+        transmitTest.getTopic().addSubscriber(new Topic.Subscriber<AbstractLogicManager.Event>() {
+            @Override
+            public void update(AbstractLogicManager.Event event) {
+                logger.debug("Event received from CardAccessManager" + event.toString());
+            }
+        });
 
         stubReader.addObserver(new Observable.Observer<ReaderEvent>() {
             Boolean inserted = false;

@@ -113,10 +113,10 @@ public class StubReader extends AbstractObservableReader implements Configurable
                     logger.info("Application was already open : " + aid);
                 }
 
-                if(fciResponse.isSuccessful()) {
-                    //Send APDU
+                if (fciResponse.isSuccessful()) {
+                    // Send APDU
                     for (ApduRequest apduRequest : seRequest.getApduRequests()) {
-                        //add APDU responses
+                        // add APDU responses
                         apduResponses.add(currentSE.process(apduRequest));
                     }
                 }
@@ -237,10 +237,10 @@ public class StubReader extends AbstractObservableReader implements Configurable
      */
     private ApduResponse connectApplication(ByteBuffer aid) throws IOException {
 
-        if(currentSE.getAid()!=null && currentSE.getAid().equals(aid.toString())){
-            return new ApduResponse(ByteBufferUtils.fromHex(currentSE.getFCI()),true);
-        }else{
-            return new ApduResponse(ByteBuffer.allocate(0),false);
+        if (currentSE.getAid() != null && currentSE.getAid().equals(aid.toString())) {
+            return new ApduResponse(ByteBufferUtils.fromHex(currentSE.getFCI()), true);
+        } else {
+            return new ApduResponse(ByteBuffer.allocate(0), false);
         }
 
     }
