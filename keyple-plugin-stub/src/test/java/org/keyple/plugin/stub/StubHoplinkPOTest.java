@@ -55,14 +55,37 @@ public class StubHoplinkPOTest {
     }
 
 
+    @Test
+    public void InsertRemoveCalypso() throws IOReaderException {
+
+        stubReader.addObserver(new Observable.Observer<ReaderEvent>() {
+            Boolean inserted = false;
+            @Override
+            public void update(Observable<? extends ReaderEvent> observable, ReaderEvent event) {
+                if (!inserted) {
+                    assert (event.getEventType() == ReaderEvent.EventType.SE_INSERTED);
+                    inserted = true;
+                } else {
+                    assert (event.getEventType() == ReaderEvent.EventType.SE_REMOVAL);
+                }
+            }
+
+        });
+
+        csc.insertInto(stubReader);
+        csc.removeFrom(stubReader);
+
+
+    }
+
 
     @Test
     public void selectCalypsoApplication() throws IOReaderException {
 
-        final IsodepCardAccessManager cardAccessManager = new IsodepCardAccessManager();
-        cardAccessManager.setPoReader(stubReader);
+        final IsodepCardAccessManager transmitTest = new IsodepCardAccessManager();
+        transmitTest.setPoReader(stubReader);
 
-        cardAccessManager.getTopic()
+        transmitTest.getTopic()
                 .addSubscriber(new Topic.Subscriber<AbstractLogicManager.Event>() {
                     @Override
                     public void update(AbstractLogicManager.Event event) {
@@ -71,14 +94,14 @@ public class StubHoplinkPOTest {
                 });
 
         stubReader.addObserver(new Observable.Observer<ReaderEvent>() {
-            Integer i = 0;
+            Boolean inserted = false;
 
             @Override
             public void update(Observable<? extends ReaderEvent> observable, ReaderEvent event) {
-                if (i == 0) {
+                if (!inserted) {
                     assert (event.getEventType() == ReaderEvent.EventType.SE_INSERTED);
-                    i++;
-                    cardAccessManager.run();
+                    inserted = true;
+                    transmitTest.run();
                 } else {
                     assert (event.getEventType() == ReaderEvent.EventType.SE_REMOVAL);
                 }

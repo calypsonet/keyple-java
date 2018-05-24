@@ -29,7 +29,6 @@ public class StubHoplinkPO extends StubSecureElement {
 
 
     String tech = "android.nfc.tech.IsoDep";
-    public static String poAid = "A000000291A000000191";
 
     private Map<String, String> commands;
 
@@ -37,8 +36,6 @@ public class StubHoplinkPO extends StubSecureElement {
     public StubHoplinkPO() {
 
         commands = new HashMap<String, String>();
-        commands.put("00A404000A" + poAid + "00",
-                "6F25840BA000000291A00000019102A516BF0C13C70800000000C0E11FA653070A3C230C1410019000");
         commands.put("00B201A420",
                 "00000000000000000000000000000000000000000000000000000000000000009000");
         commands.put("00B201D430",
@@ -52,6 +49,21 @@ public class StubHoplinkPO extends StubSecureElement {
     @Override
     public String getTech() {
         return tech;
+    }
+
+    @Override
+    public String getAid() {
+        return "A000000291A000000191";
+    }
+
+    @Override
+    public String getFCI() {
+        return "6F25840BA000000291A00000019102A516BF0C13C70800000000C0E11FA653070A3C230C1410019000";
+    }
+
+    @Override
+    public String getATR() {
+        return null;
     }
 
     @Override

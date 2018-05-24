@@ -19,10 +19,29 @@ public abstract class StubSecureElement {
 
     /**
      * Retrieve Technology of Secure Element
-     * 
-     * @param : String representation of SE Technology
+     *
+     * @return  : String representation of SE Technology
      */
     abstract public String getTech();
+
+
+    /**
+     * Retrieve Aid (mandatory for an ISO Secure Element)
+     * @return  : Hexdecimal String representation of Aid
+     */
+    abstract public String getAid();
+
+    /**
+     * Retrieve FCI (mandatory for an ISO Secure Element)
+     * @return  : Hexdecimal String representation of FCI
+     */
+    abstract public String getFCI();
+
+    /**
+     * Retrieve ATR (mandatory for an ISO Secure Element)
+     * @return  : Hexdecimal String representation of ATR
+     */
+    abstract public String getATR();
 
     /**
      * Implement this function to simulate responses to requests

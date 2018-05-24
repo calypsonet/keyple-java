@@ -113,10 +113,14 @@ public class StubReader extends AbstractObservableReader implements Configurable
                     logger.info("Application was already open : " + aid);
                 }
 
-                // Send all apduRequest
-                for (ApduRequest apduRequest : seRequest.getApduRequests()) {
-                    apduResponses.add(currentSE.process(apduRequest));
+                if(fciResponse.isSuccessful()) {
+                    //Send APDU
+                    for (ApduRequest apduRequest : seRequest.getApduRequests()) {
+                        //add APDU responses
+                        apduResponses.add(currentSE.process(apduRequest));
+                    }
                 }
+
 
                 // Add ResponseElements to global SeResponseSet
                 SeResponse out =
@@ -130,6 +134,7 @@ public class StubReader extends AbstractObservableReader implements Configurable
                     saveChannelState(aid);
                     break;
                 }
+
 
                 // For last element, close physical channel if asked
                 if (i == seRequests.size() - 1 && !seRequest.keepChannelOpen()) {
@@ -227,23 +232,16 @@ public class StubReader extends AbstractObservableReader implements Configurable
      * Build and send an APDU to select 'aid'
      * 
      * @param aid : aid to select
-     * @return : response from SE
+     * @return : FCI or ATR
      * @throws IOException
      */
     private ApduResponse connectApplication(ByteBuffer aid) throws IOException {
 
-        ByteBuffer command = ByteBuffer.allocate(aid.limit() + 6);
-        command.put((byte) 0x00);
-        command.put((byte) 0xA4);
-        command.put((byte) 0x04);
-        command.put((byte) 0x00);
-        command.put((byte) aid.limit());
-        command.put(aid);
-        command.put((byte) 0x00);
-        command.position(0);
-
-        logger.info("Select application APDU: " + ByteBufferUtils.toHex(command));
-        return currentSE.process(new ApduRequest(command, false));
+        if(currentSE.getAid()!=null && currentSE.getAid().equals(aid.toString())){
+            return new ApduResponse(ByteBufferUtils.fromHex(currentSE.getFCI()),true);
+        }else{
+            return new ApduResponse(ByteBuffer.allocate(0),false);
+        }
 
     }
 
