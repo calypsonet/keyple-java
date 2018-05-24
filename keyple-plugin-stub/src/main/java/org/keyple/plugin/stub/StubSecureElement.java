@@ -28,21 +28,21 @@ public abstract class StubSecureElement {
     /**
      * Retrieve Aid (mandatory for an ISO Secure Element)
      * 
-     * @return : Hexdecimal String representation of Aid
+     * @return : Hexadecimal String representation of Aid
      */
     abstract public String getAid();
 
     /**
      * Retrieve FCI (mandatory for an ISO Secure Element)
      * 
-     * @return : Hexdecimal String representation of FCI
+     * @return : Hexadecimal String representation of FCI
      */
     abstract public String getFCI();
 
     /**
      * Retrieve ATR (mandatory for an ISO Secure Element)
      * 
-     * @return : Hexdecimal String representation of ATR
+     * @return : Hexadecimal String representation of ATR
      */
     abstract public String getATR();
 

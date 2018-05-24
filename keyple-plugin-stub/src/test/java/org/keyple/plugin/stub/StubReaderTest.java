@@ -12,12 +12,10 @@ package org.keyple.plugin.stub;
 import static org.junit.Assert.fail;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.keyple.seproxy.ApduRequest;
 import org.keyple.seproxy.SeRequest;
 import org.keyple.seproxy.SeRequestSet;
 import org.keyple.seproxy.exceptions.IOReaderException;
@@ -58,7 +56,6 @@ public class StubReaderTest {
     // Timeout
     @Test
     public void testTimeout() {
-        List<ApduRequest> apduRequests = new ArrayList<ApduRequest>();
 
         SeRequestSet seRequest = new SeRequestSet(new ArrayList<SeRequest>());
         stubReader.configureWillTimeout(true);
@@ -67,7 +64,6 @@ public class StubReaderTest {
             stubReader.transmit(seRequest);
             fail("Should raise exception");
         } catch (IOReaderException e) {
-            assert (e != null);
         }
 
     }
@@ -98,7 +94,7 @@ public class StubReaderTest {
         }
     }
 
-    // Set Paramater
+    // Set Parameter
     @Test
     public void testSetParameters() {
         Map<String, String> p1 = new HashMap<String, String>();

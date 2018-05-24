@@ -17,7 +17,7 @@ import com.github.structlog4j.ILogger;
 import com.github.structlog4j.SLoggerFactory;
 
 /**
- * Simulated Calypso PO embedded in a ISO Secured Element Default application aid is {@link #poAid}
+ * Simulated Calypso PO embedded in a ISO Secured Element
  * You can add additional behaviour at runtime using
  * {@link #addCommand(String request, String response)} and {@link #removeCommand(String)}
  * 
@@ -70,7 +70,7 @@ public class StubHoplinkPO extends StubSecureElement {
     public ApduResponse process(ApduRequest request) {
 
         String out = null;
-        Boolean success = null;
+        Boolean success;
         String commandHex = ByteBufferUtils.toHex(request.getBuffer());
         logger.info("Processing command : " + commandHex);
 

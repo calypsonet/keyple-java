@@ -72,7 +72,7 @@ public class StubReader extends AbstractObservableReader implements Configurable
         }
 
         logger.info("APDU commands are simulated with StubCurrentElement : " + currentSE.getTech());
-        logger.info("Size of APDU Requests : " + String.valueOf(seRequestSet.getElements().size()));
+        logger.info("Size of seRequestSet : " + String.valueOf(seRequestSet.getElements().size()));
 
 
 
@@ -113,7 +113,7 @@ public class StubReader extends AbstractObservableReader implements Configurable
                     logger.info("Application was already open : " + aid);
                 }
 
-                if (fciResponse.isSuccessful()) {
+                if (previousOpenApplication !=null || (fciResponse!=null && fciResponse.isSuccessful())) {
                     // Send APDU
                     for (ApduRequest apduRequest : seRequest.getApduRequests()) {
                         // add APDU responses
@@ -237,7 +237,7 @@ public class StubReader extends AbstractObservableReader implements Configurable
      */
     private ApduResponse connectApplication(ByteBuffer aid) throws IOException {
 
-        if (currentSE.getAid() != null && currentSE.getAid().equals(aid.toString())) {
+        if (currentSE.getAid() != null && currentSE.getAid().equals(ByteBufferUtils.toHex(aid))) {
             return new ApduResponse(ByteBufferUtils.fromHex(currentSE.getFCI()), true);
         } else {
             return new ApduResponse(ByteBuffer.allocate(0), false);
