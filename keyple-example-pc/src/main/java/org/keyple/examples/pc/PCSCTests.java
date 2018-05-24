@@ -10,7 +10,7 @@ package org.keyple.examples.pc;
 
 import java.nio.ByteBuffer;
 import javax.smartcardio.*;
-import org.keyple.util.ByteBufferUtils;
+import org.keyple.seproxy.ByteBufferUtils;
 
 public class PCSCTests {
     public static void main(String[] args) throws CardException, InterruptedException {

@@ -16,7 +16,6 @@ import org.keyple.calypso.commands.po.builder.ReadRecordsCmdBuild;
 import org.keyple.commands.AbstractApduCommandBuilder;
 import org.keyple.commands.InconsistentCommandException;
 import org.keyple.seproxy.ApduRequest;
-import org.keyple.util.ByteBufferUtils;
 
 public class ReadRecordsCmdBuildTest {
 
@@ -28,7 +27,7 @@ public class ReadRecordsCmdBuildTest {
 
     AbstractApduCommandBuilder apduCommandBuilder;
 
-    ApduRequest apduRequest;
+    ApduRequest ApduRequest;
 
     @Test
     public void readRecords_rev2_4() throws InconsistentCommandException {
@@ -46,8 +45,8 @@ public class ReadRecordsCmdBuildTest {
         byte[] request2_4 = {cla, cmd, p1, p2, 0x00};
         apduCommandBuilder = new ReadRecordsCmdBuild(PoRevision.REV2_4, record_number,
                 readJustOneRecord, sfi, expectedLenght);
-        apduRequest = apduCommandBuilder.getApduRequest();
-        Assert.assertArrayEquals(request2_4, ByteBufferUtils.toBytes(apduRequest.getBuffer()));
+        ApduRequest = apduCommandBuilder.getApduRequest();
+        Assert.assertArrayEquals(request2_4, ApduRequest.getBytes());
     }
 
     @Test
@@ -67,8 +66,8 @@ public class ReadRecordsCmdBuildTest {
         byte[] request3_1 = {cla, cmd, p1, p2, 0x00};
         apduCommandBuilder = new ReadRecordsCmdBuild(PoRevision.REV3_1, record_number,
                 readJustOneRecord, sfi, expectedLenght);
-        apduRequest = apduCommandBuilder.getApduRequest();
-        Assert.assertArrayEquals(request3_1, ByteBufferUtils.toBytes(apduRequest.getBuffer()));
+        ApduRequest = apduCommandBuilder.getApduRequest();
+        Assert.assertArrayEquals(request3_1, ApduRequest.getBytes());
     }
 
     @Test
@@ -86,8 +85,8 @@ public class ReadRecordsCmdBuildTest {
         byte[] request3_2 = {cla, cmd, p1, p2, 0x00};
         apduCommandBuilder = new ReadRecordsCmdBuild(PoRevision.REV3_2, record_number,
                 readJustOneRecord, sfi, expectedLenght);
-        apduRequest = apduCommandBuilder.getApduRequest();
-        Assert.assertArrayEquals(request3_2, ByteBufferUtils.toBytes(apduRequest.getBuffer()));
+        ApduRequest = apduCommandBuilder.getApduRequest();
+        Assert.assertArrayEquals(request3_2, ApduRequest.getBytes());
     }
 
 }

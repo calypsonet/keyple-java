@@ -73,4 +73,6 @@ abstract class TagTransceiver implements TagTechnology {
         throw new IOReaderException("Unknown tag");
     }
 
+
+
 }

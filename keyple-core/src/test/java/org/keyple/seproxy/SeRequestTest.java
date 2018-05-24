@@ -15,35 +15,32 @@ import org.junit.Test;
 
 public class SeRequestTest {
 
-    private static final ByteBuffer aid = ByteBuffer.wrap(new byte[] {(byte) 0x01, (byte) 0x02});
+    private static final ByteBuffer aid =
+            ByteBufferUtils.wrap(new byte[] {(byte) 0x01, (byte) 0x02});
 
     @Test
     public void testSERequest() {
-        SeRequestSet request =
-                new SeRequestSet(new SeRequest(aid, new ArrayList<ApduRequest>(), true));
+        SeRequestSet request = new SeRequestSet(aid, new ArrayList<ApduRequest>(), true);
         assertNotNull(request);
     }
 
     @Test
     public void testGetAidToSelect() {
-        SeRequestSet request =
-                new SeRequestSet(new SeRequest(aid, new ArrayList<ApduRequest>(), true));
-        assertEquals(aid, request.getSingleElement().getAidToSelect());
+        SeRequestSet request = new SeRequestSet(aid, new ArrayList<ApduRequest>(), true);
+        assertEquals(aid, request.getAidToSelect());
     }
 
     @Test
     public void testGetApduRequests() {
-        SeRequestSet request =
-                new SeRequestSet(new SeRequest(aid, new ArrayList<ApduRequest>(), true));
+        SeRequestSet request = new SeRequestSet(aid, new ArrayList<ApduRequest>(), true);
         assertArrayEquals(new ArrayList<ApduRequest>().toArray(),
-                request.getSingleElement().getApduRequests().toArray());
+                request.getApduRequests().toArray());
     }
 
     @Test
     public void testAskKeepChannelOpen() {
-        SeRequestSet request =
-                new SeRequestSet(new SeRequest(aid, new ArrayList<ApduRequest>(), true));
-        assertTrue(request.getSingleElement().keepChannelOpen());
+        SeRequestSet request = new SeRequestSet(aid, new ArrayList<ApduRequest>(), true);
+        assertTrue(request.keepChannelOpen());
     }
 
 }

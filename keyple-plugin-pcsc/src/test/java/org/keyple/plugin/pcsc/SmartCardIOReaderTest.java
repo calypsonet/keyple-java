@@ -133,14 +133,13 @@ public class SmartCardIOReaderTest {
 
         List<ApduRequest> apduRequests = new ArrayList<ApduRequest>();
         apduRequests.add(apduRequestMF);
-        SeRequestSet seApplicationRequest =
-                new SeRequestSet(new SeRequest(aidToSelect, apduRequests, true));
+        SeRequestSet seApplicationRequest = new SeRequestSet(aidToSelect, apduRequests, true);
 
         SeResponseSet reponseActuelle = reader.transmit(seApplicationRequest);
 
-        assertNull(reponseActuelle.getSingleElement().getFci());
-        assertEquals(reponseActuelle.getSingleElement().getApduResponses().size(), 0);
-        assertFalse(reponseActuelle.getSingleElement().wasChannelPreviouslyOpen());
+        assertNull(reponseActuelle.getFci());
+        assertEquals(reponseActuelle.getApduResponses().size(), 0);
+        assertFalse(reponseActuelle.wasChannelPreviouslyOpen());
     }
 
     @Test
@@ -156,7 +155,7 @@ public class SmartCardIOReaderTest {
         byte[] returnOK = {(byte) 0x90, (byte) 0x00};
         ApduResponse responseMockMF = new ApduResponse(new byte[] {(byte) 0x85, 0x17, 0x00, 0x01,
                 0x00, 0x00, 0x00, 0x12, 0x12, 0x00, 0x00, 0x01, 0x03, 0x01, 0x01, 0x00, 0x7E, 0x7E,
-                0x7E, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, (byte) 0x90, 0x00}, true);
+                0x7E, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, true, returnOK);
         ApduRequest apduRequestMF = new ApduRequest(
                 new byte[] {(byte) 0x94, (byte) 0xA4, 0x00, 0x00, 0x02, 0x3F, 0x02}, false);
 
@@ -165,17 +164,16 @@ public class SmartCardIOReaderTest {
 
         List<ApduRequest> apduRequests = new ArrayList<ApduRequest>();
         apduRequests.add(apduRequestMF);
-        SeRequestSet seApplicationRequest =
-                new SeRequestSet(new SeRequest(aidToSelect, apduRequests, true));
+        SeRequestSet seApplicationRequest = new SeRequestSet(aidToSelect, apduRequests, true);
 
         PcscReader spiedReader = spy(this.reader);
         SeResponseSet reponseActuelle = spiedReader.transmit(seApplicationRequest);
 
-        assertEquals(reponseActuelle.getSingleElement().getApduResponses().size(),
-                seApplicationRequest.getSingleElement().getApduRequests().size());
+        assertEquals(reponseActuelle.getApduResponses().size(),
+                seApplicationRequest.getApduRequests().size());
         // assertNotNull(Whitebox.getInternalState(spiedReader, "card"));
         // assertNotNull(Whitebox.getInternalState(spiedReader, "channel"));
-        assertNotNull(reponseActuelle.getSingleElement().getFci());
+        assertNotNull(reponseActuelle.getFci());
     }
 
     @Test
@@ -191,25 +189,24 @@ public class SmartCardIOReaderTest {
         byte[] returnOK = {(byte) 0x90, (byte) 0x00};
         ApduResponse responseMockMF = new ApduResponse(new byte[] {(byte) 0x85, 0x17, 0x00, 0x01,
                 0x00, 0x00, 0x00, 0x12, 0x12, 0x00, 0x00, 0x01, 0x03, 0x01, 0x01, 0x00, 0x7E, 0x7E,
-                0x7E, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, (byte) 0x90, 0x00}, true);
+                0x7E, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, true, returnOK);
         ApduRequest apduRequestMF = new ApduRequest(
                 new byte[] {(byte) 0x94, (byte) 0xA4, 0x00, 0x00, 0x02, 0x3F, 0x02}, false);
 
         // code de la requete
         ByteBuffer aidToSelect =
-                ByteBuffer.wrap(new byte[] {(byte) 0x94, (byte) 0xCA, 0x00, 0x4F, 0x00});
+                ByteBufferUtils.wrap(new byte[] {(byte) 0x94, (byte) 0xCA, 0x00, 0x4F, 0x00});
 
         List<ApduRequest> apduRequests = new ArrayList<ApduRequest>();
         apduRequests.add(apduRequestMF);
-        SeRequestSet seApplicationRequest =
-                new SeRequestSet(new SeRequest(aidToSelect, apduRequests, true));
+        SeRequestSet seApplicationRequest = new SeRequestSet(aidToSelect, apduRequests, true);
 
         PcscReader spiedReader = spy(this.reader);
 
         SeResponseSet reponseActuelle = spiedReader.transmit(seApplicationRequest);
-        assertNotNull(reponseActuelle.getSingleElement().getFci());
-        assertEquals(reponseActuelle.getSingleElement().getApduResponses().size(),
-                seApplicationRequest.getSingleElement().getApduRequests().size());
+        assertNotNull(reponseActuelle.getFci());
+        assertEquals(reponseActuelle.getApduResponses().size(),
+                seApplicationRequest.getApduRequests().size());
     }
 
     @Test
@@ -223,25 +220,24 @@ public class SmartCardIOReaderTest {
         byte[] returnOK = {(byte) 0x90, (byte) 0x00};
         ApduResponse responseMockMF = new ApduResponse(new byte[] {(byte) 0x85, 0x17, 0x00, 0x01,
                 0x00, 0x00, 0x00, 0x12, 0x12, 0x00, 0x00, 0x01, 0x03, 0x01, 0x01, 0x00, 0x7E, 0x7E,
-                0x7E, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, (byte) 0x90, 0x00}, true);
+                0x7E, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, true, returnOK);
         ApduRequest apduRequestMF = new ApduRequest(
                 new byte[] {(byte) 0x94, (byte) 0xA4, 0x00, 0x00, 0x02, 0x3F, 0x02}, false);
 
         // code de la requete
         ByteBuffer aidToSelect =
-                ByteBuffer.wrap(new byte[] {(byte) 0x94, (byte) 0xCA, 0x00, 0x4F, 0x00});
+                ByteBufferUtils.wrap(new byte[] {(byte) 0x94, (byte) 0xCA, 0x00, 0x4F, 0x00});
 
         List<ApduRequest> apduRequests = new ArrayList<ApduRequest>();
         apduRequests.add(apduRequestMF);
-        SeRequestSet seApplicationRequest =
-                new SeRequestSet(new SeRequest(aidToSelect, apduRequests, false));
+        SeRequestSet seApplicationRequest = new SeRequestSet(aidToSelect, apduRequests, false);
 
         PcscReader spiedReader = spy(this.reader);
 
         SeResponseSet reponseActuelle = spiedReader.transmit(seApplicationRequest);
-        assertNotNull(reponseActuelle.getSingleElement().getFci());
-        assertEquals(reponseActuelle.getSingleElement().getApduResponses().size(),
-                seApplicationRequest.getSingleElement().getApduRequests().size());
+        assertNotNull(reponseActuelle.getFci());
+        assertEquals(reponseActuelle.getApduResponses().size(),
+                seApplicationRequest.getApduRequests().size());
         // assertNull(Whitebox.getInternalState(spiedReader, "card"));
         // assertNull(Whitebox.getInternalState(spiedReader, "channel"));
     }

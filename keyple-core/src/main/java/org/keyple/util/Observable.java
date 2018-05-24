@@ -8,8 +8,8 @@
 
 package org.keyple.util;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Observable
@@ -29,37 +29,51 @@ public class Observable<T> {
     protected final Collection<Observer<? super T>> observers;
 
     public Observable() {
-        observers = new CopyOnWriteArrayList<Observer<? super T>>();
+        observers = new ArrayList<Observer<? super T>>();
     }
 
     public void addObserver(final Observer<? super T> observer) {
-        if (!observers.contains(observer)) {
-            observers.add(observer);
+        synchronized (observers) {
+            if (!observers.contains(observer)) {
+                observers.add(observer);
+            }
         }
     }
 
     public void removeObserver(final Observer<? super T> observer) {
-        observers.remove(observer);
+        synchronized (observers) {
+            observers.remove(observer);
+        }
     }
 
     public void clearObservers() {
-        this.observers.clear();
+        synchronized (observers) {
+            this.observers.clear();
+        }
     }
 
     public void setChanged() {
-        this.changed = true;
+        synchronized (observers) {
+            this.changed = true;
+        }
     }
 
     public void clearChanged() {
-        this.changed = false;
+        synchronized (observers) {
+            this.changed = false;
+        }
     }
 
     public boolean hasChanged() {
-        return this.changed;
+        synchronized (observers) {
+            return this.changed;
+        }
     }
 
     public int countObservers() {
-        return observers.size();
+        synchronized (observers) {
+            return observers.size();
+        }
     }
 
     public void notifyObservers() {
@@ -67,7 +81,15 @@ public class Observable<T> {
     }
 
     public void notifyObservers(final T value) {
-        for (Observer<? super T> observer : observers) {
+        ArrayList<Observer<? super T>> toNotify = null;
+        synchronized (observers) {
+            if (!changed) {
+                return;
+            }
+            toNotify = new ArrayList<Observer<? super T>>(observers);
+            changed = false;
+        }
+        for (Observer<? super T> observer : toNotify) {
             observer.update(this, value);
         }
     }

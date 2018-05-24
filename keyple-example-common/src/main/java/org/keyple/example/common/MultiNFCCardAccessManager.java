@@ -16,7 +16,6 @@ import org.keyple.calypso.commands.po.builder.ReadRecordsCmdBuild;
 import org.keyple.calypso.commands.po.builder.UpdateRecordCmdBuild;
 import org.keyple.seproxy.*;
 import org.keyple.seproxy.exceptions.IOReaderException;
-import org.keyple.util.ByteBufferUtils;
 
 /**
  * Set of @{@link SeRequest} to test NFC Plugin multiple protocol flags. Two @{@link SeRequest} are

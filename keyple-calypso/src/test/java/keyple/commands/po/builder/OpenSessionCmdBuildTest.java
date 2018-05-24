@@ -17,7 +17,7 @@ import org.keyple.calypso.commands.po.builder.AbstractOpenSessionCmdBuild;
 import org.keyple.commands.AbstractApduCommandBuilder;
 import org.keyple.commands.InconsistentCommandException;
 import org.keyple.seproxy.ApduRequest;
-import org.keyple.util.ByteBufferUtils;
+import org.keyple.seproxy.ByteBufferUtils;
 
 
 public class OpenSessionCmdBuildTest {
@@ -26,7 +26,7 @@ public class OpenSessionCmdBuildTest {
 
     AbstractApduCommandBuilder apduCommandBuilder;
 
-    ApduRequest apduRequest;
+    ApduRequest ApduRequest;
 
 
     @Test(expected = InconsistentCommandException.class)
@@ -60,8 +60,8 @@ public class OpenSessionCmdBuildTest {
 
         apduCommandBuilder = AbstractOpenSessionCmdBuild.create(PoRevision.REV2_4, keyIndex, dataIn,
                 sfiToSelect, recordNumberToRead);
-        apduRequest = apduCommandBuilder.getApduRequest();
-        Assert.assertArrayEquals(request2_4, ByteBufferUtils.toBytes(apduRequest.getBuffer()));
+        ApduRequest = apduCommandBuilder.getApduRequest();
+        Assert.assertArrayEquals(request2_4, ApduRequest.getBytes());
     }
 
     @Test
@@ -80,8 +80,8 @@ public class OpenSessionCmdBuildTest {
                 {cla, cmd, p1, p2, (byte) dataIn.limit(), (byte) 0xA8, 0x31, (byte) 0xC3, 0x3E};
         apduCommandBuilder = AbstractOpenSessionCmdBuild.create(PoRevision.REV3_1, keyIndex, dataIn,
                 sfiToSelect, recordNumberToRead);
-        apduRequest = apduCommandBuilder.getApduRequest();
-        Assert.assertArrayEquals(request3_1, ByteBufferUtils.toBytes(apduRequest.getBuffer()));
+        ApduRequest = apduCommandBuilder.getApduRequest();
+        Assert.assertArrayEquals(request3_1, ApduRequest.getBytes());
     }
 
     @Test
@@ -101,9 +101,9 @@ public class OpenSessionCmdBuildTest {
                         (byte) 0x00, (byte) 0xA8, 0x31, (byte) 0xC3, 0x3E});
         apduCommandBuilder = AbstractOpenSessionCmdBuild.create(PoRevision.REV3_2, keyIndex,
                 samChallenge, sfiToSelect, recordNumberToRead);
-        apduRequest = apduCommandBuilder.getApduRequest();
+        ApduRequest = apduCommandBuilder.getApduRequest();
         Assert.assertEquals(ByteBufferUtils.toHex(request3_2),
-                ByteBufferUtils.toHex(apduRequest.getBuffer()));
+                ByteBufferUtils.toHex(ApduRequest.getBuffer()));
     }
 
 

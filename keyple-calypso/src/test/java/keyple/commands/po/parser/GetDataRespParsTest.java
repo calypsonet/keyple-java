@@ -16,7 +16,6 @@ import org.junit.Test;
 import org.keyple.calypso.commands.po.parser.GetDataFciRespPars;
 import org.keyple.commands.AbstractApduResponseParser;
 import org.keyple.seproxy.ApduResponse;
-import org.keyple.seproxy.SeResponse;
 import org.keyple.seproxy.SeResponseSet;
 
 public class GetDataRespParsTest {
@@ -27,10 +26,10 @@ public class GetDataRespParsTest {
         ApduResponse apduResponse =
                 new ApduResponse(ByteBuffer.wrap(new byte[] {(byte) 0x90, 0x00}), true);
         listeResponse.add(apduResponse);
-        SeResponseSet seResponse = new SeResponseSet(new SeResponse(true, null, listeResponse));
+        SeResponseSet seResponse = new SeResponseSet(true, null, listeResponse);
 
         AbstractApduResponseParser apduResponseParser =
-                new GetDataFciRespPars(seResponse.getSingleElement().getApduResponses().get(0));
+                new GetDataFciRespPars(seResponse.getApduResponses().get(0));
 
         ByteBuffer responseActual = apduResponseParser.getApduResponse().getBuffer();
         Assert.assertEquals(ByteBuffer.wrap(new byte[] {(byte) 0x90, 0x00}), responseActual);

@@ -17,60 +17,55 @@ public class SeResponseTest {
 
     @Test
     public void testSEResponse() {
-        ApduResponse fciData = new ApduResponse(
-                new byte[] {(byte) 0x01, (byte) 02, (byte) 0x03, (byte) 0x04}, true);
-        SeResponseSet response =
-                new SeResponseSet(new SeResponse(true, fciData, new ArrayList<ApduResponse>()));
+        ApduResponse fciData = new ApduResponse(new byte[] {(byte) 0x01, (byte) 02}, true,
+                new byte[] {(byte) 0x03, (byte) 0x04});
+        SeResponseSet response = new SeResponseSet(true, fciData, new ArrayList<ApduResponse>());
         // assertNotNull(response);
         assertArrayEquals(new ArrayList<ApduResponse>().toArray(),
-                response.getSingleElement().getApduResponses().toArray());
+                response.getApduResponses().toArray());
     }
 
     @Test
     public void testWasChannelPreviouslyOpen() {
-        SeResponseSet response =
-                new SeResponseSet(new SeResponse(true, null, new ArrayList<ApduResponse>()));
-        assertTrue(response.getSingleElement().wasChannelPreviouslyOpen());
+        SeResponseSet response = new SeResponseSet(true, null, new ArrayList<ApduResponse>());
+        assertTrue(response.wasChannelPreviouslyOpen());
     }
 
     @Test
     public void testGetFciData() {
-        ApduResponse fciData = new ApduResponse(
-                new byte[] {(byte) 0x01, (byte) 02, (byte) 0x03, (byte) 0x04}, true);
-        SeResponseSet response =
-                new SeResponseSet(new SeResponse(true, fciData, new ArrayList<ApduResponse>()));
-        assertEquals(fciData, response.getSingleElement().getFci());
+        ApduResponse fciData = new ApduResponse(new byte[] {(byte) 0x01, (byte) 02}, true,
+                new byte[] {(byte) 0x03, (byte) 0x04});
+        SeResponseSet response = new SeResponseSet(true, fciData, new ArrayList<ApduResponse>());
+        assertEquals(fciData, response.getFci());
 
     }
 
     @Test
     public void testGetFciDataNull() {
         ApduResponse fciData = null;
-        SeResponseSet response =
-                new SeResponseSet(new SeResponse(false, fciData, new ArrayList<ApduResponse>()));
-        assertNull(response.getSingleElement().getFci());
+        SeResponseSet response = new SeResponseSet(false, fciData, new ArrayList<ApduResponse>());
+        assertNull(response.getFci());
 
     }
 
     @Test
     public void testGetApduResponses() {
-        SeResponseSet response =
-                new SeResponseSet(new SeResponse(true, null, new ArrayList<ApduResponse>()));
+        SeResponseSet response = new SeResponseSet(true, null, new ArrayList<ApduResponse>());
         assertArrayEquals(new ArrayList<ApduResponse>().toArray(),
-                response.getSingleElement().getApduResponses().toArray());
+                response.getApduResponses().toArray());
     }
 
     @Test
     public void testToString() {
-        ApduResponse fciData = new ApduResponse(
-                new byte[] {(byte) 0x01, (byte) 02, (byte) 0x03, (byte) 0x04}, true);
+        ApduResponse fciData = new ApduResponse(new byte[] {(byte) 0x01, (byte) 02}, true,
+                new byte[] {(byte) 0x03, (byte) 0x04});
         List<ApduResponse> responses = new ArrayList<ApduResponse>();
         responses.add(fciData);
         responses.add(fciData);
-        SeResponseSet response = new SeResponseSet(new SeResponse(true, fciData, responses));
-        assertEquals(response.getSingleElement().getApduResponses().size(), 2);
-        assertEquals(fciData, response.getSingleElement().getFci());
-        for (ApduResponse resp : response.getSingleElement().getApduResponses()) {
+        SeResponseSet response = new SeResponseSet(true, fciData, responses);
+        assertEquals(response.getApduResponses().size(), 2);
+        assertEquals(fciData, response.getFci());
+        for (ApduResponse resp : response.getApduResponses()) {
             assertEquals(resp, fciData);
         }
     }

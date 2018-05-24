@@ -6,7 +6,7 @@
  * available at https://www.eclipse.org/org/documents/epl-2.0/EPL-2.0.html
  */
 
-package org.keyple.util;
+package org.keyple.seproxy;
 
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
@@ -135,6 +135,18 @@ public class ByteBufferUtils {
         buf = buf.duplicate();
         buf.position(offset).limit(offset + length);
         return buf.slice();
+    }
+
+    /**
+     * Temporary conversion method. Every time this method is called it should be replaced by
+     * something else.
+     *
+     * @param array Array to convert to {@link ByteBuffer}
+     * @return {@link ByteBuffer} or null
+     * @deprecated This should be replaced by some proper {@link ByteBuffer} handling
+     */
+    public static ByteBuffer wrap(byte[] array) {
+        return array != null ? ByteBuffer.wrap(array) : null;
     }
 
     public static ByteBuffer concat(ByteBuffer buf1, ByteBuffer buf2) {

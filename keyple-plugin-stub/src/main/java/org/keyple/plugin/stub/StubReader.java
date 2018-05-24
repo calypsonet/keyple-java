@@ -8,6 +8,7 @@
 
 package org.keyple.plugin.stub;
 
+import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,76 +19,137 @@ import org.keyple.seproxy.exceptions.IOReaderException;
 import com.github.structlog4j.ILogger;
 import com.github.structlog4j.SLoggerFactory;
 
+
+/**
+ * Stub Implementation of {@link ProxyReader} To inject custom behaviour use
+ * {@link StubSecureElement}
+ */
 public class StubReader extends AbstractObservableReader implements ConfigurableReader {
 
 
     private static final ILogger logger = SLoggerFactory.getLogger(StubReader.class);
 
     private boolean isSEPresent = false;
-    private ByteBuffer aid;
+    private ByteBuffer previousOpenApplication = null;
 
     private Map<String, String> parameters = new HashMap<String, String>();
 
     public static final String ALLOWED_PARAMETER_1 = "parameter1";
     public static final String ALLOWED_PARAMETER_2 = "parameter2";
 
+    private StubSecureElement currentSE;
+
+    private boolean test_WillTimeout = false;
+
 
     @Override
     public String getName() {
-        return "";
+        return "StubReader";
     }
 
+    /**
+     * Simulated transmit function to {@link StubSecureElement} ; Only seRequest whose protocol flag
+     * corresponds to the Secure Element technology are executed; if KeepChannelOpen parameter set
+     * to true will abort following seRequestElements
+     * 
+     * @param seRequestSet : Set of seRequest to be sent
+     * @return SeResponseSet : set of resulting seResponse
+     */
     @Override
-    public SeResponseSet transmit(SeRequestSet requestSet) throws IOReaderException {
+    public SeResponseSet transmit(SeRequestSet seRequestSet) throws IOReaderException {
+        logger.info("Calling transmit on Keyple Stub Reader");
 
-        if (requestSet == null) {
-            logger.error("SeRequestSet is null");
-            throw new IOReaderException("SeRequestSet is null");
+        if (seRequestSet == null) {
+            throw new IOReaderException("se Request Set should not be null");
         }
 
         if (!isSEPresent) {
-            throw new IOReaderException("SE is not present");
+            throw new IOReaderException("Secured Element is not present");
         }
 
         if (test_WillTimeout) {
-            logger.info("Timeout test is enabled, transmit raises TimeoutException");
-            throw new IOReaderException("timeout while processing SeRequestSet");
+            throw new IOReaderException("Timeout while transmitting");
         }
 
-        boolean channelPreviouslyOpen;
-        ApduResponse fci;
-        List<ApduResponse> apduResponses = new ArrayList<ApduResponse>();
-
-        // Open channel commands
-        if (!test_ChannelIsOpen) {
-            channelPreviouslyOpen = false;
-            logger.debug("Logical channel is not open");
-
-            if (test_ApplicationError) {
-                logger.info(
-                        "Application error test is enabled, transmit will fail at open application");
-                fci = new ApduResponse(ByteBuffer.allocate(0), false);
-                return new SeResponseSet(new SeResponse(channelPreviouslyOpen, fci, apduResponses));
-            } else {
-                logger.info("Logical channel is opened with aid : " + aid);
-                fci = new ApduResponse(ByteBuffer.allocate(0), true);
-            }
-        } else {
-            channelPreviouslyOpen = true;
-            aid = ByteBuffer.allocate(0);
-            logger.info("Logical channel is already opened with aid : " + aid);
-            fci = new ApduResponse(aid, true);
-        }
+        logger.info("APDU commands are simulated with StubCurrentElement : " + currentSE.getTech());
+        logger.info("Size of seRequestSet : " + String.valueOf(seRequestSet.getElements().size()));
 
 
-        // Prepare succesfull responses
-        for (ApduRequest apduRequest : requestSet.getSingleElement().getApduRequests()) {
-            logger.debug("Processing request : " + apduRequest.toString());
-            apduResponses.add(new ApduResponse(ByteBuffer.allocate(0), true));
-        }
 
+        // init response
         List<SeResponse> seResponses = new ArrayList<SeResponse>();
-        seResponses.add(new SeResponse(channelPreviouslyOpen, fci, apduResponses));
+
+        // Filter requestElements whom protocol matches the current SE
+        List<SeRequest> seRequests = filterByProtocol(seRequestSet.getElements());
+
+        // no seRequestElements are left after filtering
+        if (seRequests.size() < 1) {
+            return new SeResponseSet(seResponses);
+        }
+
+
+        // process the request elements
+        for (int i = 0; i < seRequests.size(); i++) {
+
+            logger.info("Processing seRequestElements # " + i);
+
+            SeRequest seRequest = seRequests.get(i);
+
+            // init response
+            List<ApduResponse> apduResponses = new ArrayList<ApduResponse>();
+            ApduResponse fciResponse = null;
+
+            try {
+
+                // Checking of the presence of the AID request in requests group
+                ByteBuffer aid = seRequest.getAidToSelect();
+                logger.info("Connect to application, aid :" + ByteBufferUtils.toHex(aid));
+
+                // Open the application channel if not open yet
+                if (previousOpenApplication == null || previousOpenApplication != aid) {
+                    logger.info("Connecting to application : " + aid);
+                    fciResponse = this.connectApplication(seRequest.getAidToSelect());
+                } else {
+                    logger.info("Application was already open : " + aid);
+                }
+
+                if (previousOpenApplication != null
+                        || (fciResponse != null && fciResponse.isSuccessful())) {
+                    // Send APDU
+                    for (ApduRequest apduRequest : seRequest.getApduRequests()) {
+                        // add APDU responses
+                        apduResponses.add(currentSE.process(apduRequest));
+                    }
+                }
+
+
+                // Add ResponseElements to global SeResponseSet
+                SeResponse out =
+                        new SeResponse(previousOpenApplication != null, fciResponse, apduResponses);
+                seResponses.add(out);
+
+                // Don't process more seRequestElement if asked
+                if (seRequest.keepChannelOpen()) {
+                    logger.info(
+                            "Keep Channel Open is set to true, abort further seRequestElement if any");
+                    saveChannelState(aid);
+                    break;
+                }
+
+
+                // For last element, close physical channel if asked
+                if (i == seRequests.size() - 1 && !seRequest.keepChannelOpen()) {
+                    disconnect(currentSE);
+                }
+
+            } catch (IOException e) {
+                logger.error("Error executing command");
+                e.printStackTrace();
+                apduResponses.add(null);// add empty response
+            }
+
+        }
+
         return new SeResponseSet(seResponses);
     }
 
@@ -131,34 +193,91 @@ public class StubReader extends AbstractObservableReader implements Configurable
     }
 
 
-    private boolean test_WillTimeout = false;
-    private boolean test_ApplicationError = false;
-    private boolean test_ChannelIsOpen = false;
 
-    public void test_InsertSE() {
+    /**
+     * Physical connect to Secure Element (simulated)
+     * 
+     * @param se : Stub Secure Element to connect to
+     */
+    protected void connect(StubSecureElement se) {
         isSEPresent = true;
-        logger.debug("Test - insert SE");
+        currentSE = se;
+        logger.info("Connect SE : " + se.getTech());
         notifyObservers(new ReaderEvent(this, ReaderEvent.EventType.SE_INSERTED));
     }
 
-    public void test_RemoveSE() {
+    /**
+     * Physical disconnect to Secure Element (simulated)
+     * 
+     * @param se : Stub Secure Element to connect to
+     */
+    protected void disconnect(StubSecureElement se) {
+        logger.info("Disconnect SE : " + se.getTech());
         isSEPresent = false;
-        logger.debug("Test - remove SE");
+        currentSE = null;
         notifyObservers(new ReaderEvent(this, ReaderEvent.EventType.SE_REMOVAL));
     }
 
-    public void test_SetWillTimeout(Boolean willTimeout) {
-        logger.debug("Test - set will timeout to " + willTimeout);
+    /**
+     * Activate a simulated timeout during transmit command
+     * 
+     * @param willTimeout
+     */
+    public void configureWillTimeout(Boolean willTimeout) {
+        logger.info("Configure test will timeout to " + willTimeout);
         test_WillTimeout = willTimeout;
     }
 
-    public void test_SetApplicationError(Boolean applicationError) {
-        logger.debug("Test - set applicationError to " + applicationError);
-        test_ApplicationError = applicationError;
+
+    /**
+     * Build and send an APDU to select 'aid'
+     * 
+     * @param aid : aid to select
+     * @return : FCI or ATR
+     * @throws IOException
+     */
+    private ApduResponse connectApplication(ByteBuffer aid) throws IOException {
+
+        if (currentSE.getAid() != null && currentSE.getAid().equals(ByteBufferUtils.toHex(aid))) {
+            return new ApduResponse(ByteBufferUtils.fromHex(currentSE.getFCI()), true);
+        } else {
+            return new ApduResponse(ByteBuffer.allocate(0), false);
+        }
+
     }
 
-    public void test_SetChannelIsOpen(Boolean channelIsOpen) {
-        logger.debug("Test - set channelIsOpen to " + channelIsOpen);
-        test_ChannelIsOpen = channelIsOpen;
+
+    /**
+     * Filter by protocol the seRequestElements which matches with SE Technology
+     * 
+     * @param seRequestElements
+     * @return filtered list of seRequestElements
+     */
+    private List<SeRequest> filterByProtocol(List<SeRequest> seRequestElements) {
+
+        logger.info("Filtering # seRequestElements : " + seRequestElements.size());
+        List<SeRequest> filteredSRE = new ArrayList<SeRequest>();
+
+        for (SeRequest seRequestElement : seRequestElements) {
+
+            logger.info("Filtering seRequestElement whom protocol : "
+                    + seRequestElement.getProtocolFlag());
+
+            if (seRequestElement.getProtocolFlag() != null
+                    && seRequestElement.getProtocolFlag().equals(currentSE.getTech())) {
+                filteredSRE.add(seRequestElement);
+            }
+        }
+        logger.info("After Filter seRequestElement : " + filteredSRE.size());
+        return filteredSRE;
+    }
+
+
+    /**
+     * Keep the current channel open for further commands
+     */
+    private void saveChannelState(ByteBuffer aid) {
+        logger.info("Save application id for further commands");
+        previousOpenApplication = aid;
     }
 }

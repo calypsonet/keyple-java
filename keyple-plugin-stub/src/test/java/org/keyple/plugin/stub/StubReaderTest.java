@@ -12,12 +12,10 @@ package org.keyple.plugin.stub;
 import static org.junit.Assert.fail;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.keyple.seproxy.ApduRequest;
 import org.keyple.seproxy.SeRequest;
 import org.keyple.seproxy.SeRequestSet;
 import org.keyple.seproxy.exceptions.IOReaderException;
@@ -31,6 +29,9 @@ public class StubReaderTest {
     @Before
     public void SetUp() throws IOReaderException {
         stubReader = (StubReader) StubPlugin.getInstance().getReaders().get(0);
+        stubReader.configureWillTimeout(false);
+        stubReader.clearObservers();
+
     }
 
 
@@ -39,67 +40,38 @@ public class StubReaderTest {
         assert (stubReader.getName() != null);
     }
 
-    @Test
-    public void testIsPresent() throws IOReaderException {
-        assert (!stubReader.isSEPresent());
-    }
 
     @Test
     public void testTransmitNull() throws IOReaderException {
         try {
-            stubReader.transmit(null).getSingleElement().getApduResponses().size();
+            stubReader.transmit(null);
             fail("Should raise exception");
         } catch (IOReaderException e) {
             e.printStackTrace();
-            assert (e.getMessage().contains("null"));
+            assert (e.getMessage() != null);
         }
     }
 
-
-
-    @Test(expected = IOReaderException.class)
-    // if SE is not present, transmit fails
-    public void testTransmitSEnotPressent() throws IOReaderException {
-        List<ApduRequest> apduRequests = new ArrayList<ApduRequest>();
-        SeRequestSet seRequest = new SeRequestSet(new SeRequest(apduRequests));
-        assert (stubReader.transmit(seRequest).getSingleElement().getApduResponses().size() == 0);
-
-    }
 
     // Timeout
     @Test
     public void testTimeout() {
-        List<ApduRequest> apduRequests = new ArrayList<ApduRequest>();
-        SeRequestSet seRequest = new SeRequestSet(new SeRequest(apduRequests));
-        stubReader.test_SetWillTimeout(true);
+
+        SeRequestSet seRequest = new SeRequestSet(new ArrayList<SeRequest>());
+        stubReader.configureWillTimeout(true);
 
         try {
             stubReader.transmit(seRequest);
             fail("Should raise exception");
         } catch (IOReaderException e) {
-            assert (e != null);
         }
 
     }
 
-    // SE is not present
-    @Test
-    public void testTransmitWithoutSE() {
-        List<ApduRequest> apduRequests = new ArrayList<ApduRequest>();
-        SeRequestSet seRequest = new SeRequestSet(new SeRequest(apduRequests));
-        stubReader.test_RemoveSE();
-
-        try {
-            stubReader.transmit(seRequest);
-            fail("Should raise exception");
-        } catch (IOReaderException e) {
-            assert (e != null);
-        }
-    }
 
     // Set wrong parameter
     @Test
-    public void testSetWrongParamater() {
+    public void testSetWrongParameter() {
         try {
             stubReader.setParameter("WRONG_PARAMETER", "a");
             fail("Should raise exception");
@@ -110,7 +82,7 @@ public class StubReaderTest {
 
     // Set A wrong parameter
     @Test
-    public void testSetWrongParamaters() {
+    public void testSetWrongParameters() {
         Map<String, String> parameters = new HashMap<String, String>();
         parameters.put("WRONG_PARAMETER", "d");
         parameters.put(StubReader.ALLOWED_PARAMETER_1, "a");
@@ -122,7 +94,7 @@ public class StubReaderTest {
         }
     }
 
-    // Set Paramater
+    // Set Parameter
     @Test
     public void testSetParameters() {
         Map<String, String> p1 = new HashMap<String, String>();
