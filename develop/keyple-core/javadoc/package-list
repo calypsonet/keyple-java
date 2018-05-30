@@ -1,4 +1,4 @@
-org.keyple.commands
-org.keyple.seproxy
-org.keyple.seproxy.exceptions
-org.keyple.util
+org.eclipse.keyple.commands
+org.eclipse.keyple.seproxy
+org.eclipse.keyple.seproxy.exceptions
+org.eclipse.keyple.util
