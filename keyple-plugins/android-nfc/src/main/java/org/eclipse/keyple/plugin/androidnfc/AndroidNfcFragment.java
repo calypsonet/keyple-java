@@ -121,7 +121,6 @@ public class AndroidNfcFragment extends Fragment {
         nfcAdapter.enableReaderMode(getActivity(),
                 ((AndroidNfcReader) AndroidNfcPlugin.getInstance().getReaders().get(0)),
                 NfcAdapter.FLAG_READER_NFC_A | NfcAdapter.FLAG_READER_NFC_B
-                        | NfcAdapter.FLAG_READER_NFC_F | NfcAdapter.FLAG_READER_NFC_V
                         | NfcAdapter.FLAG_READER_SKIP_NDEF_CHECK,
                 options);
 

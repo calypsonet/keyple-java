@@ -35,12 +35,12 @@ abstract class TagTransceiver implements TagTechnology {
     static TagTransceiver getTagTransceiver(Tag tag) throws IOReaderException {
 
         // TODO factorize this code
-        if (Arrays.asList(tag.getTechList()).contains("android.nfc.tech.MifareClassic")) {
+        if (Arrays.asList(tag.getTechList()).contains(AndroidNfcProtocolSettings.TAG_TECHNOLOGY_MIFARE_CLASSIC)) {
             Log.d(TAG, "Tag embedded into MifareClassic Transceiver");
             return new MifareClassicTransceiver(tag);
         }
 
-        if (Arrays.asList(tag.getTechList()).contains("android.nfc.tech.MifareUltralight")) {
+        if (Arrays.asList(tag.getTechList()).contains(AndroidNfcProtocolSettings.TAG_TECHNOLOGY_MIFARE_UL)) {
             Log.d(TAG, "Tag embedded into MifareUltralight Transceiver");
             return new MifareUltralightTransceiver(tag);
         }
@@ -51,27 +51,13 @@ abstract class TagTransceiver implements TagTechnology {
             return new IsoDepTransceiver(tag);
         }
 
-        if (Arrays.asList(tag.getTechList()).contains("android.nfc.tech.NfcA")) {
-            Log.d(TAG, "Tag embedded into NfcA Transceiver");
-            return new NfcATransceiver(tag);
-        }
 
-        if (Arrays.asList(tag.getTechList()).contains("android.nfc.tech.NfcB")) {
-            Log.d(TAG, "Tag embedded into NfcB Transceiver");
-            return new NfcBTransceiver(tag);
-        }
+        throw new IOReaderException("Keyple Android Reader supports only : "
+                + AndroidNfcProtocolSettings.TAG_TECHNOLOGY_MIFARE_CLASSIC +", "
+                + AndroidNfcProtocolSettings.TAG_TECHNOLOGY_MIFARE_UL +", "
+                + AndroidNfcProtocolSettings.TAG_TECHNOLOGY_ISO14443_4 +", "
 
-        if (Arrays.asList(tag.getTechList()).contains("android.nfc.tech.NfcF")) {
-            Log.d(TAG, "Tag embedded into NfcF Transceiver");
-            return new NfcFTransceiver(tag);
-        }
-
-        if (Arrays.asList(tag.getTechList()).contains("android.nfc.tech.NfcV")) {
-            Log.d(TAG, "Tag embedded into NfcV Transceiver");
-            return new NfcVTransceiver(tag);
-        }
-
-        throw new IOReaderException("Unknown tag");
+        );
     }
 
 }

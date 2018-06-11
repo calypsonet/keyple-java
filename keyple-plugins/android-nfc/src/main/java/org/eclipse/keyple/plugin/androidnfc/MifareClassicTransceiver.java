@@ -24,7 +24,7 @@ class MifareClassicTransceiver extends TagTransceiver {
 
     @Override
     public String getTech() {
-        return "android.nfc.tech.MifareClassic";
+        return AndroidNfcProtocolSettings.TAG_TECHNOLOGY_MIFARE_CLASSIC;
     }
 
     MifareClassicTransceiver(Tag tag) {

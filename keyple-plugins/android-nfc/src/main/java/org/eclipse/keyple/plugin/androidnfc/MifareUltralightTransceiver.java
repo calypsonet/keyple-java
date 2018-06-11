@@ -26,7 +26,7 @@ class MifareUltralightTransceiver extends TagTransceiver {
 
     @Override
     public String getTech() {
-        return "android.nfc.tech.MifareUltralight";
+        return AndroidNfcProtocolSettings.TAG_TECHNOLOGY_MIFARE_UL;
     }
 
     MifareUltralightTransceiver(Tag tag) {

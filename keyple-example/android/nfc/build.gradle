@@ -39,8 +39,6 @@ apply plugin: 'com.android.application'
 
 android {
     signingConfigs {
-        config {
-        }
     }
     compileSdkVersion 26
     defaultConfig {
@@ -50,7 +48,6 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        signingConfig signingConfigs.config
     }
     buildTypes {
         release {
@@ -77,7 +74,6 @@ repositories {
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:support-v4:26.1.0'
     implementation 'com.android.support:appcompat-v7:26.1.0'
     implementation 'com.android.support:design:26.1.0'
