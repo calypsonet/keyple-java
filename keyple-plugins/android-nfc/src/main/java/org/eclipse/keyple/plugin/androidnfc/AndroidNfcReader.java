@@ -11,18 +11,10 @@ package org.eclipse.keyple.plugin.androidnfc;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import org.eclipse.keyple.seproxy.ApduRequest;
-import org.eclipse.keyple.seproxy.ApduResponse;
+
 import org.eclipse.keyple.seproxy.SeProtocol;
-import org.eclipse.keyple.seproxy.SeRequest;
-import org.eclipse.keyple.seproxy.SeRequestSet;
-import org.eclipse.keyple.seproxy.SeResponse;
-import org.eclipse.keyple.seproxy.SeResponseSet;
-import org.eclipse.keyple.seproxy.event.AbstractObservableReader;
 import org.eclipse.keyple.seproxy.event.ReaderEvent;
 import org.eclipse.keyple.seproxy.exception.ChannelStateReaderException;
 import org.eclipse.keyple.seproxy.exception.IOReaderException;
@@ -157,8 +149,8 @@ public class AndroidNfcReader extends AbstractLocalReader
         // Initialization
         long commandLenght = apduIn.limit();
         Log.d(TAG, "Data Length to be sent to tag : " + commandLenght);
+        Log.d(TAG, "Data in : " + ByteBufferUtils.toHex(apduIn));
         byte[] data = ByteBufferUtils.toBytes(apduIn);
-        Log.d(TAG, "Data in : " + data);
         byte[] dataOut = new byte[0];
         try {
             dataOut = tagTransceiver.transceive(data);
@@ -166,8 +158,9 @@ public class AndroidNfcReader extends AbstractLocalReader
             e.printStackTrace();
             throw new ChannelStateReaderException(e);
         }
-        Log.d(TAG, "Data out  : " + dataOut);
-        return ByteBuffer.wrap(dataOut);
+        ByteBuffer out = ByteBuffer.wrap(dataOut);
+        Log.d(TAG, "Data out : " + ByteBufferUtils.toHex(out));
+        return out;
     }
 
     @Override
@@ -321,7 +314,7 @@ public class AndroidNfcReader extends AbstractLocalReader
     }
 
     private String printTagId() {
-        return tagTransceiver != null
+        return tagTransceiver != null && tagTransceiver.getTag() != null
                 ? tagTransceiver.getTag().getId() + tagTransceiver.getTag().toString()
                 : "null";
     }

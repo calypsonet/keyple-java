@@ -9,9 +9,7 @@
 package org.eclipse.keyple.examples.androidnfc;
 
 
-import java.io.Reader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import org.eclipse.keyple.commands.InconsistentCommandException;
 import org.eclipse.keyple.example.common.HoplinkSimpleRead;
@@ -47,13 +45,8 @@ public class NFCTestFragment extends Fragment implements AbstractLoggedObservabl
 
 
     private static final String TAG = NFCTestFragment.class.getSimpleName();
-    //
     private static final String TAG_NFC_ANDROID_FRAGMENT =
             "org.eclipse.keyple.plugin.androidnfc.AndroidNfcFragment";
-
-
-    // APDU Commands Test Logic
-//    private AbstractLogicManager cardAccessManager;
 
     // UI
     private TextView mText;
@@ -129,7 +122,7 @@ public class NFCTestFragment extends Fragment implements AbstractLoggedObservabl
 
 
     /**
-     * Init Isodep basic test suite
+     * Run commands test
      */
     private void runTest() {
 
@@ -149,11 +142,15 @@ public class NFCTestFragment extends Fragment implements AbstractLoggedObservabl
                     public void run() {
                         mText.append("\n ---- \n");
                         for(SeResponse response : seResponseSet.getResponses()){
-                            for(ApduResponse apdu : response.getApduResponses()){
-                                mText.append(apdu.getStatusCode() + " - " + ByteBufferUtils.toHex(apdu.getDataOut()));
+                            if(response !=null){
+                                for(ApduResponse apdu : response.getApduResponses()){
+                                    mText.append("Response : "+ apdu.getStatusCode() + " - " + ByteBufferUtils.toHex(apdu.getDataOut()));
+                                    mText.append("\n");
+                                }
+                            }else{
+                                mText.append("Response : null");
                                 mText.append("\n");
                             }
-
                         }
                     }
                 });
@@ -181,7 +178,6 @@ public class NFCTestFragment extends Fragment implements AbstractLoggedObservabl
             SeProxyService seProxyService = SeProxyService.getInstance();
             ProxyReader reader = seProxyService.getPlugins().get(0).getReaders().get(0);
             ((AbstractObservableReader) reader).removeObserver(this);
-
 
             // destroy AndroidNFC fragment
             FragmentManager fm = getFragmentManager();
@@ -211,7 +207,7 @@ public class NFCTestFragment extends Fragment implements AbstractLoggedObservabl
                 switch (event) {
                     case SE_INSERTED:
                         mText.append("\n ---- \n");
-                        mText.append("Tag detected");
+                        mText.append("Tag opened to tag");
                         try {
 
                             runTest();
