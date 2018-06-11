@@ -35,12 +35,14 @@ abstract class TagTransceiver implements TagTechnology {
     static TagTransceiver getTagTransceiver(Tag tag) throws IOReaderException {
 
         // TODO factorize this code
-        if (Arrays.asList(tag.getTechList()).contains(AndroidNfcProtocolSettings.TAG_TECHNOLOGY_MIFARE_CLASSIC)) {
+        if (Arrays.asList(tag.getTechList())
+                .contains(AndroidNfcProtocolSettings.TAG_TECHNOLOGY_MIFARE_CLASSIC)) {
             Log.d(TAG, "Tag embedded into MifareClassic Transceiver");
             return new MifareClassicTransceiver(tag);
         }
 
-        if (Arrays.asList(tag.getTechList()).contains(AndroidNfcProtocolSettings.TAG_TECHNOLOGY_MIFARE_UL)) {
+        if (Arrays.asList(tag.getTechList())
+                .contains(AndroidNfcProtocolSettings.TAG_TECHNOLOGY_MIFARE_UL)) {
             Log.d(TAG, "Tag embedded into MifareUltralight Transceiver");
             return new MifareUltralightTransceiver(tag);
         }
@@ -53,9 +55,9 @@ abstract class TagTransceiver implements TagTechnology {
 
 
         throw new IOReaderException("Keyple Android Reader supports only : "
-                + AndroidNfcProtocolSettings.TAG_TECHNOLOGY_MIFARE_CLASSIC +", "
-                + AndroidNfcProtocolSettings.TAG_TECHNOLOGY_MIFARE_UL +", "
-                + AndroidNfcProtocolSettings.TAG_TECHNOLOGY_ISO14443_4 +", "
+                + AndroidNfcProtocolSettings.TAG_TECHNOLOGY_MIFARE_CLASSIC + ", "
+                + AndroidNfcProtocolSettings.TAG_TECHNOLOGY_MIFARE_UL + ", "
+                + AndroidNfcProtocolSettings.TAG_TECHNOLOGY_ISO14443_4 + ", "
 
         );
     }

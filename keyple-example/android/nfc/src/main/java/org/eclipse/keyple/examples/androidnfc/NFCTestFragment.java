@@ -41,7 +41,8 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 
-public class NFCTestFragment extends Fragment implements AbstractLoggedObservable.Observer<ReaderEvent> {
+public class NFCTestFragment extends Fragment
+        implements AbstractLoggedObservable.Observer<ReaderEvent> {
 
 
     private static final String TAG = NFCTestFragment.class.getSimpleName();
@@ -126,34 +127,36 @@ public class NFCTestFragment extends Fragment implements AbstractLoggedObservabl
      */
     private void runTest() {
 
-        if(radioGroup.getCheckedRadioButtonId() ==  R.id.hoplinkSimpleRead){
+        if (radioGroup.getCheckedRadioButtonId() == R.id.hoplinkSimpleRead) {
             runHoplinkSimpleRead();
         }
     }
 
-    private void runHoplinkSimpleRead(){
+    private void runHoplinkSimpleRead() {
         Log.d(TAG, "Running HopLink Simple Read Tests");
         ProxyReader reader = null;
         try {
             reader = SeProxyService.getInstance().getPlugins().get(0).getReaders().get(0);
-            SeResponseSet seResponseSet = reader.transmit(new SeRequestSet(HoplinkSimpleRead.getSeRequest()));
+            SeResponseSet seResponseSet =
+                    reader.transmit(new SeRequestSet(HoplinkSimpleRead.getSeRequest()));
             getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        mText.append("\n ---- \n");
-                        for(SeResponse response : seResponseSet.getResponses()){
-                            if(response !=null){
-                                for(ApduResponse apdu : response.getApduResponses()){
-                                    mText.append("Response : "+ apdu.getStatusCode() + " - " + ByteBufferUtils.toHex(apdu.getDataOut()));
-                                    mText.append("\n");
-                                }
-                            }else{
-                                mText.append("Response : null");
+                @Override
+                public void run() {
+                    mText.append("\n ---- \n");
+                    for (SeResponse response : seResponseSet.getResponses()) {
+                        if (response != null) {
+                            for (ApduResponse apdu : response.getApduResponses()) {
+                                mText.append("Response : " + apdu.getStatusCode() + " - "
+                                        + ByteBufferUtils.toHex(apdu.getDataOut()));
                                 mText.append("\n");
                             }
+                        } else {
+                            mText.append("Response : null");
+                            mText.append("\n");
                         }
                     }
-                });
+                }
+            });
 
         } catch (IOReaderException e) {
             e.printStackTrace();
@@ -161,7 +164,6 @@ public class NFCTestFragment extends Fragment implements AbstractLoggedObservabl
 
 
     }
-
 
 
 
