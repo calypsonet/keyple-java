@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Map;
 import org.eclipse.keyple.seproxy.ProxyReader;
 import org.eclipse.keyple.seproxy.ReadersPlugin;
-
 import android.util.Log;
 
 
@@ -29,9 +28,8 @@ import android.util.Log;
  *
  * Then set the Activity as an observer of the plugin as any Keyple plugin :
  *
- * SeProxyService seProxyService = SeProxyService.getInstance();
- * List<ReadersPlugin> plugins = new ArrayList<ReadersPlugin>();
- * plugins.add(AndroidNfcPlugin.getInstance());
+ * SeProxyService seProxyService = SeProxyService.getInstance(); List<ReadersPlugin> plugins = new
+ * ArrayList<ReadersPlugin>(); plugins.add(AndroidNfcPlugin.getInstance());
  * seProxyService.setPlugins(plugins);
  *
  * ProxyReader reader = seProxyService.getPlugins().get(0).getReaders().get(0);

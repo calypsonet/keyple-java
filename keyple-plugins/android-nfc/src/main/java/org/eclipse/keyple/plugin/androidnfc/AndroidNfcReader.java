@@ -55,14 +55,12 @@ public class AndroidNfcReader extends AbstractLocalReader implements NfcAdapter.
         private final static AndroidNfcReader instance = new AndroidNfcReader();
     }
 
-
     /**
      * Access point for the unique instance of singleton
      */
     protected static AndroidNfcReader getInstance() {
         return SingletonHolder.instance;
     }
-
 
     @Override
     public String getName() {
@@ -79,31 +77,30 @@ public class AndroidNfcReader extends AbstractLocalReader implements NfcAdapter.
         Log.w(TAG, "AndroidNfcReader does not support parameters");
     }
 
-
     /**
-     * Callback function invoked when the @{@link NfcAdapter} detects a @{@link Tag}
+     * Callback function invoked by @{@link NfcAdapter} when a @{@link Tag} is discovered A
+     * TagTransceiver is created based on the Tag technology see
+     * {@link TagTransceiver#getTagTransceiver(Tag)} Do not call this function directly.
      * 
      * @param tag : detected tag
      */
     @Override
     public void onTagDiscovered(Tag tag) {
-
-        Log.i(TAG, "Received Tag Discovered event ");
+        Log.i(TAG, "Received Tag Discovered event");
         try {
             tagTransceiver = TagTransceiver.getTagTransceiver(tag);
             notifyObservers(ReaderEvent.SE_INSERTED);
 
         } catch (IOReaderException e) {
+            // print and do nothing
             e.printStackTrace();
-            // TODO
+            Log.e(TAG, e.getLocalizedMessage());
         }
 
     }
 
-
     @Override
     public boolean isSePresent() {
-
         return tagTransceiver != null && tagTransceiver.isConnected();
     }
 
@@ -132,11 +129,9 @@ public class AndroidNfcReader extends AbstractLocalReader implements NfcAdapter.
                 this.notifyObservers(ReaderEvent.SE_REMOVAL);
                 Log.i(TAG, "Disconnected tag : " + printTagId());
             }
-
         } catch (IOException e) {
             Log.e(TAG, "Disconnecting error");
         }
-
         tagTransceiver = null;
     }
 
@@ -162,18 +157,20 @@ public class AndroidNfcReader extends AbstractLocalReader implements NfcAdapter.
 
     @Override
     public ByteBuffer getAlternateFci() {
-        return null;// TODO
+        // return default fci
+        return ByteBuffer.wrap(new byte[] {(byte) 0x90, 0x00});
     }
 
     @Override
     public boolean protocolFlagMatches(SeProtocol protocolFlag) throws InvalidMessageException {
 
         return protocolFlag == ContactlessProtocols.PROTOCOL_ISO14443_4
-                && tagTransceiver.getTech().equals(AndroidNfcProtocolSettings.TAG_TECHNOLOGY_ISO14443_4)
+                && tagTransceiver.getTech()
+                        .equals(AndroidNfcProtocolSettings.TAG_TECHNOLOGY_ISO14443_4)
                 || protocolFlag == ContactlessProtocols.PROTOCOL_MIFARE_CLASSIC && tagTransceiver
-                .getTech().equals(AndroidNfcProtocolSettings.TAG_TECHNOLOGY_MIFARE_CLASSIC)
+                        .getTech().equals(AndroidNfcProtocolSettings.TAG_TECHNOLOGY_MIFARE_CLASSIC)
                 || protocolFlag == ContactlessProtocols.PROTOCOL_MIFARE_UL && tagTransceiver
-                .getTech().equals(AndroidNfcProtocolSettings.TAG_TECHNOLOGY_MIFARE_UL);
+                        .getTech().equals(AndroidNfcProtocolSettings.TAG_TECHNOLOGY_MIFARE_UL);
     }
 
     /**

@@ -28,10 +28,10 @@ import org.eclipse.keyple.seproxy.exception.IOReaderException;
 import org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable;
 import org.eclipse.keyple.util.ByteBufferUtils;
 import org.eclipse.keyple.util.Observable;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -128,6 +128,9 @@ public class NFCTestFragment extends Fragment
         }
     }
 
+    /**
+     * Run Hoplink Simple read command
+     */
     private void runHoplinkSimpleRead() {
         Log.d(TAG, "Running HopLink Simple Read Tests");
         ProxyReader reader = null;
@@ -190,11 +193,13 @@ public class NFCTestFragment extends Fragment
     }
 
 
-    private void clearText() {
-        mText.setText("");
-    }
-
-
+    /**
+     * Catch @{@link org.eclipse.keyple.plugin.androidnfc.AndroidNfcReader} events When a SE is
+     * inserted, launch test commands
+     * 
+     * @param observable
+     * @param event
+     */
     @Override
     public void update(Observable<ReaderEvent> observable, ReaderEvent event) {
         getActivity().runOnUiThread(new Runnable() {

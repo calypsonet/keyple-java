@@ -8,10 +8,10 @@
 
 package org.eclipse.keyple.plugin.androidnfc;
 
+import android.app.Fragment;
 import android.content.Intent;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,8 +25,8 @@ import android.view.ViewGroup;
  * "myFragmentId").commit();
  *
  * By default the plugin only listens to events when your application activity is in the foreground.
- * To activate NFC events while you application is not in the foreground, add the following statements
- * to your activity definition in AndroidManifest.xml
+ * To activate NFC events while you application is not in the foreground, add the following
+ * statements to your activity definition in AndroidManifest.xml
  *
  * <intent-filter> <action android:name="android.nfc.action.TECH_DISCOVERED" /> </intent-filter>
  * <meta-data android:name="android.nfc.action.TECH_DISCOVERED" android:resource="@xml/tech_list" />
@@ -41,7 +41,6 @@ public class AndroidNfcFragment extends Fragment {
     private static final String TAG = AndroidNfcFragment.class.getSimpleName();
 
     private NfcAdapter nfcAdapter;
-
 
     public AndroidNfcFragment() {
         // Required empty public constructor
@@ -103,8 +102,8 @@ public class AndroidNfcFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        //Process NFC intent i.e ACTION_TECH_DISCOVERED are processed by the reader. Many Intents
-        //can be received by the activity, only ACTION_TECH_DISCOVERED are processed
+        // Process NFC intent i.e ACTION_TECH_DISCOVERED are processed by the reader. Many Intents
+        // can be received by the activity, only ACTION_TECH_DISCOVERED are processed
         Intent intent = getActivity().getIntent();
         Log.d(TAG, "Intent type : " + intent.getAction());
 
@@ -120,14 +119,14 @@ public class AndroidNfcFragment extends Fragment {
 
         }
 
-        //Reader mode for NFC reader allows to listen to NFC events without the Intent mecanism.
+        // Reader mode for NFC reader allows to listen to NFC events without the Intent mecanism.
         // It is active only when the activity thus the fragment is active.
         Log.i(TAG, "Enabling Read Write Mode");
         Bundle options = new Bundle();
         options.putInt(NfcAdapter.EXTRA_READER_PRESENCE_CHECK_DELAY, 5000);
 
-        //By default reader mode is listening to @FLAG_READER_NFC_A and @FLAG_READER_NFC_B types
-        //TODO : parametrize this at plugin level
+        // By default reader mode is listening to @FLAG_READER_NFC_A and @FLAG_READER_NFC_B types
+        // TODO : parametrize this at plugin level
         nfcAdapter.enableReaderMode(getActivity(),
                 ((AndroidNfcReader) AndroidNfcPlugin.getInstance().getReaders().get(0)),
                 NfcAdapter.FLAG_READER_NFC_A | NfcAdapter.FLAG_READER_NFC_B
