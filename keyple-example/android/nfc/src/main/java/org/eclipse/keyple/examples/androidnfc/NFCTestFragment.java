@@ -32,7 +32,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -78,11 +77,8 @@ public class NFCTestFragment extends Fragment
         // add NFC Fragment to activity in order to communicate with Android Plugin
         Log.d(TAG, "Add Keyple NFC Fragment to activity in order to "
                 + "communicate with Android Plugin");
-        Fragment nfcFragment = AndroidNfcFragment.newInstance();
-        FragmentManager fm = getFragmentManager();
-        FragmentTransaction fragtrans = fm.beginTransaction();
-        fragtrans.add(nfcFragment, TAG_NFC_ANDROID_FRAGMENT);
-        fragtrans.commit();
+        getFragmentManager().beginTransaction()
+                .add(AndroidNfcFragment.newInstance(), TAG_NFC_ANDROID_FRAGMENT).commit();
 
 
         try {

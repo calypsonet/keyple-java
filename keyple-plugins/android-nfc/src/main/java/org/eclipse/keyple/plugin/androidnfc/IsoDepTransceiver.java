@@ -12,7 +12,7 @@ import java.io.IOException;
 import android.nfc.Tag;
 import android.nfc.tech.IsoDep;
 
-/** IsoDep Implementation of @{@link org.eclipse.keyple.plugin.androidnfc.TagTransceiver} */
+/** IsoDep Implementation of {@link org.eclipse.keyple.plugin.androidnfc.TagTransceiver} */
 class IsoDepTransceiver extends TagTransceiver {
 
     private final IsoDep tag;

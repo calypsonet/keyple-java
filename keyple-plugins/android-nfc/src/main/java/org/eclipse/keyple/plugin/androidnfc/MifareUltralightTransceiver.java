@@ -13,7 +13,7 @@ import android.nfc.Tag;
 import android.nfc.tech.MifareUltralight;
 
 /**
- * MifareUltralight Implementation of @{@link org.eclipse.keyple.plugin.androidnfc.TagTransceiver}
+ * MifareUltralight Implementation of {@link org.eclipse.keyple.plugin.androidnfc.TagTransceiver}
  */
 class MifareUltralightTransceiver extends TagTransceiver {
 

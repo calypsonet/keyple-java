@@ -28,8 +28,8 @@ import android.util.Log;
 
 
 /**
- * Implementation of @{@link org.eclipse.keyple.seproxy.ProxyReader} for the communication with the
- * ISO Card though Android @{@link NfcAdapter}
+ * Implementation of {@link org.eclipse.keyple.seproxy.ProxyReader} for the communication with the
+ * NFC Tag though Android {@link NfcAdapter}
  */
 public class AndroidNfcReader extends AbstractLocalReader implements NfcAdapter.ReaderCallback {
 
@@ -37,8 +37,6 @@ public class AndroidNfcReader extends AbstractLocalReader implements NfcAdapter.
 
     // keep state between session if required
     private TagTransceiver tagTransceiver;
-    private ByteBuffer previousOpenApplication = null;
-
 
     /**
      * Private constructor
@@ -142,6 +140,7 @@ public class AndroidNfcReader extends AbstractLocalReader implements NfcAdapter.
         tagTransceiver = null;
     }
 
+
     @Override
     public ByteBuffer transmitApdu(ByteBuffer apduIn) throws ChannelStateReaderException {
         // Initialization
@@ -170,132 +169,12 @@ public class AndroidNfcReader extends AbstractLocalReader implements NfcAdapter.
     public boolean protocolFlagMatches(SeProtocol protocolFlag) throws InvalidMessageException {
 
         return protocolFlag == ContactlessProtocols.PROTOCOL_ISO14443_4
-                && tagTransceiver.getTech() == AndroidNfcProtocolSettings.TAG_TECHNOLOGY_ISO14443_4
+                && tagTransceiver.getTech().equals(AndroidNfcProtocolSettings.TAG_TECHNOLOGY_ISO14443_4)
                 || protocolFlag == ContactlessProtocols.PROTOCOL_MIFARE_CLASSIC && tagTransceiver
-                        .getTech() == AndroidNfcProtocolSettings.TAG_TECHNOLOGY_MIFARE_CLASSIC
+                .getTech().equals(AndroidNfcProtocolSettings.TAG_TECHNOLOGY_MIFARE_CLASSIC)
                 || protocolFlag == ContactlessProtocols.PROTOCOL_MIFARE_UL && tagTransceiver
-                        .getTech() == AndroidNfcProtocolSettings.TAG_TECHNOLOGY_MIFARE_UL;
+                .getTech().equals(AndroidNfcProtocolSettings.TAG_TECHNOLOGY_MIFARE_UL);
     }
-
-    // /**
-    // * Transmit {@link SeRequestSet} to the connected Tag Supports protocol argument to
-    // * filterByProtocol commands for the right connected Tag
-    // *
-    // * @param seRequest the se application request
-    // * @return {@link SeResponseSet} : response from the transmitted request
-    // */
-    // @Override
-    // public SeResponseSet transmit(SeRequestSet seRequest) {
-    // Log.i(TAG, "Calling transmit on Android NFC Reader");
-    // Log.d(TAG, "Size of APDU Requests : " + String.valueOf(seRequest.getRequests().size()));
-    //
-    // // init response
-    // List<SeResponse> seResponseElements = new ArrayList<SeResponse>();
-    //
-    // // Filter requestElements whom protocol matches the current tag
-    // List<SeRequest> seRequestElements = filterByProtocol(seRequest.getRequests());
-    //
-    // // no seRequestElements are left after filtering
-    // if (seRequestElements.size() < 1) {
-    // disconnectTag();
-    // return new SeResponseSet(seResponseElements);
-    //
-    // }
-    //
-    //
-    // // process the request elements
-    // for (int i = 0; i < seRequestElements.size(); i++) {
-    //
-    // SeRequest seRequestElement = seRequestElements.get(i);
-    //
-    // // init response
-    // List<ApduResponse> apduResponses = new ArrayList<ApduResponse>();
-    // ApduResponse fciResponse = null;
-    //
-    // try {
-    //
-    // // Checking of the presence of the AID request in requests group
-    // ByteBuffer aid = seRequestElement.getAidToSelect();
-    //
-    // // Open the application channel if not open yet
-    // if (previousOpenApplication == null || previousOpenApplication != aid) {
-    // Log.i(TAG, "Connecting to application : " + aid);
-    // fciResponse = this.connectApplication(seRequestElement.getAidToSelect());
-    // }
-    //
-    // // Send all apduRequest
-    // for (ApduRequest apduRequest : seRequestElement.getApduRequests()) {
-    // apduResponses.add(sendAPDUCommand(apduRequest.getBuffer()));
-    // }
-    //
-    // // Add ResponseElements to global SeResponseSet
-    // SeResponse out =
-    // new SeResponse(previousOpenApplication != null, fciResponse, apduResponses);
-    // seResponseElements.add(out);
-    //
-    // // Don't process more seRequestElement if asked
-    // if (seRequestElement.isKeepChannelOpen()) {
-    // Log.i(TAG,
-    // "Keep Channel Open is set to true, abort further seRequestElement if any");
-    // saveChannelState(aid);
-    // break;
-    // }
-    //
-    // // For last element, close physical channel if asked
-    // if (i == seRequestElements.size() - 1 && !seRequestElement.isKeepChannelOpen()) {
-    // disconnectTag();
-    // }
-    //
-    // } catch (IOException e) {
-    // Log.e(TAG, "Error executing command");
-    // e.printStackTrace();
-    // apduResponses.add(null);// add empty response
-    // }
-    //
-    // }
-    //
-    // return new SeResponseSet(seResponseElements);
-    // }
-
-
-    // /**
-    // * Filter seRequestElements based on their protocol and the tag detected
-    // *
-    // * @param seRequestElements embedding seRequestElements to be filtered
-    // * @return filtered seRequest
-    // */
-    // private List<SeRequest> filterByProtocol(List<SeRequest> seRequestElements) {
-    //
-    //
-    // Log.d(TAG, "Filtering # seRequestElements : " + seRequestElements.size());
-    // List<SeRequest> filteredSRE = new ArrayList<SeRequest>();
-    //
-    // for (SeRequest seRequestElement : seRequestElements) {
-    //
-    // Log.d(TAG, "Filtering seRequestElement whom protocol : "
-    // + seRequestElement.getProtocolFlag());
-    //
-    // if (seRequestElement.getProtocolFlag() != null
-    // && seRequestElement.getProtocolFlag().equals(tagTransceiver.getTech())) {
-    // filteredSRE.add(seRequestElement);
-    // }
-    // }
-    // Log.d(TAG, "After Filter seRequestElement : " + filteredSRE.size());
-    // return filteredSRE;
-    //
-    // }
-
-
-
-    /**
-     * Keep the current channel open for further commands
-     */
-    private void saveChannelState(ByteBuffer aid) {
-        Log.d(TAG, "save application id for further commands");
-        previousOpenApplication = aid;
-
-    }// TODO
-
 
     /**
      * Process data from NFC Intent

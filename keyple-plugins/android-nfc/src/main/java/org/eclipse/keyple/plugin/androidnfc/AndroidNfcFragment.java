@@ -18,9 +18,22 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * UI-less fragment to enable NFC in an Activity Include this fragment to enable NFC Android Keyples
- * capabilities to your Activity
+ * Add this {@link Fragment} to the Android application Activity
+ * {@link android.app.Fragment#onCreate(Bundle)} method to enable NFC
  *
+ * getFragmentManager().beginTransaction() .add(AndroidNfcFragment.newInstance(),
+ * "myFragmentId").commit();
+ *
+ * By default the plugin only listens to events when your application activity is in the foreground.
+ * To activate NFC events while you application is not in the foreground, add the following statements
+ * to your activity definition in AndroidManifest.xml
+ *
+ * <intent-filter> <action android:name="android.nfc.action.TECH_DISCOVERED" /> </intent-filter>
+ * <meta-data android:name="android.nfc.action.TECH_DISCOVERED" android:resource="@xml/tech_list" />
+ *
+ * Create a xml/tech_list.xml file in your res folder with the following content <?xml version="1.0"
+ * encoding="utf-8"?> <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2"> <tech-list>
+ * <tech>android.nfc.tech.IsoDep</tech> <tech>android.nfc.tech.NfcA</tech> </tech-list> </resources>
  */
 public class AndroidNfcFragment extends Fragment {
 
@@ -82,7 +95,7 @@ public class AndroidNfcFragment extends Fragment {
 
     /**
      *
-     * Enable the Nfc Adapter in reader mode while the fragment is active NFCAdapter will detect ISO
+     * Enable the Nfc Adapter in reader mode. While the fragment is active NFCAdapter will detect
      * card of type @NFCAdapter.FLAG_READER_NFC_B Android Reader is called to process the
      * communication with the ISO Card Fragment process Intent of ACTION_TECH_DISCOVERED if presents
      */
@@ -90,34 +103,31 @@ public class AndroidNfcFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        Log.d(TAG, "onResume Fragment");
-
-        // if the fragment was created following an intent of NfcAdapter.ACTION_TECH_DISCOVERED TAG
+        //Process NFC intent i.e ACTION_TECH_DISCOVERED are processed by the reader. Many Intents
+        //can be received by the activity, only ACTION_TECH_DISCOVERED are processed
         Intent intent = getActivity().getIntent();
-        Log.d(TAG, "Intent : " + intent.getAction());
+        Log.d(TAG, "Intent type : " + intent.getAction());
+
         if (intent.getAction() != null
                 && intent.getAction().equals(NfcAdapter.ACTION_TECH_DISCOVERED)) {
-            // handle intent
             Log.d(TAG, "Handle ACTION TECH intent");
 
             ((AndroidNfcReader) AndroidNfcPlugin.getInstance().getReaders().get(0))
                     .processIntent(intent);
-
 
         } else {
             Log.d(TAG, "Intent is not of type ACTION TECH, do not process");
 
         }
 
-
+        //Reader mode for NFC reader allows to listen to NFC events without the Intent mecanism.
+        // It is active only when the activity thus the fragment is active.
+        Log.i(TAG, "Enabling Read Write Mode");
         Bundle options = new Bundle();
         options.putInt(NfcAdapter.EXTRA_READER_PRESENCE_CHECK_DELAY, 5000);
 
-
-
-        Log.i(TAG, "Enabling Read Write Mode");
-
-
+        //By default reader mode is listening to @FLAG_READER_NFC_A and @FLAG_READER_NFC_B types
+        //TODO : parametrize this at plugin level
         nfcAdapter.enableReaderMode(getActivity(),
                 ((AndroidNfcReader) AndroidNfcPlugin.getInstance().getReaders().get(0)),
                 NfcAdapter.FLAG_READER_NFC_A | NfcAdapter.FLAG_READER_NFC_B
