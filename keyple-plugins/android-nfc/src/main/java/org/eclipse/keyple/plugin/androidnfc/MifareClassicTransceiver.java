@@ -12,7 +12,7 @@ import java.io.IOException;
 import android.nfc.Tag;
 import android.nfc.tech.MifareClassic;
 
-/** MifareClassic Implementation of @{@link org.eclipse.keyple.plugin.androidnfc.TagTransceiver} */
+/** MifareClassic Implementation of {@link org.eclipse.keyple.plugin.androidnfc.TagTransceiver} */
 class MifareClassicTransceiver extends TagTransceiver {
 
     private final MifareClassic tag;
@@ -24,7 +24,7 @@ class MifareClassicTransceiver extends TagTransceiver {
 
     @Override
     public String getTech() {
-        return "android.nfc.tech.MifareClassic";
+        return AndroidNfcProtocolSettings.TAG_TECHNOLOGY_MIFARE_CLASSIC;
     }
 
     MifareClassicTransceiver(Tag tag) {

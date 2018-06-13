@@ -2,11 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.eclipse.keyple.examples.androidnfc">
 
-    <!-- Required for NFC-->
+    <!-- Required for NFC
     <uses-permission android:name="android.permission.NFC" />
     <uses-feature
         android:name="android.hardware.nfc"
         android:required="true" />
+    -->
 
     <application
         android:allowBackup="true"
@@ -24,15 +25,19 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            <!-- Required for NFC KEYPLE-->
+
+            <!-- NFC KEYPLE : if you need to catch NFC Event while your application's activity is not in the foreground
+            you can activate TECH DISCOVERED and specify the technology of smart card to be captured in tech_list.xml file-->
+            <!--
             <intent-filter>
                 <action android:name="android.nfc.action.TECH_DISCOVERED" />
             </intent-filter>
 
-            <!-- Required for NFC KEYPLE-->
+
             <meta-data
                 android:name="android.nfc.action.TECH_DISCOVERED"
                 android:resource="@xml/tech_list" />
+            -->
         </activity>
     </application>
 

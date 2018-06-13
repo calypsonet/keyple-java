@@ -13,7 +13,7 @@ import android.nfc.Tag;
 import android.nfc.tech.MifareUltralight;
 
 /**
- * MifareUltralight Implementation of @{@link org.eclipse.keyple.plugin.androidnfc.TagTransceiver}
+ * MifareUltralight Implementation of {@link org.eclipse.keyple.plugin.androidnfc.TagTransceiver}
  */
 class MifareUltralightTransceiver extends TagTransceiver {
 
@@ -26,7 +26,7 @@ class MifareUltralightTransceiver extends TagTransceiver {
 
     @Override
     public String getTech() {
-        return "android.nfc.tech.MifareUltralight";
+        return AndroidNfcProtocolSettings.TAG_TECHNOLOGY_MIFARE_UL;
     }
 
     MifareUltralightTransceiver(Tag tag) {

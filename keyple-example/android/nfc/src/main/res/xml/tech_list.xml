@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- NFC KEYPLE : if you need to catch NFC Event while your application's activity is not in the foreground
+          you can activate TECH DISCOVERED in the AndroidManifest and specify the technology of smart card to be captured in this file-->
+
+
     <tech-list>
         <tech>android.nfc.tech.IsoDep</tech>
         <tech>android.nfc.tech.NfcB</tech>

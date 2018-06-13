@@ -10,9 +10,9 @@ package org.eclipse.keyple.plugin.androidnfc;
 
 public interface AndroidNfcProtocolSettings {
 
-    public static String TAG_TECHNOLOGY_ISO14443_4 = "android.nfc.tech.IsoDep";
+    String TAG_TECHNOLOGY_ISO14443_4 = "android.nfc.tech.IsoDep";
 
-    public static String TAG_TECHNOLOGY_MIFARE_UL = "android.nfc.tech.MifareUltralight";
+    String TAG_TECHNOLOGY_MIFARE_UL = "android.nfc.tech.MifareUltralight";
 
-    public static String TAG_TECHNOLOGY_MIFARE_CLASSIC = "android.nfc.tech.MifareClassic";
+    String TAG_TECHNOLOGY_MIFARE_CLASSIC = "android.nfc.tech.MifareClassic";
 }
