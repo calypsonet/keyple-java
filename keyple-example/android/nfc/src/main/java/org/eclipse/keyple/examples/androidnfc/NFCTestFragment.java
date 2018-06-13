@@ -15,10 +15,13 @@ import org.eclipse.keyple.commands.InconsistentCommandException;
 import org.eclipse.keyple.example.common.HoplinkSimpleRead;
 import org.eclipse.keyple.plugin.androidnfc.AndroidNfcFragment;
 import org.eclipse.keyple.plugin.androidnfc.AndroidNfcPlugin;
+import org.eclipse.keyple.plugin.androidnfc.AndroidNfcProtocolSettings;
+import org.eclipse.keyple.plugin.androidnfc.AndroidNfcReader;
 import org.eclipse.keyple.seproxy.ApduResponse;
 import org.eclipse.keyple.seproxy.ProxyReader;
 import org.eclipse.keyple.seproxy.ReadersPlugin;
 import org.eclipse.keyple.seproxy.SeProxyService;
+import org.eclipse.keyple.seproxy.SeRequest;
 import org.eclipse.keyple.seproxy.SeRequestSet;
 import org.eclipse.keyple.seproxy.SeResponse;
 import org.eclipse.keyple.seproxy.SeResponseSet;
@@ -26,6 +29,8 @@ import org.eclipse.keyple.seproxy.event.AbstractObservableReader;
 import org.eclipse.keyple.seproxy.event.ReaderEvent;
 import org.eclipse.keyple.seproxy.exception.IOReaderException;
 import org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable;
+import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
+import org.eclipse.keyple.seproxy.protocol.SeProtocolSettings;
 import org.eclipse.keyple.util.ByteBufferUtils;
 import org.eclipse.keyple.util.Observable;
 import android.app.Fragment;
@@ -67,14 +72,14 @@ public class NFCTestFragment extends Fragment
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // initialize SEProxy with Android Plugin
+        // 1 - First initialize SEProxy with Android Plugin
         Log.d(TAG, "Initialize SEProxy with Android Plugin");
         SeProxyService seProxyService = SeProxyService.getInstance();
         List<ReadersPlugin> plugins = new ArrayList<ReadersPlugin>();
         plugins.add(AndroidNfcPlugin.getInstance());
         seProxyService.setPlugins(plugins);
 
-        // add NFC Fragment to activity in order to communicate with Android Plugin
+        // 2 - add NFC Fragment to activity in order to communicate with Android Plugin
         Log.d(TAG, "Add Keyple NFC Fragment to activity in order to "
                 + "communicate with Android Plugin");
         getFragmentManager().beginTransaction()
@@ -85,7 +90,11 @@ public class NFCTestFragment extends Fragment
             // define task as an observer for ReaderEvents
             Log.d(TAG, "Define this view as an observer for ReaderEvents");
             ProxyReader reader = seProxyService.getPlugins().get(0).getReaders().get(0);
-            ((AbstractObservableReader) reader).addObserver(this);
+            ((AndroidNfcReader) reader).addObserver(this);
+
+
+            ((AndroidNfcReader) reader).addSeProtocolSetting(AndroidNfcProtocolSettings.SETTING_PROTOCOL_ISO14443_4);
+            ((AndroidNfcReader) reader).addSeProtocolSetting(AndroidNfcProtocolSettings.SETTING_PROTOCOL_MIFARE_CLASSIC);
 
         } catch (IOReaderException e) {
             e.printStackTrace();
@@ -136,8 +145,16 @@ public class NFCTestFragment extends Fragment
         ProxyReader reader = null;
         try {
             reader = SeProxyService.getInstance().getPlugins().get(0).getReaders().get(0);
+
+            SeRequest seRequest = new SeRequest(HoplinkSimpleRead.getAid(),
+                    HoplinkSimpleRead.getApduList(),
+                    false,
+                    ContactlessProtocols.PROTOCOL_ISO14443_4);
+
+
             SeResponseSet seResponseSet =
-                    reader.transmit(new SeRequestSet(HoplinkSimpleRead.getSeRequest()));
+                    reader.transmit(new SeRequestSet(seRequest));
+
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {

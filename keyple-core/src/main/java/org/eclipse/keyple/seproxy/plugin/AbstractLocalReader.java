@@ -10,6 +10,7 @@ package org.eclipse.keyple.seproxy.plugin;
 
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.smartcardio.CardException;
@@ -270,7 +271,8 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
 
             ByteBuffer fciDataBytes = openLogicalChannelAndSelect(seRequest.getAidToSelect());
 
-            if (fciDataBytes != null) { // the logical channel opening is successful
+            if (fciDataBytes != null) {
+                // the logical channel opening is successful
                 if (seRequest.getAidToSelect() != null) {
                     aidCurrentlySelected = seRequest.getAidToSelect();
                 }
@@ -294,7 +296,7 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
      * PO selection map associating seProtocols and selection strings (e.g. ATR regex for Pcsc
      * plugins)
      */
-    public Map<SeProtocol, String> protocolsMap;
+    public Map<SeProtocol, String> protocolsMap = new HashMap<SeProtocol, String>();
 
     public final void addSeProtocolSetting(Map<SeProtocol, String> seProtocolSettings)
             throws IOReaderException {

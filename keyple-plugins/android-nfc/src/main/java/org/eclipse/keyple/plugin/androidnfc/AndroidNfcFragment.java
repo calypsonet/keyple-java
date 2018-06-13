@@ -17,6 +17,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.eclipse.keyple.seproxy.SeProxyService;
+import org.eclipse.keyple.seproxy.exception.IOReaderException;
+
 /**
  * Add this {@link Fragment} to the Android application Activity
  * {@link android.app.Fragment#onCreate(Bundle)} method to enable NFC
@@ -40,7 +43,6 @@ public class AndroidNfcFragment extends Fragment {
 
     private static final String TAG = AndroidNfcFragment.class.getSimpleName();
 
-    private NfcAdapter nfcAdapter;
 
     public AndroidNfcFragment() {
         // Required empty public constructor
@@ -69,7 +71,7 @@ public class AndroidNfcFragment extends Fragment {
         setRetainInstance(true); // Must be set to true
         Log.d(TAG, "onCreate");
 
-        nfcAdapter = NfcAdapter.getDefaultAdapter(getActivity());
+        NfcAdapter nfcAdapter = NfcAdapter.getDefaultAdapter(getActivity());
 
         if (nfcAdapter == null) {
             Log.w(TAG, "Your device does not support NFC");
@@ -119,19 +121,15 @@ public class AndroidNfcFragment extends Fragment {
 
         }
 
-        // Reader mode for NFC reader allows to listen to NFC events without the Intent mecanism.
-        // It is active only when the activity thus the fragment is active.
-        Log.i(TAG, "Enabling Read Write Mode");
-        Bundle options = new Bundle();
-        options.putInt(NfcAdapter.EXTRA_READER_PRESENCE_CHECK_DELAY, 5000);
+        //Enable Reader Mode for NFC Adapter
+        try{
+            ((AndroidNfcReader)SeProxyService.getInstance().getPlugins().get(0).getReaders().get(0))
+                .enableNFCReaderMode(getActivity());
 
-        // By default reader mode is listening to @FLAG_READER_NFC_A and @FLAG_READER_NFC_B types
-        // TODO : parametrize this at plugin level
-        nfcAdapter.enableReaderMode(getActivity(),
-                ((AndroidNfcReader) AndroidNfcPlugin.getInstance().getReaders().get(0)),
-                NfcAdapter.FLAG_READER_NFC_A | NfcAdapter.FLAG_READER_NFC_B
-                        | NfcAdapter.FLAG_READER_SKIP_NDEF_CHECK,
-                options);
+        }catch (IOReaderException e){
+            e.printStackTrace();
+            Log.e(TAG, "NFC Reader is not ready");
+        }
 
 
 
@@ -141,8 +139,16 @@ public class AndroidNfcFragment extends Fragment {
     public void onPause() {
         super.onPause();
         Log.i(TAG, "on Pause Fragment - Stopping Read Write Mode");
-        nfcAdapter.disableReaderMode(getActivity());
 
+        try{
+            //Disable Reader Mode for NFC Adapter
+            ((AndroidNfcReader)SeProxyService.getInstance().getPlugins().get(0).getReaders().get(0))
+                    .disableNFCReaderMode();
+
+        }catch (IOReaderException e){
+            e.printStackTrace();
+            Log.e(TAG, "NFC Reader is not ready");
+        }
     }
 
 
