@@ -2,6 +2,6 @@ org.eclipse.keyple.commands
 org.eclipse.keyple.seproxy
 org.eclipse.keyple.seproxy.event
 org.eclipse.keyple.seproxy.exception
-org.eclipse.keyple.seproxy.plugin
+org.eclipse.keyple.seproxy.local
 org.eclipse.keyple.seproxy.protocol
 org.eclipse.keyple.util
