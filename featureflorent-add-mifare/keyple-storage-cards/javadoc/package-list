@@ -1,9 +1,0 @@
-org.keyple.storagecards.mifare1k.commands
-org.keyple.storagecards.mifare1k.commands.po
-org.keyple.storagecards.mifare1k.commands.po.builder
-org.keyple.storagecards.mifare1k.commands.po.parser
-org.keyple.storagecards.mifare1k.commands.utils
-org.keyple.storagecards.standard
-org.keyple.storagecards.standard.builder
-org.keyple.storagecards.standard.parser
-org.keyple.storagecards.standard.utils
