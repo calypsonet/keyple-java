@@ -1,0 +1,9 @@
+org.eclipse.keyple.calypso.commands
+org.eclipse.keyple.calypso.commands.csm
+org.eclipse.keyple.calypso.commands.csm.builder
+org.eclipse.keyple.calypso.commands.csm.parser
+org.eclipse.keyple.calypso.commands.po
+org.eclipse.keyple.calypso.commands.po.builder
+org.eclipse.keyple.calypso.commands.po.parser
+org.eclipse.keyple.calypso.commands.utils
+org.eclipse.keyple.calypso.transaction
