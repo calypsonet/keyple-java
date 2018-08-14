@@ -5,5 +5,4 @@ org.eclipse.keyple.calypso.command.csm.parser
 org.eclipse.keyple.calypso.command.po
 org.eclipse.keyple.calypso.command.po.builder
 org.eclipse.keyple.calypso.command.po.parser
-org.eclipse.keyple.calypso.command.util
 org.eclipse.keyple.calypso.transaction
