@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - Class org.eclipse.keyple.plugin.stub.StubReaderTest</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>Class org.eclipse.keyple.plugin.stub.StubReaderTest</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/org.eclipse.keyple.plugin.stub.html">org.eclipse.keyple.plugin.stub</a> &gt; StubReaderTest</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">9</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">0.056s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Tests</a>
+</li>
+<li>
+<a href="#tab1">Standard error</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">processApduRequestTest</td>
+<td>0.024s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">testGetName</td>
+<td>0s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">testInsert</td>
+<td>0.005s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">testSetParameters</td>
+<td>0s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">testSetWrongParameter</td>
+<td>0s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">testSetWrongParameters</td>
+<td>0s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">transmit_Hoplink_Sucessfull</td>
+<td>0.012s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">transmit_Hoplink_null</td>
+<td>0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">transmit_null_Selection</td>
+<td>0.014s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div id="tab1" class="tab">
+<h2>Standard error</h2>
+<span class="code">
+<pre>[Test worker] INFO org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - AbstractObservableReader: Notifying of an event action=observable_reader.notify_observers event=org.eclipse.keyple.seproxy.event.ReaderEvent@1812440a readerName=StubReader
+[Test worker] INFO org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - processApduRequest: request apdu.name=null command.data=FEDCBA989005
+[Test worker] INFO org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - Adding an observer class=&quot;class org.eclipse.keyple.plugin.stub.StubReader&quot; name=StubReader
+[Test worker] INFO org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - AbstractObservableReader: Notifying of an event action=observable_reader.notify_observers event=org.eclipse.keyple.seproxy.event.ReaderEvent@1372757d readerName=StubReader
+[Test worker] INFO org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - SeRequestSet reader=StubReader data=&quot;SeRequestSet{sortedRequests=[SeRequest{requests=[Read Records: 00B201A420], selector=SeRequest.AidSelector{aid=A000000291A000000191}, keepchannelopen=false}]}&quot;
+[Test worker] INFO org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - Close logical channel reader=StubReader
+[Test worker] INFO org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - Closing of the physical SE channel. action=local_reader.transmit_actual reader=StubReader
+[Test worker] INFO org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - LocalReader: Data exchange action=local_reader.transmit reader=StubReader requestSet=&quot;SeRequestSet{sortedRequests=[SeRequest{requests=[Read Records: 00B201A420], selector=SeRequest.AidSelector{aid=A000000291A000000191}, keepchannelopen=false}]}&quot; responseSet=SeReponse{seResponses=[null]} elapsedMs=0.6
+[Test worker] INFO org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - SeResponseSet reader=StubReader data=SeReponse{seResponses=[null]}
+[Test worker] INFO org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - AbstractObservableReader: Notifying of an event action=observable_reader.notify_observers event=org.eclipse.keyple.seproxy.event.ReaderEvent@57f52849 readerName=StubReader
+[Test worker] INFO org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - AbstractObservableReader: Notifying of an event action=observable_reader.notify_observers event=org.eclipse.keyple.seproxy.event.ReaderEvent@6e1518c5 readerName=StubReader
+[Test worker] INFO org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - SeRequestSet reader=StubReader data=&quot;SeRequestSet{sortedRequests=[SeRequest{requests=[Read Records: 00B201A420], selector=SeRequest.AidSelector{aid=A000000291A000000191}, keepchannelopen=false}]}&quot;
+[Test worker] INFO org.eclipse.keyple.seproxy.plugin.AbstractSelectionLocalReader - Channel opening ATR=3B8E800180318066409089120802830190000B
+[Test worker] INFO org.eclipse.keyple.seproxy.plugin.AbstractSelectionLocalReader - Connecting to card action=local_reader.openLogicalChannel aid=A000000291A000000191 readerName=StubReader
+[Test worker] INFO org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - processApduRequest: request apdu.name=null command.data=00A404000AA000000291A00000019100
+[Test worker] INFO org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - processApduRequest: response apdu.name=null response.data=6F25840BA000000291A00000019102A516BF0C13C70800000000C0E11FA653070A3C230C141001 elapsedMs=1.4
+[Test worker] INFO org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - Logical channel is open reader=StubReader
+[Test worker] INFO org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - processApduRequest: request apdu.name=&quot;Read Records&quot; command.data=00B201A420
+[Test worker] INFO org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - processApduRequest: response apdu.name=&quot;Read Records&quot; response.data=0000000000000000000000000000000000000000000000000000000000000000 elapsedMs=0.2
+[Test worker] INFO org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - Close logical channel reader=StubReader
+[Test worker] INFO org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - Closing of the physical SE channel. action=local_reader.transmit_actual reader=StubReader
+[Test worker] INFO org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - LocalReader: Data exchange action=local_reader.transmit reader=StubReader requestSet=&quot;SeRequestSet{sortedRequests=[SeRequest{requests=[Read Records: 00B201A420], selector=SeRequest.AidSelector{aid=A000000291A000000191}, keepchannelopen=false}]}&quot; responseSet=SeReponse{seResponses=[org.eclipse.keyple.seproxy.SeResponse@902bf9c7]} elapsedMs=9.3
+[Test worker] INFO org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - SeResponseSet reader=StubReader data=SeReponse{seResponses=[org.eclipse.keyple.seproxy.SeResponse@902bf9c7]}
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="http://www.gradle.org">Gradle 4.5.1</a> at Aug 16, 2018 4:10:34 PM</p>
+</div>
+</div>
+</body>
+</html>
