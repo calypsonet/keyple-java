@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">0.047s</div>
+<div class="counter">0.051s</div>
 <p>duration</p>
 </div>
 </td>
@@ -79,27 +79,27 @@
 </thead>
 <tr>
 <td class="success">testATR</td>
-<td>0.008s</td>
+<td>0.010s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">testGetName</td>
-<td>0.001s</td>
+<td>0s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">testInsert</td>
-<td>0.002s</td>
+<td>0.003s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">testSetParameters</td>
-<td>0.001s</td>
+<td>0s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">testSetWrongParameter</td>
-<td>0s</td>
+<td>0.001s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
@@ -109,17 +109,17 @@
 </tr>
 <tr>
 <td class="success">transmit_Hoplink_Sucessfull</td>
-<td>0.009s</td>
+<td>0.008s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">transmit_Hoplink_null</td>
-<td>0.005s</td>
+<td>0.004s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">transmit_null_Selection</td>
-<td>0.021s</td>
+<td>0.025s</td>
 <td class="success">passed</td>
 </tr>
 </table>
@@ -136,7 +136,7 @@
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractSelectionLocalReader - Channel opening ATR=3B8E800180318066409089120802830190000B
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - Logicial channel opening status=success
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - Logical channel is open reader=StubReader
-[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - LocalReader: Data exchange action=local_reader.transmit reader=StubReader requestSet=&quot;SeRequestSet{sortedRequests=[SeRequest{requests=null, selector=SeRequest.AtrSelector{atrRegex=3B.*}, keepchannelopen=true}]}&quot; responseSet=SeReponse{seResponses=[org.eclipse.keyple.seproxy.SeResponse@93d4d59d]} elapsedMs=4.5
+[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - LocalReader: Data exchange action=local_reader.transmit reader=StubReader requestSet=&quot;SeRequestSet{sortedRequests=[SeRequest{requests=null, selector=SeRequest.AtrSelector{atrRegex=3B.*}, keepchannelopen=true}]}&quot; responseSet=SeReponse{seResponses=[org.eclipse.keyple.seproxy.SeResponse@93d4d59d]} elapsedMs=5.6
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - SeResponseSet reader=StubReader data=SeReponse{seResponses=[org.eclipse.keyple.seproxy.SeResponse@93d4d59d]}
 [Test worker] WARN org.eclipse.keyple.plugin.stub.StubPlugin - Reader with name StubReader was already plugged
 [Test worker] WARN org.eclipse.keyple.plugin.stub.StubPlugin - Reader with name StubReader was already plugged
@@ -153,14 +153,14 @@
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractSelectionLocalReader - Channel opening ATR=3B8E800180318066409089120802830190000B
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractSelectionLocalReader - Connecting to card action=local_reader.openLogicalChannel aid=A000000291A000000191 readerName=StubReader
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - processApduRequest: request apdu.name=null command.data=00A404000AA000000291A00000019100
-[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - processApduRequest: response apdu.name=null response.data=6F25840BA000000291A00000019102A516BF0C13C70800000000C0E11FA653070A3C230C141001 elapsedMs=1.5
+[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - processApduRequest: response apdu.name=null response.data=6F25840BA000000291A00000019102A516BF0C13C70800000000C0E11FA653070A3C230C141001 elapsedMs=1.4
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - Logicial channel opening status=success
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - Logical channel is open reader=StubReader
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - processApduRequest: request apdu.name=&quot;Read Records&quot; command.data=00B201A420
-[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - processApduRequest: response apdu.name=&quot;Read Records&quot; response.data=0000000000000000000000000000000000000000000000000000000000000000 elapsedMs=0.3
+[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - processApduRequest: response apdu.name=&quot;Read Records&quot; response.data=0000000000000000000000000000000000000000000000000000000000000000 elapsedMs=0.2
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - Close logical channel reader=StubReader
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - Closing of the physical SE channel. action=local_reader.transmit_actual reader=StubReader
-[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - LocalReader: Data exchange action=local_reader.transmit reader=StubReader requestSet=&quot;SeRequestSet{sortedRequests=[SeRequest{requests=[Read Records: 00B201A420], selector=SeRequest.AidSelector{aid=A000000291A000000191}, keepchannelopen=false}]}&quot; responseSet=SeReponse{seResponses=[org.eclipse.keyple.seproxy.SeResponse@902bf9c7]} elapsedMs=8.2
+[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - LocalReader: Data exchange action=local_reader.transmit reader=StubReader requestSet=&quot;SeRequestSet{sortedRequests=[SeRequest{requests=[Read Records: 00B201A420], selector=SeRequest.AidSelector{aid=A000000291A000000191}, keepchannelopen=false}]}&quot; responseSet=SeReponse{seResponses=[org.eclipse.keyple.seproxy.SeResponse@902bf9c7]} elapsedMs=9.4
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - SeResponseSet reader=StubReader data=SeReponse{seResponses=[org.eclipse.keyple.seproxy.SeResponse@902bf9c7]}
 [Test worker] WARN org.eclipse.keyple.plugin.stub.StubPlugin - Reader with name StubReader was already plugged
 [Test worker] INFO org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - AbstractObservableReader: Notifying of an event action=observable_reader.notify_observers event=org.eclipse.keyple.seproxy.event.ReaderEvent@6de6dd07 readerName=StubReader
@@ -168,7 +168,7 @@
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractSelectionLocalReader - Channel opening ATR=3B8E800180318066409089120802830190000B
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - Logicial channel opening status=success
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - Logical channel is open reader=StubReader
-[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - LocalReader: Data exchange action=local_reader.transmit reader=StubReader requestSet=&quot;SeRequestSet{sortedRequests=[SeRequest{requests=null, selector=SeRequest.AtrSelector{atrRegex=3B.*}, keepchannelopen=true}]}&quot; responseSet=SeReponse{seResponses=[org.eclipse.keyple.seproxy.SeResponse@93d4d59d]} elapsedMs=1.4
+[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - LocalReader: Data exchange action=local_reader.transmit reader=StubReader requestSet=&quot;SeRequestSet{sortedRequests=[SeRequest{requests=null, selector=SeRequest.AtrSelector{atrRegex=3B.*}, keepchannelopen=true}]}&quot; responseSet=SeReponse{seResponses=[org.eclipse.keyple.seproxy.SeResponse@93d4d59d]} elapsedMs=2.3
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - SeResponseSet reader=StubReader data=SeReponse{seResponses=[org.eclipse.keyple.seproxy.SeResponse@93d4d59d]}
 [Test worker] WARN org.eclipse.keyple.plugin.stub.StubPlugin - Reader with name StubReader was already plugged
 [Test worker] INFO org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - AbstractObservableReader: Notifying of an event action=observable_reader.notify_observers event=org.eclipse.keyple.seproxy.event.ReaderEvent@5c0f69e9 readerName=StubReader
@@ -180,14 +180,14 @@
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractSelectionLocalReader - Channel opening ATR=3B8E800180318066409089120802830190000B
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractSelectionLocalReader - Connecting to card action=local_reader.openLogicalChannel aid=A000000291A000000191 readerName=StubReader
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - processApduRequest: request apdu.name=null command.data=00A404000AA000000291A00000019100
-[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - processApduRequest: response apdu.name=null response.data=6F25840BA000000291A00000019102A516BF0C13C70800000000C0E11FA653070A3C230C141001 elapsedMs=1.0
+[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - processApduRequest: response apdu.name=null response.data=6F25840BA000000291A00000019102A516BF0C13C70800000000C0E11FA653070A3C230C141001 elapsedMs=1.1
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - Logicial channel opening status=success
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - Logical channel is open reader=StubReader
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - processApduRequest: request apdu.name=&quot;Read Records&quot; command.data=00B201A420
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - processApduRequest: response apdu.name=&quot;Read Records&quot; response.data=0000000000000000000000000000000000000000000000000000000000000000 elapsedMs=0.2
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - Close logical channel reader=StubReader
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - Closing of the physical SE channel. action=local_reader.transmit_actual reader=StubReader
-[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - LocalReader: Data exchange action=local_reader.transmit reader=StubReader requestSet=&quot;SeRequestSet{sortedRequests=[SeRequest{requests=[Read Records: 00B201A420], selector=SeRequest.AidSelector{aid=A000000291A000000191}, keepchannelopen=false}]}&quot; responseSet=SeReponse{seResponses=[org.eclipse.keyple.seproxy.SeResponse@902bf9c7]} elapsedMs=6.0
+[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - LocalReader: Data exchange action=local_reader.transmit reader=StubReader requestSet=&quot;SeRequestSet{sortedRequests=[SeRequest{requests=[Read Records: 00B201A420], selector=SeRequest.AidSelector{aid=A000000291A000000191}, keepchannelopen=false}]}&quot; responseSet=SeReponse{seResponses=[org.eclipse.keyple.seproxy.SeResponse@902bf9c7]} elapsedMs=5.3
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - SeResponseSet reader=StubReader data=SeReponse{seResponses=[org.eclipse.keyple.seproxy.SeResponse@902bf9c7]}
 </pre>
 </span>
@@ -200,7 +200,7 @@
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 4.5.1</a> at Aug 30, 2018 8:48:57 AM</p>
+<a href="http://www.gradle.org">Gradle 4.5.1</a> at Aug 30, 2018 8:57:53 AM</p>
 </div>
 </div>
 </body>
