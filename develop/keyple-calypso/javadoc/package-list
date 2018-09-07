@@ -4,5 +4,7 @@ org.eclipse.keyple.calypso.command.csm.builder
 org.eclipse.keyple.calypso.command.csm.parser
 org.eclipse.keyple.calypso.command.po
 org.eclipse.keyple.calypso.command.po.builder
+org.eclipse.keyple.calypso.command.po.builder.session
 org.eclipse.keyple.calypso.command.po.parser
+org.eclipse.keyple.calypso.command.po.parser.session
 org.eclipse.keyple.calypso.transaction
