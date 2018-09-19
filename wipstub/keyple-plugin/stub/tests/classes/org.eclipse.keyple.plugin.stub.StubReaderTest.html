@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - Class org.eclipse.keyple.plugin.stub.StubReaderTest</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>Class org.eclipse.keyple.plugin.stub.StubReaderTest</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/org.eclipse.keyple.plugin.stub.html">org.eclipse.keyple.plugin.stub</a> &gt; StubReaderTest</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">9</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">9.061s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Tests</a>
+</li>
+<li>
+<a href="#tab1">Standard error</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">testATR</td>
+<td>1.016s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">testGetName</td>
+<td>1.002s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">testInsert</td>
+<td>1.004s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">testSetParameters</td>
+<td>1.002s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">testSetWrongParameter</td>
+<td>1.002s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">testSetWrongParameters</td>
+<td>1.002s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">transmit_Hoplink_Sucessfull</td>
+<td>1.028s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">transmit_Hoplink_null</td>
+<td>1.002s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">transmit_null_Selection</td>
+<td>1.003s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div id="tab1" class="tab">
+<h2>Standard error</h2>
+<span class="code">
+<pre>[11:59:42:542] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:42:543] [Test worker] [INFO] StubReaderTest - Stubplugin readers size 0
+[11:59:42:543] [Test worker] [INFO] StubReaderTest - Stubplugin observers size 0
+[11:59:42:543] [Test worker] [INFO] StubPlugin - Plugging a new reader with name StubReaderTest
+[11:59:42:595] [Thread-4] [TRACE] AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader connected 
+[11:59:42:595] [Thread-4] [TRACE] AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Add plugged reader to readers list.
+[11:59:43:048] [Test worker] [TRACE] AbstractLoggedObservable - [class org.eclipse.keyple.plugin.stub.StubReader][StubReaderTest] addObserver =&gt; Adding an observer.
+[11:59:43:049] [Test worker] [INFO] StubPlugin - Unplugged reader with name StubReaderTest
+[11:59:43:054] [observable-reader-events-1] [TRACE] AbstractLoggedObservable - [StubReaderTest] AbstractObservableReader =&gt; Notifying a reader event. EVENTNAME = SE insertion
+[11:59:43:056] [observable-reader-events-1] [TRACE] AbstractObservableReader - [StubReaderTest] transmit =&gt; SeRequestSet: 1 SeRequest(s), elapsed 509.4 ms.
+[11:59:43:056] [observable-reader-events-1] [DEBUG] AbstractLocalReader - [StubReaderTest] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = null, SELECTOR = ATR regex:3B.*, KEEPCHANNELOPEN = true}
+[11:59:43:058] [observable-reader-events-1] [TRACE] AbstractSelectionLocalReader - [StubReaderTest] openLogicalChannelAndSelect =&gt; ATR: 3B8E800180318066409089120802830190000B
+[11:59:43:060] [observable-reader-events-1] [TRACE] AbstractLocalReader - [StubReaderTest] processSeRequest =&gt; Logical channel opening success.
+[11:59:43:063] [observable-reader-events-1] [DEBUG] AbstractLocalReader - [StubReaderTest] processSeRequestSet =&gt; receive SeResponse:{RESPONSES = [], ATR = 3B8E800180318066409089120802830190000B, FCI =null, CHANNELWASOPEN = false}
+[11:59:43:063] [observable-reader-events-1] [TRACE] AbstractObservableReader - [StubReaderTest] transmit =&gt; SeResponse: 1 SeReponse(s), elapsed 7.7 ms.
+[11:59:43:097] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:43:097] [Thread-4] [TRACE] AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader disconnected 
+[11:59:43:098] [Thread-4] [TRACE] AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Remove unplugged reader from readers list.
+[11:59:43:148] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:43:199] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:43:249] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:43:300] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:43:350] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:43:400] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:43:451] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:43:501] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:43:552] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:43:552] [Test worker] [INFO] StubReaderTest - Stubplugin readers size 0
+[11:59:43:552] [Test worker] [INFO] StubReaderTest - Stubplugin observers size 0
+[11:59:43:552] [Test worker] [INFO] StubPlugin - Plugging a new reader with name StubReaderTest
+[11:59:43:602] [Thread-4] [TRACE] AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader connected 
+[11:59:43:603] [Thread-4] [TRACE] AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Add plugged reader to readers list.
+[11:59:44:053] [Test worker] [INFO] StubPlugin - Unplugged reader with name StubReaderTest
+[11:59:44:054] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:44:054] [Thread-4] [TRACE] AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader disconnected 
+[11:59:44:054] [Thread-4] [TRACE] AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Remove unplugged reader from readers list.
+[11:59:44:105] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:44:155] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:44:206] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:44:256] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:44:306] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:44:357] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:44:407] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:44:458] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:44:508] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:44:554] [Test worker] [INFO] StubReaderTest - Stubplugin readers size 0
+[11:59:44:554] [Test worker] [INFO] StubReaderTest - Stubplugin observers size 0
+[11:59:44:554] [Test worker] [INFO] StubPlugin - Plugging a new reader with name StubReaderTest
+[11:59:44:559] [Thread-4] [TRACE] AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader connected 
+[11:59:44:559] [Thread-4] [TRACE] AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Add plugged reader to readers list.
+[11:59:45:056] [Test worker] [TRACE] AbstractLoggedObservable - [class org.eclipse.keyple.plugin.stub.StubReader][StubReaderTest] addObserver =&gt; Adding an observer.
+[11:59:45:056] [Test worker] [INFO] StubPlugin - Unplugged reader with name StubReaderTest
+[11:59:45:061] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:45:061] [Thread-4] [TRACE] AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader disconnected 
+[11:59:45:061] [Thread-4] [TRACE] AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Remove unplugged reader from readers list.
+[11:59:45:062] [observable-reader-events-5] [TRACE] AbstractLoggedObservable - [StubReaderTest] AbstractObservableReader =&gt; Notifying a reader event. EVENTNAME = SE insertion
+[11:59:45:112] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:45:162] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:45:212] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:45:263] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:45:313] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:45:364] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:45:414] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:45:464] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:45:515] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:45:557] [Test worker] [INFO] StubReaderTest - Stubplugin readers size 0
+[11:59:45:558] [Test worker] [INFO] StubReaderTest - Stubplugin observers size 0
+[11:59:45:558] [Test worker] [INFO] StubPlugin - Plugging a new reader with name StubReaderTest
+[11:59:45:566] [Thread-4] [TRACE] AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader connected 
+[11:59:45:566] [Thread-4] [TRACE] AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Add plugged reader to readers list.
+[11:59:46:059] [Test worker] [INFO] StubPlugin - Unplugged reader with name StubReaderTest
+[11:59:46:068] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:46:068] [Thread-4] [TRACE] AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader disconnected 
+[11:59:46:068] [Thread-4] [TRACE] AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Remove unplugged reader from readers list.
+[11:59:46:118] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:46:169] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:46:219] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:46:270] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:46:320] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:46:371] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:46:421] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:46:471] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:46:522] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:46:560] [Test worker] [INFO] StubReaderTest - Stubplugin readers size 0
+[11:59:46:560] [Test worker] [INFO] StubReaderTest - Stubplugin observers size 0
+[11:59:46:560] [Test worker] [INFO] StubPlugin - Plugging a new reader with name StubReaderTest
+[11:59:46:573] [Thread-4] [TRACE] AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader connected 
+[11:59:46:573] [Thread-4] [TRACE] AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Add plugged reader to readers list.
+[11:59:47:061] [Test worker] [INFO] StubPlugin - Unplugged reader with name StubReaderTest
+[11:59:47:075] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:47:075] [Thread-4] [TRACE] AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader disconnected 
+[11:59:47:075] [Thread-4] [TRACE] AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Remove unplugged reader from readers list.
+[11:59:47:125] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:47:176] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:47:226] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:47:277] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:47:327] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:47:377] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:47:428] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:47:478] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:47:528] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:47:563] [Test worker] [INFO] StubReaderTest - Stubplugin readers size 0
+[11:59:47:563] [Test worker] [INFO] StubReaderTest - Stubplugin observers size 0
+[11:59:47:563] [Test worker] [INFO] StubPlugin - Plugging a new reader with name StubReaderTest
+[11:59:47:579] [Thread-4] [TRACE] AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader connected 
+[11:59:47:579] [Thread-4] [TRACE] AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Add plugged reader to readers list.
+[11:59:48:064] [Test worker] [INFO] StubPlugin - Unplugged reader with name StubReaderTest
+[11:59:48:081] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:48:081] [Thread-4] [TRACE] AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader disconnected 
+[11:59:48:081] [Thread-4] [TRACE] AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Remove unplugged reader from readers list.
+[11:59:48:132] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:48:182] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:48:233] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:48:283] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:48:333] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:48:384] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:48:434] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:48:485] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:48:535] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:48:565] [Test worker] [INFO] StubReaderTest - Stubplugin readers size 0
+[11:59:48:565] [Test worker] [INFO] StubReaderTest - Stubplugin observers size 0
+[11:59:48:565] [Test worker] [INFO] StubPlugin - Plugging a new reader with name StubReaderTest
+[11:59:48:586] [Thread-4] [TRACE] AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader connected 
+[11:59:48:586] [Thread-4] [TRACE] AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Add plugged reader to readers list.
+[11:59:49:079] [Test worker] [TRACE] AbstractObservableReader - [StubReaderTest] transmit =&gt; SeRequestSet: 1 SeRequest(s), elapsed 513.1 ms.
+[11:59:49:080] [Test worker] [DEBUG] AbstractLocalReader - [StubReaderTest] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A420], SELECTOR = AID:A000000291A000000191, KEEPCHANNELOPEN = false}
+[11:59:49:081] [Test worker] [TRACE] AbstractSelectionLocalReader - [StubReaderTest] openLogicalChannelAndSelect =&gt; ATR: 3B8E800180318066409089120802830190000B
+[11:59:49:081] [Test worker] [TRACE] AbstractSelectionLocalReader - [StubReaderTest] openLogicalChannelAndSelect =&gt; Select Application with AID = A000000291A000000191
+[11:59:49:083] [observable-reader-events-13] [TRACE] AbstractLoggedObservable - [StubReaderTest] AbstractObservableReader =&gt; Notifying a reader event. EVENTNAME = SE insertion
+[11:59:49:083] [Test worker] [TRACE] AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Intrinsic Select Application&quot;, RAWDATA = 00A404000AA000000291A00000019100, case4, elapsed 516.2 ms.
+[11:59:49:086] [Test worker] [TRACE] AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 6F25840BA000000291A00000019102A516BF0C13C70800000000C0E11FA653070A3C230C1410019000, elapsed 2.3 ms.
+[11:59:49:086] [Test worker] [TRACE] AbstractLocalReader - [StubReaderTest] processSeRequest =&gt; Logical channel opening success.
+[11:59:49:087] [Test worker] [TRACE] AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A420, elapsed 1.7 ms.
+[11:59:49:088] [Test worker] [TRACE] AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000000000009000, elapsed 1.1 ms.
+[11:59:49:091] [Test worker] [DEBUG] AbstractLocalReader - [StubReaderTest] processSeRequestSet =&gt; receive SeResponse:{RESPONSES = [ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000000000009000], ATR = 3B8E800180318066409089120802830190000B, FCI =ApduResponse: SUCCESS, RAWDATA = 6F25840BA000000291A00000019102A516BF0C13C70800000000C0E11FA653070A3C230C1410019000, CHANNELWASOPEN = false}
+[11:59:49:091] [Test worker] [TRACE] AbstractLocalReader - [StubReaderTest] closeLogicalChannel =&gt; Closing of the logical channel.
+[11:59:49:092] [Test worker] [DEBUG] AbstractLocalReader - [StubReaderTest] processSeRequestSet =&gt; Closing of the physical channel.
+[11:59:49:092] [Test worker] [TRACE] AbstractObservableReader - [StubReaderTest] transmit =&gt; SeResponse: 1 SeReponse(s), elapsed 13.0 ms.
+[11:59:49:092] [Test worker] [INFO] StubPlugin - Unplugged reader with name StubReaderTest
+[11:59:49:138] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:49:138] [Thread-4] [TRACE] AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader disconnected 
+[11:59:49:138] [Thread-4] [TRACE] AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Remove unplugged reader from readers list.
+[11:59:49:188] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:49:239] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:49:289] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:49:340] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:49:390] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:49:440] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:49:491] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:49:541] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:49:592] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:49:593] [Test worker] [INFO] StubReaderTest - Stubplugin readers size 0
+[11:59:49:593] [Test worker] [INFO] StubReaderTest - Stubplugin observers size 0
+[11:59:49:593] [Test worker] [INFO] StubPlugin - Plugging a new reader with name StubReaderTest
+[11:59:49:642] [Thread-4] [TRACE] AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader connected 
+[11:59:49:642] [Thread-4] [TRACE] AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Add plugged reader to readers list.
+[11:59:50:094] [Test worker] [INFO] StubPlugin - Unplugged reader with name StubReaderTest
+[11:59:50:094] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:50:094] [Thread-4] [TRACE] AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader disconnected 
+[11:59:50:095] [Thread-4] [TRACE] AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Remove unplugged reader from readers list.
+[11:59:50:101] [observable-reader-events-15] [TRACE] AbstractLoggedObservable - [StubReaderTest] AbstractObservableReader =&gt; Notifying a reader event. EVENTNAME = SE insertion
+[11:59:50:145] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:50:195] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:50:246] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:50:296] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:50:346] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:50:397] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:50:447] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:50:498] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:50:548] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:50:595] [Test worker] [INFO] StubReaderTest - Stubplugin readers size 0
+[11:59:50:595] [Test worker] [INFO] StubReaderTest - Stubplugin observers size 0
+[11:59:50:595] [Test worker] [INFO] StubPlugin - Plugging a new reader with name StubReaderTest
+[11:59:50:599] [Thread-4] [TRACE] AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader connected 
+[11:59:50:599] [Thread-4] [TRACE] AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Add plugged reader to readers list.
+[11:59:51:096] [Test worker] [TRACE] AbstractObservableReader - [StubReaderTest] transmit =&gt; SeRequestSet: 1 SeRequest(s), elapsed 500.5 ms.
+[11:59:51:096] [Test worker] [TRACE] AbstractLocalReader - [StubReaderTest] closeLogicalChannel =&gt; Closing of the logical channel.
+[11:59:51:096] [Test worker] [DEBUG] AbstractLocalReader - [StubReaderTest] processSeRequestSet =&gt; Closing of the physical channel.
+[11:59:51:097] [Test worker] [TRACE] AbstractObservableReader - [StubReaderTest] transmit =&gt; SeResponse: 1 SeReponse(s), elapsed 0.4 ms.
+[11:59:51:097] [Test worker] [INFO] StubPlugin - Unplugged reader with name StubReaderTest
+[11:59:51:100] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:51:101] [Thread-4] [TRACE] AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader disconnected 
+[11:59:51:101] [Thread-4] [TRACE] AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Remove unplugged reader from readers list.
+[11:59:51:151] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:51:201] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:51:252] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:51:302] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:51:353] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:51:403] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:51:453] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:51:504] [Thread-4] [TRACE] StubPlugin - No reader available.
+[11:59:51:554] [Thread-4] [TRACE] StubPlugin - No reader available.
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="http://www.gradle.org">Gradle 4.5.1</a> at Sep 19, 2018 11:59:57 AM</p>
+</div>
+</div>
+</body>
+</html>
