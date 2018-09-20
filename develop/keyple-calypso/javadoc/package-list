@@ -8,3 +8,4 @@ org.eclipse.keyple.calypso.command.po.builder.session
 org.eclipse.keyple.calypso.command.po.parser
 org.eclipse.keyple.calypso.command.po.parser.session
 org.eclipse.keyple.calypso.transaction
+org.eclipse.keyple.calypso.transaction.exception
