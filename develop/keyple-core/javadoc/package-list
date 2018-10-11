@@ -4,4 +4,5 @@ org.eclipse.keyple.seproxy.event
 org.eclipse.keyple.seproxy.exception
 org.eclipse.keyple.seproxy.plugin
 org.eclipse.keyple.seproxy.protocol
+org.eclipse.keyple.transaction
 org.eclipse.keyple.util
