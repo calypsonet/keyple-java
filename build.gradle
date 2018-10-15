@@ -8,8 +8,6 @@ subprojects {
 }
 
 
-
-
 allprojects {
     repositories {
         mavenCentral()
