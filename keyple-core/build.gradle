@@ -17,15 +17,23 @@ task preBuild {
     }
 }
 
+
+
+sourceSets.main.resources.includes = [ '**/keyple.properties',
+                                       '../LICENSE',
+                                       '../NOTICE' ]
+
 jar {
     manifest {
         attributes 'Implementation-Title': 'Keyple Core',
         'Implementation-Version': project.version
     }
+
 }
 
 
-build.dependsOn preBuild
+
+jar.dependsOn preBuild, copyLICENSE, copyNOTICE
 
 pmd {
     ruleSets = [

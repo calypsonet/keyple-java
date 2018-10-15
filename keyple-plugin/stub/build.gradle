@@ -9,6 +9,7 @@ jar {
     }
 }
 
+jar.dependsOn copyLICENSE, copyNOTICE
 
 dependencies {
     implementation project(':keyple-core')
