@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">5.164s</div>
+<div class="counter">5.154s</div>
 <p>duration</p>
 </div>
 </td>
@@ -79,12 +79,12 @@
 </thead>
 <tr>
 <td class="success">testATR</td>
-<td>0.308s</td>
+<td>0.309s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">testGetName</td>
-<td>0.302s</td>
+<td>0.300s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
@@ -104,12 +104,12 @@
 </tr>
 <tr>
 <td class="success">testSetWrongParameters</td>
-<td>0.303s</td>
+<td>0.301s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">transmit_Hoplink_Sucessfull</td>
-<td>0.313s</td>
+<td>0.316s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
@@ -119,17 +119,17 @@
 </tr>
 <tr>
 <td class="success">transmit_no_response</td>
-<td>0.305s</td>
+<td>0.302s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">transmit_partial_response_0</td>
-<td>0.303s</td>
+<td>0.302s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">transmit_partial_response_1</td>
-<td>0.301s</td>
+<td>0.302s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
@@ -139,12 +139,12 @@
 </tr>
 <tr>
 <td class="success">transmit_partial_response_3</td>
-<td>0.307s</td>
+<td>0.302s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">transmit_partial_response_set_0</td>
-<td>0.304s</td>
+<td>0.302s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
@@ -179,12 +179,12 @@
 [Thread-4] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader disconnected 
 [Thread-4] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Remove unplugged reader from readers list.
 [observable-reader-events-1] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubReaderTest] AbstractObservableReader =&gt; Notifying a reader event. EVENTNAME = SE insertion
-[observable-reader-events-1] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 154.2 ms.
+[observable-reader-events-1] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 152.5 ms.
 [observable-reader-events-1] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = null, SELECTOR = ATR regex:3B.*, KEEPCHANNELOPEN = true}
 [observable-reader-events-1] TRACE org.eclipse.keyple.seproxy.plugin.AbstractSelectionLocalReader - [StubReaderTest] openLogicalChannelAndSelect =&gt; ATR: 3B8E800180318066409089120802830190000B
 [observable-reader-events-1] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processSeRequest =&gt; Logical channel opening success.
 [observable-reader-events-1] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processSeRequestSet =&gt; receive SeResponse:{RESPONSES = [], ATR = 3B8E800180318066409089120802830190000B, FCI =null, CHANNELWASOPEN = false}
-[observable-reader-events-1] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 1.7 ms.
+[observable-reader-events-1] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 1.9 ms.
 [Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubReaderTest - Stubplugin readers size 0
@@ -198,6 +198,7 @@
 [Thread-4] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Remove unplugged reader from readers list.
 [Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubReaderTest - Stubplugin readers size 0
+[Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubReaderTest - Stubplugin observers size 0
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubPlugin - Plugging a new reader with name StubReaderTest
 [Thread-4] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader connected 
@@ -219,15 +220,6 @@
 [Thread-4] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader disconnected 
 [Thread-4] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Remove unplugged reader from readers list.
 [Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Test worker] INFO org.eclipse.keyple.plugin.stub.StubReaderTest - Stubplugin readers size 0
-[Test worker] INFO org.eclipse.keyple.plugin.stub.StubReaderTest - Stubplugin observers size 0
-[Test worker] INFO org.eclipse.keyple.plugin.stub.StubPlugin - Plugging a new reader with name StubReaderTest
-[Thread-4] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader connected 
-[Thread-4] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Add plugged reader to readers list.
-[Test worker] INFO org.eclipse.keyple.plugin.stub.StubPlugin - Unplugged reader with name StubReaderTest
-[Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-4] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader disconnected 
-[Thread-4] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Remove unplugged reader from readers list.
 [Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubReaderTest - Stubplugin readers size 0
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubReaderTest - Stubplugin observers size 0
@@ -239,27 +231,39 @@
 [Thread-4] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader disconnected 
 [Thread-4] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Remove unplugged reader from readers list.
 [Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubReaderTest - Stubplugin readers size 0
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubReaderTest - Stubplugin observers size 0
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubPlugin - Plugging a new reader with name StubReaderTest
 [Thread-4] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader connected 
 [Thread-4] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Add plugged reader to readers list.
-[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 159.7 ms.
+[Test worker] INFO org.eclipse.keyple.plugin.stub.StubPlugin - Unplugged reader with name StubReaderTest
+[Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-4] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader disconnected 
+[Thread-4] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Remove unplugged reader from readers list.
+[Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Test worker] INFO org.eclipse.keyple.plugin.stub.StubReaderTest - Stubplugin readers size 0
+[Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Test worker] INFO org.eclipse.keyple.plugin.stub.StubReaderTest - Stubplugin observers size 0
+[Test worker] INFO org.eclipse.keyple.plugin.stub.StubPlugin - Plugging a new reader with name StubReaderTest
+[Thread-4] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader connected 
+[Thread-4] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Add plugged reader to readers list.
+[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 162.8 ms.
 [Test worker] TRACE org.eclipse.keyple.plugin.stub.StubReader - [StubReaderTest] protocolFlagMatches =&gt; matching SE. PROTOCOLFLAG = PROTOCOL_ISO14443_4
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A420], SELECTOR = AID:A000000291A000000191, KEEPCHANNELOPEN = false}
-[observable-reader-events-7] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubReaderTest] AbstractObservableReader =&gt; Notifying a reader event. EVENTNAME = SE insertion
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractSelectionLocalReader - [StubReaderTest] openLogicalChannelAndSelect =&gt; ATR: 3B8E800180318066409089120802830190000B
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractSelectionLocalReader - [StubReaderTest] openLogicalChannelAndSelect =&gt; Select Application with AID = A000000291A000000191
-[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Intrinsic Select Application&quot;, RAWDATA = 00A404000AA000000291A00000019100, case4, elapsed 161.9 ms.
-[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 6F25840BA000000291A00000019102A516BF0C13C70800000000C0E11FA653070A3C230C1410019000, elapsed 0.3 ms.
+[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Intrinsic Select Application&quot;, RAWDATA = 00A404000AA000000291A00000019100, case4, elapsed 164.4 ms.
+[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 6F25840BA000000291A00000019102A516BF0C13C70800000000C0E11FA653070A3C230C1410019000, elapsed 0.2 ms.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processSeRequest =&gt; Logical channel opening success.
-[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A420, elapsed 0.3 ms.
+[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A420, elapsed 0.1 ms.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000000000009000, elapsed 0.2 ms.
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processSeRequestSet =&gt; receive SeResponse:{RESPONSES = [ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000000000009000], ATR = 3B8E800180318066409089120802830190000B, FCI =ApduResponse: SUCCESS, RAWDATA = 6F25840BA000000291A00000019102A516BF0C13C70800000000C0E11FA653070A3C230C1410019000, CHANNELWASOPEN = false}
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] closeLogicalChannel =&gt; Closing of the logical channel.
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processSeRequestSet =&gt; Closing of the physical channel.
-[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 3.5 ms.
+[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 2.8 ms.
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubPlugin - Unplugged reader with name StubReaderTest
+[observable-reader-events-7] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubReaderTest] AbstractObservableReader =&gt; Notifying a reader event. EVENTNAME = SE insertion
 [Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-4] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader disconnected 
 [Thread-4] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Remove unplugged reader from readers list.
@@ -280,16 +284,16 @@
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubPlugin - Plugging a new reader with name StubReaderTest
 [Thread-4] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader connected 
 [Thread-4] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Add plugged reader to readers list.
-[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 163.2 ms.
+[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 165.5 ms.
 [Test worker] TRACE org.eclipse.keyple.plugin.stub.StubReader - [StubReaderTest] protocolFlagMatches =&gt; matching SE. PROTOCOLFLAG = PROTOCOL_ISO14443_4
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [ApduRequest: NAME = &quot;Increase&quot;, RAWDATA = 003201A00300000000, case4], SELECTOR = AID:A000000291A000000191, KEEPCHANNELOPEN = false}
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractSelectionLocalReader - [StubReaderTest] openLogicalChannelAndSelect =&gt; ATR: 3B8E800180318066409089120802830190000B
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractSelectionLocalReader - [StubReaderTest] openLogicalChannelAndSelect =&gt; Select Application with AID = A000000291A000000191
-[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Intrinsic Select Application&quot;, RAWDATA = 00A404000AA000000291A00000019100, case4, elapsed 164.8 ms.
-[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 6F25840BA000000291A00000019102A516BF0C13C70800000000C0E11FA653070A3C230C1410019000, elapsed 0.2 ms.
+[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Intrinsic Select Application&quot;, RAWDATA = 00A404000AA000000291A00000019100, case4, elapsed 166.1 ms.
+[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 6F25840BA000000291A00000019102A516BF0C13C70800000000C0E11FA653070A3C230C1410019000, elapsed 0.1 ms.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processSeRequest =&gt; Logical channel opening success.
-[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Increase&quot;, RAWDATA = 003201A00300000000, case4, elapsed 0.3 ms.
-[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [2.5] transmit =&gt; SEREQUESTSET IO failure. elapsed null
+[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Increase&quot;, RAWDATA = 003201A00300000000, case4, elapsed 0.0 ms.
+[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [0.9] transmit =&gt; SEREQUESTSET IO failure. elapsed null
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubPlugin - Unplugged reader with name StubReaderTest
 [observable-reader-events-9] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubReaderTest] AbstractObservableReader =&gt; Notifying a reader event. EVENTNAME = SE insertion
 [Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
@@ -301,14 +305,14 @@
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubPlugin - Plugging a new reader with name StubReaderTest
 [Thread-4] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader connected 
 [Thread-4] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Add plugged reader to readers list.
-[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SEREQUEST = SeRequest:{REQUESTS = [ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201F400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400], SELECTOR = AID:A000000291A000000191, KEEPCHANNELOPEN = false}, elapsed 159.0 ms.
+[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SEREQUEST = SeRequest:{REQUESTS = [ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201F400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400], SELECTOR = AID:A000000291A000000191, KEEPCHANNELOPEN = false}, elapsed 166.7 ms.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractSelectionLocalReader - [StubReaderTest] openLogicalChannelAndSelect =&gt; ATR: 3B8E800180318066409089120802830190000B
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractSelectionLocalReader - [StubReaderTest] openLogicalChannelAndSelect =&gt; Select Application with AID = A000000291A000000191
-[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Intrinsic Select Application&quot;, RAWDATA = 00A404000AA000000291A00000019100, case4, elapsed 160.2 ms.
+[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Intrinsic Select Application&quot;, RAWDATA = 00A404000AA000000291A00000019100, case4, elapsed 167.3 ms.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 6F25840BA000000291A00000019102A516BF0C13C70800000000C0E11FA653070A3C230C1410019000, elapsed 0.2 ms.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processSeRequest =&gt; Logical channel opening success.
-[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201F400, elapsed 0.0 ms.
-[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [1.7] transmit =&gt; SEREQUEST IO failure. elapsed null
+[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201F400, elapsed 0.1 ms.
+[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [1.2] transmit =&gt; SEREQUEST IO failure. elapsed null
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubPlugin - Unplugged reader with name StubReaderTest
 [observable-reader-events-10] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubReaderTest] AbstractObservableReader =&gt; Notifying a reader event. EVENTNAME = SE insertion
 [Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
@@ -320,16 +324,16 @@
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubPlugin - Plugging a new reader with name StubReaderTest
 [Thread-4] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader connected 
 [Thread-4] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Add plugged reader to readers list.
-[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SEREQUEST = SeRequest:{REQUESTS = [ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201F400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400], SELECTOR = AID:A000000291A000000191, KEEPCHANNELOPEN = false}, elapsed 160.8 ms.
+[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SEREQUEST = SeRequest:{REQUESTS = [ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201F400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400], SELECTOR = AID:A000000291A000000191, KEEPCHANNELOPEN = false}, elapsed 168.1 ms.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractSelectionLocalReader - [StubReaderTest] openLogicalChannelAndSelect =&gt; ATR: 3B8E800180318066409089120802830190000B
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractSelectionLocalReader - [StubReaderTest] openLogicalChannelAndSelect =&gt; Select Application with AID = A000000291A000000191
-[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Intrinsic Select Application&quot;, RAWDATA = 00A404000AA000000291A00000019100, case4, elapsed 161.3 ms.
-[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 6F25840BA000000291A00000019102A516BF0C13C70800000000C0E11FA653070A3C230C1410019000, elapsed 0.1 ms.
+[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Intrinsic Select Application&quot;, RAWDATA = 00A404000AA000000291A00000019100, case4, elapsed 168.7 ms.
+[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 6F25840BA000000291A00000019102A516BF0C13C70800000000C0E11FA653070A3C230C1410019000, elapsed 0.2 ms.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processSeRequest =&gt; Logical channel opening success.
-[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, elapsed 0.0 ms.
-[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, elapsed 0.0 ms.
+[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, elapsed 0.1 ms.
+[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, elapsed 0.1 ms.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201F400, elapsed 0.0 ms.
-[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [0.9] transmit =&gt; SEREQUEST IO failure. elapsed null
+[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [1.2] transmit =&gt; SEREQUEST IO failure. elapsed null
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubPlugin - Unplugged reader with name StubReaderTest
 [observable-reader-events-11] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubReaderTest] AbstractObservableReader =&gt; Notifying a reader event. EVENTNAME = SE insertion
 [Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
@@ -341,20 +345,20 @@
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubPlugin - Plugging a new reader with name StubReaderTest
 [Thread-4] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader connected 
 [Thread-4] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Add plugged reader to readers list.
-[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SEREQUEST = SeRequest:{REQUESTS = [ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201F400], SELECTOR = AID:A000000291A000000191, KEEPCHANNELOPEN = false}, elapsed 161.4 ms.
-[observable-reader-events-12] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubReaderTest] AbstractObservableReader =&gt; Notifying a reader event. EVENTNAME = SE insertion
+[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SEREQUEST = SeRequest:{REQUESTS = [ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201F400], SELECTOR = AID:A000000291A000000191, KEEPCHANNELOPEN = false}, elapsed 169.4 ms.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractSelectionLocalReader - [StubReaderTest] openLogicalChannelAndSelect =&gt; ATR: 3B8E800180318066409089120802830190000B
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractSelectionLocalReader - [StubReaderTest] openLogicalChannelAndSelect =&gt; Select Application with AID = A000000291A000000191
-[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Intrinsic Select Application&quot;, RAWDATA = 00A404000AA000000291A00000019100, case4, elapsed 161.9 ms.
-[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 6F25840BA000000291A00000019102A516BF0C13C70800000000C0E11FA653070A3C230C1410019000, elapsed 0.1 ms.
+[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Intrinsic Select Application&quot;, RAWDATA = 00A404000AA000000291A00000019100, case4, elapsed 170.0 ms.
+[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 6F25840BA000000291A00000019102A516BF0C13C70800000000C0E11FA653070A3C230C1410019000, elapsed 0.2 ms.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processSeRequest =&gt; Logical channel opening success.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, elapsed 0.1 ms.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, elapsed 0.1 ms.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, elapsed 0.0 ms.
-[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, elapsed 0.5 ms.
+[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, elapsed 0.1 ms.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201F400, elapsed 0.0 ms.
-[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [1.7] transmit =&gt; SEREQUEST IO failure. elapsed null
+[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [1.5] transmit =&gt; SEREQUEST IO failure. elapsed null
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubPlugin - Unplugged reader with name StubReaderTest
+[observable-reader-events-12] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubReaderTest] AbstractObservableReader =&gt; Notifying a reader event. EVENTNAME = SE insertion
 [Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-4] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader disconnected 
 [Thread-4] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Remove unplugged reader from readers list.
@@ -364,20 +368,20 @@
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubPlugin - Plugging a new reader with name StubReaderTest
 [Thread-4] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader connected 
 [Thread-4] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Add plugged reader to readers list.
-[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SEREQUEST = SeRequest:{REQUESTS = [ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400], SELECTOR = AID:A000000291A000000191, KEEPCHANNELOPEN = false}, elapsed 160.9 ms.
+[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SEREQUEST = SeRequest:{REQUESTS = [ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400], SELECTOR = AID:A000000291A000000191, KEEPCHANNELOPEN = false}, elapsed 170.9 ms.
 [observable-reader-events-13] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubReaderTest] AbstractObservableReader =&gt; Notifying a reader event. EVENTNAME = SE insertion
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractSelectionLocalReader - [StubReaderTest] openLogicalChannelAndSelect =&gt; ATR: 3B8E800180318066409089120802830190000B
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractSelectionLocalReader - [StubReaderTest] openLogicalChannelAndSelect =&gt; Select Application with AID = A000000291A000000191
-[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Intrinsic Select Application&quot;, RAWDATA = 00A404000AA000000291A00000019100, case4, elapsed 161.9 ms.
-[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 6F25840BA000000291A00000019102A516BF0C13C70800000000C0E11FA653070A3C230C1410019000, elapsed 0.2 ms.
+[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Intrinsic Select Application&quot;, RAWDATA = 00A404000AA000000291A00000019100, case4, elapsed 171.5 ms.
+[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 6F25840BA000000291A00000019102A516BF0C13C70800000000C0E11FA653070A3C230C1410019000, elapsed 0.1 ms.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processSeRequest =&gt; Logical channel opening success.
-[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, elapsed 0.3 ms.
-[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, elapsed 2.2 ms.
-[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, elapsed 0.4 ms.
-[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, elapsed 0.3 ms.
-[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, elapsed 0.4 ms.
-[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, elapsed 0.3 ms.
-[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SERESPONSE = SeResponse:{RESPONSES = [ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000], ATR = 3B8E800180318066409089120802830190000B, FCI =ApduResponse: SUCCESS, RAWDATA = 6F25840BA000000291A00000019102A516BF0C13C70800000000C0E11FA653070A3C230C1410019000, CHANNELWASOPEN = false}, elapsed 5.6 ms.
+[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, elapsed 0.0 ms.
+[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, elapsed 0.0 ms.
+[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, elapsed 0.0 ms.
+[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, elapsed 0.0 ms.
+[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, elapsed 0.0 ms.
+[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, elapsed 0.0 ms.
+[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SERESPONSE = SeResponse:{RESPONSES = [ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000], ATR = 3B8E800180318066409089120802830190000B, FCI =ApduResponse: SUCCESS, RAWDATA = 6F25840BA000000291A00000019102A516BF0C13C70800000000C0E11FA653070A3C230C1410019000, CHANNELWASOPEN = false}, elapsed 1.2 ms.
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubPlugin - Unplugged reader with name StubReaderTest
 [Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-4] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader disconnected 
@@ -388,22 +392,22 @@
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubPlugin - Plugging a new reader with name StubReaderTest
 [Thread-4] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader connected 
 [Thread-4] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Add plugged reader to readers list.
-[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SEREQUESTSET = 3 SeRequest(s), elapsed 165.6 ms.
+[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SEREQUESTSET = 3 SeRequest(s), elapsed 172.5 ms.
 [Test worker] TRACE org.eclipse.keyple.plugin.stub.StubReader - [StubReaderTest] protocolFlagMatches =&gt; matching SE. PROTOCOLFLAG = PROTOCOL_ISO14443_4
 [Test worker] TRACE org.eclipse.keyple.plugin.stub.StubReader - [StubReaderTest] protocolFlagMatches =&gt; matching SE. PROTOCOLFLAG = PROTOCOL_ISO14443_4
 [Test worker] TRACE org.eclipse.keyple.plugin.stub.StubReader - [StubReaderTest] protocolFlagMatches =&gt; matching SE. PROTOCOLFLAG = PROTOCOL_ISO14443_4
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201F400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400], SELECTOR = AID:A000000291A000000191, KEEPCHANNELOPEN = false}
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractSelectionLocalReader - [StubReaderTest] openLogicalChannelAndSelect =&gt; ATR: 3B8E800180318066409089120802830190000B
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractSelectionLocalReader - [StubReaderTest] openLogicalChannelAndSelect =&gt; Select Application with AID = A000000291A000000191
-[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Intrinsic Select Application&quot;, RAWDATA = 00A404000AA000000291A00000019100, case4, elapsed 166.9 ms.
+[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Intrinsic Select Application&quot;, RAWDATA = 00A404000AA000000291A00000019100, case4, elapsed 173.3 ms.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 6F25840BA000000291A00000019102A516BF0C13C70800000000C0E11FA653070A3C230C1410019000, elapsed 0.1 ms.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processSeRequest =&gt; Logical channel opening success.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, elapsed 0.1 ms.
-[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, elapsed 0.7 ms.
-[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, elapsed 0.1 ms.
-[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, elapsed 0.3 ms.
+[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, elapsed 0.1 ms.
+[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, elapsed 0.0 ms.
+[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, elapsed 0.0 ms.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201F400, elapsed 0.0 ms.
-[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [2.9] transmit =&gt; SEREQUESTSET IO failure. elapsed null
+[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [1.5] transmit =&gt; SEREQUESTSET IO failure. elapsed null
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubPlugin - Unplugged reader with name StubReaderTest
 [observable-reader-events-14] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubReaderTest] AbstractObservableReader =&gt; Notifying a reader event. EVENTNAME = SE insertion
 [Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
@@ -415,32 +419,32 @@
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubPlugin - Plugging a new reader with name StubReaderTest
 [Thread-4] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader connected 
 [Thread-4] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Add plugged reader to readers list.
-[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SEREQUESTSET = 3 SeRequest(s), elapsed 163.4 ms.
+[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SEREQUESTSET = 3 SeRequest(s), elapsed 174.0 ms.
 [Test worker] TRACE org.eclipse.keyple.plugin.stub.StubReader - [StubReaderTest] protocolFlagMatches =&gt; matching SE. PROTOCOLFLAG = PROTOCOL_ISO14443_4
 [Test worker] TRACE org.eclipse.keyple.plugin.stub.StubReader - [StubReaderTest] protocolFlagMatches =&gt; matching SE. PROTOCOLFLAG = PROTOCOL_ISO14443_4
 [Test worker] TRACE org.eclipse.keyple.plugin.stub.StubReader - [StubReaderTest] protocolFlagMatches =&gt; matching SE. PROTOCOLFLAG = PROTOCOL_ISO14443_4
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400], SELECTOR = AID:A000000291A000000191, KEEPCHANNELOPEN = false}
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractSelectionLocalReader - [StubReaderTest] openLogicalChannelAndSelect =&gt; ATR: 3B8E800180318066409089120802830190000B
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractSelectionLocalReader - [StubReaderTest] openLogicalChannelAndSelect =&gt; Select Application with AID = A000000291A000000191
-[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Intrinsic Select Application&quot;, RAWDATA = 00A404000AA000000291A00000019100, case4, elapsed 164.0 ms.
+[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Intrinsic Select Application&quot;, RAWDATA = 00A404000AA000000291A00000019100, case4, elapsed 174.6 ms.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 6F25840BA000000291A00000019102A516BF0C13C70800000000C0E11FA653070A3C230C1410019000, elapsed 0.1 ms.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processSeRequest =&gt; Logical channel opening success.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, elapsed 0.0 ms.
-[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, elapsed 0.0 ms.
-[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, elapsed 0.1 ms.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, elapsed 0.1 ms.
+[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, elapsed 0.0 ms.
+[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, elapsed 0.0 ms.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, elapsed 0.0 ms.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, elapsed 0.1 ms.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, elapsed 0.0 ms.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, elapsed 0.0 ms.
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processSeRequestSet =&gt; receive SeResponse:{RESPONSES = [ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000], ATR = 3B8E800180318066409089120802830190000B, FCI =ApduResponse: SUCCESS, RAWDATA = 6F25840BA000000291A00000019102A516BF0C13C70800000000C0E11FA653070A3C230C1410019000, CHANNELWASOPEN = false}
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201F400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400], SELECTOR = AID:A000000291A000000191, KEEPCHANNELOPEN = false}
-[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, elapsed 0.2 ms.
+[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, elapsed 0.3 ms.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, elapsed 0.1 ms.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, elapsed 0.0 ms.
-[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, elapsed 0.0 ms.
+[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, elapsed 0.2 ms.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201F400, elapsed 0.0 ms.
-[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [2.1] transmit =&gt; SEREQUESTSET IO failure. elapsed null
+[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [2.3] transmit =&gt; SEREQUESTSET IO failure. elapsed null
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubPlugin - Unplugged reader with name StubReaderTest
 [observable-reader-events-15] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubReaderTest] AbstractObservableReader =&gt; Notifying a reader event. EVENTNAME = SE insertion
 [Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
@@ -452,15 +456,15 @@
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubPlugin - Plugging a new reader with name StubReaderTest
 [Thread-4] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader connected 
 [Thread-4] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Add plugged reader to readers list.
-[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SEREQUESTSET = 3 SeRequest(s), elapsed 156.5 ms.
+[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SEREQUESTSET = 3 SeRequest(s), elapsed 177.2 ms.
 [Test worker] TRACE org.eclipse.keyple.plugin.stub.StubReader - [StubReaderTest] protocolFlagMatches =&gt; matching SE. PROTOCOLFLAG = PROTOCOL_ISO14443_4
 [Test worker] TRACE org.eclipse.keyple.plugin.stub.StubReader - [StubReaderTest] protocolFlagMatches =&gt; matching SE. PROTOCOLFLAG = PROTOCOL_ISO14443_4
 [Test worker] TRACE org.eclipse.keyple.plugin.stub.StubReader - [StubReaderTest] protocolFlagMatches =&gt; matching SE. PROTOCOLFLAG = PROTOCOL_ISO14443_4
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400], SELECTOR = AID:A000000291A000000191, KEEPCHANNELOPEN = false}
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractSelectionLocalReader - [StubReaderTest] openLogicalChannelAndSelect =&gt; ATR: 3B8E800180318066409089120802830190000B
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractSelectionLocalReader - [StubReaderTest] openLogicalChannelAndSelect =&gt; Select Application with AID = A000000291A000000191
-[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Intrinsic Select Application&quot;, RAWDATA = 00A404000AA000000291A00000019100, case4, elapsed 157.7 ms.
-[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 6F25840BA000000291A00000019102A516BF0C13C70800000000C0E11FA653070A3C230C1410019000, elapsed 0.0 ms.
+[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Intrinsic Select Application&quot;, RAWDATA = 00A404000AA000000291A00000019100, case4, elapsed 178.2 ms.
+[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 6F25840BA000000291A00000019102A516BF0C13C70800000000C0E11FA653070A3C230C1410019000, elapsed 0.1 ms.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processSeRequest =&gt; Logical channel opening success.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, elapsed 0.0 ms.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, elapsed 0.0 ms.
@@ -487,7 +491,7 @@
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, elapsed 0.0 ms.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, elapsed 0.0 ms.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201F400, elapsed 0.0 ms.
-[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [2.8] transmit =&gt; SEREQUESTSET IO failure. elapsed null
+[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [2.7] transmit =&gt; SEREQUESTSET IO failure. elapsed null
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubPlugin - Unplugged reader with name StubReaderTest
 [observable-reader-events-16] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubReaderTest] AbstractObservableReader =&gt; Notifying a reader event. EVENTNAME = SE insertion
 [Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
@@ -499,15 +503,15 @@
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubPlugin - Plugging a new reader with name StubReaderTest
 [Thread-4] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader connected 
 [Thread-4] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Add plugged reader to readers list.
-[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SEREQUESTSET = 3 SeRequest(s), elapsed 159.9 ms.
+[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SEREQUESTSET = 3 SeRequest(s), elapsed 180.6 ms.
 [Test worker] TRACE org.eclipse.keyple.plugin.stub.StubReader - [StubReaderTest] protocolFlagMatches =&gt; matching SE. PROTOCOLFLAG = PROTOCOL_ISO14443_4
 [Test worker] TRACE org.eclipse.keyple.plugin.stub.StubReader - [StubReaderTest] protocolFlagMatches =&gt; matching SE. PROTOCOLFLAG = PROTOCOL_ISO14443_4
 [Test worker] TRACE org.eclipse.keyple.plugin.stub.StubReader - [StubReaderTest] protocolFlagMatches =&gt; matching SE. PROTOCOLFLAG = PROTOCOL_ISO14443_4
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400], SELECTOR = AID:A000000291A000000191, KEEPCHANNELOPEN = false}
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractSelectionLocalReader - [StubReaderTest] openLogicalChannelAndSelect =&gt; ATR: 3B8E800180318066409089120802830190000B
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractSelectionLocalReader - [StubReaderTest] openLogicalChannelAndSelect =&gt; Select Application with AID = A000000291A000000191
-[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Intrinsic Select Application&quot;, RAWDATA = 00A404000AA000000291A00000019100, case4, elapsed 160.6 ms.
-[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 6F25840BA000000291A00000019102A516BF0C13C70800000000C0E11FA653070A3C230C1410019000, elapsed 0.1 ms.
+[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Intrinsic Select Application&quot;, RAWDATA = 00A404000AA000000291A00000019100, case4, elapsed 181.0 ms.
+[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 6F25840BA000000291A00000019102A516BF0C13C70800000000C0E11FA653070A3C230C1410019000, elapsed 0.0 ms.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processSeRequest =&gt; Logical channel opening success.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, elapsed 0.0 ms.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, elapsed 0.0 ms.
@@ -518,9 +522,10 @@
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, elapsed 0.0 ms.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, elapsed 0.0 ms.
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processSeRequestSet =&gt; receive SeResponse:{RESPONSES = [ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000], ATR = 3B8E800180318066409089120802830190000B, FCI =ApduResponse: SUCCESS, RAWDATA = 6F25840BA000000291A00000019102A516BF0C13C70800000000C0E11FA653070A3C230C1410019000, CHANNELWASOPEN = false}
+[observable-reader-events-17] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubReaderTest] AbstractObservableReader =&gt; Notifying a reader event. EVENTNAME = SE insertion
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400], SELECTOR = AID:A000000291A000000191, KEEPCHANNELOPEN = false}
-[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, elapsed 0.3 ms.
-[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, elapsed 0.0 ms.
+[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, elapsed 0.4 ms.
+[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, elapsed 0.1 ms.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, elapsed 0.0 ms.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, elapsed 0.0 ms.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, elapsed 0.0 ms.
@@ -529,7 +534,7 @@
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, elapsed 0.0 ms.
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processSeRequestSet =&gt; receive SeResponse:{RESPONSES = [ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000], ATR = 3B8E800180318066409089120802830190000B, FCI =ApduResponse: SUCCESS, RAWDATA = 6F25840BA000000291A00000019102A516BF0C13C70800000000C0E11FA653070A3C230C1410019000, CHANNELWASOPEN = true}
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400], SELECTOR = AID:A000000291A000000191, KEEPCHANNELOPEN = false}
-[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, elapsed 0.3 ms.
+[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, elapsed 1.1 ms.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, elapsed 0.0 ms.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, elapsed 0.0 ms.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, elapsed 0.0 ms.
@@ -540,9 +545,8 @@
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processSeRequestSet =&gt; receive SeResponse:{RESPONSES = [ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000], ATR = 3B8E800180318066409089120802830190000B, FCI =ApduResponse: SUCCESS, RAWDATA = 6F25840BA000000291A00000019102A516BF0C13C70800000000C0E11FA653070A3C230C1410019000, CHANNELWASOPEN = true}
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] closeLogicalChannel =&gt; Closing of the logical channel.
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processSeRequestSet =&gt; Closing of the physical channel.
-[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SERESPONSESET = 3 SeReponse(s), elapsed 2.8 ms.
+[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SERESPONSESET = 3 SeReponse(s), elapsed 3.1 ms.
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubPlugin - Unplugged reader with name StubReaderTest
-[observable-reader-events-17] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubReaderTest] AbstractObservableReader =&gt; Notifying a reader event. EVENTNAME = SE insertion
 [Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-4] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader disconnected 
 [Thread-4] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Remove unplugged reader from readers list.
@@ -558,7 +562,7 @@
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 4.5.1</a> at Oct 23, 2018 5:28:46 PM</p>
+<a href="http://www.gradle.org">Gradle 4.5.1</a> at Oct 23, 2018 6:32:02 PM</p>
 </div>
 </div>
 </body>
