@@ -49,7 +49,7 @@ public final class SeSelection {
      * @param seSelector the selector to prepare
      * @return a MatchingSe for further information request about this selector
      */
-    public MatchingSe prepareSelector(SeSelector seSelector) {
+    public MatchingSe prepareSelection(SeSelector seSelector) {
         if (logger.isTraceEnabled()) {
             logger.trace("SELECTORREQUEST = {}, EXTRAINFO = {}", seSelector.getSelectorRequest(),
                     seSelector.getExtraInfo());
@@ -187,7 +187,7 @@ public final class SeSelection {
      * through the selection process. This method is useful to build the prepared selection to be
      * executed by a reader just after a SE insertion.
      * 
-     * @return the SeRequestSet previously prepared with prepareSelector
+     * @return the SeRequestSet previously prepared with prepareSelection
      */
     public SeRequestSet getSelectionOperation() {
         return new SeRequestSet(selectionRequestSet);
