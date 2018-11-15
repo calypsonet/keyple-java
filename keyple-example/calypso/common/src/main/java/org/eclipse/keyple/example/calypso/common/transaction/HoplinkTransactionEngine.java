@@ -24,7 +24,6 @@ import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
 import org.eclipse.keyple.transaction.MatchingSe;
 import org.eclipse.keyple.transaction.SeSelection;
-import org.eclipse.keyple.transaction.SeSelector;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -184,23 +183,17 @@ public class HoplinkTransactionEngine extends AbstractReaderObserverEngine {
         /*
          * Add selection case 1: Fake AID1, protocol ISO, target rev 3
          */
-        seSelection
-                .prepareSelector(new PoSelector(
-                        new SeSelector.SelectionParameters(ByteArrayUtils.fromHex("AABBCCDDEE"),
-                                false),
-                        true, ContactlessProtocols.PROTOCOL_ISO14443_4,
-                        PoSelector.RevisionTarget.TARGET_REV3, "Selector with fake AID1"));
+        seSelection.prepareSelector(new PoSelector(ByteArrayUtils.fromHex("AABBCCDDEE"), false,
+                true, ContactlessProtocols.PROTOCOL_ISO14443_4,
+                PoSelector.RevisionTarget.TARGET_REV3, "Selector with fake AID1"));
         /*
          * Add selection case 2: Hoplink application, protocol ISO, target rev 3
          *
          * addition of read commands to execute following the selection
          */
-        PoSelector poSelectorHoplink =
-                new PoSelector(
-                        new SeSelector.SelectionParameters(ByteArrayUtils.fromHex(HoplinkInfo.AID),
-                                false),
-                        true, ContactlessProtocols.PROTOCOL_ISO14443_4,
-                        PoSelector.RevisionTarget.TARGET_REV3, "Hoplink selector");
+        PoSelector poSelectorHoplink = new PoSelector(ByteArrayUtils.fromHex(HoplinkInfo.AID),
+                false, true, ContactlessProtocols.PROTOCOL_ISO14443_4,
+                PoSelector.RevisionTarget.TARGET_REV3, "Hoplink selector");
 
         poSelectorHoplink.prepareReadRecordsCmd(HoplinkInfo.SFI_T2Environment,
                 HoplinkInfo.RECORD_NUMBER_1, true, (byte) 0x00,
@@ -212,12 +205,9 @@ public class HoplinkTransactionEngine extends AbstractReaderObserverEngine {
          * Add selection case 3: Fake AID2, unspecified protocol, target rev 2 or 3
          */
 
-        seSelection
-                .prepareSelector(new PoSelector(
-                        new SeSelector.SelectionParameters(ByteArrayUtils.fromHex("EEDDCCBBAA"),
-                                false),
-                        true, ContactlessProtocols.PROTOCOL_ISO14443_4,
-                        PoSelector.RevisionTarget.TARGET_REV2_REV3, "Selector with fake AID2"));
+        seSelection.prepareSelector(new PoSelector(ByteArrayUtils.fromHex("EEDDCCBBAA"), false,
+                true, ContactlessProtocols.PROTOCOL_ISO14443_4,
+                PoSelector.RevisionTarget.TARGET_REV2_REV3, "Selector with fake AID2"));
 
         return seSelection.getSelectionOperation();
     }

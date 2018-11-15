@@ -30,6 +30,7 @@ public final class PoSelector extends SeSelector {
     private static final Logger logger = LoggerFactory.getLogger(PoSelector.class);
 
     private final RevisionTarget revisionTarget;
+    private final Short dfLID;
 
     /**
      * Selection targets definition
@@ -41,24 +42,50 @@ public final class PoSelector extends SeSelector {
     /**
      * Calypso PO revision 1 selector
      * 
-     * @param selectionParameters the information data to select the SE
+     * @param atrRegex a regular expression to compare with the ATR of the targeted Rev1 PO
+     * @param dfLID the LID of the DF to select
      * @param keepChannelOpen indicates whether the logical channel should remain open
      * @param protocolFlag the protocol flag to filter POs according to their communication protocol
      * @param extraInfo information string
      */
-    public PoSelector(SeSelector.SelectionParameters selectionParameters, boolean keepChannelOpen,
+    public PoSelector(String atrRegex, Short dfLID, boolean keepChannelOpen,
             SeProtocol protocolFlag, RevisionTarget revisionTarget, String extraInfo) {
-        super(selectionParameters, keepChannelOpen, protocolFlag, extraInfo);
+        super(atrRegex, keepChannelOpen, protocolFlag, extraInfo);
+        this.dfLID = dfLID;
         setMatchingClass(CalypsoPo.class);
         setSelectorClass(PoSelector.class);
-        if (selectionParameters.isSelectionByAid()) {
-            this.revisionTarget = revisionTarget;
-        } else {
-            this.revisionTarget = RevisionTarget.TARGET_REV1;
-        }
+        this.revisionTarget = RevisionTarget.TARGET_REV1;
         if (logger.isTraceEnabled()) {
             logger.trace("Calypso {} selector", revisionTarget);
         }
+    }
+
+    /**
+     * Calypso PO revision 2+ selector
+     *
+     * @param aid a regular expression to compare with the ATR of the targeted Rev1 PO
+     * @param selectNext a flag to indicate if the first or the next occurrence is requested
+     * @param keepChannelOpen indicates whether the logical channel should remain open
+     * @param protocolFlag the protocol flag to filter POs according to their communication protocol
+     * @param extraInfo information string
+     */
+    public PoSelector(byte[] aid, boolean selectNext, boolean keepChannelOpen,
+            SeProtocol protocolFlag, RevisionTarget revisionTarget, String extraInfo) {
+        super(aid, selectNext, keepChannelOpen, protocolFlag, extraInfo);
+        setMatchingClass(CalypsoPo.class);
+        setSelectorClass(PoSelector.class);
+        this.revisionTarget = RevisionTarget.TARGET_REV1;
+        this.dfLID = null;
+        if (logger.isTraceEnabled()) {
+            logger.trace("Calypso {} selector", revisionTarget);
+        }
+    }
+
+    /**
+     * @return the LID of the DF to be selected in ATR-based selection mode
+     */
+    public Short getDfLID() {
+        return dfLID;
     }
 
     /**

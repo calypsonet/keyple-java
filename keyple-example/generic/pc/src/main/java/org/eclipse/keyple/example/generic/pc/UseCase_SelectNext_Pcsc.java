@@ -55,56 +55,43 @@ public class UseCase_SelectNext_Pcsc {
             String poAidPrefix = "A000000404012509";
 
             /* AID based selection */
-            seSelection.prepareSelector(new SeSelector(
-                    new SeSelector.SelectionParameters(ByteArrayUtils.fromHex(poAidPrefix), false),
+            seSelection.prepareSelector(new SeSelector(ByteArrayUtils.fromHex(poAidPrefix), false,
                     false, null, "Initial selection"));
             /* next selection */
-            seSelection.prepareSelector(new SeSelector(
-                    new SeSelector.SelectionParameters(ByteArrayUtils.fromHex(poAidPrefix), true),
+            seSelection.prepareSelector(new SeSelector(ByteArrayUtils.fromHex(poAidPrefix), true,
                     false, null, "Next selection #1"));
             /* next selection */
-            seSelection.prepareSelector(new SeSelector(
-                    new SeSelector.SelectionParameters(ByteArrayUtils.fromHex(poAidPrefix), true),
+            seSelection.prepareSelector(new SeSelector(ByteArrayUtils.fromHex(poAidPrefix), true,
                     false, null, "Next selection #2"));
             /* next selection */
-            seSelection.prepareSelector(new SeSelector(
-                    new SeSelector.SelectionParameters(ByteArrayUtils.fromHex(poAidPrefix), true),
+            seSelection.prepareSelector(new SeSelector(ByteArrayUtils.fromHex(poAidPrefix), true,
                     false, null, "Next selection #3"));
             /* next selection */
-            seSelection.prepareSelector(new SeSelector(
-                    new SeSelector.SelectionParameters(ByteArrayUtils.fromHex(poAidPrefix), true),
+            seSelection.prepareSelector(new SeSelector(ByteArrayUtils.fromHex(poAidPrefix), true,
                     false, null, "Next selection #4"));
             /* next selection */
-            seSelection.prepareSelector(new SeSelector(
-                    new SeSelector.SelectionParameters(ByteArrayUtils.fromHex(poAidPrefix), true),
+            seSelection.prepareSelector(new SeSelector(ByteArrayUtils.fromHex(poAidPrefix), true,
                     false, null, "Next selection #5"));
             /* next selection */
-            seSelection.prepareSelector(new SeSelector(
-                    new SeSelector.SelectionParameters(ByteArrayUtils.fromHex(poAidPrefix), true),
+            seSelection.prepareSelector(new SeSelector(ByteArrayUtils.fromHex(poAidPrefix), true,
                     false, null, "Next selection #6"));
             /* next selection */
-            seSelection.prepareSelector(new SeSelector(
-                    new SeSelector.SelectionParameters(ByteArrayUtils.fromHex(poAidPrefix), true),
+            seSelection.prepareSelector(new SeSelector(ByteArrayUtils.fromHex(poAidPrefix), true,
                     false, null, "Next selection #7"));
             /* next selection */
-            seSelection.prepareSelector(new SeSelector(
-                    new SeSelector.SelectionParameters(ByteArrayUtils.fromHex(poAidPrefix), true),
+            seSelection.prepareSelector(new SeSelector(ByteArrayUtils.fromHex(poAidPrefix), true,
                     false, null, "Next selection #8"));
             /* next selection */
-            seSelection.prepareSelector(new SeSelector(
-                    new SeSelector.SelectionParameters(ByteArrayUtils.fromHex(poAidPrefix), true),
+            seSelection.prepareSelector(new SeSelector(ByteArrayUtils.fromHex(poAidPrefix), true,
                     false, null, "Next selection #9"));
             /* next selection */
-            seSelection.prepareSelector(new SeSelector(
-                    new SeSelector.SelectionParameters(ByteArrayUtils.fromHex(poAidPrefix), true),
+            seSelection.prepareSelector(new SeSelector(ByteArrayUtils.fromHex(poAidPrefix), true,
                     false, null, "Next selection #10"));
             /* next selection */
-            seSelection.prepareSelector(new SeSelector(
-                    new SeSelector.SelectionParameters(ByteArrayUtils.fromHex(poAidPrefix), true),
+            seSelection.prepareSelector(new SeSelector(ByteArrayUtils.fromHex(poAidPrefix), true,
                     false, null, "Next selection #11"));
             /* next selection */
-            seSelection.prepareSelector(new SeSelector(
-                    new SeSelector.SelectionParameters(ByteArrayUtils.fromHex(poAidPrefix), true),
+            seSelection.prepareSelector(new SeSelector(ByteArrayUtils.fromHex(poAidPrefix), true,
                     false, null, "Next selection #12"));
 
             return seSelection.getSelectionOperation();

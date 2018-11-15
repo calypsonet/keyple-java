@@ -37,7 +37,6 @@ import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 import org.eclipse.keyple.seproxy.protocol.SeProtocolSetting;
 import org.eclipse.keyple.transaction.MatchingSe;
 import org.eclipse.keyple.transaction.SeSelection;
-import org.eclipse.keyple.transaction.SeSelector;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -85,8 +84,7 @@ public class UseCase_MultipleSession_Pcsc {
 
 
             /* AID based selection */
-            seSelection.prepareSelector(new PoSelector(
-                    new SeSelector.SelectionParameters(ByteArrayUtils.fromHex(poAid), false), true,
+            seSelection.prepareSelector(new PoSelector(ByteArrayUtils.fromHex(poAid), false, true,
                     null, PoSelector.RevisionTarget.TARGET_REV3, "AID: " + poAid));
 
             return seSelection.getSelectionOperation();

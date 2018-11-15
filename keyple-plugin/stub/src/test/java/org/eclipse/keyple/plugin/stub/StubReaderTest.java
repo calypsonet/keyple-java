@@ -77,8 +77,7 @@ public class StubReaderTest {
 
     private void selectSe() throws KeypleReaderException {
         SeSelection seSelection = new SeSelection(reader);
-        SeSelector seSelector =
-                new SeSelector(new SeSelector.SelectionParameters("3B.*", null), true, null);
+        SeSelector seSelector = new SeSelector("3B.*", true, null, "ATR selection");
 
         /* Prepare selector, ignore MatchingSe here */
         seSelection.prepareSelector(seSelector);
@@ -117,8 +116,7 @@ public class StubReaderTest {
             @Override
             public void update(ReaderEvent event) {
                 SeSelection seSelection = new SeSelection(reader);
-                SeSelector seSelector = new SeSelector(
-                        new SeSelector.SelectionParameters("3B.*", null), true, null);
+                SeSelector seSelector = new SeSelector("3B.*", true, null, "Test ATR");
 
                 /* Prepare selector, ignore MatchingSe here */
                 seSelection.prepareSelector(seSelector);
