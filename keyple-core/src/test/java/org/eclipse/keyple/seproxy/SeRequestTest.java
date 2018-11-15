@@ -70,7 +70,7 @@ public class SeRequestTest {
     @Test
     public void getApduRequests() {
         // test
-        seRequest = new SeRequest(getAidSelector(), apdus, false);
+        seRequest = new SeRequest(getAidSelector(), apdus, false, null, null);
         assertArrayEquals(apdus.toArray(), seRequest.getApduRequests().toArray());
     }
 
@@ -81,7 +81,8 @@ public class SeRequestTest {
 
     @Test
     public void getProtocolFlag() {
-        seRequest = new SeRequest(getAidSelector(), new ArrayList<ApduRequest>(), true, seProtocol);
+        seRequest = new SeRequest(getAidSelector(), new ArrayList<ApduRequest>(), true, seProtocol,
+                null);
         assertEquals(seProtocol, seRequest.getProtocolFlag());
     }
 
@@ -104,7 +105,7 @@ public class SeRequestTest {
      */
     @Test
     public void constructor1() {
-        seRequest = new SeRequest(getAidSelector(), apdus, keepChannelOpen);
+        seRequest = new SeRequest(getAidSelector(), apdus, keepChannelOpen, null, null);
         assertEquals(getAidSelector().toString(), seRequest.getSelector().toString());
         assertEquals(keepChannelOpen, seRequest.isKeepChannelOpen());
         assertArrayEquals(apdus.toArray(), seRequest.getApduRequests().toArray());
@@ -115,7 +116,7 @@ public class SeRequestTest {
 
     @Test
     public void constructor2() {
-        seRequest = new SeRequest(getAidSelector(), apdus, keepChannelOpen, seProtocol);
+        seRequest = new SeRequest(getAidSelector(), apdus, keepChannelOpen, seProtocol, null);
         assertEquals(getAidSelector().toString(), seRequest.getSelector().toString());
         assertEquals(keepChannelOpen, seRequest.isKeepChannelOpen());
         assertArrayEquals(apdus.toArray(), seRequest.getApduRequests().toArray());
@@ -126,7 +127,8 @@ public class SeRequestTest {
 
     @Test
     public void constructor2b() {
-        seRequest = new SeRequest(getAidSelector(), apdus, keepChannelOpen, selectionStatusCode);
+        seRequest =
+                new SeRequest(getAidSelector(), apdus, keepChannelOpen, null, selectionStatusCode);
         assertEquals(getAidSelector().toString(), seRequest.getSelector().toString());
         assertEquals(keepChannelOpen, seRequest.isKeepChannelOpen());
         assertArrayEquals(apdus.toArray(), seRequest.getApduRequests().toArray());

@@ -225,44 +225,13 @@ public final class SeRequest implements Serializable {
     }
 
     /**
-     * Alternate constructor with no list of successful selection status codes set and a protocol
-     * flag
+     * Constructor to be used when the SE is already selected
      * 
-     * @param selector the AID or ATR selector
-     * @param apduRequests a list of ApudRequest
-     * @param keepChannelOpen a flag to tell if the channel has to be closed at the end
-     * @param protocolFlag the expected protocol flag
-     */
-    public SeRequest(Selector selector, List<ApduRequest> apduRequests, boolean keepChannelOpen,
-            SeProtocol protocolFlag) {
-        this(selector, apduRequests, keepChannelOpen, protocolFlag, null);
-    }
-
-    /**
-     * Alternate constructor with a list of successful selection status codes set and no protocol
-     * flag
-     *
-     * @param selector the AID or ATR selector
-     * @param apduRequests a list of ApudRequest
-     * @param keepChannelOpen a flag to tell if the channel has to be closed at the end
-     * @param successfulSelectionStatusCodes a list of successful status codes for the select
-     *        application command
-     *
-     */
-    public SeRequest(Selector selector, List<ApduRequest> apduRequests, boolean keepChannelOpen,
-            Set<Integer> successfulSelectionStatusCodes) {
-        this(selector, apduRequests, keepChannelOpen, null, successfulSelectionStatusCodes);
-    }
-
-    /**
-     * Alternate constructor with no protocol flag set
-     * 
-     * @param selector the AID or ATR selector
      * @param apduRequests a list of ApudRequest
      * @param keepChannelOpen a flag to tell if the channel has to be closed at the end
      */
-    public SeRequest(Selector selector, List<ApduRequest> apduRequests, boolean keepChannelOpen) {
-        this(selector, apduRequests, keepChannelOpen, null, null);
+    public SeRequest(List<ApduRequest> apduRequests, boolean keepChannelOpen) {
+        this(null, apduRequests, keepChannelOpen, null, null);
     }
 
 

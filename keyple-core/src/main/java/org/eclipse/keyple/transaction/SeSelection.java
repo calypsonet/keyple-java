@@ -123,7 +123,8 @@ public final class SeSelection {
      */
     public boolean processDefaultSelection(SeResponseSet seResponseSet) {
         if (logger.isTraceEnabled()) {
-            logger.trace("Process default SELECTIONRESPONSE ({} response(s))", seResponseSet.getResponses().size());
+            logger.trace("Process default SELECTIONRESPONSE ({} response(s))",
+                    seResponseSet.getResponses().size());
         }
 
         return processSelection(seResponseSet);

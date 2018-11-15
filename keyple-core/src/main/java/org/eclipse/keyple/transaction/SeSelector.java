@@ -184,7 +184,7 @@ public class SeSelector {
         if (!selectionParameters.isSelectionByAid()) {
             seSelectionRequest =
                     new SeRequest(new SeRequest.AtrSelector(selectionParameters.getAtrRegex()),
-                            seSelectionApduRequestList, keepChannelOpen, protocolFlag);
+                            seSelectionApduRequestList, keepChannelOpen, protocolFlag, null);
         } else {
             seSelectionRequest = new SeRequest(
                     new SeRequest.AidSelector(selectionParameters.getAid(),

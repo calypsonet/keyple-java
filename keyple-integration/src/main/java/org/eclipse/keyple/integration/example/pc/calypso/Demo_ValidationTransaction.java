@@ -340,14 +340,25 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
 
             // check the availability of the SAM, open its physical and logical channels and keep it
             // open
-            SeRequest samCheckRequest =
-                    new SeRequest(new SeRequest.AtrSelector(SAM_ATR_REGEX), null, true);
-            SeResponse samCheckResponse =
-                    samReader.transmitSet(new SeRequestSet(samCheckRequest)).getSingleResponse();
+            // check the availability of the SAM, open its physical and logical channels and keep it
+            // open
+            SeSelection samSelection = new SeSelection(samReader);
 
-            if (samCheckResponse == null) {
-                System.out.println("Unable to open a logical channel for SAM!");
-                throw new IllegalStateException("SAM channel opening failure");
+            SeSelector samSelector = new SeSelector(
+                    new SeSelector.SelectionParameters(SAM_ATR_REGEX, null), true, null);
+
+            /* Prepare selector, ignore MatchingSe here */
+            samSelection.prepareSelector(samSelector);
+
+            try {
+                if (!samSelection.processExplicitSelection()) {
+                    System.out.println("Unable to open a logical channel for SAM!");
+                    throw new IllegalStateException("SAM channel opening failure");
+                } else {
+                }
+            } catch (KeypleReaderException e) {
+                throw new IllegalStateException("Reader exception: " + e.getMessage());
+
             }
 
             SeSelection seSelection = new SeSelection(poReader);
@@ -376,7 +387,7 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
                             ByteArrayUtils.fromHex(PoFileStructureInfo.cdLightAid), false),
                     true, null, PoSelector.RevisionTarget.TARGET_REV2_REV3, "CDLight"));
 
-            if (!seSelection.processSelection()) {
+            if (!seSelection.processExplicitSelection()) {
                 throw new IllegalArgumentException("No recognizable PO detected.");
             }
 
