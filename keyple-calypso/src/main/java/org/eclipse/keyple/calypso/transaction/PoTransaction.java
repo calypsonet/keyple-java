@@ -1843,6 +1843,7 @@ public final class PoTransaction {
      * Returns the associated response parser.
      *
      * @param sfi the sfi top select
+     * @param readDataStructureEnum read mode enum to indicate a SINGLE, MULTIPLE or COUNTER read
      * @param firstRecordNumber the record number to read (or first record to read in case of
      *        several records)
      * @param expectedLength the expected length of the record(s)

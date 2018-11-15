@@ -13,10 +13,15 @@ package org.eclipse.keyple.calypso.transaction;
 
 
 
+import java.util.ArrayList;
+import java.util.List;
 import org.eclipse.keyple.calypso.command.po.PoCustomModificationCommandBuilder;
 import org.eclipse.keyple.calypso.command.po.PoCustomReadCommandBuilder;
 import org.eclipse.keyple.calypso.command.po.PoRevision;
 import org.eclipse.keyple.calypso.command.po.builder.ReadRecordsCmdBuild;
+import org.eclipse.keyple.calypso.command.po.parser.ReadDataStructure;
+import org.eclipse.keyple.calypso.command.po.parser.ReadRecordsRespPars;
+import org.eclipse.keyple.command.AbstractApduResponseParser;
 import org.eclipse.keyple.seproxy.ApduRequest;
 import org.eclipse.keyple.seproxy.SeProtocol;
 import org.eclipse.keyple.transaction.SeSelector;
@@ -30,7 +35,38 @@ public final class PoSelector extends SeSelector {
     private static final Logger logger = LoggerFactory.getLogger(PoSelector.class);
 
     private final RevisionTarget revisionTarget;
-    private final Short dfLID;
+    /** The list to contain the parsers associated to the prepared commands */
+    private List<CommandParser> poResponseParserList = new ArrayList<CommandParser>();
+
+    /**
+     * Inner class to hold a apduResponseParser and a flag indicating whether this parser is
+     * associated with one or two command.
+     * <p>
+     * The goal of this class and its doubleParser flag is to handle the case where two commands
+     * were sent to a Calypso PO (case TARGET_REV2_REV3 of prepareReadRecordsCmd)
+     * <p>
+     * This flag will be tested when parsing the response to the selection.
+     * 
+     * @param <AbstractApduResponseParser>
+     * @param <Boolean>
+     */
+    class CommandParser<AbstractApduResponseParser, Boolean> {
+        private final AbstractApduResponseParser apduResponseParser;
+        private final Boolean doubleParser;
+
+        public CommandParser(AbstractApduResponseParser apduResponseParser, Boolean doubleParser) {
+            this.apduResponseParser = apduResponseParser;
+            this.doubleParser = doubleParser;
+        }
+
+        public AbstractApduResponseParser getApduResponseParser() {
+            return apduResponseParser;
+        }
+
+        public Boolean getDoubleParser() {
+            return doubleParser;
+        }
+    }
 
     /**
      * Selection targets definition
@@ -43,7 +79,6 @@ public final class PoSelector extends SeSelector {
      * Calypso PO revision 1 selector
      * 
      * @param atrRegex a regular expression to compare with the ATR of the targeted Rev1 PO
-     * @param dfLID the LID of the DF to select
      * @param keepChannelOpen indicates whether the logical channel should remain open
      * @param protocolFlag the protocol flag to filter POs according to their communication protocol
      * @param extraInfo information string
@@ -51,7 +86,6 @@ public final class PoSelector extends SeSelector {
     public PoSelector(String atrRegex, Short dfLID, boolean keepChannelOpen,
             SeProtocol protocolFlag, RevisionTarget revisionTarget, String extraInfo) {
         super(atrRegex, keepChannelOpen, protocolFlag, extraInfo);
-        this.dfLID = dfLID;
         setMatchingClass(CalypsoPo.class);
         setSelectorClass(PoSelector.class);
         this.revisionTarget = RevisionTarget.TARGET_REV1;
@@ -75,17 +109,9 @@ public final class PoSelector extends SeSelector {
         setMatchingClass(CalypsoPo.class);
         setSelectorClass(PoSelector.class);
         this.revisionTarget = RevisionTarget.TARGET_REV1;
-        this.dfLID = null;
         if (logger.isTraceEnabled()) {
             logger.trace("Calypso {} selector", revisionTarget);
         }
-    }
-
-    /**
-     * @return the LID of the DF to be selected in ATR-based selection mode
-     */
-    public Short getDfLID() {
-        return dfLID;
     }
 
     /**
@@ -96,14 +122,25 @@ public final class PoSelector extends SeSelector {
      * format, the second one in rev2 format (mainly class byte)
      * 
      * @param sfi the sfi top select
+     * @param readDataStructureEnum read mode enum to indicate a SINGLE, MULTIPLE or COUNTER read
      * @param firstRecordNumber the record number to read (or first record to read in case of
      *        several records)
-     * @param readJustOneRecord the read just one record
      * @param expectedLength the expected length of the record(s)
      * @param extraInfo extra information included in the logs (can be null or empty)
      */
-    public void prepareReadRecordsCmd(byte sfi, byte firstRecordNumber, boolean readJustOneRecord,
-            byte expectedLength, String extraInfo) {
+    // public void prepareReadRecordsCmd(byte sfi, byte firstRecordNumber, boolean
+    // readJustOneRecord,
+    // byte expectedLength, String extraInfo)
+    public ReadRecordsRespPars prepareReadRecordsCmd(byte sfi,
+            ReadDataStructure readDataStructureEnum, byte firstRecordNumber, byte expectedLength,
+            String extraInfo) {
+        /*
+         * the readJustOneRecord flag is set to false only in case of multiple read records, in all
+         * other cases it is set to true
+         */
+        boolean readJustOneRecord =
+                !(readDataStructureEnum == readDataStructureEnum.MULTIPLE_RECORD_DATA);
+
         switch (this.revisionTarget) {
             case TARGET_REV1:
                 seSelectionApduRequestList
@@ -133,6 +170,15 @@ public final class PoSelector extends SeSelector {
             logger.trace("ReadRecords: SFI = {}, RECNUMBER = {}, JUSTONE = {}, EXPECTEDLENGTH = {}",
                     sfi, firstRecordNumber, readJustOneRecord, expectedLength);
         }
+
+        /* create a parser to be returned to the caller */
+        ReadRecordsRespPars poResponseParser =
+                new ReadRecordsRespPars(firstRecordNumber, readDataStructureEnum);
+
+        poResponseParserList.add(new CommandParser(poResponseParser,
+                this.revisionTarget == RevisionTarget.TARGET_REV2_REV3));
+
+        return poResponseParser;
     }
 
     /**
