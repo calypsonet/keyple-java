@@ -112,7 +112,7 @@ public class UseCase_SelectNext_Pcsc {
 
         @Override
         public void processSeMatch(SeResponseSet seResponses) {
-            if (seSelection.processSelection(seResponses)) {
+            if (seSelection.processDefaultSelection(seResponses)) {
                 logger.info("Selection: {}", seSelection.getSelectedSe());
             } else {
                 logger.info("The selection process did not return any selected SE.");

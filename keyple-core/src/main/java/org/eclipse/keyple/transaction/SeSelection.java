@@ -73,20 +73,7 @@ public final class SeSelection {
         return matchingSe;
     }
 
-    /**
-     * Parses the response to a selection operation sent to a SE and sets the selectedSe if any
-     * <p>
-     * The returned boolean indicates if at least one response was successful.
-     * <p>
-     * If one of the response also corresponds to a request for which the channel has been asked to
-     * be kept open, then it is retained as a selection answer.
-     * <p>
-     * Responses that have not matched the current SE are set to null.
-     * 
-     * @param seResponseSet the response from the reader to the selection SeRequestSet
-     * @return boolean true if a SE was selected
-     */
-    public boolean processSelection(SeResponseSet seResponseSet) {
+    private boolean processSelection(SeResponseSet seResponseSet) {
         boolean selectionSuccessful = false;
         /* Check SeResponses */
         Iterator<MatchingSe> matchingSeIterator = matchingSeList.iterator();
@@ -122,6 +109,27 @@ public final class SeSelection {
     }
 
     /**
+     * Parses the response to a selection operation sent to a SE and sets the selectedSe if any
+     * <p>
+     * The returned boolean indicates if at least one response was successful.
+     * <p>
+     * If one of the response also corresponds to a request for which the channel has been asked to
+     * be kept open, then it is retained as a selection answer.
+     * <p>
+     * Responses that have not matched the current SE are set to null.
+     *
+     * @param seResponseSet the response from the reader to the selection SeRequestSet
+     * @return boolean true if a SE was selected
+     */
+    public boolean processDefaultSelection(SeResponseSet seResponseSet) {
+        if (logger.isTraceEnabled()) {
+            logger.trace("Process default SELECTIONRESPONSE ({} response(s))", seResponseSet.getResponses().size());
+        }
+
+        return processSelection(seResponseSet);
+    }
+
+    /**
      * Execute the selection process.
      * <p>
      * The selection requests are transmitted to the SE.
@@ -142,7 +150,7 @@ public final class SeSelection {
      * @return boolean true if a SE was selected
      * @throws KeypleReaderException if the requests transmission failed
      */
-    public boolean processSelection() throws KeypleReaderException {
+    public boolean processExplicitSelection() throws KeypleReaderException {
         if (logger.isTraceEnabled()) {
             logger.trace("Transmit SELECTIONREQUEST ({} request(s))", selectionRequestSet.size());
         }

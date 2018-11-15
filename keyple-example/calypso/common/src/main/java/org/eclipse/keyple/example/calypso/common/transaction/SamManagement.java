@@ -40,7 +40,7 @@ public class SamManagement {
         samSelection.prepareSelector(samSelector);
 
         try {
-            if (!samSelection.processSelection()) {
+            if (!samSelection.processExplicitSelection()) {
                 throw new IllegalStateException("Unable to open a logical channel for SAM!");
             } else {
             }

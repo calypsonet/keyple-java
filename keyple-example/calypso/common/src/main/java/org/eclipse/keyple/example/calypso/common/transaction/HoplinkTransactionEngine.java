@@ -227,7 +227,7 @@ public class HoplinkTransactionEngine extends AbstractReaderObserverEngine {
      */
     @Override
     public void processSeMatch(SeResponseSet seResponses) {
-        if (seSelection.processSelection(seResponses)) {
+        if (seSelection.processDefaultSelection(seResponses)) {
             MatchingSe selectedSe = seSelection.getSelectedSe();
             try {
                 /* first time: check SAM */

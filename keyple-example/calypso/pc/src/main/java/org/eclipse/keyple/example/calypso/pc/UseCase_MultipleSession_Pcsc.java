@@ -95,7 +95,7 @@ public class UseCase_MultipleSession_Pcsc {
         @Override
         public void processSeMatch(SeResponseSet seResponses) {
             Profiler profiler;
-            if (seSelection.processSelection(seResponses)) {
+            if (seSelection.processDefaultSelection(seResponses)) {
                 MatchingSe selectedSe = seSelection.getSelectedSe();
                 try {
                     /* first time: check SAM */
