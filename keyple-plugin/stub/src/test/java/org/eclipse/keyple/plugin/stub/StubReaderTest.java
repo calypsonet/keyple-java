@@ -80,7 +80,7 @@ public class StubReaderTest {
         SeSelector seSelector = new SeSelector("3B.*", true, null, "ATR selection");
 
         /* Prepare selector, ignore MatchingSe here */
-        seSelection.prepareSelector(seSelector);
+        seSelection.prepareSelection(seSelector);
 
         seSelection.processExplicitSelection();
     }
@@ -119,7 +119,7 @@ public class StubReaderTest {
                 SeSelector seSelector = new SeSelector("3B.*", true, null, "Test ATR");
 
                 /* Prepare selector, ignore MatchingSe here */
-                seSelection.prepareSelector(seSelector);
+                seSelection.prepareSelection(seSelector);
 
                 try {
                     SeResponse atrResponse = reader.transmitSet(seSelection.getSelectionOperation())

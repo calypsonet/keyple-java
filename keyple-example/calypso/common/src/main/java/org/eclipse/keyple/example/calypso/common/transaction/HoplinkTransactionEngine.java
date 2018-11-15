@@ -183,7 +183,7 @@ public class HoplinkTransactionEngine extends AbstractReaderObserverEngine {
         /*
          * Add selection case 1: Fake AID1, protocol ISO, target rev 3
          */
-        seSelection.prepareSelector(new PoSelector(ByteArrayUtils.fromHex("AABBCCDDEE"), false,
+        seSelection.prepareSelection(new PoSelector(ByteArrayUtils.fromHex("AABBCCDDEE"), false,
                 true, ContactlessProtocols.PROTOCOL_ISO14443_4,
                 PoSelector.RevisionTarget.TARGET_REV3, "Selector with fake AID1"));
         /*
@@ -199,13 +199,13 @@ public class HoplinkTransactionEngine extends AbstractReaderObserverEngine {
                 ReadDataStructure.SINGLE_RECORD_DATA, HoplinkInfo.RECORD_NUMBER_1, (byte) 0x00,
                 HoplinkInfo.EXTRAINFO_ReadRecord_T2EnvironmentRec1);
 
-        seSelection.prepareSelector(poSelectorHoplink);
+        seSelection.prepareSelection(poSelectorHoplink);
 
         /*
          * Add selection case 3: Fake AID2, unspecified protocol, target rev 2 or 3
          */
 
-        seSelection.prepareSelector(new PoSelector(ByteArrayUtils.fromHex("EEDDCCBBAA"), false,
+        seSelection.prepareSelection(new PoSelector(ByteArrayUtils.fromHex("EEDDCCBBAA"), false,
                 true, ContactlessProtocols.PROTOCOL_ISO14443_4,
                 PoSelector.RevisionTarget.TARGET_REV2_REV3, "Selector with fake AID2"));
 
@@ -223,7 +223,7 @@ public class HoplinkTransactionEngine extends AbstractReaderObserverEngine {
                 /* first time: check SAM */
                 if (!this.samChannelOpen) {
                     /* the following method will throw an exception if the SAM is not available. */
-                    SamManagement.checkSamAndOpenChannel(samReader);
+                    CalypsoUtilities.checkSamAndOpenChannel(samReader);
                     this.samChannelOpen = true;
                 }
 

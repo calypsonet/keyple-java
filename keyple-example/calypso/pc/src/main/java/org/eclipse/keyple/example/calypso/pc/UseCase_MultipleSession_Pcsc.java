@@ -22,9 +22,9 @@ import org.eclipse.keyple.calypso.command.po.parser.AppendRecordRespPars;
 import org.eclipse.keyple.calypso.transaction.CalypsoPo;
 import org.eclipse.keyple.calypso.transaction.PoSelector;
 import org.eclipse.keyple.calypso.transaction.PoTransaction;
-import org.eclipse.keyple.example.calypso.common.transaction.SamManagement;
+import org.eclipse.keyple.example.calypso.common.transaction.CalypsoUtilities;
 import org.eclipse.keyple.example.generic.common.AbstractReaderObserverEngine;
-import org.eclipse.keyple.example.generic.common.ReaderUtilities;
+import org.eclipse.keyple.example.generic.pc.ReaderUtilities;
 import org.eclipse.keyple.plugin.pcsc.PcscPlugin;
 import org.eclipse.keyple.plugin.pcsc.PcscProtocolSetting;
 import org.eclipse.keyple.plugin.pcsc.PcscReader;
@@ -84,7 +84,7 @@ public class UseCase_MultipleSession_Pcsc {
 
 
             /* AID based selection */
-            seSelection.prepareSelector(new PoSelector(ByteArrayUtils.fromHex(poAid), false, true,
+            seSelection.prepareSelection(new PoSelector(ByteArrayUtils.fromHex(poAid), false, true,
                     null, PoSelector.RevisionTarget.TARGET_REV3, "AID: " + poAid));
 
             return seSelection.getSelectionOperation();
@@ -101,7 +101,7 @@ public class UseCase_MultipleSession_Pcsc {
                         /*
                          * the following method will throw an exception if the SAM is not available.
                          */
-                        SamManagement.checkSamAndOpenChannel(samReader);
+                        CalypsoUtilities.checkSamAndOpenChannel(samReader);
                         this.samChannelOpen = true;
                     }
 

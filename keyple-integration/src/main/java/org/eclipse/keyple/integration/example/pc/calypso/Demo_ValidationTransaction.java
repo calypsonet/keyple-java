@@ -347,7 +347,7 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
             SeSelector samSelector = new SeSelector(SAM_ATR_REGEX, true, null, "SAM Selection");
 
             /* Prepare selector, ignore MatchingSe here */
-            samSelection.prepareSelector(samSelector);
+            samSelection.prepareSelection(samSelector);
 
             try {
                 if (!samSelection.processExplicitSelection()) {
@@ -363,17 +363,17 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
             SeSelection seSelection = new SeSelection(poReader);
 
             // Add Audit C0 AID to the list
-            CalypsoPo auditC0Se = (CalypsoPo) seSelection.prepareSelector(
+            CalypsoPo auditC0Se = (CalypsoPo) seSelection.prepareSelection(
                     new PoSelector(ByteArrayUtils.fromHex(PoFileStructureInfo.poAuditC0Aid), false,
                             true, null, PoSelector.RevisionTarget.TARGET_REV3, "Audit C0"));
 
             // Add CLAP AID to the list
-            CalypsoPo clapSe = (CalypsoPo) seSelection.prepareSelector(
+            CalypsoPo clapSe = (CalypsoPo) seSelection.prepareSelection(
                     new PoSelector(ByteArrayUtils.fromHex(PoFileStructureInfo.clapAid), false, true,
                             null, PoSelector.RevisionTarget.TARGET_REV3, "CLAP"));
 
             // Add cdLight AID to the list
-            CalypsoPo cdLightSe = (CalypsoPo) seSelection.prepareSelector(
+            CalypsoPo cdLightSe = (CalypsoPo) seSelection.prepareSelection(
                     new PoSelector(ByteArrayUtils.fromHex(PoFileStructureInfo.cdLightAid), false,
                             true, null, PoSelector.RevisionTarget.TARGET_REV2_REV3, "CDLight"));
 

@@ -11,16 +11,58 @@
  ********************************************************************************/
 package org.eclipse.keyple.example.calypso.common.transaction;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 import org.eclipse.keyple.example.calypso.common.postructure.CalypsoClassicInfo;
+import org.eclipse.keyple.example.generic.pc.ReaderUtilities;
 import org.eclipse.keyple.seproxy.ProxyReader;
+import org.eclipse.keyple.seproxy.SeProxyService;
+import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.transaction.SeSelection;
 import org.eclipse.keyple.transaction.SeSelector;
 
-public class SamManagement {
+public class CalypsoUtilities {
+    private static Properties properties;
+
+    static {
+        properties = new Properties();
+
+        String propertiesFileName = "config.properties";
+
+        InputStream inputStream =
+                CalypsoUtilities.class.getClassLoader().getResourceAsStream(propertiesFileName);
+
+        try {
+            if (inputStream != null) {
+                properties.load(inputStream);
+            } else {
+                throw new FileNotFoundException(
+                        "property file '" + propertiesFileName + "' not found!");
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static ProxyReader getDefaultPoReader(SeProxyService seProxyService)
+            throws KeypleBaseException {
+        ProxyReader poReader = ReaderUtilities.getReaderByName(seProxyService,
+                properties.getProperty("po.reader.regex"));
+
+        ReaderUtilities.setContactlessSettings(poReader);
+
+        return poReader;
+    }
+
+
     /**
      * Check SAM presence and consistency
-     *
+     * <p>
      * Throw an exception if the expected SAM is not available
      *
      * @param samReader the SAM reader
@@ -36,7 +78,7 @@ public class SamManagement {
                 new SeSelector(CalypsoClassicInfo.SAM_C1_ATR_REGEX, true, null, "Selection SAM C1");
 
         /* Prepare selector, ignore MatchingSe here */
-        samSelection.prepareSelector(samSelector);
+        samSelection.prepareSelection(samSelector);
 
         try {
             if (!samSelection.processExplicitSelection()) {

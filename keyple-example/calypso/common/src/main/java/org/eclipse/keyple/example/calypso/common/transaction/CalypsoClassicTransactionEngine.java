@@ -292,7 +292,7 @@ public class CalypsoClassicTransactionEngine extends AbstractReaderObserverEngin
         /*
          * Add selection case 1: Fake AID1, protocol ISO, target rev 3
          */
-        seSelection.prepareSelector(new PoSelector(ByteArrayUtils.fromHex(poFakeAid1), false, true,
+        seSelection.prepareSelection(new PoSelector(ByteArrayUtils.fromHex(poFakeAid1), false, true,
                 ContactlessProtocols.PROTOCOL_ISO14443_4, PoSelector.RevisionTarget.TARGET_REV3,
                 "Selector with fake AID1"));
 
@@ -310,12 +310,12 @@ public class CalypsoClassicTransactionEngine extends AbstractReaderObserverEngin
                 ReadDataStructure.SINGLE_RECORD_DATA, RECORD_NUMBER_1, (byte) 0x00,
                 "EventLog (selection step)");
 
-        seSelection.prepareSelector(poSelectorCalypsoAid);
+        seSelection.prepareSelection(poSelectorCalypsoAid);
 
         /*
          * Add selection case 3: Fake AID2, unspecified protocol, target rev 2 or 3
          */
-        seSelection.prepareSelector(new PoSelector(ByteArrayUtils.fromHex(poFakeAid2), false, true,
+        seSelection.prepareSelection(new PoSelector(ByteArrayUtils.fromHex(poFakeAid2), false, true,
                 ContactlessProtocols.PROTOCOL_ISO14443_4,
                 PoSelector.RevisionTarget.TARGET_REV2_REV3, "Selector with fake AID2"));
 
@@ -333,7 +333,7 @@ public class CalypsoClassicTransactionEngine extends AbstractReaderObserverEngin
                 /* first time: check SAM */
                 if (!this.samChannelOpen) {
                     /* the following method will throw an exception if the SAM is not available. */
-                    SamManagement.checkSamAndOpenChannel(samReader);
+                    CalypsoUtilities.checkSamAndOpenChannel(samReader);
                     this.samChannelOpen = true;
                 }
 

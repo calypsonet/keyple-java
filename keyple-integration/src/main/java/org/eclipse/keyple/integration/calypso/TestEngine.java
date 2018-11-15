@@ -56,7 +56,7 @@ public class TestEngine {
         SeSelector samSelector = new SeSelector(SAM_ATR_REGEX, true, null, "SAM Selection");
 
         /* Prepare selector, ignore MatchingSe here */
-        samSelection.prepareSelector(samSelector);
+        samSelection.prepareSelection(samSelector);
 
         try {
             if (!samSelection.processExplicitSelection()) {
@@ -72,18 +72,18 @@ public class TestEngine {
         SeSelection seSelection = new SeSelection(poReader);
 
         // Add Audit C0 AID to the list
-        seSelection.prepareSelector(new PoSelector(
+        seSelection.prepareSelection(new PoSelector(
 
                 ByteArrayUtils.fromHex(PoFileStructureInfo.poAuditC0Aid), false, true, null,
                 PoSelector.RevisionTarget.TARGET_REV3, "Audit C0"));
 
         // Add CLAP AID to the list
-        seSelection
-                .prepareSelector(new PoSelector(ByteArrayUtils.fromHex(PoFileStructureInfo.clapAid),
-                        false, true, null, PoSelector.RevisionTarget.TARGET_REV3, "CLAP"));
+        seSelection.prepareSelection(
+                new PoSelector(ByteArrayUtils.fromHex(PoFileStructureInfo.clapAid), false, true,
+                        null, PoSelector.RevisionTarget.TARGET_REV3, "CLAP"));
 
         // Add cdLight AID to the list
-        seSelection.prepareSelector(
+        seSelection.prepareSelection(
                 new PoSelector(ByteArrayUtils.fromHex(PoFileStructureInfo.cdLightAid), false, true,
                         null, PoSelector.RevisionTarget.TARGET_REV2_REV3, "CDLight"));
 

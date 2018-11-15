@@ -14,17 +14,21 @@ package org.eclipse.keyple.example.calypso.pc;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.*;
+import java.util.EnumMap;
+import java.util.Properties;
 import org.eclipse.keyple.calypso.transaction.CalypsoPo;
 import org.eclipse.keyple.calypso.transaction.PoSelector;
 import org.eclipse.keyple.calypso.transaction.PoTransaction;
-import org.eclipse.keyple.example.calypso.common.transaction.SamManagement;
+import org.eclipse.keyple.example.calypso.common.transaction.CalypsoUtilities;
 import org.eclipse.keyple.example.generic.common.AbstractReaderObserverEngine;
-import org.eclipse.keyple.example.generic.common.ReaderUtilities;
+import org.eclipse.keyple.example.generic.pc.ReaderUtilities;
 import org.eclipse.keyple.plugin.pcsc.PcscPlugin;
 import org.eclipse.keyple.plugin.pcsc.PcscProtocolSetting;
 import org.eclipse.keyple.plugin.pcsc.PcscReader;
-import org.eclipse.keyple.seproxy.*;
+import org.eclipse.keyple.seproxy.ProxyReader;
+import org.eclipse.keyple.seproxy.SeProxyService;
+import org.eclipse.keyple.seproxy.SeRequestSet;
+import org.eclipse.keyple.seproxy.SeResponseSet;
 import org.eclipse.keyple.seproxy.event.ObservableReader;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 import org.eclipse.keyple.seproxy.protocol.SeProtocolSetting;
@@ -80,7 +84,7 @@ public class UseCase_CalypsoAuthenticationLevel3_Pcsc {
 
 
             /* AID based selection */
-            seSelection.prepareSelector(new PoSelector(ByteArrayUtils.fromHex(poAid), false, true,
+            seSelection.prepareSelection(new PoSelector(ByteArrayUtils.fromHex(poAid), false, true,
                     null, PoSelector.RevisionTarget.TARGET_REV3, "Calypso selection"));
             return seSelection.getSelectionOperation();
         }
@@ -96,7 +100,7 @@ public class UseCase_CalypsoAuthenticationLevel3_Pcsc {
                         /*
                          * the following method will throw an exception if the SAM is not available.
                          */
-                        SamManagement.checkSamAndOpenChannel(samReader);
+                        CalypsoUtilities.checkSamAndOpenChannel(samReader);
                         this.samChannelOpen = true;
                     }
 

@@ -80,7 +80,7 @@ public class SeProtocolDetectionEngine extends AbstractReaderObserverEngine {
                             ReadDataStructure.SINGLE_RECORD_DATA, (byte) 0x01, (byte) 0x00,
                             "Hoplink T2 Environment");
 
-                    seSelection.prepareSelector(poSelector);
+                    seSelection.prepareSelection(poSelector);
 
                     break;
                 case PROTOCOL_ISO14443_3A:
@@ -93,7 +93,7 @@ public class SeProtocolDetectionEngine extends AbstractReaderObserverEngine {
                     break;
                 default:
                     /* Add a generic selector */
-                    seSelection.prepareSelector(new SeSelector(".*", true,
+                    seSelection.prepareSelection(new SeSelector(".*", true,
                             ContactlessProtocols.PROTOCOL_ISO14443_4, "Default selector"));
                     break;
             }

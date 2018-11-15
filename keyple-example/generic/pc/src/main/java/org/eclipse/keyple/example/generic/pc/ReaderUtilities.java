@@ -9,14 +9,18 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  ********************************************************************************/
-package org.eclipse.keyple.example.generic.common;
+package org.eclipse.keyple.example.generic.pc;
 
 import java.util.regex.Pattern;
+import org.eclipse.keyple.plugin.pcsc.PcscProtocolSetting;
+import org.eclipse.keyple.plugin.pcsc.PcscReader;
 import org.eclipse.keyple.seproxy.ProxyReader;
 import org.eclipse.keyple.seproxy.ReaderPlugin;
 import org.eclipse.keyple.seproxy.SeProxyService;
+import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderNotFoundException;
+import org.eclipse.keyple.seproxy.protocol.SeProtocolSetting;
 
 public class ReaderUtilities {
     /**
@@ -38,5 +42,37 @@ public class ReaderUtilities {
             }
         }
         throw new KeypleReaderNotFoundException("Reader name pattern: " + pattern);
+    }
+
+    /**
+     * Sets the reader parameters for contactless secure elements
+     * 
+     * @param reader the reader to configure
+     * @throws KeypleBaseException
+     */
+    public static void setContactlessSettings(ProxyReader reader) throws KeypleBaseException {
+        /* Enable logging */
+        reader.setParameter(PcscReader.SETTING_KEY_LOGGING, "true");
+
+        /* Contactless SE works with T1 protocol */
+        reader.setParameter(PcscReader.SETTING_KEY_PROTOCOL, PcscReader.SETTING_PROTOCOL_T1);
+
+        /*
+         * PC/SC card access mode:
+         *
+         * The SAM is left in the SHARED mode (by default) to avoid automatic resets due to the
+         * limited time between two consecutive exchanges granted by Windows.
+         *
+         * The PO reader is set to EXCLUSIVE mode to avoid side effects during the selection step
+         * that may result in session failures.
+         *
+         * These two points will be addressed in a coming release of the Keyple PcSc reader plugin.
+         */
+        reader.setParameter(PcscReader.SETTING_KEY_MODE, PcscReader.SETTING_MODE_SHARED);
+
+        /* Set the PO reader protocol flag */
+        reader.addSeProtocolSetting(
+                new SeProtocolSetting(PcscProtocolSetting.SETTING_PROTOCOL_ISO14443_4));
+
     }
 }
