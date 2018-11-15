@@ -48,7 +48,7 @@ public class UseCase_SelectNext_Pcsc {
             this.poReader = poReader;
         }
 
-        public SeRequestSet prepareSelection() {
+        public SeRequestSet preparePoSelection() {
             seSelection = new SeSelection(poReader);
 
             /* operate SE selection */

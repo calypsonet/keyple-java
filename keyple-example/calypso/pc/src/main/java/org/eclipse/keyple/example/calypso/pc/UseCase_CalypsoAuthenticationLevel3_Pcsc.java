@@ -69,7 +69,7 @@ public class UseCase_CalypsoAuthenticationLevel3_Pcsc {
             this.samReader = samReader;
         }
 
-        public SeRequestSet prepareSelection() {
+        public SeRequestSet preparePoSelection() {
             /*
              * Initialize the selection process for the poReader
              */
@@ -236,7 +236,7 @@ public class UseCase_CalypsoAuthenticationLevel3_Pcsc {
                 new CalypsoAuthenticationLevel3TransactionEngine(poReader, samReader);
 
         /* Set the default selection operation */
-        ((ObservableReader) poReader).setDefaultSeRequests(transactionEngine.prepareSelection());
+        ((ObservableReader) poReader).setDefaultSeRequests(transactionEngine.preparePoSelection());
 
         /* Set terminal as Observer of the first reader */
         ((ObservableReader) poReader).addObserver(transactionEngine);

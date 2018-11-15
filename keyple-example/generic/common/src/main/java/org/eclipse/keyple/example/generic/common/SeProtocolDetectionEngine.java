@@ -13,6 +13,7 @@ package org.eclipse.keyple.example.generic.common;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.eclipse.keyple.calypso.command.po.parser.ReadDataStructure;
 import org.eclipse.keyple.calypso.transaction.PoSelector;
 import org.eclipse.keyple.seproxy.ApduRequest;
 import org.eclipse.keyple.seproxy.ProxyReader;
@@ -50,7 +51,7 @@ public class SeProtocolDetectionEngine extends AbstractReaderObserverEngine {
         this.poReader = poReader;
     }
 
-    public SeRequestSet prepareSelection() {
+    public SeRequestSet prepareSeSelection() {
 
         seSelection = new SeSelection(poReader);
 
@@ -75,8 +76,9 @@ public class SeProtocolDetectionEngine extends AbstractReaderObserverEngine {
                     poSelector.preparePoCustomReadCmd("Standard Get Data",
                             new ApduRequest(ByteArrayUtils.fromHex("FFCA000000"), false));
 
-                    poSelector.prepareReadRecordsCmd(SFI_T2Environment, (byte) 0x01, true,
-                            (byte) 0x00, "Hoplink T2 Environment");
+                    poSelector.prepareReadRecordsCmd(SFI_T2Environment,
+                            ReadDataStructure.SINGLE_RECORD_DATA, (byte) 0x01, (byte) 0x00,
+                            "Hoplink T2 Environment");
 
                     seSelection.prepareSelector(poSelector);
 

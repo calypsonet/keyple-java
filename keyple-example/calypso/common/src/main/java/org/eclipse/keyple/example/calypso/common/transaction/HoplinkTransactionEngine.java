@@ -174,7 +174,7 @@ public class HoplinkTransactionEngine extends AbstractReaderObserverEngine {
         }
     }
 
-    public SeRequestSet prepareSelection() {
+    public SeRequestSet preparePoSelection() {
         /*
          * Initialize the selection process for the poReader
          */
@@ -196,7 +196,7 @@ public class HoplinkTransactionEngine extends AbstractReaderObserverEngine {
                 PoSelector.RevisionTarget.TARGET_REV3, "Hoplink selector");
 
         poSelectorHoplink.prepareReadRecordsCmd(HoplinkInfo.SFI_T2Environment,
-                HoplinkInfo.RECORD_NUMBER_1, true, (byte) 0x00,
+                ReadDataStructure.SINGLE_RECORD_DATA, HoplinkInfo.RECORD_NUMBER_1, (byte) 0x00,
                 HoplinkInfo.EXTRAINFO_ReadRecord_T2EnvironmentRec1);
 
         seSelection.prepareSelector(poSelectorHoplink);

@@ -74,7 +74,7 @@ public class UseCase_MultipleSession_Pcsc {
             this.samReader = samReader;
         }
 
-        public SeRequestSet prepareSelection() {
+        public SeRequestSet preparePoSelection() {
             /*
              * Initialize the selection process for the poReader
              */
@@ -279,7 +279,7 @@ public class UseCase_MultipleSession_Pcsc {
                 new MultipleSessionLeve3TransactionEngine(poReader, samReader);
 
         /* Set the default selection operation */
-        ((ObservableReader) poReader).setDefaultSeRequests(transactionEngine.prepareSelection());
+        ((ObservableReader) poReader).setDefaultSeRequests(transactionEngine.preparePoSelection());
 
         /* Set terminal as Observer of the first reader */
         ((ObservableReader) poReader).addObserver(transactionEngine);

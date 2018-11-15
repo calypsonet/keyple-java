@@ -279,7 +279,7 @@ public class CalypsoClassicTransactionEngine extends AbstractReaderObserverEngin
         }
     }
 
-    public SeRequestSet prepareSelection() {
+    public SeRequestSet preparePoSelection() {
         /*
          * Initialize the selection process for the poReader
          */
@@ -306,7 +306,8 @@ public class CalypsoClassicTransactionEngine extends AbstractReaderObserverEngin
                         ContactlessProtocols.PROTOCOL_ISO14443_4,
                         PoSelector.RevisionTarget.TARGET_REV2_REV3, "Calypso selector");
 
-        poSelectorCalypsoAid.prepareReadRecordsCmd(SFI_EventLog, RECORD_NUMBER_1, true, (byte) 0x00,
+        poSelectorCalypsoAid.prepareReadRecordsCmd(SFI_EventLog,
+                ReadDataStructure.SINGLE_RECORD_DATA, RECORD_NUMBER_1, (byte) 0x00,
                 "EventLog (selection step)");
 
         seSelection.prepareSelector(poSelectorCalypsoAid);
