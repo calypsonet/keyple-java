@@ -233,7 +233,8 @@ public class CalypsoClassicTransactionEngine extends AbstractReaderObserverEngin
                     (byte) 0x00, String.format("Contracts (SFI=%02X, recnbr=%d)", SFI_Contracts,
                             RECORD_NUMBER_1));
 
-            poProcessStatus = poTransaction.processPoCommands();
+            /* proceed with the sending of commands, don't close the channel */
+            poProcessStatus = poTransaction.processPoCommands(false);
 
             logger.info("Parsing Read Contract file: " + readContractsParser.toString());
 

@@ -151,7 +151,8 @@ public class UseCase_MultipleSession_Pcsc {
                                 String.format("EventLog (SFI=%02X) #%d", SFI_EventLog, i));
                     }
 
-                    poProcessStatus = poTransaction.processPoCommands();
+                    /* proceed with the sending of commands, don't close the channel */
+                    poProcessStatus = poTransaction.processPoCommands(false);
 
                     if (!poProcessStatus) {
                         for (int i = 0; i < nbCommands; i++) {

@@ -173,7 +173,7 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
                 ReadDataStructure.SINGLE_RECORD_DATA, (byte) (contractIndex + 1), (byte) 0x1D,
                 "Contract");
 
-        poProcessStatus = poTransaction.processPoCommands();
+        poProcessStatus = poTransaction.processPoCommands(false);
 
         System.out
                 .println("Reading contract #" + (contractIndex + 1) + " for current validation...");
