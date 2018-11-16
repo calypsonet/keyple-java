@@ -530,23 +530,30 @@ public final class PoTransaction {
      * keepChannelOpen set at true, and ApduRequests with the PO commands.</li>
      * <li>In case the secure session is active, the "cache" of SAM commands is completed with the
      * corresponding Digest Update commands.</li>
+     * <li>If a session is open and closeSeChannel is set to true, the current PO session is
+     * aborted</li>
      * <li>Returns the corresponding PO SeResponse.</li>
      * </ul>
      *
      * @param poCommands the po commands inside session
+     * @param closeSeChannel if true the SE channel of the PO reader must be closed after the last
+     *        command
      * @return SeResponse all responses to the provided commands
      *
      * @throws KeypleReaderException IO Reader exception
      */
-    private SeResponse processAtomicPoCommands(List<PoSendableInSession> poCommands)
-            throws KeypleReaderException {
+    private SeResponse processAtomicPoCommands(List<PoSendableInSession> poCommands,
+            boolean closeSeChannel) throws KeypleReaderException {
 
         // Get PO ApduRequest List from PoSendableInSession List
         List<ApduRequest> poApduRequestList =
                 this.getApduRequestsToSendInSession((List<SendableInSession>) (List<?>) poCommands);
 
-        /* Create a SeRequest from the ApduRequest list, PO AID as Selector, keepChannelOpen true */
-        SeRequest poSeRequest = new SeRequest(poApduRequestList, true);
+        /*
+         * Create a SeRequest from the ApduRequest list, PO AID as Selector, keepChannelOpen
+         * according to the closeSeChannel flag
+         */
+        SeRequest poSeRequest = new SeRequest(poApduRequestList, !closeSeChannel);
 
         logger.debug("processAtomicPoCommands => POREQUEST = {}", poSeRequest);
 
@@ -1543,11 +1550,13 @@ public final class PoTransaction {
      * from the PO.</li>
      * </ul>
      *
+     * @param closeSeChannel if true the SE channel of the PO reader must be closed after the last
+     *        command
      * @return true if all commands are successful
      *
      * @throws KeypleReaderException IO Reader exception
      */
-    public boolean processPoCommands() throws KeypleReaderException {
+    public boolean processPoCommands(boolean closeSeChannel) throws KeypleReaderException {
         boolean poProcessSuccess = true;
         /*
          * Iterator to keep the progress in updating the parsers from the list of prepared commands
@@ -1556,7 +1565,8 @@ public final class PoTransaction {
                 poResponseParserList.iterator();
         if (currentState == SessionState.SESSION_CLOSED) {
             /* PO commands sent outside a Secure Session. No modifications buffer limitation. */
-            SeResponse seResponsePoCommands = processAtomicPoCommands(poCommandBuilderList);
+            SeResponse seResponsePoCommands =
+                    processAtomicPoCommands(poCommandBuilderList, closeSeChannel);
 
             if (!updateParsersWithResponses(seResponsePoCommands,
                     abstractApduResponseParserIterator)) {
@@ -1585,7 +1595,7 @@ public final class PoTransaction {
                          * kept all along the process.
                          */
                         SeResponse seResponsePoCommands =
-                                processAtomicPoCommands(poAtomicCommandBuilderList);
+                                processAtomicPoCommands(poAtomicCommandBuilderList, false);
                         if (!updateParsersWithResponses(seResponsePoCommands,
                                 abstractApduResponseParserIterator)) {
                             poProcessSuccess = false;
@@ -1621,12 +1631,16 @@ public final class PoTransaction {
             }
             if (!poAtomicCommandBuilderList.isEmpty()) {
                 SeResponse seResponsePoCommands =
-                        processAtomicPoCommands(poAtomicCommandBuilderList);
+                        processAtomicPoCommands(poAtomicCommandBuilderList, false);
                 if (!updateParsersWithResponses(seResponsePoCommands,
                         abstractApduResponseParserIterator)) {
                     poProcessSuccess = false;
                 }
             }
+            // TODO add session abort command if closeChannel is true
+            // if(closeSeChannel) {
+            // /* abort the PO session session */
+            // }
         }
         /* clean up global lists */
         poCommandBuilderList.clear();
@@ -1704,7 +1718,7 @@ public final class PoTransaction {
                         for (PoModificationCommand command : poAtomicCommandBuilderList) {
                             poSendableInSessionList.add((PoSendableInSession) command);
                         }
-                        seResponseClosing = processAtomicPoCommands(poSendableInSessionList);
+                        seResponseClosing = processAtomicPoCommands(poSendableInSessionList, false);
                         atLeastOneReadCommand = false;
                     } else {
                         /* All commands in the list are 'modifying' */
