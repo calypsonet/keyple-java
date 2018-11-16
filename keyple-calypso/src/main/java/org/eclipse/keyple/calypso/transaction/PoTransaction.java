@@ -1558,7 +1558,7 @@ public final class PoTransaction {
             /* PO commands sent outside a Secure Session. No modifications buffer limitation. */
             SeResponse seResponsePoCommands = processAtomicPoCommands(poCommandBuilderList);
 
-            if (updateParsersWithResponses(seResponsePoCommands,
+            if (!updateParsersWithResponses(seResponsePoCommands,
                     abstractApduResponseParserIterator)) {
                 poProcessSuccess = false;
             }
