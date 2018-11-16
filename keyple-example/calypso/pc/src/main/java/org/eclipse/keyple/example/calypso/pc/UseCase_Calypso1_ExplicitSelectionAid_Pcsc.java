@@ -33,9 +33,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-public class UseCase_1_CalypsoExplicitSelection_Pcsc {
+public class UseCase_Calypso1_ExplicitSelectionAid_Pcsc {
     protected static final Logger logger =
-            LoggerFactory.getLogger(UseCase_1_CalypsoExplicitSelection_Pcsc.class);
+            LoggerFactory.getLogger(UseCase_Calypso1_ExplicitSelectionAid_Pcsc.class);
     private static String poAid = "A0000004040125090101";
 
 
@@ -62,12 +62,22 @@ public class UseCase_1_CalypsoExplicitSelection_Pcsc {
             throw new IllegalStateException("Bad PO reader setup");
         }
 
-        logger.info("PO Reader  NAME = {}", poReader.getName());
+        logger.info(
+                "=============== UseCase Calypo #1: AID based explicit selection ==================");
+        logger.info("= PO Reader  NAME = {}", poReader.getName());
 
         /* Check if a PO is present in the reader */
         if (poReader.isSePresent()) {
+
+            logger.info(
+                    "==================================================================================");
+            logger.info(
+                    "= 1st PO exchange: AID based selection with reading of Environment file.         =");
+            logger.info(
+                    "==================================================================================");
+
             /*
-             * Initialize the selection process for the poReader
+             * Prepare a Calypso PO selection
              */
             SeSelection seSelection = new SeSelection(poReader);
 
@@ -86,6 +96,10 @@ public class UseCase_1_CalypsoExplicitSelection_Pcsc {
                     /* selectNext */false, /* keepChannelOpen */true, /* protocolFlag */ null,
                     PoSelector.RevisionTarget.TARGET_REV3, "AID: " + poAid);
 
+            /*
+             * Prepare the reading order and keep the associated parser for later use once the
+             * selection has been made.
+             */
             ReadRecordsRespPars readEnvironmentParser = poSelector.prepareReadRecordsCmd(
                     SFI_EnvironmentAndHolder, ReadDataStructure.SINGLE_RECORD_DATA, RECORD_NUMBER_1,
                     (byte) 0x00,
@@ -97,34 +111,61 @@ public class UseCase_1_CalypsoExplicitSelection_Pcsc {
              */
             CalypsoPo calypsoPo = (CalypsoPo) seSelection.prepareSelection(poSelector);
 
-            /* Operate through a single SeRequestSet the Calypso PO selection and the file read */
+            /*
+             * Actual PO communication: operate through a single request the Calypso PO selection
+             * and the file read
+             */
             if (seSelection.processExplicitSelection()) {
                 logger.info("The selection of the PO has succeeded.");
 
-                /* Retrieve the data read */
+                /* Retrieve the data read from the parser updated during the selection process */
                 byte environmentAndHolder[] =
                         (readEnvironmentParser.getRecords()).get((int) RECORD_NUMBER_1);
 
+                /* Log the result */
                 logger.info("Environment file data: {}",
                         ByteArrayUtils.toHex(environmentAndHolder));
 
                 /* Go on with the reading of the first record of the EventLog file */
+                logger.info(
+                        "==================================================================================");
+                logger.info(
+                        "= 2nd PO exchange: reading transaction of the EventLog file.                     =");
+                logger.info(
+                        "==================================================================================");
 
                 PoTransaction poTransaction = new PoTransaction(poReader, calypsoPo);
 
+                /*
+                 * Prepare the reading order and keep the associated parser for later use once the
+                 * transaction has been processed.
+                 */
                 ReadRecordsRespPars readEventLogParser = poTransaction.prepareReadRecordsCmd(
                         SFI_EventLog, ReadDataStructure.SINGLE_RECORD_DATA, RECORD_NUMBER_1,
                         (byte) 0x00, String.format("EventLog (SFI=%02X, recnbr=%d))", SFI_EventLog,
                                 RECORD_NUMBER_1));
 
-                if (poTransaction.processPoCommands()) {
+                /*
+                 * Actual PO communication: send the prepared read order, then close the channel
+                 * with the PO
+                 */
+                if (poTransaction.processPoCommands(true)) {
                     logger.info("The reading of the EventLog has succeeded.");
 
-                    /* Retrieve the data read */
+                    /*
+                     * Retrieve the data read from the parser updated during the transaction process
+                     */
                     byte eventLog[] = (readEventLogParser.getRecords()).get((int) RECORD_NUMBER_1);
 
+                    /* Log the result */
                     logger.info("EventLog file data: {}", ByteArrayUtils.toHex(eventLog));
                 }
+                logger.info(
+                        "==================================================================================");
+                logger.info(
+                        "= End of the Calypso PO processing.                                              =");
+                logger.info(
+                        "==================================================================================");
             } else {
                 logger.error("The selection of the PO has failed.");
             }
