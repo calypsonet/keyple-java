@@ -82,7 +82,8 @@ public class UseCase_1_CalypsoExplicitSelection_Pcsc {
              * Calypso selection: configures a PoSelector with all the desired attributes to make
              * the selection and read additional information afterwards
              */
-            PoSelector poSelector = new PoSelector(ByteArrayUtils.fromHex(poAid), false, true, null,
+            PoSelector poSelector = new PoSelector(ByteArrayUtils.fromHex(poAid),
+                    /* selectNext */false, /* keepChannelOpen */true, /* protocolFlag */ null,
                     PoSelector.RevisionTarget.TARGET_REV3, "AID: " + poAid);
 
             ReadRecordsRespPars readEnvironmentParser = poSelector.prepareReadRecordsCmd(
