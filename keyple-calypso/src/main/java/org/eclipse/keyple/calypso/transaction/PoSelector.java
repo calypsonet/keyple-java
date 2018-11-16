@@ -14,6 +14,7 @@ package org.eclipse.keyple.calypso.transaction;
 
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import org.eclipse.keyple.calypso.command.po.PoCustomModificationCommandBuilder;
 import org.eclipse.keyple.calypso.command.po.PoCustomReadCommandBuilder;
@@ -23,7 +24,9 @@ import org.eclipse.keyple.calypso.command.po.parser.ReadDataStructure;
 import org.eclipse.keyple.calypso.command.po.parser.ReadRecordsRespPars;
 import org.eclipse.keyple.command.AbstractApduResponseParser;
 import org.eclipse.keyple.seproxy.ApduRequest;
+import org.eclipse.keyple.seproxy.ApduResponse;
 import org.eclipse.keyple.seproxy.SeProtocol;
+import org.eclipse.keyple.seproxy.SeResponse;
 import org.eclipse.keyple.transaction.SeSelector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,24 +50,22 @@ public final class PoSelector extends SeSelector {
      * <p>
      * This flag will be tested when parsing the response to the selection.
      * 
-     * @param <AbstractApduResponseParser>
-     * @param <Boolean>
      */
-    class CommandParser<AbstractApduResponseParser, Boolean> {
+    class CommandParser {
         private final AbstractApduResponseParser apduResponseParser;
-        private final Boolean doubleParser;
+        private final int numberOfRequests;
 
-        public CommandParser(AbstractApduResponseParser apduResponseParser, Boolean doubleParser) {
+        public CommandParser(AbstractApduResponseParser apduResponseParser, int numberOfRequests) {
             this.apduResponseParser = apduResponseParser;
-            this.doubleParser = doubleParser;
+            this.numberOfRequests = numberOfRequests;
         }
 
         public AbstractApduResponseParser getApduResponseParser() {
             return apduResponseParser;
         }
 
-        public Boolean getDoubleParser() {
-            return doubleParser;
+        public int getNumberOfRequests() {
+            return numberOfRequests;
         }
     }
 
@@ -158,6 +159,13 @@ public final class PoSelector extends SeSelector {
                                 readJustOneRecord, expectedLength, extraInfo).getApduRequest());
                 break;
             case TARGET_REV2_REV3:
+                /*
+                 * we add here two readrecord commands because the two targeted PO differs with the
+                 * expected apdu class (CLA)
+                 *
+                 * At most one response will be successful. The filling process of the parser will
+                 * select the first one that succeeds.
+                 */
                 seSelectionApduRequestList
                         .add(new ReadRecordsCmdBuild(PoRevision.REV3_1, sfi, firstRecordNumber,
                                 readJustOneRecord, expectedLength, extraInfo).getApduRequest());
@@ -175,8 +183,11 @@ public final class PoSelector extends SeSelector {
         ReadRecordsRespPars poResponseParser =
                 new ReadRecordsRespPars(firstRecordNumber, readDataStructureEnum);
 
+        /*
+         * keep the parser in a CommandParser list with the number of apduRequest associated with it
+         */
         poResponseParserList.add(new CommandParser(poResponseParser,
-                this.revisionTarget == RevisionTarget.TARGET_REV2_REV3));
+                this.revisionTarget == RevisionTarget.TARGET_REV2_REV3 ? 2 : 1));
 
         return poResponseParser;
     }
@@ -206,6 +217,39 @@ public final class PoSelector extends SeSelector {
                 .add(new PoCustomModificationCommandBuilder(name, apduRequest).getApduRequest());
         if (logger.isTraceEnabled()) {
             logger.trace("CustomModificationCommand: APDUREQUEST = {}", apduRequest);
+        }
+    }
+
+
+    /**
+     * Loops on the SeResponse and updates the list of parsers previously memorized
+     *
+     * @param seResponse the seResponse from the PO
+     */
+    public void updateParsersWithResponses(SeResponse seResponse) {
+        if (poResponseParserList.size() != 0) {
+            /* attempt to update the parsers only if the list is not empty! */
+            Iterator<CommandParser> parserIterator = poResponseParserList.iterator();
+            /* double loop to set apdu responses to corresponding parsers */
+            for (Iterator<ApduResponse> responseIterator =
+                    seResponse.getApduResponses().iterator(); responseIterator.hasNext();) {
+                if (!parserIterator.hasNext()) {
+                    throw new IllegalStateException("Parsers list and responses list mismatch! ");
+                }
+                CommandParser parser = parserIterator.next();
+                boolean parserUpdated = false;
+                for (int i = 0; i < parser.getNumberOfRequests(); i++) {
+                    if (!responseIterator.hasNext()) {
+                        throw new IllegalStateException(
+                                "Parsers list and responses list mismatch! ");
+                    }
+                    ApduResponse apduResponse = responseIterator.next();
+                    if (!parserUpdated && apduResponse.isSuccessful()) {
+                        parser.getApduResponseParser().setApduResponse(apduResponse);
+                        parserUpdated = true;
+                    }
+                }
+            }
         }
     }
 }

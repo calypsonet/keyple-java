@@ -12,6 +12,7 @@
 package org.eclipse.keyple.calypso.transaction;
 
 
+
 import org.eclipse.keyple.calypso.command.po.PoRevision;
 import org.eclipse.keyple.calypso.command.po.parser.GetDataFciRespPars;
 import org.eclipse.keyple.seproxy.SeResponse;
@@ -32,6 +33,7 @@ import org.slf4j.LoggerFactory;
 public final class CalypsoPo extends MatchingSe {
     private static final Logger logger = LoggerFactory.getLogger(CalypsoPo.class);
 
+    private final PoSelector poSelector;
     private byte[] applicationSerialNumber;
     private PoRevision revision;
     private byte[] dfName;
@@ -44,6 +46,7 @@ public final class CalypsoPo extends MatchingSe {
 
     public CalypsoPo(PoSelector poSelector) {
         super(poSelector);
+        this.poSelector = poSelector;
     }
 
     /**
@@ -56,6 +59,9 @@ public final class CalypsoPo extends MatchingSe {
     @Override
     public void setSelectionResponse(SeResponse selectionResponse) {
         super.setSelectionResponse(selectionResponse);
+
+        /* Update the parser objects with the responses obtained */
+        poSelector.updateParsersWithResponses(selectionResponse);
 
         /* The selectionSeResponse may not include a FCI field (e.g. old PO Calypso Rev 1) */
         if (selectionResponse.getSelectionStatus().getFci() != null) {
