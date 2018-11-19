@@ -11,6 +11,7 @@
  ********************************************************************************/
 package org.eclipse.keyple.example.generic.pc;
 
+import static org.eclipse.keyple.example.generic.pc.PcscReadersSettings.PO_READER_NAME_REGEX;
 import java.util.regex.Pattern;
 import org.eclipse.keyple.plugin.pcsc.PcscProtocolSetting;
 import org.eclipse.keyple.plugin.pcsc.PcscReader;
@@ -42,6 +43,23 @@ public class ReaderUtilities {
             }
         }
         throw new KeypleReaderNotFoundException("Reader name pattern: " + pattern);
+    }
+
+    /**
+     * Get a fully configured contactless proxy reader
+     * 
+     * @param seProxyService the current SeProxyService
+     * @return the targeted ProxyReader to do contactless communications
+     * @throws KeypleBaseException
+     */
+    public static ProxyReader getDefaultContactLessSeReader(SeProxyService seProxyService)
+            throws KeypleBaseException {
+        ProxyReader seReader =
+                ReaderUtilities.getReaderByName(seProxyService, PO_READER_NAME_REGEX);
+
+        ReaderUtilities.setContactlessSettings(seReader);
+
+        return seReader;
     }
 
     /**
