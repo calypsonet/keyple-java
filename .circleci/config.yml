@@ -80,6 +80,7 @@ jobs:
         #### BUILD KEYPLE       ####
         ############################
 
+        - run: gradle wrapper --gradle-version 4.5.1
         - run: ./gradlew :keyple-core:build --info
         - run: ./gradlew :keyple-calypso:build --info
         - run: ./gradlew :keyple-plugin:keyple-plugin-pcsc:build --info
