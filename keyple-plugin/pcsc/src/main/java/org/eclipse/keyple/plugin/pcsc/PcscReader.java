@@ -117,7 +117,7 @@ public class PcscReader extends AbstractThreadedLocalReader {
     }
 
     @Override
-    public final boolean waitForCardPresent(long timeout) throws NoStackTraceThrowable {
+    protected final boolean waitForCardPresent(long timeout) throws NoStackTraceThrowable {
         try {
             return terminal.waitForCardPresent(timeout);
         } catch (CardException e) {
@@ -128,7 +128,7 @@ public class PcscReader extends AbstractThreadedLocalReader {
     }
 
     @Override
-    public final boolean waitForCardAbsent(long timeout) throws NoStackTraceThrowable {
+    protected final boolean waitForCardAbsent(long timeout) throws NoStackTraceThrowable {
         try {
             if (terminal.waitForCardAbsent(timeout)) {
                 closeLogicalChannel();
