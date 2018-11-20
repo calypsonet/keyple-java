@@ -61,18 +61,18 @@ public abstract class AbstractSelectionLocalReader extends AbstractLocalReader
     /**
      * Starts the monitoring thread
      * <p>
-     * This method has to be implemented by the class that handle the monitoring thread. It will be
+     * This method has to be overloaded by the class that handle the monitoring thread. It will be
      * called when a first observer is added.
      */
-    protected abstract void startObservation();
+    protected void startObservation() {};
 
     /**
      * Ends the monitoring thread
      * <p>
-     * This method has to be implemented by the class that handle the monitoring thread. It will be
+     * This method has to be overloaded by the class that handle the monitoring thread. It will be
      * called when the observer is removed.
      */
-    protected abstract void stopObservation();
+    protected void stopObservation() {};
 
     /**
      * Opens a logical channel
