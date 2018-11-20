@@ -18,16 +18,19 @@ import org.eclipse.keyple.calypso.command.po.PoRevision;
 import org.eclipse.keyple.calypso.command.po.builder.IncreaseCmdBuild;
 import org.eclipse.keyple.calypso.command.po.builder.ReadRecordsCmdBuild;
 import org.eclipse.keyple.seproxy.*;
+import org.eclipse.keyple.seproxy.event.ObservablePlugin;
+import org.eclipse.keyple.seproxy.event.ObservableReader;
+import org.eclipse.keyple.seproxy.event.PluginEvent;
 import org.eclipse.keyple.seproxy.event.ReaderEvent;
 import org.eclipse.keyple.seproxy.exception.KeypleChannelStateException;
 import org.eclipse.keyple.seproxy.exception.KeypleIOReaderException;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.exception.NoStackTraceThrowable;
 import org.eclipse.keyple.seproxy.protocol.SeProtocolSetting;
+import org.eclipse.keyple.transaction.MatchingSe;
 import org.eclipse.keyple.transaction.SeSelection;
 import org.eclipse.keyple.transaction.SeSelector;
 import org.eclipse.keyple.util.ByteArrayUtils;
-import org.eclipse.keyple.util.Observable;
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
@@ -51,25 +54,44 @@ public class StubReaderTest {
 
         StubPlugin stubPlugin = StubPlugin.getInstance();
 
+        // add dummy observer to start the monitoring thread
+        stubPlugin.addObserver(new ObservablePlugin.PluginObserver() {
+            @Override
+            public void update(PluginEvent event) {
+
+            }
+        });
+
+        Thread.sleep(100);
+
         logger.info("Stubplugin readers size {}", stubPlugin.getReaders().size());
         Assert.assertEquals(0, stubPlugin.getReaders().size());
 
         logger.info("Stubplugin observers size {}", stubPlugin.countObservers());
-        Assert.assertEquals(0, stubPlugin.countObservers());
+        Assert.assertEquals(1, stubPlugin.countObservers());
 
-        StubPlugin.getInstance().plugStubReader("StubReaderTest");
+        stubPlugin.plugStubReader("StubReaderTest");
+
+        Thread.sleep(100);
+
+        reader = (StubReader) stubPlugin.getReader("StubReaderTest");
 
         Thread.sleep(100);
 
-        reader = (StubReader) StubPlugin.getInstance().getReader("StubReaderTest");
-
-        Thread.sleep(100);
+        // // add dummy observer to start the monitoring thread
+        // reader.addObserver(new ObservableReader.ReaderObserver() {
+        // @Override
+        // public void update(ReaderEvent event) {
+        //
+        // }
+        // });
     }
 
     @After
     public void tearDown() throws InterruptedException, KeypleReaderException {
-        StubPlugin.getInstance().clearObservers();
-        StubPlugin.getInstance().unplugReader("StubReaderTest");
+        StubPlugin stubPlugin = StubPlugin.getInstance();
+        stubPlugin.clearObservers();
+        stubPlugin.getInstance().unplugReader("StubReaderTest");
         Thread.sleep(100);
 
     }
@@ -93,7 +115,7 @@ public class StubReaderTest {
     @Test
     public void testInsert() throws NoStackTraceThrowable {
         // add observer
-        reader.addObserver(new Observable.Observer<ReaderEvent>() {
+        reader.addObserver(new ObservableReader.ReaderObserver() {
             @Override
             public void update(ReaderEvent event) {
                 Assert.assertEquals(event.getReaderName(), reader.getName());
@@ -110,9 +132,9 @@ public class StubReaderTest {
     }
 
     @Test
-    public void testATR() {
+    public void testATR() throws InterruptedException {
         // add observer
-        reader.addObserver(new Observable.Observer<ReaderEvent>() {
+        reader.addObserver(new ObservableReader.ReaderObserver() {
             @Override
             public void update(ReaderEvent event) {
                 SeSelection seSelection = new SeSelection(reader);
@@ -121,11 +143,13 @@ public class StubReaderTest {
                 /* Prepare selector, ignore MatchingSe here */
                 seSelection.prepareSelection(seSelector);
 
-                try {
-                    SeResponse atrResponse = reader.transmitSet(seSelection.getSelectionOperation())
-                            .getSingleResponse();
 
-                    Assert.assertNotNull(atrResponse);
+                try {
+                    seSelection.processExplicitSelection();
+
+                    MatchingSe matchingSe = seSelection.getSelectedSe();
+
+                    Assert.assertNotNull(matchingSe);
 
                 } catch (KeypleReaderException e) {
                     Assert.fail();
@@ -135,6 +159,8 @@ public class StubReaderTest {
         });
         // test
         reader.insertSe(hoplinkSE());
+
+        Thread.sleep(100);
 
         // assert
         Assert.assertTrue(reader.isSePresent());
@@ -150,12 +176,14 @@ public class StubReaderTest {
     }
 
     @Test
-    public void transmit_Hoplink_Sucessfull() throws KeypleReaderException {
+    public void transmit_Hoplink_Sucessfull() throws KeypleReaderException, InterruptedException {
         // init Request
         SeRequestSet requests = getRequestIsoDepSetSample();
 
         // init SE
         reader.insertSe(hoplinkSE());
+
+        Thread.sleep(100);
 
         // send the selection request
         selectSe();
@@ -191,12 +219,14 @@ public class StubReaderTest {
 
 
     @Test(expected = KeypleReaderException.class)
-    public void transmit_no_response() throws KeypleReaderException {
+    public void transmit_no_response() throws KeypleReaderException, InterruptedException {
         // init Request
         SeRequestSet requests = getNoResponseRequest();
 
         // init SE
         reader.insertSe(noApduResponseSE());
+
+        Thread.sleep(100);
 
         // add Protocol flag
         reader.addSeProtocolSetting(
@@ -210,12 +240,15 @@ public class StubReaderTest {
     }
 
     @Test
-    public void transmit_partial_response_set_0() throws KeypleReaderException {
+    public void transmit_partial_response_set_0()
+            throws KeypleReaderException, InterruptedException {
         // init Request
         SeRequestSet seRequestSet = getPartialRequestSet(0);
 
         // init SE
         reader.insertSe(partialSE());
+
+        Thread.sleep(100);
 
         // add Protocol flag
         reader.addSeProtocolSetting(
@@ -235,12 +268,15 @@ public class StubReaderTest {
     }
 
     @Test
-    public void transmit_partial_response_set_1() throws KeypleReaderException {
+    public void transmit_partial_response_set_1()
+            throws KeypleReaderException, InterruptedException {
         // init Request
         SeRequestSet seRequestSet = getPartialRequestSet(1);
 
         // init SE
         reader.insertSe(partialSE());
+
+        Thread.sleep(100);
 
         // add Protocol flag
         reader.addSeProtocolSetting(
@@ -265,12 +301,15 @@ public class StubReaderTest {
 
 
     @Test
-    public void transmit_partial_response_set_2() throws KeypleReaderException {
+    public void transmit_partial_response_set_2()
+            throws KeypleReaderException, InterruptedException {
         // init Request
         SeRequestSet seRequestSet = getPartialRequestSet(2);
 
         // init SE
         reader.insertSe(partialSE());
+
+        Thread.sleep(100);
 
         // add Protocol flag
         reader.addSeProtocolSetting(
@@ -294,12 +333,15 @@ public class StubReaderTest {
     }
 
     @Test
-    public void transmit_partial_response_set_3() throws KeypleReaderException {
+    public void transmit_partial_response_set_3()
+            throws KeypleReaderException, InterruptedException {
         // init Request
         SeRequestSet seRequestSet = getPartialRequestSet(3);
 
         // init SE
         reader.insertSe(partialSE());
+
+        Thread.sleep(100);
 
         // add Protocol flag
         reader.addSeProtocolSetting(
@@ -323,12 +365,14 @@ public class StubReaderTest {
     }
 
     @Test
-    public void transmit_partial_response_0() throws KeypleReaderException {
+    public void transmit_partial_response_0() throws KeypleReaderException, InterruptedException {
         // init Request
         SeRequest seRequest = getPartialRequest(0);
 
         // init SE
         reader.insertSe(partialSE());
+
+        Thread.sleep(100);
 
         // add Protocol flag
         reader.addSeProtocolSetting(
@@ -347,12 +391,14 @@ public class StubReaderTest {
 
 
     @Test
-    public void transmit_partial_response_1() throws KeypleReaderException {
+    public void transmit_partial_response_1() throws KeypleReaderException, InterruptedException {
         // init Request
         SeRequest seRequest = getPartialRequest(1);
 
         // init SE
         reader.insertSe(partialSE());
+
+        Thread.sleep(100);
 
         // add Protocol flag
         reader.addSeProtocolSetting(
@@ -370,12 +416,14 @@ public class StubReaderTest {
     }
 
     @Test
-    public void transmit_partial_response_2() throws KeypleReaderException {
+    public void transmit_partial_response_2() throws KeypleReaderException, InterruptedException {
         // init Request
         SeRequest seRequest = getPartialRequest(2);
 
         // init SE
         reader.insertSe(partialSE());
+
+        Thread.sleep(100);
 
         // add Protocol flag
         reader.addSeProtocolSetting(
@@ -393,12 +441,14 @@ public class StubReaderTest {
     }
 
     @Test
-    public void transmit_partial_response_3() throws KeypleReaderException {
+    public void transmit_partial_response_3() throws KeypleReaderException, InterruptedException {
         // init Request
         SeRequest seRequest = getPartialRequest(3);
 
         // init SE
         reader.insertSe(partialSE());
+
+        Thread.sleep(100);
 
         // add Protocol flag
         reader.addSeProtocolSetting(

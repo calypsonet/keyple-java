@@ -106,6 +106,6 @@ abstract class AbstractObservablePlugin extends AbstractLoggedObservable<PluginE
                 return reader;
             }
         }
-        throw new KeypleReaderNotFoundException("Reader " + name + "not found.");
+        throw new KeypleReaderNotFoundException(name);
     }
 }
