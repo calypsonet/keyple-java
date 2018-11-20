@@ -14,7 +14,7 @@ Committers project.
 - keyple-core: source and unit tests for the SeProxy module.
 - keyple-calypso: source and unit tests for the Calypso library.
 - keyple-plugin: source and unit tests for the different plugins: smartcard.io PC/SC, Stub, Android NFC, Android OMAPI, etc.
-- keyple-example: source for the generic and Calypso implementation examples.
+- example: source for the generic and Calypso implementation examples.
 - keyple-integration: source for the integration code (SDK).
 
 ## Copyright
