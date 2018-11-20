@@ -97,6 +97,11 @@ public class AndroidNfcReader extends AbstractSelectionLocalReader
         return parameters;
     }
 
+    @Override
+    protected void startObservation() {}
+
+    @Override
+    protected void stopObservation() {}
 
     /**
      * Configure NFC Reader AndroidNfcReader supports the following parameters : FLAG_READER:
@@ -346,7 +351,4 @@ public class AndroidNfcReader extends AbstractSelectionLocalReader
         nfcAdapter.disableReaderMode(activity);
 
     }
-
-
-
 }

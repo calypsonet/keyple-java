@@ -12,8 +12,8 @@
 package org.eclipse.keyple.util;
 
 
-import java.util.Collection;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 
 /**
@@ -24,31 +24,49 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 
 public class Observable<T> {
-
     public interface Observer<T> {
         void update(T event);
     }
 
     private boolean changed = false;
 
-    private final Collection<Observer<T>> observers;
+    /*
+     * this object will be used to synchronize the access to the observers list in order to be
+     * thread safe
+     */
+    private final Object SYNC = new Object();
 
-    public Observable() {
-        observers = new CopyOnWriteArrayList<Observer<T>>();
-    }
+    private Set<Observer<T>> observers;
 
     public void addObserver(final Observer<T> observer) {
-        if (!observers.contains(observer)) {
+        if (observer == null) {
+            return;
+        }
+
+        synchronized (SYNC) {
+            if (observers == null) {
+                observers = new HashSet<Observer<T>>(1);
+            }
             observers.add(observer);
         }
     }
 
     public void removeObserver(final Observer<T> observer) {
-        observers.remove(observer);
+        if (observer == null) {
+            return;
+        }
+
+        synchronized (SYNC) {
+            if (observers != null) {
+                observers.remove(observer);
+            }
+        }
     }
 
     public void clearObservers() {
-        this.observers.clear();
+        if (observers != null) {
+            this.observers.clear();
+        }
     }
 
     public void setChanged() {
@@ -64,7 +82,7 @@ public class Observable<T> {
     }
 
     public int countObservers() {
-        return observers.size();
+        return observers == null ? 0 : observers.size();
     }
 
     public void notifyObservers() {
@@ -72,8 +90,17 @@ public class Observable<T> {
     }
 
     public void notifyObservers(final T event) {
-        for (Observer<T> observer : observers) {
-            observer.update(event); // the Observable is already present in the event
+        Set<Observer> observersCopy;
+
+        synchronized (SYNC) {
+            if (observers == null) {
+                return;
+            }
+            observersCopy = new HashSet<Observer>(observers);
+        }
+
+        for (Observer observer : observersCopy) {
+            observer.update(event);
         }
     }
 }
