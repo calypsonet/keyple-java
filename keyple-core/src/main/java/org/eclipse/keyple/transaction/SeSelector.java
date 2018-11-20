@@ -12,9 +12,9 @@
 package org.eclipse.keyple.transaction;
 
 import java.util.*;
-import org.eclipse.keyple.seproxy.ApduRequest;
-import org.eclipse.keyple.seproxy.SeProtocol;
-import org.eclipse.keyple.seproxy.SeRequest;
+import org.eclipse.keyple.seproxy.message.ApduRequest;
+import org.eclipse.keyple.seproxy.message.SeRequest;
+import org.eclipse.keyple.seproxy.protocol.SeProtocol;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -12,8 +12,8 @@
 package org.eclipse.keyple.plugin.remotese.common.json;
 
 import org.eclipse.keyple.plugin.remotese.transport.json.JsonParser;
-import org.eclipse.keyple.seproxy.SeRequestSet;
-import org.eclipse.keyple.seproxy.SeResponseSet;
+import org.eclipse.keyple.seproxy.message.SeRequestSet;
+import org.eclipse.keyple.seproxy.message.SeResponseSet;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;

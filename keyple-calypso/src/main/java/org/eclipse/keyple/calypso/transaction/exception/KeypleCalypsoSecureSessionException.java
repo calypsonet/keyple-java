@@ -13,9 +13,9 @@ package org.eclipse.keyple.calypso.transaction.exception;
 
 import java.util.Collections;
 import java.util.List;
-import org.eclipse.keyple.seproxy.ApduRequest;
-import org.eclipse.keyple.seproxy.ApduResponse;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
+import org.eclipse.keyple.seproxy.message.ApduRequest;
+import org.eclipse.keyple.seproxy.message.ApduResponse;
 
 public class KeypleCalypsoSecureSessionException extends KeypleReaderException {
 

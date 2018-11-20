@@ -13,7 +13,7 @@ package org.eclipse.keyple.plugin.remotese.common.json;
 
 
 import java.util.*;
-import org.eclipse.keyple.seproxy.*;
+import org.eclipse.keyple.seproxy.message.*;
 import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
 import org.eclipse.keyple.seproxy.protocol.ContactsProtocols;
 import org.eclipse.keyple.util.ByteArrayUtils;

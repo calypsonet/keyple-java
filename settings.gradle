@@ -13,7 +13,7 @@ println '** ' + rootProject.name + ' initialization phase.'
 
 include 'keyple-core'
 include 'keyple-calypso'
-include 'keyple-integration'
+include 'integration'
 
 include 'keyple-plugin:pcsc'
 project(':keyple-plugin:pcsc').name = "keyple-plugin-pcsc"
@@ -25,20 +25,20 @@ include 'keyple-plugin:remotese'
 project(':keyple-plugin:remotese').name = "keyple-plugin-remotese"
 
 
-include 'keyple-example:generic:common'
-project(':keyple-example:generic:common').name = "keyple-example-generic-common"
+include 'example:generic:common'
+project(':example:generic:common').name = "example-generic-common"
 
-include 'keyple-example:generic:pc'
-project(':keyple-example:generic:pc').name = "keyple-example-generic-pc"
+include 'example:generic:pc'
+project(':example:generic:pc').name = "example-generic-pc"
 
-include 'keyple-example:calypso:common'
-project(':keyple-example:calypso:common').name = "keyple-example-calypso-common"
+include 'example:calypso:common'
+project(':example:calypso:common').name = "example-calypso-common"
 
-include 'keyple-example:calypso:pc'
-project(':keyple-example:calypso:pc').name = "keyple-example-calypso-pc"
+include 'example:calypso:pc'
+project(':example:calypso:pc').name = "example-calypso-pc"
 
-include 'keyple-example:calypso:remotese'
-project(':keyple-example:calypso:remotese').name = "keyple-example-remotese"
+include 'example:calypso:remotese'
+project(':example:calypso:remotese').name = "example-remotese"
 
 
 

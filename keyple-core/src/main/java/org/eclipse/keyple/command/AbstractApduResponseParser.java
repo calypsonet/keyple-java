@@ -13,7 +13,7 @@ package org.eclipse.keyple.command;
 
 import java.util.HashMap;
 import java.util.Map;
-import org.eclipse.keyple.seproxy.ApduResponse;
+import org.eclipse.keyple.seproxy.message.ApduResponse;
 
 /**
  * Base class for parsing APDU

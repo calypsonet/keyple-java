@@ -13,8 +13,8 @@ package org.eclipse.keyple.plugin.remotese.transport.json;
 
 
 import java.nio.ByteBuffer;
-import org.eclipse.keyple.seproxy.SeProtocol;
-import org.eclipse.keyple.seproxy.SeRequest;
+import org.eclipse.keyple.seproxy.message.SeRequest;
+import org.eclipse.keyple.seproxy.protocol.SeProtocol;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;

@@ -12,7 +12,7 @@
 package org.eclipse.keyple.plugin.remotese.transport.json;
 
 import java.lang.reflect.Type;
-import org.eclipse.keyple.seproxy.SeRequest;
+import org.eclipse.keyple.seproxy.message.SeRequest;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import com.google.gson.*;
 

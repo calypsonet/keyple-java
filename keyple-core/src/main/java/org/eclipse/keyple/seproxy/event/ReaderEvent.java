@@ -12,7 +12,7 @@
 package org.eclipse.keyple.seproxy.event;
 
 
-import org.eclipse.keyple.seproxy.SeResponseSet;
+import org.eclipse.keyple.seproxy.message.SeResponseSet;
 
 /**
  * ReaderEvent used to notify changes at reader level

@@ -12,8 +12,9 @@
 package org.eclipse.keyple.calypso.command.sam.builder;
 
 
+import org.eclipse.keyple.calypso.command.sam.builder.session.DigestAuthenticateCmdBuild;
 import org.eclipse.keyple.command.AbstractApduCommandBuilder;
-import org.eclipse.keyple.seproxy.ApduRequest;
+import org.eclipse.keyple.seproxy.message.ApduRequest;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.junit.Assert;
 import org.junit.Test;

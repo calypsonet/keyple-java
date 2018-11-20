@@ -12,9 +12,10 @@
 package org.eclipse.keyple.plugin.remotese.pluginse;
 
 import java.util.Map;
-import org.eclipse.keyple.seproxy.*;
+import org.eclipse.keyple.seproxy.ProxyReader;
 import org.eclipse.keyple.seproxy.event.ObservableReader;
 import org.eclipse.keyple.seproxy.event.ReaderEvent;
+import org.eclipse.keyple.seproxy.message.*;
 import org.eclipse.keyple.seproxy.protocol.SeProtocolSetting;
 import org.eclipse.keyple.util.Observable;
 import org.slf4j.Logger;
