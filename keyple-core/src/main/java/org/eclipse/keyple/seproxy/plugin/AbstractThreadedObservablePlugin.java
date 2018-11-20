@@ -162,9 +162,7 @@ public abstract class AbstractThreadedObservablePlugin extends AbstractObservabl
         super.addObserver(observer);
         if (super.countObservers() == 1) {
             logger.debug("Start the plugin monitoring.");
-            if (thread == null) {
-                thread = new EventThread(this.getName());
-            }
+            thread = new EventThread(this.getName());
             thread.start();
         }
     }

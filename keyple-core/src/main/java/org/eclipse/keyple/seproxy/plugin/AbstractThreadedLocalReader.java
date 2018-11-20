@@ -41,9 +41,7 @@ public abstract class AbstractThreadedLocalReader extends AbstractSelectionLocal
      */
     @Override
     protected void startObservation() {
-        if (thread == null) {
-            thread = new EventThread(this.getPluginName(), this.getName());
-        }
+        thread = new EventThread(this.getPluginName(), this.getName());
         thread.start();
     }
 
