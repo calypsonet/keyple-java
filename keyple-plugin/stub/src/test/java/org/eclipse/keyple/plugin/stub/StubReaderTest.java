@@ -54,7 +54,7 @@ public class StubReaderTest {
 
         StubPlugin stubPlugin = StubPlugin.getInstance();
 
-        // add dummy observer to start the monitoring thread
+        // add an observer to start the plugin monitoring thread
         stubPlugin.addObserver(new ObservablePlugin.PluginObserver() {
             @Override
             public void update(PluginEvent event) {
@@ -77,14 +77,6 @@ public class StubReaderTest {
         reader = (StubReader) stubPlugin.getReader("StubReaderTest");
 
         Thread.sleep(100);
-
-        // // add dummy observer to start the monitoring thread
-        // reader.addObserver(new ObservableReader.ReaderObserver() {
-        // @Override
-        // public void update(ReaderEvent event) {
-        //
-        // }
-        // });
     }
 
     @After
