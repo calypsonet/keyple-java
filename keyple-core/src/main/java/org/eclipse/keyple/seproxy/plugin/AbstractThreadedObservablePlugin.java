@@ -46,7 +46,7 @@ public abstract class AbstractThreadedObservablePlugin extends AbstractObservabl
 
     /**
      * Returns the list of names of all connected readers
-     * 
+     *
      * @return readers names list
      * @throws KeypleReaderException if a reader error occurs
      */
@@ -54,24 +54,11 @@ public abstract class AbstractThreadedObservablePlugin extends AbstractObservabl
 
     /**
      * Constructor
-     * 
+     *
      * @param name name of the plugin
      */
     public AbstractThreadedObservablePlugin(String name) {
         super(name);
-        /* create and launch the monitoring thread */
-        thread = new EventThread(this.getName());
-        thread.start();
-    }
-
-    @Override
-    public final void addObserver(Observer observer) {
-        super.addObserver(observer);
-    }
-
-    @Override
-    public final void removeObserver(Observer observer) {
-        super.removeObserver(observer);
     }
 
     /**
@@ -149,7 +136,7 @@ public abstract class AbstractThreadedObservablePlugin extends AbstractObservabl
 
     /**
      * Called when the class is unloaded. Attempt to do a clean exit.
-     * 
+     *
      * @throws Throwable a generic exception
      */
     @Override
@@ -160,11 +147,41 @@ public abstract class AbstractThreadedObservablePlugin extends AbstractObservabl
         super.finalize();
     }
 
+    /**
+     * Add a plugin observer.
+     * <p>
+     * The observer will receive all the events produced by this plugin (reader insertion, removal,
+     * etc.)
+     * <p>
+     * The monitoring thread is started when the first observer is added.
+     *
+     * @param observer the observer object
+     */
+    @Override
     public final void addObserver(PluginObserver observer) {
         super.addObserver(observer);
+        if (super.countObservers() == 1) {
+            logger.debug("Start the plugin monitoring.");
+            thread = new EventThread(this.getName());
+            thread.start();
+        }
     }
 
+    /**
+     * Remove a plugin observer.
+     * <p>
+     * The observer will do not receive any of the events produced by this plugin.
+     * <p>
+     * The monitoring thread is ended when the last observer is removed.
+     *
+     * @param observer the observer object
+     */
+    @Override
     public final void removeObserver(PluginObserver observer) {
         super.removeObserver(observer);
+        if (super.countObservers() == 0) {
+            logger.debug("Stop the plugin monitoring.");
+            thread.end();
+        }
     }
 }

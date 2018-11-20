@@ -97,7 +97,6 @@ public class AndroidNfcReader extends AbstractSelectionLocalReader
         return parameters;
     }
 
-
     /**
      * Configure NFC Reader AndroidNfcReader supports the following parameters : FLAG_READER:
      * SKIP_NDEF_CHECK (skip NDEF check when a smartcard is detected) FLAG_READER:
@@ -346,7 +345,4 @@ public class AndroidNfcReader extends AbstractSelectionLocalReader
         nfcAdapter.disableReaderMode(activity);
 
     }
-
-
-
 }

@@ -59,6 +59,22 @@ public abstract class AbstractSelectionLocalReader extends AbstractLocalReader
     protected abstract void openPhysicalChannel() throws KeypleChannelStateException;
 
     /**
+     * Starts the monitoring thread
+     * <p>
+     * This method has to be overloaded by the class that handle the monitoring thread. It will be
+     * called when a first observer is added.
+     */
+    protected void startObservation() {};
+
+    /**
+     * Ends the monitoring thread
+     * <p>
+     * This method has to be overloaded by the class that handle the monitoring thread. It will be
+     * called when the observer is removed.
+     */
+    protected void stopObservation() {};
+
+    /**
      * Opens a logical channel
      * 
      * @param selector the SE Selector: AID of the application to select or ATR regex
@@ -165,11 +181,38 @@ public abstract class AbstractSelectionLocalReader extends AbstractLocalReader
                 selectionHasMatched);
     }
 
+    /**
+     * Add a reader observer.
+     * <p>
+     * The observer will receive all the events produced by this reader (card insertion, removal,
+     * etc.)
+     * <p>
+     * The monitoring thread is started when the first observer is added.
+     * 
+     * @param observer the observer object
+     */
     public final void addObserver(ReaderObserver observer) {
         super.addObserver(observer);
+        if (super.countObservers() == 1) {
+            logger.debug("Start the reader monitoring.");
+            startObservation();
+        }
     }
 
+    /**
+     * Remove a reader observer.
+     * <p>
+     * The observer will do not receive any of the events produced by this reader.
+     * <p>
+     * The monitoring thread is ended when the last observer is removed.
+     * 
+     * @param observer the observer object
+     */
     public final void removeObserver(ReaderObserver observer) {
         super.removeObserver(observer);
+        if (super.countObservers() == 0) {
+            logger.debug("Stop the reader monitoring.");
+            stopObservation();
+        }
     }
 }
