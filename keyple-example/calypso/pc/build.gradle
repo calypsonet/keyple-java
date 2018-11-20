@@ -43,8 +43,11 @@ dependencies {
     //use keyple library : plugin pcsc
     implementation group: 'org.eclipse.keyple', name: 'keyple-plugin-pcsc', version: '1.0.0-RC4'
 
-    //use keyple example : generic
+    //use keyple example : generic-common
     implementation group: 'org.eclipse.keyple', name: 'keyple-example-generic-common', version: '1.0.0-RC4'
+
+    //use keyple example : generic-pc
+    implementation group: 'org.eclipse.keyple', name: 'keyple-example-generic-pc', version: '1.0.0-RC4'
 
     //https://mvnrepository.com/artifact/org.slf4j/slf4j-simple
     implementation group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.25'

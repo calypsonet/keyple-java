@@ -182,9 +182,9 @@ public class OMAPITestFragment extends Fragment {
                             poUpdateRecordCmd_T2UsageFill.getApduRequest());
 
 
-                    SeRequest seRequest =
-                            new SeRequest(new SeRequest.AidSelector(ByteArrayUtils.fromHex(poAid)),
-                                    poApduRequestList, false, ContactsProtocols.PROTOCOL_ISO7816_3);
+                    SeRequest seRequest = new SeRequest(
+                            new SeRequest.AidSelector(ByteArrayUtils.fromHex(poAid)),
+                            poApduRequestList, false, ContactsProtocols.PROTOCOL_ISO7816_3, null);
 
 
                     SeResponseSet seResponseSet = reader.transmitSet(new SeRequestSet(seRequest));

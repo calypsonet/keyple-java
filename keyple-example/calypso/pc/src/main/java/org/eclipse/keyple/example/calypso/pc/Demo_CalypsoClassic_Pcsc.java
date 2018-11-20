@@ -13,7 +13,7 @@ package org.eclipse.keyple.example.calypso.pc;
 
 
 import org.eclipse.keyple.example.calypso.common.transaction.CalypsoClassicTransactionEngine;
-import org.eclipse.keyple.example.generic.common.ReaderUtilities;
+import org.eclipse.keyple.example.generic.pc.ReaderUtilities;
 import org.eclipse.keyple.plugin.pcsc.PcscPlugin;
 import org.eclipse.keyple.plugin.pcsc.PcscProtocolSetting;
 import org.eclipse.keyple.plugin.pcsc.PcscReader;
@@ -111,7 +111,7 @@ public class Demo_CalypsoClassic_Pcsc {
         transactionEngine.setReaders(poReader, samReader);
 
         /* Set the default selection operation */
-        ((ObservableReader) poReader).setDefaultSeRequests(transactionEngine.prepareSelection());
+        ((ObservableReader) poReader).setDefaultSeRequests(transactionEngine.preparePoSelection());
 
         /* Set terminal as Observer of the first reader */
         ((ObservableReader) poReader).addObserver(transactionEngine);

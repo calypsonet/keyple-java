@@ -246,7 +246,7 @@ public class NFCTestFragment extends Fragment implements ObservableReader.Reader
                     SeRequest seRequest =
                             new SeRequest(new SeRequest.AidSelector(ByteArrayUtils.fromHex(poAid)),
                                     poApduRequestList, keepChannelOpen,
-                                    ContactlessProtocols.PROTOCOL_ISO14443_4);
+                                    ContactlessProtocols.PROTOCOL_ISO14443_4, null);
 
                     // transmit seRequestSet to Reader
                     final SeResponseSet seResponseSet =

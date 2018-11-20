@@ -97,7 +97,7 @@ public class CommandSetTestSuite {
 
         poTransaction.prepareUpdateRecordCmd(sfi, recordNumber, dataToWrite,
                 String.format("SFI=%02X, recnbr=%d", sfi, recordNumber));
-        poTransaction.processPoCommands();
+        poTransaction.processPoCommands(false);
 
         poTransaction.processClosing(CommunicationMode.CONTACTLESS_MODE, false);
     }
@@ -115,7 +115,7 @@ public class CommandSetTestSuite {
         poTransaction.prepareDecreaseCmd(countersSfi, counterIndex, valueToDecrement, String.format(
                 "SFI=%02X, index=%d, decvalue=%d", countersSfi, counterIndex, valueToDecrement));
 
-        poTransaction.processPoCommands();
+        poTransaction.processPoCommands(false);
 
         poTransaction.processClosing(CommunicationMode.CONTACTLESS_MODE, false);
     }
@@ -133,7 +133,7 @@ public class CommandSetTestSuite {
         poTransaction.prepareIncreaseCmd(countersSfi, counterIndex, valueToIncrement, String.format(
                 "SFI=%02X, index=%d, decvalue=%d", countersSfi, counterIndex, valueToIncrement));
 
-        poTransaction.processPoCommands();
+        poTransaction.processPoCommands(false);
 
         poTransaction.processClosing(CommunicationMode.CONTACTLESS_MODE, false);
     }
@@ -150,7 +150,7 @@ public class CommandSetTestSuite {
 
         poTransaction.prepareAppendRecordCmd(sfi, dataToWrite, String.format("SFI=%02X", sfi));
 
-        poTransaction.processPoCommands();
+        poTransaction.processPoCommands(false);
 
         poTransaction.processClosing(CommunicationMode.CONTACTLESS_MODE, false);
     }
@@ -449,7 +449,7 @@ public class CommandSetTestSuite {
                     0x01, String.format("SFI=%02X, index=1, decvalue=1",
                             poData.getCountersFileData().getSfi()));
 
-            poTransaction.processPoCommands();
+            poTransaction.processPoCommands(false);
 
             poTransaction.processClosing(CommunicationMode.CONTACTLESS_MODE, false);
 
@@ -499,7 +499,7 @@ public class CommandSetTestSuite {
                     0xFF, String.format("SFI=%02X, index=1, decvalue=255",
                             poData.getCountersFileData().getSfi()));
 
-            poTransaction.processPoCommands();
+            poTransaction.processPoCommands(false);
 
             poTransaction.processClosing(CommunicationMode.CONTACTLESS_MODE, false);
 
@@ -547,7 +547,7 @@ public class CommandSetTestSuite {
                     recordDataToAppend,
                     String.format("SFI=%02X", poData.getEventFileData().getSfi()));
 
-            poTransaction.processPoCommands();
+            poTransaction.processPoCommands(true);
 
             poTransaction.processClosing(CommunicationMode.CONTACTLESS_MODE, false);
 

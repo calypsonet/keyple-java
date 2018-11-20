@@ -16,7 +16,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 import org.eclipse.keyple.example.generic.common.AbstractReaderObserverEngine;
-import org.eclipse.keyple.example.generic.common.ReaderUtilities;
 import org.eclipse.keyple.plugin.pcsc.PcscPlugin;
 import org.eclipse.keyple.plugin.pcsc.PcscProtocolSetting;
 import org.eclipse.keyple.plugin.pcsc.PcscReader;
@@ -48,63 +47,50 @@ public class UseCase_SelectNext_Pcsc {
             this.poReader = poReader;
         }
 
-        public SeRequestSet prepareSelection() {
+        public SeRequestSet preparePoSelection() {
             seSelection = new SeSelection(poReader);
 
             /* operate SE selection */
             String poAidPrefix = "A000000404012509";
 
             /* AID based selection */
-            seSelection.prepareSelector(new SeSelector(
-                    new SeSelector.SelectionParameters(ByteArrayUtils.fromHex(poAidPrefix), false),
+            seSelection.prepareSelection(new SeSelector(ByteArrayUtils.fromHex(poAidPrefix), false,
                     false, null, "Initial selection"));
             /* next selection */
-            seSelection.prepareSelector(new SeSelector(
-                    new SeSelector.SelectionParameters(ByteArrayUtils.fromHex(poAidPrefix), true),
+            seSelection.prepareSelection(new SeSelector(ByteArrayUtils.fromHex(poAidPrefix), true,
                     false, null, "Next selection #1"));
             /* next selection */
-            seSelection.prepareSelector(new SeSelector(
-                    new SeSelector.SelectionParameters(ByteArrayUtils.fromHex(poAidPrefix), true),
+            seSelection.prepareSelection(new SeSelector(ByteArrayUtils.fromHex(poAidPrefix), true,
                     false, null, "Next selection #2"));
             /* next selection */
-            seSelection.prepareSelector(new SeSelector(
-                    new SeSelector.SelectionParameters(ByteArrayUtils.fromHex(poAidPrefix), true),
+            seSelection.prepareSelection(new SeSelector(ByteArrayUtils.fromHex(poAidPrefix), true,
                     false, null, "Next selection #3"));
             /* next selection */
-            seSelection.prepareSelector(new SeSelector(
-                    new SeSelector.SelectionParameters(ByteArrayUtils.fromHex(poAidPrefix), true),
+            seSelection.prepareSelection(new SeSelector(ByteArrayUtils.fromHex(poAidPrefix), true,
                     false, null, "Next selection #4"));
             /* next selection */
-            seSelection.prepareSelector(new SeSelector(
-                    new SeSelector.SelectionParameters(ByteArrayUtils.fromHex(poAidPrefix), true),
+            seSelection.prepareSelection(new SeSelector(ByteArrayUtils.fromHex(poAidPrefix), true,
                     false, null, "Next selection #5"));
             /* next selection */
-            seSelection.prepareSelector(new SeSelector(
-                    new SeSelector.SelectionParameters(ByteArrayUtils.fromHex(poAidPrefix), true),
+            seSelection.prepareSelection(new SeSelector(ByteArrayUtils.fromHex(poAidPrefix), true,
                     false, null, "Next selection #6"));
             /* next selection */
-            seSelection.prepareSelector(new SeSelector(
-                    new SeSelector.SelectionParameters(ByteArrayUtils.fromHex(poAidPrefix), true),
+            seSelection.prepareSelection(new SeSelector(ByteArrayUtils.fromHex(poAidPrefix), true,
                     false, null, "Next selection #7"));
             /* next selection */
-            seSelection.prepareSelector(new SeSelector(
-                    new SeSelector.SelectionParameters(ByteArrayUtils.fromHex(poAidPrefix), true),
+            seSelection.prepareSelection(new SeSelector(ByteArrayUtils.fromHex(poAidPrefix), true,
                     false, null, "Next selection #8"));
             /* next selection */
-            seSelection.prepareSelector(new SeSelector(
-                    new SeSelector.SelectionParameters(ByteArrayUtils.fromHex(poAidPrefix), true),
+            seSelection.prepareSelection(new SeSelector(ByteArrayUtils.fromHex(poAidPrefix), true,
                     false, null, "Next selection #9"));
             /* next selection */
-            seSelection.prepareSelector(new SeSelector(
-                    new SeSelector.SelectionParameters(ByteArrayUtils.fromHex(poAidPrefix), true),
+            seSelection.prepareSelection(new SeSelector(ByteArrayUtils.fromHex(poAidPrefix), true,
                     false, null, "Next selection #10"));
             /* next selection */
-            seSelection.prepareSelector(new SeSelector(
-                    new SeSelector.SelectionParameters(ByteArrayUtils.fromHex(poAidPrefix), true),
+            seSelection.prepareSelection(new SeSelector(ByteArrayUtils.fromHex(poAidPrefix), true,
                     false, null, "Next selection #11"));
             /* next selection */
-            seSelection.prepareSelector(new SeSelector(
-                    new SeSelector.SelectionParameters(ByteArrayUtils.fromHex(poAidPrefix), true),
+            seSelection.prepareSelection(new SeSelector(ByteArrayUtils.fromHex(poAidPrefix), true,
                     false, null, "Next selection #12"));
 
             return seSelection.getSelectionOperation();
@@ -112,7 +98,7 @@ public class UseCase_SelectNext_Pcsc {
 
         @Override
         public void processSeMatch(SeResponseSet seResponses) {
-            if (seSelection.processSelection(seResponses)) {
+            if (seSelection.processDefaultSelection(seResponses)) {
                 logger.info("Selection: {}", seSelection.getSelectedSe());
             } else {
                 logger.info("The selection process did not return any selected SE.");

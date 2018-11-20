@@ -23,8 +23,9 @@ import org.eclipse.keyple.seproxy.exception.KeypleChannelStateException;
 import org.eclipse.keyple.seproxy.exception.KeypleIOReaderException;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.exception.NoStackTraceThrowable;
-import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
 import org.eclipse.keyple.seproxy.protocol.SeProtocolSetting;
+import org.eclipse.keyple.transaction.SeSelection;
+import org.eclipse.keyple.transaction.SeSelector;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.eclipse.keyple.util.Observable;
 import org.junit.*;
@@ -74,6 +75,16 @@ public class StubReaderTest {
     }
 
 
+    private void selectSe() throws KeypleReaderException {
+        SeSelection seSelection = new SeSelection(reader);
+        SeSelector seSelector = new SeSelector("3B.*", true, null, "ATR selection");
+
+        /* Prepare selector, ignore MatchingSe here */
+        seSelection.prepareSelection(seSelector);
+
+        seSelection.processExplicitSelection();
+    }
+
     /*
      * TRANSMIT
      */
@@ -104,12 +115,15 @@ public class StubReaderTest {
         reader.addObserver(new Observable.Observer<ReaderEvent>() {
             @Override
             public void update(ReaderEvent event) {
-                SeRequest atrRequest = new SeRequest(new SeRequest.AtrSelector("3B.*"), null, true);
+                SeSelection seSelection = new SeSelection(reader);
+                SeSelector seSelector = new SeSelector("3B.*", true, null, "Test ATR");
 
+                /* Prepare selector, ignore MatchingSe here */
+                seSelection.prepareSelection(seSelector);
 
                 try {
-                    SeResponse atrResponse =
-                            reader.transmitSet(new SeRequestSet(atrRequest)).getSingleResponse();
+                    SeResponse atrResponse = reader.transmitSet(seSelection.getSelectionOperation())
+                            .getSingleResponse();
 
                     Assert.assertNotNull(atrResponse);
 
@@ -142,6 +156,9 @@ public class StubReaderTest {
 
         // init SE
         reader.insertSe(hoplinkSE());
+
+        // send the selection request
+        selectSe();
 
         // add Protocol flag
         reader.addSeProtocolSetting(
@@ -184,12 +201,16 @@ public class StubReaderTest {
         // add Protocol flag
         reader.addSeProtocolSetting(
                 new SeProtocolSetting(StubProtocolSetting.SETTING_PROTOCOL_ISO14443_4));
+
+        // send the selection request
+        selectSe();
+
         // test
         SeResponseSet seResponse = reader.transmitSet(requests);
     }
 
     @Test
-    public void transmit_partial_response_set_0() {
+    public void transmit_partial_response_set_0() throws KeypleReaderException {
         // init Request
         SeRequestSet seRequestSet = getPartialRequestSet(0);
 
@@ -199,6 +220,10 @@ public class StubReaderTest {
         // add Protocol flag
         reader.addSeProtocolSetting(
                 new SeProtocolSetting(StubProtocolSetting.SETTING_PROTOCOL_ISO14443_4));
+
+        // send the selection request
+        selectSe();
+
         // test
         try {
             SeResponseSet seResponseSet = reader.transmitSet(seRequestSet);
@@ -210,7 +235,7 @@ public class StubReaderTest {
     }
 
     @Test
-    public void transmit_partial_response_set_1() {
+    public void transmit_partial_response_set_1() throws KeypleReaderException {
         // init Request
         SeRequestSet seRequestSet = getPartialRequestSet(1);
 
@@ -220,6 +245,9 @@ public class StubReaderTest {
         // add Protocol flag
         reader.addSeProtocolSetting(
                 new SeProtocolSetting(StubProtocolSetting.SETTING_PROTOCOL_ISO14443_4));
+
+        // send the selection request
+        selectSe();
 
         // test
         try {
@@ -237,7 +265,7 @@ public class StubReaderTest {
 
 
     @Test
-    public void transmit_partial_response_set_2() {
+    public void transmit_partial_response_set_2() throws KeypleReaderException {
         // init Request
         SeRequestSet seRequestSet = getPartialRequestSet(2);
 
@@ -247,6 +275,9 @@ public class StubReaderTest {
         // add Protocol flag
         reader.addSeProtocolSetting(
                 new SeProtocolSetting(StubProtocolSetting.SETTING_PROTOCOL_ISO14443_4));
+
+        // send the selection request
+        selectSe();
 
         // test
         try {
@@ -263,7 +294,7 @@ public class StubReaderTest {
     }
 
     @Test
-    public void transmit_partial_response_set_3() {
+    public void transmit_partial_response_set_3() throws KeypleReaderException {
         // init Request
         SeRequestSet seRequestSet = getPartialRequestSet(3);
 
@@ -273,6 +304,9 @@ public class StubReaderTest {
         // add Protocol flag
         reader.addSeProtocolSetting(
                 new SeProtocolSetting(StubProtocolSetting.SETTING_PROTOCOL_ISO14443_4));
+
+        // send the selection request
+        selectSe();
 
         // test
         try {
@@ -289,7 +323,7 @@ public class StubReaderTest {
     }
 
     @Test
-    public void transmit_partial_response_0() {
+    public void transmit_partial_response_0() throws KeypleReaderException {
         // init Request
         SeRequest seRequest = getPartialRequest(0);
 
@@ -299,6 +333,10 @@ public class StubReaderTest {
         // add Protocol flag
         reader.addSeProtocolSetting(
                 new SeProtocolSetting(StubProtocolSetting.SETTING_PROTOCOL_ISO14443_4));
+
+        // send the selection request
+        selectSe();
+
         // test
         try {
             SeResponse seResponse = reader.transmit(seRequest);
@@ -309,7 +347,7 @@ public class StubReaderTest {
 
 
     @Test
-    public void transmit_partial_response_1() {
+    public void transmit_partial_response_1() throws KeypleReaderException {
         // init Request
         SeRequest seRequest = getPartialRequest(1);
 
@@ -319,6 +357,10 @@ public class StubReaderTest {
         // add Protocol flag
         reader.addSeProtocolSetting(
                 new SeProtocolSetting(StubProtocolSetting.SETTING_PROTOCOL_ISO14443_4));
+
+        // send the selection request
+        selectSe();
+
         // test
         try {
             SeResponse seResponse = reader.transmit(seRequest);
@@ -328,7 +370,7 @@ public class StubReaderTest {
     }
 
     @Test
-    public void transmit_partial_response_2() {
+    public void transmit_partial_response_2() throws KeypleReaderException {
         // init Request
         SeRequest seRequest = getPartialRequest(2);
 
@@ -338,6 +380,10 @@ public class StubReaderTest {
         // add Protocol flag
         reader.addSeProtocolSetting(
                 new SeProtocolSetting(StubProtocolSetting.SETTING_PROTOCOL_ISO14443_4));
+
+        // send the selection request
+        selectSe();
+
         // test
         try {
             SeResponse seResponse = reader.transmit(seRequest);
@@ -347,7 +393,7 @@ public class StubReaderTest {
     }
 
     @Test
-    public void transmit_partial_response_3() {
+    public void transmit_partial_response_3() throws KeypleReaderException {
         // init Request
         SeRequest seRequest = getPartialRequest(3);
 
@@ -357,6 +403,10 @@ public class StubReaderTest {
         // add Protocol flag
         reader.addSeProtocolSetting(
                 new SeProtocolSetting(StubProtocolSetting.SETTING_PROTOCOL_ISO14443_4));
+
+        // send the selection request
+        selectSe();
+
         // test
         try {
             SeResponse seResponse = reader.transmit(seRequest);
@@ -423,8 +473,7 @@ public class StubReaderTest {
 
         SeRequest.Selector selector = new SeRequest.AidSelector(ByteArrayUtils.fromHex(poAid));
 
-        SeRequest seRequest = new SeRequest(selector, poApduRequestList, false,
-                ContactlessProtocols.PROTOCOL_ISO14443_4);
+        SeRequest seRequest = new SeRequest(poApduRequestList, false);
 
         return new SeRequestSet(seRequest);
 
@@ -447,8 +496,7 @@ public class StubReaderTest {
 
         SeRequest.Selector selector = new SeRequest.AidSelector(ByteArrayUtils.fromHex(poAid));
 
-        SeRequest seRequest = new SeRequest(selector, poApduRequestList, false,
-                ContactlessProtocols.PROTOCOL_ISO14443_4);
+        SeRequest seRequest = new SeRequest(poApduRequestList, false);
 
         return new SeRequestSet(seRequest);
 
@@ -489,18 +537,14 @@ public class StubReaderTest {
 
         SeRequest.Selector selector = new SeRequest.AidSelector(ByteArrayUtils.fromHex(poAid));
 
-        SeRequest seRequest1 = new SeRequest(selector, poApduRequestList1, false,
-                ContactlessProtocols.PROTOCOL_ISO14443_4);
+        SeRequest seRequest1 = new SeRequest(poApduRequestList1, true);
 
-        SeRequest seRequest2 = new SeRequest(selector, poApduRequestList2, false,
-                ContactlessProtocols.PROTOCOL_ISO14443_4);
+        SeRequest seRequest2 = new SeRequest(poApduRequestList2, true);
 
         /* This SeRequest fails at step 3 */
-        SeRequest seRequest3 = new SeRequest(selector, poApduRequestList3, false,
-                ContactlessProtocols.PROTOCOL_ISO14443_4);
+        SeRequest seRequest3 = new SeRequest(poApduRequestList3, true);
 
-        SeRequest seRequest4 = new SeRequest(selector, poApduRequestList1, false,
-                ContactlessProtocols.PROTOCOL_ISO14443_4);
+        SeRequest seRequest4 = new SeRequest(poApduRequestList1, true);
 
         Set<SeRequest> seRequestSets = new LinkedHashSet<SeRequest>();
 
@@ -579,8 +623,7 @@ public class StubReaderTest {
 
         SeRequest.Selector selector = new SeRequest.AidSelector(ByteArrayUtils.fromHex(poAid));
 
-        return new SeRequest(selector, poApduRequestList, false,
-                ContactlessProtocols.PROTOCOL_ISO14443_4);
+        return new SeRequest(poApduRequestList, false);
     }
 
     private StubSecureElement hoplinkSE() {

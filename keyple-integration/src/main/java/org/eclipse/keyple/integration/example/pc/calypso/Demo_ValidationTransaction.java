@@ -173,7 +173,7 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
                 ReadDataStructure.SINGLE_RECORD_DATA, (byte) (contractIndex + 1), (byte) 0x1D,
                 "Contract");
 
-        poProcessStatus = poTransaction.processPoCommands();
+        poProcessStatus = poTransaction.processPoCommands(false);
 
         System.out
                 .println("Reading contract #" + (contractIndex + 1) + " for current validation...");
@@ -340,43 +340,44 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
 
             // check the availability of the SAM, open its physical and logical channels and keep it
             // open
-            SeRequest samCheckRequest =
-                    new SeRequest(new SeRequest.AtrSelector(SAM_ATR_REGEX), null, true);
-            SeResponse samCheckResponse =
-                    samReader.transmitSet(new SeRequestSet(samCheckRequest)).getSingleResponse();
+            // check the availability of the SAM, open its physical and logical channels and keep it
+            // open
+            SeSelection samSelection = new SeSelection(samReader);
 
-            if (samCheckResponse == null) {
-                System.out.println("Unable to open a logical channel for SAM!");
-                throw new IllegalStateException("SAM channel opening failure");
+            SeSelector samSelector = new SeSelector(SAM_ATR_REGEX, true, null, "SAM Selection");
+
+            /* Prepare selector, ignore MatchingSe here */
+            samSelection.prepareSelection(samSelector);
+
+            try {
+                if (!samSelection.processExplicitSelection()) {
+                    System.out.println("Unable to open a logical channel for SAM!");
+                    throw new IllegalStateException("SAM channel opening failure");
+                } else {
+                }
+            } catch (KeypleReaderException e) {
+                throw new IllegalStateException("Reader exception: " + e.getMessage());
+
             }
 
             SeSelection seSelection = new SeSelection(poReader);
 
             // Add Audit C0 AID to the list
-            CalypsoPo auditC0Se =
-                    (CalypsoPo) seSelection
-                            .prepareSelector(
-                                    new PoSelector(
-                                            new SeSelector.SelectionParameters(
-                                                    ByteArrayUtils.fromHex(
-                                                            PoFileStructureInfo.poAuditC0Aid),
-                                                    false),
-                                            true, null, PoSelector.RevisionTarget.TARGET_REV3,
-                                            "Audit C0"));
+            CalypsoPo auditC0Se = (CalypsoPo) seSelection.prepareSelection(
+                    new PoSelector(ByteArrayUtils.fromHex(PoFileStructureInfo.poAuditC0Aid), false,
+                            true, null, PoSelector.RevisionTarget.TARGET_REV3, "Audit C0"));
 
             // Add CLAP AID to the list
-            CalypsoPo clapSe = (CalypsoPo) seSelection.prepareSelector(new PoSelector(
-                    new SeSelector.SelectionParameters(
-                            ByteArrayUtils.fromHex(PoFileStructureInfo.clapAid), false),
-                    true, null, PoSelector.RevisionTarget.TARGET_REV3, "CLAP"));
+            CalypsoPo clapSe = (CalypsoPo) seSelection.prepareSelection(
+                    new PoSelector(ByteArrayUtils.fromHex(PoFileStructureInfo.clapAid), false, true,
+                            null, PoSelector.RevisionTarget.TARGET_REV3, "CLAP"));
 
             // Add cdLight AID to the list
-            CalypsoPo cdLightSe = (CalypsoPo) seSelection.prepareSelector(new PoSelector(
-                    new SeSelector.SelectionParameters(
-                            ByteArrayUtils.fromHex(PoFileStructureInfo.cdLightAid), false),
-                    true, null, PoSelector.RevisionTarget.TARGET_REV2_REV3, "CDLight"));
+            CalypsoPo cdLightSe = (CalypsoPo) seSelection.prepareSelection(
+                    new PoSelector(ByteArrayUtils.fromHex(PoFileStructureInfo.cdLightAid), false,
+                            true, null, PoSelector.RevisionTarget.TARGET_REV2_REV3, "CDLight"));
 
-            if (!seSelection.processSelection()) {
+            if (!seSelection.processExplicitSelection()) {
                 throw new IllegalArgumentException("No recognizable PO detected.");
             }
 

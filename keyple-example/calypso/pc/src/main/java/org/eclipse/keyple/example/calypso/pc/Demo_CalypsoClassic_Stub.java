@@ -33,7 +33,7 @@ public class Demo_CalypsoClassic_Stub {
      * @throws InterruptedException thread exception
      */
     public static void main(String[] args) throws InterruptedException {
-        final Logger logger = LoggerFactory.getLogger(Demo_Hoplink_Stub.class);
+        final Logger logger = LoggerFactory.getLogger(Demo_CalypsoClassic_Stub.class);
 
         /* Get the instance of the SeProxyService (Singleton pattern) */
         SeProxyService seProxyService = SeProxyService.getInstance();

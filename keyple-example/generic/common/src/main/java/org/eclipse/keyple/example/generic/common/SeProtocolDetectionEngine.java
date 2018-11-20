@@ -13,6 +13,7 @@ package org.eclipse.keyple.example.generic.common;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.eclipse.keyple.calypso.command.po.parser.ReadDataStructure;
 import org.eclipse.keyple.calypso.transaction.PoSelector;
 import org.eclipse.keyple.seproxy.ApduRequest;
 import org.eclipse.keyple.seproxy.ProxyReader;
@@ -50,7 +51,7 @@ public class SeProtocolDetectionEngine extends AbstractReaderObserverEngine {
         this.poReader = poReader;
     }
 
-    public SeRequestSet prepareSelection() {
+    public SeRequestSet prepareSeSelection() {
 
         seSelection = new SeSelection(poReader);
 
@@ -68,19 +69,18 @@ public class SeProtocolDetectionEngine extends AbstractReaderObserverEngine {
                     byte SFI_T2Usage = (byte) 0x1A;
                     byte SFI_T2Environment = (byte) 0x14;
 
-                    PoSelector poSelector = new PoSelector(
-                            new SeSelector.SelectionParameters(ByteArrayUtils.fromHex(HoplinkAID),
-                                    false),
-                            true, ContactlessProtocols.PROTOCOL_ISO14443_4,
+                    PoSelector poSelector = new PoSelector(ByteArrayUtils.fromHex(HoplinkAID),
+                            false, true, ContactlessProtocols.PROTOCOL_ISO14443_4,
                             PoSelector.RevisionTarget.TARGET_REV3, "Hoplink selector");
 
                     poSelector.preparePoCustomReadCmd("Standard Get Data",
                             new ApduRequest(ByteArrayUtils.fromHex("FFCA000000"), false));
 
-                    poSelector.prepareReadRecordsCmd(SFI_T2Environment, (byte) 0x01, true,
-                            (byte) 0x00, "Hoplink T2 Environment");
+                    poSelector.prepareReadRecordsCmd(SFI_T2Environment,
+                            ReadDataStructure.SINGLE_RECORD_DATA, (byte) 0x01, (byte) 0x00,
+                            "Hoplink T2 Environment");
 
-                    seSelection.prepareSelector(poSelector);
+                    seSelection.prepareSelection(poSelector);
 
                     break;
                 case PROTOCOL_ISO14443_3A:
@@ -93,9 +93,8 @@ public class SeProtocolDetectionEngine extends AbstractReaderObserverEngine {
                     break;
                 default:
                     /* Add a generic selector */
-                    seSelection.prepareSelector(
-                            new SeSelector(new SeSelector.SelectionParameters(".*", null), true,
-                                    ContactlessProtocols.PROTOCOL_ISO14443_4, "Default selector"));
+                    seSelection.prepareSelection(new SeSelector(".*", true,
+                            ContactlessProtocols.PROTOCOL_ISO14443_4, "Default selector"));
                     break;
             }
         }
@@ -108,7 +107,7 @@ public class SeProtocolDetectionEngine extends AbstractReaderObserverEngine {
      */
     @Override
     public void processSeMatch(SeResponseSet seResponses) {
-        if (seSelection.processSelection(seResponses)) {
+        if (seSelection.processDefaultSelection(seResponses)) {
             MatchingSe selectedSe = seSelection.getSelectedSe();
             System.out.println("Selector: " + selectedSe.getExtraInfo() + ", selection status = "
                     + selectedSe.isSelected());

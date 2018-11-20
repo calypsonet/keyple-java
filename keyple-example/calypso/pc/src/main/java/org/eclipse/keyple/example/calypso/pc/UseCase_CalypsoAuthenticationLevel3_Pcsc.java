@@ -14,23 +14,26 @@ package org.eclipse.keyple.example.calypso.pc;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.*;
+import java.util.EnumMap;
+import java.util.Properties;
 import org.eclipse.keyple.calypso.transaction.CalypsoPo;
 import org.eclipse.keyple.calypso.transaction.PoSelector;
 import org.eclipse.keyple.calypso.transaction.PoTransaction;
-import org.eclipse.keyple.example.calypso.common.transaction.SamManagement;
+import org.eclipse.keyple.example.calypso.common.transaction.CalypsoUtilities;
 import org.eclipse.keyple.example.generic.common.AbstractReaderObserverEngine;
-import org.eclipse.keyple.example.generic.common.ReaderUtilities;
+import org.eclipse.keyple.example.generic.pc.ReaderUtilities;
 import org.eclipse.keyple.plugin.pcsc.PcscPlugin;
 import org.eclipse.keyple.plugin.pcsc.PcscProtocolSetting;
 import org.eclipse.keyple.plugin.pcsc.PcscReader;
-import org.eclipse.keyple.seproxy.*;
+import org.eclipse.keyple.seproxy.ProxyReader;
+import org.eclipse.keyple.seproxy.SeProxyService;
+import org.eclipse.keyple.seproxy.SeRequestSet;
+import org.eclipse.keyple.seproxy.SeResponseSet;
 import org.eclipse.keyple.seproxy.event.ObservableReader;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 import org.eclipse.keyple.seproxy.protocol.SeProtocolSetting;
 import org.eclipse.keyple.transaction.MatchingSe;
 import org.eclipse.keyple.transaction.SeSelection;
-import org.eclipse.keyple.transaction.SeSelector;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -70,7 +73,7 @@ public class UseCase_CalypsoAuthenticationLevel3_Pcsc {
             this.samReader = samReader;
         }
 
-        public SeRequestSet prepareSelection() {
+        public SeRequestSet preparePoSelection() {
             /*
              * Initialize the selection process for the poReader
              */
@@ -81,8 +84,7 @@ public class UseCase_CalypsoAuthenticationLevel3_Pcsc {
 
 
             /* AID based selection */
-            seSelection.prepareSelector(new PoSelector(
-                    new SeSelector.SelectionParameters(ByteArrayUtils.fromHex(poAid), false), true,
+            seSelection.prepareSelection(new PoSelector(ByteArrayUtils.fromHex(poAid), false, true,
                     null, PoSelector.RevisionTarget.TARGET_REV3, "Calypso selection"));
             return seSelection.getSelectionOperation();
         }
@@ -90,7 +92,7 @@ public class UseCase_CalypsoAuthenticationLevel3_Pcsc {
         @Override
         public void processSeMatch(SeResponseSet seResponses) {
             Profiler profiler;
-            if (seSelection.processSelection(seResponses)) {
+            if (seSelection.processDefaultSelection(seResponses)) {
                 MatchingSe selectedSe = seSelection.getSelectedSe();
                 try {
                     /* first time: check SAM */
@@ -98,7 +100,7 @@ public class UseCase_CalypsoAuthenticationLevel3_Pcsc {
                         /*
                          * the following method will throw an exception if the SAM is not available.
                          */
-                        SamManagement.checkSamAndOpenChannel(samReader);
+                        CalypsoUtilities.checkSamAndOpenChannel(samReader);
                         this.samChannelOpen = true;
                     }
 
@@ -238,7 +240,7 @@ public class UseCase_CalypsoAuthenticationLevel3_Pcsc {
                 new CalypsoAuthenticationLevel3TransactionEngine(poReader, samReader);
 
         /* Set the default selection operation */
-        ((ObservableReader) poReader).setDefaultSeRequests(transactionEngine.prepareSelection());
+        ((ObservableReader) poReader).setDefaultSeRequests(transactionEngine.preparePoSelection());
 
         /* Set terminal as Observer of the first reader */
         ((ObservableReader) poReader).addObserver(transactionEngine);
