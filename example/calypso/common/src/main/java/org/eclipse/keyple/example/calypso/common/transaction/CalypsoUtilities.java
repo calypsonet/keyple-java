@@ -21,6 +21,7 @@ import org.eclipse.keyple.seproxy.ProxyReader;
 import org.eclipse.keyple.seproxy.SeProxyService;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
+import org.eclipse.keyple.seproxy.message.SeRequest;
 import org.eclipse.keyple.transaction.SeSelection;
 import org.eclipse.keyple.transaction.SeSelector;
 
@@ -74,8 +75,8 @@ public class CalypsoUtilities {
          */
         SeSelection samSelection = new SeSelection(samReader);
 
-        SeSelector samSelector =
-                new SeSelector(CalypsoClassicInfo.SAM_C1_ATR_REGEX, true, null, "Selection SAM C1");
+        SeSelector samSelector = new SeSelector(CalypsoClassicInfo.SAM_C1_ATR_REGEX,
+                SeRequest.ChannelState.KEEP_OPEN, null, "Selection SAM C1");
 
         /* Prepare selector, ignore MatchingSe here */
         samSelection.prepareSelection(samSelector);

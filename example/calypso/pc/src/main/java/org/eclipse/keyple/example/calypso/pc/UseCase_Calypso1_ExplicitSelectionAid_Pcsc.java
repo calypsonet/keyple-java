@@ -27,7 +27,9 @@ import org.eclipse.keyple.seproxy.ProxyReader;
 import org.eclipse.keyple.seproxy.SeProxyService;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 import org.eclipse.keyple.seproxy.exception.NoStackTraceThrowable;
+import org.eclipse.keyple.seproxy.message.SeRequest;
 import org.eclipse.keyple.transaction.SeSelection;
+import org.eclipse.keyple.transaction.SeSelector;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -92,9 +94,10 @@ public class UseCase_Calypso1_ExplicitSelectionAid_Pcsc {
              * Calypso selection: configures a PoSelector with all the desired attributes to make
              * the selection and read additional information afterwards
              */
-            PoSelector poSelector = new PoSelector(ByteArrayUtils.fromHex(poAid),
-                    /* selectNext */false, /* keepChannelOpen */true, /* protocolFlag */ null,
-                    PoSelector.RevisionTarget.TARGET_REV3, "AID: " + poAid);
+            PoSelector poSelector =
+                    new PoSelector(ByteArrayUtils.fromHex(poAid), SeSelector.SelectMode.FIRST,
+                            SeRequest.ChannelState.KEEP_OPEN, /* protocolFlag */ null,
+                            PoSelector.RevisionTarget.TARGET_REV3, "AID: " + poAid);
 
             /*
              * Prepare the reading order and keep the associated parser for later use once the

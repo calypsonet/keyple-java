@@ -49,8 +49,9 @@ class CommandSample {
             poApduRequestList = Arrays.asList(poReadRecordCmd_T2Env.getApduRequest());
             final SeRequest.Selector selector =
                     new SeRequest.AidSelector(ByteArrayUtils.fromHex(poAid));
-            SeRequest seRequest = new SeRequest(selector, poApduRequestList, true,
-                    ContactlessProtocols.PROTOCOL_ISO14443_4, null);
+            SeRequest seRequest =
+                    new SeRequest(selector, poApduRequestList, SeRequest.ChannelState.KEEP_OPEN,
+                            ContactlessProtocols.PROTOCOL_ISO14443_4, null);
 
             // SYNC transmit seRequestSet to Reader With Callback function
             SeResponseSet seResponseSet = reader.transmitSet(new SeRequestSet(seRequest));
@@ -65,8 +66,9 @@ class CommandSample {
             List<ApduRequest> poApduRequestList2;
             poApduRequestList2 = Arrays.asList(poReadRecordCmd_T2Env2.getApduRequest());
 
-            SeRequest seRequest2 = new SeRequest(selector, poApduRequestList2, false,
-                    ContactlessProtocols.PROTOCOL_ISO14443_4, null);
+            SeRequest seRequest2 =
+                    new SeRequest(selector, poApduRequestList2, SeRequest.ChannelState.KEEP_OPEN,
+                            ContactlessProtocols.PROTOCOL_ISO14443_4, null);
 
             // SYNC transmit seRequestSet to Reader With Callback function
             SeResponseSet seResponseSet2 = reader.transmitSet(new SeRequestSet(seRequest2));

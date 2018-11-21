@@ -23,6 +23,7 @@ import org.eclipse.keyple.seproxy.ProxyReader;
 import org.eclipse.keyple.seproxy.SeProxyService;
 import org.eclipse.keyple.seproxy.event.ObservableReader;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
+import org.eclipse.keyple.seproxy.message.SeRequest;
 import org.eclipse.keyple.seproxy.message.SeRequestSet;
 import org.eclipse.keyple.seproxy.message.SeResponseSet;
 import org.eclipse.keyple.seproxy.protocol.SeProtocolSetting;
@@ -54,44 +55,57 @@ public class UseCase_SelectNext_Pcsc {
             String poAidPrefix = "A000000404012509";
 
             /* AID based selection */
-            seSelection.prepareSelection(new SeSelector(ByteArrayUtils.fromHex(poAidPrefix), false,
-                    false, null, "Initial selection"));
+            seSelection.prepareSelection(
+                    new SeSelector(ByteArrayUtils.fromHex(poAidPrefix), SeSelector.SelectMode.FIRST,
+                            SeRequest.ChannelState.CLOSE_AFTER, null, "Initial selection"));
             /* next selection */
-            seSelection.prepareSelection(new SeSelector(ByteArrayUtils.fromHex(poAidPrefix), true,
-                    false, null, "Next selection #1"));
+            seSelection.prepareSelection(
+                    new SeSelector(ByteArrayUtils.fromHex(poAidPrefix), SeSelector.SelectMode.NEXT,
+                            SeRequest.ChannelState.CLOSE_AFTER, null, "Next selection #1"));
             /* next selection */
-            seSelection.prepareSelection(new SeSelector(ByteArrayUtils.fromHex(poAidPrefix), true,
-                    false, null, "Next selection #2"));
+            seSelection.prepareSelection(
+                    new SeSelector(ByteArrayUtils.fromHex(poAidPrefix), SeSelector.SelectMode.NEXT,
+                            SeRequest.ChannelState.CLOSE_AFTER, null, "Next selection #2"));
             /* next selection */
-            seSelection.prepareSelection(new SeSelector(ByteArrayUtils.fromHex(poAidPrefix), true,
-                    false, null, "Next selection #3"));
+            seSelection.prepareSelection(
+                    new SeSelector(ByteArrayUtils.fromHex(poAidPrefix), SeSelector.SelectMode.NEXT,
+                            SeRequest.ChannelState.CLOSE_AFTER, null, "Next selection #3"));
             /* next selection */
-            seSelection.prepareSelection(new SeSelector(ByteArrayUtils.fromHex(poAidPrefix), true,
-                    false, null, "Next selection #4"));
+            seSelection.prepareSelection(
+                    new SeSelector(ByteArrayUtils.fromHex(poAidPrefix), SeSelector.SelectMode.NEXT,
+                            SeRequest.ChannelState.CLOSE_AFTER, null, "Next selection #4"));
             /* next selection */
-            seSelection.prepareSelection(new SeSelector(ByteArrayUtils.fromHex(poAidPrefix), true,
-                    false, null, "Next selection #5"));
+            seSelection.prepareSelection(
+                    new SeSelector(ByteArrayUtils.fromHex(poAidPrefix), SeSelector.SelectMode.NEXT,
+                            SeRequest.ChannelState.CLOSE_AFTER, null, "Next selection #5"));
             /* next selection */
-            seSelection.prepareSelection(new SeSelector(ByteArrayUtils.fromHex(poAidPrefix), true,
-                    false, null, "Next selection #6"));
+            seSelection.prepareSelection(
+                    new SeSelector(ByteArrayUtils.fromHex(poAidPrefix), SeSelector.SelectMode.NEXT,
+                            SeRequest.ChannelState.CLOSE_AFTER, null, "Next selection #6"));
             /* next selection */
-            seSelection.prepareSelection(new SeSelector(ByteArrayUtils.fromHex(poAidPrefix), true,
-                    false, null, "Next selection #7"));
+            seSelection.prepareSelection(
+                    new SeSelector(ByteArrayUtils.fromHex(poAidPrefix), SeSelector.SelectMode.NEXT,
+                            SeRequest.ChannelState.CLOSE_AFTER, null, "Next selection #7"));
             /* next selection */
-            seSelection.prepareSelection(new SeSelector(ByteArrayUtils.fromHex(poAidPrefix), true,
-                    false, null, "Next selection #8"));
+            seSelection.prepareSelection(
+                    new SeSelector(ByteArrayUtils.fromHex(poAidPrefix), SeSelector.SelectMode.NEXT,
+                            SeRequest.ChannelState.CLOSE_AFTER, null, "Next selection #8"));
             /* next selection */
-            seSelection.prepareSelection(new SeSelector(ByteArrayUtils.fromHex(poAidPrefix), true,
-                    false, null, "Next selection #9"));
+            seSelection.prepareSelection(
+                    new SeSelector(ByteArrayUtils.fromHex(poAidPrefix), SeSelector.SelectMode.NEXT,
+                            SeRequest.ChannelState.CLOSE_AFTER, null, "Next selection #9"));
             /* next selection */
-            seSelection.prepareSelection(new SeSelector(ByteArrayUtils.fromHex(poAidPrefix), true,
-                    false, null, "Next selection #10"));
+            seSelection.prepareSelection(
+                    new SeSelector(ByteArrayUtils.fromHex(poAidPrefix), SeSelector.SelectMode.NEXT,
+                            SeRequest.ChannelState.CLOSE_AFTER, null, "Next selection #10"));
             /* next selection */
-            seSelection.prepareSelection(new SeSelector(ByteArrayUtils.fromHex(poAidPrefix), true,
-                    false, null, "Next selection #11"));
+            seSelection.prepareSelection(
+                    new SeSelector(ByteArrayUtils.fromHex(poAidPrefix), SeSelector.SelectMode.NEXT,
+                            SeRequest.ChannelState.CLOSE_AFTER, null, "Next selection #11"));
             /* next selection */
-            seSelection.prepareSelection(new SeSelector(ByteArrayUtils.fromHex(poAidPrefix), true,
-                    false, null, "Next selection #12"));
+            seSelection.prepareSelection(
+                    new SeSelector(ByteArrayUtils.fromHex(poAidPrefix), SeSelector.SelectMode.NEXT,
+                            SeRequest.ChannelState.CLOSE_AFTER, null, "Next selection #12"));
 
             return seSelection.getSelectionOperation();
         }
