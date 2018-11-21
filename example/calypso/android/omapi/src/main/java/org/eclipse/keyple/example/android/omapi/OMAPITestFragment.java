@@ -184,7 +184,7 @@ public class OMAPITestFragment extends Fragment {
 
                     SeRequest seRequest = new SeRequest(
                             new SeRequest.AidSelector(ByteArrayUtils.fromHex(poAid)),
-                            poApduRequestList, false, ContactsProtocols.PROTOCOL_ISO7816_3, null);
+                            poApduRequestList, SeRequest.ChannelState.CLOSE_AFTER, ContactsProtocols.PROTOCOL_ISO7816_3, null);
 
 
                     SeResponseSet seResponseSet = reader.transmitSet(new SeRequestSet(seRequest));

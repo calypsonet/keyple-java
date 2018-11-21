@@ -12,6 +12,7 @@
 package org.eclipse.keyple.example.android.nfc;
 
 
+import java.nio.channels.Channel;
 import java.util.Arrays;
 import java.util.List;
 import java.util.SortedSet;
@@ -241,7 +242,7 @@ public class NFCTestFragment extends Fragment implements ObservableReader.Reader
                             poReadRecordCmd_T2Usage.getApduRequest(),
                             poUpdateRecordCmd_T2UsageFill.getApduRequest());
 
-                    Boolean keepChannelOpen = false;
+                    SeRequest.ChannelState keepChannelOpen = SeRequest.ChannelState.CLOSE_AFTER;
 
                     SeRequest seRequest =
                             new SeRequest(new SeRequest.AidSelector(ByteArrayUtils.fromHex(poAid)),
