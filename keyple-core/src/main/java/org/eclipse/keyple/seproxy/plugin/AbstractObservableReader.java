@@ -13,6 +13,7 @@ package org.eclipse.keyple.seproxy.plugin;
 
 
 import org.eclipse.keyple.seproxy.ProxyReader;
+import org.eclipse.keyple.seproxy.event.ObservableReader;
 import org.eclipse.keyple.seproxy.event.ReaderEvent;
 import org.eclipse.keyple.seproxy.exception.KeypleChannelStateException;
 import org.eclipse.keyple.seproxy.exception.KeypleIOReaderException;
@@ -44,6 +45,9 @@ public abstract class AbstractObservableReader extends AbstractLoggedObservable<
     /** the default SeRequestSet to be executed upon SE insertion */
     protected SeRequestSet defaultSeRequests;
 
+    /** Indicate if all SE detected should be notified or only matching SE */
+    protected ObservableReader.NotificationMode notificationMode;
+
     protected abstract SeResponseSet processSeRequestSet(SeRequestSet requestSet)
             throws KeypleIOReaderException, KeypleChannelStateException, KeypleReaderException;
 
@@ -68,11 +72,17 @@ public abstract class AbstractObservableReader extends AbstractLoggedObservable<
     /**
      * If defined, the prepared setDefaultSeRequests will be processed as soon as a SE is inserted.
      * The result of this request set will be added to the reader event.
+     * <p>
+     * Depending on the notification mode, the observer will be notified whenever an SE is inserted,
+     * regardless of the selection status, or only if the current SE matches the selection criteria.
      *
      * @param defaultSeRequests the {@link SeRequestSet} to be executed when a SE is inserted
+     * @param notificationMode the notification mode enum (ALWAYS or MATCHED_ONLY)
      */
-    public void setDefaultSeRequests(SeRequestSet defaultSeRequests) {
+    public void setDefaultSeRequests(SeRequestSet defaultSeRequests,
+            ObservableReader.NotificationMode notificationMode) {
         this.defaultSeRequests = defaultSeRequests;
+        this.notificationMode = notificationMode;
     };
 
     /**

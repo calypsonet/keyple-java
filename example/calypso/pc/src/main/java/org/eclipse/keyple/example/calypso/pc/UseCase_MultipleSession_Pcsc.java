@@ -284,7 +284,8 @@ public class UseCase_MultipleSession_Pcsc {
                 new MultipleSessionLeve3TransactionEngine(poReader, samReader);
 
         /* Set the default selection operation */
-        ((ObservableReader) poReader).setDefaultSeRequests(transactionEngine.preparePoSelection());
+        ((ObservableReader) poReader).setDefaultSeRequests(transactionEngine.preparePoSelection(),
+                ObservableReader.NotificationMode.MATCHED_ONLY);
 
         /* Set terminal as Observer of the first reader */
         ((ObservableReader) poReader).addObserver(transactionEngine);

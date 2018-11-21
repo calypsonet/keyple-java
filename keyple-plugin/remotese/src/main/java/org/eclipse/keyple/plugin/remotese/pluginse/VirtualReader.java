@@ -195,7 +195,7 @@ public class VirtualReader extends Observable implements ObservableReader {
     }
 
     @Override
-    public void setDefaultSeRequests(SeRequestSet seRequestSet) {
+    public void setDefaultSeRequests(SeRequestSet seRequestSet, NotificationMode notificationMode) {
         // todo does it makes sense here?
     }
 
