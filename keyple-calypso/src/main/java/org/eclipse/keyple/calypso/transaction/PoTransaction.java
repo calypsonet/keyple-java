@@ -24,15 +24,17 @@ import org.eclipse.keyple.calypso.command.po.parser.session.AbstractOpenSessionR
 import org.eclipse.keyple.calypso.command.po.parser.session.CloseSessionRespPars;
 import org.eclipse.keyple.calypso.command.sam.SamRevision;
 import org.eclipse.keyple.calypso.command.sam.SamSendableInSession;
-import org.eclipse.keyple.calypso.command.sam.builder.*;
-import org.eclipse.keyple.calypso.command.sam.parser.DigestAuthenticateRespPars;
-import org.eclipse.keyple.calypso.command.sam.parser.DigestCloseRespPars;
-import org.eclipse.keyple.calypso.command.sam.parser.SamGetChallengeRespPars;
+import org.eclipse.keyple.calypso.command.sam.builder.session.DigestAuthenticateCmdBuild;
+import org.eclipse.keyple.calypso.command.sam.builder.session.SelectDiversifierCmdBuild;
+import org.eclipse.keyple.calypso.command.sam.parser.session.DigestAuthenticateRespPars;
+import org.eclipse.keyple.calypso.command.sam.parser.session.DigestCloseRespPars;
+import org.eclipse.keyple.calypso.command.sam.parser.session.SamGetChallengeRespPars;
 import org.eclipse.keyple.calypso.transaction.exception.*;
 import org.eclipse.keyple.command.AbstractApduCommandBuilder;
 import org.eclipse.keyple.command.AbstractApduResponseParser;
-import org.eclipse.keyple.seproxy.*;
+import org.eclipse.keyple.seproxy.ProxyReader;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
+import org.eclipse.keyple.seproxy.message.*;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -324,7 +326,8 @@ public final class PoTransaction {
                 : CHALLENGE_LENGTH_REV_INF_32;
 
         AbstractApduCommandBuilder samGetChallenge =
-                new SamGetChallengeCmdBuild(this.samRevision, challengeLength);
+                new org.eclipse.keyple.calypso.command.sam.builder.session.SamGetChallengeCmdBuild(
+                        this.samRevision, challengeLength);
 
         samApduRequestList.add(samGetChallenge.getApduRequest());
 
@@ -1236,8 +1239,10 @@ public final class PoTransaction {
              * Build and append Digest Init command as first ApduRequest of the digest computation
              * process
              */
-            samApduRequestList.add(new DigestInitCmdBuild(samRevision, verification, revMode,
-                    keyRecordNumber, keyKIF, keyKVC, poDigestDataCache.get(0)).getApduRequest());
+            samApduRequestList.add(
+                    new org.eclipse.keyple.calypso.command.sam.builder.session.DigestInitCmdBuild(
+                            samRevision, verification, revMode, keyRecordNumber, keyKIF, keyKVC,
+                            poDigestDataCache.get(0)).getApduRequest());
 
             /*
              * Build and append Digest Update commands
@@ -1246,16 +1251,19 @@ public final class PoTransaction {
              */
             for (int i = 1; i < poDigestDataCache.size(); i++) {
                 samApduRequestList.add(
-                        new DigestUpdateCmdBuild(samRevision, encryption, poDigestDataCache.get(i))
-                                .getApduRequest());
+                        new org.eclipse.keyple.calypso.command.sam.builder.session.DigestUpdateCmdBuild(
+                                samRevision, encryption, poDigestDataCache.get(i))
+                                        .getApduRequest());
             }
 
             /*
              * Build and append Digest Close command
              */
-            samApduRequestList.add((new DigestCloseCmdBuild(samRevision,
-                    poRevision.equals(PoRevision.REV3_2) ? SIGNATURE_LENGTH_REV32
-                            : SIGNATURE_LENGTH_REV_INF_32).getApduRequest()));
+            samApduRequestList.add(
+                    (new org.eclipse.keyple.calypso.command.sam.builder.session.DigestCloseCmdBuild(
+                            samRevision,
+                            poRevision.equals(PoRevision.REV3_2) ? SIGNATURE_LENGTH_REV32
+                                    : SIGNATURE_LENGTH_REV_INF_32).getApduRequest()));
 
 
             return new SeRequest(samApduRequestList, true);

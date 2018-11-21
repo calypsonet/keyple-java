@@ -12,11 +12,15 @@
 package org.eclipse.keyple.seproxy.plugin;
 
 
-import org.eclipse.keyple.seproxy.*;
+import org.eclipse.keyple.seproxy.ProxyReader;
 import org.eclipse.keyple.seproxy.event.ReaderEvent;
 import org.eclipse.keyple.seproxy.exception.KeypleChannelStateException;
 import org.eclipse.keyple.seproxy.exception.KeypleIOReaderException;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
+import org.eclipse.keyple.seproxy.message.SeRequest;
+import org.eclipse.keyple.seproxy.message.SeRequestSet;
+import org.eclipse.keyple.seproxy.message.SeResponse;
+import org.eclipse.keyple.seproxy.message.SeResponseSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

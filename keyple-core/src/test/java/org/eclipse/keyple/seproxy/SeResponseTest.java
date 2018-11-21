@@ -11,6 +11,8 @@
  ********************************************************************************/
 package org.eclipse.keyple.seproxy;
 
+import org.eclipse.keyple.seproxy.message.SeResponse;
+import org.eclipse.keyple.seproxy.message.SelectionStatus;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

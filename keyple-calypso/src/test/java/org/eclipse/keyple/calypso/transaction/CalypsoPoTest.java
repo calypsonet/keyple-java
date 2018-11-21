@@ -13,9 +13,9 @@ package org.eclipse.keyple.calypso.transaction;
 
 
 import org.eclipse.keyple.calypso.command.po.PoRevision;
-import org.eclipse.keyple.seproxy.ApduResponse;
-import org.eclipse.keyple.seproxy.SeResponse;
-import org.eclipse.keyple.seproxy.SelectionStatus;
+import org.eclipse.keyple.seproxy.message.ApduResponse;
+import org.eclipse.keyple.seproxy.message.SeResponse;
+import org.eclipse.keyple.seproxy.message.SelectionStatus;
 import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.junit.Assert;

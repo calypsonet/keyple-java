@@ -15,7 +15,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import org.eclipse.keyple.command.AbstractApduResponseParser;
-import org.eclipse.keyple.seproxy.ApduResponse;
+import org.eclipse.keyple.seproxy.message.ApduResponse;
 
 /**
  * This class provides status code properties and the getters to access to the structured fields of

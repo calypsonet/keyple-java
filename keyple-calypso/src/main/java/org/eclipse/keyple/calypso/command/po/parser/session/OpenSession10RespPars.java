@@ -13,7 +13,7 @@ package org.eclipse.keyple.calypso.command.po.parser.session;
 
 import java.util.Arrays;
 import org.eclipse.keyple.calypso.command.po.PoRevision;
-import org.eclipse.keyple.seproxy.ApduResponse;
+import org.eclipse.keyple.seproxy.message.ApduResponse;
 
 public final class OpenSession10RespPars extends AbstractOpenSessionRespPars {
 

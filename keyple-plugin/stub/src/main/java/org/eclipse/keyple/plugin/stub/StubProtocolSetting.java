@@ -11,8 +11,8 @@
  ********************************************************************************/
 package org.eclipse.keyple.plugin.stub;
 
-import org.eclipse.keyple.seproxy.SeProtocol;
 import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
+import org.eclipse.keyple.seproxy.protocol.SeProtocol;
 import org.eclipse.keyple.seproxy.protocol.SeProtocolSettingList;
 
 /**

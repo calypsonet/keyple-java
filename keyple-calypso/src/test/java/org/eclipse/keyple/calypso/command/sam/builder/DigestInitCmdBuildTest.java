@@ -13,6 +13,7 @@ package org.eclipse.keyple.calypso.command.sam.builder;
 
 import static org.junit.Assert.assertArrayEquals;
 import org.eclipse.keyple.calypso.command.sam.SamRevision;
+import org.eclipse.keyple.calypso.command.sam.builder.session.DigestInitCmdBuild;
 import org.eclipse.keyple.command.AbstractApduCommandBuilder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,8 +35,9 @@ public class DigestInitCmdBuildTest {
         SamRevision revision = SamRevision.S1D;
 
         AbstractApduCommandBuilder apduCommandBuilder =
-                new DigestInitCmdBuild(revision, verificationMode, rev3_2Mode, workKeyRecordNumber,
-                        workKeyKif, workKeyKVC, digestData);
+                new org.eclipse.keyple.calypso.command.sam.builder.session.DigestInitCmdBuild(
+                        revision, verificationMode, rev3_2Mode, workKeyRecordNumber, workKeyKif,
+                        workKeyKVC, digestData);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -51,8 +53,9 @@ public class DigestInitCmdBuildTest {
         SamRevision revision = SamRevision.S1D;
 
         AbstractApduCommandBuilder apduCommandBuilder =
-                new DigestInitCmdBuild(revision, verificationMode, rev3_2Mode, workKeyRecordNumber,
-                        workKeyKif, workKeyKVC, digestData);
+                new org.eclipse.keyple.calypso.command.sam.builder.session.DigestInitCmdBuild(
+                        revision, verificationMode, rev3_2Mode, workKeyRecordNumber, workKeyKif,
+                        workKeyKVC, digestData);
     }
 
     @Test

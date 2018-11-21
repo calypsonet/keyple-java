@@ -15,7 +15,7 @@ package org.eclipse.keyple.calypso.transaction;
 
 import org.eclipse.keyple.calypso.command.po.PoRevision;
 import org.eclipse.keyple.calypso.command.po.parser.GetDataFciRespPars;
-import org.eclipse.keyple.seproxy.SeResponse;
+import org.eclipse.keyple.seproxy.message.SeResponse;
 import org.eclipse.keyple.transaction.MatchingSe;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.slf4j.Logger;

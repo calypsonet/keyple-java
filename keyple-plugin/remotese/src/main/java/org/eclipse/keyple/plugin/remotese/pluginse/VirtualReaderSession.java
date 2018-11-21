@@ -12,8 +12,8 @@
 package org.eclipse.keyple.plugin.remotese.pluginse;
 
 
-import org.eclipse.keyple.seproxy.SeRequestSet;
-import org.eclipse.keyple.seproxy.SeResponseSet;
+import org.eclipse.keyple.seproxy.message.SeRequestSet;
+import org.eclipse.keyple.seproxy.message.SeResponseSet;
 
 public interface VirtualReaderSession {
 

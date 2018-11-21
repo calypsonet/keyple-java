@@ -12,7 +12,7 @@
 package org.eclipse.keyple.command;
 
 
-import org.eclipse.keyple.seproxy.ApduRequest;
+import org.eclipse.keyple.seproxy.message.ApduRequest;
 
 /**
  * Iso7816 APDU command builder.

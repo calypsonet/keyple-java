@@ -11,8 +11,10 @@
  ********************************************************************************/
 package org.eclipse.keyple.calypso.command.sam;
 
-import org.eclipse.keyple.calypso.command.sam.builder.SelectDiversifierCmdBuild;
-import org.eclipse.keyple.calypso.command.sam.parser.SelectDiversifierRespPars;
+import org.eclipse.keyple.calypso.command.sam.builder.session.*;
+import org.eclipse.keyple.calypso.command.sam.builder.session.SelectDiversifierCmdBuild;
+import org.eclipse.keyple.calypso.command.sam.parser.session.*;
+import org.eclipse.keyple.calypso.command.sam.parser.session.SelectDiversifierRespPars;
 import org.eclipse.keyple.command.AbstractApduCommandBuilder;
 import org.eclipse.keyple.command.AbstractApduResponseParser;
 import org.eclipse.keyple.command.CommandsTable;
@@ -24,34 +26,26 @@ public enum CalypsoSamCommands implements CommandsTable {
             SelectDiversifierRespPars.class),
 
     /** The sam get challenge. */
-    GET_CHALLENGE("Get Challenge", (byte) 0x84,
-            org.eclipse.keyple.calypso.command.sam.builder.SamGetChallengeCmdBuild.class,
-            org.eclipse.keyple.calypso.command.sam.parser.SamGetChallengeRespPars.class),
+    GET_CHALLENGE("Get Challenge", (byte) 0x84, SamGetChallengeCmdBuild.class,
+            SamGetChallengeRespPars.class),
 
     /** The sam digest init. */
-    DIGEST_INIT("Digest Init", (byte) 0x8A,
-            org.eclipse.keyple.calypso.command.sam.builder.DigestInitCmdBuild.class,
-            org.eclipse.keyple.calypso.command.sam.parser.DigestInitRespPars.class),
+    DIGEST_INIT("Digest Init", (byte) 0x8A, DigestInitCmdBuild.class, DigestInitRespPars.class),
 
     /** The sam digest update. */
-    DIGEST_UPDATE("Digest Update", (byte) 0x8C,
-            org.eclipse.keyple.calypso.command.sam.builder.DigestUpdateCmdBuild.class,
-            org.eclipse.keyple.calypso.command.sam.parser.DigestUpdateRespPars.class),
+    DIGEST_UPDATE("Digest Update", (byte) 0x8C, DigestUpdateCmdBuild.class,
+            DigestUpdateRespPars.class),
 
     /** The sam digest update multiple. */
     DIGEST_UPDATE_MULTIPLE("Digest Update Multiple", (byte) 0x8C,
-            org.eclipse.keyple.calypso.command.sam.builder.DigestUpdateMultipleCmdBuild.class,
-            org.eclipse.keyple.calypso.command.sam.parser.DigestUpdateMultipleRespPars.class),
+            DigestUpdateMultipleCmdBuild.class, DigestUpdateMultipleRespPars.class),
 
     /** The sam digest close. */
-    DIGEST_CLOSE("Digest Close", (byte) 0x8E,
-            org.eclipse.keyple.calypso.command.sam.builder.DigestCloseCmdBuild.class,
-            org.eclipse.keyple.calypso.command.sam.parser.DigestCloseRespPars.class),
+    DIGEST_CLOSE("Digest Close", (byte) 0x8E, DigestCloseCmdBuild.class, DigestCloseRespPars.class),
 
     /** The sam digest authenticate. */
-    DIGEST_AUTHENTICATE("Digest Authenticate", (byte) 0x82,
-            org.eclipse.keyple.calypso.command.sam.builder.DigestAuthenticateCmdBuild.class,
-            org.eclipse.keyple.calypso.command.sam.parser.DigestAuthenticateRespPars.class);
+    DIGEST_AUTHENTICATE("Digest Authenticate", (byte) 0x82, DigestAuthenticateCmdBuild.class,
+            DigestAuthenticateRespPars.class);
 
     /** The name. */
     private final String name;

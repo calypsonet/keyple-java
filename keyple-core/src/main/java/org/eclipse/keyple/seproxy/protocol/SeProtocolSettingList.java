@@ -11,8 +11,6 @@
  ********************************************************************************/
 package org.eclipse.keyple.seproxy.protocol;
 
-import org.eclipse.keyple.seproxy.SeProtocol;
-
 /**
  * Interface to be implemented by SeProtocolSetting enums
  */
