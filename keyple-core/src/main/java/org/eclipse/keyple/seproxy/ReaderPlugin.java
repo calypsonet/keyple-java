@@ -14,13 +14,15 @@ package org.eclipse.keyple.seproxy;
 import java.util.SortedSet;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderNotFoundException;
-import org.eclipse.keyple.util.NameableConfigurable;
+import org.eclipse.keyple.util.Configurable;
+import org.eclipse.keyple.util.Nameable;
+
 
 
 /**
  * Card readers plugin interface.
  */
-public interface ReaderPlugin extends NameableConfigurable, Comparable<ReaderPlugin> {
+public interface ReaderPlugin extends Nameable, Configurable, Comparable<ReaderPlugin> {
 
     /**
      * Gets the readers.

@@ -145,9 +145,9 @@ public class AndroidOmapiReaderTest {
         List<ApduRequest> poApduRequestList = Arrays.asList(poReadRecordCmd_T2Env.getApduRequest());
 
         // wrong protocol
-        SeRequest seRequest =
-                new SeRequest(new SeRequest.AidSelector(ByteArrayUtils.fromHex(poAid)),
-                        poApduRequestList, false, ContactlessProtocols.PROTOCOL_MIFARE_UL, null);
+        SeRequest seRequest = new SeRequest(
+                new SeRequest.AidSelector(ByteArrayUtils.fromHex(poAid)), poApduRequestList,
+                SeRequest.ChannelState.CLOSE_AFTER, ContactlessProtocols.PROTOCOL_MIFARE_UL, null);
 
         // test
         SeResponseSet seResponse = proxyReader.transmitSet(new SeRequestSet(seRequest));
@@ -227,9 +227,9 @@ public class AndroidOmapiReaderTest {
 
         poApduRequestList = Arrays.asList(poReadRecordCmd_T2Env.getApduRequest());
 
-        SeRequest seRequest =
-                new SeRequest(new SeRequest.AidSelector(ByteArrayUtils.fromHex(poAid)),
-                        poApduRequestList, false, ContactsProtocols.PROTOCOL_ISO7816_3, null);
+        SeRequest seRequest = new SeRequest(
+                new SeRequest.AidSelector(ByteArrayUtils.fromHex(poAid)), poApduRequestList,
+                SeRequest.ChannelState.CLOSE_AFTER, ContactsProtocols.PROTOCOL_ISO7816_3, null);
 
         return new SeRequestSet(seRequest);
 

@@ -347,7 +347,8 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
             // open
             SeSelection samSelection = new SeSelection(samReader);
 
-            SeSelector samSelector = new SeSelector(SAM_ATR_REGEX, true, null, "SAM Selection");
+            SeSelector samSelector = new SeSelector(SAM_ATR_REGEX, SeRequest.ChannelState.KEEP_OPEN,
+                    null, "SAM Selection");
 
             /* Prepare selector, ignore MatchingSe here */
             samSelection.prepareSelection(samSelector);
@@ -367,18 +368,21 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
 
             // Add Audit C0 AID to the list
             CalypsoPo auditC0Se = (CalypsoPo) seSelection.prepareSelection(
-                    new PoSelector(ByteArrayUtils.fromHex(PoFileStructureInfo.poAuditC0Aid), false,
-                            true, null, PoSelector.RevisionTarget.TARGET_REV3, "Audit C0"));
+                    new PoSelector(ByteArrayUtils.fromHex(PoFileStructureInfo.poAuditC0Aid),
+                            SeSelector.SelectMode.FIRST, SeRequest.ChannelState.KEEP_OPEN, null,
+                            PoSelector.RevisionTarget.TARGET_REV3, "Audit C0"));
 
             // Add CLAP AID to the list
             CalypsoPo clapSe = (CalypsoPo) seSelection.prepareSelection(
-                    new PoSelector(ByteArrayUtils.fromHex(PoFileStructureInfo.clapAid), false, true,
-                            null, PoSelector.RevisionTarget.TARGET_REV3, "CLAP"));
+                    new PoSelector(ByteArrayUtils.fromHex(PoFileStructureInfo.clapAid),
+                            SeSelector.SelectMode.FIRST, SeRequest.ChannelState.KEEP_OPEN, null,
+                            PoSelector.RevisionTarget.TARGET_REV3, "CLAP"));
 
             // Add cdLight AID to the list
             CalypsoPo cdLightSe = (CalypsoPo) seSelection.prepareSelection(
-                    new PoSelector(ByteArrayUtils.fromHex(PoFileStructureInfo.cdLightAid), false,
-                            true, null, PoSelector.RevisionTarget.TARGET_REV2_REV3, "CDLight"));
+                    new PoSelector(ByteArrayUtils.fromHex(PoFileStructureInfo.cdLightAid),
+                            SeSelector.SelectMode.FIRST, SeRequest.ChannelState.KEEP_OPEN, null,
+                            PoSelector.RevisionTarget.TARGET_REV2_REV3, "CDLight"));
 
             if (!seSelection.processExplicitSelection()) {
                 throw new IllegalArgumentException("No recognizable PO detected.");

@@ -332,7 +332,8 @@ public final class PoTransaction {
         samApduRequestList.add(samGetChallenge.getApduRequest());
 
         /* Build a SAM SeRequest */
-        SeRequest samSeRequest = new SeRequest(samApduRequestList, true);
+        SeRequest samSeRequest =
+                new SeRequest(samApduRequestList, SeRequest.ChannelState.KEEP_OPEN);
 
         logger.debug("processAtomicOpening => identification: SAMSEREQUEST = {}", samSeRequest);
 
@@ -387,7 +388,7 @@ public final class PoTransaction {
         }
 
         /* Create a SeRequest from the ApduRequest list, PO AID as Selector, keepChannelOpen true */
-        SeRequest poSeRequest = new SeRequest(poApduRequestList, true);
+        SeRequest poSeRequest = new SeRequest(poApduRequestList, SeRequest.ChannelState.KEEP_OPEN);
 
         logger.debug("processAtomicOpening => opening:  POSEREQUEST = {}", poSeRequest);
 
@@ -556,7 +557,9 @@ public final class PoTransaction {
          * Create a SeRequest from the ApduRequest list, PO AID as Selector, keepChannelOpen
          * according to the closeSeChannel flag
          */
-        SeRequest poSeRequest = new SeRequest(poApduRequestList, !closeSeChannel);
+        SeRequest poSeRequest =
+                new SeRequest(poApduRequestList, closeSeChannel ? SeRequest.ChannelState.CLOSE_AFTER
+                        : SeRequest.ChannelState.KEEP_OPEN);
 
         logger.debug("processAtomicPoCommands => POREQUEST = {}", poSeRequest);
 
@@ -634,7 +637,8 @@ public final class PoTransaction {
                 .getApduRequestsToSendInSession((List<SendableInSession>) (List<?>) samCommands);
 
         /* SeRequest from the command list */
-        SeRequest samSeRequest = new SeRequest(samApduRequestList, true);
+        SeRequest samSeRequest =
+                new SeRequest(samApduRequestList, SeRequest.ChannelState.KEEP_OPEN);
 
         logger.debug("processSamCommands => SAMSEREQUEST = {}", samSeRequest);
 
@@ -842,7 +846,9 @@ public final class PoTransaction {
         /*
          * Transfer PO commands
          */
-        SeRequest poSeRequest = new SeRequest(poApduRequestList, !closeSeChannel);
+        SeRequest poSeRequest =
+                new SeRequest(poApduRequestList, closeSeChannel ? SeRequest.ChannelState.CLOSE_AFTER
+                        : SeRequest.ChannelState.KEEP_OPEN);
 
         logger.debug("processAtomicClosing => POSEREQUEST = {}", poSeRequest);
 
@@ -903,7 +909,7 @@ public final class PoTransaction {
         List<ApduRequest> samApduRequestList = new ArrayList<ApduRequest>();
         samApduRequestList.add(digestAuth.getApduRequest());
 
-        samSeRequest = new SeRequest(samApduRequestList, true);
+        samSeRequest = new SeRequest(samApduRequestList, SeRequest.ChannelState.KEEP_OPEN);
 
         logger.debug("PoTransaction.DigestProcessor => checkPoSignature: SAMREQUEST = {}",
                 samSeRequest);
@@ -1266,7 +1272,7 @@ public final class PoTransaction {
                                     : SIGNATURE_LENGTH_REV_INF_32).getApduRequest()));
 
 
-            return new SeRequest(samApduRequestList, true);
+            return new SeRequest(samApduRequestList, SeRequest.ChannelState.KEEP_OPEN);
         }
     }
 

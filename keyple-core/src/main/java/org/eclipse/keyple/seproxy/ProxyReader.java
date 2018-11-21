@@ -16,7 +16,9 @@ import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.exception.NoStackTraceThrowable;
 import org.eclipse.keyple.seproxy.message.*;
 import org.eclipse.keyple.seproxy.protocol.SeProtocolSetting;
-import org.eclipse.keyple.util.NameableConfigurable;
+import org.eclipse.keyple.util.Configurable;
+import org.eclipse.keyple.util.Nameable;
+
 
 /**
  * ProxyReader interface
@@ -31,7 +33,7 @@ import org.eclipse.keyple.util.NameableConfigurable;
  * </ul>
  * Interface each {@link ReaderPlugin} should implement
  */
-public interface ProxyReader extends NameableConfigurable, Comparable<ProxyReader> {
+public interface ProxyReader extends Nameable, Configurable, Comparable<ProxyReader> {
 
     /**
      * Checks if is SE present.

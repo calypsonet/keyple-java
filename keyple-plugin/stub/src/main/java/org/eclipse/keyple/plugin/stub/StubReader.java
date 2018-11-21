@@ -23,6 +23,7 @@ import org.eclipse.keyple.seproxy.message.ApduResponse;
 import org.eclipse.keyple.seproxy.message.SeRequestSet;
 import org.eclipse.keyple.seproxy.message.SeResponseSet;
 import org.eclipse.keyple.seproxy.plugin.AbstractThreadedLocalReader;
+import org.eclipse.keyple.seproxy.protocol.Protocol;
 import org.eclipse.keyple.seproxy.protocol.SeProtocol;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -85,7 +86,7 @@ public class StubReader extends AbstractThreadedLocalReader {
             throws KeypleReaderException {
         boolean result;
         // Get protocolFlag to check if ATR filtering is required
-        if (protocolFlag != null) {
+        if (protocolFlag != Protocol.ANY) {
             if (!isPhysicalChannelOpen()) {
                 openPhysicalChannel();
             }

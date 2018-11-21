@@ -36,8 +36,8 @@ class SampleFactory {
 
         SeRequest.Selector selector = new SeRequest.AidSelector(ByteArrayUtils.fromHex(poAid));
 
-        SeRequest seRequest = new SeRequest(selector, poApduRequestList, false,
-                ContactlessProtocols.PROTOCOL_ISO14443_4, null);
+        SeRequest seRequest = new SeRequest(selector, poApduRequestList,
+                SeRequest.ChannelState.CLOSE_AFTER, ContactlessProtocols.PROTOCOL_ISO14443_4, null);
 
         return new SeRequestSet(seRequest);
 
@@ -55,11 +55,11 @@ class SampleFactory {
         SeRequest.Selector aidSelector = new SeRequest.AidSelector(ByteArrayUtils.fromHex(poAid));
         SeRequest.Selector atrSelector = new SeRequest.AtrSelector("/regex/");
 
-        SeRequest seRequest = new SeRequest(aidSelector, poApduRequestList, false,
-                ContactlessProtocols.PROTOCOL_ISO14443_4, null);
+        SeRequest seRequest = new SeRequest(aidSelector, poApduRequestList,
+                SeRequest.ChannelState.CLOSE_AFTER, ContactlessProtocols.PROTOCOL_ISO14443_4, null);
 
-        SeRequest seRequest2 = new SeRequest(atrSelector, poApduRequestList, true,
-                ContactsProtocols.PROTOCOL_ISO7816_3, null);
+        SeRequest seRequest2 = new SeRequest(atrSelector, poApduRequestList,
+                SeRequest.ChannelState.KEEP_OPEN, ContactsProtocols.PROTOCOL_ISO7816_3, null);
 
         Set<SeRequest> seRequests = new HashSet<SeRequest>();
         seRequests.add(seRequest);

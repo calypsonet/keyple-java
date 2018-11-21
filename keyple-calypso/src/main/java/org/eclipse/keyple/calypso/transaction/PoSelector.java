@@ -25,6 +25,7 @@ import org.eclipse.keyple.calypso.command.po.parser.ReadRecordsRespPars;
 import org.eclipse.keyple.command.AbstractApduResponseParser;
 import org.eclipse.keyple.seproxy.message.ApduRequest;
 import org.eclipse.keyple.seproxy.message.ApduResponse;
+import org.eclipse.keyple.seproxy.message.SeRequest;
 import org.eclipse.keyple.seproxy.message.SeResponse;
 import org.eclipse.keyple.seproxy.protocol.SeProtocol;
 import org.eclipse.keyple.transaction.SeSelector;
@@ -80,13 +81,13 @@ public final class PoSelector extends SeSelector {
      * Calypso PO revision 1 selector
      * 
      * @param atrRegex a regular expression to compare with the ATR of the targeted Rev1 PO
-     * @param keepChannelOpen indicates whether the logical channel should remain open
+     * @param channelState indicates whether the logical channel should remain open
      * @param protocolFlag the protocol flag to filter POs according to their communication protocol
      * @param extraInfo information string
      */
-    public PoSelector(String atrRegex, Short dfLID, boolean keepChannelOpen,
+    public PoSelector(String atrRegex, Short dfLID, SeRequest.ChannelState channelState,
             SeProtocol protocolFlag, RevisionTarget revisionTarget, String extraInfo) {
-        super(atrRegex, keepChannelOpen, protocolFlag, extraInfo);
+        super(atrRegex, channelState, protocolFlag, extraInfo);
         setMatchingClass(CalypsoPo.class);
         setSelectorClass(PoSelector.class);
         this.revisionTarget = RevisionTarget.TARGET_REV1;
@@ -99,14 +100,14 @@ public final class PoSelector extends SeSelector {
      * Calypso PO revision 2+ selector
      *
      * @param aid a regular expression to compare with the ATR of the targeted Rev1 PO
-     * @param selectNext a flag to indicate if the first or the next occurrence is requested
-     * @param keepChannelOpen indicates whether the logical channel should remain open
+     * @param selectMode a flag to indicate if the first or the next occurrence is requested
+     * @param channelState indicates whether the logical channel should remain open
      * @param protocolFlag the protocol flag to filter POs according to their communication protocol
      * @param extraInfo information string
      */
-    public PoSelector(byte[] aid, boolean selectNext, boolean keepChannelOpen,
+    public PoSelector(byte[] aid, SelectMode selectMode, SeRequest.ChannelState channelState,
             SeProtocol protocolFlag, RevisionTarget revisionTarget, String extraInfo) {
-        super(aid, selectNext, keepChannelOpen, protocolFlag, extraInfo);
+        super(aid, selectMode, channelState, protocolFlag, extraInfo);
         setMatchingClass(CalypsoPo.class);
         setSelectorClass(PoSelector.class);
         this.revisionTarget = RevisionTarget.TARGET_REV1;

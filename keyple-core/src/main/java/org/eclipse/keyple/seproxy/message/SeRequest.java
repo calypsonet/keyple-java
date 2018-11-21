@@ -16,7 +16,9 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
+import org.eclipse.keyple.seproxy.protocol.Protocol;
 import org.eclipse.keyple.seproxy.protocol.SeProtocol;
+import org.eclipse.keyple.transaction.SeSelector;
 import org.eclipse.keyple.util.ByteArrayUtils;
 
 /**
@@ -25,6 +27,14 @@ import org.eclipse.keyple.util.ByteArrayUtils;
  * @see SeResponse
  */
 public final class SeRequest implements Serializable {
+
+    /**
+     * indicate if the logical channel should be closed or not at the end of the request
+     * transmission
+     */
+    public enum ChannelState {
+        KEEP_OPEN, CLOSE_AFTER
+    }
 
     static final long serialVersionUID = 6018469841127325812L;
 
@@ -41,7 +51,7 @@ public final class SeRequest implements Serializable {
 
         public static final int AID_MIN_LENGTH = 5;
         public static final int AID_MAX_LENGTH = 16;
-        protected boolean selectNext = false;
+        protected SeSelector.SelectMode selectMode = SeSelector.SelectMode.FIRST;
 
         /**
          * - AID’s bytes of the SE application to select. In case the SE application is currently
@@ -69,18 +79,18 @@ public final class SeRequest implements Serializable {
         /**
          * AID based selector with selection mode
          * <p>
-         * The selectNext parameter defines the selection options P2 of the SELECT command message
+         * The selectMode parameter defines the selection options P2 of the SELECT command message
          * <ul>
          * <li>false: first or only occurrence</li>
          * <li>true: next occurrence</li>
          * </ul>
          * 
          * @param aidToSelect byte array
-         * @param selectNext true or false according to selection mode
+         * @param selectMode selection mode FIRST or NEXT
          */
-        public AidSelector(byte[] aidToSelect, boolean selectNext) {
+        public AidSelector(byte[] aidToSelect, SeSelector.SelectMode selectMode) {
             this(aidToSelect);
-            this.selectNext = selectNext;
+            this.selectMode = selectMode;
         }
 
         /**
@@ -98,7 +108,7 @@ public final class SeRequest implements Serializable {
          * @return true or false
          */
         public boolean isSelectNext() {
-            return selectNext;
+            return selectMode == SeSelector.SelectMode.NEXT;
         }
 
         /**
@@ -186,15 +196,15 @@ public final class SeRequest implements Serializable {
     /**
      * the protocol flag is used to target specific SE technologies for a given request
      */
-    private SeProtocol protocolFlag = null;
+    private SeProtocol protocolFlag = Protocol.ANY;
 
     /**
-     * the final logical channel status: if true, the SE reader keep active the logical channel of
-     * the SE application after processing the group of APDU commands. If false, the SE reader will
-     * close the logical channel of the SE application after processing the group of APDU commands
-     * (i.e. after the receipt of the last APDU response).
+     * the final logical channel status: the SE reader may kept active the logical channel of the SE
+     * application after processing the group of APDU commands otherwise the SE reader will close
+     * the logical channel of the SE application after processing the group of APDU commands (i.e.
+     * after the receipt of the last APDU response).
      */
-    private boolean keepChannelOpen;
+    private ChannelState channelState;
 
     /**
      * The constructor called by a ProxyReader in order to open a logical channel, to send a set of
@@ -211,16 +221,19 @@ public final class SeRequest implements Serializable {
      *
      * @param selector the SE selector
      * @param apduRequests the apdu requests
-     * @param keepChannelOpen the keep channel open
+     * @param channelState the keep channel open
      * @param protocolFlag the expected protocol
      * @param successfulSelectionStatusCodes a list of successful status codes for the select
      *        application command
      */
-    public SeRequest(Selector selector, List<ApduRequest> apduRequests, boolean keepChannelOpen,
+    public SeRequest(Selector selector, List<ApduRequest> apduRequests, ChannelState channelState,
             SeProtocol protocolFlag, Set<Integer> successfulSelectionStatusCodes) {
+        if (protocolFlag == null) {
+            throw new IllegalArgumentException("¨protocolFlag can't be null");
+        }
         this.selector = selector;
         this.apduRequests = apduRequests;
-        this.keepChannelOpen = keepChannelOpen;
+        this.channelState = channelState;
         this.protocolFlag = protocolFlag;
         this.successfulSelectionStatusCodes = successfulSelectionStatusCodes;
     }
@@ -229,10 +242,10 @@ public final class SeRequest implements Serializable {
      * Constructor to be used when the SE is already selected
      * 
      * @param apduRequests a list of ApudRequest
-     * @param keepChannelOpen a flag to tell if the channel has to be closed at the end
+     * @param channelState a flag to tell if the channel has to be closed at the end
      */
-    public SeRequest(List<ApduRequest> apduRequests, boolean keepChannelOpen) {
-        this(null, apduRequests, keepChannelOpen, null, null);
+    public SeRequest(List<ApduRequest> apduRequests, ChannelState channelState) {
+        this(null, apduRequests, channelState, Protocol.ANY, null);
     }
 
 
@@ -242,7 +255,7 @@ public final class SeRequest implements Serializable {
      * @return the current SE selector
      */
     public Selector getSelector() {
-        return this.selector;
+        return selector;
     }
 
     /**
@@ -262,7 +275,7 @@ public final class SeRequest implements Serializable {
      * @return If the channel should be kept open
      */
     public boolean isKeepChannelOpen() {
-        return keepChannelOpen;
+        return channelState == ChannelState.KEEP_OPEN;
     }
 
     /**
@@ -271,7 +284,7 @@ public final class SeRequest implements Serializable {
      * @return protocolFlag
      */
     public SeProtocol getProtocolFlag() {
-        return this.protocolFlag;
+        return protocolFlag;
     }
 
     /**
@@ -286,6 +299,6 @@ public final class SeRequest implements Serializable {
     @Override
     public String toString() {
         return String.format("SeRequest:{REQUESTS = %s, SELECTOR = %s, KEEPCHANNELOPEN = %s}",
-                getApduRequests(), getSelector(), this.keepChannelOpen);
+                getApduRequests(), getSelector(), channelState);
     }
 }

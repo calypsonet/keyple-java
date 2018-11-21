@@ -53,7 +53,8 @@ public class TestEngine {
         // open
         SeSelection samSelection = new SeSelection(samReader);
 
-        SeSelector samSelector = new SeSelector(SAM_ATR_REGEX, true, null, "SAM Selection");
+        SeSelector samSelector = new SeSelector(SAM_ATR_REGEX, SeRequest.ChannelState.CLOSE_AFTER,
+                null, "SAM Selection");
 
         /* Prepare selector, ignore MatchingSe here */
         samSelection.prepareSelection(samSelector);
@@ -74,18 +75,21 @@ public class TestEngine {
         // Add Audit C0 AID to the list
         seSelection.prepareSelection(new PoSelector(
 
-                ByteArrayUtils.fromHex(PoFileStructureInfo.poAuditC0Aid), false, true, null,
+                ByteArrayUtils.fromHex(PoFileStructureInfo.poAuditC0Aid),
+                SeSelector.SelectMode.FIRST, SeRequest.ChannelState.KEEP_OPEN, null,
                 PoSelector.RevisionTarget.TARGET_REV3, "Audit C0"));
 
         // Add CLAP AID to the list
         seSelection.prepareSelection(
-                new PoSelector(ByteArrayUtils.fromHex(PoFileStructureInfo.clapAid), false, true,
-                        null, PoSelector.RevisionTarget.TARGET_REV3, "CLAP"));
+                new PoSelector(ByteArrayUtils.fromHex(PoFileStructureInfo.clapAid),
+                        SeSelector.SelectMode.FIRST, SeRequest.ChannelState.KEEP_OPEN, null,
+                        PoSelector.RevisionTarget.TARGET_REV3, "CLAP"));
 
         // Add cdLight AID to the list
         seSelection.prepareSelection(
-                new PoSelector(ByteArrayUtils.fromHex(PoFileStructureInfo.cdLightAid), false, true,
-                        null, PoSelector.RevisionTarget.TARGET_REV2_REV3, "CDLight"));
+                new PoSelector(ByteArrayUtils.fromHex(PoFileStructureInfo.cdLightAid),
+                        SeSelector.SelectMode.FIRST, SeRequest.ChannelState.KEEP_OPEN, null,
+                        PoSelector.RevisionTarget.TARGET_REV2_REV3, "CDLight"));
 
         if (seSelection.processExplicitSelection()) {
             return new PoFileStructureInfo(seSelection.getSelectedSe());

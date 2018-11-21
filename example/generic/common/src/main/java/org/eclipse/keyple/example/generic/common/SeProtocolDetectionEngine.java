@@ -17,6 +17,7 @@ import org.eclipse.keyple.calypso.command.po.parser.ReadDataStructure;
 import org.eclipse.keyple.calypso.transaction.PoSelector;
 import org.eclipse.keyple.seproxy.ProxyReader;
 import org.eclipse.keyple.seproxy.message.ApduRequest;
+import org.eclipse.keyple.seproxy.message.SeRequest;
 import org.eclipse.keyple.seproxy.message.SeRequestSet;
 import org.eclipse.keyple.seproxy.message.SeResponseSet;
 import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
@@ -70,7 +71,8 @@ public class SeProtocolDetectionEngine extends AbstractReaderObserverEngine {
                     byte SFI_T2Environment = (byte) 0x14;
 
                     PoSelector poSelector = new PoSelector(ByteArrayUtils.fromHex(HoplinkAID),
-                            false, true, ContactlessProtocols.PROTOCOL_ISO14443_4,
+                            SeSelector.SelectMode.FIRST, SeRequest.ChannelState.KEEP_OPEN,
+                            ContactlessProtocols.PROTOCOL_ISO14443_4,
                             PoSelector.RevisionTarget.TARGET_REV3, "Hoplink selector");
 
                     poSelector.preparePoCustomReadCmd("Standard Get Data",
@@ -93,8 +95,9 @@ public class SeProtocolDetectionEngine extends AbstractReaderObserverEngine {
                     break;
                 default:
                     /* Add a generic selector */
-                    seSelection.prepareSelection(new SeSelector(".*", true,
-                            ContactlessProtocols.PROTOCOL_ISO14443_4, "Default selector"));
+                    seSelection
+                            .prepareSelection(new SeSelector(".*", SeRequest.ChannelState.KEEP_OPEN,
+                                    ContactlessProtocols.PROTOCOL_ISO14443_4, "Default selector"));
                     break;
             }
         }
