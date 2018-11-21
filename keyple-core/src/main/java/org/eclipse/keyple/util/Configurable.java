@@ -17,15 +17,9 @@ import org.eclipse.keyple.seproxy.ReaderPlugin;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 
 /**
- * Allow {@link ProxyReader}s and {@link ReaderPlugin}s to be named and receive configuration
- * parameters.
+ * Allow {@link ProxyReader}s and {@link ReaderPlugin}s to receive configuration parameters.
  */
-public interface NameableConfigurable {
-    /**
-     *
-     * @return the ‘unique’ name of the item
-     */
-    String getName();
+public interface Configurable {
 
     /**
      * Gets the parameters
