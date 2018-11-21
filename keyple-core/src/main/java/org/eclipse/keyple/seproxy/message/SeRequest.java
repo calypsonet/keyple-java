@@ -16,6 +16,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
+import org.eclipse.keyple.seproxy.protocol.Protocol;
 import org.eclipse.keyple.seproxy.protocol.SeProtocol;
 import org.eclipse.keyple.transaction.SeSelector;
 import org.eclipse.keyple.util.ByteArrayUtils;
@@ -195,7 +196,7 @@ public final class SeRequest implements Serializable {
     /**
      * the protocol flag is used to target specific SE technologies for a given request
      */
-    private SeProtocol protocolFlag = null;
+    private SeProtocol protocolFlag = Protocol.ANY;
 
     /**
      * the final logical channel status: the SE reader may kept active the logical channel of the SE
@@ -227,6 +228,9 @@ public final class SeRequest implements Serializable {
      */
     public SeRequest(Selector selector, List<ApduRequest> apduRequests, ChannelState channelState,
             SeProtocol protocolFlag, Set<Integer> successfulSelectionStatusCodes) {
+        if (protocolFlag == null) {
+            throw new IllegalArgumentException("¨protocolFlag can't be null");
+        }
         this.selector = selector;
         this.apduRequests = apduRequests;
         this.channelState = channelState;
@@ -241,7 +245,7 @@ public final class SeRequest implements Serializable {
      * @param channelState a flag to tell if the channel has to be closed at the end
      */
     public SeRequest(List<ApduRequest> apduRequests, ChannelState channelState) {
-        this(null, apduRequests, channelState, null, null);
+        this(null, apduRequests, channelState, Protocol.ANY, null);
     }
 
 

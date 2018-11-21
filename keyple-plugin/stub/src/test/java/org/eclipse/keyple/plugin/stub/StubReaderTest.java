@@ -26,6 +26,7 @@ import org.eclipse.keyple.seproxy.exception.KeypleIOReaderException;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.exception.NoStackTraceThrowable;
 import org.eclipse.keyple.seproxy.message.*;
+import org.eclipse.keyple.seproxy.protocol.Protocol;
 import org.eclipse.keyple.seproxy.protocol.SeProtocolSetting;
 import org.eclipse.keyple.transaction.MatchingSe;
 import org.eclipse.keyple.transaction.SeSelection;
@@ -91,8 +92,8 @@ public class StubReaderTest {
 
     private void selectSe() throws KeypleReaderException {
         SeSelection seSelection = new SeSelection(reader);
-        SeSelector seSelector =
-                new SeSelector("3B.*", SeRequest.ChannelState.KEEP_OPEN, null, "ATR selection");
+        SeSelector seSelector = new SeSelector("3B.*", SeRequest.ChannelState.KEEP_OPEN,
+                Protocol.ANY, "ATR selection");
 
         /* Prepare selector, ignore MatchingSe here */
         seSelection.prepareSelection(seSelector);

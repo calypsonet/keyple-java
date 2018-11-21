@@ -19,6 +19,7 @@ import org.eclipse.keyple.seproxy.SeProxyService;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 import org.eclipse.keyple.seproxy.exception.NoStackTraceThrowable;
 import org.eclipse.keyple.seproxy.message.SeRequest;
+import org.eclipse.keyple.seproxy.protocol.Protocol;
 import org.eclipse.keyple.transaction.MatchingSe;
 import org.eclipse.keyple.transaction.SeSelection;
 import org.eclipse.keyple.transaction.SeSelector;
@@ -86,9 +87,9 @@ public class UseCase_Generic1_ExplicitSelectionAid_Pcsc {
              * Generic selection: configures a SeSelector with all the desired attributes to make
              * the selection and read additional information afterwards
              */
-            SeSelector seSelector = new SeSelector(ByteArrayUtils.fromHex(seAid),
-                    SeSelector.SelectMode.FIRST, SeRequest.ChannelState.KEEP_OPEN,
-                    /* protocolFlag */ null, "AID: " + seAid);
+            SeSelector seSelector =
+                    new SeSelector(ByteArrayUtils.fromHex(seAid), SeSelector.SelectMode.FIRST,
+                            SeRequest.ChannelState.KEEP_OPEN, Protocol.ANY, "AID: " + seAid);
 
             /*
              * Add the selection case to the current selection (we could have added other cases

@@ -54,6 +54,9 @@ public class SeSelector {
         return selectionByAid;
     }
 
+    /**
+     * SelectMode indicates how to carry out the application selection in accordance with ISO7816-4
+     */
     public enum SelectMode {
         FIRST, NEXT
     }
