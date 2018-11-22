@@ -12,6 +12,7 @@
 package org.eclipse.keyple.seproxy.plugin;
 
 import java.util.*;
+import org.eclipse.keyple.seproxy.event.ObservableReader;
 import org.eclipse.keyple.seproxy.event.ReaderEvent;
 import org.eclipse.keyple.seproxy.exception.KeypleApplicationSelectionException;
 import org.eclipse.keyple.seproxy.exception.KeypleChannelStateException;
@@ -102,13 +103,30 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
      */
     protected void cardInserted() {
         if (defaultSeRequests == null) {
+            /* no default request is defined, just notify the SE insertion */
             notifyObservers(
                     new ReaderEvent(this.pluginName, this.name, ReaderEvent.EventType.SE_INSERTED));
         } else {
             try {
-                /* TODO add responses check? */
+                /*
+                 * a default request is defined, send it a notify according to the notification mode
+                 * and the selection status
+                 */
+                boolean notify = true;
                 SeResponseSet seResponseSet = processSeRequestSet(defaultSeRequests);
-                notifyObservers(new ReaderEvent(this.pluginName, this.name, seResponseSet));
+                if (notificationMode == ObservableReader.NotificationMode.MATCHED_ONLY) {
+                    notify = false;
+                    /* the notification is only sent if there is a matching response */
+                    for (SeResponse seResponse : seResponseSet.getResponses()) {
+                        if (seResponse != null && seResponse.getSelectionStatus().hasMatched()) {
+                            notify = true;
+                            break;
+                        }
+                    }
+                }
+                if (notify) {
+                    notifyObservers(new ReaderEvent(this.pluginName, this.name, seResponseSet));
+                }
             } catch (KeypleReaderException e) {
                 e.printStackTrace();
             }

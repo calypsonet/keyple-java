@@ -176,7 +176,7 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
                 ReadDataStructure.SINGLE_RECORD_DATA, (byte) (contractIndex + 1), (byte) 0x1D,
                 "Contract");
 
-        poProcessStatus = poTransaction.processPoCommands(false);
+        poProcessStatus = poTransaction.processPoCommands(SeRequest.ChannelState.KEEP_OPEN);
 
         System.out
                 .println("Reading contract #" + (contractIndex + 1) + " for current validation...");
@@ -209,7 +209,8 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
         AppendRecordRespPars appendEventPars =
                 poTransaction.prepareAppendRecordCmd(eventSfi, newEventData, "Event");
 
-        poProcessStatus = poTransaction.processClosing(CommunicationMode.CONTACTLESS_MODE, false);
+        poProcessStatus = poTransaction.processClosing(CommunicationMode.CONTACTLESS_MODE,
+                SeRequest.ChannelState.KEEP_OPEN);
 
         System.out.println("\nValidation Successful!");
         System.out.println(
@@ -291,7 +292,8 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
 
             System.out.println("No value present in the card. Initiating auto top-up...");
 
-            poTransaction.processClosing(PoTransaction.CommunicationMode.CONTACTLESS_MODE, false);
+            poTransaction.processClosing(PoTransaction.CommunicationMode.CONTACTLESS_MODE,
+                    SeRequest.ChannelState.KEEP_OPEN);
 
             poTransaction.processOpening(PoTransaction.ModificationMode.ATOMIC, SESSION_LVL_LOAD,
                     (byte) 0x00, (byte) 0x00);
@@ -324,7 +326,8 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
 
         byte[] updatedCounterValue = getByteArrayFromCounterValue(counterValue - 1);
 
-        poTransaction.processClosing(CommunicationMode.CONTACTLESS_MODE, false);
+        poTransaction.processClosing(CommunicationMode.CONTACTLESS_MODE,
+                SeRequest.ChannelState.KEEP_OPEN);
 
         System.out.println("\nValidation Successful!");
         System.out.println(

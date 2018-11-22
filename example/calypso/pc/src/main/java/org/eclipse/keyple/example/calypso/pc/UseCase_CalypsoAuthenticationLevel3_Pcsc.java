@@ -140,7 +140,8 @@ public class UseCase_CalypsoAuthenticationLevel3_Pcsc {
                      * A ratification command will be sent (CONTACTLESS_MODE).
                      */
                     poProcessStatus = poTransaction.processClosing(
-                            PoTransaction.CommunicationMode.CONTACTLESS_MODE, false);
+                            PoTransaction.CommunicationMode.CONTACTLESS_MODE,
+                            SeRequest.ChannelState.KEEP_OPEN);
                     profiler.stop();
                     logger.warn(System.getProperty("line.separator") + "{}", profiler);
                 } catch (Exception e) {
@@ -244,7 +245,8 @@ public class UseCase_CalypsoAuthenticationLevel3_Pcsc {
                 new CalypsoAuthenticationLevel3TransactionEngine(poReader, samReader);
 
         /* Set the default selection operation */
-        ((ObservableReader) poReader).setDefaultSeRequests(transactionEngine.preparePoSelection());
+        ((ObservableReader) poReader).setDefaultSeRequests(transactionEngine.preparePoSelection(),
+                ObservableReader.NotificationMode.MATCHED_ONLY);
 
         /* Set terminal as Observer of the first reader */
         ((ObservableReader) poReader).addObserver(transactionEngine);

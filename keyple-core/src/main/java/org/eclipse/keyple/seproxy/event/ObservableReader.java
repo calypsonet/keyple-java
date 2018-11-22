@@ -19,11 +19,15 @@ public interface ObservableReader extends ProxyReader {
     interface ReaderObserver extends Observable.Observer<ReaderEvent> {
     }
 
+    public enum NotificationMode {
+        ALWAYS, MATCHED_ONLY
+    }
+
     void addObserver(ReaderObserver observer);
 
     void removeObserver(ReaderObserver observer);
 
     void notifyObservers(ReaderEvent event);
 
-    void setDefaultSeRequests(SeRequestSet defaultSeRequests);
+    void setDefaultSeRequests(SeRequestSet defaultSeRequests, NotificationMode notificationMode);
 }
