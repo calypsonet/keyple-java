@@ -14,7 +14,7 @@ package org.eclipse.keyple.example.generic.common;
 
 import org.eclipse.keyple.seproxy.event.ObservableReader;
 import org.eclipse.keyple.seproxy.event.ReaderEvent;
-import org.eclipse.keyple.seproxy.message.SeResponseSet;
+import org.eclipse.keyple.transaction.SelectionResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,7 +27,7 @@ public abstract class AbstractReaderObserverEngine implements ObservableReader.R
     private static Logger logger = LoggerFactory.getLogger(AbstractReaderObserverEngine.class);
 
 
-    protected abstract void processSeMatch(SeResponseSet seResponses);
+    protected abstract void processSeMatch(SelectionResponse selectionResponse);
 
     protected abstract void processSeInsertion(); // alternative AID selection
 

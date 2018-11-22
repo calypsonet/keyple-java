@@ -24,13 +24,10 @@ import org.eclipse.keyple.example.generic.common.AbstractReaderObserverEngine;
 import org.eclipse.keyple.seproxy.ChannelState;
 import org.eclipse.keyple.seproxy.ProxyReader;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
-import org.eclipse.keyple.seproxy.message.SeRequestSet;
 import org.eclipse.keyple.seproxy.message.SeResponse;
 import org.eclipse.keyple.seproxy.message.SeResponseSet;
 import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
-import org.eclipse.keyple.transaction.MatchingSe;
-import org.eclipse.keyple.transaction.SeSelection;
-import org.eclipse.keyple.transaction.SeSelector;
+import org.eclipse.keyple.transaction.*;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -282,7 +279,7 @@ public class CalypsoClassicTransactionEngine extends AbstractReaderObserverEngin
         }
     }
 
-    public SeRequestSet preparePoSelection() {
+    public SelectionRequest preparePoSelection() {
         /*
          * Initialize the selection process for the poReader
          */
@@ -331,8 +328,8 @@ public class CalypsoClassicTransactionEngine extends AbstractReaderObserverEngin
      * Do the PO selection and possibly go on with Calypso transactions.
      */
     @Override
-    public void processSeMatch(SeResponseSet seResponses) {
-        if (seSelection.processDefaultSelection(seResponses)) {
+    public void processSeMatch(SelectionResponse selectionResponse) {
+        if (seSelection.processDefaultSelection(selectionResponse)) {
             MatchingSe selectedSe = seSelection.getSelectedSe();
             try {
                 /* first time: check SAM */

@@ -17,6 +17,7 @@ import org.eclipse.keyple.seproxy.event.ObservableReader;
 import org.eclipse.keyple.seproxy.event.ReaderEvent;
 import org.eclipse.keyple.seproxy.message.*;
 import org.eclipse.keyple.seproxy.protocol.SeProtocolSetting;
+import org.eclipse.keyple.transaction.SelectionRequest;
 import org.eclipse.keyple.util.Observable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -195,7 +196,8 @@ public class VirtualReader extends Observable implements ObservableReader {
     }
 
     @Override
-    public void setDefaultSeRequests(SeRequestSet seRequestSet, NotificationMode notificationMode) {
+    public void setDefaultSelectionRequest(SelectionRequest selectionRequest,
+            NotificationMode notificationMode) {
         // todo does it makes sense here?
     }
 

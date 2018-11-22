@@ -22,6 +22,7 @@ import org.eclipse.keyple.seproxy.message.SeRequest;
 import org.eclipse.keyple.seproxy.message.SeRequestSet;
 import org.eclipse.keyple.seproxy.message.SeResponse;
 import org.eclipse.keyple.seproxy.message.SeResponseSet;
+import org.eclipse.keyple.transaction.SelectionRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,8 +43,8 @@ public abstract class AbstractObservableReader extends AbstractLoggedObservable<
 
     protected final String pluginName;
 
-    /** the default SeRequestSet to be executed upon SE insertion */
-    protected SeRequestSet defaultSeRequests;
+    /** the default SelectionRequest to be executed upon SE insertion */
+    protected SelectionRequest defaultSelectionRequest;
 
     /** Indicate if all SE detected should be notified or only matching SE */
     protected ObservableReader.NotificationMode notificationMode;
@@ -70,18 +71,19 @@ public abstract class AbstractObservableReader extends AbstractLoggedObservable<
 
 
     /**
-     * If defined, the prepared setDefaultSeRequests will be processed as soon as a SE is inserted.
-     * The result of this request set will be added to the reader event.
+     * If defined, the prepared setDefaultSelectionRequest will be processed as soon as a SE is
+     * inserted. The result of this request set will be added to the reader event.
      * <p>
      * Depending on the notification mode, the observer will be notified whenever an SE is inserted,
      * regardless of the selection status, or only if the current SE matches the selection criteria.
      *
-     * @param defaultSeRequests the {@link SeRequestSet} to be executed when a SE is inserted
+     * @param defaultSelectionRequest the {@link SelectionRequest} to be executed when a SE is
+     *        inserted
      * @param notificationMode the notification mode enum (ALWAYS or MATCHED_ONLY)
      */
-    public void setDefaultSeRequests(SeRequestSet defaultSeRequests,
+    public void setDefaultSelectionRequest(SelectionRequest defaultSelectionRequest,
             ObservableReader.NotificationMode notificationMode) {
-        this.defaultSeRequests = defaultSeRequests;
+        this.defaultSelectionRequest = defaultSelectionRequest;
         this.notificationMode = notificationMode;
     };
 

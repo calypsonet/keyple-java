@@ -113,7 +113,8 @@ public class UseCase_Calypso2_DefaultSelectionNotification_Pcsc implements Reade
          * Provide the ProxyReader with the selection operation to be processed when a PO is
          * inserted.
          */
-        ((ObservableReader) poReader).setDefaultSeRequests(seSelection.getSelectionOperation(),
+        ((ObservableReader) poReader).setDefaultSelectionRequest(
+                seSelection.getSelectionOperation(),
                 ObservableReader.NotificationMode.MATCHED_ONLY);
 
         /* Set the current class as Observer of the first reader */
