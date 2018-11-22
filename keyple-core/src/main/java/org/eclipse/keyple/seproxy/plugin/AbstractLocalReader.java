@@ -39,6 +39,7 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
     private boolean logicalChannelIsOpen = false;
     private byte[] aidCurrentlySelected;
     private SelectionStatus currentSelectionStatus;
+    private boolean presenceNotified = false;
     private long before; // timestamp recorder
 
     public AbstractLocalReader(String pluginName, String readerName) {
@@ -93,10 +94,14 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
 
     /**
      * This method is invoked when a SE is removed
+     * <p>The SE will be notified removed only if it has been previously notified present
      */
     protected void cardRemoved() {
-        notifyObservers(new ReaderEvent(this.pluginName, this.name,
-                ReaderEvent.EventType.SE_REMOVAL, null));
+        if(presenceNotified) {
+            notifyObservers(new ReaderEvent(this.pluginName, this.name,
+                    ReaderEvent.EventType.SE_REMOVAL, null));
+            presenceNotified = false;
+        }
     }
 
     /**
@@ -119,6 +124,7 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
             /* no default request is defined, just notify the SE insertion */
             notifyObservers(new ReaderEvent(this.pluginName, this.name,
                     ReaderEvent.EventType.SE_INSERTED, null));
+            presenceNotified = true;
         } else {
             try {
                 /*
@@ -140,12 +146,14 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
                         notifyObservers(new ReaderEvent(this.pluginName, this.name,
                                 ReaderEvent.EventType.SE_MATCHED,
                                 new SelectionResponse(seResponseSet)));
+                        presenceNotified = true;
                     }
                 } else {
                     /* notify an SE_INSERTED event with the received response */
                     notifyObservers(new ReaderEvent(this.pluginName, this.name,
                             ReaderEvent.EventType.SE_INSERTED,
                             new SelectionResponse(seResponseSet)));
+                    presenceNotified = true;
                 }
             } catch (KeypleReaderException e) {
                 e.printStackTrace();
