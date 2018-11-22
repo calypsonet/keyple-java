@@ -94,10 +94,11 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
 
     /**
      * This method is invoked when a SE is removed
-     * <p>The SE will be notified removed only if it has been previously notified present
+     * <p>
+     * The SE will be notified removed only if it has been previously notified present
      */
     protected void cardRemoved() {
-        if(presenceNotified) {
+        if (presenceNotified) {
             notifyObservers(new ReaderEvent(this.pluginName, this.name,
                     ReaderEvent.EventType.SE_REMOVAL, null));
             presenceNotified = false;

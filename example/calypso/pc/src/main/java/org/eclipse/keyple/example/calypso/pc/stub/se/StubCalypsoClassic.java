@@ -33,6 +33,12 @@ public class StubCalypsoClassic extends StubSecureElement {
         /* Read Records */
         addHexCommand("00B2014400",
                 "00112233445566778899AABBCCDDEEFF00112233445566778899AABBCC9000");
+        /* Read Records - EnvironmentAndHolder (SFI=07)) */
+        addHexCommand("00B2013C00",
+                "24B92848080000131A50001200000000000000000000000000000000009000");
+        /* Read Records - EventLog (SFI=08, recnbr=1)) */
+        addHexCommand("00B2014400",
+                "00112233445566778899AABBCCDDEEFF00112233445566778899AABBCC9000");
         /* Open Secure Session V3.1 */
         addHexCommand("008A0B3904C1C2C3C400",
                 "0308306C00307E1D24B928480800000606F0001200000000000000000000000000000000009000");

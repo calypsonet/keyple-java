@@ -53,8 +53,8 @@ public class UseCase_Generic2_DefaultSelectionNotification_Pcsc implements Reade
         seProxyService.addPlugin(pcscPlugin);
 
         /*
-         * Get a SE reader ready to work with contactless SE. Use the getReader helper method from the
-         * ReaderUtilities class.
+         * Get a SE reader ready to work with contactless SE. Use the getReader helper method from
+         * the ReaderUtilities class.
          */
         seReader = ReaderUtilities.getDefaultContactLessSeReader(seProxyService);
 
@@ -118,7 +118,7 @@ public class UseCase_Generic2_DefaultSelectionNotification_Pcsc implements Reade
     }
 
     /**
-     * Method invoked upon reader event
+     * Method invoked in the case of a reader event
      * 
      * @param event the reader event
      */
@@ -138,11 +138,13 @@ public class UseCase_Generic2_DefaultSelectionNotification_Pcsc implements Reade
                     logger.info(
                             "==================================================================================");
                 } else {
-                    logger.error("The selection of the SE has failed. Should not have occurred due to the MATCHED_ONLY selection mode.");
+                    logger.error(
+                            "The selection of the SE has failed. Should not have occurred due to the MATCHED_ONLY selection mode.");
                 }
                 break;
             case SE_INSERTED:
-                logger.error("SE_INSERTED event: should not have occurred due to the MATCHED_ONLY selection mode.");
+                logger.error(
+                        "SE_INSERTED event: should not have occurred due to the MATCHED_ONLY selection mode.");
                 break;
             case SE_REMOVAL:
                 logger.info("The SE has been removed.");
