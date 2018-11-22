@@ -19,6 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.smartcardio.*;
+import org.eclipse.keyple.seproxy.ChannelState;
 import org.eclipse.keyple.seproxy.exception.*;
 import org.eclipse.keyple.seproxy.message.*;
 import org.eclipse.keyple.util.ByteArrayUtils;
@@ -119,7 +120,7 @@ public class SmartCardIOReaderTest {
         List<ApduRequest> apduRequests = new ArrayList<ApduRequest>();
         apduRequests.add(apduRequestMF);
         SeRequestSet seApplicationRequest =
-                new SeRequestSet(new SeRequest(apduRequests, SeRequest.ChannelState.KEEP_OPEN));
+                new SeRequestSet(new SeRequest(apduRequests, ChannelState.KEEP_OPEN));
 
         SeResponseSet reponseActuelle = reader.transmitSet(seApplicationRequest);
 
@@ -150,7 +151,7 @@ public class SmartCardIOReaderTest {
         List<ApduRequest> apduRequests = new ArrayList<ApduRequest>();
         apduRequests.add(apduRequestMF);
         SeRequestSet seApplicationRequest =
-                new SeRequestSet(new SeRequest(apduRequests, SeRequest.ChannelState.KEEP_OPEN));
+                new SeRequestSet(new SeRequest(apduRequests, ChannelState.KEEP_OPEN));
 
         PcscReader spiedReader = spy(this.reader);
         SeResponseSet reponseActuelle = spiedReader.transmitSet(seApplicationRequest);
@@ -184,7 +185,7 @@ public class SmartCardIOReaderTest {
         List<ApduRequest> apduRequests = new ArrayList<ApduRequest>();
         apduRequests.add(apduRequestMF);
         SeRequestSet seApplicationRequest =
-                new SeRequestSet(new SeRequest(apduRequests, SeRequest.ChannelState.KEEP_OPEN));
+                new SeRequestSet(new SeRequest(apduRequests, ChannelState.KEEP_OPEN));
 
         PcscReader spiedReader = spy(this.reader);
 
@@ -213,7 +214,7 @@ public class SmartCardIOReaderTest {
         List<ApduRequest> apduRequests = new ArrayList<ApduRequest>();
         apduRequests.add(apduRequestMF);
         SeRequestSet seApplicationRequest =
-                new SeRequestSet(new SeRequest(apduRequests, SeRequest.ChannelState.KEEP_OPEN));
+                new SeRequestSet(new SeRequest(apduRequests, ChannelState.KEEP_OPEN));
 
         PcscReader spiedReader = spy(this.reader);
 

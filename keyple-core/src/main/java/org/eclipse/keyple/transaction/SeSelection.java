@@ -77,11 +77,11 @@ public final class SeSelection {
         return matchingSe;
     }
 
-    private boolean processSelection(SeResponseSet seResponseSet) {
+    private boolean processSelection(SelectionResponse selectionResponse) {
         boolean selectionSuccessful = false;
         /* Check SeResponses */
         Iterator<MatchingSe> matchingSeIterator = matchingSeList.iterator();
-        for (SeResponse seResponse : seResponseSet.getResponses()) {
+        for (SeResponse seResponse : selectionResponse.getSelectionSeResponseSet().getResponses()) {
             if (seResponse != null) {
                 /* test if the selection is successful: we should have either a FCI or an ATR */
                 if (seResponse.getSelectionStatus().hasMatched()) {
@@ -122,16 +122,16 @@ public final class SeSelection {
      * <p>
      * Responses that have not matched the current SE are set to null.
      *
-     * @param seResponseSet the response from the reader to the selection SeRequestSet
+     * @param selectionResponse the response from the reader to the {@link SelectionRequest}
      * @return boolean true if a SE was selected
      */
-    public boolean processDefaultSelection(SeResponseSet seResponseSet) {
+    public boolean processDefaultSelection(SelectionResponse selectionResponse) {
         if (logger.isTraceEnabled()) {
             logger.trace("Process default SELECTIONRESPONSE ({} response(s))",
-                    seResponseSet.getResponses().size());
+                    selectionResponse.getSelectionSeResponseSet().getResponses().size());
         }
 
-        return processSelection(seResponseSet);
+        return processSelection(selectionResponse);
     }
 
     /**
@@ -164,7 +164,7 @@ public final class SeSelection {
         SeResponseSet seResponseSet =
                 proxyReader.transmitSet(new SeRequestSet(selectionRequestSet));
 
-        return processSelection(seResponseSet);
+        return processSelection(new SelectionResponse(seResponseSet));
     }
 
     /**
@@ -187,13 +187,13 @@ public final class SeSelection {
     }
 
     /**
-     * The SelectionOperation is the SeRequestSet to process in ordered to select a SE among others
-     * through the selection process. This method is useful to build the prepared selection to be
-     * executed by a reader just after a SE insertion.
+     * The SelectionOperation is the SelectionRequest to process in ordered to select a SE among
+     * others through the selection process. This method is useful to build the prepared selection
+     * to be executed by a reader just after a SE insertion.
      * 
-     * @return the SeRequestSet previously prepared with prepareSelection
+     * @return the {@link SelectionRequest} previously prepared with prepareSelection
      */
-    public SeRequestSet getSelectionOperation() {
-        return new SeRequestSet(selectionRequestSet);
+    public SelectionRequest getSelectionOperation() {
+        return new SelectionRequest(new SeRequestSet(selectionRequestSet));
     }
 }

@@ -21,6 +21,7 @@ import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.message.*;
 import org.eclipse.keyple.seproxy.protocol.SeProtocol;
 import org.eclipse.keyple.seproxy.protocol.SeProtocolSetting;
+import org.eclipse.keyple.transaction.SelectionResponse;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -94,38 +95,57 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
      * This method is invoked when a SE is removed
      */
     protected void cardRemoved() {
-        notifyObservers(
-                new ReaderEvent(this.pluginName, this.name, ReaderEvent.EventType.SE_REMOVAL));
+        notifyObservers(new ReaderEvent(this.pluginName, this.name,
+                ReaderEvent.EventType.SE_REMOVAL, null));
     }
 
     /**
      * This method is invoked when a SE is inserted
+     * <p>
+     * It will fire an ReaderEvent in the following cases:
+     * <ul>
+     * <li>SE_INSERTED: if no default selection request was defined</li>
+     * <li>SE_MATCHED: if a default selection request was defined in any mode a SE matched the
+     * selection</li>
+     * <li>SE_INSERTED: if a default selection request was defined in ALWAYS mode but no SE matched
+     * the selection (the SelectionResponse is however transmitted)</li>
+     * </ul>
+     * <p>
+     * It will do nothing if a default selection is defined in MATCHED_ONLY mode but no SE matched
+     * the selection.
      */
     protected void cardInserted() {
-        if (defaultSeRequests == null) {
+        if (defaultSelectionRequest == null) {
             /* no default request is defined, just notify the SE insertion */
-            notifyObservers(
-                    new ReaderEvent(this.pluginName, this.name, ReaderEvent.EventType.SE_INSERTED));
+            notifyObservers(new ReaderEvent(this.pluginName, this.name,
+                    ReaderEvent.EventType.SE_INSERTED, null));
         } else {
             try {
                 /*
                  * a default request is defined, send it a notify according to the notification mode
                  * and the selection status
                  */
-                boolean notify = true;
-                SeResponseSet seResponseSet = processSeRequestSet(defaultSeRequests);
-                if (notificationMode == ObservableReader.NotificationMode.MATCHED_ONLY) {
-                    notify = false;
-                    /* the notification is only sent if there is a matching response */
-                    for (SeResponse seResponse : seResponseSet.getResponses()) {
-                        if (seResponse != null && seResponse.getSelectionStatus().hasMatched()) {
-                            notify = true;
-                            break;
-                        }
+                boolean aSeMatched = false;
+                SeResponseSet seResponseSet =
+                        processSeRequestSet(defaultSelectionRequest.getSelectionSeRequestSet());
+                for (SeResponse seResponse : seResponseSet.getResponses()) {
+                    if (seResponse != null && seResponse.getSelectionStatus().hasMatched()) {
+                        aSeMatched = true;
+                        break;
                     }
                 }
-                if (notify) {
-                    notifyObservers(new ReaderEvent(this.pluginName, this.name, seResponseSet));
+                if (notificationMode == ObservableReader.NotificationMode.MATCHED_ONLY) {
+                    /* notify only if a SE matched the selection, just ignore if not */
+                    if (aSeMatched) {
+                        notifyObservers(new ReaderEvent(this.pluginName, this.name,
+                                ReaderEvent.EventType.SE_MATCHED,
+                                new SelectionResponse(seResponseSet)));
+                    }
+                } else {
+                    /* notify an SE_INSERTED event with the received response */
+                    notifyObservers(new ReaderEvent(this.pluginName, this.name,
+                            ReaderEvent.EventType.SE_INSERTED,
+                            new SelectionResponse(seResponseSet)));
                 }
             } catch (KeypleReaderException e) {
                 e.printStackTrace();

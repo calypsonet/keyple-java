@@ -12,7 +12,8 @@
 package org.eclipse.keyple.seproxy.event;
 
 
-import org.eclipse.keyple.seproxy.message.SeResponseSet;
+import org.eclipse.keyple.transaction.SelectionRequest;
+import org.eclipse.keyple.transaction.SelectionResponse;
 
 /**
  * ReaderEvent used to notify changes at reader level
@@ -36,7 +37,7 @@ public final class ReaderEvent {
     /**
      * The response to the selection request
      */
-    private final SeResponseSet defaultResponseSet;
+    private final SelectionResponse defaultResponseSet;
 
     /**
      * The different types of reader event
@@ -76,33 +77,20 @@ public final class ReaderEvent {
 
     /**
      * ReaderEvent constructor for simple insertion notification mode
-     * 
-     * @param pluginName the name of the current plugin
-     * @param readerName the name of the current reader
-     * @param eventType the type of event
-     */
-    public ReaderEvent(String pluginName, String readerName, EventType eventType) {
-        this.pluginName = pluginName;
-        this.readerName = readerName;
-        this.eventType = eventType;
-        this.defaultResponseSet = null;
-    }
-
-    /**
-     * ReaderEvent constructor for implicit selection notification mode.
-     * <p>
-     * The event type is fixed to SE_SELECTED.
      *
      * @param pluginName the name of the current plugin
      * @param readerName the name of the current reader
-     * @param seResponseSet the response to the default SeRequestSet
+     * @param eventType the type of event
+     * @param selectionResponse the response to the default {@link SelectionRequest} (may be null)
      */
-    public ReaderEvent(String pluginName, String readerName, SeResponseSet seResponseSet) {
+    public ReaderEvent(String pluginName, String readerName, EventType eventType,
+            SelectionResponse selectionResponse) {
         this.pluginName = pluginName;
         this.readerName = readerName;
-        this.eventType = EventType.SE_MATCHED;
-        this.defaultResponseSet = seResponseSet;
+        this.eventType = eventType;
+        this.defaultResponseSet = selectionResponse;
     }
+
 
     public String getPluginName() {
         return pluginName;
@@ -116,7 +104,7 @@ public final class ReaderEvent {
         return eventType;
     }
 
-    public SeResponseSet getDefaultResponseSet() {
+    public SelectionResponse getDefaultResponseSet() {
         return defaultResponseSet;
     }
 }

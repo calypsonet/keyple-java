@@ -21,16 +21,13 @@ import org.eclipse.keyple.calypso.transaction.PoSelector;
 import org.eclipse.keyple.calypso.transaction.PoTransaction;
 import org.eclipse.keyple.example.calypso.common.postructure.CalypsoClassicInfo;
 import org.eclipse.keyple.example.generic.common.AbstractReaderObserverEngine;
+import org.eclipse.keyple.seproxy.ChannelState;
 import org.eclipse.keyple.seproxy.ProxyReader;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
-import org.eclipse.keyple.seproxy.message.SeRequest;
-import org.eclipse.keyple.seproxy.message.SeRequestSet;
 import org.eclipse.keyple.seproxy.message.SeResponse;
 import org.eclipse.keyple.seproxy.message.SeResponseSet;
 import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
-import org.eclipse.keyple.transaction.MatchingSe;
-import org.eclipse.keyple.transaction.SeSelection;
-import org.eclipse.keyple.transaction.SeSelector;
+import org.eclipse.keyple.transaction.*;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -208,9 +205,8 @@ public class CalypsoClassicTransactionEngine extends AbstractReaderObserverEngin
             /*
              * A ratification command will be sent (CONTACTLESS_MODE).
              */
-            poProcessStatus =
-                    poTransaction.processClosing(PoTransaction.CommunicationMode.CONTACTLESS_MODE,
-                            SeRequest.ChannelState.KEEP_OPEN);
+            poProcessStatus = poTransaction.processClosing(
+                    PoTransaction.CommunicationMode.CONTACTLESS_MODE, ChannelState.KEEP_OPEN);
 
         } else {
             /*
@@ -237,7 +233,7 @@ public class CalypsoClassicTransactionEngine extends AbstractReaderObserverEngin
                             RECORD_NUMBER_1));
 
             /* proceed with the sending of commands, don't close the channel */
-            poProcessStatus = poTransaction.processPoCommands(SeRequest.ChannelState.KEEP_OPEN);
+            poProcessStatus = poTransaction.processPoCommands(ChannelState.KEEP_OPEN);
 
             logger.info("Parsing Read Contract file: " + readContractsParser.toString());
 
@@ -266,9 +262,8 @@ public class CalypsoClassicTransactionEngine extends AbstractReaderObserverEngin
             /*
              * A ratification command will be sent (CONTACTLESS_MODE).
              */
-            poProcessStatus =
-                    poTransaction.processClosing(PoTransaction.CommunicationMode.CONTACTLESS_MODE,
-                            SeRequest.ChannelState.KEEP_OPEN);
+            poProcessStatus = poTransaction.processClosing(
+                    PoTransaction.CommunicationMode.CONTACTLESS_MODE, ChannelState.KEEP_OPEN);
 
             logger.info("Parsing Append EventLog file: " + appendEventLogParser.toString());
         }
@@ -284,7 +279,7 @@ public class CalypsoClassicTransactionEngine extends AbstractReaderObserverEngin
         }
     }
 
-    public SeRequestSet preparePoSelection() {
+    public SelectionRequest preparePoSelection() {
         /*
          * Initialize the selection process for the poReader
          */
@@ -299,7 +294,7 @@ public class CalypsoClassicTransactionEngine extends AbstractReaderObserverEngin
          */
         seSelection.prepareSelection(
                 new PoSelector(ByteArrayUtils.fromHex(poFakeAid1), SeSelector.SelectMode.FIRST,
-                        SeRequest.ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4,
+                        ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4,
                         PoSelector.RevisionTarget.TARGET_REV3, "Selector with fake AID1"));
 
         /*
@@ -309,7 +304,7 @@ public class CalypsoClassicTransactionEngine extends AbstractReaderObserverEngin
          */
         PoSelector poSelectorCalypsoAid = new PoSelector(
                 ByteArrayUtils.fromHex(CalypsoClassicInfo.AID), SeSelector.SelectMode.FIRST,
-                SeRequest.ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4,
+                ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4,
                 PoSelector.RevisionTarget.TARGET_REV2_REV3, "Calypso selector");
 
         poSelectorCalypsoAid.prepareReadRecordsCmd(SFI_EventLog,
@@ -323,7 +318,7 @@ public class CalypsoClassicTransactionEngine extends AbstractReaderObserverEngin
          */
         seSelection.prepareSelection(
                 new PoSelector(ByteArrayUtils.fromHex(poFakeAid2), SeSelector.SelectMode.FIRST,
-                        SeRequest.ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4,
+                        ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4,
                         PoSelector.RevisionTarget.TARGET_REV2_REV3, "Selector with fake AID2"));
 
         return seSelection.getSelectionOperation();
@@ -333,8 +328,8 @@ public class CalypsoClassicTransactionEngine extends AbstractReaderObserverEngin
      * Do the PO selection and possibly go on with Calypso transactions.
      */
     @Override
-    public void processSeMatch(SeResponseSet seResponses) {
-        if (seSelection.processDefaultSelection(seResponses)) {
+    public void processSeMatch(SelectionResponse selectionResponse) {
+        if (seSelection.processDefaultSelection(selectionResponse)) {
             MatchingSe selectedSe = seSelection.getSelectedSe();
             try {
                 /* first time: check SAM */

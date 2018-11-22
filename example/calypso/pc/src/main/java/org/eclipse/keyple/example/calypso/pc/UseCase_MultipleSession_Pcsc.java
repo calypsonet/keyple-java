@@ -28,18 +28,14 @@ import org.eclipse.keyple.example.generic.pc.ReaderUtilities;
 import org.eclipse.keyple.plugin.pcsc.PcscPlugin;
 import org.eclipse.keyple.plugin.pcsc.PcscProtocolSetting;
 import org.eclipse.keyple.plugin.pcsc.PcscReader;
+import org.eclipse.keyple.seproxy.ChannelState;
 import org.eclipse.keyple.seproxy.ProxyReader;
 import org.eclipse.keyple.seproxy.SeProxyService;
 import org.eclipse.keyple.seproxy.event.ObservableReader;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
-import org.eclipse.keyple.seproxy.message.SeRequest;
-import org.eclipse.keyple.seproxy.message.SeRequestSet;
-import org.eclipse.keyple.seproxy.message.SeResponseSet;
 import org.eclipse.keyple.seproxy.protocol.Protocol;
 import org.eclipse.keyple.seproxy.protocol.SeProtocolSetting;
-import org.eclipse.keyple.transaction.MatchingSe;
-import org.eclipse.keyple.transaction.SeSelection;
-import org.eclipse.keyple.transaction.SeSelector;
+import org.eclipse.keyple.transaction.*;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -77,7 +73,7 @@ public class UseCase_MultipleSession_Pcsc {
             this.samReader = samReader;
         }
 
-        public SeRequestSet preparePoSelection() {
+        public SelectionRequest preparePoSelection() {
             /*
              * Initialize the selection process for the poReader
              */
@@ -88,16 +84,16 @@ public class UseCase_MultipleSession_Pcsc {
 
             /* AID based selection */
             seSelection.prepareSelection(new PoSelector(ByteArrayUtils.fromHex(poAid),
-                    SeSelector.SelectMode.FIRST, SeRequest.ChannelState.KEEP_OPEN, Protocol.ANY,
+                    SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN, Protocol.ANY,
                     PoSelector.RevisionTarget.TARGET_REV3, "AID: " + poAid));
 
             return seSelection.getSelectionOperation();
         }
 
         @Override
-        public void processSeMatch(SeResponseSet seResponses) {
+        public void processSeMatch(SelectionResponse selectionResponse) {
             Profiler profiler;
-            if (seSelection.processDefaultSelection(seResponses)) {
+            if (seSelection.processDefaultSelection(selectionResponse)) {
                 MatchingSe selectedSe = seSelection.getSelectedSe();
                 try {
                     /* first time: check SAM */
@@ -156,8 +152,7 @@ public class UseCase_MultipleSession_Pcsc {
                     }
 
                     /* proceed with the sending of commands, don't close the channel */
-                    poProcessStatus =
-                            poTransaction.processPoCommands(SeRequest.ChannelState.KEEP_OPEN);
+                    poProcessStatus = poTransaction.processPoCommands(ChannelState.KEEP_OPEN);
 
                     if (!poProcessStatus) {
                         for (int i = 0; i < nbCommands; i++) {
@@ -182,7 +177,7 @@ public class UseCase_MultipleSession_Pcsc {
                      */
                     poProcessStatus = poTransaction.processClosing(
                             PoTransaction.CommunicationMode.CONTACTLESS_MODE,
-                            SeRequest.ChannelState.KEEP_OPEN);
+                            ChannelState.KEEP_OPEN);
 
                     profiler.stop();
                     logger.warn(System.getProperty("line.separator") + "{}", profiler);
@@ -286,7 +281,8 @@ public class UseCase_MultipleSession_Pcsc {
                 new MultipleSessionLeve3TransactionEngine(poReader, samReader);
 
         /* Set the default selection operation */
-        ((ObservableReader) poReader).setDefaultSeRequests(transactionEngine.preparePoSelection(),
+        ((ObservableReader) poReader).setDefaultSelectionRequest(
+                transactionEngine.preparePoSelection(),
                 ObservableReader.NotificationMode.MATCHED_ONLY);
 
         /* Set terminal as Observer of the first reader */

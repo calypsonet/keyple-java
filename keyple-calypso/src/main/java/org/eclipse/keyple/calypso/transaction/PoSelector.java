@@ -23,9 +23,9 @@ import org.eclipse.keyple.calypso.command.po.builder.ReadRecordsCmdBuild;
 import org.eclipse.keyple.calypso.command.po.parser.ReadDataStructure;
 import org.eclipse.keyple.calypso.command.po.parser.ReadRecordsRespPars;
 import org.eclipse.keyple.command.AbstractApduResponseParser;
+import org.eclipse.keyple.seproxy.ChannelState;
 import org.eclipse.keyple.seproxy.message.ApduRequest;
 import org.eclipse.keyple.seproxy.message.ApduResponse;
-import org.eclipse.keyple.seproxy.message.SeRequest;
 import org.eclipse.keyple.seproxy.message.SeResponse;
 import org.eclipse.keyple.seproxy.protocol.SeProtocol;
 import org.eclipse.keyple.transaction.SeSelector;
@@ -85,7 +85,7 @@ public final class PoSelector extends SeSelector {
      * @param protocolFlag the protocol flag to filter POs according to their communication protocol
      * @param extraInfo information string
      */
-    public PoSelector(String atrRegex, Short dfLID, SeRequest.ChannelState channelState,
+    public PoSelector(String atrRegex, Short dfLID, ChannelState channelState,
             SeProtocol protocolFlag, RevisionTarget revisionTarget, String extraInfo) {
         super(atrRegex, channelState, protocolFlag, extraInfo);
         setMatchingClass(CalypsoPo.class);
@@ -105,7 +105,7 @@ public final class PoSelector extends SeSelector {
      * @param protocolFlag the protocol flag to filter POs according to their communication protocol
      * @param extraInfo information string
      */
-    public PoSelector(byte[] aid, SelectMode selectMode, SeRequest.ChannelState channelState,
+    public PoSelector(byte[] aid, SelectMode selectMode, ChannelState channelState,
             SeProtocol protocolFlag, RevisionTarget revisionTarget, String extraInfo) {
         super(aid, selectMode, channelState, protocolFlag, extraInfo);
         setMatchingClass(CalypsoPo.class);

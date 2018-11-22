@@ -21,6 +21,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import org.eclipse.keyple.calypso.command.po.PoRevision;
 import org.eclipse.keyple.calypso.command.po.builder.ReadRecordsCmdBuild;
+import org.eclipse.keyple.seproxy.ChannelState;
 import org.eclipse.keyple.seproxy.ProxyReader;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
@@ -147,7 +148,7 @@ public class AndroidOmapiReaderTest {
         // wrong protocol
         SeRequest seRequest = new SeRequest(
                 new SeRequest.AidSelector(ByteArrayUtils.fromHex(poAid)), poApduRequestList,
-                SeRequest.ChannelState.CLOSE_AFTER, ContactlessProtocols.PROTOCOL_MIFARE_UL, null);
+                ChannelState.CLOSE_AFTER, ContactlessProtocols.PROTOCOL_MIFARE_UL, null);
 
         // test
         SeResponseSet seResponse = proxyReader.transmitSet(new SeRequestSet(seRequest));
@@ -229,7 +230,7 @@ public class AndroidOmapiReaderTest {
 
         SeRequest seRequest = new SeRequest(
                 new SeRequest.AidSelector(ByteArrayUtils.fromHex(poAid)), poApduRequestList,
-                SeRequest.ChannelState.CLOSE_AFTER, ContactsProtocols.PROTOCOL_ISO7816_3, null);
+                ChannelState.CLOSE_AFTER, ContactsProtocols.PROTOCOL_ISO7816_3, null);
 
         return new SeRequestSet(seRequest);
 
