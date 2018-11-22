@@ -156,7 +156,8 @@ public class UseCase_MultipleSession_Pcsc {
                     }
 
                     /* proceed with the sending of commands, don't close the channel */
-                    poProcessStatus = poTransaction.processPoCommands(false);
+                    poProcessStatus =
+                            poTransaction.processPoCommands(SeRequest.ChannelState.KEEP_OPEN);
 
                     if (!poProcessStatus) {
                         for (int i = 0; i < nbCommands; i++) {
@@ -180,7 +181,8 @@ public class UseCase_MultipleSession_Pcsc {
                      * A ratification command will be sent (CONTACTLESS_MODE).
                      */
                     poProcessStatus = poTransaction.processClosing(
-                            PoTransaction.CommunicationMode.CONTACTLESS_MODE, false);
+                            PoTransaction.CommunicationMode.CONTACTLESS_MODE,
+                            SeRequest.ChannelState.KEEP_OPEN);
 
                     profiler.stop();
                     logger.warn(System.getProperty("line.separator") + "{}", profiler);

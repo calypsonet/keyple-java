@@ -268,7 +268,7 @@ public final class PoTransaction {
      * keyIndex, and openingSfiToSelect / openingRecordNumberToRead.</li>
      * <li>Next the PO reader is requested:
      * <ul>
-     * <li>for the current selected PO AID, with keepChannelOpen set at true,</li>
+     * <li>for the current selected PO AID, with channelState set to KEEP_OPEN,</li>
      * <li>and some PO Apdu Requests including at least the Open Session command and optionally some
      * PO command to operate inside the session.</li>
      * </ul>
@@ -387,7 +387,7 @@ public final class PoTransaction {
                     (List<SendableInSession>) (List<?>) poCommandsInsideSession));
         }
 
-        /* Create a SeRequest from the ApduRequest list, PO AID as Selector, keepChannelOpen true */
+        /* Create a SeRequest from the ApduRequest list, PO AID as Selector, keep channel open */
         SeRequest poSeRequest = new SeRequest(poApduRequestList, SeRequest.ChannelState.KEEP_OPEN);
 
         logger.debug("processAtomicOpening => opening:  POSEREQUEST = {}", poSeRequest);
@@ -530,36 +530,34 @@ public final class PoTransaction {
     /**
      * Process PO commands in a Secure Session.
      * <ul>
-     * <li>On the PO reader, generates a SeRequest for the current selected AID, with
-     * keepChannelOpen set at true, and ApduRequests with the PO commands.</li>
+     * <li>On the PO reader, generates a SeRequest with channelState set to KEEP_OPEN, and
+     * ApduRequests with the PO commands.</li>
      * <li>In case the secure session is active, the "cache" of SAM commands is completed with the
      * corresponding Digest Update commands.</li>
-     * <li>If a session is open and closeSeChannel is set to true, the current PO session is
+     * <li>If a session is open and channelState is set to CLOSE_AFTER, the current PO session is
      * aborted</li>
      * <li>Returns the corresponding PO SeResponse.</li>
      * </ul>
      *
      * @param poCommands the po commands inside session
-     * @param closeSeChannel if true the SE channel of the PO reader must be closed after the last
-     *        command
+     * @param channelState indicated if the SE channel of the PO reader must be closed after the
+     *        last command
      * @return SeResponse all responses to the provided commands
      *
      * @throws KeypleReaderException IO Reader exception
      */
     private SeResponse processAtomicPoCommands(List<PoSendableInSession> poCommands,
-            boolean closeSeChannel) throws KeypleReaderException {
+            SeRequest.ChannelState channelState) throws KeypleReaderException {
 
         // Get PO ApduRequest List from PoSendableInSession List
         List<ApduRequest> poApduRequestList =
                 this.getApduRequestsToSendInSession((List<SendableInSession>) (List<?>) poCommands);
 
         /*
-         * Create a SeRequest from the ApduRequest list, PO AID as Selector, keepChannelOpen
-         * according to the closeSeChannel flag
+         * Create a SeRequest from the ApduRequest list, PO AID as Selector, manage the logical
+         * channel according to the channelState enum
          */
-        SeRequest poSeRequest =
-                new SeRequest(poApduRequestList, closeSeChannel ? SeRequest.ChannelState.CLOSE_AFTER
-                        : SeRequest.ChannelState.KEEP_OPEN);
+        SeRequest poSeRequest = new SeRequest(poApduRequestList, channelState);
 
         logger.debug("processAtomicPoCommands => POREQUEST = {}", poSeRequest);
 
@@ -621,7 +619,7 @@ public final class PoTransaction {
     /**
      * Process SAM commands.
      * <ul>
-     * <li>On the SAM reader, transmission of a SeRequest with keepChannelOpen set at true.</li>
+     * <li>On the SAM reader, transmission of a SeRequest with channelState set to KEEP_OPEN.</li>
      * <li>Returns the corresponding SAM SeResponse.</li>
      * </ul>
      *
@@ -667,16 +665,15 @@ public final class PoTransaction {
      * Close the Secure Session.
      * <ul>
      * <li>The SAM cache is completed with the Digest Update commands related to the new PO commands
-     * to send and their anticipated responses. A Digest Close command is also added to the SAM
-     * cache.</li>
-     * <li>On the SAM session reader, a SeRequest is transmitted with SAM commands of the cache. The
-     * SAM cache is emptied.</li>
-     * <li>The SAM certificate is recovered from the Digest Close response. The terminal signature
+     * to be sent and their anticipated responses. A Digest Close command is also added to the SAM
+     * command cache.</li>
+     * <li>On the SAM session reader side, a SeRequest is transmitted with SAM commands from the
+     * command cache. The SAM command cache is emptied.</li>
+     * <li>The SAM certificate is retrieved from the Digest Close response. The terminal signature
      * is identified.</li>
-     * <li>Next on the PO reader, a SeRequest is transmitted for the current selected AID, with
-     * keepChannelOpen set at the reverse value of closeSeChannel, and apduRequests including the
-     * new PO commands to send in the session, a Close Session command (defined with the SAM
-     * certificate), and optionally a ratificationCommand.
+     * <li>Then, on the PO reader, a SeRequest is transmitted with the provided channelState, and
+     * apduRequests including the new PO commands to send in the session, a Close Session command
+     * (defined with the SAM certificate), and optionally a ratificationCommand.
      * <ul>
      * <li>The management of ratification is conditioned by the mode of communication.
      * <ul>
@@ -711,8 +708,8 @@ public final class PoTransaction {
      *        command. On the contrary, if the communication mode is CONTACTS_MODE, no ratification
      *        command will be sent to the PO and ratification will be requested in the Close Session
      *        command
-     * @param closeSeChannel if true the SE channel of the PO reader must be closed after the last
-     *        command
+     * @param channelState indicates if the SE channel of the PO reader must be closed after the
+     *        last command
      * @return SeResponse close session response
      * @throws KeypleReaderException the IO reader exception This method is deprecated.
      *         <ul>
@@ -722,7 +719,7 @@ public final class PoTransaction {
      */
     private SeResponse processAtomicClosing(List<PoModificationCommand> poModificationCommands,
             List<ApduResponse> poAnticipatedResponses, CommunicationMode communicationMode,
-            boolean closeSeChannel) throws KeypleReaderException {
+            SeRequest.ChannelState channelState) throws KeypleReaderException {
 
         if (currentState != SessionState.SESSION_OPEN) {
             throw new IllegalStateException("Bad session state. Current: " + currentState.toString()
@@ -846,9 +843,7 @@ public final class PoTransaction {
         /*
          * Transfer PO commands
          */
-        SeRequest poSeRequest =
-                new SeRequest(poApduRequestList, closeSeChannel ? SeRequest.ChannelState.CLOSE_AFTER
-                        : SeRequest.ChannelState.KEEP_OPEN);
+        SeRequest poSeRequest = new SeRequest(poApduRequestList, channelState);
 
         logger.debug("processAtomicClosing => POSEREQUEST = {}", poSeRequest);
 
@@ -975,8 +970,8 @@ public final class PoTransaction {
      *        command. On the contrary, if the communication mode is CONTACTS_MODE, no ratification
      *        command will be sent to the PO and ratification will be requested in the Close Session
      *        command
-     * @param closeSeChannel if true the SE channel of the PO reader must be closed after the last
-     *        command
+     * @param channelState indicates if the SE channel of the PO reader must be closed after the
+     *        last command
      * @return SeResponse close session response
      * @throws KeypleReaderException the IO reader exception This method is deprecated.
      *         <ul>
@@ -985,12 +980,12 @@ public final class PoTransaction {
      *         </ul>
      */
     private SeResponse processAtomicClosing(List<PoModificationCommand> poModificationCommands,
-            CommunicationMode communicationMode, boolean closeSeChannel)
+            CommunicationMode communicationMode, SeRequest.ChannelState channelState)
             throws KeypleReaderException {
         List<ApduResponse> poAnticipatedResponses =
                 AnticipatedResponseBuilder.getResponses(poModificationCommands);
         return processAtomicClosing(poModificationCommands, poAnticipatedResponses,
-                communicationMode, closeSeChannel);
+                communicationMode, channelState);
     }
 
     /**
@@ -1458,7 +1453,7 @@ public final class PoTransaction {
      * keyIndex, and openingSfiToSelect / openingRecordNumberToRead.</li>
      * <li>Next the PO reader is requested:
      * <ul>
-     * <li>for the current selected PO AID, with keepChannelOpen set at true,</li>
+     * <li>for the currently selected PO, with channelState set to KEEP_OPEN,</li>
      * <li>and some PO Apdu Requests including at least the Open Session command and all prepared PO
      * command to operate inside the session.</li>
      * </ul>
@@ -1521,7 +1516,8 @@ public final class PoTransaction {
                      * Closes the session, resets the modifications buffer counters for the next
                      * round
                      */
-                    processAtomicClosing(null, CommunicationMode.CONTACTS_MODE, false);
+                    processAtomicClosing(null, CommunicationMode.CONTACTS_MODE,
+                            SeRequest.ChannelState.KEEP_OPEN);
                     resetModificationsBufferCounter();
                     /*
                      * Clear the list and add the command that did not fit in the PO modifications
@@ -1556,21 +1552,22 @@ public final class PoTransaction {
     /**
      * Process all prepared PO commands in a Secure Session.
      * <ul>
-     * <li>On the PO reader, generates a SeRequest for the current selected AID, with
-     * keepChannelOpen set at true, and ApduRequests with the PO commands.</li>
+     * <li>On the PO reader, generates a SeRequest for the current selected AID, with channelState
+     * set to KEEP_OPEN, and ApduRequests with the PO commands.</li>
      * <li>In case the secure session is active, the "cache" of SAM commands is completed with the
      * corresponding Digest Update commands.</li>
      * <li>All parsers returned by the prepare command methods are updated with the Apdu responses
      * from the PO.</li>
      * </ul>
      *
-     * @param closeSeChannel if true the SE channel of the PO reader must be closed after the last
-     *        command
+     * @param channelState indicates if the SE channel of the PO reader must be closed after the
+     *        last command
      * @return true if all commands are successful
      *
      * @throws KeypleReaderException IO Reader exception
      */
-    public boolean processPoCommands(boolean closeSeChannel) throws KeypleReaderException {
+    public boolean processPoCommands(SeRequest.ChannelState channelState)
+            throws KeypleReaderException {
         boolean poProcessSuccess = true;
         /*
          * Iterator to keep the progress in updating the parsers from the list of prepared commands
@@ -1580,7 +1577,7 @@ public final class PoTransaction {
         if (currentState == SessionState.SESSION_CLOSED) {
             /* PO commands sent outside a Secure Session. No modifications buffer limitation. */
             SeResponse seResponsePoCommands =
-                    processAtomicPoCommands(poCommandBuilderList, closeSeChannel);
+                    processAtomicPoCommands(poCommandBuilderList, channelState);
 
             if (!updateParsersWithResponses(seResponsePoCommands,
                     abstractApduResponseParserIterator)) {
@@ -1608,8 +1605,8 @@ public final class PoTransaction {
                          * send the current commands and update the parsers. The parsers Iterator is
                          * kept all along the process.
                          */
-                        SeResponse seResponsePoCommands =
-                                processAtomicPoCommands(poAtomicCommandBuilderList, false);
+                        SeResponse seResponsePoCommands = processAtomicPoCommands(
+                                poAtomicCommandBuilderList, SeRequest.ChannelState.KEEP_OPEN);
                         if (!updateParsersWithResponses(seResponsePoCommands,
                                 abstractApduResponseParserIterator)) {
                             poProcessSuccess = false;
@@ -1618,7 +1615,8 @@ public final class PoTransaction {
                          * Close the session and reset the modifications buffer counters for the
                          * next round
                          */
-                        processAtomicClosing(null, CommunicationMode.CONTACTS_MODE, false);
+                        processAtomicClosing(null, CommunicationMode.CONTACTS_MODE,
+                                SeRequest.ChannelState.KEEP_OPEN);
                         resetModificationsBufferCounter();
                         /* We reopen a new session for the remaining commands to be sent */
                         SeResponse seResponseOpening = processAtomicOpening(currentAccessLevel,
@@ -1644,15 +1642,15 @@ public final class PoTransaction {
                 }
             }
             if (!poAtomicCommandBuilderList.isEmpty()) {
-                SeResponse seResponsePoCommands =
-                        processAtomicPoCommands(poAtomicCommandBuilderList, false);
+                SeResponse seResponsePoCommands = processAtomicPoCommands(
+                        poAtomicCommandBuilderList, SeRequest.ChannelState.KEEP_OPEN);
                 if (!updateParsersWithResponses(seResponsePoCommands,
                         abstractApduResponseParserIterator)) {
                     poProcessSuccess = false;
                 }
             }
-            // TODO add session abort command if closeChannel is true
-            // if(closeSeChannel) {
+            // TODO add session abort command if channel closing is requested
+            // if(channelState) {
             // /* abort the PO session session */
             // }
         }
@@ -1677,8 +1675,8 @@ public final class PoTransaction {
      *        command. On the contrary, if the communication mode is CONTACTS_MODE, no ratification
      *        command will be sent to the PO and ratification will be requested in the Close Session
      *        command
-     * @param closeSeChannel if true the SE channel of the PO reader must be closed after the last
-     *        command
+     * @param channelState indicates if the SE channel of the PO reader must be closed after the
+     *        last command
      * @return true if all commands are successful
      * @throws KeypleReaderException the IO reader exception This method is deprecated.
      *         <ul>
@@ -1686,8 +1684,8 @@ public final class PoTransaction {
      *         communication mode.</li>
      *         </ul>
      */
-    public boolean processClosing(CommunicationMode communicationMode, boolean closeSeChannel)
-            throws KeypleReaderException {
+    public boolean processClosing(CommunicationMode communicationMode,
+            SeRequest.ChannelState channelState) throws KeypleReaderException {
         boolean poProcessSuccess = true;
         boolean atLeastOneReadCommand = false;
         boolean sessionPreviouslyClosed = false;
@@ -1732,12 +1730,13 @@ public final class PoTransaction {
                         for (PoModificationCommand command : poAtomicCommandBuilderList) {
                             poSendableInSessionList.add((PoSendableInSession) command);
                         }
-                        seResponseClosing = processAtomicPoCommands(poSendableInSessionList, false);
+                        seResponseClosing = processAtomicPoCommands(poSendableInSessionList,
+                                SeRequest.ChannelState.KEEP_OPEN);
                         atLeastOneReadCommand = false;
                     } else {
                         /* All commands in the list are 'modifying' */
                         seResponseClosing = processAtomicClosing(poAtomicCommandBuilderList,
-                                CommunicationMode.CONTACTS_MODE, false);
+                                CommunicationMode.CONTACTS_MODE, SeRequest.ChannelState.KEEP_OPEN);
                         resetModificationsBufferCounter();
                         sessionPreviouslyClosed = true;
                     }
@@ -1769,14 +1768,14 @@ public final class PoTransaction {
         if (sessionPreviouslyClosed) {
             /*
              * Reopen if needed, to close the session with the requested conditions
-             * (CommunicationMode and keepChannelOpen)
+             * (CommunicationMode and channelState)
              */
             processAtomicOpening(currentAccessLevel, (byte) 0x00, (byte) 0x00, null);
         }
 
         /* Finally, close the session as requested */
         seResponseClosing =
-                processAtomicClosing(poAtomicCommandBuilderList, communicationMode, closeSeChannel);
+                processAtomicClosing(poAtomicCommandBuilderList, communicationMode, channelState);
 
         /* Update parsers */
         if (!updateParsersWithResponses(seResponseClosing, abstractApduResponseParserIterator)) {

@@ -208,8 +208,9 @@ public class CalypsoClassicTransactionEngine extends AbstractReaderObserverEngin
             /*
              * A ratification command will be sent (CONTACTLESS_MODE).
              */
-            poProcessStatus = poTransaction
-                    .processClosing(PoTransaction.CommunicationMode.CONTACTLESS_MODE, false);
+            poProcessStatus =
+                    poTransaction.processClosing(PoTransaction.CommunicationMode.CONTACTLESS_MODE,
+                            SeRequest.ChannelState.KEEP_OPEN);
 
         } else {
             /*
@@ -236,7 +237,7 @@ public class CalypsoClassicTransactionEngine extends AbstractReaderObserverEngin
                             RECORD_NUMBER_1));
 
             /* proceed with the sending of commands, don't close the channel */
-            poProcessStatus = poTransaction.processPoCommands(false);
+            poProcessStatus = poTransaction.processPoCommands(SeRequest.ChannelState.KEEP_OPEN);
 
             logger.info("Parsing Read Contract file: " + readContractsParser.toString());
 
@@ -265,8 +266,9 @@ public class CalypsoClassicTransactionEngine extends AbstractReaderObserverEngin
             /*
              * A ratification command will be sent (CONTACTLESS_MODE).
              */
-            poProcessStatus = poTransaction
-                    .processClosing(PoTransaction.CommunicationMode.CONTACTLESS_MODE, false);
+            poProcessStatus =
+                    poTransaction.processClosing(PoTransaction.CommunicationMode.CONTACTLESS_MODE,
+                            SeRequest.ChannelState.KEEP_OPEN);
 
             logger.info("Parsing Append EventLog file: " + appendEventLogParser.toString());
         }

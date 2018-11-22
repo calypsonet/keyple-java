@@ -183,7 +183,7 @@ public class UseCase_Calypso2_DefaultSelectionNotification_Pcsc implements Reade
                      * with the PO
                      */
                     try {
-                        if (poTransaction.processPoCommands(true)) {
+                        if (poTransaction.processPoCommands(SeRequest.ChannelState.CLOSE_AFTER)) {
                             logger.info("The reading of the EventLog has succeeded.");
 
                             /*

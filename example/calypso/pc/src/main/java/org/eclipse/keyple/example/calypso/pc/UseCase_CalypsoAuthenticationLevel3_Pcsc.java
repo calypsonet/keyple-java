@@ -140,7 +140,8 @@ public class UseCase_CalypsoAuthenticationLevel3_Pcsc {
                      * A ratification command will be sent (CONTACTLESS_MODE).
                      */
                     poProcessStatus = poTransaction.processClosing(
-                            PoTransaction.CommunicationMode.CONTACTLESS_MODE, false);
+                            PoTransaction.CommunicationMode.CONTACTLESS_MODE,
+                            SeRequest.ChannelState.KEEP_OPEN);
                     profiler.stop();
                     logger.warn(System.getProperty("line.separator") + "{}", profiler);
                 } catch (Exception e) {

@@ -24,6 +24,7 @@ import org.eclipse.keyple.calypso.transaction.CalypsoPo;
 import org.eclipse.keyple.calypso.transaction.PoTransaction;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
+import org.eclipse.keyple.seproxy.message.SeRequest;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -73,7 +74,8 @@ public class CommandSetTestSuite {
                 PoTransaction.ModificationMode.ATOMIC,
                 PoTransaction.SessionAccessLevel.SESSION_LVL_DEBIT, (byte) 0x00, (byte) 0x00);
 
-        poTransaction.processClosing(CommunicationMode.CONTACTLESS_MODE, false);
+        poTransaction.processClosing(CommunicationMode.CONTACTLESS_MODE,
+                SeRequest.ChannelState.KEEP_OPEN);
         /*
          * System.out.println("DataRead#: " +
          * ByteArrayUtils.toHex(dataReadInSession.getApduResponses().get(1).getDataOut()));
@@ -97,9 +99,10 @@ public class CommandSetTestSuite {
 
         poTransaction.prepareUpdateRecordCmd(sfi, recordNumber, dataToWrite,
                 String.format("SFI=%02X, recnbr=%d", sfi, recordNumber));
-        poTransaction.processPoCommands(false);
+        poTransaction.processPoCommands(SeRequest.ChannelState.KEEP_OPEN);
 
-        poTransaction.processClosing(CommunicationMode.CONTACTLESS_MODE, false);
+        poTransaction.processClosing(CommunicationMode.CONTACTLESS_MODE,
+                SeRequest.ChannelState.KEEP_OPEN);
     }
 
 
@@ -115,9 +118,10 @@ public class CommandSetTestSuite {
         poTransaction.prepareDecreaseCmd(countersSfi, counterIndex, valueToDecrement, String.format(
                 "SFI=%02X, index=%d, decvalue=%d", countersSfi, counterIndex, valueToDecrement));
 
-        poTransaction.processPoCommands(false);
+        poTransaction.processPoCommands(SeRequest.ChannelState.KEEP_OPEN);
 
-        poTransaction.processClosing(CommunicationMode.CONTACTLESS_MODE, false);
+        poTransaction.processClosing(CommunicationMode.CONTACTLESS_MODE,
+                SeRequest.ChannelState.KEEP_OPEN);
     }
 
 
@@ -133,9 +137,10 @@ public class CommandSetTestSuite {
         poTransaction.prepareIncreaseCmd(countersSfi, counterIndex, valueToIncrement, String.format(
                 "SFI=%02X, index=%d, decvalue=%d", countersSfi, counterIndex, valueToIncrement));
 
-        poTransaction.processPoCommands(false);
+        poTransaction.processPoCommands(SeRequest.ChannelState.KEEP_OPEN);
 
-        poTransaction.processClosing(CommunicationMode.CONTACTLESS_MODE, false);
+        poTransaction.processClosing(CommunicationMode.CONTACTLESS_MODE,
+                SeRequest.ChannelState.KEEP_OPEN);
     }
 
 
@@ -150,9 +155,10 @@ public class CommandSetTestSuite {
 
         poTransaction.prepareAppendRecordCmd(sfi, dataToWrite, String.format("SFI=%02X", sfi));
 
-        poTransaction.processPoCommands(false);
+        poTransaction.processPoCommands(SeRequest.ChannelState.KEEP_OPEN);
 
-        poTransaction.processClosing(CommunicationMode.CONTACTLESS_MODE, false);
+        poTransaction.processClosing(CommunicationMode.CONTACTLESS_MODE,
+                SeRequest.ChannelState.KEEP_OPEN);
     }
 
 
@@ -449,9 +455,10 @@ public class CommandSetTestSuite {
                     0x01, String.format("SFI=%02X, index=1, decvalue=1",
                             poData.getCountersFileData().getSfi()));
 
-            poTransaction.processPoCommands(false);
+            poTransaction.processPoCommands(SeRequest.ChannelState.KEEP_OPEN);
 
-            poTransaction.processClosing(CommunicationMode.CONTACTLESS_MODE, false);
+            poTransaction.processClosing(CommunicationMode.CONTACTLESS_MODE,
+                    SeRequest.ChannelState.KEEP_OPEN);
 
             counterData[2] = 0x09;
 
@@ -499,9 +506,10 @@ public class CommandSetTestSuite {
                     0xFF, String.format("SFI=%02X, index=1, decvalue=255",
                             poData.getCountersFileData().getSfi()));
 
-            poTransaction.processPoCommands(false);
+            poTransaction.processPoCommands(SeRequest.ChannelState.KEEP_OPEN);
 
-            poTransaction.processClosing(CommunicationMode.CONTACTLESS_MODE, false);
+            poTransaction.processClosing(CommunicationMode.CONTACTLESS_MODE,
+                    SeRequest.ChannelState.KEEP_OPEN);
 
             counterData[2] = (byte) 0xFF;
 
@@ -547,9 +555,10 @@ public class CommandSetTestSuite {
                     recordDataToAppend,
                     String.format("SFI=%02X", poData.getEventFileData().getSfi()));
 
-            poTransaction.processPoCommands(true);
+            poTransaction.processPoCommands(SeRequest.ChannelState.KEEP_OPEN);
 
-            poTransaction.processClosing(CommunicationMode.CONTACTLESS_MODE, false);
+            poTransaction.processClosing(CommunicationMode.CONTACTLESS_MODE,
+                    SeRequest.ChannelState.KEEP_OPEN);
 
             ReadRecordsRespPars readRecordsRespPars =
                     readRecords((CalypsoPo) poData.getMatchingSe(),
