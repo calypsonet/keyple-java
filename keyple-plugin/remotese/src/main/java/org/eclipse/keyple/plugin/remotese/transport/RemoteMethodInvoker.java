@@ -9,18 +9,13 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  ********************************************************************************/
-package org.eclipse.keyple.example.remote.transport;
+package org.eclipse.keyple.plugin.remotese.transport;
 
 
-import org.eclipse.keyple.plugin.remotese.transport.TransportNode;
+public interface RemoteMethodInvoker {
 
-/**
- * Client type of TransportNode, connects to a ServerNode
- */
-public interface ClientNode extends TransportNode {
-
-    void connect();
-
-    void disconnect();
+    KeypleDto dto();
 
 }
+
+

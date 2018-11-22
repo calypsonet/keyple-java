@@ -17,9 +17,10 @@ import java.net.InetSocketAddress;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Random;
-import org.eclipse.keyple.example.remote.transport.ClientNode;
-import org.eclipse.keyple.example.remote.transport.ServerNode;
-import org.eclipse.keyple.example.remote.transport.TransportFactory;
+
+import org.eclipse.keyple.plugin.remotese.transport.ClientNode;
+import org.eclipse.keyple.plugin.remotese.transport.ServerNode;
+import org.eclipse.keyple.plugin.remotese.transport.TransportFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,12 +35,17 @@ public class WskFactory extends TransportFactory {
     final private String bindUrl = "0.0.0.0";
     final private String protocol = "http://";
     final private String clientNodeId = "local1";
+    private Boolean isMasterServer ;
 
     private static final Logger logger = LoggerFactory.getLogger(WskFactory.class);
 
 
+    public WskFactory(Boolean isMasterServer){
+        this.isMasterServer = isMasterServer;
+    }
+
     @Override
-    public ClientNode getClient(Boolean isMaster) {
+    public ClientNode getClient() {
 
         logger.info("*** Create Websocket Client ***");
 
@@ -58,12 +64,14 @@ public class WskFactory extends TransportFactory {
     }
 
     @Override
-    public ServerNode getServer(Boolean isMaster) throws IOException {
+    public ServerNode getServer() throws IOException {
 
         logger.info("*** Create Websocket Server ***");
 
         InetSocketAddress inet = new InetSocketAddress(Inet4Address.getByName(bindUrl), port);
-        return new WskServer(inet, !isMaster, clientNodeId + "server");
+        return new WskServer(inet,this.isMasterServer, clientNodeId + "server");
 
     }
+
+
 }

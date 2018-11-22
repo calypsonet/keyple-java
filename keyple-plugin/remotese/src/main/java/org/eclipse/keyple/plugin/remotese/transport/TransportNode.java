@@ -18,6 +18,6 @@ package org.eclipse.keyple.plugin.remotese.transport;
  */
 public interface TransportNode extends DtoSender {
 
-    void setDtoHandler(DtoHandler receiver);
+    void setDtoHandler(DtoHandler handler);
 
 }

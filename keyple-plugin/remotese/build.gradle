@@ -182,4 +182,7 @@ dependencies {
     // https://mvnrepository.com/artifact/org.mockito/mockito-core
     testImplementation group: 'org.mockito', name: 'mockito-core', version: '2.13.0'
 
+    //use keyple library : keyple core
+    testImplementation group: 'org.eclipse.keyple', name: 'keyple-plugin-stub', version: '1.+'
+
 }

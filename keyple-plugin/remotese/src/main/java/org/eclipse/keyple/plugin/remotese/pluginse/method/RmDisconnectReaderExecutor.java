@@ -1,0 +1,38 @@
+package org.eclipse.keyple.plugin.remotese.pluginse.method;
+
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
+import org.eclipse.keyple.plugin.remotese.pluginse.RemoteSePlugin;
+import org.eclipse.keyple.plugin.remotese.pluginse.VirtualReader;
+import org.eclipse.keyple.plugin.remotese.transport.*;
+import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
+import org.eclipse.keyple.seproxy.exception.KeypleReaderNotFoundException;
+
+public class RmDisconnectReaderExecutor extends RemoteMethodExecutor {
+
+    RemoteSePlugin plugin;
+
+    public RmDisconnectReaderExecutor(RemoteSePlugin plugin){
+        this.plugin = plugin;
+    }
+
+
+    @Override
+    public TransportDto execute(TransportDto transportDto) {
+        KeypleDto keypleDto = transportDto.getKeypleDTO();
+
+        String nativeReaderName = keypleDto.getNativeReaderName();
+        String clientNodeId = keypleDto.getNodeId();
+
+        try {
+            plugin.disconnectRemoteReader(nativeReaderName);// todo find by reader + nodeId
+            return transportDto.nextTransportDTO(new KeypleDto(RemoteMethod.READER_DISCONNECT.getName(),
+                    "{}", false, null,
+                    nativeReaderName,null , clientNodeId));
+        } catch (KeypleReaderNotFoundException e) {
+            return transportDto.nextTransportDTO(KeypleDtoHelper.ExceptionDTO(RemoteMethod.READER_DISCONNECT.getName(),
+                    e,keypleDto.getSessionId(),keypleDto.getNativeReaderName(),keypleDto.getVirtualReaderName(),keypleDto.getNodeId()));
+        }
+
+    }
+}

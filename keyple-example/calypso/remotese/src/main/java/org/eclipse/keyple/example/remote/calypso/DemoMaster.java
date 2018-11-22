@@ -12,12 +12,14 @@
 package org.eclipse.keyple.example.remote.calypso;
 
 import java.io.IOException;
-import org.eclipse.keyple.example.remote.transport.ClientNode;
-import org.eclipse.keyple.example.remote.transport.ServerNode;
-import org.eclipse.keyple.example.remote.transport.TransportFactory;
+
+
 import org.eclipse.keyple.plugin.remotese.pluginse.RemoteSePlugin;
 import org.eclipse.keyple.plugin.remotese.pluginse.VirtualReader;
 import org.eclipse.keyple.plugin.remotese.pluginse.VirtualReaderService;
+import org.eclipse.keyple.plugin.remotese.transport.ClientNode;
+import org.eclipse.keyple.plugin.remotese.transport.ServerNode;
+import org.eclipse.keyple.plugin.remotese.transport.TransportFactory;
 import org.eclipse.keyple.plugin.remotese.transport.TransportNode;
 import org.eclipse.keyple.seproxy.ReaderPlugin;
 import org.eclipse.keyple.seproxy.SeProxyService;
@@ -56,7 +58,8 @@ class DemoMaster implements org.eclipse.keyple.util.Observable.Observer {
         if (isServer) {
             // Master is server, start Server and wait for Slave Clients
             try {
-                node = transportFactory.getServer(true);
+                node = transportFactory.getServer();
+
                 // start server in a new thread
                 new Thread() {
                     @Override
@@ -71,7 +74,7 @@ class DemoMaster implements org.eclipse.keyple.util.Observable.Observer {
             }
         } else {
             // Master is client, connectAReader to Slave Server
-            node = transportFactory.getClient(true);
+            node = transportFactory.getClient();
             ((ClientNode) node).connect();
         }
     }

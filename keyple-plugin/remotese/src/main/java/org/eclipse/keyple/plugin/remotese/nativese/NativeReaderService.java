@@ -14,17 +14,25 @@ package org.eclipse.keyple.plugin.remotese.nativese;
 import java.util.Map;
 import org.eclipse.keyple.seproxy.ProxyReader;
 import org.eclipse.keyple.seproxy.event.ObservableReader;
+import org.eclipse.keyple.seproxy.exception.KeypleReaderNotFoundException;
 
-interface NativeReaderService extends ObservableReader.ReaderObserver {
+public interface NativeReaderService extends ObservableReader.ReaderObserver {
 
 
     /**
      * Connect Physical Local Reader to Remote SE Creates a Session to exchange data with this
      * Reader with an option to duplex connection
      */
-    void connectReader(String nodeId, ProxyReader localReader, Map<String, Object> options);
+    void connectReader(ProxyReader localReader, String clientNodeId);
 
-    void disconnectReader(String nodeId, ProxyReader localReader);
+    void disconnectReader(ProxyReader localReader, String clientNodeId);
+
+    /**
+     * Find a local reader acroos plugins by its name
+     * @param nativeReaderName : native name of the reader to find
+     * @return proxy reader if found
+     */
+    public ProxyReader findLocalReader(String nativeReaderName)  throws KeypleReaderNotFoundException;
 
 
 }

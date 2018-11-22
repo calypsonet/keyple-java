@@ -14,11 +14,8 @@ package org.eclipse.keyple.example.remote.websocket;
 import java.net.InetSocketAddress;
 import java.util.HashMap;
 import java.util.Map;
-import org.eclipse.keyple.example.remote.transport.ServerNode;
-import org.eclipse.keyple.plugin.remotese.transport.DtoHandler;
-import org.eclipse.keyple.plugin.remotese.transport.KeypleDto;
-import org.eclipse.keyple.plugin.remotese.transport.KeypleDtoHelper;
-import org.eclipse.keyple.plugin.remotese.transport.TransportDto;
+
+import org.eclipse.keyple.plugin.remotese.transport.*;
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
@@ -31,19 +28,19 @@ import org.slf4j.LoggerFactory;
 class WskServer extends WebSocketServer implements ServerNode {
 
     private static final Logger logger = LoggerFactory.getLogger(WskServer.class);
-    private DtoHandler stubplugin;
+    private DtoHandler dtoHandler;
 
-    // only for when server is slave
-    final private Boolean isSlave;
+    // only for when server is master
+    private Boolean isMaster;
     private WebSocket masterWebSocket;
     final private String nodeId;
 
-    public WskServer(InetSocketAddress address, Boolean isSlave, String nodeId) {
+    public WskServer(InetSocketAddress address,Boolean isMaster, String nodeId) {
         super(address);
 
         logger.info("Create websocket server on address {}", address.toString());
-        this.isSlave = isSlave;
         this.nodeId = nodeId;
+        this.isMaster = isMaster;
     }
 
     /*
@@ -71,13 +68,13 @@ class WskServer extends WebSocketServer implements ServerNode {
         logger.trace("Web socket onMessage {} {}", conn, message);
         KeypleDto keypleDto = KeypleDtoHelper.fromJson(message);
 
-        if (stubplugin != null) {
+        if (dtoHandler != null) {
 
             // LOOP pass DTO and get DTO Response is any
             TransportDto transportDto =
-                    stubplugin.onDTO(new WskTransportDTO(keypleDto, conn, this));
+                    dtoHandler.onDTO(new WskTransportDTO(keypleDto, conn, this));
 
-            if (!isSlave) {
+            if (isMaster) {
                 // if server is master, can have numerous clients
                 if (transportDto.getKeypleDTO().getSessionId() != null) {
                     sessionId_Connection.put(transportDto.getKeypleDTO().getSessionId(), conn);
@@ -116,7 +113,7 @@ class WskServer extends WebSocketServer implements ServerNode {
     }
 
     public void setDtoHandler(DtoHandler stubplugin) {
-        this.stubplugin = stubplugin;
+        this.dtoHandler = stubplugin;
     }
 
 
@@ -128,21 +125,23 @@ class WskServer extends WebSocketServer implements ServerNode {
             logger.trace("Keyple DTO is empty, do not send it");
         } else {
 
-            if (isSlave) {
-                // only one client -> master
+            if (!isMaster) {
+                // if server is client -> use the master web socket
                 masterWebSocket.send(KeypleDtoHelper.toJson(transportDto.getKeypleDTO()));
             } else {
-                // server is master and can have numerous clients
+                // server is master, can have numerous slave clients
                 if (((WskTransportDTO) transportDto).getSocketWeb() != null) {
                     logger.trace("Use socketweb included in TransportDto");
                     ((WskTransportDTO) transportDto).getSocketWeb()
                             .send(KeypleDtoHelper.toJson(transportDto.getKeypleDTO()));
                 } else {
+                    //if there is no socketweb defined in the transport dto
+                    //retrieve the socketweb by the sessionId
                     if (transportDto.getKeypleDTO().getSessionId() == null) {
                         logger.warn("No sessionId defined in message, Keyple DTO can not be sent");
                     } else {
                         logger.trace("Retrieve socketweb from sessionId");
-                        // retrieve connection object from the common
+                        // retrieve connection object from the sessionId
                         Object conn = getConnection(transportDto.getKeypleDTO().getSessionId());
                         logger.trace("send DTO {} {}",
                                 KeypleDtoHelper.toJson(transportDto.getKeypleDTO()), conn);

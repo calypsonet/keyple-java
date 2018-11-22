@@ -12,7 +12,7 @@
 package org.eclipse.keyple.example.remote.calypso;
 
 
-import org.eclipse.keyple.example.remote.transport.TransportFactory;
+import org.eclipse.keyple.plugin.remotese.transport.TransportFactory;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderNotFoundException;
 import org.slf4j.Logger;

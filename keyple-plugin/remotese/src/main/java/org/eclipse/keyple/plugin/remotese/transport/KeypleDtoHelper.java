@@ -19,10 +19,6 @@ import com.google.gson.JsonObject;
  */
 public class KeypleDtoHelper {
 
-    public final static String READER_TRANSMIT = "reader_transmit";
-    public final static String READER_CONNECT = "reader_connect";
-    public final static String READER_DISCONNECT = "reader_disconnect";
-    public final static String READER_EVENT = "reader_event";
 
     static public String toJson(KeypleDto keypleDto) {
         return JsonParser.getGson().toJson(keypleDto);
@@ -40,8 +36,9 @@ public class KeypleDtoHelper {
         return new KeypleDto("", "", false);
     }
 
-    static public KeypleDto ErrorDTO() {
-        return new KeypleDto("ERROR", "", false);// todo statusCode
+    static public KeypleDto ExceptionDTO(String action, Throwable exception, String sessionId,
+                                         String nativeReaderName, String virtualReaderName, String clientNodeId) {
+        return new KeypleDto(action, JsonParser.getGson().toJson(exception), false,sessionId,nativeReaderName,virtualReaderName, clientNodeId);
     }
 
     static public KeypleDto ACK() {
@@ -62,6 +59,10 @@ public class KeypleDtoHelper {
 
     static public Boolean isKeypleDTO(JsonObject json) {
         return json.has("action");
+    }
+
+    static public Boolean containsException(KeypleDto keypleDto) {
+        return keypleDto.getBody().contains("stackTrace");
     }
 
 

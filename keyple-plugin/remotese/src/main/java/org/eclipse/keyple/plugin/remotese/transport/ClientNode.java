@@ -9,20 +9,18 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  ********************************************************************************/
-package org.eclipse.keyple.example.remote.transport;
+package org.eclipse.keyple.plugin.remotese.transport;
 
-import java.io.IOException;
+
+import org.eclipse.keyple.plugin.remotese.transport.TransportNode;
 
 /**
- * Factory for Clients and Servers sharing a protocol and a configuration to connectAReader each
- * others
+ * Client type of TransportNode, connects to a ServerNode
  */
-public abstract class TransportFactory {
+public interface ClientNode extends TransportNode {
 
-    abstract public ClientNode getClient(Boolean isMaster);
+    void connect();
 
-    abstract public ServerNode getServer(Boolean isMaster) throws IOException;
-
-
+    void disconnect();
 
 }

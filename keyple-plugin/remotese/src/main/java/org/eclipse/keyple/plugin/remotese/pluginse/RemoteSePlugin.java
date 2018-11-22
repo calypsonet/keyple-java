@@ -97,7 +97,7 @@ public class RemoteSePlugin extends Observable implements ObservablePlugin {
      * Create a virtual reader
      *
      */
-    ProxyReader createVirtualReader(String clientNodeId, String nativeReaderName,
+    public ProxyReader createVirtualReader(String clientNodeId, String nativeReaderName,
             DtoSender dtoSender) throws KeypleReaderException {
         logger.debug("createVirtualReader for nativeReader {}", nativeReaderName);
 
@@ -109,7 +109,7 @@ public class RemoteSePlugin extends Observable implements ObservablePlugin {
 
         // check if reader is not already connected (by localReaderName)
         if (!isReaderConnected(nativeReaderName)) {
-            logger.info("Connecting a new RemoteSeReader with localReaderName {} with session {}",
+            logger.info("Connecting a new Virtual Reader with localReaderName {} with session {}",
                     nativeReaderName, session.getSessionId());
 
             final VirtualReader virtualReader = new VirtualReader(session, nativeReaderName);
@@ -137,12 +137,12 @@ public class RemoteSePlugin extends Observable implements ObservablePlugin {
      * 
      * @param nativeReaderName name of the virtual reader to be deleted
      */
-    void disconnectRemoteReader(String nativeReaderName) throws KeypleReaderNotFoundException {
-        logger.debug("disconnectRemoteReader {}", nativeReaderName);
+    public void disconnectRemoteReader(String nativeReaderName) throws KeypleReaderNotFoundException {
+        logger.debug("Disconnect Virtual reader {}", nativeReaderName);
 
         // check if reader is not already connected (by name)
         if (isReaderConnected(nativeReaderName)) {
-            logger.info("DisconnectRemoteReader RemoteSeReader with name {} with session {}",
+            logger.info("Disconnect VirtualReader with name {} with session {}",
                     nativeReaderName);
 
             // retrieve virtual reader to delete
@@ -179,7 +179,7 @@ public class RemoteSePlugin extends Observable implements ObservablePlugin {
      * @param event
      * @param sessionId : not used yet
      */
-    void onReaderEvent(ReaderEvent event, String sessionId) {
+    public void onReaderEvent(ReaderEvent event, String sessionId) {
         logger.debug("OnReaderEvent {}", event);
         logger.debug("Dispatch ReaderEvent to the appropriate Reader {} {}", event.getReaderName(),
                 sessionId);

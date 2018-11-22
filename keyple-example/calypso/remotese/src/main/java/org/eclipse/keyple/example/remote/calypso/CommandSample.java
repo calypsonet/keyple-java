@@ -32,7 +32,7 @@ class CommandSample {
         try {
 
 
-            logger.info("--- PURE SYNC COMMAND RUNNING ---");
+            logger.info("--- Execute a Blocking transmit --- ");
 
             // get the reader by its name
             final VirtualReader reader = (VirtualReader) ((RemoteSePlugin) SeProxyService

@@ -14,13 +14,23 @@ package org.eclipse.keyple.plugin.remotese.common.json;
 import org.eclipse.keyple.plugin.remotese.transport.json.JsonParser;
 import org.eclipse.keyple.seproxy.SeRequestSet;
 import org.eclipse.keyple.seproxy.SeResponseSet;
+import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
 import com.google.gson.Gson;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @RunWith(MockitoJUnitRunner.class)
 public class JsonParserTest {
+
+    private static final Logger logger = LoggerFactory.getLogger(JsonParserTest.class);
+
+
+    /**
+     * Test Serialization of Keyple Se Proxy Objects
+     */
 
     @Test
     public void testHoplinkSeRequestSet() {
@@ -37,19 +47,42 @@ public class JsonParserTest {
     @Test
     public void testSeResponseSet() {
         SeResponseSet responseSet = SampleFactory.getCompleteResponseSet();
-        Object deserialized = testSerializeDeserializeObj(responseSet, SeResponseSet.class);
-        assert responseSet.getResponses().get(0)
-                .equals(((SeResponseSet) deserialized).getResponses().get(0));
+        testSerializeDeserializeObj(responseSet, SeResponseSet.class);
+
     }
+
+
+    /**
+     * Test Serialization of Keyple Reader Exceptions
+     */
+    @Test
+    public void testSimpleKeypleException() {
+        KeypleBaseException exception = SampleFactory.getASimpleKeypleException();
+        testSerializeDeserializeObj(exception, KeypleBaseException.class);
+
+    }
+
+    @Test
+    public void testStackedKeypleException() {
+        KeypleBaseException exception = SampleFactory.getAStackedKeypleException();
+        testSerializeDeserializeObj(exception, KeypleBaseException.class);
+
+    }
+
+
+
+    /*
+     * Utility Method
+     */
 
     public Object testSerializeDeserializeObj(Object obj, Class objectClass) {
         Gson gson = JsonParser.getGson();
         String json = gson.toJson(obj);
-        System.out.println(json);
+        logger.debug("json 1 : {}", json);
         Object deserializeObj = gson.fromJson(json, objectClass);
-        // System.out.println(deserializeObj);
+        logger.debug("deserializeObj : {}", deserializeObj.toString());
         String json2 = gson.toJson(deserializeObj);
-        System.out.println(json2);
+        logger.debug("json 2 : {}", json2);
         assert json.equals(json2);
         return deserializeObj;
     }

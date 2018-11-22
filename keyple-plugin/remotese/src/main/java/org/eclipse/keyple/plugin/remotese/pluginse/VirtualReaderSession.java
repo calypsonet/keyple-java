@@ -12,8 +12,11 @@
 package org.eclipse.keyple.plugin.remotese.pluginse;
 
 
+import org.eclipse.keyple.plugin.remotese.transport.KeypleRemoteException;
+import org.eclipse.keyple.plugin.remotese.transport.KeypleRemoteReaderException;
 import org.eclipse.keyple.seproxy.SeRequestSet;
 import org.eclipse.keyple.seproxy.SeResponseSet;
+import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 
 public interface VirtualReaderSession {
 
@@ -34,7 +37,7 @@ public interface VirtualReaderSession {
      * @return SeResponseSet
      */
     SeResponseSet transmit(String nativeReaderName, String virtualReaderName,
-            SeRequestSet seApplicationRequest);
+            SeRequestSet seApplicationRequest) throws KeypleRemoteReaderException;
 
 
 
@@ -43,7 +46,9 @@ public interface VirtualReaderSession {
      * 
      * @param seResponseSet : receive seResponseSet to be callback
      */
-    void asyncSetSeResponseSet(SeResponseSet seResponseSet);
+    void asyncSetSeResponseSet(SeResponseSet seResponseSet, KeypleRemoteReaderException e);
+
+
 
     /**
      * Has a seRequestSet in session (being transmitted)

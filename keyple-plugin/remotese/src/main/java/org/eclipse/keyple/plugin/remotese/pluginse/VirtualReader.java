@@ -12,9 +12,13 @@
 package org.eclipse.keyple.plugin.remotese.pluginse;
 
 import java.util.Map;
+
+import org.eclipse.keyple.plugin.remotese.transport.KeypleRemoteException;
+import org.eclipse.keyple.plugin.remotese.transport.KeypleRemoteReaderException;
 import org.eclipse.keyple.seproxy.*;
 import org.eclipse.keyple.seproxy.event.ObservableReader;
 import org.eclipse.keyple.seproxy.event.ReaderEvent;
+import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.protocol.SeProtocolSetting;
 import org.eclipse.keyple.util.Observable;
 import org.slf4j.Logger;
@@ -36,17 +40,16 @@ public class VirtualReader extends Observable implements ObservableReader {
      * 
      * @param session Reader Session that helps communicate with
      *        {@link org.eclipse.keyple.plugin.remotese.transport.TransportNode}
-     * @param remoteName local name of the native reader on slave side
+     * @param nativeReaderName local name of the native reader on slave side
      */
-    VirtualReader(VirtualReaderSession session, String remoteName) {
+    VirtualReader(VirtualReaderSession session, String nativeReaderName) {
         this.session = session;
-        this.remoteName = remoteName;
-        this.name = "remote-" + remoteName;
+        this.remoteName = nativeReaderName;
+        this.name = "remote-" + nativeReaderName;
     }
 
     /**
      * Local name of the virtual reader
-     * 
      * @return name of the virtual reader
      */
     @Override
@@ -56,14 +59,14 @@ public class VirtualReader extends Observable implements ObservableReader {
 
     /**
      * Name of the Native Reader
-     * 
+     *
      * @return local name of the native reader (on slave device)
      */
     public String getNativeReaderName() {
         return remoteName;
     }
 
-    VirtualReaderSession getSession() {
+    public VirtualReaderSession getSession() {
         return session;
     }
 
@@ -81,12 +84,12 @@ public class VirtualReader extends Observable implements ObservableReader {
      * @throws IllegalArgumentException
      */
     @Override
-    public SeResponseSet transmitSet(SeRequestSet seRequestSet) throws IllegalArgumentException {
+    public SeResponseSet transmitSet(SeRequestSet seRequestSet) throws IllegalArgumentException,KeypleRemoteReaderException {
         return session.transmit(this.getNativeReaderName(), this.getName(), seRequestSet);
     }
 
     @Override
-    public SeResponse transmit(SeRequest seApplicationRequest) throws IllegalArgumentException {
+    public SeResponse transmit(SeRequest seApplicationRequest) throws IllegalArgumentException, KeypleRemoteReaderException {
         return session.transmit(this.getNativeReaderName(), this.getName(),
                 new SeRequestSet(seApplicationRequest)).getSingleResponse();
     }

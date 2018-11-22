@@ -14,10 +14,11 @@ package org.eclipse.keyple.example.remote.wspolling.client_retrofit;
 import java.io.IOException;
 import java.util.Properties;
 import java.util.Random;
-import org.eclipse.keyple.example.remote.transport.ClientNode;
-import org.eclipse.keyple.example.remote.transport.ServerNode;
-import org.eclipse.keyple.example.remote.transport.TransportFactory;
+import org.eclipse.keyple.plugin.remotese.transport.ClientNode;
+
 import org.eclipse.keyple.example.remote.wspolling.server.WsPServer;
+import org.eclipse.keyple.plugin.remotese.transport.ServerNode;
+import org.eclipse.keyple.plugin.remotese.transport.TransportFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -64,7 +65,7 @@ public class WsPollingRetrofitFactory extends TransportFactory {
     }
 
     @Override
-    public ClientNode getClient(Boolean isMaster) {
+    public ClientNode getClient() {
 
         logger.info("*** Create RETROFIT Ws Polling Client ***");
         return new WsPRetrofitClientImpl(protocol + hostname + ":" + port, clientNodeId);
@@ -73,7 +74,7 @@ public class WsPollingRetrofitFactory extends TransportFactory {
 
 
     @Override
-    public ServerNode getServer(Boolean isMaster) throws IOException {
+    public ServerNode getServer() throws IOException {
 
         logger.info("*** Create Ws Polling Server ***");
         return new WsPServer(hostname, port, keypleUrl, pollingUrl, clientNodeId + "server");

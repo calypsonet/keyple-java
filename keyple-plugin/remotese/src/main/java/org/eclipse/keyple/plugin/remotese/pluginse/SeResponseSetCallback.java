@@ -11,6 +11,7 @@
  ********************************************************************************/
 package org.eclipse.keyple.plugin.remotese.pluginse;
 
+import org.eclipse.keyple.plugin.remotese.transport.KeypleRemoteReaderException;
 import org.eclipse.keyple.seproxy.SeResponseSet;
 
 /**
@@ -23,5 +24,5 @@ interface SeResponseSetCallback {
      * 
      * @param seResponseSet : returns the seResponseSet
      */
-    void getResponseSet(SeResponseSet seResponseSet);
+    void get(SeResponseSet seResponseSet, KeypleRemoteReaderException exception);
 }

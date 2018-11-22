@@ -12,14 +12,14 @@
 package org.eclipse.keyple.example.remote.websocket;
 
 import org.eclipse.keyple.example.remote.calypso.DemoThreads;
-import org.eclipse.keyple.example.remote.transport.TransportFactory;
+import org.eclipse.keyple.plugin.remotese.transport.TransportFactory;
 
 public class DemoWsKMasterServer {
 
     public static void main(String[] args) throws Exception {
 
-        TransportFactory factory = new WskFactory(); // Web socket
-        Boolean isMasterServer = true; // DemoMaster is the server (and DemoSlave the Client)
+        final Boolean isMasterServer = true; // DemoMaster is the server (and DemoSlave the Client)
+        TransportFactory factory = new WskFactory(isMasterServer); // Web socket
 
         /**
          * DemoThreads

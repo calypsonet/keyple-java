@@ -11,29 +11,51 @@
  ********************************************************************************/
 package org.eclipse.keyple.plugin.remotese.nativese;
 
+import org.eclipse.keyple.plugin.remotese.transport.DtoHandler;
 import org.eclipse.keyple.plugin.remotese.transport.DtoSender;
+import org.eclipse.keyple.plugin.remotese.transport.TransportNode;
 import org.eclipse.keyple.seproxy.SeProxyService;
 import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnitRunner;
 
-// @RunWith(MockitoJUnitRunner.class)
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
+
+@RunWith(MockitoJUnitRunner.class)
 public class NativeReaderServiceImplTest {
 
-    @Mock
-    SeProxyService seProxyService;
 
     @Mock
     DtoSender dtoSender;
 
-    private NativeReaderServiceImpl nse;
+    @Mock
+    TransportNode transportNode;
+
+    private NativeReaderServiceImpl nre;
 
     @Before
     public void Setup() {
+        MockitoAnnotations.initMocks(this);
 
-        nse = new NativeReaderServiceImpl(dtoSender);
 
+        doNothing().when(transportNode).setDtoHandler(any(DtoHandler.class));
+
+        //Prepare nre with Mock
+        nre = new NativeReaderServiceImpl(dtoSender);
+        nre.bindDtoEndpoint(transportNode);
     }
 
 
+
+    @Test
+    public void TestConnectReader(){
+        //todo
+
+    }
 
 }

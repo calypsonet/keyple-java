@@ -12,13 +12,25 @@
 package org.eclipse.keyple.plugin.remotese.common.json;
 
 
+import java.io.IOException;
 import java.util.*;
 import org.eclipse.keyple.seproxy.*;
+import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
+import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
 import org.eclipse.keyple.seproxy.protocol.ContactsProtocols;
 import org.eclipse.keyple.util.ByteArrayUtils;
 
 class SampleFactory {
+
+    public static KeypleBaseException getAStackedKeypleException() {
+        return new KeypleReaderException("Keyple Reader Exception", new IOException("IO Error",
+                new IOException("IO Error2", new RuntimeException("sdfsdf"))));
+    }
+
+    public static KeypleBaseException getASimpleKeypleException() {
+        return new KeypleReaderException("Keyple Reader Exception");
+    }
 
 
     public static SeRequestSet getASeRequest() {
