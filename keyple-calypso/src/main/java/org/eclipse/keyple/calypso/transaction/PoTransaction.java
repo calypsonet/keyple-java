@@ -32,6 +32,7 @@ import org.eclipse.keyple.calypso.command.sam.parser.session.SamGetChallengeResp
 import org.eclipse.keyple.calypso.transaction.exception.*;
 import org.eclipse.keyple.command.AbstractApduCommandBuilder;
 import org.eclipse.keyple.command.AbstractApduResponseParser;
+import org.eclipse.keyple.seproxy.ChannelState;
 import org.eclipse.keyple.seproxy.ProxyReader;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.message.*;
@@ -332,8 +333,7 @@ public final class PoTransaction {
         samApduRequestList.add(samGetChallenge.getApduRequest());
 
         /* Build a SAM SeRequest */
-        SeRequest samSeRequest =
-                new SeRequest(samApduRequestList, SeRequest.ChannelState.KEEP_OPEN);
+        SeRequest samSeRequest = new SeRequest(samApduRequestList, ChannelState.KEEP_OPEN);
 
         logger.debug("processAtomicOpening => identification: SAMSEREQUEST = {}", samSeRequest);
 
@@ -388,7 +388,7 @@ public final class PoTransaction {
         }
 
         /* Create a SeRequest from the ApduRequest list, PO AID as Selector, keep channel open */
-        SeRequest poSeRequest = new SeRequest(poApduRequestList, SeRequest.ChannelState.KEEP_OPEN);
+        SeRequest poSeRequest = new SeRequest(poApduRequestList, ChannelState.KEEP_OPEN);
 
         logger.debug("processAtomicOpening => opening:  POSEREQUEST = {}", poSeRequest);
 
@@ -547,7 +547,7 @@ public final class PoTransaction {
      * @throws KeypleReaderException IO Reader exception
      */
     private SeResponse processAtomicPoCommands(List<PoSendableInSession> poCommands,
-            SeRequest.ChannelState channelState) throws KeypleReaderException {
+            ChannelState channelState) throws KeypleReaderException {
 
         // Get PO ApduRequest List from PoSendableInSession List
         List<ApduRequest> poApduRequestList =
@@ -635,8 +635,7 @@ public final class PoTransaction {
                 .getApduRequestsToSendInSession((List<SendableInSession>) (List<?>) samCommands);
 
         /* SeRequest from the command list */
-        SeRequest samSeRequest =
-                new SeRequest(samApduRequestList, SeRequest.ChannelState.KEEP_OPEN);
+        SeRequest samSeRequest = new SeRequest(samApduRequestList, ChannelState.KEEP_OPEN);
 
         logger.debug("processSamCommands => SAMSEREQUEST = {}", samSeRequest);
 
@@ -719,7 +718,7 @@ public final class PoTransaction {
      */
     private SeResponse processAtomicClosing(List<PoModificationCommand> poModificationCommands,
             List<ApduResponse> poAnticipatedResponses, CommunicationMode communicationMode,
-            SeRequest.ChannelState channelState) throws KeypleReaderException {
+            ChannelState channelState) throws KeypleReaderException {
 
         if (currentState != SessionState.SESSION_OPEN) {
             throw new IllegalStateException("Bad session state. Current: " + currentState.toString()
@@ -904,7 +903,7 @@ public final class PoTransaction {
         List<ApduRequest> samApduRequestList = new ArrayList<ApduRequest>();
         samApduRequestList.add(digestAuth.getApduRequest());
 
-        samSeRequest = new SeRequest(samApduRequestList, SeRequest.ChannelState.KEEP_OPEN);
+        samSeRequest = new SeRequest(samApduRequestList, ChannelState.KEEP_OPEN);
 
         logger.debug("PoTransaction.DigestProcessor => checkPoSignature: SAMREQUEST = {}",
                 samSeRequest);
@@ -980,7 +979,7 @@ public final class PoTransaction {
      *         </ul>
      */
     private SeResponse processAtomicClosing(List<PoModificationCommand> poModificationCommands,
-            CommunicationMode communicationMode, SeRequest.ChannelState channelState)
+            CommunicationMode communicationMode, ChannelState channelState)
             throws KeypleReaderException {
         List<ApduResponse> poAnticipatedResponses =
                 AnticipatedResponseBuilder.getResponses(poModificationCommands);
@@ -1267,7 +1266,7 @@ public final class PoTransaction {
                                     : SIGNATURE_LENGTH_REV_INF_32).getApduRequest()));
 
 
-            return new SeRequest(samApduRequestList, SeRequest.ChannelState.KEEP_OPEN);
+            return new SeRequest(samApduRequestList, ChannelState.KEEP_OPEN);
         }
     }
 
@@ -1517,7 +1516,7 @@ public final class PoTransaction {
                      * round
                      */
                     processAtomicClosing(null, CommunicationMode.CONTACTS_MODE,
-                            SeRequest.ChannelState.KEEP_OPEN);
+                            ChannelState.KEEP_OPEN);
                     resetModificationsBufferCounter();
                     /*
                      * Clear the list and add the command that did not fit in the PO modifications
@@ -1566,8 +1565,7 @@ public final class PoTransaction {
      *
      * @throws KeypleReaderException IO Reader exception
      */
-    public boolean processPoCommands(SeRequest.ChannelState channelState)
-            throws KeypleReaderException {
+    public boolean processPoCommands(ChannelState channelState) throws KeypleReaderException {
         boolean poProcessSuccess = true;
         /*
          * Iterator to keep the progress in updating the parsers from the list of prepared commands
@@ -1606,7 +1604,7 @@ public final class PoTransaction {
                          * kept all along the process.
                          */
                         SeResponse seResponsePoCommands = processAtomicPoCommands(
-                                poAtomicCommandBuilderList, SeRequest.ChannelState.KEEP_OPEN);
+                                poAtomicCommandBuilderList, ChannelState.KEEP_OPEN);
                         if (!updateParsersWithResponses(seResponsePoCommands,
                                 abstractApduResponseParserIterator)) {
                             poProcessSuccess = false;
@@ -1616,7 +1614,7 @@ public final class PoTransaction {
                          * next round
                          */
                         processAtomicClosing(null, CommunicationMode.CONTACTS_MODE,
-                                SeRequest.ChannelState.KEEP_OPEN);
+                                ChannelState.KEEP_OPEN);
                         resetModificationsBufferCounter();
                         /* We reopen a new session for the remaining commands to be sent */
                         SeResponse seResponseOpening = processAtomicOpening(currentAccessLevel,
@@ -1642,8 +1640,8 @@ public final class PoTransaction {
                 }
             }
             if (!poAtomicCommandBuilderList.isEmpty()) {
-                SeResponse seResponsePoCommands = processAtomicPoCommands(
-                        poAtomicCommandBuilderList, SeRequest.ChannelState.KEEP_OPEN);
+                SeResponse seResponsePoCommands =
+                        processAtomicPoCommands(poAtomicCommandBuilderList, ChannelState.KEEP_OPEN);
                 if (!updateParsersWithResponses(seResponsePoCommands,
                         abstractApduResponseParserIterator)) {
                     poProcessSuccess = false;
@@ -1684,8 +1682,8 @@ public final class PoTransaction {
      *         communication mode.</li>
      *         </ul>
      */
-    public boolean processClosing(CommunicationMode communicationMode,
-            SeRequest.ChannelState channelState) throws KeypleReaderException {
+    public boolean processClosing(CommunicationMode communicationMode, ChannelState channelState)
+            throws KeypleReaderException {
         boolean poProcessSuccess = true;
         boolean atLeastOneReadCommand = false;
         boolean sessionPreviouslyClosed = false;
@@ -1731,12 +1729,12 @@ public final class PoTransaction {
                             poSendableInSessionList.add((PoSendableInSession) command);
                         }
                         seResponseClosing = processAtomicPoCommands(poSendableInSessionList,
-                                SeRequest.ChannelState.KEEP_OPEN);
+                                ChannelState.KEEP_OPEN);
                         atLeastOneReadCommand = false;
                     } else {
                         /* All commands in the list are 'modifying' */
                         seResponseClosing = processAtomicClosing(poAtomicCommandBuilderList,
-                                CommunicationMode.CONTACTS_MODE, SeRequest.ChannelState.KEEP_OPEN);
+                                CommunicationMode.CONTACTS_MODE, ChannelState.KEEP_OPEN);
                         resetModificationsBufferCounter();
                         sessionPreviouslyClosed = true;
                     }

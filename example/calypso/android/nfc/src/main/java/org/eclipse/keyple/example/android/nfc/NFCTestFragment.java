@@ -23,6 +23,7 @@ import org.eclipse.keyple.plugin.android.nfc.AndroidNfcFragment;
 import org.eclipse.keyple.plugin.android.nfc.AndroidNfcPlugin;
 import org.eclipse.keyple.plugin.android.nfc.AndroidNfcProtocolSettings;
 import org.eclipse.keyple.plugin.android.nfc.AndroidNfcReader;
+import org.eclipse.keyple.seproxy.ChannelState;
 import org.eclipse.keyple.seproxy.ProxyReader;
 import org.eclipse.keyple.seproxy.ReaderPlugin;
 import org.eclipse.keyple.seproxy.SeProxyService;
@@ -241,7 +242,7 @@ public class NFCTestFragment extends Fragment implements ObservableReader.Reader
                             poReadRecordCmd_T2Usage.getApduRequest(),
                             poUpdateRecordCmd_T2UsageFill.getApduRequest());
 
-                    SeRequest.ChannelState keepChannelOpen = SeRequest.ChannelState.CLOSE_AFTER;
+                    ChannelState keepChannelOpen = ChannelState.CLOSE_AFTER;
 
                     SeRequest seRequest =
                             new SeRequest(new SeRequest.AidSelector(ByteArrayUtils.fromHex(poAid)),

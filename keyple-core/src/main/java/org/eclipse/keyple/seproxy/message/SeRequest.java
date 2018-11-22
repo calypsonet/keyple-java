@@ -16,6 +16,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
+import org.eclipse.keyple.seproxy.ChannelState;
 import org.eclipse.keyple.seproxy.protocol.Protocol;
 import org.eclipse.keyple.seproxy.protocol.SeProtocol;
 import org.eclipse.keyple.transaction.SeSelector;
@@ -27,14 +28,6 @@ import org.eclipse.keyple.util.ByteArrayUtils;
  * @see SeResponse
  */
 public final class SeRequest implements Serializable {
-
-    /**
-     * indicate if the logical channel should be closed or not at the end of the request
-     * transmission
-     */
-    public enum ChannelState {
-        KEEP_OPEN, CLOSE_AFTER
-    }
 
     static final long serialVersionUID = 6018469841127325812L;
 

@@ -12,6 +12,7 @@
 package org.eclipse.keyple.transaction;
 
 import java.util.*;
+import org.eclipse.keyple.seproxy.ChannelState;
 import org.eclipse.keyple.seproxy.message.ApduRequest;
 import org.eclipse.keyple.seproxy.message.SeRequest;
 import org.eclipse.keyple.seproxy.protocol.SeProtocol;
@@ -30,7 +31,7 @@ public class SeSelector {
     protected Set<Integer> selectApplicationSuccessfulStatusCodes = new HashSet<Integer>();
     private Class<? extends MatchingSe> matchingClass = MatchingSe.class;
     private Class<? extends SeSelector> selectorClass = SeSelector.class;
-    private final SeRequest.ChannelState channelState;
+    private final ChannelState channelState;
     private final SeProtocol protocolFlag;
     private final String atrRegex;
     private final byte[] aid;
@@ -73,7 +74,7 @@ public class SeSelector {
      *        SE
      * @param extraInfo information string (to be printed in logs)
      */
-    public SeSelector(String atrRegex, SeRequest.ChannelState channelState, SeProtocol protocolFlag,
+    public SeSelector(String atrRegex, ChannelState channelState, SeProtocol protocolFlag,
             String extraInfo) {
         this.atrRegex = atrRegex;
         this.channelState = channelState;
@@ -107,7 +108,7 @@ public class SeSelector {
      *        SE
      * @param extraInfo information string (to be printed in logs)
      */
-    public SeSelector(byte[] aid, SelectMode selectMode, SeRequest.ChannelState channelState,
+    public SeSelector(byte[] aid, SelectMode selectMode, ChannelState channelState,
             SeProtocol protocolFlag, String extraInfo) {
         this.aid = aid;
         this.selectMode = selectMode;

@@ -19,11 +19,11 @@ import org.eclipse.keyple.example.generic.common.AbstractReaderObserverEngine;
 import org.eclipse.keyple.plugin.pcsc.PcscPlugin;
 import org.eclipse.keyple.plugin.pcsc.PcscProtocolSetting;
 import org.eclipse.keyple.plugin.pcsc.PcscReader;
+import org.eclipse.keyple.seproxy.ChannelState;
 import org.eclipse.keyple.seproxy.ProxyReader;
 import org.eclipse.keyple.seproxy.SeProxyService;
 import org.eclipse.keyple.seproxy.event.ObservableReader;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
-import org.eclipse.keyple.seproxy.message.SeRequest;
 import org.eclipse.keyple.seproxy.message.SeRequestSet;
 import org.eclipse.keyple.seproxy.message.SeResponseSet;
 import org.eclipse.keyple.seproxy.protocol.Protocol;
@@ -58,55 +58,55 @@ public class UseCase_SelectNext_Pcsc {
             /* AID based selection */
             seSelection.prepareSelection(
                     new SeSelector(ByteArrayUtils.fromHex(poAidPrefix), SeSelector.SelectMode.FIRST,
-                            SeRequest.ChannelState.CLOSE_AFTER, Protocol.ANY, "Initial selection"));
+                            ChannelState.CLOSE_AFTER, Protocol.ANY, "Initial selection"));
             /* next selection */
             seSelection.prepareSelection(
                     new SeSelector(ByteArrayUtils.fromHex(poAidPrefix), SeSelector.SelectMode.NEXT,
-                            SeRequest.ChannelState.CLOSE_AFTER, Protocol.ANY, "Next selection #1"));
+                            ChannelState.CLOSE_AFTER, Protocol.ANY, "Next selection #1"));
             /* next selection */
             seSelection.prepareSelection(
                     new SeSelector(ByteArrayUtils.fromHex(poAidPrefix), SeSelector.SelectMode.NEXT,
-                            SeRequest.ChannelState.CLOSE_AFTER, Protocol.ANY, "Next selection #2"));
+                            ChannelState.CLOSE_AFTER, Protocol.ANY, "Next selection #2"));
             /* next selection */
             seSelection.prepareSelection(
                     new SeSelector(ByteArrayUtils.fromHex(poAidPrefix), SeSelector.SelectMode.NEXT,
-                            SeRequest.ChannelState.CLOSE_AFTER, Protocol.ANY, "Next selection #3"));
+                            ChannelState.CLOSE_AFTER, Protocol.ANY, "Next selection #3"));
             /* next selection */
             seSelection.prepareSelection(
                     new SeSelector(ByteArrayUtils.fromHex(poAidPrefix), SeSelector.SelectMode.NEXT,
-                            SeRequest.ChannelState.CLOSE_AFTER, Protocol.ANY, "Next selection #4"));
+                            ChannelState.CLOSE_AFTER, Protocol.ANY, "Next selection #4"));
             /* next selection */
             seSelection.prepareSelection(
                     new SeSelector(ByteArrayUtils.fromHex(poAidPrefix), SeSelector.SelectMode.NEXT,
-                            SeRequest.ChannelState.CLOSE_AFTER, Protocol.ANY, "Next selection #5"));
+                            ChannelState.CLOSE_AFTER, Protocol.ANY, "Next selection #5"));
             /* next selection */
             seSelection.prepareSelection(
                     new SeSelector(ByteArrayUtils.fromHex(poAidPrefix), SeSelector.SelectMode.NEXT,
-                            SeRequest.ChannelState.CLOSE_AFTER, Protocol.ANY, "Next selection #6"));
+                            ChannelState.CLOSE_AFTER, Protocol.ANY, "Next selection #6"));
             /* next selection */
             seSelection.prepareSelection(
                     new SeSelector(ByteArrayUtils.fromHex(poAidPrefix), SeSelector.SelectMode.NEXT,
-                            SeRequest.ChannelState.CLOSE_AFTER, Protocol.ANY, "Next selection #7"));
+                            ChannelState.CLOSE_AFTER, Protocol.ANY, "Next selection #7"));
             /* next selection */
             seSelection.prepareSelection(
                     new SeSelector(ByteArrayUtils.fromHex(poAidPrefix), SeSelector.SelectMode.NEXT,
-                            SeRequest.ChannelState.CLOSE_AFTER, Protocol.ANY, "Next selection #8"));
+                            ChannelState.CLOSE_AFTER, Protocol.ANY, "Next selection #8"));
             /* next selection */
             seSelection.prepareSelection(
                     new SeSelector(ByteArrayUtils.fromHex(poAidPrefix), SeSelector.SelectMode.NEXT,
-                            SeRequest.ChannelState.CLOSE_AFTER, Protocol.ANY, "Next selection #9"));
+                            ChannelState.CLOSE_AFTER, Protocol.ANY, "Next selection #9"));
             /* next selection */
-            seSelection.prepareSelection(new SeSelector(ByteArrayUtils.fromHex(poAidPrefix),
-                    SeSelector.SelectMode.NEXT, SeRequest.ChannelState.CLOSE_AFTER, Protocol.ANY,
-                    "Next selection #10"));
+            seSelection.prepareSelection(
+                    new SeSelector(ByteArrayUtils.fromHex(poAidPrefix), SeSelector.SelectMode.NEXT,
+                            ChannelState.CLOSE_AFTER, Protocol.ANY, "Next selection #10"));
             /* next selection */
-            seSelection.prepareSelection(new SeSelector(ByteArrayUtils.fromHex(poAidPrefix),
-                    SeSelector.SelectMode.NEXT, SeRequest.ChannelState.CLOSE_AFTER, Protocol.ANY,
-                    "Next selection #11"));
+            seSelection.prepareSelection(
+                    new SeSelector(ByteArrayUtils.fromHex(poAidPrefix), SeSelector.SelectMode.NEXT,
+                            ChannelState.CLOSE_AFTER, Protocol.ANY, "Next selection #11"));
             /* next selection */
-            seSelection.prepareSelection(new SeSelector(ByteArrayUtils.fromHex(poAidPrefix),
-                    SeSelector.SelectMode.NEXT, SeRequest.ChannelState.CLOSE_AFTER, Protocol.ANY,
-                    "Next selection #12"));
+            seSelection.prepareSelection(
+                    new SeSelector(ByteArrayUtils.fromHex(poAidPrefix), SeSelector.SelectMode.NEXT,
+                            ChannelState.CLOSE_AFTER, Protocol.ANY, "Next selection #12"));
 
             return seSelection.getSelectionOperation();
         }

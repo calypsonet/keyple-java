@@ -17,6 +17,7 @@ import java.util.*;
 import org.eclipse.keyple.calypso.command.po.PoRevision;
 import org.eclipse.keyple.calypso.command.po.builder.IncreaseCmdBuild;
 import org.eclipse.keyple.calypso.command.po.builder.ReadRecordsCmdBuild;
+import org.eclipse.keyple.seproxy.ChannelState;
 import org.eclipse.keyple.seproxy.event.ObservablePlugin;
 import org.eclipse.keyple.seproxy.event.ObservableReader;
 import org.eclipse.keyple.seproxy.event.PluginEvent;
@@ -92,8 +93,8 @@ public class StubReaderTest {
 
     private void selectSe() throws KeypleReaderException {
         SeSelection seSelection = new SeSelection(reader);
-        SeSelector seSelector = new SeSelector("3B.*", SeRequest.ChannelState.KEEP_OPEN,
-                Protocol.ANY, "ATR selection");
+        SeSelector seSelector =
+                new SeSelector("3B.*", ChannelState.KEEP_OPEN, Protocol.ANY, "ATR selection");
 
         /* Prepare selector, ignore MatchingSe here */
         seSelection.prepareSelection(seSelector);
@@ -133,7 +134,7 @@ public class StubReaderTest {
             public void update(ReaderEvent event) {
                 SeSelection seSelection = new SeSelection(reader);
                 SeSelector seSelector =
-                        new SeSelector("3B.*", SeRequest.ChannelState.KEEP_OPEN, null, "Test ATR");
+                        new SeSelector("3B.*", ChannelState.KEEP_OPEN, null, "Test ATR");
 
                 /* Prepare selector, ignore MatchingSe here */
                 seSelection.prepareSelection(seSelector);
@@ -518,7 +519,7 @@ public class StubReaderTest {
 
         SeRequest.Selector selector = new SeRequest.AidSelector(ByteArrayUtils.fromHex(poAid));
 
-        SeRequest seRequest = new SeRequest(poApduRequestList, SeRequest.ChannelState.CLOSE_AFTER);
+        SeRequest seRequest = new SeRequest(poApduRequestList, ChannelState.CLOSE_AFTER);
 
         return new SeRequestSet(seRequest);
 
@@ -541,7 +542,7 @@ public class StubReaderTest {
 
         SeRequest.Selector selector = new SeRequest.AidSelector(ByteArrayUtils.fromHex(poAid));
 
-        SeRequest seRequest = new SeRequest(poApduRequestList, SeRequest.ChannelState.CLOSE_AFTER);
+        SeRequest seRequest = new SeRequest(poApduRequestList, ChannelState.CLOSE_AFTER);
 
         return new SeRequestSet(seRequest);
 
@@ -582,14 +583,14 @@ public class StubReaderTest {
 
         SeRequest.Selector selector = new SeRequest.AidSelector(ByteArrayUtils.fromHex(poAid));
 
-        SeRequest seRequest1 = new SeRequest(poApduRequestList1, SeRequest.ChannelState.KEEP_OPEN);
+        SeRequest seRequest1 = new SeRequest(poApduRequestList1, ChannelState.KEEP_OPEN);
 
-        SeRequest seRequest2 = new SeRequest(poApduRequestList2, SeRequest.ChannelState.KEEP_OPEN);
+        SeRequest seRequest2 = new SeRequest(poApduRequestList2, ChannelState.KEEP_OPEN);
 
         /* This SeRequest fails at step 3 */
-        SeRequest seRequest3 = new SeRequest(poApduRequestList3, SeRequest.ChannelState.KEEP_OPEN);
+        SeRequest seRequest3 = new SeRequest(poApduRequestList3, ChannelState.KEEP_OPEN);
 
-        SeRequest seRequest4 = new SeRequest(poApduRequestList1, SeRequest.ChannelState.KEEP_OPEN);
+        SeRequest seRequest4 = new SeRequest(poApduRequestList1, ChannelState.KEEP_OPEN);
 
         Set<SeRequest> seRequestSets = new LinkedHashSet<SeRequest>();
 
@@ -668,7 +669,7 @@ public class StubReaderTest {
 
         SeRequest.Selector selector = new SeRequest.AidSelector(ByteArrayUtils.fromHex(poAid));
 
-        return new SeRequest(poApduRequestList, SeRequest.ChannelState.CLOSE_AFTER);
+        return new SeRequest(poApduRequestList, ChannelState.CLOSE_AFTER);
     }
 
     private StubSecureElement hoplinkSE() {

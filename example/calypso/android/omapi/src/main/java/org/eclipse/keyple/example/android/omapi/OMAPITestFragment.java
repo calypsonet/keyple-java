@@ -19,6 +19,7 @@ import org.eclipse.keyple.calypso.command.po.PoRevision;
 import org.eclipse.keyple.calypso.command.po.builder.ReadRecordsCmdBuild;
 import org.eclipse.keyple.calypso.command.po.builder.UpdateRecordCmdBuild;
 import org.eclipse.keyple.plugin.android.omapi.AndroidOmapiPlugin;
+import org.eclipse.keyple.seproxy.ChannelState;
 import org.eclipse.keyple.seproxy.ProxyReader;
 import org.eclipse.keyple.seproxy.ReaderPlugin;
 import org.eclipse.keyple.seproxy.SeProxyService;
@@ -184,7 +185,7 @@ public class OMAPITestFragment extends Fragment {
 
                     SeRequest seRequest =
                             new SeRequest(new SeRequest.AidSelector(ByteArrayUtils.fromHex(poAid)),
-                                    poApduRequestList, SeRequest.ChannelState.CLOSE_AFTER,
+                                    poApduRequestList, ChannelState.CLOSE_AFTER,
                                     ContactsProtocols.PROTOCOL_ISO7816_3, null);
 
 

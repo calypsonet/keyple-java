@@ -33,6 +33,7 @@ import org.eclipse.keyple.integration.calypso.PoFileStructureInfo;
 import org.eclipse.keyple.plugin.pcsc.PcscPlugin;
 import org.eclipse.keyple.plugin.pcsc.PcscProtocolSetting;
 import org.eclipse.keyple.plugin.pcsc.PcscReader;
+import org.eclipse.keyple.seproxy.ChannelState;
 import org.eclipse.keyple.seproxy.ProxyReader;
 import org.eclipse.keyple.seproxy.ReaderPlugin;
 import org.eclipse.keyple.seproxy.SeProxyService;
@@ -176,7 +177,7 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
                 ReadDataStructure.SINGLE_RECORD_DATA, (byte) (contractIndex + 1), (byte) 0x1D,
                 "Contract");
 
-        poProcessStatus = poTransaction.processPoCommands(SeRequest.ChannelState.KEEP_OPEN);
+        poProcessStatus = poTransaction.processPoCommands(ChannelState.KEEP_OPEN);
 
         System.out
                 .println("Reading contract #" + (contractIndex + 1) + " for current validation...");
@@ -210,7 +211,7 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
                 poTransaction.prepareAppendRecordCmd(eventSfi, newEventData, "Event");
 
         poProcessStatus = poTransaction.processClosing(CommunicationMode.CONTACTLESS_MODE,
-                SeRequest.ChannelState.KEEP_OPEN);
+                ChannelState.KEEP_OPEN);
 
         System.out.println("\nValidation Successful!");
         System.out.println(
@@ -293,7 +294,7 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
             System.out.println("No value present in the card. Initiating auto top-up...");
 
             poTransaction.processClosing(PoTransaction.CommunicationMode.CONTACTLESS_MODE,
-                    SeRequest.ChannelState.KEEP_OPEN);
+                    ChannelState.KEEP_OPEN);
 
             poTransaction.processOpening(PoTransaction.ModificationMode.ATOMIC, SESSION_LVL_LOAD,
                     (byte) 0x00, (byte) 0x00);
@@ -326,8 +327,7 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
 
         byte[] updatedCounterValue = getByteArrayFromCounterValue(counterValue - 1);
 
-        poTransaction.processClosing(CommunicationMode.CONTACTLESS_MODE,
-                SeRequest.ChannelState.KEEP_OPEN);
+        poTransaction.processClosing(CommunicationMode.CONTACTLESS_MODE, ChannelState.KEEP_OPEN);
 
         System.out.println("\nValidation Successful!");
         System.out.println(
@@ -350,8 +350,8 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
             // open
             SeSelection samSelection = new SeSelection(samReader);
 
-            SeSelector samSelector = new SeSelector(SAM_ATR_REGEX, SeRequest.ChannelState.KEEP_OPEN,
-                    null, "SAM Selection");
+            SeSelector samSelector =
+                    new SeSelector(SAM_ATR_REGEX, ChannelState.KEEP_OPEN, null, "SAM Selection");
 
             /* Prepare selector, ignore MatchingSe here */
             samSelection.prepareSelection(samSelector);
@@ -372,19 +372,19 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
             // Add Audit C0 AID to the list
             CalypsoPo auditC0Se = (CalypsoPo) seSelection.prepareSelection(
                     new PoSelector(ByteArrayUtils.fromHex(PoFileStructureInfo.poAuditC0Aid),
-                            SeSelector.SelectMode.FIRST, SeRequest.ChannelState.KEEP_OPEN, null,
+                            SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN, null,
                             PoSelector.RevisionTarget.TARGET_REV3, "Audit C0"));
 
             // Add CLAP AID to the list
             CalypsoPo clapSe = (CalypsoPo) seSelection.prepareSelection(
                     new PoSelector(ByteArrayUtils.fromHex(PoFileStructureInfo.clapAid),
-                            SeSelector.SelectMode.FIRST, SeRequest.ChannelState.KEEP_OPEN, null,
+                            SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN, null,
                             PoSelector.RevisionTarget.TARGET_REV3, "CLAP"));
 
             // Add cdLight AID to the list
             CalypsoPo cdLightSe = (CalypsoPo) seSelection.prepareSelection(
                     new PoSelector(ByteArrayUtils.fromHex(PoFileStructureInfo.cdLightAid),
-                            SeSelector.SelectMode.FIRST, SeRequest.ChannelState.KEEP_OPEN, null,
+                            SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN, null,
                             PoSelector.RevisionTarget.TARGET_REV2_REV3, "CDLight"));
 
             if (!seSelection.processExplicitSelection()) {
