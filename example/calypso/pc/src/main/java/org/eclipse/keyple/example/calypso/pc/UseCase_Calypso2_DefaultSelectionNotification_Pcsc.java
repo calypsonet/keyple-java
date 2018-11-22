@@ -63,7 +63,7 @@ public class UseCase_Calypso2_DefaultSelectionNotification_Pcsc implements Reade
 
         /*
          * Get a PO reader ready to work with Calypso PO. Use the getReader helper method from the
-         * ReaderUtilities class.
+         * CalypsoUtilities class.
          */
         poReader = CalypsoUtilities.getDefaultPoReader(seProxyService);
 
@@ -73,7 +73,7 @@ public class UseCase_Calypso2_DefaultSelectionNotification_Pcsc implements Reade
         }
 
         logger.info(
-                "=============== UseCase Calypo #2: AID based default selection ===================");
+                "=============== UseCase Calypso #2: AID based default selection ===================");
         logger.info("= PO Reader  NAME = {}", poReader.getName());
 
         /*
@@ -144,7 +144,7 @@ public class UseCase_Calypso2_DefaultSelectionNotification_Pcsc implements Reade
     public void update(ReaderEvent event) {
         switch (event.getEventType()) {
             case SE_MATCHED:
-                if (seSelection.processDefaultSelection(event.getDefaultResponseSet())) {
+                if (seSelection.processDefaultSelection(event.getDefaultSelectionResponse())) {
                     MatchingSe selectedSe = seSelection.getSelectedSe();
 
                     logger.info("Observer notification: the selection of the PO has succeeded.");
@@ -207,14 +207,16 @@ public class UseCase_Calypso2_DefaultSelectionNotification_Pcsc implements Reade
                     logger.info(
                             "==================================================================================");
                 } else {
-                    logger.error("The selection of the PO has failed.");
+                    logger.error(
+                            "The selection of the PO has failed. Should not have occurred due to the MATCHED_ONLY selection mode.");
                 }
                 break;
             case SE_INSERTED:
-                logger.error("A PO was detected but the selection has failed.");
+                logger.error(
+                        "SE_INSERTED event: should not have occurred due to the MATCHED_ONLY selection mode.");
                 break;
             case SE_REMOVAL:
-                logger.error("The PO has been removed.");
+                logger.info("The PO has been removed.");
                 break;
             default:
                 break;

@@ -56,7 +56,7 @@ public class UseCase_Calypso1_ExplicitSelectionAid_Pcsc {
 
         /*
          * Get a PO reader ready to work with Calypso PO. Use the getReader helper method from the
-         * ReaderUtilities class.
+         * CalypsoUtilities class.
          */
         ProxyReader poReader = CalypsoUtilities.getDefaultPoReader(seProxyService);
 
@@ -66,7 +66,7 @@ public class UseCase_Calypso1_ExplicitSelectionAid_Pcsc {
         }
 
         logger.info(
-                "=============== UseCase Calypo #1: AID based explicit selection ==================");
+                "=============== UseCase Calypso #1: AID based explicit selection ==================");
         logger.info("= PO Reader  NAME = {}", poReader.getName());
 
         /* Check if a PO is present in the reader */
