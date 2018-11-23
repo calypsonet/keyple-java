@@ -12,6 +12,8 @@
 package org.eclipse.keyple.example.calypso.pc;
 
 
+import static org.eclipse.keyple.example.calypso.common.postructure.CalypsoClassicInfo.*;
+import java.io.IOException;
 import org.eclipse.keyple.calypso.command.po.parser.ReadDataStructure;
 import org.eclipse.keyple.calypso.command.po.parser.ReadRecordsRespPars;
 import org.eclipse.keyple.calypso.transaction.CalypsoPo;
@@ -26,14 +28,9 @@ import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 import org.eclipse.keyple.seproxy.exception.NoStackTraceThrowable;
 import org.eclipse.keyple.seproxy.protocol.Protocol;
 import org.eclipse.keyple.transaction.SeSelection;
-import org.eclipse.keyple.transaction.SeSelector;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
-
-import static org.eclipse.keyple.example.calypso.common.postructure.CalypsoClassicInfo.*;
 
 /**
  * <h1>Use Case ‘Calypso 3’ – Rev1 Selection Atr (PC/SC)</h1>
@@ -41,8 +38,9 @@ import static org.eclipse.keyple.example.calypso.common.postructure.CalypsoClass
  * <li>
  * <h2>Scenario:</h2>
  * <ul>
- * <li>Check if a B' protocol SE is in the reader, select a Calypso PO Rev1 (ATR selection), select the DF RT (ticketing), operate a simple Calypso PO
- *  transaction (simple plain read, not involving a Calypso SAM).</li>
+ * <li>Check if a B' protocol SE is in the reader, select a Calypso PO Rev1 (ATR selection), select
+ * the DF RT (ticketing), operate a simple Calypso PO transaction (simple plain read, not involving
+ * a Calypso SAM).</li>
  * <li><code>
  Explicit Selection
  </code> means that it is the terminal application which start the SE processing.</li>

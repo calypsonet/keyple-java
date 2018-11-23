@@ -85,8 +85,8 @@ public final class PoSelector extends SeSelector {
      * @param protocolFlag the protocol flag to filter POs according to their communication protocol
      * @param extraInfo information string
      */
-    public PoSelector(String atrRegex, Short dfLID, ChannelState channelState,
-            SeProtocol protocolFlag, RevisionTarget revisionTarget, String extraInfo) {
+    public PoSelector(String atrRegex, ChannelState channelState, SeProtocol protocolFlag,
+            RevisionTarget revisionTarget, String extraInfo) {
         super(atrRegex, channelState, protocolFlag, extraInfo);
         setMatchingClass(CalypsoPo.class);
         setSelectorClass(PoSelector.class);
