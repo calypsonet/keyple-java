@@ -1,5 +1,7 @@
 # Keyple Java
 
+![global architecture](doc/20181010-Keyple-components.svg "keyple SDK global architecture")
+
 This is the repository for the Java implementation of the [keyple](https://keyple.org/) API.
 
 ## Supported platforms
