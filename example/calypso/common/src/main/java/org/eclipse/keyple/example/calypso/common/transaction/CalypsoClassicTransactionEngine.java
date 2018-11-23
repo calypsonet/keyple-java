@@ -24,8 +24,6 @@ import org.eclipse.keyple.example.generic.common.AbstractReaderObserverEngine;
 import org.eclipse.keyple.seproxy.ChannelState;
 import org.eclipse.keyple.seproxy.ProxyReader;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
-import org.eclipse.keyple.seproxy.message.SeResponse;
-import org.eclipse.keyple.seproxy.message.SeResponseSet;
 import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
 import org.eclipse.keyple.transaction.*;
 import org.eclipse.keyple.util.ByteArrayUtils;
@@ -39,7 +37,7 @@ import org.slf4j.profiler.Profiler;
  * <ol>
  * <li>Setting up a two-reader configuration and adding an observer method ({@link #update update})
  * <li>Starting a card operation when a PO presence is notified
- * ({@link #processSeMatch(SeResponseSet)} operateSeTransaction})
+ * ({@link #processSeMatch(SelectionResponse)} operateSeTransaction})
  * <li>Opening a logical channel with the SAM (C1 SAM is expected) see
  * ({@link CalypsoClassicInfo#SAM_C1_ATR_REGEX SAM_C1_ATR_REGEX})
  * <li>Attempting to open a logical channel with the PO with 3 options:
@@ -48,7 +46,7 @@ import org.slf4j.profiler.Profiler;
  * <li>Selecting with the Calypso AID and reading the event log file
  * <li>Selecting with a fake AID (2)
  * </ul>
- * <li>Display SeResponse data
+ * <li>Display {@link SelectionResponse} data
  * <li>If the Calypso selection succeeded, do a Calypso transaction
  * ({doCalypsoReadWriteTransaction(PoTransaction, ApduResponse, boolean)}
  * doCalypsoReadWriteTransaction}).
@@ -61,6 +59,7 @@ import org.slf4j.profiler.Profiler;
  * <p>
  * Read the doc of each methods for further details.
  */
+@SuppressWarnings("unused")
 public class CalypsoClassicTransactionEngine extends AbstractReaderObserverEngine {
     private static Logger logger = LoggerFactory.getLogger(CalypsoClassicTransactionEngine.class);
 
@@ -144,9 +143,6 @@ public class CalypsoClassicTransactionEngine extends AbstractReaderObserverEngin
      */
     public void doCalypsoReadWriteTransaction(PoTransaction poTransaction, boolean closeSeChannel)
             throws KeypleReaderException {
-
-        /* SeResponse object to receive the results of PoTransaction operations. */
-        SeResponse seResponse;
 
         boolean poProcessStatus;
 

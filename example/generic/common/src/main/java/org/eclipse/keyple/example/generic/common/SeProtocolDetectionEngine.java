@@ -11,8 +11,7 @@
  ********************************************************************************/
 package org.eclipse.keyple.example.generic.common;
 
-import java.util.ArrayList;
-import java.util.List;
+
 import org.eclipse.keyple.calypso.command.po.parser.ReadDataStructure;
 import org.eclipse.keyple.calypso.transaction.PoSelector;
 import org.eclipse.keyple.seproxy.ChannelState;
@@ -51,11 +50,6 @@ public class SeProtocolDetectionEngine extends AbstractReaderObserverEngine {
     public SelectionRequest prepareSeSelection() {
 
         seSelection = new SeSelection(poReader);
-
-        ApduRequest pcscContactlessReaderGetData =
-                new ApduRequest(ByteArrayUtils.fromHex("FFCA000000"), false);
-        List<ApduRequest> pcscContactlessReaderGetDataList = new ArrayList<ApduRequest>();
-        pcscContactlessReaderGetDataList.add(pcscContactlessReaderGetData);
 
         // process SDK defined protocols
         for (ContactlessProtocols protocol : ContactlessProtocols.values()) {

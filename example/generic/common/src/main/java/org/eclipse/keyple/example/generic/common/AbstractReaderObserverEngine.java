@@ -55,8 +55,8 @@ public abstract class AbstractReaderObserverEngine implements ObservableReader.R
 
             case SE_MATCHED:
                 currentlyProcessingSe = true;
-                processSeMatch(event.getDefaultResponseSet()); // to process the selected
-                                                               // application
+                processSeMatch(event.getDefaultSelectionResponse()); // to process the selected
+                // application
                 currentlyProcessingSe = false;
                 break;
 

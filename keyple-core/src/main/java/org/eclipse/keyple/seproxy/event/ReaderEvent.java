@@ -104,7 +104,7 @@ public final class ReaderEvent {
         return eventType;
     }
 
-    public SelectionResponse getDefaultResponseSet() {
+    public SelectionResponse getDefaultSelectionResponse() {
         return defaultResponseSet;
     }
 }
