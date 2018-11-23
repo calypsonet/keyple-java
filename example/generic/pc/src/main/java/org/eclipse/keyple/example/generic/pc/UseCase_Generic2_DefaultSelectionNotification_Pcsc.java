@@ -28,6 +28,27 @@ import org.eclipse.keyple.util.ByteArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * <h1>Use Case ‘generic 2’ – Default Selection Notification (PC/SC)</h1>
+ * <ul>
+ * <li>
+ * <h2>Scenario:</h2>
+ * <ul>
+ * <li>Define a default selection of ISO 14443-4 (here a Calypso PO) and set it to an observable
+ * reader, on SE detection in case the selection is successful, notify the terminal application with
+ * the SE information.</li>
+ * <li><code>
+ Default Selection Notification
+ </code> means that the SE processing is automatically started when detected.</li>
+ * <li>PO messages:
+ * <ul>
+ * <li>A single SE message handled at ProxyReader level</li>
+ * </ul>
+ * </li>
+ * </ul>
+ * </li>
+ * </ul>
+ */
 public class UseCase_Generic2_DefaultSelectionNotification_Pcsc implements ReaderObserver {
     protected static final Logger logger =
             LoggerFactory.getLogger(UseCase_Generic2_DefaultSelectionNotification_Pcsc.class);

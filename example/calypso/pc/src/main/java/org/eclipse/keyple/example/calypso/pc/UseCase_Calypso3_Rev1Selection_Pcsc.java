@@ -12,10 +12,6 @@
 package org.eclipse.keyple.example.calypso.pc;
 
 
-import static org.eclipse.keyple.example.calypso.common.postructure.CalypsoClassicInfo.RECORD_NUMBER_1;
-import static org.eclipse.keyple.example.calypso.common.postructure.CalypsoClassicInfo.SFI_EnvironmentAndHolder;
-import static org.eclipse.keyple.example.calypso.common.postructure.CalypsoClassicInfo.SFI_EventLog;
-import java.io.IOException;
 import org.eclipse.keyple.calypso.command.po.parser.ReadDataStructure;
 import org.eclipse.keyple.calypso.command.po.parser.ReadRecordsRespPars;
 import org.eclipse.keyple.calypso.transaction.CalypsoPo;
@@ -35,20 +31,24 @@ import org.eclipse.keyple.util.ByteArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
+
+import static org.eclipse.keyple.example.calypso.common.postructure.CalypsoClassicInfo.*;
+
 /**
- * <h1>Use Case ‘Calypso 1’ – Explicit Selection Aid (PC/SC)</h1>
+ * <h1>Use Case ‘Calypso 3’ – Rev1 Selection Atr (PC/SC)</h1>
  * <ul>
  * <li>
  * <h2>Scenario:</h2>
  * <ul>
- * <li>Check if a ISO 14443-4 SE is in the reader, select a Calypso PO, operate a simple Calypso PO
- * transaction (simple plain read, not involving a Calypso SAM).</li>
+ * <li>Check if a B' protocol SE is in the reader, select a Calypso PO Rev1 (ATR selection), select the DF RT (ticketing), operate a simple Calypso PO
+ *  transaction (simple plain read, not involving a Calypso SAM).</li>
  * <li><code>
  Explicit Selection
  </code> means that it is the terminal application which start the SE processing.</li>
  * <li>PO messages:
  * <ul>
- * <li>A first SE message to select the application in the reader</li>
+ * <li>A first SE message to do an ATR based selection and DF selection of the SE in the reader</li>
  * <li>A second SE message to operate the simple Calypso transaction</li>
  * </ul>
  * </li>
@@ -56,10 +56,10 @@ import org.slf4j.LoggerFactory;
  * </li>
  * </ul>
  */
-public class UseCase_Calypso1_ExplicitSelectionAid_Pcsc {
+public class UseCase_Calypso3_Rev1Selection_Pcsc {
     protected static final Logger logger =
-            LoggerFactory.getLogger(UseCase_Calypso1_ExplicitSelectionAid_Pcsc.class);
-    private static String poAid = "A0000004040125090101";
+            LoggerFactory.getLogger(UseCase_Calypso3_Rev1Selection_Pcsc.class);
+    private static String poAtrRegex = ".*";
 
 
     public static void main(String[] args)
@@ -95,7 +95,7 @@ public class UseCase_Calypso1_ExplicitSelectionAid_Pcsc {
             logger.info(
                     "==================================================================================");
             logger.info(
-                    "= 1st PO exchange: AID based selection with reading of Environment file.         =");
+                    "= 1st PO exchange: ATR based selection with reading of Environment file.         =");
             logger.info(
                     "==================================================================================");
 
@@ -115,13 +115,11 @@ public class UseCase_Calypso1_ExplicitSelectionAid_Pcsc {
              * Calypso selection: configures a PoSelector with all the desired attributes to make
              * the selection and read additional information afterwards
              */
-            PoSelector poSelector = new PoSelector(ByteArrayUtils.fromHex(poAid),
-                    SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN, Protocol.ANY,
-                    PoSelector.RevisionTarget.TARGET_REV3, "AID: " + poAid);
+            PoSelector poSelector = new PoSelector(poAtrRegex, ChannelState.KEEP_OPEN, Protocol.ANY,
+                    PoSelector.RevisionTarget.TARGET_REV3, "ATR: " + poAtrRegex);
 
             /*
-             * Prepare the reading order and keep the associated parser for later use once the
-             * selection has been made.
+             * Prepare the selection of the DF RT.
              */
             ReadRecordsRespPars readEnvironmentParser = poSelector.prepareReadRecordsCmd(
                     SFI_EnvironmentAndHolder, ReadDataStructure.SINGLE_RECORD_DATA, RECORD_NUMBER_1,

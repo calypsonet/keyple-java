@@ -28,6 +28,25 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
+/**
+ * <h1>Use Case ‘generic 1’ – Explicit Selection Aid (PC/SC)</h1>
+ * <ul>
+ * <li>
+ * <h2>Scenario:</h2>
+ * <ul>
+ * <li>Check if a ISO 14443-4 SE is in the reader, select a SE (here a Calypso PO).</li>
+ * <li><code>
+ Explicit Selection
+ </code> means that it is the terminal application which start the SE processing.</li>
+ * <li>SE messages:
+ * <ul>
+ * <li>A single SE message to select the application in the reader</li>
+ * </ul>
+ * </li>
+ * </ul>
+ * </li>
+ * </ul>
+ */
 public class UseCase_Generic1_ExplicitSelectionAid_Pcsc {
     protected static final Logger logger =
             LoggerFactory.getLogger(UseCase_Generic1_ExplicitSelectionAid_Pcsc.class);

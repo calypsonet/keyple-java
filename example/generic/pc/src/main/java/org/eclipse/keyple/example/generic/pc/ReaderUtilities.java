@@ -50,7 +50,8 @@ public class ReaderUtilities {
      * 
      * @param seProxyService the current SeProxyService
      * @return the targeted ProxyReader to do contactless communications
-     * @throws KeypleBaseException
+     * @throws KeypleBaseException in case of an error while retrieving the reader or setting its
+     *         parameters
      */
     public static ProxyReader getDefaultContactLessSeReader(SeProxyService seProxyService)
             throws KeypleBaseException {
@@ -66,7 +67,7 @@ public class ReaderUtilities {
      * Sets the reader parameters for contactless secure elements
      * 
      * @param reader the reader to configure
-     * @throws KeypleBaseException
+     * @throws KeypleBaseException in case of an error while settings the parameters
      */
     public static void setContactlessSettings(ProxyReader reader) throws KeypleBaseException {
         /* Enable logging */
