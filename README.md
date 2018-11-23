@@ -21,9 +21,11 @@ Function specification, Javadoc and compiled JARs are on [keyple-doc](https://ca
   - integration: source for the integration code (SDK).
 
 ## Keyple packages' usages
-The packages to import in order to implement a ticketing application, a reader plugin, or a SE library to manage a specific solution.
+The packages to import in order to implement a ticketing **application**, a reader **plugin**, or a **SE library** to manage a specific solution.
+
 - generic to any SE solution
 ![generic packages](doc/SeProxyPackage.svg "Keyple generic packages")
+
 - specific to Calypso
 ![Calypso packages](doc/CalypsoPackage.svg "Calypso packages")
 
