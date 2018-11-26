@@ -26,6 +26,7 @@ import org.eclipse.keyple.seproxy.SeReader;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.message.ApduRequest;
 import org.eclipse.keyple.seproxy.message.ApduResponse;
+import org.eclipse.keyple.seproxy.message.ProxyReader;
 import org.eclipse.keyple.seproxy.message.SeRequest;
 import org.eclipse.keyple.seproxy.message.SeRequestSet;
 import org.eclipse.keyple.seproxy.message.SeResponse;
@@ -189,7 +190,7 @@ public class OMAPITestFragment extends Fragment {
                                     ContactsProtocols.PROTOCOL_ISO7816_3, null);
 
 
-                    SeResponseSet seResponseSet = reader.transmitSet(new SeRequestSet(seRequest));
+                    SeResponseSet seResponseSet = ((ProxyReader)reader).transmitSet(new SeRequestSet(seRequest));
 
 
                     mText.append("\n ---- \n");

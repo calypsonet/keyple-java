@@ -32,6 +32,7 @@ import org.eclipse.keyple.seproxy.event.ReaderEvent;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.message.ApduRequest;
+import org.eclipse.keyple.seproxy.message.ProxyReader;
 import org.eclipse.keyple.seproxy.message.SeRequest;
 import org.eclipse.keyple.seproxy.message.SeRequestSet;
 import org.eclipse.keyple.seproxy.message.SeResponse;
@@ -45,6 +46,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.ProxyFileDescriptorCallback;
 import android.support.annotation.Nullable;
 import android.text.Spannable;
 import android.text.style.ForegroundColorSpan;
@@ -251,7 +253,7 @@ public class NFCTestFragment extends Fragment implements ObservableReader.Reader
 
                     // transmit seRequestSet to Reader
                     final SeResponseSet seResponseSet =
-                            reader.transmitSet(new SeRequestSet(seRequest));
+                            ((ProxyReader)reader).transmitSet(new SeRequestSet(seRequest));
 
                     /*
                      * print responses in View
