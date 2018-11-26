@@ -50,7 +50,8 @@ public class ReaderUtilities {
      * 
      * @param seProxyService the current SeProxyService
      * @return the targeted ProxyReader to do contactless communications
-     * @throws KeypleBaseException
+     * @throws KeypleBaseException in case of an error while retrieving the reader or setting its
+     *         parameters
      */
     public static ProxyReader getDefaultContactLessSeReader(SeProxyService seProxyService)
             throws KeypleBaseException {
@@ -66,7 +67,7 @@ public class ReaderUtilities {
      * Sets the reader parameters for contactless secure elements
      * 
      * @param reader the reader to configure
-     * @throws KeypleBaseException
+     * @throws KeypleBaseException in case of an error while settings the parameters
      */
     public static void setContactlessSettings(ProxyReader reader) throws KeypleBaseException {
         /* Enable logging */
@@ -92,5 +93,32 @@ public class ReaderUtilities {
         reader.addSeProtocolSetting(
                 new SeProtocolSetting(PcscProtocolSetting.SETTING_PROTOCOL_ISO14443_4));
 
+    }
+
+    /**
+     * Sets the reader parameters for contacts secure elements
+     *
+     * @param reader the reader to configure
+     * @throws KeypleBaseException in case of an error while settings the parameters
+     */
+    public static void setContactsSettings(ProxyReader reader) throws KeypleBaseException {
+        /* Enable logging */
+        reader.setParameter(PcscReader.SETTING_KEY_LOGGING, "true");
+
+        /* Contactless SE works with T0 protocol */
+        reader.setParameter(PcscReader.SETTING_KEY_PROTOCOL, PcscReader.SETTING_PROTOCOL_T0);
+
+        /*
+         * PC/SC card access mode:
+         *
+         * The SAM is left in the SHARED mode (by default) to avoid automatic resets due to the
+         * limited time between two consecutive exchanges granted by Windows.
+         *
+         * The PO reader is set to EXCLUSIVE mode to avoid side effects during the selection step
+         * that may result in session failures.
+         *
+         * These two points will be addressed in a coming release of the Keyple PcSc reader plugin.
+         */
+        reader.setParameter(PcscReader.SETTING_KEY_MODE, PcscReader.SETTING_MODE_SHARED);
     }
 }

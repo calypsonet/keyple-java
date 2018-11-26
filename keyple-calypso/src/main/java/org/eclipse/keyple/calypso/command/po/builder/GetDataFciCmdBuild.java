@@ -33,6 +33,7 @@ public final class GetDataFciCmdBuild extends PoCommandBuilder {
      */
     public GetDataFciCmdBuild(PoRevision revision) {
         super(command, null);
+        // TODO check revision management
         byte cla = PoRevision.REV2_4.equals(revision) ? (byte) 0x94 : (byte) 0x00;
 
         request = setApduRequest(cla, command, (byte) 0x00, (byte) 0x6F, null, (byte) 0x00);

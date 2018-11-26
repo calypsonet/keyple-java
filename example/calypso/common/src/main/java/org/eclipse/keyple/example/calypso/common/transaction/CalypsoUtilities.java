@@ -14,7 +14,9 @@ package org.eclipse.keyple.example.calypso.common.transaction;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.EnumMap;
 import java.util.Properties;
+import org.eclipse.keyple.calypso.transaction.PoTransaction;
 import org.eclipse.keyple.example.calypso.common.postructure.CalypsoClassicInfo;
 import org.eclipse.keyple.example.generic.pc.ReaderUtilities;
 import org.eclipse.keyple.seproxy.ChannelState;
@@ -51,6 +53,13 @@ public class CalypsoUtilities {
         }
     }
 
+    /**
+     * Get the default reader for PO communications
+     * 
+     * @param seProxyService the current ProxyService
+     * @return a ProxyReader object
+     * @throws KeypleBaseException if an error occurred
+     */
     public static ProxyReader getDefaultPoReader(SeProxyService seProxyService)
             throws KeypleBaseException {
         ProxyReader poReader = ReaderUtilities.getReaderByName(seProxyService,
@@ -61,6 +70,44 @@ public class CalypsoUtilities {
         return poReader;
     }
 
+    /**
+     * Get the default reader for SAM communications
+     * 
+     * @param seProxyService the current ProxyService
+     * @return a ProxyReader object
+     * @throws KeypleBaseException if an error occurred
+     */
+    public static ProxyReader getDefaultSamReader(SeProxyService seProxyService)
+            throws KeypleBaseException {
+        ProxyReader samReader = ReaderUtilities.getReaderByName(seProxyService,
+                properties.getProperty("sam.reader.regex"));
+
+        ReaderUtilities.setContactsSettings(samReader);
+
+        /*
+         * Open logical channel for the SAM inserted in the reader
+         *
+         * (We expect the right is inserted)
+         */
+        checkSamAndOpenChannel(samReader);
+
+        return samReader;
+    }
+
+    public static EnumMap<PoTransaction.SamSettings, Byte> getSamSettings() {
+        /* define the SAM parameters to provide when creating PoTransaction */
+        return new EnumMap<PoTransaction.SamSettings, Byte>(PoTransaction.SamSettings.class) {
+            {
+                put(PoTransaction.SamSettings.SAM_DEFAULT_KIF_PERSO,
+                        PoTransaction.DEFAULT_KIF_PERSO);
+                put(PoTransaction.SamSettings.SAM_DEFAULT_KIF_LOAD, PoTransaction.DEFAULT_KIF_LOAD);
+                put(PoTransaction.SamSettings.SAM_DEFAULT_KIF_DEBIT,
+                        PoTransaction.DEFAULT_KIF_DEBIT);
+                put(PoTransaction.SamSettings.SAM_DEFAULT_KEY_RECORD_NUMBER,
+                        PoTransaction.DEFAULT_KEY_RECORD_NUMER);
+            }
+        };
+    }
 
     /**
      * Check SAM presence and consistency

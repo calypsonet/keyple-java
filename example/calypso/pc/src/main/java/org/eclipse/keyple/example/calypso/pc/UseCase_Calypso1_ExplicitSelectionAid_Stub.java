@@ -37,7 +37,27 @@ import org.eclipse.keyple.util.ByteArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
+/**
+ * <h1>Use Case ‘Calypso 1’ – Explicit Selection Aid (Stub)</h1>
+ * <ul>
+ * <li>
+ * <h2>Scenario:</h2>
+ * <ul>
+ * <li>Check if a ISO 14443-4 SE is in the reader, select a Calypso PO, operate a simple Calypso PO
+ * transaction (simple plain read, not involving a Calypso SAM).</li>
+ * <li><code>
+ Explicit Selection
+ </code> means that it is the terminal application which start the SE processing.</li>
+ * <li>PO messages:
+ * <ul>
+ * <li>A first SE message to select the application in the reader</li>
+ * <li>A second SE message to operate the simple Calypso transaction</li>
+ * </ul>
+ * </li>
+ * </ul>
+ * </li>
+ * </ul>
+ */
 public class UseCase_Calypso1_ExplicitSelectionAid_Stub {
     protected static final Logger logger =
             LoggerFactory.getLogger(UseCase_Calypso1_ExplicitSelectionAid_Stub.class);
