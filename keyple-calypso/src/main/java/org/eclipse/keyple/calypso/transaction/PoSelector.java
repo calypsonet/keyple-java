@@ -20,8 +20,10 @@ import org.eclipse.keyple.calypso.command.po.PoCustomModificationCommandBuilder;
 import org.eclipse.keyple.calypso.command.po.PoCustomReadCommandBuilder;
 import org.eclipse.keyple.calypso.command.po.PoRevision;
 import org.eclipse.keyple.calypso.command.po.builder.ReadRecordsCmdBuild;
+import org.eclipse.keyple.calypso.command.po.builder.SelectFileCmdBuild;
 import org.eclipse.keyple.calypso.command.po.parser.ReadDataStructure;
 import org.eclipse.keyple.calypso.command.po.parser.ReadRecordsRespPars;
+import org.eclipse.keyple.calypso.command.po.parser.SelectFileRespPars;
 import org.eclipse.keyple.command.AbstractApduResponseParser;
 import org.eclipse.keyple.seproxy.ChannelState;
 import org.eclipse.keyple.seproxy.message.ApduRequest;
@@ -29,6 +31,7 @@ import org.eclipse.keyple.seproxy.message.ApduResponse;
 import org.eclipse.keyple.seproxy.message.SeResponse;
 import org.eclipse.keyple.seproxy.protocol.SeProtocol;
 import org.eclipse.keyple.transaction.SeSelector;
+import org.eclipse.keyple.util.ByteArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -183,6 +186,36 @@ public final class PoSelector extends SeSelector {
         /* create a parser to be returned to the caller */
         ReadRecordsRespPars poResponseParser =
                 new ReadRecordsRespPars(firstRecordNumber, readDataStructureEnum);
+
+        /*
+         * keep the parser in a CommandParser list with the number of apduRequest associated with it
+         */
+        poResponseParserList.add(new CommandParser(poResponseParser,
+                this.revisionTarget == RevisionTarget.TARGET_REV2_REV3 ? 2 : 1));
+
+        return poResponseParser;
+    }
+
+    /**
+     * Prepare a select file ApduRequest to be executed following the selection.
+     * <p>
+     * 
+     * @param path path from the MF (MF identifier excluded)
+     * @param extraInfo extra information included in the logs (can be null or empty)
+     */
+    public SelectFileRespPars prepareSelectFileDfCmd(byte[] path, String extraInfo) {
+        if (this.revisionTarget != RevisionTarget.TARGET_REV1) {
+            throw new IllegalArgumentException("Select File not allowed here for REV2 or REV3 PO.");
+        }
+        seSelectionApduRequestList.add(new SelectFileCmdBuild(PoRevision.REV1_0,
+                SelectFileCmdBuild.SelectControl.PATH_FROM_MF, SelectFileCmdBuild.SelectOptions.FCI,
+                path).getApduRequest());
+        if (logger.isTraceEnabled()) {
+            logger.trace("Select File: PATH = {}", ByteArrayUtils.toHex(path));
+        }
+
+        /* create a parser to be returned to the caller */
+        SelectFileRespPars poResponseParser = new SelectFileRespPars();
 
         /*
          * keep the parser in a CommandParser list with the number of apduRequest associated with it
