@@ -22,7 +22,7 @@ import org.eclipse.keyple.calypso.transaction.PoTransaction;
 import org.eclipse.keyple.example.calypso.common.postructure.CalypsoClassicInfo;
 import org.eclipse.keyple.example.generic.common.AbstractReaderObserverEngine;
 import org.eclipse.keyple.seproxy.ChannelState;
-import org.eclipse.keyple.seproxy.ProxyReader;
+import org.eclipse.keyple.seproxy.SeReader;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
 import org.eclipse.keyple.transaction.*;
@@ -78,7 +78,7 @@ public class CalypsoClassicTransactionEngine extends AbstractReaderObserverEngin
                 }
             };
 
-    private ProxyReader poReader, samReader;
+    private SeReader poReader, samReader;
 
     private SeSelection seSelection;
 
@@ -91,7 +91,7 @@ public class CalypsoClassicTransactionEngine extends AbstractReaderObserverEngin
     }
 
     /* Assign readers to the transaction engine */
-    public void setReaders(ProxyReader poReader, ProxyReader samReader) {
+    public void setReaders(SeReader poReader, SeReader samReader) {
         this.poReader = poReader;
         this.samReader = samReader;
     }

@@ -23,8 +23,8 @@ import org.eclipse.keyple.calypso.transaction.PoTransaction;
 import org.eclipse.keyple.example.calypso.common.transaction.CalypsoUtilities;
 import org.eclipse.keyple.plugin.pcsc.PcscPlugin;
 import org.eclipse.keyple.seproxy.ChannelState;
-import org.eclipse.keyple.seproxy.ProxyReader;
 import org.eclipse.keyple.seproxy.SeProxyService;
+import org.eclipse.keyple.seproxy.SeReader;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 import org.eclipse.keyple.seproxy.exception.NoStackTraceThrowable;
 import org.eclipse.keyple.seproxy.protocol.Protocol;
@@ -77,14 +77,14 @@ public class UseCase_Calypso4_PoAuthentication_Pcsc {
          * Get a PO reader ready to work with Calypso PO. Use the getReader helper method from the
          * CalypsoUtilities class.
          */
-        ProxyReader poReader = CalypsoUtilities.getDefaultPoReader(seProxyService);
+        SeReader poReader = CalypsoUtilities.getDefaultPoReader(seProxyService);
 
 
         /*
          * Get a SAM reader ready to work with Calypso PO. Use the getReader helper method from the
          * CalypsoUtilities class.
          */
-        ProxyReader samReader = CalypsoUtilities.getDefaultSamReader(seProxyService);
+        SeReader samReader = CalypsoUtilities.getDefaultSamReader(seProxyService);
 
         /* Check if the readers exists */
         if (poReader == null || samReader == null) {

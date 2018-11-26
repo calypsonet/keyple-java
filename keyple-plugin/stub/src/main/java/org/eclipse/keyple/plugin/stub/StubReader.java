@@ -29,7 +29,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-public class StubReader extends AbstractThreadedLocalReader {
+public final class StubReader extends AbstractThreadedLocalReader {
 
     private static final Logger logger = LoggerFactory.getLogger(StubReader.class);
 
@@ -82,8 +82,7 @@ public class StubReader extends AbstractThreadedLocalReader {
     }
 
     @Override
-    protected final boolean protocolFlagMatches(SeProtocol protocolFlag)
-            throws KeypleReaderException {
+    protected boolean protocolFlagMatches(SeProtocol protocolFlag) throws KeypleReaderException {
         boolean result;
         // Get protocolFlag to check if ATR filtering is required
         if (protocolFlag != Protocol.ANY) {

@@ -17,8 +17,8 @@ import org.eclipse.keyple.example.generic.pc.ReaderUtilities;
 import org.eclipse.keyple.plugin.pcsc.PcscPlugin;
 import org.eclipse.keyple.plugin.pcsc.PcscProtocolSetting;
 import org.eclipse.keyple.plugin.pcsc.PcscReader;
-import org.eclipse.keyple.seproxy.ProxyReader;
 import org.eclipse.keyple.seproxy.SeProxyService;
+import org.eclipse.keyple.seproxy.SeReader;
 import org.eclipse.keyple.seproxy.event.ObservableReader;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderNotFoundException;
@@ -60,7 +60,7 @@ public class Demo_CalypsoClassic_Pcsc {
          * Get PO and SAM readers. Apply regulars expressions to reader names to select PO / SAM
          * readers. Use the getReader helper method from the transaction engine.
          */
-        ProxyReader poReader = null, samReader = null;
+        SeReader poReader = null, samReader = null;
         try {
             poReader = ReaderUtilities.getReaderByName(seProxyService,
                     PcscReadersSettings.PO_READER_NAME_REGEX);

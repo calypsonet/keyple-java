@@ -33,9 +33,10 @@ import org.eclipse.keyple.calypso.transaction.exception.*;
 import org.eclipse.keyple.command.AbstractApduCommandBuilder;
 import org.eclipse.keyple.command.AbstractApduResponseParser;
 import org.eclipse.keyple.seproxy.ChannelState;
-import org.eclipse.keyple.seproxy.ProxyReader;
+import org.eclipse.keyple.seproxy.SeReader;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.message.*;
+import org.eclipse.keyple.seproxy.message.ProxyReader;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -102,8 +103,6 @@ public final class PoTransaction {
     private final byte[] poCalypsoInstanceSerial;
     /** The current CalypsoPo */
     protected final CalypsoPo calypsoPo;
-    /** The PO selector from the selection result */
-    private SeRequest.Selector selector;
     /** the type of the notified event. */
     private SessionState currentState;
     /** Selected AID of the Calypso PO. */
@@ -152,7 +151,7 @@ public final class PoTransaction {
      *        default parameters are applied. The available setting keys are defined in
      *        {@link SamSettings}
      */
-    public PoTransaction(ProxyReader poReader, CalypsoPo calypsoPO, ProxyReader samReader,
+    public PoTransaction(SeReader poReader, CalypsoPo calypsoPO, SeReader samReader,
             EnumMap<SamSettings, Byte> samSetting) {
 
         this(poReader, calypsoPO);
@@ -169,8 +168,8 @@ public final class PoTransaction {
      * @param poReader the PO reader
      * @param calypsoPO the CalypsoPo object obtained at the end of the selection step
      */
-    public PoTransaction(ProxyReader poReader, CalypsoPo calypsoPO) {
-        this.poReader = poReader;
+    public PoTransaction(SeReader poReader, CalypsoPo calypsoPO) {
+        this.poReader = (ProxyReader) poReader;
 
         this.calypsoPo = calypsoPO;
 
@@ -181,13 +180,6 @@ public final class PoTransaction {
         modificationsCounterIsInBytes = calypsoPO.isModificationsCounterInBytes();
 
         modificationsCounterMax = modificationsCounter = calypsoPO.getModificationsCounter();
-
-        /* Configure an Aid or Atr selector depending on whether the DF name is available or not. */
-        if (poCalypsoInstanceAid != null) {
-            selector = new SeRequest.AidSelector(poCalypsoInstanceAid);
-        } else {
-            selector = new SeRequest.AtrSelector(ByteArrayUtils.toHex(calypsoPO.getAtr()));
-        }
 
         /* Serial Number of the selected Calypso instance. */
         poCalypsoInstanceSerial = calypsoPO.getApplicationSerialNumber();
@@ -201,8 +193,8 @@ public final class PoTransaction {
      * @param samReader
      * @param samSetting
      */
-    public void setSamSettings(ProxyReader samReader, EnumMap<SamSettings, Byte> samSetting) {
-        this.samReader = samReader;
+    public void setSamSettings(SeReader samReader, EnumMap<SamSettings, Byte> samSetting) {
+        this.samReader = (ProxyReader) samReader;
 
         /* Initialize samSetting with provided settings */
         if (samSetting != null) {

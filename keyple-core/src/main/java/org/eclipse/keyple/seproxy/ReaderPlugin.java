@@ -30,14 +30,14 @@ public interface ReaderPlugin extends Nameable, Configurable, Comparable<ReaderP
      * @return the ‘unique’ name of the readers’ plugin.
      * @throws KeypleReaderException if the list of readers has not been initialized
      */
-    SortedSet<? extends ProxyReader> getReaders() throws KeypleReaderException;
+    SortedSet<? extends SeReader> getReaders() throws KeypleReaderException;
 
     /**
      * Gets the reader whose name is provided as an argument
      * 
      * @param name of the reader
-     * @return the ProxyReader object.
+     * @return the SeReader object.
      * @throws KeypleReaderNotFoundException if the wanted reader is not found
      */
-    ProxyReader getReader(String name) throws KeypleReaderNotFoundException;
+    SeReader getReader(String name) throws KeypleReaderNotFoundException;
 }

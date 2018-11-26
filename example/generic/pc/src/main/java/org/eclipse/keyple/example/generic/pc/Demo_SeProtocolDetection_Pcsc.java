@@ -21,8 +21,8 @@ import org.eclipse.keyple.example.generic.common.SeProtocolDetectionEngine;
 import org.eclipse.keyple.plugin.pcsc.PcscPlugin;
 import org.eclipse.keyple.plugin.pcsc.PcscProtocolSetting;
 import org.eclipse.keyple.plugin.pcsc.PcscReader;
-import org.eclipse.keyple.seproxy.ProxyReader;
 import org.eclipse.keyple.seproxy.SeProxyService;
+import org.eclipse.keyple.seproxy.SeReader;
 import org.eclipse.keyple.seproxy.event.ObservableReader;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
@@ -54,8 +54,8 @@ public class Demo_SeProtocolDetection_Pcsc {
 
         seProxyService.addPlugin(pcscPlugin);
 
-        /* attempt to get the ProxyReader (the right reader should be ready here) */
-        ProxyReader poReader =
+        /* attempt to get the SeReader (the right reader should be ready here) */
+        SeReader poReader =
                 getReaderByName(seProxyService, PcscReadersSettings.PO_READER_NAME_REGEX);
 
         if (poReader == null) {

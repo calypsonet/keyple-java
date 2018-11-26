@@ -30,5 +30,3 @@ The packages to import in order to implement a ticketing **application**, a read
 - specific to Calypso
 
 ![Calypso packages](doc/CalypsoPackage.svg "Calypso packages")
-
-

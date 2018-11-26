@@ -24,14 +24,15 @@ import org.eclipse.keyple.plugin.android.nfc.AndroidNfcPlugin;
 import org.eclipse.keyple.plugin.android.nfc.AndroidNfcProtocolSettings;
 import org.eclipse.keyple.plugin.android.nfc.AndroidNfcReader;
 import org.eclipse.keyple.seproxy.ChannelState;
-import org.eclipse.keyple.seproxy.ProxyReader;
 import org.eclipse.keyple.seproxy.ReaderPlugin;
 import org.eclipse.keyple.seproxy.SeProxyService;
+import org.eclipse.keyple.seproxy.SeReader;
 import org.eclipse.keyple.seproxy.event.ObservableReader;
 import org.eclipse.keyple.seproxy.event.ReaderEvent;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.message.ApduRequest;
+import org.eclipse.keyple.seproxy.message.ProxyReader;
 import org.eclipse.keyple.seproxy.message.SeRequest;
 import org.eclipse.keyple.seproxy.message.SeRequestSet;
 import org.eclipse.keyple.seproxy.message.SeResponse;
@@ -45,6 +46,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.ProxyFileDescriptorCallback;
 import android.support.annotation.Nullable;
 import android.text.Spannable;
 import android.text.style.ForegroundColorSpan;
@@ -76,7 +78,7 @@ public class NFCTestFragment extends Fragment implements ObservableReader.Reader
 
     /**
      * Initialize SEProxy with Keyple Android NFC Plugin Add this view to the list of Observer
-     * of @{@link ProxyReader}
+     * of @{@link SeReader}
      *
      * @param savedInstanceState
      */
@@ -101,7 +103,7 @@ public class NFCTestFragment extends Fragment implements ObservableReader.Reader
         try {
             // define task as an observer for ReaderEvents
             LOG.debug("Define this view as an observer for ReaderEvents");
-            ProxyReader reader = seProxyService.getPlugins().first().getReaders().first();
+            SeReader reader = seProxyService.getPlugins().first().getReaders().first();
             ((AndroidNfcReader) reader).addObserver(this);
 
             reader.setParameter("FLAG_READER_PRESENCE_CHECK_DELAY", "5000");
@@ -204,7 +206,7 @@ public class NFCTestFragment extends Fragment implements ObservableReader.Reader
 
                     initTextView();
 
-                    ProxyReader reader = null;
+                    SeReader reader = null;
                     reader = SeProxyService.getInstance().getPlugins().first().getReaders().first();
 
                     /*
@@ -251,7 +253,7 @@ public class NFCTestFragment extends Fragment implements ObservableReader.Reader
 
                     // transmit seRequestSet to Reader
                     final SeResponseSet seResponseSet =
-                            reader.transmitSet(new SeRequestSet(seRequest));
+                            ((ProxyReader)reader).transmitSet(new SeRequestSet(seRequest));
 
                     /*
                      * print responses in View
@@ -308,7 +310,7 @@ public class NFCTestFragment extends Fragment implements ObservableReader.Reader
         try {
             LOG.debug("Remove task as an observer for ReaderEvents");
             SeProxyService seProxyService = SeProxyService.getInstance();
-            ProxyReader reader = seProxyService.getPlugins().first().getReaders().first();
+            SeReader reader = seProxyService.getPlugins().first().getReaders().first();
             ((ObservableReader) reader).removeObserver(this);
 
             // destroy AndroidNFC fragment

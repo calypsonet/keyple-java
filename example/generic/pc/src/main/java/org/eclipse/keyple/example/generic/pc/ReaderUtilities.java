@@ -15,9 +15,9 @@ import static org.eclipse.keyple.example.generic.pc.PcscReadersSettings.PO_READE
 import java.util.regex.Pattern;
 import org.eclipse.keyple.plugin.pcsc.PcscProtocolSetting;
 import org.eclipse.keyple.plugin.pcsc.PcscReader;
-import org.eclipse.keyple.seproxy.ProxyReader;
 import org.eclipse.keyple.seproxy.ReaderPlugin;
 import org.eclipse.keyple.seproxy.SeProxyService;
+import org.eclipse.keyple.seproxy.SeReader;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderNotFoundException;
@@ -29,14 +29,14 @@ public class ReaderUtilities {
      *
      * @param seProxyService SE Proxy service
      * @param pattern Pattern
-     * @return ProxyReader
+     * @return SeReader
      * @throws KeypleReaderException Readers are not initialized
      */
-    public static ProxyReader getReaderByName(SeProxyService seProxyService, String pattern)
+    public static SeReader getReaderByName(SeProxyService seProxyService, String pattern)
             throws KeypleReaderException {
         Pattern p = Pattern.compile(pattern);
         for (ReaderPlugin plugin : seProxyService.getPlugins()) {
-            for (ProxyReader reader : plugin.getReaders()) {
+            for (SeReader reader : plugin.getReaders()) {
                 if (p.matcher(reader.getName()).matches()) {
                     return reader;
                 }
@@ -49,14 +49,13 @@ public class ReaderUtilities {
      * Get a fully configured contactless proxy reader
      * 
      * @param seProxyService the current SeProxyService
-     * @return the targeted ProxyReader to do contactless communications
+     * @return the targeted SeReader to do contactless communications
      * @throws KeypleBaseException in case of an error while retrieving the reader or setting its
      *         parameters
      */
-    public static ProxyReader getDefaultContactLessSeReader(SeProxyService seProxyService)
+    public static SeReader getDefaultContactLessSeReader(SeProxyService seProxyService)
             throws KeypleBaseException {
-        ProxyReader seReader =
-                ReaderUtilities.getReaderByName(seProxyService, PO_READER_NAME_REGEX);
+        SeReader seReader = ReaderUtilities.getReaderByName(seProxyService, PO_READER_NAME_REGEX);
 
         ReaderUtilities.setContactlessSettings(seReader);
 
@@ -69,7 +68,7 @@ public class ReaderUtilities {
      * @param reader the reader to configure
      * @throws KeypleBaseException in case of an error while settings the parameters
      */
-    public static void setContactlessSettings(ProxyReader reader) throws KeypleBaseException {
+    public static void setContactlessSettings(SeReader reader) throws KeypleBaseException {
         /* Enable logging */
         reader.setParameter(PcscReader.SETTING_KEY_LOGGING, "true");
 
@@ -101,7 +100,7 @@ public class ReaderUtilities {
      * @param reader the reader to configure
      * @throws KeypleBaseException in case of an error while settings the parameters
      */
-    public static void setContactsSettings(ProxyReader reader) throws KeypleBaseException {
+    public static void setContactsSettings(SeReader reader) throws KeypleBaseException {
         /* Enable logging */
         reader.setParameter(PcscReader.SETTING_KEY_LOGGING, "true");
 

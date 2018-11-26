@@ -20,12 +20,13 @@ import org.eclipse.keyple.calypso.command.po.builder.ReadRecordsCmdBuild;
 import org.eclipse.keyple.calypso.command.po.builder.UpdateRecordCmdBuild;
 import org.eclipse.keyple.plugin.android.omapi.AndroidOmapiPlugin;
 import org.eclipse.keyple.seproxy.ChannelState;
-import org.eclipse.keyple.seproxy.ProxyReader;
 import org.eclipse.keyple.seproxy.ReaderPlugin;
 import org.eclipse.keyple.seproxy.SeProxyService;
+import org.eclipse.keyple.seproxy.SeReader;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.message.ApduRequest;
 import org.eclipse.keyple.seproxy.message.ApduResponse;
+import org.eclipse.keyple.seproxy.message.ProxyReader;
 import org.eclipse.keyple.seproxy.message.SeRequest;
 import org.eclipse.keyple.seproxy.message.SeRequestSet;
 import org.eclipse.keyple.seproxy.message.SeResponse;
@@ -100,14 +101,14 @@ public class OMAPITestFragment extends Fragment {
         super.onResume();
 
         try {
-            SortedSet<? extends ProxyReader> readers =
+            SortedSet<? extends SeReader> readers =
                     SeProxyService.getInstance().getPlugins().first().getReaders();
 
             if (readers == null || readers.size() < 1) {
                 mText.append("\nNo readers found in OMAPI Keyple Plugin");
                 mText.append("\nTry to reload..");
             } else {
-                for (ProxyReader aReader : readers) {
+                for (SeReader aReader : readers) {
                     Log.d(TAG, "Launching tests for reader : " + aReader.getName());
                     runHoplinkSimpleRead(aReader);
                 }
@@ -123,7 +124,7 @@ public class OMAPITestFragment extends Fragment {
     /**
      * Run Hoplink Simple read command
      */
-    private void runHoplinkSimpleRead(ProxyReader reader) {
+    private void runHoplinkSimpleRead(SeReader reader) {
         Log.d(TAG, "Running HopLink Simple Read Tests");
 
         getActivity().runOnUiThread(new Runnable() {
@@ -189,7 +190,7 @@ public class OMAPITestFragment extends Fragment {
                                     ContactsProtocols.PROTOCOL_ISO7816_3, null);
 
 
-                    SeResponseSet seResponseSet = reader.transmitSet(new SeRequestSet(seRequest));
+                    SeResponseSet seResponseSet = ((ProxyReader)reader).transmitSet(new SeRequestSet(seRequest));
 
 
                     mText.append("\n ---- \n");

@@ -13,8 +13,8 @@ package org.eclipse.keyple.plugin.remotese.pluginse;
 
 import org.eclipse.keyple.plugin.remotese.transport.*;
 import org.eclipse.keyple.plugin.remotese.transport.json.JsonParser;
-import org.eclipse.keyple.seproxy.ProxyReader;
 import org.eclipse.keyple.seproxy.SeProxyService;
+import org.eclipse.keyple.seproxy.SeReader;
 import org.eclipse.keyple.seproxy.event.ReaderEvent;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderNotFoundException;
@@ -222,7 +222,7 @@ public class VirtualReaderService implements DtoHandler {
      */
     private VirtualReader getReaderBySessionId(String sessionId)
             throws KeypleReaderNotFoundException {
-        for (ProxyReader reader : plugin.getReaders()) {
+        for (SeReader reader : plugin.getReaders()) {
 
             if (((VirtualReader) reader).getSession().getSessionId().equals(sessionId)) {
                 return (VirtualReader) reader;

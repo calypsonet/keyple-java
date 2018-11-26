@@ -12,10 +12,11 @@
 package org.eclipse.keyple.plugin.remotese.pluginse;
 
 import java.util.Map;
-import org.eclipse.keyple.seproxy.ProxyReader;
+import org.eclipse.keyple.seproxy.SeReader;
 import org.eclipse.keyple.seproxy.event.ObservableReader;
 import org.eclipse.keyple.seproxy.event.ReaderEvent;
 import org.eclipse.keyple.seproxy.message.*;
+import org.eclipse.keyple.seproxy.message.ProxyReader;
 import org.eclipse.keyple.seproxy.protocol.SeProtocolSetting;
 import org.eclipse.keyple.transaction.SelectionRequest;
 import org.eclipse.keyple.util.Observable;
@@ -25,7 +26,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Virtual Reader Behaves like the Remote Reader it emulates
  */
-public class VirtualReader extends Observable implements ObservableReader {
+public final class VirtualReader extends Observable implements ObservableReader, ProxyReader {
 
     private final VirtualReaderSession session;
     private final String remoteName;
@@ -132,7 +133,7 @@ public class VirtualReader extends Observable implements ObservableReader {
 
     // compare by name
     @Override
-    public int compareTo(ProxyReader o) {
+    public int compareTo(SeReader o) {
         return o.getName().compareTo(this.getName());
     }// todo
 

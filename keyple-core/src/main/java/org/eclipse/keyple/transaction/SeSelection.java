@@ -14,8 +14,9 @@ package org.eclipse.keyple.transaction;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
-import org.eclipse.keyple.seproxy.ProxyReader;
+import org.eclipse.keyple.seproxy.SeReader;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
+import org.eclipse.keyple.seproxy.message.ProxyReader;
 import org.eclipse.keyple.seproxy.message.SeRequest;
 import org.eclipse.keyple.seproxy.message.SeRequestSet;
 import org.eclipse.keyple.seproxy.message.SeResponse;
@@ -37,10 +38,10 @@ public final class SeSelection {
     /**
      * Initializes the SeSelection
      * 
-     * @param proxyReader the reader to use to make the selection
+     * @param seReader the reader to use to make the selection
      */
-    public SeSelection(ProxyReader proxyReader) {
-        this.proxyReader = proxyReader;
+    public SeSelection(SeReader seReader) {
+        this.proxyReader = (ProxyReader) seReader;
     }
 
     /**

@@ -37,7 +37,7 @@ import android.util.Log;
  * or virtual devices. They can be removable or not. They can contain one SE that can or cannot be
  * removed.
  */
-public class AndroidOmapiReader extends AbstractStaticReader {
+public final class AndroidOmapiReader extends AbstractStaticReader {
 
 
     private static final String TAG = AndroidOmapiReader.class.getSimpleName();

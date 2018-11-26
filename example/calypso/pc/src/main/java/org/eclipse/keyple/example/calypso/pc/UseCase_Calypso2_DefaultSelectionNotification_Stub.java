@@ -162,8 +162,7 @@ public class UseCase_Calypso2_DefaultSelectionNotification_Stub implements Reade
         seSelection.prepareSelection(poSelector);
 
         /*
-         * Provide the ProxyReader with the selection operation to be processed when a PO is
-         * inserted.
+         * Provide the SeReader with the selection operation to be processed when a PO is inserted.
          */
         ((ObservableReader) poReader).setDefaultSelectionRequest(
                 seSelection.getSelectionOperation(),
