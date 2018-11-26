@@ -34,9 +34,9 @@ import org.eclipse.keyple.plugin.pcsc.PcscPlugin;
 import org.eclipse.keyple.plugin.pcsc.PcscProtocolSetting;
 import org.eclipse.keyple.plugin.pcsc.PcscReader;
 import org.eclipse.keyple.seproxy.ChannelState;
-import org.eclipse.keyple.seproxy.ProxyReader;
 import org.eclipse.keyple.seproxy.ReaderPlugin;
 import org.eclipse.keyple.seproxy.SeProxyService;
+import org.eclipse.keyple.seproxy.SeReader;
 import org.eclipse.keyple.seproxy.event.ObservableReader;
 import org.eclipse.keyple.seproxy.event.ReaderEvent;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
@@ -49,7 +49,7 @@ import org.eclipse.keyple.util.ByteArrayUtils;
 
 public class Demo_ValidationTransaction implements ObservableReader.ReaderObserver {
 
-    private ProxyReader poReader, samReader;
+    private SeReader poReader, samReader;
 
     @Override
     public void update(ReaderEvent event) {
@@ -426,14 +426,14 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
      *
      * @param seProxyService SE Proxy service
      * @param pattern Pattern
-     * @return ProxyReader
+     * @return SeReader
      * @throws KeypleReaderException Any error with the card communication
      */
-    private static ProxyReader getReader(SeProxyService seProxyService, String pattern)
+    private static SeReader getReader(SeProxyService seProxyService, String pattern)
             throws KeypleReaderException {
         Pattern p = Pattern.compile(pattern);
         for (ReaderPlugin plugin : seProxyService.getPlugins()) {
-            for (ProxyReader reader : plugin.getReaders()) {
+            for (SeReader reader : plugin.getReaders()) {
                 if (p.matcher(reader.getName()).matches()) {
                     return reader;
                 }
@@ -452,9 +452,8 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
         pluginsSet.add(PcscPlugin.getInstance());
         seProxyService.setPlugins(pluginsSet);
 
-        ProxyReader poReader = getReader(seProxyService, PcscReadersSettings.PO_READER_NAME_REGEX);
-        ProxyReader samReader =
-                getReader(seProxyService, PcscReadersSettings.SAM_READER_NAME_REGEX);
+        SeReader poReader = getReader(seProxyService, PcscReadersSettings.PO_READER_NAME_REGEX);
+        SeReader samReader = getReader(seProxyService, PcscReadersSettings.SAM_READER_NAME_REGEX);
 
 
         if (poReader == samReader || poReader == null || samReader == null) {

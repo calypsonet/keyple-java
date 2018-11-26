@@ -12,9 +12,9 @@
 package org.eclipse.keyple.util;
 
 import java.util.Map;
-import org.eclipse.keyple.seproxy.ProxyReader;
 import org.eclipse.keyple.seproxy.ReaderPlugin;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
+import org.eclipse.keyple.seproxy.message.ProxyReader;
 
 /**
  * Allow {@link ProxyReader}s and {@link ReaderPlugin}s to receive configuration parameters.

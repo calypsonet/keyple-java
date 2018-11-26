@@ -14,8 +14,8 @@ package org.eclipse.keyple.example.generic.pc;
 
 import org.eclipse.keyple.plugin.pcsc.PcscPlugin;
 import org.eclipse.keyple.seproxy.ChannelState;
-import org.eclipse.keyple.seproxy.ProxyReader;
 import org.eclipse.keyple.seproxy.SeProxyService;
+import org.eclipse.keyple.seproxy.SeReader;
 import org.eclipse.keyple.seproxy.event.ObservableReader;
 import org.eclipse.keyple.seproxy.event.ObservableReader.ReaderObserver;
 import org.eclipse.keyple.seproxy.event.ReaderEvent;
@@ -42,7 +42,7 @@ import org.slf4j.LoggerFactory;
  </code> means that the SE processing is automatically started when detected.</li>
  * <li>PO messages:
  * <ul>
- * <li>A single SE message handled at ProxyReader level</li>
+ * <li>A single SE message handled at SeReader level</li>
  * </ul>
  * </li>
  * </ul>
@@ -52,7 +52,7 @@ import org.slf4j.LoggerFactory;
 public class UseCase_Generic2_DefaultSelectionNotification_Pcsc implements ReaderObserver {
     protected static final Logger logger =
             LoggerFactory.getLogger(UseCase_Generic2_DefaultSelectionNotification_Pcsc.class);
-    private ProxyReader seReader;
+    private SeReader seReader;
     private String seAid = "A0000004040125090101";
     private SeSelection seSelection;
     /**
@@ -113,8 +113,7 @@ public class UseCase_Generic2_DefaultSelectionNotification_Pcsc implements Reade
         seSelection.prepareSelection(seSelector);
 
         /*
-         * Provide the ProxyReader with the selection operation to be processed when a SE is
-         * inserted.
+         * Provide the SeReader with the selection operation to be processed when a SE is inserted.
          */
         ((ObservableReader) seReader).setDefaultSelectionRequest(
                 seSelection.getSelectionOperation(),

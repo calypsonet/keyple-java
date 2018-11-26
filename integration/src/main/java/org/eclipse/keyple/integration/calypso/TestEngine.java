@@ -20,13 +20,12 @@ import org.eclipse.keyple.plugin.pcsc.PcscPlugin;
 import org.eclipse.keyple.plugin.pcsc.PcscProtocolSetting;
 import org.eclipse.keyple.plugin.pcsc.PcscReader;
 import org.eclipse.keyple.seproxy.ChannelState;
-import org.eclipse.keyple.seproxy.ProxyReader;
 import org.eclipse.keyple.seproxy.ReaderPlugin;
 import org.eclipse.keyple.seproxy.SeProxyService;
+import org.eclipse.keyple.seproxy.SeReader;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.exception.NoStackTraceThrowable;
-import org.eclipse.keyple.seproxy.message.*;
 import org.eclipse.keyple.seproxy.protocol.SeProtocolSetting;
 import org.eclipse.keyple.transaction.SeSelection;
 import org.eclipse.keyple.transaction.SeSelector;
@@ -34,7 +33,7 @@ import org.eclipse.keyple.util.ByteArrayUtils;
 
 public class TestEngine {
 
-    public static ProxyReader poReader, samReader;
+    public static SeReader poReader, samReader;
 
     public static PoFileStructureInfo selectPO()
             throws IllegalArgumentException, KeypleReaderException {
@@ -98,12 +97,12 @@ public class TestEngine {
         throw new IllegalArgumentException("No recognizable PO detected.");
     }
 
-    private static ProxyReader getReader(SeProxyService seProxyService, String pattern)
+    private static SeReader getReader(SeProxyService seProxyService, String pattern)
             throws KeypleReaderException {
 
         Pattern p = Pattern.compile(pattern);
         for (ReaderPlugin plugin : seProxyService.getPlugins()) {
-            for (ProxyReader reader : plugin.getReaders()) {
+            for (SeReader reader : plugin.getReaders()) {
                 if (p.matcher(reader.getName()).matches()) {
                     return reader;
                 }

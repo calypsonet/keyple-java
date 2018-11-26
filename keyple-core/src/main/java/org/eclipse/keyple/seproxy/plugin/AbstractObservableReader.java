@@ -12,12 +12,13 @@
 package org.eclipse.keyple.seproxy.plugin;
 
 
-import org.eclipse.keyple.seproxy.ProxyReader;
+import org.eclipse.keyple.seproxy.SeReader;
 import org.eclipse.keyple.seproxy.event.ObservableReader;
 import org.eclipse.keyple.seproxy.event.ReaderEvent;
 import org.eclipse.keyple.seproxy.exception.KeypleChannelStateException;
 import org.eclipse.keyple.seproxy.exception.KeypleIOReaderException;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
+import org.eclipse.keyple.seproxy.message.ProxyReader;
 import org.eclipse.keyple.seproxy.message.SeRequest;
 import org.eclipse.keyple.seproxy.message.SeRequestSet;
 import org.eclipse.keyple.seproxy.message.SeResponse;
@@ -198,13 +199,12 @@ public abstract class AbstractObservableReader extends AbstractLoggedObservable<
     }
 
     /**
-     * Compare the name of the current ProxyReader to the name of the ProxyReader provided in
-     * argument
+     * Compare the name of the current SeReader to the name of the SeReader provided in argument
      * 
-     * @param proxyReader a ProxyReader object
+     * @param seReader a SeReader object
      * @return true if the names match (The method is needed for the SortedSet lists)
      */
-    public final int compareTo(ProxyReader proxyReader) {
-        return this.getName().compareTo(proxyReader.getName());
+    public final int compareTo(SeReader seReader) {
+        return this.getName().compareTo(seReader.getName());
     }
 }

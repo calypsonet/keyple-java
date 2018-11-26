@@ -20,8 +20,8 @@ import org.eclipse.keyple.calypso.transaction.PoTransaction;
 import org.eclipse.keyple.example.calypso.common.postructure.CalypsoClassicInfo;
 import org.eclipse.keyple.example.generic.pc.ReaderUtilities;
 import org.eclipse.keyple.seproxy.ChannelState;
-import org.eclipse.keyple.seproxy.ProxyReader;
 import org.eclipse.keyple.seproxy.SeProxyService;
+import org.eclipse.keyple.seproxy.SeReader;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.protocol.Protocol;
@@ -57,12 +57,12 @@ public class CalypsoUtilities {
      * Get the default reader for PO communications
      * 
      * @param seProxyService the current ProxyService
-     * @return a ProxyReader object
+     * @return a SeReader object
      * @throws KeypleBaseException if an error occurred
      */
-    public static ProxyReader getDefaultPoReader(SeProxyService seProxyService)
+    public static SeReader getDefaultPoReader(SeProxyService seProxyService)
             throws KeypleBaseException {
-        ProxyReader poReader = ReaderUtilities.getReaderByName(seProxyService,
+        SeReader poReader = ReaderUtilities.getReaderByName(seProxyService,
                 properties.getProperty("po.reader.regex"));
 
         ReaderUtilities.setContactlessSettings(poReader);
@@ -74,12 +74,12 @@ public class CalypsoUtilities {
      * Get the default reader for SAM communications
      * 
      * @param seProxyService the current ProxyService
-     * @return a ProxyReader object
+     * @return a SeReader object
      * @throws KeypleBaseException if an error occurred
      */
-    public static ProxyReader getDefaultSamReader(SeProxyService seProxyService)
+    public static SeReader getDefaultSamReader(SeProxyService seProxyService)
             throws KeypleBaseException {
-        ProxyReader samReader = ReaderUtilities.getReaderByName(seProxyService,
+        SeReader samReader = ReaderUtilities.getReaderByName(seProxyService,
                 properties.getProperty("sam.reader.regex"));
 
         ReaderUtilities.setContactsSettings(samReader);
@@ -116,7 +116,7 @@ public class CalypsoUtilities {
      *
      * @param samReader the SAM reader
      */
-    public static void checkSamAndOpenChannel(ProxyReader samReader) {
+    public static void checkSamAndOpenChannel(SeReader samReader) {
         /*
          * check the availability of the SAM doing a ATR based selection, open its physical and
          * logical channels and keep it open

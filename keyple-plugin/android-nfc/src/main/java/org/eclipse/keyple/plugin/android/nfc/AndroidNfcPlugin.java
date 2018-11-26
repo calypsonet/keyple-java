@@ -44,7 +44,7 @@ import org.slf4j.LoggerFactory;
  *
  */
 
-public class AndroidNfcPlugin extends AbstractStaticPlugin {
+public final class AndroidNfcPlugin extends AbstractStaticPlugin {
 
     private static final Logger LOG = LoggerFactory.getLogger(AndroidNfcPlugin.class);
 

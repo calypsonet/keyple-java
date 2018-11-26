@@ -29,8 +29,8 @@ import org.eclipse.keyple.plugin.pcsc.PcscPlugin;
 import org.eclipse.keyple.plugin.pcsc.PcscProtocolSetting;
 import org.eclipse.keyple.plugin.pcsc.PcscReader;
 import org.eclipse.keyple.seproxy.ChannelState;
-import org.eclipse.keyple.seproxy.ProxyReader;
 import org.eclipse.keyple.seproxy.SeProxyService;
+import org.eclipse.keyple.seproxy.SeReader;
 import org.eclipse.keyple.seproxy.event.ObservableReader;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 import org.eclipse.keyple.seproxy.protocol.Protocol;
@@ -49,7 +49,7 @@ public class UseCase_MultipleSession_Pcsc {
         private final Logger logger =
                 LoggerFactory.getLogger(MultipleSessionLeve3TransactionEngine.class);
 
-        private final ProxyReader poReader, samReader;
+        private final SeReader poReader, samReader;
         private SeSelection seSelection;
         private boolean samChannelOpen;
 
@@ -68,7 +68,7 @@ public class UseCase_MultipleSession_Pcsc {
                     }
                 };
 
-        public MultipleSessionLeve3TransactionEngine(ProxyReader poReader, ProxyReader samReader) {
+        public MultipleSessionLeve3TransactionEngine(SeReader poReader, SeReader samReader) {
             this.poReader = poReader;
             this.samReader = samReader;
         }
@@ -239,9 +239,9 @@ public class UseCase_MultipleSession_Pcsc {
          * Get PO and SAM readers. Apply regulars expressions to reader names to select PO / SAM
          * readers. Use the getReader helper method from the transaction engine.
          */
-        ProxyReader poReader = ReaderUtilities.getReaderByName(seProxyService,
+        SeReader poReader = ReaderUtilities.getReaderByName(seProxyService,
                 properties.getProperty("po.reader.regex"));
-        ProxyReader samReader = ReaderUtilities.getReaderByName(seProxyService,
+        SeReader samReader = ReaderUtilities.getReaderByName(seProxyService,
                 properties.getProperty("sam.reader.regex"));
 
         /* Both readers are expected not null */

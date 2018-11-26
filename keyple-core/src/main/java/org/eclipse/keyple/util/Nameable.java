@@ -12,8 +12,8 @@
 package org.eclipse.keyple.util;
 
 
-import org.eclipse.keyple.seproxy.ProxyReader;
 import org.eclipse.keyple.seproxy.ReaderPlugin;
+import org.eclipse.keyple.seproxy.message.ProxyReader;
 
 /**
  * Allow {@link ProxyReader}s and {@link ReaderPlugin}s to be named.

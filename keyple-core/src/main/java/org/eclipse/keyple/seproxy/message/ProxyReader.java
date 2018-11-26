@@ -9,15 +9,11 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  ********************************************************************************/
-package org.eclipse.keyple.seproxy;
+package org.eclipse.keyple.seproxy.message;
 
 
+import org.eclipse.keyple.seproxy.SeReader;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
-import org.eclipse.keyple.seproxy.exception.NoStackTraceThrowable;
-import org.eclipse.keyple.seproxy.message.*;
-import org.eclipse.keyple.seproxy.protocol.SeProtocolSetting;
-import org.eclipse.keyple.util.Configurable;
-import org.eclipse.keyple.util.Nameable;
 
 
 /**
@@ -31,18 +27,9 @@ import org.eclipse.keyple.util.Nameable;
  * <li>if necessary a new logical channel is open (for a specific AID if defined)</li>
  * <li>and ApduRequest are transmited one by one</li>
  * </ul>
- * Interface each {@link ReaderPlugin} should implement
+ * This interface should be implemented by any specific reader plugin.
  */
-public interface ProxyReader extends Nameable, Configurable, Comparable<ProxyReader> {
-
-    /**
-     * Checks if is SE present.
-     *
-     * @return true if a Secure Element is present in the reader
-     * @throws NoStackTraceThrowable a exception without stack trace in order to be catched and
-     *         processed silently
-     */
-    boolean isSePresent() throws NoStackTraceThrowable;
+public interface ProxyReader extends SeReader {
 
     /**
      * Transmits a {@link SeRequestSet} (list of {@link SeRequest}) to a SE application and get back
@@ -95,25 +82,4 @@ public interface ProxyReader extends Nameable, Configurable, Comparable<ProxyRea
      */
     SeResponse transmit(SeRequest seApplicationRequest)
             throws KeypleReaderException, IllegalArgumentException;
-
-    /**
-     * A protocol setting is a map that establish the link between a protocol identifier and a
-     * String that defines how a particular SE may match this protocol.
-     * <p>
-     * For example:
-     * <p>
-     * for a PC/SC plugin the String is defined as a regular expression that will be applied to the
-     * ATR in order to identify which type of SE is currently communicating.
-     * <p>
-     * for another plugin (e.g. NFC or proprietary plugin) the String would be any specific word to
-     * match a value handled by the low level API of the reader (e.g. "NfcA", "NfcB",
-     * "MifareClassic", etc)
-     *
-     * <p>
-     * A reader plugin will handle a list of protocol settings in order to target multiple types of
-     * SE.
-     * 
-     * @param seProtocolSetting the protocol setting to be add to the plugin internal list
-     */
-    void addSeProtocolSetting(SeProtocolSetting seProtocolSetting);
 }

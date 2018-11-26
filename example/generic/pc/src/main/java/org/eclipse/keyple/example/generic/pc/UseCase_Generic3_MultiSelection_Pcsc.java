@@ -14,8 +14,8 @@ package org.eclipse.keyple.example.generic.pc;
 import java.io.IOException;
 import org.eclipse.keyple.plugin.pcsc.PcscPlugin;
 import org.eclipse.keyple.seproxy.ChannelState;
-import org.eclipse.keyple.seproxy.ProxyReader;
 import org.eclipse.keyple.seproxy.SeProxyService;
+import org.eclipse.keyple.seproxy.SeReader;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 import org.eclipse.keyple.seproxy.exception.NoStackTraceThrowable;
 import org.eclipse.keyple.seproxy.protocol.Protocol;
@@ -48,7 +48,7 @@ public class UseCase_Generic3_MultiSelection_Pcsc {
          * Get a SE reader ready to work with generic SE. Use the getReader helper method from the
          * ReaderUtilities class.
          */
-        ProxyReader seReader = ReaderUtilities.getDefaultContactLessSeReader(seProxyService);
+        SeReader seReader = ReaderUtilities.getDefaultContactLessSeReader(seProxyService);
 
         /* Check if the reader exists */
         if (seReader == null) {

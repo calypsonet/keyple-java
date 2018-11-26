@@ -15,7 +15,7 @@ package org.eclipse.keyple.example.generic.common;
 import org.eclipse.keyple.calypso.command.po.parser.ReadDataStructure;
 import org.eclipse.keyple.calypso.transaction.PoSelector;
 import org.eclipse.keyple.seproxy.ChannelState;
-import org.eclipse.keyple.seproxy.ProxyReader;
+import org.eclipse.keyple.seproxy.SeReader;
 import org.eclipse.keyple.seproxy.message.ApduRequest;
 import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
 import org.eclipse.keyple.transaction.*;
@@ -35,7 +35,7 @@ import org.eclipse.keyple.util.ByteArrayUtils;
  * is mainly event driven through the observability.
  */
 public class SeProtocolDetectionEngine extends AbstractReaderObserverEngine {
-    private ProxyReader poReader;
+    private SeReader poReader;
     private SeSelection seSelection;
 
     public SeProtocolDetectionEngine() {
@@ -43,7 +43,7 @@ public class SeProtocolDetectionEngine extends AbstractReaderObserverEngine {
     }
 
     /* Assign reader to the transaction engine */
-    public void setReader(ProxyReader poReader) {
+    public void setReader(SeReader poReader) {
         this.poReader = poReader;
     }
 

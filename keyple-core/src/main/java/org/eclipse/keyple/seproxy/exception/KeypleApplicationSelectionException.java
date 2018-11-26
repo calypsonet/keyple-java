@@ -12,7 +12,7 @@
 package org.eclipse.keyple.seproxy.exception;
 
 
-import org.eclipse.keyple.seproxy.ProxyReader;
+import org.eclipse.keyple.seproxy.message.ProxyReader;
 
 /**
  * Application selection failure in {@link ProxyReader} by AID or ATR

@@ -21,8 +21,8 @@ import org.eclipse.keyple.calypso.transaction.PoTransaction;
 import org.eclipse.keyple.example.calypso.common.transaction.CalypsoUtilities;
 import org.eclipse.keyple.plugin.pcsc.PcscPlugin;
 import org.eclipse.keyple.seproxy.ChannelState;
-import org.eclipse.keyple.seproxy.ProxyReader;
 import org.eclipse.keyple.seproxy.SeProxyService;
+import org.eclipse.keyple.seproxy.SeReader;
 import org.eclipse.keyple.seproxy.event.ObservableReader;
 import org.eclipse.keyple.seproxy.event.ObservableReader.ReaderObserver;
 import org.eclipse.keyple.seproxy.event.ReaderEvent;
@@ -61,7 +61,7 @@ import org.slf4j.LoggerFactory;
 public class UseCase_Calypso2_DefaultSelectionNotification_Pcsc implements ReaderObserver {
     protected static final Logger logger =
             LoggerFactory.getLogger(UseCase_Calypso2_DefaultSelectionNotification_Pcsc.class);
-    private ProxyReader poReader;
+    private SeReader poReader;
     private String poAid = "A0000004040125090101";
     private SeSelection seSelection;
     private ReadRecordsRespPars readEnvironmentParser;
@@ -132,8 +132,7 @@ public class UseCase_Calypso2_DefaultSelectionNotification_Pcsc implements Reade
         seSelection.prepareSelection(poSelector);
 
         /*
-         * Provide the ProxyReader with the selection operation to be processed when a PO is
-         * inserted.
+         * Provide the SeReader with the selection operation to be processed when a PO is inserted.
          */
         ((ObservableReader) poReader).setDefaultSelectionRequest(
                 seSelection.getSelectionOperation(),

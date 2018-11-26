@@ -12,7 +12,7 @@
 package org.eclipse.keyple.plugin.remotese.nativese;
 
 import java.util.Map;
-import org.eclipse.keyple.seproxy.ProxyReader;
+import org.eclipse.keyple.seproxy.SeReader;
 import org.eclipse.keyple.seproxy.event.ObservableReader;
 
 interface NativeReaderService extends ObservableReader.ReaderObserver {
@@ -22,9 +22,9 @@ interface NativeReaderService extends ObservableReader.ReaderObserver {
      * Connect Physical Local Reader to Remote SE Creates a Session to exchange data with this
      * Reader with an option to duplex connection
      */
-    void connectReader(String nodeId, ProxyReader localReader, Map<String, Object> options);
+    void connectReader(String nodeId, SeReader localReader, Map<String, Object> options);
 
-    void disconnectReader(String nodeId, ProxyReader localReader);
+    void disconnectReader(String nodeId, SeReader localReader);
 
 
 }

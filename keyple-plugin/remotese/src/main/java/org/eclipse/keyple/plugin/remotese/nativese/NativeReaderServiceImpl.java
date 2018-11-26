@@ -15,13 +15,14 @@ import java.util.ArrayList;
 import java.util.Map;
 import org.eclipse.keyple.plugin.remotese.transport.*;
 import org.eclipse.keyple.plugin.remotese.transport.json.JsonParser;
-import org.eclipse.keyple.seproxy.ProxyReader;
 import org.eclipse.keyple.seproxy.ReaderPlugin;
 import org.eclipse.keyple.seproxy.SeProxyService;
+import org.eclipse.keyple.seproxy.SeReader;
 import org.eclipse.keyple.seproxy.event.ReaderEvent;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderNotFoundException;
 import org.eclipse.keyple.seproxy.message.*;
+import org.eclipse.keyple.seproxy.message.ProxyReader;
 import org.eclipse.keyple.seproxy.plugin.AbstractObservableReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -88,7 +89,7 @@ public class NativeReaderServiceImpl implements NativeReaderService, DtoHandler 
             if (statusCode == 0) {
                 try {
                     // observe reader to propagate reader events
-                    ProxyReader localReader = this.findLocalReader(nativeReaderName);
+                    ProxyReader localReader = (ProxyReader) this.findLocalReader(nativeReaderName);
                     if (localReader instanceof AbstractObservableReader) {
                         logger.debug(
                                 "Add NativeReaderServiceImpl as an observer for native reader {}",
@@ -159,7 +160,7 @@ public class NativeReaderServiceImpl implements NativeReaderService, DtoHandler 
      * @param options : map of options, not in used at the moment
      */
     @Override
-    public void connectReader(String nodeId, ProxyReader localReader, Map<String, Object> options) {
+    public void connectReader(String nodeId, SeReader localReader, Map<String, Object> options) {
         logger.info("connectReader {} {}", localReader.getName(), options);
 
         JsonObject jsonObject = new JsonObject();
@@ -172,7 +173,7 @@ public class NativeReaderServiceImpl implements NativeReaderService, DtoHandler 
     }
 
     @Override
-    public void disconnectReader(String nodeId, ProxyReader localReader) {
+    public void disconnectReader(String nodeId, SeReader localReader) {
         logger.info("disconnectReader {} {}", localReader.getName());
 
         // String data = jsonObject.toString();
@@ -189,7 +190,7 @@ public class NativeReaderServiceImpl implements NativeReaderService, DtoHandler 
     private SeResponseSet onTransmit(String nativeReaderName, String sessionId, SeRequestSet req)
             throws KeypleReaderException {
         try {
-            ProxyReader reader = findLocalReader(nativeReaderName);
+            ProxyReader reader = (ProxyReader) findLocalReader(nativeReaderName);
             return reader.transmitSet(req);
         } catch (KeypleReaderNotFoundException e) {
             e.printStackTrace();
@@ -204,8 +205,7 @@ public class NativeReaderServiceImpl implements NativeReaderService, DtoHandler 
      * @return found reader if any
      * @throws KeypleReaderNotFoundException if not reader were found with this name
      */
-    private ProxyReader findLocalReader(String nativeReaderName)
-            throws KeypleReaderNotFoundException {
+    private SeReader findLocalReader(String nativeReaderName) throws KeypleReaderNotFoundException {
         logger.debug("Find local reader by name {} in {} plugin(s)", nativeReaderName,
                 seProxyService.getPlugins().size());
         for (ReaderPlugin plugin : seProxyService.getPlugins()) {

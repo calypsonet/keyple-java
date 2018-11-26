@@ -11,9 +11,10 @@
  ********************************************************************************/
 package org.eclipse.keyple.seproxy.exception;
 
+import org.eclipse.keyple.seproxy.message.ProxyReader;
+
 /**
- * Exception thrown when Channel Operations (open/close) failed in a
- * {@link org.eclipse.keyple.seproxy.ProxyReader}
+ * Exception thrown when Channel Operations (open/close) failed in a {@link ProxyReader}
  */
 public class KeypleChannelStateException extends KeypleReaderException {
 

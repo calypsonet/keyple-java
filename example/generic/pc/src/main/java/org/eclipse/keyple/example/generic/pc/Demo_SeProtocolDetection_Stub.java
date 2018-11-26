@@ -22,9 +22,9 @@ import org.eclipse.keyple.example.generic.pc.stub.se.*;
 import org.eclipse.keyple.plugin.stub.StubPlugin;
 import org.eclipse.keyple.plugin.stub.StubProtocolSetting;
 import org.eclipse.keyple.plugin.stub.StubReader;
-import org.eclipse.keyple.seproxy.ProxyReader;
 import org.eclipse.keyple.seproxy.ReaderPlugin;
 import org.eclipse.keyple.seproxy.SeProxyService;
+import org.eclipse.keyple.seproxy.SeReader;
 import org.eclipse.keyple.seproxy.event.ObservableReader;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderNotFoundException;
 import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
@@ -38,7 +38,7 @@ public class
 
 Demo_SeProtocolDetection_Stub {
 
-    private ProxyReader poReader, samReader;
+    private SeReader poReader, samReader;
 
     public Demo_SeProtocolDetection_Stub() {
         super();
