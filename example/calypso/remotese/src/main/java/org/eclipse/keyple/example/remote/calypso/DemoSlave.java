@@ -17,15 +17,14 @@ import java.util.Map;
 import java.util.SortedSet;
 import org.eclipse.keyple.example.calypso.pc.stub.se.StubHoplink;
 import org.eclipse.keyple.plugin.remotese.nativese.NativeReaderServiceImpl;
-import org.eclipse.keyple.plugin.remotese.transport.ClientNode;
-import org.eclipse.keyple.plugin.remotese.transport.ServerNode;
-import org.eclipse.keyple.plugin.remotese.transport.TransportFactory;
-import org.eclipse.keyple.plugin.remotese.transport.TransportNode;
+import org.eclipse.keyple.plugin.remotese.transport.*;
 import org.eclipse.keyple.plugin.stub.StubPlugin;
 import org.eclipse.keyple.plugin.stub.StubProtocolSetting;
 import org.eclipse.keyple.plugin.stub.StubReader;
 import org.eclipse.keyple.seproxy.ReaderPlugin;
 import org.eclipse.keyple.seproxy.SeProxyService;
+import org.eclipse.keyple.seproxy.event.ObservablePlugin;
+import org.eclipse.keyple.seproxy.event.PluginEvent;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.protocol.SeProtocolSetting;
 import org.slf4j.Logger;
@@ -95,7 +94,7 @@ class DemoSlave {
      * @throws KeypleReaderException
      * @throws InterruptedException
      */
-    public void connectAReader() throws KeypleReaderException, InterruptedException {
+    public void connectAReader() throws KeypleReaderException, InterruptedException, KeypleRemoteException {
 
 
         logger.info("Boot DemoSlave LocalReader ");
@@ -108,9 +107,20 @@ class DemoSlave {
         SortedSet<ReaderPlugin> plugins = SeProxyService.getInstance().getPlugins();
         plugins.add(stubPlugin);
         seProxyService.setPlugins(plugins);
+
+        ObservablePlugin.PluginObserver observer = new ObservablePlugin.PluginObserver() {
+            @Override
+            public void update(PluginEvent event) {}
+        };
+
+        // add observer to have the reader management done by the monitoring thread
+        stubPlugin.addObserver(observer);
+
+        Thread.sleep(100);
+
         stubPlugin.plugStubReader("stubClientSlave");
 
-        Thread.sleep(1000);
+        Thread.sleep(100);
 
         // get the created proxy reader
         localReader = (StubReader) stubPlugin.getReader("stubClientSlave");
@@ -158,7 +168,7 @@ class DemoSlave {
 
     }
 
-    public void disconnect() throws KeypleReaderException {
+    public void disconnect() throws KeypleReaderException, KeypleRemoteException {
 
         logger.info("*************************");
         logger.info("Disconnect native reader ");
