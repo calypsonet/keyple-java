@@ -19,8 +19,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.smartcardio.*;
-import org.eclipse.keyple.seproxy.*;
+import org.eclipse.keyple.seproxy.ChannelState;
 import org.eclipse.keyple.seproxy.exception.*;
+import org.eclipse.keyple.seproxy.message.*;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -55,9 +56,8 @@ public class SmartCardIOReaderTest {
         when(terminal.connect(any(String.class))).thenReturn(card);
         when(card.getBasicChannel()).thenReturn(channel);
 
-        responseApduByte = new byte[] {(byte) 0x85, 0x17, 0x00, 0x01, 0x00, 0x00, 0x00, 0x12, 0x12,
-                0x00, 0x00, 0x01, 0x03, 0x01, 0x01, 0x00, 0x7E, 0x7E, 0x7E, 0x00, 0x00, 0x00, 0x00,
-                0x00, 0x00};
+        responseApduByte =
+                ByteArrayUtils.fromHex("851700010000001212000001030101007E7E7E000000000000");
         res = new ResponseAPDU(responseApduByte);
 
         readerName = "reader";
@@ -119,8 +119,8 @@ public class SmartCardIOReaderTest {
 
         List<ApduRequest> apduRequests = new ArrayList<ApduRequest>();
         apduRequests.add(apduRequestMF);
-        SeRequestSet seApplicationRequest = new SeRequestSet(
-                new SeRequest(new SeRequest.AidSelector(aidToSelect), apduRequests, true));
+        SeRequestSet seApplicationRequest =
+                new SeRequestSet(new SeRequest(apduRequests, ChannelState.KEEP_OPEN));
 
         SeResponseSet reponseActuelle = reader.transmitSet(seApplicationRequest);
 
@@ -133,15 +133,15 @@ public class SmartCardIOReaderTest {
     public void testTransmitToCardWithoutAidToSelect()
             throws CardException, KeypleReaderException, KeypleReaderException {
 
-        atr = new ATR(new byte[] {(byte) 0x85, 0x17, 0x00, 0x01});
+        atr = new ATR(ByteArrayUtils.fromHex("85170001"));
         when(terminal.isCardPresent()).thenReturn(true);
         when(channel.transmit(any(CommandAPDU.class))).thenReturn(res);
         when(card.getATR()).thenReturn(atr);
         // this.reader = new PcscReader(terminal, readerName);
         byte[] returnOK = {(byte) 0x90, (byte) 0x00};
-        ApduResponse responseMockMF = new ApduResponse(new byte[] {(byte) 0x85, 0x17, 0x00, 0x01,
-                0x00, 0x00, 0x00, 0x12, 0x12, 0x00, 0x00, 0x01, 0x03, 0x01, 0x01, 0x00, 0x7E, 0x7E,
-                0x7E, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, (byte) 0x90, 0x00}, null);
+        ApduResponse responseMockMF = new ApduResponse(
+                ByteArrayUtils.fromHex("0x851700010000001212000001030101007E7E7E0000000000009000"),
+                null);
         ApduRequest apduRequestMF =
                 new ApduRequest(ByteArrayUtils.fromHex("94A40000023F02"), false);
 
@@ -150,8 +150,8 @@ public class SmartCardIOReaderTest {
 
         List<ApduRequest> apduRequests = new ArrayList<ApduRequest>();
         apduRequests.add(apduRequestMF);
-        SeRequestSet seApplicationRequest = new SeRequestSet(
-                new SeRequest(new SeRequest.AidSelector(aidToSelect), apduRequests, true));
+        SeRequestSet seApplicationRequest =
+                new SeRequestSet(new SeRequest(apduRequests, ChannelState.KEEP_OPEN));
 
         PcscReader spiedReader = spy(this.reader);
         SeResponseSet reponseActuelle = spiedReader.transmitSet(seApplicationRequest);
@@ -170,22 +170,22 @@ public class SmartCardIOReaderTest {
 
         when(terminal.isCardPresent()).thenReturn(true);
         when(channel.transmit(any(CommandAPDU.class))).thenReturn(res);
-        atr = new ATR(new byte[] {(byte) 0x85, 0x17, 0x00, 0x01});
+        atr = new ATR(ByteArrayUtils.fromHex("85170001"));
         when(card.getATR()).thenReturn(atr);
         byte[] returnOK = {(byte) 0x90, (byte) 0x00};
-        ApduResponse responseMockMF = new ApduResponse(new byte[] {(byte) 0x85, 0x17, 0x00, 0x01,
-                0x00, 0x00, 0x00, 0x12, 0x12, 0x00, 0x00, 0x01, 0x03, 0x01, 0x01, 0x00, 0x7E, 0x7E,
-                0x7E, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, (byte) 0x90, 0x00}, null);
+        ApduResponse responseMockMF = new ApduResponse(
+                ByteArrayUtils.fromHex("0x851700010000001212000001030101007E7E7E0000000000009000"),
+                null);
         ApduRequest apduRequestMF =
                 new ApduRequest(ByteArrayUtils.fromHex("94A40000023F02"), false);
 
         // code de la requete
-        byte[] aidToSelect = new byte[] {(byte) 0x94, (byte) 0xCA, 0x00, 0x4F, 0x00};
+        byte[] aidToSelect = ByteArrayUtils.fromHex("94CA004F00");
 
         List<ApduRequest> apduRequests = new ArrayList<ApduRequest>();
         apduRequests.add(apduRequestMF);
-        SeRequestSet seApplicationRequest = new SeRequestSet(
-                new SeRequest(new SeRequest.AidSelector(aidToSelect), apduRequests, true));
+        SeRequestSet seApplicationRequest =
+                new SeRequestSet(new SeRequest(apduRequests, ChannelState.KEEP_OPEN));
 
         PcscReader spiedReader = spy(this.reader);
 
@@ -203,18 +203,18 @@ public class SmartCardIOReaderTest {
         when(terminal.isCardPresent()).thenReturn(true);
         when(channel.transmit(any(CommandAPDU.class))).thenReturn(res);
         byte[] returnOK = {(byte) 0x90, (byte) 0x00};
-        ApduResponse responseMockMF = new ApduResponse(new byte[] {(byte) 0x85, 0x17, 0x00, 0x01,
-                0x00, 0x00, 0x00, 0x12, 0x12, 0x00, 0x00, 0x01, 0x03, 0x01, 0x01, 0x00, 0x7E, 0x7E,
-                0x7E, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, (byte) 0x90, 0x00}, null);
+        ApduResponse responseMockMF = new ApduResponse(
+                ByteArrayUtils.fromHex("0x851700010000001212000001030101007E7E7E0000000000009000"),
+                null);
         ApduRequest apduRequestMF =
                 new ApduRequest(ByteArrayUtils.fromHex("94A40000023F02"), false);
         // code de la requete
-        byte[] aidToSelect = new byte[] {(byte) 0x94, (byte) 0xCA, 0x00, 0x4F, 0x00};
+        byte[] aidToSelect = ByteArrayUtils.fromHex("94CA004F00");
 
         List<ApduRequest> apduRequests = new ArrayList<ApduRequest>();
         apduRequests.add(apduRequestMF);
-        SeRequestSet seApplicationRequest = new SeRequestSet(
-                new SeRequest(new SeRequest.AidSelector(aidToSelect), apduRequests, false));
+        SeRequestSet seApplicationRequest =
+                new SeRequestSet(new SeRequest(apduRequests, ChannelState.KEEP_OPEN));
 
         PcscReader spiedReader = spy(this.reader);
 

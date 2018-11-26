@@ -15,8 +15,8 @@ import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import org.eclipse.keyple.plugin.remotese.transport.DtoSender;
-import org.eclipse.keyple.seproxy.ProxyReader;
 import org.eclipse.keyple.seproxy.ReaderPlugin;
+import org.eclipse.keyple.seproxy.SeReader;
 import org.eclipse.keyple.seproxy.event.ObservablePlugin;
 import org.eclipse.keyple.seproxy.event.PluginEvent;
 import org.eclipse.keyple.seproxy.event.ReaderEvent;
@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
  * Remote SE Plugin Creates a virtual reader when a remote readers connect Manages the dispatch of
  * events received from remote readers
  */
-public class RemoteSePlugin extends Observable implements ObservablePlugin {
+public final class RemoteSePlugin extends Observable implements ObservablePlugin {
 
     private static final Logger logger = LoggerFactory.getLogger(RemoteSePlugin.class);
 
@@ -69,12 +69,12 @@ public class RemoteSePlugin extends Observable implements ObservablePlugin {
     }
 
     @Override
-    public SortedSet<? extends ProxyReader> getReaders() {
+    public SortedSet<? extends SeReader> getReaders() {
         return virtualReaders;
     }
 
     @Override
-    public ProxyReader getReader(String name) throws KeypleReaderNotFoundException {
+    public SeReader getReader(String name) throws KeypleReaderNotFoundException {
         for (VirtualReader VirtualReader : virtualReaders) {
             if (VirtualReader.getName().equals(name)) {
                 return VirtualReader;
@@ -83,8 +83,7 @@ public class RemoteSePlugin extends Observable implements ObservablePlugin {
         throw new KeypleReaderNotFoundException("reader with name not found : " + name);
     }
 
-    public ProxyReader getReaderByRemoteName(String remoteName)
-            throws KeypleReaderNotFoundException {
+    public SeReader getReaderByRemoteName(String remoteName) throws KeypleReaderNotFoundException {
         for (VirtualReader VirtualReader : virtualReaders) {
             if (VirtualReader.getNativeReaderName().equals(remoteName)) {
                 return VirtualReader;
@@ -97,7 +96,7 @@ public class RemoteSePlugin extends Observable implements ObservablePlugin {
      * Create a virtual reader
      *
      */
-    public ProxyReader createVirtualReader(String clientNodeId, String nativeReaderName,
+    SeReader createVirtualReader(String clientNodeId, String nativeReaderName,
             DtoSender dtoSender) throws KeypleReaderException {
         logger.debug("createVirtualReader for nativeReader {}", nativeReaderName);
 

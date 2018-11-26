@@ -9,7 +9,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  ********************************************************************************/
-package org.eclipse.keyple.plugin.remotese.transport;
+package org.eclipse.keyple.example.remote.transport;
 
 import java.io.IOException;
 
@@ -19,9 +19,9 @@ import java.io.IOException;
  */
 public abstract class TransportFactory {
 
-    abstract public ClientNode getClient();
+    abstract public ClientNode getClient(Boolean isMaster);
 
-    abstract public ServerNode getServer() throws IOException;
+    abstract public ServerNode getServer(Boolean isMaster) throws IOException;
 
 
 

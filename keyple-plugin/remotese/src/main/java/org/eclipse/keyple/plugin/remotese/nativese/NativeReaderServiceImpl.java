@@ -19,9 +19,13 @@ import org.eclipse.keyple.plugin.remotese.nativese.method.RmDisconnectReaderInvo
 import org.eclipse.keyple.plugin.remotese.nativese.method.RmTransmitExecutor;
 import org.eclipse.keyple.plugin.remotese.transport.*;
 import org.eclipse.keyple.plugin.remotese.transport.json.JsonParser;
-import org.eclipse.keyple.seproxy.*;
+import org.eclipse.keyple.seproxy.ReaderPlugin;
+import org.eclipse.keyple.seproxy.SeProxyService;
+import org.eclipse.keyple.seproxy.SeReader;
 import org.eclipse.keyple.seproxy.event.ReaderEvent;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderNotFoundException;
+import org.eclipse.keyple.seproxy.message.*;
+import org.eclipse.keyple.seproxy.message.ProxyReader;
 import org.eclipse.keyple.seproxy.plugin.AbstractObservableReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -145,13 +149,13 @@ public class NativeReaderServiceImpl implements NativeReaderService, DtoHandler 
      * @param localReader : native reader to be connected
      */
     @Override
-    public void connectReader(ProxyReader localReader,String clientNodeId) throws KeypleRemoteException{
+    public void connectReader(SeReader localReader,String clientNodeId) throws KeypleRemoteException{
         logger.info("connectReader {} from device {}", localReader.getName(), clientNodeId);
         dtoSender.sendDTO(new RmConnectReaderInvoker(localReader, clientNodeId).dto());
     }
 
     @Override
-    public void disconnectReader(ProxyReader localReader,String clientNodeId) throws KeypleRemoteException {
+    public void disconnectReader(SeReader localReader,String clientNodeId) throws KeypleRemoteException {
         logger.info("disconnectReader {} from device {}", localReader.getName(), clientNodeId);
         dtoSender.sendDTO(new RmDisconnectReaderInvoker(localReader, clientNodeId).dto());
 
@@ -167,7 +171,7 @@ public class NativeReaderServiceImpl implements NativeReaderService, DtoHandler 
      * @return found reader if any
      * @throws KeypleReaderNotFoundException if not reader were found with this name
      */
-    public ProxyReader findLocalReader(String nativeReaderName)
+    public SeReader findLocalReader(String nativeReaderName)
             throws KeypleReaderNotFoundException {
         logger.debug("Find local reader by name {} in {} plugin(s)", nativeReaderName,
                 seProxyService.getInstance().getPlugins().size());

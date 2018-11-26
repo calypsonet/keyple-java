@@ -12,11 +12,12 @@
 package org.eclipse.keyple.seproxy.exception;
 
 
-import org.eclipse.keyple.seproxy.SeResponse;
-import org.eclipse.keyple.seproxy.SeResponseSet;
+import org.eclipse.keyple.seproxy.message.ProxyReader;
+import org.eclipse.keyple.seproxy.message.SeResponse;
+import org.eclipse.keyple.seproxy.message.SeResponseSet;
 
 /**
- * Base Exceptions thrown in a {@link org.eclipse.keyple.seproxy.ProxyReader} context
+ * Base Exceptions thrown in a {@link ProxyReader} context
  */
 public class KeypleReaderException extends KeypleBaseException {
     /*

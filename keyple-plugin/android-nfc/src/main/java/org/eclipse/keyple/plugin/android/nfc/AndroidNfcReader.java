@@ -16,13 +16,13 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import org.eclipse.keyple.seproxy.SeProtocol;
 import org.eclipse.keyple.seproxy.event.ReaderEvent;
 import org.eclipse.keyple.seproxy.exception.KeypleChannelStateException;
 import org.eclipse.keyple.seproxy.exception.KeypleIOReaderException;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.plugin.AbstractSelectionLocalReader;
 import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
+import org.eclipse.keyple.seproxy.protocol.SeProtocol;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,7 +41,7 @@ import android.os.Bundle;
  *
  *
  */
-public class AndroidNfcReader extends AbstractSelectionLocalReader
+public final class AndroidNfcReader extends AbstractSelectionLocalReader
         implements NfcAdapter.ReaderCallback {
 
     private static final Logger LOG = LoggerFactory.getLogger(AndroidNfcReader.class);
@@ -97,7 +97,6 @@ public class AndroidNfcReader extends AbstractSelectionLocalReader
         return parameters;
     }
 
-
     /**
      * Configure NFC Reader AndroidNfcReader supports the following parameters : FLAG_READER:
      * SKIP_NDEF_CHECK (skip NDEF check when a smartcard is detected) FLAG_READER:
@@ -144,8 +143,8 @@ public class AndroidNfcReader extends AbstractSelectionLocalReader
         LOG.info("Received Tag Discovered event");
         try {
             tagProxy = TagProxy.getTagProxy(tag);
-            notifyObservers(
-                    new ReaderEvent(PLUGIN_NAME, READER_NAME, ReaderEvent.EventType.SE_INSERTED));
+            notifyObservers(new ReaderEvent(PLUGIN_NAME, READER_NAME,
+                    ReaderEvent.EventType.SE_INSERTED, null));
 
         } catch (KeypleReaderException e) {
             // print and do nothing
@@ -197,7 +196,7 @@ public class AndroidNfcReader extends AbstractSelectionLocalReader
             if (tagProxy != null) {
                 tagProxy.close();
                 notifyObservers(new ReaderEvent(PLUGIN_NAME, READER_NAME,
-                        ReaderEvent.EventType.SE_REMOVAL));
+                        ReaderEvent.EventType.SE_REMOVAL, null));
                 LOG.info("Disconnected tag : " + printTagId());
             }
         } catch (IOException e) {
@@ -346,7 +345,4 @@ public class AndroidNfcReader extends AbstractSelectionLocalReader
         nfcAdapter.disableReaderMode(activity);
 
     }
-
-
-
 }

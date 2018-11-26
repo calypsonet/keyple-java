@@ -14,21 +14,22 @@ package org.eclipse.keyple.plugin.stub;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
-import org.eclipse.keyple.seproxy.ApduRequest;
-import org.eclipse.keyple.seproxy.ApduResponse;
-import org.eclipse.keyple.seproxy.SeProtocol;
-import org.eclipse.keyple.seproxy.SeRequestSet;
-import org.eclipse.keyple.seproxy.SeResponseSet;
 import org.eclipse.keyple.seproxy.exception.KeypleChannelStateException;
 import org.eclipse.keyple.seproxy.exception.KeypleIOReaderException;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.exception.NoStackTraceThrowable;
+import org.eclipse.keyple.seproxy.message.ApduRequest;
+import org.eclipse.keyple.seproxy.message.ApduResponse;
+import org.eclipse.keyple.seproxy.message.SeRequestSet;
+import org.eclipse.keyple.seproxy.message.SeResponseSet;
 import org.eclipse.keyple.seproxy.plugin.AbstractThreadedLocalReader;
+import org.eclipse.keyple.seproxy.protocol.Protocol;
+import org.eclipse.keyple.seproxy.protocol.SeProtocol;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-public class StubReader extends AbstractThreadedLocalReader {
+public final class StubReader extends AbstractThreadedLocalReader {
 
     private static final Logger logger = LoggerFactory.getLogger(StubReader.class);
 
@@ -81,11 +82,10 @@ public class StubReader extends AbstractThreadedLocalReader {
     }
 
     @Override
-    protected final boolean protocolFlagMatches(SeProtocol protocolFlag)
-            throws KeypleReaderException {
+    protected boolean protocolFlagMatches(SeProtocol protocolFlag) throws KeypleReaderException {
         boolean result;
         // Get protocolFlag to check if ATR filtering is required
-        if (protocolFlag != null) {
+        if (protocolFlag != Protocol.ANY) {
             if (!isPhysicalChannelOpen()) {
                 openPhysicalChannel();
             }

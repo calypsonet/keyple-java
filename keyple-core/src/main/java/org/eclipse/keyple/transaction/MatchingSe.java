@@ -11,7 +11,7 @@
  ********************************************************************************/
 package org.eclipse.keyple.transaction;
 
-import org.eclipse.keyple.seproxy.SeResponse;
+import org.eclipse.keyple.seproxy.message.SeResponse;
 
 /**
  * MatchingSe is the class to manage the elements of the result of a selection.

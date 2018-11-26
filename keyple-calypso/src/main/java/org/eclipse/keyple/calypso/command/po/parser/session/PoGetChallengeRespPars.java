@@ -13,7 +13,7 @@ package org.eclipse.keyple.calypso.command.po.parser.session;
 
 
 import org.eclipse.keyple.command.AbstractApduResponseParser;
-import org.eclipse.keyple.seproxy.ApduResponse;
+import org.eclipse.keyple.seproxy.message.ApduResponse;
 
 /**
  * PO Get challenge response parser. See specs: Calypso / page 108 / 9.54 - Get challenge

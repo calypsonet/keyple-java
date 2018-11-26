@@ -15,7 +15,7 @@ package org.eclipse.keyple.calypso.command.po.builder.session;
 
 import org.eclipse.keyple.calypso.command.po.PoRevision;
 import org.eclipse.keyple.command.AbstractApduCommandBuilder;
-import org.eclipse.keyple.seproxy.ApduRequest;
+import org.eclipse.keyple.seproxy.message.ApduRequest;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.junit.Assert;
 import org.junit.Test;

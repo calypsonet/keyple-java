@@ -15,12 +15,14 @@ import java.util.concurrent.CountDownLatch;
 
 import org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitInvoker;
 import org.eclipse.keyple.plugin.remotese.transport.KeypleDto;
+
+import org.eclipse.keyple.seproxy.message.SeRequest;
+import org.eclipse.keyple.seproxy.message.SeRequestSet;
+import org.eclipse.keyple.seproxy.message.SeResponse;
+import org.eclipse.keyple.seproxy.message.SeResponseSet;
 import org.eclipse.keyple.plugin.remotese.transport.KeypleRemoteReaderException;
 import org.eclipse.keyple.plugin.remotese.transport.RemoteMethodInvoker;
-import org.eclipse.keyple.seproxy.SeRequest;
-import org.eclipse.keyple.seproxy.SeRequestSet;
-import org.eclipse.keyple.seproxy.SeResponse;
-import org.eclipse.keyple.seproxy.SeResponseSet;
+
 import org.eclipse.keyple.util.Observable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -32,9 +32,25 @@ public abstract class AbstractThreadedLocalReader extends AbstractSelectionLocal
 
     protected AbstractThreadedLocalReader(String pluginName, String readerName) {
         super(pluginName, readerName);
-        /// create and launch a monitoring thread
+    }
+
+    /**
+     * Start the monitoring thread.
+     * <p>
+     * The thread is created if it does not already exist
+     */
+    @Override
+    protected void startObservation() {
         thread = new EventThread(this.getPluginName(), this.getName());
         thread.start();
+    }
+
+    /**
+     * Terminate the monitoring thread
+     */
+    @Override
+    protected void stopObservation() {
+        thread.end();
     }
 
     /**

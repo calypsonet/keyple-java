@@ -12,13 +12,16 @@
 package org.eclipse.keyple.seproxy.plugin;
 
 import java.util.*;
-import org.eclipse.keyple.seproxy.*;
+import org.eclipse.keyple.seproxy.event.ObservableReader;
 import org.eclipse.keyple.seproxy.event.ReaderEvent;
 import org.eclipse.keyple.seproxy.exception.KeypleApplicationSelectionException;
 import org.eclipse.keyple.seproxy.exception.KeypleChannelStateException;
 import org.eclipse.keyple.seproxy.exception.KeypleIOReaderException;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
+import org.eclipse.keyple.seproxy.message.*;
+import org.eclipse.keyple.seproxy.protocol.SeProtocol;
 import org.eclipse.keyple.seproxy.protocol.SeProtocolSetting;
+import org.eclipse.keyple.transaction.SelectionResponse;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,6 +39,7 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
     private boolean logicalChannelIsOpen = false;
     private byte[] aidCurrentlySelected;
     private SelectionStatus currentSelectionStatus;
+    private boolean presenceNotified = false;
     private long before; // timestamp recorder
 
     public AbstractLocalReader(String pluginName, String readerName) {
@@ -90,24 +94,68 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
 
     /**
      * This method is invoked when a SE is removed
+     * <p>
+     * The SE will be notified removed only if it has been previously notified present
      */
     protected void cardRemoved() {
-        notifyObservers(
-                new ReaderEvent(this.pluginName, this.name, ReaderEvent.EventType.SE_REMOVAL));
+        if (presenceNotified) {
+            notifyObservers(new ReaderEvent(this.pluginName, this.name,
+                    ReaderEvent.EventType.SE_REMOVAL, null));
+            presenceNotified = false;
+        }
     }
 
     /**
      * This method is invoked when a SE is inserted
+     * <p>
+     * It will fire an ReaderEvent in the following cases:
+     * <ul>
+     * <li>SE_INSERTED: if no default selection request was defined</li>
+     * <li>SE_MATCHED: if a default selection request was defined in any mode a SE matched the
+     * selection</li>
+     * <li>SE_INSERTED: if a default selection request was defined in ALWAYS mode but no SE matched
+     * the selection (the SelectionResponse is however transmitted)</li>
+     * </ul>
+     * <p>
+     * It will do nothing if a default selection is defined in MATCHED_ONLY mode but no SE matched
+     * the selection.
      */
     protected void cardInserted() {
-        if (defaultSeRequests == null) {
-            notifyObservers(
-                    new ReaderEvent(this.pluginName, this.name, ReaderEvent.EventType.SE_INSERTED));
+        if (defaultSelectionRequest == null) {
+            /* no default request is defined, just notify the SE insertion */
+            notifyObservers(new ReaderEvent(this.pluginName, this.name,
+                    ReaderEvent.EventType.SE_INSERTED, null));
+            presenceNotified = true;
         } else {
             try {
-                /* TODO add responses check? */
-                SeResponseSet seResponseSet = processSeRequestSet(defaultSeRequests);
-                notifyObservers(new ReaderEvent(this.pluginName, this.name, seResponseSet));
+                /*
+                 * a default request is defined, send it a notify according to the notification mode
+                 * and the selection status
+                 */
+                boolean aSeMatched = false;
+                SeResponseSet seResponseSet =
+                        processSeRequestSet(defaultSelectionRequest.getSelectionSeRequestSet());
+                for (SeResponse seResponse : seResponseSet.getResponses()) {
+                    if (seResponse != null && seResponse.getSelectionStatus().hasMatched()) {
+                        aSeMatched = true;
+                        break;
+                    }
+                }
+                if (notificationMode == ObservableReader.NotificationMode.MATCHED_ONLY) {
+                    /* notify only if a SE matched the selection, just ignore if not */
+                    if (aSeMatched) {
+                        notifyObservers(new ReaderEvent(this.pluginName, this.name,
+                                ReaderEvent.EventType.SE_MATCHED,
+                                new SelectionResponse(seResponseSet)));
+                        presenceNotified = true;
+                    }
+                } else {
+                    /* notify an SE_INSERTED event with the received response */
+                    notifyObservers(new ReaderEvent(this.pluginName, this.name,
+                            ReaderEvent.EventType.SE_INSERTED,
+                            new SelectionResponse(seResponseSet)));
+                    presenceNotified = true;
+                }
             } catch (KeypleReaderException e) {
                 e.printStackTrace();
             }

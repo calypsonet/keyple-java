@@ -12,13 +12,11 @@
 package org.eclipse.keyple.plugin.remotese.pluginse;
 
 
-import org.eclipse.keyple.plugin.remotese.transport.KeypleRemoteException;
+import org.eclipse.keyple.seproxy.message.SeRequest;
+import org.eclipse.keyple.seproxy.message.SeRequestSet;
+import org.eclipse.keyple.seproxy.message.SeResponse;
+import org.eclipse.keyple.seproxy.message.SeResponseSet;
 import org.eclipse.keyple.plugin.remotese.transport.KeypleRemoteReaderException;
-import org.eclipse.keyple.seproxy.SeRequest;
-import org.eclipse.keyple.seproxy.SeRequestSet;
-import org.eclipse.keyple.seproxy.SeResponse;
-import org.eclipse.keyple.seproxy.SeResponseSet;
-import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 
 public interface VirtualReaderSession {
 
@@ -32,7 +30,7 @@ public interface VirtualReaderSession {
 
     /**
      * Blocking transmitSet
-     * 
+     *
      * @param nativeReaderName : local reader to transmitSet to
      * @param virtualReaderName : virtual reader that receives the order the transmitSet to
      * @param seRequestSet : seRequestSet to transmit

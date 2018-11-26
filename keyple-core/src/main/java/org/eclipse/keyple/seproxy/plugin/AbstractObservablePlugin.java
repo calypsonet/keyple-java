@@ -12,11 +12,11 @@
 package org.eclipse.keyple.seproxy.plugin;
 
 import java.util.SortedSet;
-import org.eclipse.keyple.seproxy.ProxyReader;
 import org.eclipse.keyple.seproxy.ReaderPlugin;
 import org.eclipse.keyple.seproxy.event.PluginEvent;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderNotFoundException;
+import org.eclipse.keyple.seproxy.message.ProxyReader;
 
 /**
  * Observable plugin. These plugin can report when a reader is added or removed.
@@ -106,6 +106,6 @@ abstract class AbstractObservablePlugin extends AbstractLoggedObservable<PluginE
                 return reader;
             }
         }
-        throw new KeypleReaderNotFoundException("Reader " + name + "not found.");
+        throw new KeypleReaderNotFoundException(name);
     }
 }

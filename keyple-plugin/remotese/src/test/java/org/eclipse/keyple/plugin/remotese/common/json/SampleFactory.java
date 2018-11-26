@@ -15,10 +15,11 @@ package org.eclipse.keyple.plugin.remotese.common.json;
 import java.io.IOException;
 import java.util.*;
 
-import org.eclipse.keyple.plugin.stub.StubSecureElement;
 import org.eclipse.keyple.seproxy.*;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
+import org.eclipse.keyple.seproxy.ChannelState;
+import org.eclipse.keyple.seproxy.message.*;
 import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
 import org.eclipse.keyple.seproxy.protocol.ContactsProtocols;
 import org.eclipse.keyple.util.ByteArrayUtils;
@@ -43,8 +44,8 @@ public class SampleFactory {
 
         SeRequest.Selector selector = new SeRequest.AidSelector(ByteArrayUtils.fromHex(poAid));
 
-        SeRequest seRequest = new SeRequest(selector, poApduRequestList, false,
-                ContactlessProtocols.PROTOCOL_ISO14443_4);
+        SeRequest seRequest = new SeRequest(selector, poApduRequestList, ChannelState.CLOSE_AFTER,
+                ContactlessProtocols.PROTOCOL_ISO14443_4, null);
 
         return new SeRequestSet(seRequest);
 
@@ -105,11 +106,11 @@ public class SampleFactory {
         SeRequest.Selector aidSelector = new SeRequest.AidSelector(ByteArrayUtils.fromHex(poAid));
         SeRequest.Selector atrSelector = new SeRequest.AtrSelector("/regex/");
 
-        SeRequest seRequest = new SeRequest(aidSelector, poApduRequestList, false,
-                ContactlessProtocols.PROTOCOL_ISO14443_4);
+        SeRequest seRequest = new SeRequest(aidSelector, poApduRequestList,
+                ChannelState.CLOSE_AFTER, ContactlessProtocols.PROTOCOL_ISO14443_4, null);
 
-        SeRequest seRequest2 = new SeRequest(atrSelector, poApduRequestList, true,
-                ContactsProtocols.PROTOCOL_ISO7816_3);
+        SeRequest seRequest2 = new SeRequest(atrSelector, poApduRequestList, ChannelState.KEEP_OPEN,
+                ContactsProtocols.PROTOCOL_ISO7816_3, null);
 
         Set<SeRequest> seRequests = new HashSet<SeRequest>();
         seRequests.add(seRequest);

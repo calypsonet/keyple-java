@@ -12,8 +12,6 @@
 package org.eclipse.keyple.seproxy.protocol;
 
 
-import org.eclipse.keyple.seproxy.SeProtocol;
-
 public enum ContactsProtocols implements SeProtocol {
 
     // Contact standard

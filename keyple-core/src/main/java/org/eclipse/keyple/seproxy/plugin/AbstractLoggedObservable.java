@@ -16,7 +16,8 @@ import java.util.Map;
 import org.eclipse.keyple.seproxy.event.PluginEvent;
 import org.eclipse.keyple.seproxy.event.ReaderEvent;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
-import org.eclipse.keyple.util.NameableConfigurable;
+import org.eclipse.keyple.util.Configurable;
+import org.eclipse.keyple.util.Nameable;
 import org.eclipse.keyple.util.Observable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +27,7 @@ import org.slf4j.LoggerFactory;
  * AbstractObservablePlugin
  * 
  */
-abstract class AbstractLoggedObservable<T> extends Observable<T> implements NameableConfigurable {
+abstract class AbstractLoggedObservable<T> extends Observable<T> implements Nameable, Configurable {
     private static final Logger logger = LoggerFactory.getLogger(AbstractLoggedObservable.class);
 
     /**

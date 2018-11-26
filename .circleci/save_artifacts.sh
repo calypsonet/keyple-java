@@ -9,8 +9,8 @@ find . -name "keyple-*.jar" \
 
 save_directory keyple-core
 save_directory keyple-calypso
-save_directory keyple-example/common
-save_directory keyple-example/pc
+save_directory example/common
+save_directory example/pc
 save_directory keyple-plugin/pcsc
 save_directory keyple-plugin/stub
 

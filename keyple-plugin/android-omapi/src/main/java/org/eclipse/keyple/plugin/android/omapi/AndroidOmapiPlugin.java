@@ -26,7 +26,7 @@ import android.util.Log;
  * Loads and configures {@link AndroidOmapiReader} for each SE Reader in the platform TODO : filters
  * readers to load by parameters with a regex
  */
-public class AndroidOmapiPlugin extends AbstractStaticPlugin implements SEService.CallBack {
+public final class AndroidOmapiPlugin extends AbstractStaticPlugin implements SEService.CallBack {
 
     private static final String TAG = AndroidOmapiPlugin.class.getSimpleName();
     public static final String PLUGIN_NAME = "AndroidOmapiPlugin";

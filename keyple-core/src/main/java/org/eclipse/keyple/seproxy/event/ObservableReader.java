@@ -11,12 +11,16 @@
  ********************************************************************************/
 package org.eclipse.keyple.seproxy.event;
 
-import org.eclipse.keyple.seproxy.ProxyReader;
-import org.eclipse.keyple.seproxy.SeRequestSet;
+import org.eclipse.keyple.seproxy.SeReader;
+import org.eclipse.keyple.transaction.SelectionRequest;
 import org.eclipse.keyple.util.Observable;
 
-public interface ObservableReader extends ProxyReader {
+public interface ObservableReader extends SeReader {
     interface ReaderObserver extends Observable.Observer<ReaderEvent> {
+    }
+
+    public enum NotificationMode {
+        ALWAYS, MATCHED_ONLY
     }
 
     void addObserver(ReaderObserver observer);
@@ -25,5 +29,6 @@ public interface ObservableReader extends ProxyReader {
 
     void notifyObservers(ReaderEvent event);
 
-    void setDefaultSeRequests(SeRequestSet defaultSeRequests);
+    void setDefaultSelectionRequest(SelectionRequest defaultSelectionRequest,
+            NotificationMode notificationMode);
 }

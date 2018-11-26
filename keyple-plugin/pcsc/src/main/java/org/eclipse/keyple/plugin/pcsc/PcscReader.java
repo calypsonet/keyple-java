@@ -15,14 +15,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 import javax.smartcardio.*;
-import org.eclipse.keyple.seproxy.SeProtocol;
 import org.eclipse.keyple.seproxy.exception.*;
 import org.eclipse.keyple.seproxy.plugin.AbstractThreadedLocalReader;
+import org.eclipse.keyple.seproxy.protocol.Protocol;
+import org.eclipse.keyple.seproxy.protocol.SeProtocol;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class PcscReader extends AbstractThreadedLocalReader {
+public final class PcscReader extends AbstractThreadedLocalReader {
 
     private static final Logger logger = LoggerFactory.getLogger(PcscReader.class);
     public static final String SETTING_KEY_PROTOCOL = "protocol";
@@ -41,9 +42,6 @@ public class PcscReader extends AbstractThreadedLocalReader {
     public static final String SETTING_KEY_LOGGING = "logging";
 
     private static final long SETTING_THREAD_TIMEOUT_DEFAULT = 5000;
-
-    private boolean logicalChannelOpen;
-    private boolean physicalChannelOpen;
 
     private final CardTerminal terminal;
 
@@ -84,7 +82,7 @@ public class PcscReader extends AbstractThreadedLocalReader {
     }
 
     @Override
-    protected final void closePhysicalChannel() throws KeypleChannelStateException {
+    protected void closePhysicalChannel() throws KeypleChannelStateException {
         try {
             if (card != null) {
                 if (logging) {
@@ -106,7 +104,7 @@ public class PcscReader extends AbstractThreadedLocalReader {
     }
 
     @Override
-    public final boolean isSePresent() throws NoStackTraceThrowable {
+    public boolean isSePresent() throws NoStackTraceThrowable {
         try {
             return terminal.isCardPresent();
         } catch (CardException e) {
@@ -117,7 +115,7 @@ public class PcscReader extends AbstractThreadedLocalReader {
     }
 
     @Override
-    public final boolean waitForCardPresent(long timeout) throws NoStackTraceThrowable {
+    protected boolean waitForCardPresent(long timeout) throws NoStackTraceThrowable {
         try {
             return terminal.waitForCardPresent(timeout);
         } catch (CardException e) {
@@ -128,7 +126,7 @@ public class PcscReader extends AbstractThreadedLocalReader {
     }
 
     @Override
-    public final boolean waitForCardAbsent(long timeout) throws NoStackTraceThrowable {
+    protected boolean waitForCardAbsent(long timeout) throws NoStackTraceThrowable {
         try {
             if (terminal.waitForCardAbsent(timeout)) {
                 closeLogicalChannel();
@@ -156,7 +154,7 @@ public class PcscReader extends AbstractThreadedLocalReader {
      * @throws KeypleIOReaderException if the transmission failed
      */
     @Override
-    protected final byte[] transmitApdu(byte[] apduIn) throws KeypleIOReaderException {
+    protected byte[] transmitApdu(byte[] apduIn) throws KeypleIOReaderException {
         ResponseAPDU apduResponseData;
         try {
             apduResponseData = channel.transmit(new CommandAPDU(apduIn));
@@ -176,11 +174,10 @@ public class PcscReader extends AbstractThreadedLocalReader {
      * @throws KeypleReaderException if the protocol mask is not found
      */
     @Override
-    protected final boolean protocolFlagMatches(SeProtocol protocolFlag)
-            throws KeypleReaderException {
+    protected boolean protocolFlagMatches(SeProtocol protocolFlag) throws KeypleReaderException {
         boolean result;
         // Get protocolFlag to check if ATR filtering is required
-        if (protocolFlag != null) {
+        if (protocolFlag != Protocol.ANY) {
             if (!isPhysicalChannelOpen()) {
                 openPhysicalChannel();
             }
@@ -355,7 +352,7 @@ public class PcscReader extends AbstractThreadedLocalReader {
     }
 
     @Override
-    protected final byte[] getATR() {
+    protected byte[] getATR() {
         return card.getATR().getBytes();
     }
 
@@ -365,7 +362,7 @@ public class PcscReader extends AbstractThreadedLocalReader {
      * @return true if the physical channel is open
      */
     @Override
-    protected final boolean isPhysicalChannelOpen() {
+    protected boolean isPhysicalChannelOpen() {
         return card != null;
     }
 
@@ -380,7 +377,7 @@ public class PcscReader extends AbstractThreadedLocalReader {
      * @throws KeypleChannelStateException if a reader error occurs
      */
     @Override
-    protected final void openPhysicalChannel() throws KeypleChannelStateException {
+    protected void openPhysicalChannel() throws KeypleChannelStateException {
         // init of the physical SE channel: if not yet established, opening of a new physical
         // channel
         try {

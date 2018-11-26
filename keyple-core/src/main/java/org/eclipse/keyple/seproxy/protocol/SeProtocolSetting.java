@@ -13,7 +13,6 @@ package org.eclipse.keyple.seproxy.protocol;
 
 import java.util.HashMap;
 import java.util.Map;
-import org.eclipse.keyple.seproxy.SeProtocol;
 
 /**
  * SeProtocol Map builder

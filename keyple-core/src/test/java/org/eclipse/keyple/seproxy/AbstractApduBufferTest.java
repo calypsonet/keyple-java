@@ -13,6 +13,7 @@ package org.eclipse.keyple.seproxy;
 
 
 
+import org.eclipse.keyple.seproxy.message.ApduRequest;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

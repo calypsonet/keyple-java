@@ -12,7 +12,7 @@
 package org.eclipse.keyple.calypso.command.sam;
 
 import org.eclipse.keyple.command.AbstractIso7816CommandBuilder;
-import org.eclipse.keyple.seproxy.ApduRequest;
+import org.eclipse.keyple.seproxy.message.ApduRequest;
 
 /**
  * Superclass for all SAM command builders.
