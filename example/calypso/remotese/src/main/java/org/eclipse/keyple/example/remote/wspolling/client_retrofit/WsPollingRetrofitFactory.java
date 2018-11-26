@@ -14,9 +14,8 @@ package org.eclipse.keyple.example.remote.wspolling.client_retrofit;
 import java.io.IOException;
 import java.util.Properties;
 import java.util.Random;
-import org.eclipse.keyple.plugin.remotese.transport.ClientNode;
-
 import org.eclipse.keyple.example.remote.wspolling.server.WsPServer;
+import org.eclipse.keyple.plugin.remotese.transport.ClientNode;
 import org.eclipse.keyple.plugin.remotese.transport.ServerNode;
 import org.eclipse.keyple.plugin.remotese.transport.TransportFactory;
 import org.slf4j.Logger;

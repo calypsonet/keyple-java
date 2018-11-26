@@ -12,8 +12,8 @@
 package org.eclipse.keyple.example.remote.wspolling;
 
 import org.eclipse.keyple.example.remote.calypso.DemoThreads;
-import org.eclipse.keyple.plugin.remotese.transport.TransportFactory;
 import org.eclipse.keyple.example.remote.wspolling.client_retrofit.WsPollingRetrofitFactory;
+import org.eclipse.keyple.plugin.remotese.transport.TransportFactory;
 
 public class DemoWsPRetrofitMasterClient {
 

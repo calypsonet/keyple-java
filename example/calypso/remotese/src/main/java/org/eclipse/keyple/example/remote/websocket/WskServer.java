@@ -14,7 +14,6 @@ package org.eclipse.keyple.example.remote.websocket;
 import java.net.InetSocketAddress;
 import java.util.HashMap;
 import java.util.Map;
-
 import org.eclipse.keyple.plugin.remotese.transport.*;
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
@@ -35,7 +34,7 @@ class WskServer extends WebSocketServer implements ServerNode {
     private WebSocket masterWebSocket;
     final private String nodeId;
 
-    public WskServer(InetSocketAddress address,Boolean isMaster, String nodeId) {
+    public WskServer(InetSocketAddress address, Boolean isMaster, String nodeId) {
         super(address);
 
         logger.info("Create websocket server on address {}", address.toString());
@@ -135,8 +134,8 @@ class WskServer extends WebSocketServer implements ServerNode {
                     ((WskTransportDTO) transportDto).getSocketWeb()
                             .send(KeypleDtoHelper.toJson(transportDto.getKeypleDTO()));
                 } else {
-                    //if there is no socketweb defined in the transport dto
-                    //retrieve the socketweb by the sessionId
+                    // if there is no socketweb defined in the transport dto
+                    // retrieve the socketweb by the sessionId
                     if (transportDto.getKeypleDTO().getSessionId() == null) {
                         logger.warn("No sessionId defined in message, Keyple DTO can not be sent");
                     } else {

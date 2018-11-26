@@ -1,17 +1,28 @@
+/********************************************************************************
+ * Copyright (c) 2018 Calypso Networks Association https://www.calypsonet-asso.org/
+ *
+ * See the NOTICE file(s) distributed with this work for additional information regarding copyright
+ * ownership.
+ *
+ * This program and the accompanying materials are made available under the terms of the Eclipse
+ * Public License 2.0 which is available at http://www.eclipse.org/legal/epl-2.0
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ ********************************************************************************/
 package org.eclipse.keyple.plugin.remotese.nativese.method;
 
-import com.google.gson.JsonObject;
 import org.eclipse.keyple.plugin.remotese.nativese.NativeReaderServiceImpl;
 import org.eclipse.keyple.plugin.remotese.transport.KeypleDto;
 import org.eclipse.keyple.plugin.remotese.transport.KeypleDtoHelper;
 import org.eclipse.keyple.plugin.remotese.transport.KeypleRemoteReaderException;
 import org.eclipse.keyple.plugin.remotese.transport.RemoteMethodParser;
 import org.eclipse.keyple.plugin.remotese.transport.json.JsonParser;
-import org.eclipse.keyple.seproxy.ProxyReader;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderNotFoundException;
+import org.eclipse.keyple.seproxy.message.ProxyReader;
 import org.eclipse.keyple.seproxy.plugin.AbstractObservableReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 
 public class RmConnectReaderParser implements RemoteMethodParser<String> {
 
@@ -20,7 +31,7 @@ public class RmConnectReaderParser implements RemoteMethodParser<String> {
 
     NativeReaderServiceImpl nativeReaderService;
 
-    public RmConnectReaderParser(NativeReaderServiceImpl nativeReaderService){
+    public RmConnectReaderParser(NativeReaderServiceImpl nativeReaderService) {
         this.nativeReaderService = nativeReaderService;
     }
 
@@ -33,14 +44,14 @@ public class RmConnectReaderParser implements RemoteMethodParser<String> {
         // reader connection was a success
         if (KeypleDtoHelper.containsException(keypleDto)) {
             Throwable ex = JsonParser.getGson().fromJson(keypleDto.getBody(), Throwable.class);
-            throw new KeypleRemoteReaderException("An exception occurs while calling the remote method Connect Reader", ex);
-        }else{
+            throw new KeypleRemoteReaderException(
+                    "An exception occurs while calling the remote method Connect Reader", ex);
+        } else {
             try {
                 // observe reader to propagate reader events
                 ProxyReader localReader = nativeReaderService.findLocalReader(nativeReaderName);
                 if (localReader instanceof AbstractObservableReader) {
-                    logger.debug(
-                            "Add NativeReaderServiceImpl as an observer for native reader {}",
+                    logger.debug("Add NativeReaderServiceImpl as an observer for native reader {}",
                             localReader.getName());
                     ((AbstractObservableReader) localReader).addObserver(nativeReaderService);
                 }

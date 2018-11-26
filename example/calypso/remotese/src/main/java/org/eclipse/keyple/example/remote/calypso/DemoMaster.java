@@ -12,8 +12,6 @@
 package org.eclipse.keyple.example.remote.calypso;
 
 import java.io.IOException;
-
-
 import org.eclipse.keyple.plugin.remotese.pluginse.RemoteSePlugin;
 import org.eclipse.keyple.plugin.remotese.pluginse.VirtualReader;
 import org.eclipse.keyple.plugin.remotese.pluginse.VirtualReaderService;

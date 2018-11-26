@@ -17,5 +17,3 @@ public interface RemoteMethodInvoker {
     KeypleDto dto();
 
 }
-
-

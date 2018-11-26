@@ -12,14 +12,15 @@
 package org.eclipse.keyple.plugin.remotese.common.json;
 
 import org.eclipse.keyple.plugin.remotese.transport.json.JsonParser;
+import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 import org.eclipse.keyple.seproxy.message.SeRequestSet;
 import org.eclipse.keyple.seproxy.message.SeResponseSet;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
-import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.google.gson.Gson;
 
 @RunWith(MockitoJUnitRunner.class)
 public class JsonParserTest {

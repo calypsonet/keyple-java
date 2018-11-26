@@ -18,6 +18,7 @@ import org.eclipse.keyple.calypso.command.po.PoRevision;
 import org.eclipse.keyple.calypso.command.po.builder.IncreaseCmdBuild;
 import org.eclipse.keyple.calypso.command.po.builder.ReadRecordsCmdBuild;
 import org.eclipse.keyple.seproxy.ChannelState;
+import org.eclipse.keyple.seproxy.SeReader;
 import org.eclipse.keyple.seproxy.event.ObservablePlugin;
 import org.eclipse.keyple.seproxy.event.ObservableReader;
 import org.eclipse.keyple.seproxy.event.PluginEvent;
@@ -91,7 +92,7 @@ public class StubReaderTest {
     }
 
 
-    private void selectSe() throws KeypleReaderException {
+    static public void selectSe(SeReader reader) throws KeypleReaderException {
         SeSelection seSelection = new SeSelection(reader);
         SeSelector seSelector =
                 new SeSelector("3B.*", ChannelState.KEEP_OPEN, Protocol.ANY, "ATR selection");
@@ -182,7 +183,7 @@ public class StubReaderTest {
         Thread.sleep(100);
 
         // send the selection request
-        selectSe();
+        selectSe(reader);
 
         // add Protocol flag
         reader.addSeProtocolSetting(
@@ -229,7 +230,7 @@ public class StubReaderTest {
                 new SeProtocolSetting(StubProtocolSetting.SETTING_PROTOCOL_ISO14443_4));
 
         // send the selection request
-        selectSe();
+        selectSe(reader);
 
         // test
         SeResponseSet seResponse = reader.transmitSet(requests);
@@ -251,7 +252,7 @@ public class StubReaderTest {
                 new SeProtocolSetting(StubProtocolSetting.SETTING_PROTOCOL_ISO14443_4));
 
         // send the selection request
-        selectSe();
+        selectSe(reader);
 
         // test
         try {
@@ -279,7 +280,7 @@ public class StubReaderTest {
                 new SeProtocolSetting(StubProtocolSetting.SETTING_PROTOCOL_ISO14443_4));
 
         // send the selection request
-        selectSe();
+        selectSe(reader);
 
         // test
         try {
@@ -312,7 +313,7 @@ public class StubReaderTest {
                 new SeProtocolSetting(StubProtocolSetting.SETTING_PROTOCOL_ISO14443_4));
 
         // send the selection request
-        selectSe();
+        selectSe(reader);
 
         // test
         try {
@@ -344,7 +345,7 @@ public class StubReaderTest {
                 new SeProtocolSetting(StubProtocolSetting.SETTING_PROTOCOL_ISO14443_4));
 
         // send the selection request
-        selectSe();
+        selectSe(reader);
 
         // test
         try {
@@ -375,7 +376,7 @@ public class StubReaderTest {
                 new SeProtocolSetting(StubProtocolSetting.SETTING_PROTOCOL_ISO14443_4));
 
         // send the selection request
-        selectSe();
+        selectSe(reader);
 
         // test
         try {
@@ -401,7 +402,7 @@ public class StubReaderTest {
                 new SeProtocolSetting(StubProtocolSetting.SETTING_PROTOCOL_ISO14443_4));
 
         // send the selection request
-        selectSe();
+        selectSe(reader);
 
         // test
         try {
@@ -426,7 +427,7 @@ public class StubReaderTest {
                 new SeProtocolSetting(StubProtocolSetting.SETTING_PROTOCOL_ISO14443_4));
 
         // send the selection request
-        selectSe();
+        selectSe(reader);
 
         // test
         try {
@@ -451,7 +452,7 @@ public class StubReaderTest {
                 new SeProtocolSetting(StubProtocolSetting.SETTING_PROTOCOL_ISO14443_4));
 
         // send the selection request
-        selectSe();
+        selectSe(reader);
 
         // test
         try {
@@ -507,7 +508,7 @@ public class StubReaderTest {
      */
 
 
-    static public  SeRequestSet getRequestIsoDepSetSample() {
+    static public SeRequestSet getRequestIsoDepSetSample() {
         String poAid = "A000000291A000000191";
 
         ReadRecordsCmdBuild poReadRecordCmd_T2Env = new ReadRecordsCmdBuild(PoRevision.REV3_1,
@@ -530,7 +531,7 @@ public class StubReaderTest {
      *
      * An Exception will be thrown.
      */
-    static public  SeRequestSet getNoResponseRequest() {
+    static public SeRequestSet getNoResponseRequest() {
         String poAid = "A000000291A000000191";
 
         IncreaseCmdBuild poIncreaseCmdBuild =
@@ -553,7 +554,7 @@ public class StubReaderTest {
      *
      * An Exception will be thrown.
      */
-    static public  SeRequestSet getPartialRequestSet(int scenario) {
+    static public SeRequestSet getPartialRequestSet(int scenario) {
         String poAid = "A000000291A000000191";
 
         ReadRecordsCmdBuild poReadRecord1CmdBuild =
@@ -672,7 +673,7 @@ public class StubReaderTest {
         return new SeRequest(poApduRequestList, ChannelState.CLOSE_AFTER);
     }
 
-    static public  StubSecureElement hoplinkSE() {
+    static public StubSecureElement hoplinkSE() {
 
 
         return new StubSecureElement() {
@@ -703,7 +704,7 @@ public class StubReaderTest {
 
     }
 
-    static public  StubSecureElement noApduResponseSE() {
+    static public StubSecureElement noApduResponseSE() {
         return new StubSecureElement() {
 
             @Override
@@ -728,7 +729,7 @@ public class StubReaderTest {
         };
     }
 
-    static public  StubSecureElement partialSE() {
+    static public StubSecureElement partialSE() {
 
 
         return new StubSecureElement() {
@@ -760,7 +761,7 @@ public class StubReaderTest {
 
     }
 
-    static public  StubSecureElement getSENoconnection() {
+    static public StubSecureElement getSENoconnection() {
         return new StubSecureElement() {
             @Override
             public byte[] getATR() {
@@ -796,7 +797,7 @@ public class StubReaderTest {
 
     }
 
-    static public  ApduRequest getApduSample() {
+    static public ApduRequest getApduSample() {
         return new ApduRequest(ByteArrayUtils.fromHex("FEDCBA98 9005h"), false);
     }
 }

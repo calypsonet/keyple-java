@@ -37,8 +37,9 @@ public class KeypleDtoHelper {
     }
 
     static public KeypleDto ExceptionDTO(String action, Throwable exception, String sessionId,
-                                         String nativeReaderName, String virtualReaderName, String clientNodeId) {
-        return new KeypleDto(action, JsonParser.getGson().toJson(exception), false,sessionId,nativeReaderName,virtualReaderName, clientNodeId);
+            String nativeReaderName, String virtualReaderName, String clientNodeId) {
+        return new KeypleDto(action, JsonParser.getGson().toJson(exception), false, sessionId,
+                nativeReaderName, virtualReaderName, clientNodeId);
     }
 
     static public KeypleDto ACK() {

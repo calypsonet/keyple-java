@@ -1,18 +1,29 @@
+/********************************************************************************
+ * Copyright (c) 2018 Calypso Networks Association https://www.calypsonet-asso.org/
+ *
+ * See the NOTICE file(s) distributed with this work for additional information regarding copyright
+ * ownership.
+ *
+ * This program and the accompanying materials are made available under the terms of the Eclipse
+ * Public License 2.0 which is available at http://www.eclipse.org/legal/epl-2.0
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ ********************************************************************************/
 package org.eclipse.keyple.plugin.remotese.pluginse.method;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
 import org.eclipse.keyple.plugin.remotese.pluginse.RemoteSePlugin;
 import org.eclipse.keyple.plugin.remotese.pluginse.VirtualReader;
 import org.eclipse.keyple.plugin.remotese.transport.*;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 
 public class RmConnectReaderExecutor extends RemoteMethodExecutor {
 
     RemoteSePlugin plugin;
     DtoSender dtoSender;
 
-    public RmConnectReaderExecutor(RemoteSePlugin plugin, DtoSender dtoSender){
+    public RmConnectReaderExecutor(RemoteSePlugin plugin, DtoSender dtoSender) {
         this.plugin = plugin;
         this.dtoSender = dtoSender;
     }
@@ -40,9 +51,9 @@ public class RmConnectReaderExecutor extends RemoteMethodExecutor {
         } catch (KeypleReaderException e) {
             // virtual reader for remote reader already exists
             e.printStackTrace();
-            //send the exception
+            // send the exception
             return transportDto.nextTransportDTO(KeypleDtoHelper.ExceptionDTO(keypleDto.getAction(),
-                    e, null, nativeReaderName, null , clientNodeId));
+                    e, null, nativeReaderName, null, clientNodeId));
 
         }
     }

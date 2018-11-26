@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.InetSocketAddress;
 import java.util.concurrent.*;
-
 import org.eclipse.keyple.plugin.remotese.transport.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

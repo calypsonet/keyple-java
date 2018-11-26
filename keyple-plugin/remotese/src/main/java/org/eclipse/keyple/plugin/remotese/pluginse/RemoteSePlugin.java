@@ -22,6 +22,7 @@ import org.eclipse.keyple.seproxy.event.PluginEvent;
 import org.eclipse.keyple.seproxy.event.ReaderEvent;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderNotFoundException;
+import org.eclipse.keyple.seproxy.message.ProxyReader;
 import org.eclipse.keyple.util.Observable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -96,7 +97,7 @@ public final class RemoteSePlugin extends Observable implements ObservablePlugin
      * Create a virtual reader
      *
      */
-    SeReader createVirtualReader(String clientNodeId, String nativeReaderName,
+    public ProxyReader createVirtualReader(String clientNodeId, String nativeReaderName,
             DtoSender dtoSender) throws KeypleReaderException {
         logger.debug("createVirtualReader for nativeReader {}", nativeReaderName);
 
@@ -133,7 +134,8 @@ public final class RemoteSePlugin extends Observable implements ObservablePlugin
      * 
      * @param nativeReaderName name of the virtual reader to be deleted
      */
-    public void disconnectRemoteReader(String nativeReaderName) throws KeypleReaderNotFoundException {
+    public void disconnectRemoteReader(String nativeReaderName)
+            throws KeypleReaderNotFoundException {
         logger.debug("Disconnect Virtual reader {}", nativeReaderName);
 
 
@@ -141,8 +143,7 @@ public final class RemoteSePlugin extends Observable implements ObservablePlugin
         final VirtualReader virtualReader =
                 (VirtualReader) this.getReaderByRemoteName(nativeReaderName);
 
-        logger.info("Disconnect VirtualReader with name {} with session {}",
-                    nativeReaderName);
+        logger.info("Disconnect VirtualReader with name {} with session {}", nativeReaderName);
 
         // remove observers
         ((VirtualReaderSessionImpl) virtualReader.getSession()).clearObservers();
@@ -150,7 +151,7 @@ public final class RemoteSePlugin extends Observable implements ObservablePlugin
         // remove reader
         virtualReaders.remove(virtualReader);
 
-        //send event READER_DISCONNECTED in a separate thread
+        // send event READER_DISCONNECTED in a separate thread
         new Thread() {
             public void run() {
                 notifyObservers(new PluginEvent(getName(), virtualReader.getName(),

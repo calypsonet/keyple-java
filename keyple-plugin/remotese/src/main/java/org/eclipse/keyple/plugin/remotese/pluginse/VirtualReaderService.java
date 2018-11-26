@@ -19,14 +19,11 @@ import org.eclipse.keyple.plugin.remotese.transport.*;
 import org.eclipse.keyple.plugin.remotese.transport.json.JsonParser;
 import org.eclipse.keyple.seproxy.SeProxyService;
 import org.eclipse.keyple.seproxy.SeReader;
-import org.eclipse.keyple.seproxy.event.ReaderEvent;
-import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderNotFoundException;
 import org.eclipse.keyple.seproxy.message.SeResponseSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
+
 
 /**
  * Service to setDtoSender a RSE Plugin to a Transport Node
@@ -91,19 +88,22 @@ public class VirtualReaderService implements DtoHandler {
         RemoteMethod method = RemoteMethod.get(keypleDTO.getAction());
         logger.debug("Remote Method called : {} - isRequest : {}", method, keypleDTO.isRequest());
 
-        switch (method){
+        switch (method) {
             case READER_CONNECT:
-                if(keypleDTO.isRequest()){
-                    out = new RmConnectReaderExecutor(this.plugin, this.dtoSender).execute(transportDto);
-                }else{
-                    throw new IllegalStateException("a READER_CONNECT response has been received by VirtualReaderService");
+                if (keypleDTO.isRequest()) {
+                    out = new RmConnectReaderExecutor(this.plugin, this.dtoSender)
+                            .execute(transportDto);
+                } else {
+                    throw new IllegalStateException(
+                            "a READER_CONNECT response has been received by VirtualReaderService");
                 }
                 break;
             case READER_DISCONNECT:
-                if(keypleDTO.isRequest()){
+                if (keypleDTO.isRequest()) {
                     out = new RmDisconnectReaderExecutor(this.plugin).execute(transportDto);
-                }else{
-                    throw new IllegalStateException("a READER_DISCONNECT response has been received by VirtualReaderService");
+                } else {
+                    throw new IllegalStateException(
+                            "a READER_DISCONNECT response has been received by VirtualReaderService");
                 }
                 break;
             case READER_EVENT:
@@ -111,32 +111,35 @@ public class VirtualReaderService implements DtoHandler {
                 out = new RmEventExecutor(plugin).execute(transportDto);
                 break;
             case READER_TRANSMIT:
-                if(keypleDTO.isRequest()){
-                    throw new IllegalStateException("a READER_TRANSMIT request has been received by VirtualReaderService");
-                }else{
+                if (keypleDTO.isRequest()) {
+                    throw new IllegalStateException(
+                            "a READER_TRANSMIT request has been received by VirtualReaderService");
+                } else {
                     RemoteMethodParser<SeResponseSet> parser = new RmTransmitParser();
                     try {
                         VirtualReader reader = null;
                         reader = getReaderBySessionId(keypleDTO.getSessionId());
 
-                        try{
+                        try {
                             SeResponseSet seResponseSet = parser.parseResponse(keypleDTO);
                             logger.debug("Receive responseSet from transmitSet {}", seResponseSet);
-                            //transfer SeResponseSet to Virtual Reader (through its session)
+                            // transfer SeResponseSet to Virtual Reader (through its session)
                             reader.getSession().asyncSetSeResponseSet(seResponseSet, null);
 
                             // chain response with a seRequest if needed
                             out = isSeRequestToSendBack(transportDto);
 
-                        }catch (KeypleRemoteReaderException e){
-                            //e.printStackTrace();
-                            //propagate exception
+                        } catch (KeypleRemoteReaderException e) {
+                            // e.printStackTrace();
+                            // propagate exception
                             reader.getSession().asyncSetSeResponseSet(null, e);
                         }
 
                     } catch (KeypleReaderNotFoundException e) {
-                        //reader not found;
-                        throw new IllegalStateException("Virtual Reader was not found while receiving a transmitSet response", e);
+                        // reader not found;
+                        throw new IllegalStateException(
+                                "Virtual Reader was not found while receiving a transmitSet response",
+                                e);
                     }
                 }
                 break;
@@ -165,9 +168,11 @@ public class VirtualReaderService implements DtoHandler {
             if ((virtualReader.getSession()).hasSeRequestSet()) {
 
                 // send back seRequestSet
-                out = transportDto.nextTransportDTO(new KeypleDto(RemoteMethod.READER_TRANSMIT.getName(),
-                        JsonParser.getGson().toJson((virtualReader.getSession()).getSeRequestSet()),
-                        true, virtualReader.getSession().getSessionId()));
+                out = transportDto
+                        .nextTransportDTO(new KeypleDto(RemoteMethod.READER_TRANSMIT.getName(),
+                                JsonParser.getGson()
+                                        .toJson((virtualReader.getSession()).getSeRequestSet()),
+                                true, virtualReader.getSession().getSessionId()));
             } else {
                 // no response
                 out = transportDto.nextTransportDTO(KeypleDtoHelper.NoResponse());
@@ -176,8 +181,9 @@ public class VirtualReaderService implements DtoHandler {
         } catch (KeypleReaderNotFoundException e) {
             logger.debug("Reader was not found by session", e);
             KeypleDto keypleDto = transportDto.getKeypleDTO();
-            out = transportDto.nextTransportDTO(KeypleDtoHelper.ExceptionDTO(keypleDto.getAction(), e, keypleDto.getSessionId(),
-                    keypleDto.getNativeReaderName(),keypleDto.getVirtualReaderName(), keypleDto.getNodeId()));
+            out = transportDto.nextTransportDTO(KeypleDtoHelper.ExceptionDTO(keypleDto.getAction(),
+                    e, keypleDto.getSessionId(), keypleDto.getNativeReaderName(),
+                    keypleDto.getVirtualReaderName(), keypleDto.getNodeId()));
         }
 
         return out;

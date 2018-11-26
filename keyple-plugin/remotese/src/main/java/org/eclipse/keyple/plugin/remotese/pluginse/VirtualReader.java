@@ -12,7 +12,6 @@
 package org.eclipse.keyple.plugin.remotese.pluginse;
 
 import java.util.Map;
-
 import org.eclipse.keyple.plugin.remotese.transport.KeypleRemoteReaderException;
 import org.eclipse.keyple.seproxy.SeReader;
 import org.eclipse.keyple.seproxy.event.ObservableReader;
@@ -52,6 +51,7 @@ public final class VirtualReader extends Observable implements ObservableReader,
 
     /**
      * Local name of the virtual reader
+     * 
      * @return name of the virtual reader
      */
     @Override
@@ -80,35 +80,38 @@ public final class VirtualReader extends Observable implements ObservableReader,
 
     /**
      * Blocking TransmitSet
+     * 
      * @param seRequestSet : SeRequestSet to be transmitted
      * @return seResponseSet : SeResponseSet
      * @throws IllegalArgumentException
      * @throws KeypleReaderException
      */
     @Override
-    public SeResponseSet transmitSet(SeRequestSet seRequestSet) throws IllegalArgumentException,KeypleReaderException {
-        try{
+    public SeResponseSet transmitSet(SeRequestSet seRequestSet)
+            throws IllegalArgumentException, KeypleReaderException {
+        try {
             return session.transmitSet(this.getNativeReaderName(), this.getName(), seRequestSet);
-        }catch (KeypleRemoteReaderException e){
-            //throw the cause of the RemoteReaderException (a KeypleReaderException)
+        } catch (KeypleRemoteReaderException e) {
+            // throw the cause of the RemoteReaderException (a KeypleReaderException)
             throw (KeypleReaderException) e.getCause();
         }
     }
 
     /**
      * Blocking Transmit
+     * 
      * @param seRequest
      * @return seResponse
      * @throws IllegalArgumentException
      * @throws KeypleReaderException
      */
     @Override
-    public SeResponse transmit(SeRequest seRequest) throws IllegalArgumentException, KeypleReaderException {
-        try{
-            return session.transmit(this.getNativeReaderName(), this.getName(),
-                    seRequest);
-        }catch (KeypleRemoteReaderException e){
-            //throw the cause of the RemoteReaderException (a KeypleReaderException)
+    public SeResponse transmit(SeRequest seRequest)
+            throws IllegalArgumentException, KeypleReaderException {
+        try {
+            return session.transmit(this.getNativeReaderName(), this.getName(), seRequest);
+        } catch (KeypleRemoteReaderException e) {
+            // throw the cause of the RemoteReaderException (a KeypleReaderException)
             throw (KeypleReaderException) e.getCause();
         }
     }

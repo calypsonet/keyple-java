@@ -14,11 +14,10 @@ package org.eclipse.keyple.plugin.remotese.common.json;
 
 import java.io.IOException;
 import java.util.*;
-
 import org.eclipse.keyple.seproxy.*;
+import org.eclipse.keyple.seproxy.ChannelState;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
-import org.eclipse.keyple.seproxy.ChannelState;
 import org.eclipse.keyple.seproxy.message.*;
 import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
 import org.eclipse.keyple.seproxy.protocol.ContactsProtocols;
@@ -51,6 +50,7 @@ public class SampleFactory {
 
     }
 
+
     public static SeRequestSet getASeRequestSet() {
         String poAid = "A000000291A000000191";
 
@@ -59,7 +59,7 @@ public class SampleFactory {
 
         SeRequest.Selector selector = new SeRequest.AidSelector(ByteArrayUtils.fromHex(poAid));
 
-        SeRequest seRequest = new SeRequest(selector, poApduRequestList, false);
+        SeRequest seRequest = new SeRequest(poApduRequestList, ChannelState.CLOSE_AFTER);
 
         return new SeRequestSet(seRequest);
 
@@ -73,9 +73,8 @@ public class SampleFactory {
 
         SeRequest.Selector selector = new SeRequest.AidSelector(ByteArrayUtils.fromHex(poAid));
 
-        SeRequest seRequest = new SeRequest(selector, poApduRequestList, false,
-                ContactlessProtocols.PROTOCOL_ISO14443_4);
-
+        SeRequest seRequest = new SeRequest(selector, poApduRequestList, ChannelState.CLOSE_AFTER,
+                ContactlessProtocols.PROTOCOL_ISO14443_4, null);
         return seRequest;
 
     }
@@ -88,8 +87,7 @@ public class SampleFactory {
 
         SeRequest.Selector selector = new SeRequest.AidSelector(ByteArrayUtils.fromHex(poAid));
 
-        SeRequest seRequest = new SeRequest(selector, poApduRequestList, false);
-
+        SeRequest seRequest = new SeRequest(poApduRequestList, ChannelState.CLOSE_AFTER);
         return seRequest;
 
     }

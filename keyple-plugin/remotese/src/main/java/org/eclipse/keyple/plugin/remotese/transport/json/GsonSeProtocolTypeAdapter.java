@@ -15,6 +15,7 @@ package org.eclipse.keyple.plugin.remotese.transport.json;
 import java.lang.reflect.Type;
 import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
 import org.eclipse.keyple.seproxy.protocol.ContactsProtocols;
+import org.eclipse.keyple.seproxy.protocol.Protocol;
 import org.eclipse.keyple.seproxy.protocol.SeProtocol;
 import com.google.gson.*;
 
@@ -39,6 +40,12 @@ class GsonSeProtocolTypeAdapter
         }
 
         for (ContactsProtocols p : ContactsProtocols.values()) {
+            if (p.name().equals(value)) {
+                return p;
+            }
+        }
+
+        for (Protocol p : Protocol.values()) {
             if (p.name().equals(value)) {
                 return p;
             }

@@ -46,7 +46,6 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.ProxyFileDescriptorCallback;
 import android.support.annotation.Nullable;
 import android.text.Spannable;
 import android.text.style.ForegroundColorSpan;
@@ -253,7 +252,7 @@ public class NFCTestFragment extends Fragment implements ObservableReader.Reader
 
                     // transmit seRequestSet to Reader
                     final SeResponseSet seResponseSet =
-                            ((ProxyReader)reader).transmitSet(new SeRequestSet(seRequest));
+                            ((ProxyReader) reader).transmitSet(new SeRequestSet(seRequest));
 
                     /*
                      * print responses in View

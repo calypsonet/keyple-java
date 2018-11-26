@@ -190,7 +190,8 @@ public class OMAPITestFragment extends Fragment {
                                     ContactsProtocols.PROTOCOL_ISO7816_3, null);
 
 
-                    SeResponseSet seResponseSet = ((ProxyReader)reader).transmitSet(new SeRequestSet(seRequest));
+                    SeResponseSet seResponseSet =
+                            ((ProxyReader) reader).transmitSet(new SeRequestSet(seRequest));
 
 
                     mText.append("\n ---- \n");

@@ -24,5 +24,5 @@ interface SeResponseSetCallback {
      * 
      * @param seResponseSet : returns the seResponseSet
      */
-    void getResponseSet(SeResponseSet seResponseSet, KeypleRemoteReaderException exception);
+    void get(SeResponseSet seResponseSet, KeypleRemoteReaderException exception);
 }

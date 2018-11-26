@@ -15,7 +15,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import java.io.IOException;
 import org.eclipse.keyple.plugin.remotese.transport.KeypleDto;
-import org.eclipse.keyple.plugin.remotese.transport.KeypleDtoHelper;
 import org.eclipse.keyple.plugin.remotese.transport.RemoteMethod;
 import org.junit.Before;
 import retrofit2.Response;

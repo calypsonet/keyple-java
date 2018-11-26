@@ -17,7 +17,6 @@ import java.net.InetSocketAddress;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Random;
-
 import org.eclipse.keyple.plugin.remotese.transport.ClientNode;
 import org.eclipse.keyple.plugin.remotese.transport.ServerNode;
 import org.eclipse.keyple.plugin.remotese.transport.TransportFactory;
@@ -35,12 +34,12 @@ public class WskFactory extends TransportFactory {
     final private String bindUrl = "0.0.0.0";
     final private String protocol = "http://";
     final private String clientNodeId = "local1";
-    private Boolean isMasterServer ;
+    private Boolean isMasterServer;
 
     private static final Logger logger = LoggerFactory.getLogger(WskFactory.class);
 
 
-    public WskFactory(Boolean isMasterServer){
+    public WskFactory(Boolean isMasterServer) {
         this.isMasterServer = isMasterServer;
     }
 
@@ -69,7 +68,7 @@ public class WskFactory extends TransportFactory {
         logger.info("*** Create Websocket Server ***");
 
         InetSocketAddress inet = new InetSocketAddress(Inet4Address.getByName(bindUrl), port);
-        return new WskServer(inet,this.isMasterServer, clientNodeId + "server");
+        return new WskServer(inet, this.isMasterServer, clientNodeId + "server");
 
     }
 

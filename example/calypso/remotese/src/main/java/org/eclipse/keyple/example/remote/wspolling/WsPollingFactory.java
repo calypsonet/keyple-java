@@ -60,9 +60,9 @@ public class WsPollingFactory extends TransportFactory {
     public ServerNode getServer() {
 
         logger.info("*** Create Ws Polling Server ***");
-        try{
+        try {
             return new WsPServer(bindUrl, port, keypleUrl, pollingUrl, clientNodeId + "server");
-        }catch (IOException e){
+        } catch (IOException e) {
             return null;
         }
 

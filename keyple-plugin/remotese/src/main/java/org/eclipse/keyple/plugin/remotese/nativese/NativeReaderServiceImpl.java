@@ -11,7 +11,6 @@
  ********************************************************************************/
 package org.eclipse.keyple.plugin.remotese.nativese;
 
-import java.util.Map;
 
 import org.eclipse.keyple.plugin.remotese.nativese.method.RmConnectReaderInvoker;
 import org.eclipse.keyple.plugin.remotese.nativese.method.RmConnectReaderParser;
@@ -21,15 +20,13 @@ import org.eclipse.keyple.plugin.remotese.transport.*;
 import org.eclipse.keyple.plugin.remotese.transport.json.JsonParser;
 import org.eclipse.keyple.seproxy.ReaderPlugin;
 import org.eclipse.keyple.seproxy.SeProxyService;
-import org.eclipse.keyple.seproxy.SeReader;
 import org.eclipse.keyple.seproxy.event.ReaderEvent;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderNotFoundException;
-import org.eclipse.keyple.seproxy.message.*;
 import org.eclipse.keyple.seproxy.message.ProxyReader;
 import org.eclipse.keyple.seproxy.plugin.AbstractObservableReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.google.gson.JsonObject;
+
 
 /**
  * Native Service to manage local reader and connect them to Remote Service
@@ -81,17 +78,21 @@ public class NativeReaderServiceImpl implements NativeReaderService, DtoHandler 
         RemoteMethod method = RemoteMethod.get(keypleDTO.getAction());
         logger.debug("Remote Method called : {} - isRequest : {}", method, keypleDTO.isRequest());
 
-        switch (method){
+        switch (method) {
             case READER_CONNECT:
-                //process READER_CONNECT response
-                if(keypleDTO.isRequest()){
-                    throw new IllegalStateException("a READER_CONNECT request has been received by NativeReaderService");
-                }else{
+                // process READER_CONNECT response
+                if (keypleDTO.isRequest()) {
+                    throw new IllegalStateException(
+                            "a READER_CONNECT request has been received by NativeReaderService");
+                } else {
                     logger.info("**** RESPONSE - READER_CONNECT ****");
                     try {
-                        RemoteMethodParser<String> rmConnectReaderParser = new RmConnectReaderParser(this);
+                        RemoteMethodParser<String> rmConnectReaderParser =
+                                new RmConnectReaderParser(this);
                         String sessionId = rmConnectReaderParser.parseResponse(keypleDTO);
-                        logger.info("A virtual reader has been created on Master side with sessionId {}", sessionId);
+                        logger.info(
+                                "A virtual reader has been created on Master side with sessionId {}",
+                                sessionId);
                     } catch (KeypleRemoteReaderException e) {
                         e.printStackTrace();
                     }
@@ -100,24 +101,26 @@ public class NativeReaderServiceImpl implements NativeReaderService, DtoHandler 
                 break;
 
             case READER_DISCONNECT:
-                //process READER_DISCONNECT response
-                if(keypleDTO.isRequest()){
-                    throw new IllegalStateException("a READER_DISCONNECT request has been received by NativeReaderService");
-                }else{
+                // process READER_DISCONNECT response
+                if (keypleDTO.isRequest()) {
+                    throw new IllegalStateException(
+                            "a READER_DISCONNECT request has been received by NativeReaderService");
+                } else {
                     logger.info("**** RESPONSE - READER_DISCONNECT ****");
-                    //todo
+                    // todo
                     out = transportDto.nextTransportDTO(KeypleDtoHelper.NoResponse());
                 }
                 break;
 
 
             case READER_TRANSMIT:
-                //must be a request
-                if(keypleDTO.isRequest()){
+                // must be a request
+                if (keypleDTO.isRequest()) {
                     RemoteMethodExecutor rmTransmit = new RmTransmitExecutor(this);
                     out = rmTransmit.execute(transportDto);
-                }else{
-                    throw new IllegalStateException("a READER_TRANSMIT response has been received by NativeReaderService");
+                } else {
+                    throw new IllegalStateException(
+                            "a READER_TRANSMIT response has been received by NativeReaderService");
                 }
                 break;
 
@@ -130,7 +133,8 @@ public class NativeReaderServiceImpl implements NativeReaderService, DtoHandler 
                     logger.warn("Receive unrecognized message action : {} {} {} {}",
                             keypleDTO.getAction(), keypleDTO.getSessionId(), keypleDTO.getBody(),
                             keypleDTO.isRequest());
-                    throw new IllegalStateException("a  ERROR - UNRECOGNIZED request has been received by NativeReaderService");
+                    throw new IllegalStateException(
+                            "a  ERROR - UNRECOGNIZED request has been received by NativeReaderService");
                 }
                 out = transportDto.nextTransportDTO(KeypleDtoHelper.NoResponse());
         }
@@ -149,13 +153,15 @@ public class NativeReaderServiceImpl implements NativeReaderService, DtoHandler 
      * @param localReader : native reader to be connected
      */
     @Override
-    public void connectReader(SeReader localReader,String clientNodeId) throws KeypleRemoteException{
+    public void connectReader(ProxyReader localReader, String clientNodeId)
+            throws KeypleRemoteException {
         logger.info("connectReader {} from device {}", localReader.getName(), clientNodeId);
         dtoSender.sendDTO(new RmConnectReaderInvoker(localReader, clientNodeId).dto());
     }
 
     @Override
-    public void disconnectReader(SeReader localReader,String clientNodeId) throws KeypleRemoteException {
+    public void disconnectReader(ProxyReader localReader, String clientNodeId)
+            throws KeypleRemoteException {
         logger.info("disconnectReader {} from device {}", localReader.getName(), clientNodeId);
         dtoSender.sendDTO(new RmDisconnectReaderInvoker(localReader, clientNodeId).dto());
 
@@ -171,13 +177,13 @@ public class NativeReaderServiceImpl implements NativeReaderService, DtoHandler 
      * @return found reader if any
      * @throws KeypleReaderNotFoundException if not reader were found with this name
      */
-    public SeReader findLocalReader(String nativeReaderName)
+    public ProxyReader findLocalReader(String nativeReaderName)
             throws KeypleReaderNotFoundException {
         logger.debug("Find local reader by name {} in {} plugin(s)", nativeReaderName,
                 seProxyService.getInstance().getPlugins().size());
         for (ReaderPlugin plugin : seProxyService.getInstance().getPlugins()) {
             try {
-                return plugin.getReader(nativeReaderName);
+                return (ProxyReader) plugin.getReader(nativeReaderName);
             } catch (KeypleReaderNotFoundException e) {
                 // continue
             }
@@ -193,7 +199,7 @@ public class NativeReaderServiceImpl implements NativeReaderService, DtoHandler 
      * @param event event to be propagated to master device
      */
     @Override
-    public void update(ReaderEvent event)  {
+    public void update(ReaderEvent event) {
         logger.info("update Reader Event {}", event.getEventType());
 
         // retrieve last sessionId known for this reader
@@ -206,7 +212,8 @@ public class NativeReaderServiceImpl implements NativeReaderService, DtoHandler 
             dtoSender.sendDTO(new KeypleDto(RemoteMethod.READER_EVENT.getName(), data, true, null,
                     event.getReaderName(), null, this.dtoSender.getNodeId()));
         } catch (KeypleRemoteException e) {
-            logger.error("Event "+event.toString()+" could not be sent though Remote Service Interface", e);
+            logger.error("Event " + event.toString()
+                    + " could not be sent though Remote Service Interface", e);
         }
 
     }

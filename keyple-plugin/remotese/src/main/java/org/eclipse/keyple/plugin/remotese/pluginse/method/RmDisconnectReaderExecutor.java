@@ -1,15 +1,22 @@
+/********************************************************************************
+ * Copyright (c) 2018 Calypso Networks Association https://www.calypsonet-asso.org/
+ *
+ * See the NOTICE file(s) distributed with this work for additional information regarding copyright
+ * ownership.
+ *
+ * This program and the accompanying materials are made available under the terms of the Eclipse
+ * Public License 2.0 which is available at http://www.eclipse.org/legal/epl-2.0
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ ********************************************************************************/
 package org.eclipse.keyple.plugin.remotese.pluginse.method;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
-import org.eclipse.keyple.plugin.remotese.nativese.NativeReaderServiceImpl;
 import org.eclipse.keyple.plugin.remotese.pluginse.RemoteSePlugin;
-import org.eclipse.keyple.plugin.remotese.pluginse.VirtualReader;
 import org.eclipse.keyple.plugin.remotese.transport.*;
-import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 
 public class RmDisconnectReaderExecutor extends RemoteMethodExecutor {
 
@@ -18,7 +25,7 @@ public class RmDisconnectReaderExecutor extends RemoteMethodExecutor {
 
     RemoteSePlugin plugin;
 
-    public RmDisconnectReaderExecutor(RemoteSePlugin plugin){
+    public RmDisconnectReaderExecutor(RemoteSePlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -32,13 +39,15 @@ public class RmDisconnectReaderExecutor extends RemoteMethodExecutor {
 
         try {
             plugin.disconnectRemoteReader(nativeReaderName);// todo find by reader + nodeId
-            return transportDto.nextTransportDTO(new KeypleDto(RemoteMethod.READER_DISCONNECT.getName(),
-                    "{}", false, null,
-                    nativeReaderName,null , clientNodeId));
+            return transportDto
+                    .nextTransportDTO(new KeypleDto(RemoteMethod.READER_DISCONNECT.getName(), "{}",
+                            false, null, nativeReaderName, null, clientNodeId));
         } catch (KeypleReaderNotFoundException e) {
-            logger.error("Impossible to disconnect reader "+nativeReaderName,e);
-            return transportDto.nextTransportDTO(KeypleDtoHelper.ExceptionDTO(RemoteMethod.READER_DISCONNECT.getName(),
-                    e,keypleDto.getSessionId(),keypleDto.getNativeReaderName(),keypleDto.getVirtualReaderName(),keypleDto.getNodeId()));
+            logger.error("Impossible to disconnect reader " + nativeReaderName, e);
+            return transportDto.nextTransportDTO(
+                    KeypleDtoHelper.ExceptionDTO(RemoteMethod.READER_DISCONNECT.getName(), e,
+                            keypleDto.getSessionId(), keypleDto.getNativeReaderName(),
+                            keypleDto.getVirtualReaderName(), keypleDto.getNodeId()));
         }
 
     }

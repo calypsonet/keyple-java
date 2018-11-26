@@ -12,7 +12,6 @@
 package org.eclipse.keyple.plugin.remotese.transport;
 
 
-import org.eclipse.keyple.plugin.remotese.transport.TransportNode;
 
 /**
  * Client type of TransportNode, connects to a ServerNode

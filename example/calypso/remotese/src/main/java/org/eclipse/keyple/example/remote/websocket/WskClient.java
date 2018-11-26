@@ -12,7 +12,6 @@
 package org.eclipse.keyple.example.remote.websocket;
 
 import java.net.URI;
-
 import org.eclipse.keyple.plugin.remotese.transport.*;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;

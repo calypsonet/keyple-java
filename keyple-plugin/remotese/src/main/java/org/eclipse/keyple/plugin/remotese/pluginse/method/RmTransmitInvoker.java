@@ -13,7 +13,7 @@ package org.eclipse.keyple.plugin.remotese.pluginse.method;
 
 import org.eclipse.keyple.plugin.remotese.transport.*;
 import org.eclipse.keyple.plugin.remotese.transport.json.JsonParser;
-import org.eclipse.keyple.seproxy.SeRequestSet;
+import org.eclipse.keyple.seproxy.message.SeRequestSet;
 
 public class RmTransmitInvoker implements RemoteMethodInvoker {
 
@@ -24,23 +24,20 @@ public class RmTransmitInvoker implements RemoteMethodInvoker {
     String clientNodeId;
 
 
-    public RmTransmitInvoker(SeRequestSet seRequestSet, String sessionId, String nativeReaderName, String virtualReaderName, String clientNodeId) {
+    public RmTransmitInvoker(SeRequestSet seRequestSet, String sessionId, String nativeReaderName,
+            String virtualReaderName, String clientNodeId) {
         this.seRequestSet = seRequestSet;
         this.sessionId = sessionId;
         this.nativeReaderName = nativeReaderName;
         this.virtualReaderName = virtualReaderName;
-        this.clientNodeId  = clientNodeId;
+        this.clientNodeId = clientNodeId;
     }
 
     @Override
     public KeypleDto dto() {
         return new KeypleDto(RemoteMethod.READER_TRANSMIT.getName(),
-                JsonParser.getGson().toJson(seRequestSet, SeRequestSet.class),
-                true,
-                this.sessionId,
-                this.nativeReaderName,
-                this.virtualReaderName,
-                this.clientNodeId);
+                JsonParser.getGson().toJson(seRequestSet, SeRequestSet.class), true, this.sessionId,
+                this.nativeReaderName, this.virtualReaderName, this.clientNodeId);
     }
 
 
