@@ -1,6 +1,7 @@
 package org.eclipse.keyple.plugin.remotese.transport.java;
 
 import org.eclipse.keyple.plugin.remotese.transport.*;
+import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,7 +45,12 @@ public class LocalClient implements ClientNode {
     }
 
     @Override
-    public void sendDTO(KeypleDto keypleDto) {
+    public void sendDTO(KeypleDto keypleDto) throws KeypleRemoteException {
+
+        if(theServer ==null){
+            throw new KeypleRemoteException("Unable to connect to server");
+        }
+
         if (KeypleDtoHelper.isNoResponse(keypleDto)) {
             logger.trace("Keyple DTO is empty, do not send it");
         } else {
@@ -60,7 +66,12 @@ public class LocalClient implements ClientNode {
 
     @Override
     public void update(KeypleDto event) {
-        sendDTO(event);
+        try {
+            sendDTO(event);
+        } catch (KeypleRemoteException e) {
+            //Error is not propagated
+            logger.error("Exception while sending event throw KeypleRemoteInterface", e);
+        }
     }
 
 

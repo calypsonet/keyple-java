@@ -160,29 +160,24 @@ publishing {
 build.finalizedBy publishToMavenLocal
 
 dependencies {
-
     //use java library : keyple core
-    implementation group: 'org.eclipse.keyple', name: 'keyple-core', version: '1.+'
-
+    implementation 'org.eclipse.keyple:keyple-core:1.+'
     implementation 'com.google.code.gson:gson:2.8.5'
-
     // https://mvnrepository.com/artifact/org.slf4j/slf4j-api
-    implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
-
+    implementation 'org.slf4j:slf4j-api:1.7.25'
     /*
-    Tests
-     */
-
+        Tests
+         */
     //add slf4j simple logger implementation
-    testImplementation group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.25'
-
+    testImplementation 'org.slf4j:slf4j-simple:1.7.25'
     // https://mvnrepository.com/artifact/junit/junit
-    testImplementation group: 'junit', name: 'junit', version: '4.12'
-
+    testImplementation 'junit:junit:4.12'
     // https://mvnrepository.com/artifact/org.mockito/mockito-core
-    testImplementation group: 'org.mockito', name: 'mockito-core', version: '2.13.0'
+    testImplementation 'org.mockito:mockito-core:2.13.0'
 
-    //use keyple library : keyple core
-    testImplementation group: 'org.eclipse.keyple', name: 'keyple-plugin-stub', version: '1.+'
+    //use keyple library : keyple plugin stub unit tests
+    testCompile project(path: ':keyple-plugin:keyple-plugin-stub', configuration: 'testArtifacts')
 
+    //use keyple library : keyple calypso
+    testImplementation 'org.eclipse.keyple:keyple-calypso:1.+'
 }

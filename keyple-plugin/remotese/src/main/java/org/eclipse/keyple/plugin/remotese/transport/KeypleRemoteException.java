@@ -19,4 +19,8 @@ public class KeypleRemoteException extends KeypleBaseException {
         super(message, cause);
     };
 
+    public KeypleRemoteException(String message) {
+        super(message);
+    };
+
 }

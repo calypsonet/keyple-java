@@ -123,9 +123,6 @@ public class RemoteSePlugin extends Observable implements ObservablePlugin {
                 }
             }.start();
 
-            logger.info("*****************************");
-            logger.info(" CONNECTED {} ", virtualReader.getName());
-            logger.info("*****************************");
             return virtualReader;
         } else {
             throw new KeypleReaderException("Virtual Reader already exists");
@@ -140,37 +137,28 @@ public class RemoteSePlugin extends Observable implements ObservablePlugin {
     public void disconnectRemoteReader(String nativeReaderName) throws KeypleReaderNotFoundException {
         logger.debug("Disconnect Virtual reader {}", nativeReaderName);
 
-        // check if reader is not already connected (by name)
-        if (isReaderConnected(nativeReaderName)) {
-            logger.info("Disconnect VirtualReader with name {} with session {}",
+
+        // retrieve virtual reader to delete
+        final VirtualReader virtualReader =
+                (VirtualReader) this.getReaderByRemoteName(nativeReaderName);
+
+        logger.info("Disconnect VirtualReader with name {} with session {}",
                     nativeReaderName);
 
-            // retrieve virtual reader to delete
-            final VirtualReader virtualReader =
-                    (VirtualReader) this.getReaderByRemoteName(nativeReaderName);
+        // remove observers
+        ((VirtualReaderSessionImpl) virtualReader.getSession()).clearObservers();
 
-            // remove observers
-            ((VirtualReaderSessionImpl) virtualReader.getSession()).clearObservers();
+        // remove reader
+        virtualReaders.remove(virtualReader);
 
-            // remove reader
-            virtualReaders.remove(virtualReader);
+        //send event READER_DISCONNECTED in a separate thread
+        new Thread() {
+            public void run() {
+                notifyObservers(new PluginEvent(getName(), virtualReader.getName(),
+                        PluginEvent.EventType.READER_DISCONNECTED));
+            }
+        }.start();
 
-            new Thread() {
-                public void run() {
-                    notifyObservers(new PluginEvent(getName(), virtualReader.getName(),
-                            PluginEvent.EventType.READER_DISCONNECTED));
-                }
-            }.start();
-
-
-            logger.info("*****************************");
-            logger.info(" DISCONNECTED {} ", nativeReaderName);
-            logger.info("*****************************");
-
-        } else {
-            logger.warn("No remoteSeReader with name {} found", nativeReaderName);
-        }
-        // todo errors
     }
 
     /**

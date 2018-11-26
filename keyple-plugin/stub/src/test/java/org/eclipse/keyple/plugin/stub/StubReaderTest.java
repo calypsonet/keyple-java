@@ -411,7 +411,7 @@ public class StubReaderTest {
      */
 
 
-    private SeRequestSet getRequestIsoDepSetSample() {
+    static public  SeRequestSet getRequestIsoDepSetSample() {
         String poAid = "A000000291A000000191";
 
         ReadRecordsCmdBuild poReadRecordCmd_T2Env = new ReadRecordsCmdBuild(PoRevision.REV3_1,
@@ -435,7 +435,7 @@ public class StubReaderTest {
      *
      * An Exception will be thrown.
      */
-    private SeRequestSet getNoResponseRequest() {
+    static public  SeRequestSet getNoResponseRequest() {
         String poAid = "A000000291A000000191";
 
         IncreaseCmdBuild poIncreaseCmdBuild =
@@ -459,7 +459,7 @@ public class StubReaderTest {
      *
      * An Exception will be thrown.
      */
-    private SeRequestSet getPartialRequestSet(int scenario) {
+    static public  SeRequestSet getPartialRequestSet(int scenario) {
         String poAid = "A000000291A000000191";
 
         ReadRecordsCmdBuild poReadRecord1CmdBuild =
@@ -540,7 +540,7 @@ public class StubReaderTest {
      *
      * An Exception will be thrown.
      */
-    private SeRequest getPartialRequest(int scenario) {
+    static public SeRequest getPartialRequest(int scenario) {
         String poAid = "A000000291A000000191";
 
         ReadRecordsCmdBuild poReadRecord1CmdBuild =
@@ -583,7 +583,7 @@ public class StubReaderTest {
                 ContactlessProtocols.PROTOCOL_ISO14443_4);
     }
 
-    private StubSecureElement hoplinkSE() {
+    static public  StubSecureElement hoplinkSE() {
 
 
         return new StubSecureElement() {
@@ -612,10 +612,9 @@ public class StubReaderTest {
         };
 
 
-
     }
 
-    private StubSecureElement noApduResponseSE() {
+    static public  StubSecureElement noApduResponseSE() {
         return new StubSecureElement() {
 
             @Override
@@ -640,7 +639,7 @@ public class StubReaderTest {
         };
     }
 
-    private StubSecureElement partialSE() {
+    static public  StubSecureElement partialSE() {
 
 
         return new StubSecureElement() {
@@ -672,7 +671,7 @@ public class StubReaderTest {
 
     }
 
-    private StubSecureElement getSENoconnection() {
+    static public  StubSecureElement getSENoconnection() {
         return new StubSecureElement() {
             @Override
             public byte[] getATR() {
@@ -708,7 +707,7 @@ public class StubReaderTest {
 
     }
 
-    static ApduRequest getApduSample() {
+    static public  ApduRequest getApduSample() {
         return new ApduRequest(ByteArrayUtils.fromHex("FEDCBA98 9005h"), false);
     }
 }

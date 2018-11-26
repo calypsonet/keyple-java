@@ -89,12 +89,11 @@ public class VirtualReaderService implements DtoHandler {
 
         logger.debug("onDto {}", KeypleDtoHelper.toJson(keypleDTO));
         RemoteMethod method = RemoteMethod.get(keypleDTO.getAction());
-        logger.debug("Remote Method {}", method);
+        logger.debug("Remote Method called : {} - isRequest : {}", method, keypleDTO.isRequest());
 
         switch (method){
             case READER_CONNECT:
                 if(keypleDTO.isRequest()){
-                    logger.info("**** ACTION - READER_CONNECT ****");
                     out = new RmConnectReaderExecutor(this.plugin, this.dtoSender).execute(transportDto);
                 }else{
                     throw new IllegalStateException("a READER_CONNECT response has been received by VirtualReaderService");
@@ -102,7 +101,6 @@ public class VirtualReaderService implements DtoHandler {
                 break;
             case READER_DISCONNECT:
                 if(keypleDTO.isRequest()){
-                    logger.info("**** ACTION - READER_DISCONNECT ****");
                     out = new RmDisconnectReaderExecutor(this.plugin).execute(transportDto);
                 }else{
                     throw new IllegalStateException("a READER_DISCONNECT response has been received by VirtualReaderService");
@@ -116,7 +114,6 @@ public class VirtualReaderService implements DtoHandler {
                 if(keypleDTO.isRequest()){
                     throw new IllegalStateException("a READER_TRANSMIT request has been received by VirtualReaderService");
                 }else{
-                    logger.info("**** RESPONSE RECEIVED - READER_TRANSMIT ****");
                     RemoteMethodParser<SeResponseSet> parser = new RmTransmitParser();
                     try {
                         VirtualReader reader = null;
@@ -124,7 +121,7 @@ public class VirtualReaderService implements DtoHandler {
 
                         try{
                             SeResponseSet seResponseSet = parser.parseResponse(keypleDTO);
-                            logger.debug("Receive responseSet from transmit {}", seResponseSet);
+                            logger.debug("Receive responseSet from transmitSet {}", seResponseSet);
                             //transfer SeResponseSet to Virtual Reader (through its session)
                             reader.getSession().asyncSetSeResponseSet(seResponseSet, null);
 
@@ -132,14 +129,14 @@ public class VirtualReaderService implements DtoHandler {
                             out = isSeRequestToSendBack(transportDto);
 
                         }catch (KeypleRemoteReaderException e){
-                            e.printStackTrace();
+                            //e.printStackTrace();
                             //propagate exception
                             reader.getSession().asyncSetSeResponseSet(null, e);
                         }
 
                     } catch (KeypleReaderNotFoundException e) {
                         //reader not found;
-                        throw new IllegalStateException("Virtual Reader was not found while receiving a transmit response", e);
+                        throw new IllegalStateException("Virtual Reader was not found while receiving a transmitSet response", e);
                     }
                 }
                 break;

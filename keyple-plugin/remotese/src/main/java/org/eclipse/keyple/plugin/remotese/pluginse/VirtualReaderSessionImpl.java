@@ -17,14 +17,16 @@ import org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitInvoker;
 import org.eclipse.keyple.plugin.remotese.transport.KeypleDto;
 import org.eclipse.keyple.plugin.remotese.transport.KeypleRemoteReaderException;
 import org.eclipse.keyple.plugin.remotese.transport.RemoteMethodInvoker;
+import org.eclipse.keyple.seproxy.SeRequest;
 import org.eclipse.keyple.seproxy.SeRequestSet;
+import org.eclipse.keyple.seproxy.SeResponse;
 import org.eclipse.keyple.seproxy.SeResponseSet;
 import org.eclipse.keyple.util.Observable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Manage RSE Reader Session Manage SeRequestSet to transmit and receive SeResponseSet in blocking
+ * Manage RSE Reader Session Manage SeRequestSet to transmitSet and receive SeResponseSet in blocking
  * and non blocking way
  */
 public class VirtualReaderSessionImpl extends Observable<KeypleDto>
@@ -45,7 +47,7 @@ public class VirtualReaderSessionImpl extends Observable<KeypleDto>
     }
 
     /**
-     * Manage an asynchronous transmit, call the callback to transmit the SeResponseSet when
+     * Manage an asynchronous transmitSet, call the callback to transmitSet the SeResponseSet when
      * received
      * 
      * @param seRequestSet : seRequestSet to be processed
@@ -67,10 +69,7 @@ public class VirtualReaderSessionImpl extends Observable<KeypleDto>
 
             RemoteMethodInvoker rmTransmit = new RmTransmitInvoker(seRequestSet,sessionId, nativeReaderName,virtualReaderName,null);
 
-            //notifyObservers(new KeypleDto(KeypleDtoHelper.READER_TRANSMIT,
-            //        JsonParser.getGson().toJson(this.seRequestSet, SeRequestSet.class), true,
-            //        sessionId, nativeReaderName, virtualReaderName, null));
-
+            //pass Transmit Dto to the Keyple Dto Interface
             notifyObservers(rmTransmit.dto());
 
         } else {
@@ -112,30 +111,43 @@ public class VirtualReaderSessionImpl extends Observable<KeypleDto>
 
 
     /**
-     * Blocking transmit
+     * Blocking transmit (use internally the transmitSet)
+     *
+     * @param nativeReaderName : local reader to transmit to
+     * @param virtualReaderName : virtual reader that receive the order the transmit to
+     * @param seRequest : seRequest to transmit
+     * @return seResponse
+     */
+    public SeResponse transmit(final String nativeReaderName, final String virtualReaderName,
+                               final SeRequest seRequest) throws KeypleRemoteReaderException {
+        return transmitSet(nativeReaderName, virtualReaderName, new SeRequestSet(seRequest)).getSingleResponse();
+    }
+
+    /**
+     * Blocking transmitSet
      * 
      * @param nativeReaderName : local reader to transmit to
      * @param virtualReaderName : virtual reader that receive the order the transmit to
-     * @param seApplicationRequest : seApplicationRequest to transmit
+     * @param seRequestSet : seRequestSet to transmit
      * @return seResponseSet
      */
     @Override
-    public SeResponseSet transmit(final String nativeReaderName, final String virtualReaderName,
-            final SeRequestSet seApplicationRequest) throws KeypleRemoteReaderException {
+    public SeResponseSet transmitSet(final String nativeReaderName, final String virtualReaderName,
+                                     final SeRequestSet seRequestSet) throws KeypleRemoteReaderException {
 
-        logger.debug("Session {} sync transmit {}", sessionId, seApplicationRequest);
+        logger.debug("Session {} sync transmitSet {}", sessionId, seRequestSet);
         Thread asyncTransmit = new Thread() {
             public void run() {
 
             //Run an async Transmit in a separate thread
             //Lock it until the callback is received
-            asyncTransmit(nativeReaderName, virtualReaderName, seApplicationRequest,
+            asyncTransmit(nativeReaderName, virtualReaderName, seRequestSet,
                     new SeResponseSetCallback() {
                         @Override
                         public void get(SeResponseSet seResponseSet, KeypleRemoteReaderException exception) {
-                            logger.debug("Receive SeResponseSetCallback get call in synchronous transmit, release lock ");
+                            logger.debug("Receive SeResponseSetCallback get call in synchronous transmitSet, release lock ");
                             //the call back is used to unleash the lock on the thread
-                            //in blocking transmit, the seResponseSet is transmitted to the session without using the callback
+                            //in blocking transmitSet, the seResponseSet is transmitted to the session without using the callback
                             lock.countDown();
                         }
                     });
@@ -160,10 +172,8 @@ public class VirtualReaderSessionImpl extends Observable<KeypleDto>
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
-            throw new IllegalStateException("Thread locking in blocking transmit has encountered an exception",e);
+            throw new IllegalStateException("Thread locking in blocking transmitSet has encountered an exception",e);
         }
-
-
     }
 
     @Override

@@ -35,7 +35,7 @@ public class RmTransmitExecutor extends RemoteMethodExecutor {
             //find native reader by name
             ProxyReader reader = nativeReaderService.findLocalReader(nativeReaderName);
 
-            // execute transmit
+            // execute transmitSet
             seResponseSet = reader.transmitSet(seRequestSet);
 
             // prepare response
@@ -45,7 +45,6 @@ public class RmTransmitExecutor extends RemoteMethodExecutor {
                     keypleDto.getVirtualReaderName(), keypleDto.getNodeId()));
 
         } catch (KeypleReaderException e) {
-            e.printStackTrace();
             //if an exception occurs, send it into a keypleDto to the Master
             out = transportDto.nextTransportDTO(KeypleDtoHelper.ExceptionDTO(RemoteMethod.READER_TRANSMIT.getName(), e,
                     keypleDto.getSessionId(), nativeReaderName, keypleDto.getVirtualReaderName(), keypleDto.getNodeId()));

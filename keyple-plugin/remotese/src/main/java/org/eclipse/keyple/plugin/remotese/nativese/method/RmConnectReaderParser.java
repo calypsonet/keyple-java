@@ -28,13 +28,13 @@ public class RmConnectReaderParser implements RemoteMethodParser<String> {
     @Override
     public String parseResponse(KeypleDto keypleDto) throws KeypleRemoteReaderException {
 
-        JsonObject body = JsonParser.getGson().fromJson(keypleDto.getBody(), JsonObject.class);
-
-        Integer statusCode = body.get("statusCode").getAsInt();
         String nativeReaderName = keypleDto.getNativeReaderName();
 
         // reader connection was a success
-        if (statusCode == 0) {
+        if (KeypleDtoHelper.containsException(keypleDto)) {
+            Throwable ex = JsonParser.getGson().fromJson(keypleDto.getBody(), Throwable.class);
+            throw new KeypleRemoteReaderException("An exception occurs while calling the remote method Connect Reader", ex);
+        }else{
             try {
                 // observe reader to propagate reader events
                 ProxyReader localReader = nativeReaderService.findLocalReader(nativeReaderName);
@@ -52,10 +52,6 @@ public class RmConnectReaderParser implements RemoteMethodParser<String> {
                         "While receiving a confirmation of Rse connection, local reader was not found");
             }
             return keypleDto.getSessionId();
-        } else {
-            logger.warn("Receive a error statusCode {} {}", statusCode,
-                    KeypleDtoHelper.toJson(keypleDto));
-            throw new KeypleRemoteReaderException("Receive a error statusCode from connect method");
         }
     }
 }

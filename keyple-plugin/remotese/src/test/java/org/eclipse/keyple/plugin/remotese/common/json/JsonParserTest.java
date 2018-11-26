@@ -34,7 +34,7 @@ public class JsonParserTest {
 
     @Test
     public void testHoplinkSeRequestSet() {
-        SeRequestSet seRequestSet = SampleFactory.getASeRequest();
+        SeRequestSet seRequestSet = SampleFactory.getASeRequestSet_ISO14443_4();
         testSerializeDeserializeObj(seRequestSet, SeRequestSet.class);
     }
 

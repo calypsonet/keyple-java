@@ -14,7 +14,9 @@ package org.eclipse.keyple.plugin.remotese.pluginse;
 
 import org.eclipse.keyple.plugin.remotese.transport.KeypleRemoteException;
 import org.eclipse.keyple.plugin.remotese.transport.KeypleRemoteReaderException;
+import org.eclipse.keyple.seproxy.SeRequest;
 import org.eclipse.keyple.seproxy.SeRequestSet;
+import org.eclipse.keyple.seproxy.SeResponse;
 import org.eclipse.keyple.seproxy.SeResponseSet;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 
@@ -29,15 +31,28 @@ public interface VirtualReaderSession {
 
 
     /**
-     * Blocking transmit
+     * Blocking transmitSet
      * 
-     * @param nativeReaderName : local reader to transmit to
-     * @param virtualReaderName : virtual reader that receives the order the transmit to
-     * @param seApplicationRequest : seApplicationRequest to transmit
+     * @param nativeReaderName : local reader to transmitSet to
+     * @param virtualReaderName : virtual reader that receives the order the transmitSet to
+     * @param seRequestSet : seRequestSet to transmit
      * @return SeResponseSet
      */
-    SeResponseSet transmit(String nativeReaderName, String virtualReaderName,
-            SeRequestSet seApplicationRequest) throws KeypleRemoteReaderException;
+    SeResponseSet transmitSet(String nativeReaderName, String virtualReaderName,
+                              SeRequestSet seRequestSet) throws KeypleRemoteReaderException;
+
+
+    /**
+     * Blocking transmit
+     *
+     * @param nativeReaderName : local reader to transmitSet to
+     * @param virtualReaderName : virtual reader that receives the order the transmitSet to
+     * @param seRequest : seApplicationRequest to transmitSet
+     * @return SeResponseSet
+     */
+    SeResponse transmit(String nativeReaderName, String virtualReaderName,
+                        SeRequest seRequest) throws KeypleRemoteReaderException;
+
 
 
 
