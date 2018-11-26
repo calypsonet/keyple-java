@@ -13,6 +13,8 @@ package org.eclipse.keyple.example.calypso.pc;
 
 
 
+import static org.eclipse.keyple.example.calypso.common.postructure.CalypsoClassicInfo.RECORD_NUMBER_1;
+import static org.eclipse.keyple.example.calypso.common.postructure.CalypsoClassicInfo.SFI_EventLog;
 import org.eclipse.keyple.calypso.command.po.parser.ReadDataStructure;
 import org.eclipse.keyple.calypso.command.po.parser.ReadRecordsRespPars;
 import org.eclipse.keyple.calypso.transaction.CalypsoPo;
@@ -30,9 +32,6 @@ import org.eclipse.keyple.transaction.*;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import static org.eclipse.keyple.example.calypso.common.postructure.CalypsoClassicInfo.RECORD_NUMBER_1;
-import static org.eclipse.keyple.example.calypso.common.postructure.CalypsoClassicInfo.SFI_EventLog;
 
 /**
  * <h1>Use Case ‘Calypso 4’ – PO Authentication (PC/SC)</h1>
@@ -171,7 +170,7 @@ public class UseCase_Calypso4_PoAuthentication_Pcsc {
                         PoTransaction.ModificationMode.ATOMIC,
                         PoTransaction.SessionAccessLevel.SESSION_LVL_DEBIT, (byte) 0, (byte) 0);
 
-                if(!poProcessStatus) {
+                if (!poProcessStatus) {
                     throw new IllegalStateException("processingOpening failure.");
                 }
 
@@ -198,7 +197,7 @@ public class UseCase_Calypso4_PoAuthentication_Pcsc {
                 /* Log the result */
                 logger.info("EventLog file data: {}", ByteArrayUtils.toHex(eventLog));
 
-                if(!poProcessStatus) {
+                if (!poProcessStatus) {
                     throw new IllegalStateException("processPoCommands failure.");
                 }
 
@@ -216,7 +215,7 @@ public class UseCase_Calypso4_PoAuthentication_Pcsc {
                 poProcessStatus = poTransaction.processClosing(
                         PoTransaction.CommunicationMode.CONTACTLESS_MODE, ChannelState.KEEP_OPEN);
 
-                if(!poProcessStatus) {
+                if (!poProcessStatus) {
                     throw new IllegalStateException("processClosing failure.");
                 }
 

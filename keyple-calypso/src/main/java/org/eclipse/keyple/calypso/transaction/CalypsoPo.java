@@ -64,7 +64,7 @@ public final class CalypsoPo extends MatchingSe {
         poSelector.updateParsersWithResponses(selectionResponse);
 
         /* The selectionSeResponse may not include a FCI field (e.g. old PO Calypso Rev 1) */
-        if (selectionResponse.getSelectionStatus().getFci() != null) {
+        if (selectionResponse.getSelectionStatus().getFci().isSuccessful()) {
             /* Parse PO FCI - to retrieve Calypso Revision, Serial Number, &amp; DF Name (AID) */
             GetDataFciRespPars poFciRespPars =
                     new GetDataFciRespPars(selectionResponse.getSelectionStatus().getFci());

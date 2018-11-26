@@ -14,7 +14,6 @@ package org.eclipse.keyple.calypso.command.po.parser;
 import java.util.HashMap;
 import java.util.Map;
 import org.eclipse.keyple.command.AbstractApduResponseParser;
-import org.eclipse.keyple.seproxy.message.ApduResponse;
 
 /**
  * This class provides status code properties and the getters to access to the structured fields of
@@ -35,12 +34,11 @@ public final class SelectFileRespPars extends AbstractApduResponseParser {
     }
 
     /**
-     * Instantiates a new PoFciRespPars.
+     * Instantiates a new SelectFileRespPars.
      *
-     * @param response the response from Get Data APDU commmand
      */
-    public SelectFileRespPars(ApduResponse response) {
-        super(response);
+    public SelectFileRespPars() {
+
     }
 
     public byte[] getSelectionData() {

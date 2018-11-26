@@ -39,7 +39,7 @@ public final class SelectFileCmdBuild extends PoCommandBuilder {
     public SelectFileCmdBuild(PoRevision revision, SelectControl selectControl,
             SelectOptions selectOptions, byte[] selectData) {
         super(command, null);
-        byte cla = PoRevision.REV2_4.equals(revision) ? (byte) 0x94 : (byte) 0x00;
+        byte cla = PoRevision.REV1_0.equals(revision) ? (byte) 0x94 : (byte) 0x00;
 
         byte p1 = 0;
         switch (selectControl) {
@@ -48,9 +48,12 @@ public final class SelectFileCmdBuild extends PoCommandBuilder {
                 break;
             case PATH_FROM_MF:
                 p1 = (byte) 0x08;
+                break;
             case PATH_FROM_CURRENT_DF:
                 p1 = (byte) 0x02;
+                break;
         }
+
         byte p2 = 0;
         switch (selectOptions) {
             case FCI:

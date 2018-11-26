@@ -95,9 +95,9 @@ public class SeSelector {
     }
 
     /**
-     * Instantiate a SeSelector object with the selection data (atrRegex), dedicated to select a SE
-     * that does not support the select application command, the channel management after the
-     * selection and the protocol flag to possibly target a specific protocol
+     * Instantiate a SeSelector object with the selection data (AID), dedicated to select a SE that
+     * does not support the select application command, the channel management after the selection
+     * and the protocol flag to possibly target a specific protocol
      *
      * @param aid the target AID (end bytes can be truncated)
      * @param selectMode a flag to indicate if the first or the next occurrence is requested (see
