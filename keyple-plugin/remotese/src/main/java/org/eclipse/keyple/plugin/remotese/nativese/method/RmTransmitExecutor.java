@@ -21,7 +21,7 @@ import org.eclipse.keyple.seproxy.message.SeResponseSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class RmTransmitExecutor extends RemoteMethodExecutor {
+public class RmTransmitExecutor implements RemoteMethodExecutor {
 
     private static final Logger logger = LoggerFactory.getLogger(RmTransmitExecutor.class);
 

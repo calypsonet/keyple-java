@@ -18,7 +18,7 @@ import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 
-public class RmConnectReaderExecutor extends RemoteMethodExecutor {
+public class RmConnectReaderExecutor implements RemoteMethodExecutor {
 
     RemoteSePlugin plugin;
     DtoSender dtoSender;

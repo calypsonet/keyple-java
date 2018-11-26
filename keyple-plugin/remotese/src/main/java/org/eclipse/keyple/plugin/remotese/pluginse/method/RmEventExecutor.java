@@ -18,7 +18,7 @@ import org.eclipse.keyple.plugin.remotese.transport.json.JsonParser;
 import org.eclipse.keyple.seproxy.event.ReaderEvent;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderNotFoundException;
 
-public class RmEventExecutor extends RemoteMethodExecutor {
+public class RmEventExecutor implements RemoteMethodExecutor {
 
     RemoteSePlugin plugin;
 
