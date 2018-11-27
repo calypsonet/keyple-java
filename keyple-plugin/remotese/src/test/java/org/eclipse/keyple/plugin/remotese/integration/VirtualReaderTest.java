@@ -14,12 +14,16 @@ package org.eclipse.keyple.plugin.remotese.integration;
 import java.io.IOException;
 import org.eclipse.keyple.plugin.remotese.common.json.SampleFactory;
 import org.eclipse.keyple.plugin.remotese.nativese.NativeReaderServiceImpl;
+import org.eclipse.keyple.plugin.remotese.pluginse.VirtualReader;
 import org.eclipse.keyple.plugin.remotese.pluginse.VirtualReaderService;
 import org.eclipse.keyple.plugin.remotese.transport.TransportFactory;
 import org.eclipse.keyple.plugin.remotese.transport.java.LocalTransportFactory;
+import org.eclipse.keyple.plugin.stub.StubPlugin;
 import org.eclipse.keyple.plugin.stub.StubProtocolSetting;
 import org.eclipse.keyple.plugin.stub.StubReader;
 import org.eclipse.keyple.plugin.stub.StubReaderTest;
+import org.eclipse.keyple.seproxy.event.ObservableReader;
+import org.eclipse.keyple.seproxy.event.ReaderEvent;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.message.*;
 import org.eclipse.keyple.seproxy.protocol.SeProtocolSetting;
@@ -65,6 +69,59 @@ public class VirtualReaderTest {
         nativeReaderService = Integration.bindSlave(factory.getClient());
 
     }
+
+
+    /*
+    SE EVENTS
+     */
+
+
+    @Test
+    public void testInsert() throws Exception {
+        final String NATIVE_READER_NAME = "testInsert";
+        final String CLIENT_NODE_ID = "testInsert_NodeId";
+
+        // configure and connect a Stub Native reader
+        StubReader nativeReader = connectStubReader(NATIVE_READER_NAME, CLIENT_NODE_ID);
+
+        // test virtual reader
+        final VirtualReader virtualReader = getVirtualReader();
+
+        // add observer
+        virtualReader.addObserver(new ObservableReader.ReaderObserver() {
+            @Override
+            public void update(ReaderEvent event) {
+                Assert.assertEquals(event.getReaderName(), virtualReader.getName());
+                Assert.assertEquals(event.getPluginName(), StubPlugin.getInstance().getName());
+                Assert.assertEquals(ReaderEvent.EventType.SE_INSERTED, event.getEventType());
+
+                logger.info("SE events is well formed");
+
+
+            }
+        });
+
+        // insert SE
+        nativeReader.insertSe(StubReaderTest.hoplinkSE());
+
+        Thread.sleep(1000);
+
+        logger.info("wait for SE event to be thrown");
+
+
+    }
+
+
+
+
+
+
+
+
+
+    /*
+    TRANSMITS
+     */
 
     @Test
     public void testKOTransmitSet_NoSE() throws Exception {
@@ -419,9 +476,9 @@ public class VirtualReaderTest {
         return nativeReader;
     }
 
-    private ProxyReader getVirtualReader() {
+    private VirtualReader getVirtualReader() {
         Assert.assertEquals(1, this.virtualReaderService.getPlugin().getReaders().size());
-        return (ProxyReader) this.virtualReaderService.getPlugin().getReaders().first();
+        return (VirtualReader) this.virtualReaderService.getPlugin().getReaders().first();
     }
 
 }

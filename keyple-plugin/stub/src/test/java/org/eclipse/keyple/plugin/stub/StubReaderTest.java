@@ -54,7 +54,6 @@ public class StubReaderTest {
     @Before
     public void SetUp() throws InterruptedException, KeypleReaderException {
         // clear observers from others tests as StubPlugin is a singleton
-
         StubPlugin stubPlugin = StubPlugin.getInstance();
 
         // add an observer to start the plugin monitoring thread
@@ -117,6 +116,7 @@ public class StubReaderTest {
                 Assert.assertEquals(event.getReaderName(), reader.getName());
                 Assert.assertEquals(event.getPluginName(), StubPlugin.getInstance().getName());
                 Assert.assertEquals(ReaderEvent.EventType.SE_INSERTED, event.getEventType());
+                logger.info("SE events is well formed");
 
             }
         });

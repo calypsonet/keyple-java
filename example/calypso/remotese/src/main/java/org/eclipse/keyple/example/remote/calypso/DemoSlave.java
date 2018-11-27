@@ -104,9 +104,8 @@ class DemoSlave {
 
         logger.info("Create Local StubPlugin");
         StubPlugin stubPlugin = StubPlugin.getInstance();
-        SortedSet<ReaderPlugin> plugins = SeProxyService.getInstance().getPlugins();
-        plugins.add(stubPlugin);
-        seProxyService.setPlugins(plugins);
+
+        SeProxyService.getInstance().addPlugin(stubPlugin);
 
         ObservablePlugin.PluginObserver observer = new ObservablePlugin.PluginObserver() {
             @Override
@@ -136,9 +135,6 @@ class DemoSlave {
 
         // Binds node for incoming KeypleDTo
         nativeReaderService.bindDtoEndpoint(node);
-
-        // no options used so far
-        Map<String, Object> options = new HashMap<String, Object>();
 
         // connect a reader to Remote Plugin
         logger.info("Connect remotely the StubPlugin ");
