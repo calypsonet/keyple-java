@@ -70,7 +70,8 @@ import org.slf4j.LoggerFactory;
  * </ul>
  */
 public class UseCase_Calypso5_MultipleSession_Pcsc {
-    private static final Logger logger = LoggerFactory.getLogger(MultipleSession_Pcsc.class);
+    private static final Logger logger =
+            LoggerFactory.getLogger(UseCase_Calypso5_MultipleSession_Pcsc.class);
 
     public static void main(String[] args) throws KeypleBaseException, NoStackTraceThrowable {
 
