@@ -109,7 +109,7 @@ public class StubReaderTest {
 
 
     @Test
-    public void testInsert() throws NoStackTraceThrowable {
+    public void testInsert() {
         // add observer
         reader.addObserver(new ObservableReader.ReaderObserver() {
             @Override
