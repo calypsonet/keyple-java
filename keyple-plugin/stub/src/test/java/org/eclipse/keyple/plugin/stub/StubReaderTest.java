@@ -26,7 +26,6 @@ import org.eclipse.keyple.seproxy.event.ReaderEvent;
 import org.eclipse.keyple.seproxy.exception.KeypleChannelStateException;
 import org.eclipse.keyple.seproxy.exception.KeypleIOReaderException;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
-import org.eclipse.keyple.seproxy.exception.NoStackTraceThrowable;
 import org.eclipse.keyple.seproxy.message.*;
 import org.eclipse.keyple.seproxy.protocol.Protocol;
 import org.eclipse.keyple.seproxy.protocol.SeProtocolSetting;
@@ -40,6 +39,7 @@ import org.junit.runners.MethodSorters;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 
 @SuppressWarnings("PMD.SignatureDeclareThrowsException")
 @RunWith(MockitoJUnitRunner.class)
@@ -60,9 +60,7 @@ public class StubReaderTest {
         // add an observer to start the plugin monitoring thread
         stubPlugin.addObserver(new ObservablePlugin.PluginObserver() {
             @Override
-            public void update(PluginEvent event) {
-
-            }
+            public void update(PluginEvent event) {}
         });
 
         Thread.sleep(100);
@@ -86,9 +84,9 @@ public class StubReaderTest {
     public void tearDown() throws InterruptedException, KeypleReaderException {
         StubPlugin stubPlugin = StubPlugin.getInstance();
         stubPlugin.clearObservers();
+        reader.clearObservers();
         stubPlugin.getInstance().unplugReader("StubReaderTest");
         Thread.sleep(100);
-
     }
 
 
@@ -109,7 +107,7 @@ public class StubReaderTest {
 
 
     @Test
-    public void testInsert() throws NoStackTraceThrowable {
+    public void testInsert() throws InterruptedException {
         // add observer
         reader.addObserver(new ObservableReader.ReaderObserver() {
             @Override
@@ -117,7 +115,8 @@ public class StubReaderTest {
                 Assert.assertEquals(event.getReaderName(), reader.getName());
                 Assert.assertEquals(event.getPluginName(), StubPlugin.getInstance().getName());
                 Assert.assertEquals(ReaderEvent.EventType.SE_INSERTED, event.getEventType());
-
+                /* remove the SE to indicate the successful notification */
+                reader.removeSe();
             }
         });
         // test
@@ -125,6 +124,67 @@ public class StubReaderTest {
 
         // assert
         Assert.assertTrue(reader.isSePresent());
+
+        // let the notification process work
+        Thread.sleep(100);
+
+        // check if the notification was successful
+        if (reader.isSePresent()) {
+            Assert.fail("The expected notification failed.");
+        }
+    }
+
+    @Test
+    public void testInsertMatchingSe() throws InterruptedException {
+        // add observer
+        reader.addObserver(new ObservableReader.ReaderObserver() {
+            @Override
+            public void update(ReaderEvent event) {
+                Assert.assertEquals(event.getReaderName(), reader.getName());
+                Assert.assertEquals(event.getPluginName(), StubPlugin.getInstance().getName());
+                Assert.assertEquals(ReaderEvent.EventType.SE_MATCHED, event.getEventType());
+                Assert.assertTrue(event.getDefaultSelectionResponse().getSelectionSeResponseSet()
+                        .getSingleResponse().getSelectionStatus().hasMatched());
+                Assert.assertArrayEquals(
+                        event.getDefaultSelectionResponse().getSelectionSeResponseSet()
+                                .getSingleResponse().getSelectionStatus().getAtr().getBytes(),
+                        hoplinkSE().getATR());
+                /*
+                 * TODO add FCI to StubSecureElement
+                 * Assert.assertArrayEquals(event.getDefaultSelectionResponse().
+                 * getSelectionSeResponseSet()
+                 * .getSingleResponse().getSelectionStatus().getFci().getBytes(),
+                 * hoplinkSE().getFci()); // remove the SE to handle the notification success
+                 */
+                /* remove the SE to indicate the successful notification */
+                reader.removeSe();
+            }
+        });
+        String poAid = "A000000291A000000191";
+
+        SeSelection seSelection = new SeSelection(reader);
+
+        SeSelector seSelector = new SeSelector(ByteArrayUtils.fromHex(poAid),
+                SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN, Protocol.ANY, "AID: " + poAid);
+
+        seSelection.prepareSelection(seSelector);
+
+        ((ObservableReader) reader).setDefaultSelectionRequest(seSelection.getSelectionOperation(),
+                ObservableReader.NotificationMode.MATCHED_ONLY);
+
+        // test
+        reader.insertSe(hoplinkSE());
+
+        // assert
+        Assert.assertTrue(reader.isSePresent());
+
+        // let the notification process work
+        Thread.sleep(100);
+
+        // check if the notification was successful
+        if (reader.isSePresent()) {
+            Assert.fail("The expected notification failed.");
+        }
     }
 
     @Test
@@ -135,11 +195,10 @@ public class StubReaderTest {
             public void update(ReaderEvent event) {
                 SeSelection seSelection = new SeSelection(reader);
                 SeSelector seSelector =
-                        new SeSelector("3B.*", ChannelState.KEEP_OPEN, null, "Test ATR");
+                        new SeSelector("3B.*", ChannelState.KEEP_OPEN, Protocol.ANY, "Test ATR");
 
                 /* Prepare selector, ignore MatchingSe here */
                 seSelection.prepareSelection(seSelector);
-
 
                 try {
                     seSelection.processExplicitSelection();
@@ -149,18 +208,22 @@ public class StubReaderTest {
                     Assert.assertNotNull(matchingSe);
 
                 } catch (KeypleReaderException e) {
-                    Assert.fail();
+                    Assert.fail("Unexcepted exception");
                 }
-
+                /* remove the SE to indicate the successful notification */
+                reader.removeSe();
             }
         });
+
         // test
         reader.insertSe(hoplinkSE());
 
         Thread.sleep(100);
 
-        // assert
-        Assert.assertTrue(reader.isSePresent());
+        // check if the notification was successful
+        if (reader.isSePresent()) {
+            Assert.fail("The expected notification failed.");
+        }
     }
 
 
@@ -173,7 +236,7 @@ public class StubReaderTest {
     }
 
     @Test
-    public void transmit_Hoplink_Sucessfull() throws KeypleReaderException, InterruptedException {
+    public void transmit_Hoplink_Successful() throws KeypleReaderException, InterruptedException {
         // init Request
         SeRequestSet requests = getRequestIsoDepSetSample();
 
@@ -680,7 +743,6 @@ public class StubReaderTest {
 
             @Override
             public byte[] processApdu(byte[] apduIn) throws KeypleIOReaderException {
-
                 addHexCommand("00 A4 04 00 0A A0 00 00 02 91 A0 00 00 01 91 00",
                         "6F25840BA000000291A00000019102A516BF0C13C70800000000C0E11FA653070A3C230C1410019000");
                 addHexCommand("00 B2 01 A4 20",
