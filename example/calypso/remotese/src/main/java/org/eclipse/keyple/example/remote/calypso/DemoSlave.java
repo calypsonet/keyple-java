@@ -17,7 +17,10 @@ import java.util.Map;
 import java.util.SortedSet;
 import org.eclipse.keyple.example.calypso.pc.stub.se.StubHoplink;
 import org.eclipse.keyple.plugin.remotese.nativese.NativeReaderServiceImpl;
-import org.eclipse.keyple.plugin.remotese.transport.*;
+import org.eclipse.keyple.plugin.remotese.transport.ClientNode;
+import org.eclipse.keyple.plugin.remotese.transport.ServerNode;
+import org.eclipse.keyple.plugin.remotese.transport.TransportFactory;
+import org.eclipse.keyple.plugin.remotese.transport.TransportNode;
 import org.eclipse.keyple.plugin.stub.StubPlugin;
 import org.eclipse.keyple.plugin.stub.StubProtocolSetting;
 import org.eclipse.keyple.plugin.stub.StubReader;
@@ -94,7 +97,7 @@ class DemoSlave {
      * @throws KeypleReaderException
      * @throws InterruptedException
      */
-    public void connectAReader() throws KeypleReaderException, InterruptedException, KeypleRemoteException {
+    public void connectAReader() throws KeypleReaderException, InterruptedException {
 
 
         logger.info("Boot DemoSlave LocalReader ");
@@ -119,7 +122,7 @@ class DemoSlave {
 
         stubPlugin.plugStubReader("stubClientSlave");
 
-        Thread.sleep(100);
+        Thread.sleep(1000);
 
         // get the created proxy reader
         localReader = (StubReader) stubPlugin.getReader("stubClientSlave");
@@ -164,7 +167,7 @@ class DemoSlave {
 
     }
 
-    public void disconnect() throws KeypleReaderException, KeypleRemoteException {
+    public void disconnect() throws KeypleReaderException {
 
         logger.info("*************************");
         logger.info("Disconnect native reader ");

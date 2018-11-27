@@ -14,25 +14,15 @@ package org.eclipse.keyple.example.remote.wspolling;
 import org.eclipse.keyple.example.remote.calypso.DemoThreads;
 import org.eclipse.keyple.plugin.remotese.transport.TransportFactory;
 
-
-/**
- * Demo Web Service with jdk http client library
- * The master device uses the websocket server whereas the slave device uses the websocket client
- */
 public class DemoWsPMasterServer {
 
     public static void main(String[] args) throws Exception {
 
-        //Create the procotol factory
+        Boolean isMasterServer = true; // DemoMaster is the server (and DemoSlave the Client)
         TransportFactory factory = new WsPollingFactory(); // HTTP Web Polling
 
-
-        //Launch the server thread
-        DemoThreads.startServer(true, factory);
-
+        DemoThreads.startServer(isMasterServer, factory);
         Thread.sleep(1000);
-
-        //Launch the client thread
-        DemoThreads.startClient(false, factory);
+        DemoThreads.startClient(!isMasterServer, factory);
     }
 }

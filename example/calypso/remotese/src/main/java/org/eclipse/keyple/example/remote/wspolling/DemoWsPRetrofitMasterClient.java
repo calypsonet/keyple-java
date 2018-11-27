@@ -15,26 +15,18 @@ import org.eclipse.keyple.example.remote.calypso.DemoThreads;
 import org.eclipse.keyple.example.remote.wspolling.client_retrofit.WsPollingRetrofitFactory;
 import org.eclipse.keyple.plugin.remotese.transport.TransportFactory;
 
-/**
- * Demo Web Service with Retrofit http client library (Android friendly)
- * The master device uses the websocket client whereas the slave device uses the websocket server
- */
 public class DemoWsPRetrofitMasterClient {
 
     public static void main(String[] args) throws Exception {
 
-        //Create the procotol factory
-        // HTTP Web Polling with Android
-        // compatible client_retrofit
-        // Library
-        TransportFactory factory = new WsPollingRetrofitFactory();
+        Boolean isMasterServer = false; // DemoMaster is the Client (and DemoSlave the server)
 
-        //Launch the server thread
-        DemoThreads.startServer(false, factory);
+        TransportFactory factory = new WsPollingRetrofitFactory(); // HTTP Web Polling with Android
+                                                                   // compatible client_retrofit
+                                                                   // Library
 
+        DemoThreads.startServer(isMasterServer, factory);
         Thread.sleep(1000);
-
-        //Launch the client thread
-        DemoThreads.startClient(true, factory);
+        DemoThreads.startClient(!isMasterServer, factory);
     }
 }
