@@ -81,6 +81,7 @@ public class VirtualReaderTest {
         final String NATIVE_READER_NAME = "testInsert";
         final String CLIENT_NODE_ID = "testInsert_NodeId";
 
+
         // configure and connect a Stub Native reader
         StubReader nativeReader = connectStubReader(NATIVE_READER_NAME, CLIENT_NODE_ID);
 

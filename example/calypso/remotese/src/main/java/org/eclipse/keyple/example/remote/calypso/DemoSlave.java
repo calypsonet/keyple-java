@@ -17,10 +17,7 @@ import java.util.Map;
 import java.util.SortedSet;
 import org.eclipse.keyple.example.calypso.pc.stub.se.StubHoplink;
 import org.eclipse.keyple.plugin.remotese.nativese.NativeReaderServiceImpl;
-import org.eclipse.keyple.plugin.remotese.transport.ClientNode;
-import org.eclipse.keyple.plugin.remotese.transport.ServerNode;
-import org.eclipse.keyple.plugin.remotese.transport.TransportFactory;
-import org.eclipse.keyple.plugin.remotese.transport.TransportNode;
+import org.eclipse.keyple.plugin.remotese.transport.*;
 import org.eclipse.keyple.plugin.stub.StubPlugin;
 import org.eclipse.keyple.plugin.stub.StubProtocolSetting;
 import org.eclipse.keyple.plugin.stub.StubReader;
@@ -97,7 +94,7 @@ class DemoSlave {
      * @throws KeypleReaderException
      * @throws InterruptedException
      */
-    public void connectAReader() throws KeypleReaderException, InterruptedException {
+    public void connectAReader() throws KeypleReaderException, InterruptedException, KeypleRemoteException {
 
 
         logger.info("Boot DemoSlave LocalReader ");
@@ -112,7 +109,9 @@ class DemoSlave {
 
         ObservablePlugin.PluginObserver observer = new ObservablePlugin.PluginObserver() {
             @Override
-            public void update(PluginEvent event) {}
+            public void update(PluginEvent event) {
+                logger.info("Update - pluginEvent from inline observer" , event);
+            }
         };
 
         // add observer to have the reader management done by the monitoring thread
@@ -167,7 +166,7 @@ class DemoSlave {
 
     }
 
-    public void disconnect() throws KeypleReaderException {
+    public void disconnect() throws KeypleReaderException, KeypleRemoteException {
 
         logger.info("*************************");
         logger.info("Disconnect native reader ");
