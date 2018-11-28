@@ -5,13 +5,6 @@ This is the temporary repository for the Java implementation of the 'Eclipse [Ke
 - Soon the Java source of Keyple will be transfered to the repository https://github.com/eclipse/keyple-java.
 ![global architecture](doc/20181123-Keyple-components.svg "keyple SDK global architecture")
 
-## Supported platforms
-- Java SE 1.6 compact2
-- Android 4.4 KitKat API level 19
-
-## Documentation
-Function specification, Javadoc and compiled JARs are on [keyple-doc](https://calypsonet.github.io/keyple-doc/).
-
 ## keyple-java repositories structure
 
 - Modules that are provide as artifacts
@@ -19,8 +12,12 @@ Function specification, Javadoc and compiled JARs are on [keyple-doc](https://ca
   - keyple-calypso: source and unit tests for the Calypso library.
   - keyple-plugin: source and unit tests for the different plugins: smartcard.io PC/SC, Stub, Android NFC, Android OMAPI, etc.
 - developer support, testing
-  - example: source for the generic and Calypso implementation examples.
+  - example: source for Keyple implementation examples, generic or Calypso specific.
   - integration: source for the integration code (SDK).
+
+## Supported platforms
+- Java SE 1.6 compact2
+- Android 4.4 KitKat API level 19
 
 ## JARs
 When moved to the Eclipse repository, the Eclipse Keyple artifacts will be published on Maven. Pending temporary artifacts could be downloaded here:
@@ -48,3 +45,73 @@ The packages to import in order to implement a ticketing **application**, a read
 - specific to Calypso
 
 ![Calypso packages](doc/CalypsoPackage.svg "Calypso packages")
+
+## Documentation
+The current function specification [keyple-doc](https://calypsonet.github.io/keyple-doc/) is obsolete. We're rewriting it in to include the lastest evolutions of the Keyple API.
+
+
+## Building the examples and the artifacts
+
+### Prerequisites
+Here are the prerequisites to build the keyple artifacts (jars and aars) and to run the /example projects
+- Java SE 1.6 compact2
+- Intellij 2018 community version or Android Studio 3.0
+- Android sdk 26 should be installed on your machine [follow those instructions](http://www.androiddocs.com/sdk/installing/index.html)
+- Maven (any version) [available here](https://maven.apache.org/install.html)
+- Gradle (any version as we use the wrapper in version 4.5.1) [available here](https://gradle.org/install/)
+
+### Android configuration 
+As Android artifacts are built within the same project, so you need to create a file `local.properties` at the root path of the project (by default /keyple-java) with the following content 
+`sdk.dir=absolut/path/to/where/your/android/sdk/is`
+
+For instance ``sdk.dir=/Users/user/Library/Android/sdk``
+
+### Building the examples and the artifacts
+**The first time you build the project**, you need to build artifacts in order of their dependencies, each of those artifacts will be published in your mavenLocal repository. 
+
+###Linux or Macos
+Following commands will build the artifacts one by one. The first command is required to build the gradle wrapper.  
+
+```
+gradle wrapper --gradle-version 4.5.1
+./gradlew :keyple-core:build  --info
+./gradlew :keyple-calypso:build  --info
+./gradlew :keyple-plugin:keyple-plugin-pcsc:build  --info
+./gradlew :keyple-plugin:keyple-plugin-stub:build  --info
+./gradlew :keyple-plugin:keyple-plugin-remotese:build --info
+./gradlew :example:generic:example-generic-common:build  :example:generic:example-generic-pc:build
+./gradlew :example:calypso:example-calypso-common:build  :example:calypso:example-calypso-pc:build
+./gradlew :keyple-plugin:keyple-plugin-android-nfc:build --info
+./gradlew :keyple-plugin:keyple-plugin-android-omapi:build --info
+```
+Once the artifacts are saved into your local maven repository (usually $USER_HOME/.m2) you can build any artifact in any order.  
+Optionally if you want to build the application apk package.
+
+```
+./gradlew -b ./example/calypso/android/nfc/build.gradle assembleDebug 
+./gradlew -b ./example/calypso/android/omapi/build.gradle assembleDebug
+```
+
+###Windows
+Following commands will build the artifacts one by one. The first command is required to build the gradle wrapper.
+
+```
+gradle wrapper --gradle-version 4.5.1
+.\gradlew.bat :keyple-core:build  --info
+.\gradlew.bat :keyple-calypso:build  --info
+.\gradlew.bat :keyple-plugin:keyple-plugin-pcsc:build  --info
+.\gradlew.bat :keyple-plugin:keyple-plugin-stub:build  --info
+.\gradlew.bat :keyple-plugin:keyple-plugin-remotese:build  --info
+.\gradlew.bat :example:generic:example-generic-common:build  :example:generic:example-generic-pc:build
+.\gradlew.bat :example:calypso:example-calypso-common:build  :example:calypso:example-calypso-pc:build
+.\gradlew.bat :keyple-plugin:keyple-plugin-android-nfc:build --info
+.\gradlew.bat :keyple-plugin:keyple-plugin-android-omapi:build --info
+```
+
+Once the artifacts are saved into your local maven repository (usually $USER_HOME/.m2) you can build any artifact in any order.  
+Optionally if you want to build the application apk package.
+
+```
+.\gradlew.bat -b ./example/calypso/android/nfc/build.gradle assembleDebug 
+.\gradlew.bat -b ./example/calypso/android/omapi/build.gradle assembleDebug
+```
