@@ -19,6 +19,7 @@ import org.eclipse.keyple.plugin.remotese.pluginse.VirtualReaderService;
 import org.eclipse.keyple.plugin.remotese.transport.*;
 import org.eclipse.keyple.plugin.remotese.transport.java.LocalClient;
 import org.eclipse.keyple.plugin.remotese.transport.java.LocalTransportFactory;
+import org.eclipse.keyple.plugin.stub.StubReader;
 import org.eclipse.keyple.seproxy.message.ProxyReader;
 import org.eclipse.keyple.util.Observable;
 import org.junit.Assert;
@@ -83,14 +84,17 @@ public class NativeReaderServiceTest {
         final String NATIVE_READER_NAME = "testConnect";
         final String CLIENT_NODE_ID = "testConnectNodeId";
 
-        ProxyReader nativeReader = Integration.createStubReader(NATIVE_READER_NAME);
+        StubReader nativeReader = Integration.createStubReader(NATIVE_READER_NAME);
 
         nativeReaderSpy.connectReader(nativeReader, CLIENT_NODE_ID);
 
         // assert that a virtual reader has been created
         VirtualReader virtualReader = (VirtualReader) virtualReaderService.getPlugin()
                 .getReaderByRemoteName(NATIVE_READER_NAME);
+
         Assert.assertEquals(NATIVE_READER_NAME, virtualReader.getNativeReaderName());
+        Assert.assertEquals(1, nativeReader.countObservers());
+        Assert.assertEquals(0, virtualReader.countObservers());
 
     }
 

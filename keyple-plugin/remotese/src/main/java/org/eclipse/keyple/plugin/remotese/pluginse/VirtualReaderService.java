@@ -84,7 +84,7 @@ public class VirtualReaderService implements DtoHandler {
         KeypleDto keypleDTO = transportDto.getKeypleDTO();
         TransportDto out = null;
 
-        logger.debug("onDto {}", KeypleDtoHelper.toJson(keypleDTO));
+        logger.trace("onDto {}", KeypleDtoHelper.toJson(keypleDTO));
         RemoteMethod method = RemoteMethod.get(keypleDTO.getAction());
         logger.debug("Remote Method called : {} - isRequest : {}", method, keypleDTO.isRequest());
 
@@ -107,7 +107,6 @@ public class VirtualReaderService implements DtoHandler {
                 }
                 break;
             case READER_EVENT:
-                logger.info("**** ACTION - READER_EVENT ****");
                 out = new RmEventExecutor(plugin).execute(transportDto);
                 break;
             case READER_TRANSMIT:

@@ -12,6 +12,9 @@
 package org.eclipse.keyple.plugin.remotese.integration;
 
 import java.io.IOException;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+
 import org.eclipse.keyple.plugin.remotese.common.json.SampleFactory;
 import org.eclipse.keyple.plugin.remotese.nativese.NativeReaderServiceImpl;
 import org.eclipse.keyple.plugin.remotese.pluginse.VirtualReader;
@@ -76,14 +79,21 @@ public class VirtualReaderTest {
      */
 
 
+    /**
+     * Test SE_INSERTED Reader Event throwing and catching
+     * @throws Exception
+     */
     @Test
     public void testInsert() throws Exception {
         final String NATIVE_READER_NAME = "testInsert";
         final String CLIENT_NODE_ID = "testInsert_NodeId";
 
+        //lock test until message is received
+        final CountDownLatch lock = new CountDownLatch(1);
+
 
         // configure and connect a Stub Native reader
-        StubReader nativeReader = connectStubReader(NATIVE_READER_NAME, CLIENT_NODE_ID);
+        final StubReader nativeReader = connectStubReader(NATIVE_READER_NAME, CLIENT_NODE_ID);
 
         // test virtual reader
         final VirtualReader virtualReader = getVirtualReader();
@@ -92,28 +102,81 @@ public class VirtualReaderTest {
         virtualReader.addObserver(new ObservableReader.ReaderObserver() {
             @Override
             public void update(ReaderEvent event) {
-                Assert.assertEquals(event.getReaderName(), virtualReader.getName());
+                Assert.assertEquals(event.getReaderName(), nativeReader.getName());
                 Assert.assertEquals(event.getPluginName(), StubPlugin.getInstance().getName());
                 Assert.assertEquals(ReaderEvent.EventType.SE_INSERTED, event.getEventType());
-
-                logger.info("SE events is well formed");
-
-
+                logger.debug("Reader Event is correct, release lock");
+                lock.countDown();
             }
         });
+
+        logger.info("Insert a Hoplink SE and wait 5 seconds for a SE event to be thrown");
+
+        // insert SE
+        nativeReader.insertSe(StubReaderTest.hoplinkSE());
+        //wait 5 seconds
+        lock.await(5, TimeUnit.SECONDS);
+
+        Assert.assertEquals(0, lock.getCount());
+    }
+
+
+    /**
+     * Test SE_REMOVED Reader Event throwing and catching
+     * @throws Exception
+     */
+    @Test
+    public void testRemoveEvent() throws Exception {
+        final String NATIVE_READER_NAME = "testInsert";
+        final String CLIENT_NODE_ID = "testInsert_NodeId";
+
+        //lock test until two messages are received
+        final CountDownLatch lock = new CountDownLatch(2);
+
+
+        // configure and connect a Stub Native reader
+        final StubReader nativeReader = connectStubReader(NATIVE_READER_NAME, CLIENT_NODE_ID);
+
+        // test virtual reader
+        final VirtualReader virtualReader = getVirtualReader();
+
+        // add observer
+        virtualReader.addObserver(new ObservableReader.ReaderObserver() {
+            @Override
+            public void update(ReaderEvent event) {
+                if(event.getEventType() == ReaderEvent.EventType.SE_INSERTED){
+                    //we expect the first event to be SE_INSERTED
+                    Assert.assertEquals(2, lock.getCount());
+                    lock.countDown();
+                }else{
+                    //the next event  should be SE_REMOVAL
+                    Assert.assertEquals(1, lock.getCount());
+                    Assert.assertEquals(event.getReaderName(), nativeReader.getName());
+                    Assert.assertEquals(event.getPluginName(), StubPlugin.getInstance().getName());
+                    Assert.assertEquals(ReaderEvent.EventType.SE_REMOVAL, event.getEventType());
+                    logger.debug("Reader Event is correct, release lock");
+                    lock.countDown();
+
+                }
+            }
+        });
+
+        logger.info("Insert and remove a Hoplink SE and wait 5 seconds for two SE events to be thrown");
 
         // insert SE
         nativeReader.insertSe(StubReaderTest.hoplinkSE());
 
+        //wait 1 second
         Thread.sleep(1000);
 
-        logger.info("wait for SE event to be thrown");
+        //remove SE
+        nativeReader.removeSe();
 
+        //wait 5 seconds
+        lock.await(5, TimeUnit.SECONDS);
 
+        Assert.assertEquals(0, lock.getCount());
     }
-
-
-
 
 
 

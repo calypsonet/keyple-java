@@ -20,6 +20,7 @@ import org.eclipse.keyple.plugin.remotese.transport.json.JsonParser;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderNotFoundException;
 import org.eclipse.keyple.seproxy.message.ProxyReader;
 import org.eclipse.keyple.seproxy.plugin.AbstractObservableReader;
+import org.eclipse.keyple.seproxy.plugin.AbstractSelectionLocalReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -50,11 +51,13 @@ public class RmConnectReaderParser implements RemoteMethodParser<String> {
             try {
                 // observe reader to propagate reader events
                 ProxyReader localReader = nativeReaderService.findLocalReader(nativeReaderName);
-                if (localReader instanceof AbstractObservableReader) {
+                if (localReader instanceof AbstractSelectionLocalReader) {
                     logger.debug("Add NativeReaderServiceImpl as an observer for native reader {}",
                             localReader.getName());
-                    ((AbstractObservableReader) localReader).addObserver(nativeReaderService);
+                    ((AbstractSelectionLocalReader) localReader).addObserver(nativeReaderService);
                 }
+
+
                 // todo store sessionId in reader as a parameter?
                 // nseSessionManager.addNewSession(sessionId, localReader.getName());
 

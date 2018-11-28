@@ -116,6 +116,7 @@ public class StubReaderTest {
                 Assert.assertEquals(event.getPluginName(), StubPlugin.getInstance().getName());
                 Assert.assertEquals(ReaderEvent.EventType.SE_INSERTED, event.getEventType());
                 /* remove the SE to indicate the successful notification */
+                logger.debug("testInsert event is correct");
                 reader.removeSe();
             }
         });

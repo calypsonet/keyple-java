@@ -134,13 +134,16 @@ public final class VirtualReader extends Observable implements ObservableReader,
      */
     void onRemoteReaderEvent(final ReaderEvent event) {
         final VirtualReader thisReader = this;
-        logger.info("*****************************");
-        logger.info(" EVENT {} ", event.getEventType());
-        logger.info("*****************************");
+
+        logger.debug(" EVENT {} ", event.getEventType());
         // notify observers in a separate thread
         new Thread() {
             public void run() {
-                thisReader.notifyObservers(event);
+                if(thisReader.countObservers()>0){
+                    thisReader.notifyObservers(event);
+                }else{
+                    logger.warn("An event was received but no observers are declared into VirtualReader : {}", this.getName());
+                }
             }
         }.start();
 
@@ -184,8 +187,8 @@ public final class VirtualReader extends Observable implements ObservableReader,
      */
 
     public void addObserver(ReaderObserver observer) {
-        logger.trace("[{}][{}] addObserver => Adding an observer.", this.getClass(),
-                this.getName());
+        logger.trace("[{}][{}] addObserver => Adding an observer {}",
+                this.getName(), observer.toString());
         super.addObserver(observer);
     }
 
@@ -196,7 +199,7 @@ public final class VirtualReader extends Observable implements ObservableReader,
      */
 
     public void removeObserver(ReaderObserver observer) {
-        logger.trace("[{}] removeObserver => Deleting a reader observer", this.getName());
+        logger.trace("[{}] removeObserver => Deleting a reader observer {}", this.getName(), observer.toString());
         super.removeObserver(observer);
     }
 
@@ -211,8 +214,9 @@ public final class VirtualReader extends Observable implements ObservableReader,
      */
 
     public final void notifyObservers(ReaderEvent event) {
-        logger.trace("[{}] AbstractObservableReader => Notifying a reader event: ", this.getName(),
-                event);
+        logger.trace("[{}] AbstractObservableReader => Notifying a reader event: {} to #{} observers ", this.getName(),
+                event.getEventType(), this.countObservers());
+
         setChanged();
         super.notifyObservers(event);
 
@@ -221,7 +225,7 @@ public final class VirtualReader extends Observable implements ObservableReader,
     @Override
     public void setDefaultSelectionRequest(SelectionRequest selectionRequest,
             NotificationMode notificationMode) {
-        // todo does it makes sense here?
+        // todo : implement API
     }
 
 

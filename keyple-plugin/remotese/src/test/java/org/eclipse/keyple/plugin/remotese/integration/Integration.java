@@ -31,8 +31,13 @@ import org.junit.Assert;
 import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Integration {
+
+    private static final Logger logger = LoggerFactory.getLogger(Integration.class);
+
 
     /**
      * Create a Virtual Reader Service
@@ -110,10 +115,13 @@ public class Integration {
         stubPlugin.addObserver(new ObservablePlugin.PluginObserver() {
             @Override
             public void update(PluginEvent event) {
-
+                logger.debug("received event in stubplugin : {}", event.getEventType());
             }
         });
 
+        logger.debug("Stub plugin count observers : {}", stubPlugin.countObservers());
+
+        logger.debug("Create a new StubReader : {}", stubReaderName);
         stubPlugin.plugStubReader(stubReaderName);
 
         Thread.sleep(100);

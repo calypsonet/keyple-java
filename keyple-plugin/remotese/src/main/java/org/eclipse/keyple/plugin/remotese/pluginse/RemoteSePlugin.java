@@ -169,7 +169,7 @@ public final class RemoteSePlugin extends Observable implements ObservablePlugin
      */
     public void onReaderEvent(ReaderEvent event, String sessionId) {
         logger.debug("OnReaderEvent {}", event);
-        logger.debug("Dispatch ReaderEvent to the appropriate Reader {} {}", event.getReaderName(),
+        logger.debug("Dispatch ReaderEvent to the appropriate Reader : {} sessionId : {}", event.getReaderName(),
                 sessionId);
         try {
             // todo dispatch is managed by name, should take sessionId also
