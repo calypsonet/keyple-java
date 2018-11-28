@@ -5,13 +5,6 @@ This is the temporary repository for the Java implementation of the 'Eclipse [Ke
 - Soon the Java source of Keyple will be transfered to the repository https://github.com/eclipse/keyple-java.
 ![global architecture](doc/20181123-Keyple-components.svg "keyple SDK global architecture")
 
-## Supported platforms
-- Java SE 1.6 compact2
-- Android 4.4 KitKat API level 19
-
-## Documentation
-Function specification, Javadoc and compiled JARs are on [keyple-doc](https://calypsonet.github.io/keyple-doc/).
-
 ## keyple-java repositories structure
 
 - Modules that are provide as artifacts
@@ -19,8 +12,12 @@ Function specification, Javadoc and compiled JARs are on [keyple-doc](https://ca
   - keyple-calypso: source and unit tests for the Calypso library.
   - keyple-plugin: source and unit tests for the different plugins: smartcard.io PC/SC, Stub, Android NFC, Android OMAPI, etc.
 - developer support, testing
-  - example: source for the generic and Calypso implementation examples.
+  - example: source for Keyple implementation examples, generic or Calypso specific.
   - integration: source for the integration code (SDK).
+
+## Supported platforms
+- Java SE 1.6 compact2
+- Android 4.4 KitKat API level 19
 
 ## JARs
 When moved to the Eclipse repository, the Eclipse Keyple artifacts will be published on Maven. Pending temporary artifacts could be downloaded here:
@@ -48,3 +45,6 @@ The packages to import in order to implement a ticketing **application**, a read
 - specific to Calypso
 
 ![Calypso packages](doc/CalypsoPackage.svg "Calypso packages")
+
+## Documentation
+The current function specification [keyple-doc](https://calypsonet.github.io/keyple-doc/) is obsolete. We're rewriting it in to include the lastest evolutions of the Keyple API.
