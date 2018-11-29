@@ -1,0 +1,4 @@
+org.eclipse.keyple.plugin.remotese.nativese
+org.eclipse.keyple.plugin.remotese.pluginse
+org.eclipse.keyple.plugin.remotese.transport
+org.eclipse.keyple.plugin.remotese.transport.json
