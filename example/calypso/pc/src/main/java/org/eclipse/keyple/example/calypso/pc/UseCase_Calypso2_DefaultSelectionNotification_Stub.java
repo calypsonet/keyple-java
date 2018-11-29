@@ -12,12 +12,12 @@
 package org.eclipse.keyple.example.calypso.pc;
 
 
-import static org.eclipse.keyple.example.calypso.common.postructure.CalypsoClassicInfo.*;
 import org.eclipse.keyple.calypso.command.po.parser.ReadDataStructure;
 import org.eclipse.keyple.calypso.command.po.parser.ReadRecordsRespPars;
 import org.eclipse.keyple.calypso.transaction.CalypsoPo;
 import org.eclipse.keyple.calypso.transaction.PoSelector;
 import org.eclipse.keyple.calypso.transaction.PoTransaction;
+import org.eclipse.keyple.example.calypso.common.postructure.CalypsoClassicInfo;
 import org.eclipse.keyple.example.calypso.pc.stub.se.StubCalypsoClassic;
 import org.eclipse.keyple.plugin.stub.StubPlugin;
 import org.eclipse.keyple.plugin.stub.StubReader;
@@ -32,6 +32,7 @@ import org.eclipse.keyple.seproxy.event.PluginEvent;
 import org.eclipse.keyple.seproxy.event.ReaderEvent;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
+import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
 import org.eclipse.keyple.seproxy.protocol.Protocol;
 import org.eclipse.keyple.transaction.MatchingSe;
 import org.eclipse.keyple.transaction.SeSelection;
@@ -145,16 +146,18 @@ public class UseCase_Calypso2_DefaultSelectionNotification_Stub implements Reade
          * selection and read additional information afterwards
          */
         PoSelector poSelector = new PoSelector(ByteArrayUtils.fromHex(poAid),
-                SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN, Protocol.ANY,
+                SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4,
                 PoSelector.RevisionTarget.TARGET_REV3, "AID: " + poAid);
 
         /*
          * Prepare the reading order and keep the associated parser for later use once the selection
          * has been made.
          */
-        readEnvironmentParser = poSelector.prepareReadRecordsCmd(SFI_EnvironmentAndHolder,
-                ReadDataStructure.SINGLE_RECORD_DATA, RECORD_NUMBER_1, (byte) 0x00,
-                String.format("EnvironmentAndHolder (SFI=%02X))", SFI_EnvironmentAndHolder));
+        readEnvironmentParser =
+                poSelector.prepareReadRecordsCmd(CalypsoClassicInfo.SFI_EnvironmentAndHolder,
+                        ReadDataStructure.SINGLE_RECORD_DATA, CalypsoClassicInfo.RECORD_NUMBER_1,
+                        (byte) 0x00, String.format("EnvironmentAndHolder (SFI=%02X))",
+                                CalypsoClassicInfo.SFI_EnvironmentAndHolder));
 
         /*
          * Add the selection case to the current selection (we could have added other cases here)
@@ -217,8 +220,8 @@ public class UseCase_Calypso2_DefaultSelectionNotification_Stub implements Reade
                     /*
                      * Retrieve the data read from the parser updated during the selection process
                      */
-                    byte environmentAndHolder[] =
-                            (readEnvironmentParser.getRecords()).get((int) RECORD_NUMBER_1);
+                    byte environmentAndHolder[] = (readEnvironmentParser.getRecords())
+                            .get((int) CalypsoClassicInfo.RECORD_NUMBER_1);
 
                     /* Log the result */
                     logger.info("Environment file data: {}",
@@ -240,9 +243,11 @@ public class UseCase_Calypso2_DefaultSelectionNotification_Stub implements Reade
                      * the transaction has been processed.
                      */
                     ReadRecordsRespPars readEventLogParser = poTransaction.prepareReadRecordsCmd(
-                            SFI_EventLog, ReadDataStructure.SINGLE_RECORD_DATA, RECORD_NUMBER_1,
-                            (byte) 0x00, String.format("EventLog (SFI=%02X, recnbr=%d))",
-                                    SFI_EventLog, RECORD_NUMBER_1));
+                            CalypsoClassicInfo.SFI_EventLog, ReadDataStructure.SINGLE_RECORD_DATA,
+                            CalypsoClassicInfo.RECORD_NUMBER_1, (byte) 0x00,
+                            String.format("EventLog (SFI=%02X, recnbr=%d))",
+                                    CalypsoClassicInfo.SFI_EventLog,
+                                    CalypsoClassicInfo.RECORD_NUMBER_1));
 
                     /*
                      * Actual PO communication: send the prepared read order, then close the channel
@@ -256,8 +261,8 @@ public class UseCase_Calypso2_DefaultSelectionNotification_Stub implements Reade
                              * Retrieve the data read from the parser updated during the transaction
                              * process
                              */
-                            byte eventLog[] =
-                                    (readEventLogParser.getRecords()).get((int) RECORD_NUMBER_1);
+                            byte eventLog[] = (readEventLogParser.getRecords())
+                                    .get((int) CalypsoClassicInfo.RECORD_NUMBER_1);
 
                             /* Log the result */
                             logger.info("EventLog file data: {}", ByteArrayUtils.toHex(eventLog));

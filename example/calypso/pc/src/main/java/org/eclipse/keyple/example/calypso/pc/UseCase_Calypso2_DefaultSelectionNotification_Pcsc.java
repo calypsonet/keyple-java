@@ -12,12 +12,12 @@
 package org.eclipse.keyple.example.calypso.pc;
 
 
-import static org.eclipse.keyple.example.calypso.common.postructure.CalypsoClassicInfo.*;
 import org.eclipse.keyple.calypso.command.po.parser.ReadDataStructure;
 import org.eclipse.keyple.calypso.command.po.parser.ReadRecordsRespPars;
 import org.eclipse.keyple.calypso.transaction.CalypsoPo;
 import org.eclipse.keyple.calypso.transaction.PoSelector;
 import org.eclipse.keyple.calypso.transaction.PoTransaction;
+import org.eclipse.keyple.example.calypso.common.postructure.CalypsoClassicInfo;
 import org.eclipse.keyple.example.calypso.common.transaction.CalypsoUtilities;
 import org.eclipse.keyple.plugin.pcsc.PcscPlugin;
 import org.eclipse.keyple.seproxy.ChannelState;
@@ -122,9 +122,11 @@ public class UseCase_Calypso2_DefaultSelectionNotification_Pcsc implements Reade
          * Prepare the reading order and keep the associated parser for later use once the selection
          * has been made.
          */
-        readEnvironmentParser = poSelector.prepareReadRecordsCmd(SFI_EnvironmentAndHolder,
-                ReadDataStructure.SINGLE_RECORD_DATA, RECORD_NUMBER_1, (byte) 0x00,
-                String.format("EnvironmentAndHolder (SFI=%02X))", SFI_EnvironmentAndHolder));
+        readEnvironmentParser =
+                poSelector.prepareReadRecordsCmd(CalypsoClassicInfo.SFI_EnvironmentAndHolder,
+                        ReadDataStructure.SINGLE_RECORD_DATA, CalypsoClassicInfo.RECORD_NUMBER_1,
+                        (byte) 0x00, String.format("EnvironmentAndHolder (SFI=%02X))",
+                                CalypsoClassicInfo.SFI_EnvironmentAndHolder));
 
         /*
          * Add the selection case to the current selection (we could have added other cases here)
@@ -173,8 +175,8 @@ public class UseCase_Calypso2_DefaultSelectionNotification_Pcsc implements Reade
                     /*
                      * Retrieve the data read from the parser updated during the selection process
                      */
-                    byte environmentAndHolder[] =
-                            (readEnvironmentParser.getRecords()).get((int) RECORD_NUMBER_1);
+                    byte environmentAndHolder[] = (readEnvironmentParser.getRecords())
+                            .get((int) CalypsoClassicInfo.RECORD_NUMBER_1);
 
                     /* Log the result */
                     logger.info("Environment file data: {}",
@@ -196,9 +198,11 @@ public class UseCase_Calypso2_DefaultSelectionNotification_Pcsc implements Reade
                      * the transaction has been processed.
                      */
                     ReadRecordsRespPars readEventLogParser = poTransaction.prepareReadRecordsCmd(
-                            SFI_EventLog, ReadDataStructure.SINGLE_RECORD_DATA, RECORD_NUMBER_1,
-                            (byte) 0x00, String.format("EventLog (SFI=%02X, recnbr=%d))",
-                                    SFI_EventLog, RECORD_NUMBER_1));
+                            CalypsoClassicInfo.SFI_EventLog, ReadDataStructure.SINGLE_RECORD_DATA,
+                            CalypsoClassicInfo.RECORD_NUMBER_1, (byte) 0x00,
+                            String.format("EventLog (SFI=%02X, recnbr=%d))",
+                                    CalypsoClassicInfo.SFI_EventLog,
+                                    CalypsoClassicInfo.RECORD_NUMBER_1));
 
                     /*
                      * Actual PO communication: send the prepared read order, then close the channel
@@ -212,8 +216,8 @@ public class UseCase_Calypso2_DefaultSelectionNotification_Pcsc implements Reade
                              * Retrieve the data read from the parser updated during the transaction
                              * process
                              */
-                            byte eventLog[] =
-                                    (readEventLogParser.getRecords()).get((int) RECORD_NUMBER_1);
+                            byte eventLog[] = (readEventLogParser.getRecords())
+                                    .get((int) CalypsoClassicInfo.RECORD_NUMBER_1);
 
                             /* Log the result */
                             logger.info("EventLog file data: {}", ByteArrayUtils.toHex(eventLog));
