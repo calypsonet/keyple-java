@@ -318,8 +318,15 @@ public class CalypsoClassicTransactionEngine extends AbstractReaderObserverEngin
          */
         seSelection.prepareSelection(
                 new PoSelector(ByteArrayUtils.fromHex(poFakeAid2), SeSelector.SelectMode.FIRST,
-                        ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4,
+                        ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_B_PRIME,
                         PoSelector.RevisionTarget.TARGET_REV2_REV3, "Selector with fake AID2"));
+
+        /*
+         * Add selection case 4: ATR selection, rev 1 atrregex
+         */
+        seSelection.prepareSelection(new PoSelector(CalypsoClassicInfo.ATR_REV1_REGEX,
+                ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_B_PRIME,
+                PoSelector.RevisionTarget.TARGET_REV2_REV3, "Selector with fake AID2"));
 
         return seSelection.getSelectionOperation();
     }
