@@ -25,9 +25,6 @@ public class DemoWsKMasterServer {
         // Create the procotol factory
         TransportFactory factory = new WskFactory(true); // Web socket
 
-        /**
-         * DemoThreads
-         */
         // Launch the server thread
         DemoThreads.startServer(true, factory);
 
