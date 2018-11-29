@@ -139,10 +139,12 @@ public final class VirtualReader extends Observable implements ObservableReader,
         // notify observers in a separate thread
         new Thread() {
             public void run() {
-                if(thisReader.countObservers()>0){
+                if (thisReader.countObservers() > 0) {
                     thisReader.notifyObservers(event);
-                }else{
-                    logger.warn("An event was received but no observers are declared into VirtualReader : {}", this.getName());
+                } else {
+                    logger.debug(
+                            "An event was received but no observers are declared into VirtualReader : {} {}",
+                            thisReader.getName(), event.getEventType());
                 }
             }
         }.start();
@@ -187,8 +189,8 @@ public final class VirtualReader extends Observable implements ObservableReader,
      */
 
     public void addObserver(ReaderObserver observer) {
-        logger.trace("[{}][{}] addObserver => Adding an observer {}",
-                this.getName(), observer.toString());
+        logger.trace("[{}][{}] addObserver => Adding an observer {}", this.getName(),
+                observer.toString());
         super.addObserver(observer);
     }
 
@@ -199,7 +201,8 @@ public final class VirtualReader extends Observable implements ObservableReader,
      */
 
     public void removeObserver(ReaderObserver observer) {
-        logger.trace("[{}] removeObserver => Deleting a reader observer {}", this.getName(), observer.toString());
+        logger.trace("[{}] removeObserver => Deleting a reader observer {}", this.getName(),
+                observer.toString());
         super.removeObserver(observer);
     }
 
@@ -214,8 +217,9 @@ public final class VirtualReader extends Observable implements ObservableReader,
      */
 
     public final void notifyObservers(ReaderEvent event) {
-        logger.trace("[{}] AbstractObservableReader => Notifying a reader event: {} to #{} observers ", this.getName(),
-                event.getEventType(), this.countObservers());
+        logger.trace(
+                "[{}] AbstractObservableReader => Notifying a reader event: {} to #{} observers ",
+                this.getName(), event.getEventType(), this.countObservers());
 
         setChanged();
         super.notifyObservers(event);

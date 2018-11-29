@@ -85,7 +85,6 @@ public class NativeReaderServiceImpl implements NativeReaderService, DtoHandler 
                     throw new IllegalStateException(
                             "a READER_CONNECT request has been received by NativeReaderService");
                 } else {
-                    logger.info("**** RESPONSE - READER_CONNECT ****");
                     try {
                         RemoteMethodParser<String> rmConnectReaderParser =
                                 new RmConnectReaderParser(this);
@@ -106,7 +105,6 @@ public class NativeReaderServiceImpl implements NativeReaderService, DtoHandler 
                     throw new IllegalStateException(
                             "a READER_DISCONNECT request has been received by NativeReaderService");
                 } else {
-                    logger.info("**** RESPONSE - READER_DISCONNECT ****");
                     // todo
                     out = transportDto.nextTransportDTO(KeypleDtoHelper.NoResponse());
                 }

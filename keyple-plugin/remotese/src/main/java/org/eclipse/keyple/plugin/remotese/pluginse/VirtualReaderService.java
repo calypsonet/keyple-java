@@ -82,33 +82,28 @@ public class VirtualReaderService implements DtoHandler {
     public TransportDto onDTO(TransportDto transportDto) {
 
         KeypleDto keypleDTO = transportDto.getKeypleDTO();
-        TransportDto out = null;
-
-        logger.trace("onDto {}", KeypleDtoHelper.toJson(keypleDTO));
         RemoteMethod method = RemoteMethod.get(keypleDTO.getAction());
-        logger.debug("Remote Method called : {} - isRequest : {}", method, keypleDTO.isRequest());
+        logger.trace("onDTO, Remote Method called : {} - isRequest : {} - keypleDto : {}", method,
+                keypleDTO.isRequest(), KeypleDtoHelper.toJson(keypleDTO));
 
         switch (method) {
             case READER_CONNECT:
                 if (keypleDTO.isRequest()) {
-                    out = new RmConnectReaderExecutor(this.plugin, this.dtoSender)
+                    return new RmConnectReaderExecutor(this.plugin, this.dtoSender)
                             .execute(transportDto);
                 } else {
                     throw new IllegalStateException(
                             "a READER_CONNECT response has been received by VirtualReaderService");
                 }
-                break;
             case READER_DISCONNECT:
                 if (keypleDTO.isRequest()) {
-                    out = new RmDisconnectReaderExecutor(this.plugin).execute(transportDto);
+                    return new RmDisconnectReaderExecutor(this.plugin).execute(transportDto);
                 } else {
                     throw new IllegalStateException(
                             "a READER_DISCONNECT response has been received by VirtualReaderService");
                 }
-                break;
             case READER_EVENT:
-                out = new RmEventExecutor(plugin).execute(transportDto);
-                break;
+                return new RmEventExecutor(plugin).execute(transportDto);
             case READER_TRANSMIT:
                 if (keypleDTO.isRequest()) {
                     throw new IllegalStateException(
@@ -126,12 +121,13 @@ public class VirtualReaderService implements DtoHandler {
                             reader.getSession().asyncSetSeResponseSet(seResponseSet, null);
 
                             // chain response with a seRequest if needed
-                            out = isSeRequestToSendBack(transportDto);
+                            return isSeRequestToSendBack(transportDto);
 
                         } catch (KeypleRemoteReaderException e) {
                             // e.printStackTrace();
                             // propagate exception
                             reader.getSession().asyncSetSeResponseSet(null, e);
+                            return transportDto.nextTransportDTO(KeypleDtoHelper.NoResponse());
                         }
 
                     } catch (KeypleReaderNotFoundException e) {
@@ -141,11 +137,10 @@ public class VirtualReaderService implements DtoHandler {
                                 e);
                     }
                 }
-                break;
             default:
                 logger.debug("Default case");
+                return transportDto.nextTransportDTO(KeypleDtoHelper.NoResponse());
         }
-        return out;
     }
 
 

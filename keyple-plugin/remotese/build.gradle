@@ -176,7 +176,8 @@ dependencies {
     testImplementation 'org.mockito:mockito-core:2.13.0'
 
     //use keyple library : keyple plugin stub unit tests
-    testCompile project(path: ':keyple-plugin:keyple-plugin-stub', configuration: 'testArtifacts')
+    testImplementation project(path: ':keyple-plugin:keyple-plugin-stub', configuration: 'testArtifacts')
+    testImplementation project(path: ':keyple-plugin:keyple-plugin-stub')
 
     //use keyple library : keyple calypso
     testImplementation 'org.eclipse.keyple:keyple-calypso:1.+'

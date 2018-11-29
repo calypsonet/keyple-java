@@ -12,16 +12,17 @@
 package org.eclipse.keyple.plugin.remotese.integration;
 
 import static org.mockito.Mockito.doAnswer;
-import java.io.IOException;
 import org.eclipse.keyple.plugin.remotese.nativese.NativeReaderServiceImpl;
 import org.eclipse.keyple.plugin.remotese.pluginse.VirtualReader;
 import org.eclipse.keyple.plugin.remotese.pluginse.VirtualReaderService;
 import org.eclipse.keyple.plugin.remotese.transport.*;
 import org.eclipse.keyple.plugin.remotese.transport.java.LocalClient;
 import org.eclipse.keyple.plugin.remotese.transport.java.LocalTransportFactory;
+import org.eclipse.keyple.plugin.stub.StubPlugin;
 import org.eclipse.keyple.plugin.stub.StubReader;
-import org.eclipse.keyple.seproxy.message.ProxyReader;
-import org.eclipse.keyple.util.Observable;
+import org.eclipse.keyple.seproxy.event.ObservablePlugin;
+import org.eclipse.keyple.seproxy.event.PluginEvent;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -38,37 +39,73 @@ public class NativeReaderServiceTest {
 
     // Real objects
     TransportFactory factory;
-    Observable.Observer observer;
+    ObservablePlugin.PluginObserver stubPluginObserver;
     VirtualReaderService virtualReaderService;
+
+    StubReader nativeReader;
+    VirtualReader virtualReader;
+
+    final String NATIVE_READER_NAME = "testStubReader";
+    final String CLIENT_NODE_ID = "testClientNodeId";
+
 
     // Spy Object
     NativeReaderServiceImpl nativeReaderSpy;
 
+
+
     @Before
-    public void setTup() throws IOException {
+    public void setTup() throws Exception {
         logger.info("*** Init LocalTransportFactory");
         // use a local transport factory for testing purposes (only java calls between client and
         // server)
         // only one client and one server
         factory = new LocalTransportFactory();
-        observer = new Observable.Observer() {
-            @Override
-            public void update(Object o) {
-                logger.debug("event received {}", o);
-            }
-        };
 
+        stubPluginObserver = new ObservablePlugin.PluginObserver() {
+            @Override
+            public void update(PluginEvent pluginEvent) {
+                logger.debug("Default Stub Plugin Observer : {}", pluginEvent);
+            }
+
+        };
 
         logger.info("*** Bind Master Services");
         // bind Master services to server
-        virtualReaderService = Integration.bindMaster(factory.getServer(), observer);
+        virtualReaderService = Integration.bindMaster(factory.getServer());
 
         logger.info("*** Bind Slave Services");
         // bind Slave services to client
         nativeReaderSpy = Integration.bindSlaveSpy(factory.getClient());
 
+        nativeReader = Integration.createStubReader(NATIVE_READER_NAME, stubPluginObserver);
 
     }
+
+
+    @After
+    public void tearDown() throws Exception {
+
+        logger.info("TearDown Test");
+
+        StubPlugin stubPlugin = StubPlugin.getInstance();
+
+
+        // delete stubReader
+        stubPlugin.getInstance().unplugReader(nativeReader.getName());
+
+        Thread.sleep(500);
+
+        //delete observer and monitor thread
+        stubPlugin.removeObserver(stubPluginObserver);
+
+        nativeReader.clearObservers();
+
+        Thread.sleep(500);
+    }
+
+
+
     /*
      * CONNECT METHOD
      */
@@ -81,10 +118,6 @@ public class NativeReaderServiceTest {
      */
     @Test
     public void testOKConnect() throws Exception {
-        final String NATIVE_READER_NAME = "testConnect";
-        final String CLIENT_NODE_ID = "testConnectNodeId";
-
-        StubReader nativeReader = Integration.createStubReader(NATIVE_READER_NAME);
 
         nativeReaderSpy.connectReader(nativeReader, CLIENT_NODE_ID);
 
@@ -105,10 +138,6 @@ public class NativeReaderServiceTest {
      */
     @Test
     public void testKOConnectError() throws Exception {
-        final String NATIVE_READER_NAME = "testConnectError";
-        final String CLIENT_NODE_ID = "testConnectErrorNodeId";
-
-        ProxyReader nativeReader = Integration.createStubReader(NATIVE_READER_NAME);
 
         // first connectReader is successful
         nativeReaderSpy.connectReader(nativeReader, CLIENT_NODE_ID);
@@ -128,10 +157,6 @@ public class NativeReaderServiceTest {
      */
     @Test(expected = KeypleRemoteException.class)
     public void testKOConnectServerError() throws Exception {
-        final String NATIVE_READER_NAME = "testConnectServerError";
-        final String CLIENT_NODE_ID = "testConnectServerErrorNodeId";
-
-        ProxyReader nativeReader = Integration.createStubReader(NATIVE_READER_NAME);
 
         // bind Slave to faulty client
         nativeReaderSpy = Integration.bindSlaveSpy(new LocalClient(null));
@@ -151,16 +176,13 @@ public class NativeReaderServiceTest {
      */
     @Test
     public void testOKConnectDisconnect() throws Exception {
-        final String NATIVE_READER_NAME = "testDisconnect";
-        final String CLIENT_NODE_ID = "testDisconnectNodeId";
-
-        ProxyReader nativeReader = Integration.createStubReader(NATIVE_READER_NAME);
 
         // connect
         nativeReaderSpy.connectReader(nativeReader, CLIENT_NODE_ID);
 
         VirtualReader virtualReader = (VirtualReader) virtualReaderService.getPlugin()
                 .getReaderByRemoteName(NATIVE_READER_NAME);
+
         Assert.assertEquals(NATIVE_READER_NAME, virtualReader.getNativeReaderName());
 
         // disconnect
@@ -178,10 +200,6 @@ public class NativeReaderServiceTest {
      */
     @Test
     public void testKODisconnectNotFoundError() throws Exception {
-        final String NATIVE_READER_NAME = "testDisconnectNotFoundError";
-        final String CLIENT_NODE_ID = "testDisconnectNotFoundErrorNodeId";
-
-        ProxyReader nativeReader = Integration.createStubReader(NATIVE_READER_NAME);
 
         // assert an exception will be contained into keypleDto response
         doAnswer(Integration.assertContainsException()).when(nativeReaderSpy)
@@ -201,10 +219,6 @@ public class NativeReaderServiceTest {
      */
     @Test(expected = KeypleRemoteException.class)
     public void testKODisconnectServerError() throws Exception {
-        final String NATIVE_READER_NAME = "testDisconnectServerError";
-        final String CLIENT_NODE_ID = "testDisconnectServerErrorNodeId";
-
-        ProxyReader nativeReader = Integration.createStubReader(NATIVE_READER_NAME);
 
         // bind Slave to faulty client
         nativeReaderSpy = Integration.bindSlaveSpy(new LocalClient(null));

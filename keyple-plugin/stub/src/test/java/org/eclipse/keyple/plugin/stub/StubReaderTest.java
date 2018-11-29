@@ -14,6 +14,8 @@ package org.eclipse.keyple.plugin.stub;
 
 
 import java.util.*;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 import org.eclipse.keyple.calypso.command.po.PoRevision;
 import org.eclipse.keyple.calypso.command.po.builder.IncreaseCmdBuild;
 import org.eclipse.keyple.calypso.command.po.builder.ReadRecordsCmdBuild;
@@ -108,6 +110,10 @@ public class StubReaderTest {
 
     @Test
     public void testInsert() throws InterruptedException {
+
+        // CountDown lock
+        final CountDownLatch lock = new CountDownLatch(1);
+
         // add observer
         reader.addObserver(new ObservableReader.ReaderObserver() {
             @Override
@@ -115,28 +121,25 @@ public class StubReaderTest {
                 Assert.assertEquals(event.getReaderName(), reader.getName());
                 Assert.assertEquals(event.getPluginName(), StubPlugin.getInstance().getName());
                 Assert.assertEquals(ReaderEvent.EventType.SE_INSERTED, event.getEventType());
-                /* remove the SE to indicate the successful notification */
+
                 logger.debug("testInsert event is correct");
-                reader.removeSe();
+                // unlock thread
+                lock.countDown();
             }
         });
         // test
         reader.insertSe(hoplinkSE());
 
-        // assert
-        Assert.assertTrue(reader.isSePresent());
-
-        // let the notification process work
-        Thread.sleep(100);
-
-        // check if the notification was successful
-        if (reader.isSePresent()) {
-            Assert.fail("The expected notification failed.");
-        }
+        // lock thread for 2 seconds max to wait for the event
+        lock.await(2, TimeUnit.SECONDS);
     }
 
     @Test
     public void testInsertMatchingSe() throws InterruptedException {
+
+        // CountDown lock
+        final CountDownLatch lock = new CountDownLatch(1);
+
         // add observer
         reader.addObserver(new ObservableReader.ReaderObserver() {
             @Override
@@ -157,8 +160,9 @@ public class StubReaderTest {
                  * .getSingleResponse().getSelectionStatus().getFci().getBytes(),
                  * hoplinkSE().getFci()); // remove the SE to handle the notification success
                  */
-                /* remove the SE to indicate the successful notification */
-                reader.removeSe();
+                logger.debug("match event is correct");
+                // unlock thread
+                lock.countDown();
             }
         });
         String poAid = "A000000291A000000191";
@@ -176,20 +180,16 @@ public class StubReaderTest {
         // test
         reader.insertSe(hoplinkSE());
 
-        // assert
-        Assert.assertTrue(reader.isSePresent());
-
-        // let the notification process work
-        Thread.sleep(100);
-
-        // check if the notification was successful
-        if (reader.isSePresent()) {
-            Assert.fail("The expected notification failed.");
-        }
+        // lock thread for 2 seconds max to wait for the event
+        lock.await(2, TimeUnit.SECONDS);
     }
 
     @Test
     public void testATR() throws InterruptedException {
+
+        // CountDown lock
+        final CountDownLatch lock = new CountDownLatch(1);
+
         // add observer
         reader.addObserver(new ObservableReader.ReaderObserver() {
             @Override
@@ -211,20 +211,17 @@ public class StubReaderTest {
                 } catch (KeypleReaderException e) {
                     Assert.fail("Unexcepted exception");
                 }
-                /* remove the SE to indicate the successful notification */
-                reader.removeSe();
+                // unlock thread
+                lock.countDown();
             }
         });
 
         // test
         reader.insertSe(hoplinkSE());
 
-        Thread.sleep(100);
+        // lock thread for 2 seconds max to wait for the event
+        lock.await(2, TimeUnit.SECONDS);
 
-        // check if the notification was successful
-        if (reader.isSePresent()) {
-            Assert.fail("The expected notification failed.");
-        }
     }
 
 
@@ -596,7 +593,6 @@ public class StubReaderTest {
      * An Exception will be thrown.
      */
     static public SeRequestSet getNoResponseRequest() {
-        String poAid = "A000000291A000000191";
 
         IncreaseCmdBuild poIncreaseCmdBuild =
                 new IncreaseCmdBuild(PoRevision.REV3_1, (byte) 0x14, (byte) 0x01, 0, "");
@@ -604,8 +600,6 @@ public class StubReaderTest {
         List<ApduRequest> poApduRequestList;
 
         poApduRequestList = Arrays.asList(poIncreaseCmdBuild.getApduRequest());
-
-        SeRequest.Selector selector = new SeRequest.AidSelector(ByteArrayUtils.fromHex(poAid));
 
         SeRequest seRequest = new SeRequest(poApduRequestList, ChannelState.CLOSE_AFTER);
 

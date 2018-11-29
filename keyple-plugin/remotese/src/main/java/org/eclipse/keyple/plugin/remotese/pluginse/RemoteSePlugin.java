@@ -48,7 +48,7 @@ public final class RemoteSePlugin extends Observable implements ObservablePlugin
      */
     RemoteSePlugin(VirtualReaderSessionFactory sessionManager) {
         this.sessionManager = sessionManager;
-        logger.info("RemoteSePlugin");
+        logger.info("Init RemoteSePlugin");
     }
 
     @Override
@@ -109,7 +109,7 @@ public final class RemoteSePlugin extends Observable implements ObservablePlugin
 
         // check if reader is not already connected (by localReaderName)
         if (!isReaderConnected(nativeReaderName)) {
-            logger.info("Connecting a new Virtual Reader with localReaderName {} with session {}",
+            logger.info("Create a new Virtual Reader with localReaderName {} with session {}",
                     nativeReaderName, session.getSessionId());
 
             final VirtualReader virtualReader = new VirtualReader(session, nativeReaderName);
@@ -169,8 +169,8 @@ public final class RemoteSePlugin extends Observable implements ObservablePlugin
      */
     public void onReaderEvent(ReaderEvent event, String sessionId) {
         logger.debug("OnReaderEvent {}", event);
-        logger.debug("Dispatch ReaderEvent to the appropriate Reader : {} sessionId : {}", event.getReaderName(),
-                sessionId);
+        logger.debug("Dispatch ReaderEvent to the appropriate Reader : {} sessionId : {}",
+                event.getReaderName(), sessionId);
         try {
             // todo dispatch is managed by name, should take sessionId also
             VirtualReader virtualReader =

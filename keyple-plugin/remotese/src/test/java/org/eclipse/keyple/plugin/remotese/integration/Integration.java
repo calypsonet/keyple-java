@@ -11,7 +11,7 @@
  ********************************************************************************/
 package org.eclipse.keyple.plugin.remotese.integration;
 
-import java.util.SortedSet;
+
 import org.eclipse.keyple.plugin.remotese.nativese.NativeReaderServiceImpl;
 import org.eclipse.keyple.plugin.remotese.pluginse.VirtualReaderService;
 import org.eclipse.keyple.plugin.remotese.transport.KeypleDtoHelper;
@@ -23,10 +23,7 @@ import org.eclipse.keyple.plugin.stub.StubReader;
 import org.eclipse.keyple.seproxy.ReaderPlugin;
 import org.eclipse.keyple.seproxy.SeProxyService;
 import org.eclipse.keyple.seproxy.event.ObservablePlugin;
-import org.eclipse.keyple.seproxy.event.PluginEvent;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderNotFoundException;
-import org.eclipse.keyple.seproxy.message.ProxyReader;
-import org.eclipse.keyple.util.Observable;
 import org.junit.Assert;
 import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
@@ -43,18 +40,15 @@ public class Integration {
      * Create a Virtual Reader Service
      * 
      * @param node
-     * @param observer
      * @return
      */
-    public static VirtualReaderService bindMaster(TransportNode node,
-            Observable.Observer observer) {
+    public static VirtualReaderService bindMaster(TransportNode node) {
         // Create Master services : virtualReaderService
         VirtualReaderService virtualReaderService =
                 new VirtualReaderService(SeProxyService.getInstance(), node);
 
         // observe remote se plugin for events
         ReaderPlugin rsePlugin = virtualReaderService.getPlugin();
-        ((Observable) rsePlugin).addObserver(observer);
 
         // Binds virtualReaderService to a
         virtualReaderService.bindDtoEndpoint(node);
@@ -104,20 +98,16 @@ public class Integration {
      * @throws InterruptedException
      * @throws KeypleReaderNotFoundException
      */
-    public static StubReader createStubReader(String stubReaderName)
+    public static StubReader createStubReader(String stubReaderName,
+            ObservablePlugin.PluginObserver observer)
             throws InterruptedException, KeypleReaderNotFoundException {
         SeProxyService seProxyService = SeProxyService.getInstance();
 
         StubPlugin stubPlugin = StubPlugin.getInstance();
         seProxyService.addPlugin(stubPlugin);
 
-        // add an observer to start the plugin monitoring thread
-        stubPlugin.addObserver(new ObservablePlugin.PluginObserver() {
-            @Override
-            public void update(PluginEvent event) {
-                logger.debug("received event in stubplugin : {}", event.getEventType());
-            }
-        });
+        // add an stubPluginObserver to start the plugin monitoring thread
+        stubPlugin.addObserver(observer);
 
         logger.debug("Stub plugin count observers : {}", stubPlugin.countObservers());
 

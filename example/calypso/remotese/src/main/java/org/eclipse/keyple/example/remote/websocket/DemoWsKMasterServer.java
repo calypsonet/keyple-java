@@ -15,25 +15,25 @@ import org.eclipse.keyple.example.remote.calypso.DemoThreads;
 import org.eclipse.keyple.plugin.remotese.transport.TransportFactory;
 
 /**
- * Demo websocket
- * The master device uses the websocket server whereas the slave device uses the websocket client
+ * Demo websocket The master device uses the websocket server whereas the slave device uses the
+ * websocket client
  */
 public class DemoWsKMasterServer {
 
     public static void main(String[] args) throws Exception {
 
-        //Create the procotol factory
+        // Create the procotol factory
         TransportFactory factory = new WskFactory(true); // Web socket
 
         /**
          * DemoThreads
          */
-        //Launch the server thread
+        // Launch the server thread
         DemoThreads.startServer(true, factory);
 
         Thread.sleep(1000);
 
-        //Launch the client thread
+        // Launch the client thread
         DemoThreads.startClient(false, factory);
     }
 }

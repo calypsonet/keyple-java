@@ -127,8 +127,13 @@ public abstract class AbstractThreadedObservablePlugin extends AbstractObservabl
                     /* sleep for a while. */
                     Thread.sleep(threadWaitTimeout);
                 }
-            } catch (Exception e) {
-                logger.error("[{}] An exception occurred while monitoring plugin: {}, cause {}",
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+                logger.warn("[{}] An exception occurred while monitoring plugin: {}, cause {}",
+                        this.pluginName, e.getMessage(), e.getCause());
+            } catch (KeypleReaderException e) {
+                e.printStackTrace();
+                logger.warn("[{}] An exception occurred while monitoring plugin: {}, cause {}",
                         this.pluginName, e.getMessage(), e.getCause());
             }
         }

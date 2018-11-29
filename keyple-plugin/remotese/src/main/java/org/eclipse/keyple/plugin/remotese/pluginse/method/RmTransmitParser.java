@@ -15,19 +15,28 @@ import org.eclipse.keyple.plugin.remotese.transport.*;
 import org.eclipse.keyple.plugin.remotese.transport.json.JsonParser;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.message.SeResponseSet;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class RmTransmitParser implements RemoteMethodParser<SeResponseSet> {
+
+    private static final Logger logger = LoggerFactory.getLogger(RmTransmitParser.class);
 
     public RmTransmitParser() {}
 
     @Override
     public SeResponseSet parseResponse(KeypleDto keypleDto) throws KeypleRemoteReaderException {
+
+        logger.trace("KeypleDto : {}", keypleDto);
+
         if (KeypleDtoHelper.containsException(keypleDto)) {
+            logger.trace("KeypleDto contains an exception: {}", keypleDto);
             KeypleReaderException ex =
                     JsonParser.getGson().fromJson(keypleDto.getBody(), KeypleReaderException.class);
             throw new KeypleRemoteReaderException(
                     "An exception occurs while calling the remote method transmitSet", ex);
         } else {
+            logger.trace("KeypleDto contains a response: {}", keypleDto);
             return JsonParser.getGson().fromJson(keypleDto.getBody(), SeResponseSet.class);
         }
     }

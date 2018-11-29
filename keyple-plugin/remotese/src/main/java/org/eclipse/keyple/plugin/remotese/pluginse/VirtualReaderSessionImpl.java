@@ -87,7 +87,9 @@ public class VirtualReaderSessionImpl extends Observable<KeypleDto>
     public void asyncSetSeResponseSet(SeResponseSet seResponseSet,
             KeypleRemoteReaderException remoteException) {
 
-        logger.debug("Session {} asyncSetSeResponseSet {}", sessionId, seResponseSet);
+        logger.debug("Session {} asyncSetSeResponseSet, responseSet : {} - remoteException : {}",
+                sessionId, seResponseSet, remoteException);
+
         if (this.seRequestSet == null) {
             logger.warn("seRequestSet is missing while receiving seResponseSet {}", seResponseSet);
         }
@@ -166,8 +168,9 @@ public class VirtualReaderSessionImpl extends Observable<KeypleDto>
             logger.debug("Set lock on thread");
             lock = new CountDownLatch(1);
             lock.await();
-            logger.debug("Send SeRequestSet, thread unlock");
-
+            logger.debug(
+                    "Thread unlock in session {} asyncSetSeResponseSet, responseSet : {} - remoteException : {}",
+                    sessionId, seResponseSet, remoteException);
             // if an exception was thrown remotely
             if (this.remoteException != null) {
                 throw remoteException;

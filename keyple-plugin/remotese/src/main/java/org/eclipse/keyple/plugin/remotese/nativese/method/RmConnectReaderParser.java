@@ -19,7 +19,6 @@ import org.eclipse.keyple.plugin.remotese.transport.RemoteMethodParser;
 import org.eclipse.keyple.plugin.remotese.transport.json.JsonParser;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderNotFoundException;
 import org.eclipse.keyple.seproxy.message.ProxyReader;
-import org.eclipse.keyple.seproxy.plugin.AbstractObservableReader;
 import org.eclipse.keyple.seproxy.plugin.AbstractSelectionLocalReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
