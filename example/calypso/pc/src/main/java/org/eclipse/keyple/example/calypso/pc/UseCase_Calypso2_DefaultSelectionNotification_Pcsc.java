@@ -28,6 +28,7 @@ import org.eclipse.keyple.seproxy.event.ObservableReader.ReaderObserver;
 import org.eclipse.keyple.seproxy.event.ReaderEvent;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
+import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
 import org.eclipse.keyple.seproxy.protocol.Protocol;
 import org.eclipse.keyple.transaction.MatchingSe;
 import org.eclipse.keyple.transaction.SeSelection;
@@ -115,7 +116,7 @@ public class UseCase_Calypso2_DefaultSelectionNotification_Pcsc implements Reade
          * selection and read additional information afterwards
          */
         PoSelector poSelector = new PoSelector(ByteArrayUtils.fromHex(poAid),
-                SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN, Protocol.ANY,
+                SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4,
                 PoSelector.RevisionTarget.TARGET_REV3, "AID: " + poAid);
 
         /*

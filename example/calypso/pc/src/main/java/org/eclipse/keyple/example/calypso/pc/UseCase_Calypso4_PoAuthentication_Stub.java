@@ -30,6 +30,7 @@ import org.eclipse.keyple.seproxy.event.ObservablePlugin;
 import org.eclipse.keyple.seproxy.event.PluginEvent;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 import org.eclipse.keyple.seproxy.exception.NoStackTraceThrowable;
+import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
 import org.eclipse.keyple.seproxy.protocol.Protocol;
 import org.eclipse.keyple.transaction.MatchingSe;
 import org.eclipse.keyple.transaction.SeSelection;
@@ -180,7 +181,7 @@ public class UseCase_Calypso4_PoAuthentication_Stub {
             /* Calypso AID */
             String poAid = "A0000004040125090101";
             PoSelector poSelector = new PoSelector(ByteArrayUtils.fromHex(poAid),
-                    SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN, Protocol.ANY,
+                    SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4,
                     PoSelector.RevisionTarget.TARGET_REV3, "AID: " + poAid);
 
             /*

@@ -26,6 +26,7 @@ import org.eclipse.keyple.seproxy.SeProxyService;
 import org.eclipse.keyple.seproxy.SeReader;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 import org.eclipse.keyple.seproxy.exception.NoStackTraceThrowable;
+import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
 import org.eclipse.keyple.seproxy.protocol.Protocol;
 import org.eclipse.keyple.transaction.SeSelection;
 import org.eclipse.keyple.transaction.SeSelector;
@@ -114,7 +115,7 @@ public class UseCase_Calypso1_ExplicitSelectionAid_Pcsc {
              * the selection and read additional information afterwards
              */
             PoSelector poSelector = new PoSelector(ByteArrayUtils.fromHex(poAid),
-                    SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN, Protocol.ANY,
+                    SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4,
                     PoSelector.RevisionTarget.TARGET_REV3, "AID: " + poAid);
 
             /*
