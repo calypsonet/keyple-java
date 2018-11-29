@@ -31,7 +31,6 @@ import org.eclipse.keyple.seproxy.event.PluginEvent;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 import org.eclipse.keyple.seproxy.exception.NoStackTraceThrowable;
 import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
-import org.eclipse.keyple.seproxy.protocol.Protocol;
 import org.eclipse.keyple.transaction.SeSelection;
 import org.eclipse.keyple.transaction.SeSelector;
 import org.eclipse.keyple.util.ByteArrayUtils;
@@ -62,7 +61,6 @@ import org.slf4j.LoggerFactory;
 public class UseCase_Calypso1_ExplicitSelectionAid_Stub {
     protected static final Logger logger =
             LoggerFactory.getLogger(UseCase_Calypso1_ExplicitSelectionAid_Stub.class);
-    private static String poAid = "A0000004040125090101";
 
 
     static class StubPluginObserver implements PluginObserver {
@@ -151,9 +149,10 @@ public class UseCase_Calypso1_ExplicitSelectionAid_Stub {
              * Calypso selection: configures a PoSelector with all the desired attributes to make
              * the selection and read additional information afterwards
              */
-            PoSelector poSelector = new PoSelector(ByteArrayUtils.fromHex(poAid),
-                    SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4,
-                    PoSelector.RevisionTarget.TARGET_REV3, "AID: " + poAid);
+            PoSelector poSelector = new PoSelector(ByteArrayUtils.fromHex(CalypsoClassicInfo.AID),
+                    SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN,
+                    ContactlessProtocols.PROTOCOL_ISO14443_4, PoSelector.RevisionTarget.TARGET_REV3,
+                    "AID: " + CalypsoClassicInfo.AID);
 
             /*
              * Prepare the reading order and keep the associated parser for later use once the

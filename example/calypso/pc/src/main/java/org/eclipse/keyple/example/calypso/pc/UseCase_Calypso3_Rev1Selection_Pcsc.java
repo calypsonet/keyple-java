@@ -28,7 +28,6 @@ import org.eclipse.keyple.seproxy.SeReader;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 import org.eclipse.keyple.seproxy.exception.NoStackTraceThrowable;
 import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
-import org.eclipse.keyple.seproxy.protocol.Protocol;
 import org.eclipse.keyple.transaction.SeSelection;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.slf4j.Logger;
@@ -116,8 +115,9 @@ public class UseCase_Calypso3_Rev1Selection_Pcsc {
              * Calypso selection: configures a PoSelector with all the desired attributes to make
              * the selection and read additional information afterwards
              */
-            PoSelector poSelector = new PoSelector(poAtrRegex, ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_B_PRIME,
-                    PoSelector.RevisionTarget.TARGET_REV1, "ATR: " + poAtrRegex);
+            PoSelector poSelector = new PoSelector(poAtrRegex, ChannelState.KEEP_OPEN,
+                    ContactlessProtocols.PROTOCOL_B_PRIME, PoSelector.RevisionTarget.TARGET_REV1,
+                    "ATR: " + poAtrRegex);
 
             /*
              * Prepare the selection of the DF RT.

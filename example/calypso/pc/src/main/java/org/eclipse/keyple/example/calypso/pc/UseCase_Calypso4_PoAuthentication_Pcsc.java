@@ -121,8 +121,9 @@ public class UseCase_Calypso4_PoAuthentication_Pcsc {
              * the selection and read additional information afterwards
              */
             PoSelector poSelector = new PoSelector(ByteArrayUtils.fromHex(CalypsoClassicInfo.AID),
-                    SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4,
-                    PoSelector.RevisionTarget.TARGET_REV3, "AID: " + CalypsoClassicInfo.AID);
+                    SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN,
+                    ContactlessProtocols.PROTOCOL_ISO14443_4, PoSelector.RevisionTarget.TARGET_REV3,
+                    "AID: " + CalypsoClassicInfo.AID);
 
             /*
              * Add the selection case to the current selection (we could have added other cases

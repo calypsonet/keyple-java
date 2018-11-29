@@ -25,7 +25,6 @@ import org.eclipse.keyple.seproxy.SeReader;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 import org.eclipse.keyple.seproxy.exception.NoStackTraceThrowable;
 import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
-import org.eclipse.keyple.seproxy.protocol.Protocol;
 import org.eclipse.keyple.transaction.MatchingSe;
 import org.eclipse.keyple.transaction.SeSelection;
 import org.eclipse.keyple.transaction.SeSelector;
@@ -133,10 +132,10 @@ public class UseCase_Calypso5_MultipleSession_Pcsc {
              * the selection and read additional information afterwards
              */
             /* Calypso AID */
-            String poAid = "A0000004040125090101";
-            PoSelector poSelector = new PoSelector(ByteArrayUtils.fromHex(poAid),
-                    SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4,
-                    PoSelector.RevisionTarget.TARGET_REV3, "AID: " + poAid);
+            PoSelector poSelector = new PoSelector(ByteArrayUtils.fromHex(CalypsoClassicInfo.AID),
+                    SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN,
+                    ContactlessProtocols.PROTOCOL_ISO14443_4, PoSelector.RevisionTarget.TARGET_REV3,
+                    "AID: " + CalypsoClassicInfo.AID);
 
             /*
              * Add the selection case to the current selection (we could have added other cases

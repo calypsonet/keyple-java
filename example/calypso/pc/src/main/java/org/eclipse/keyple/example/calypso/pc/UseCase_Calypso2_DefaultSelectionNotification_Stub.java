@@ -33,7 +33,6 @@ import org.eclipse.keyple.seproxy.event.ReaderEvent;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
-import org.eclipse.keyple.seproxy.protocol.Protocol;
 import org.eclipse.keyple.transaction.MatchingSe;
 import org.eclipse.keyple.transaction.SeSelection;
 import org.eclipse.keyple.transaction.SeSelector;
@@ -67,7 +66,6 @@ public class UseCase_Calypso2_DefaultSelectionNotification_Stub implements Reade
     protected static final Logger logger =
             LoggerFactory.getLogger(UseCase_Calypso2_DefaultSelectionNotification_Stub.class);
     private StubReader poReader;
-    private String poAid = "A0000004040125090101";
     private SeSelection seSelection;
     private ReadRecordsRespPars readEnvironmentParser;
     /**
@@ -145,9 +143,10 @@ public class UseCase_Calypso2_DefaultSelectionNotification_Stub implements Reade
          * Calypso selection: configures a PoSelector with all the desired attributes to make the
          * selection and read additional information afterwards
          */
-        PoSelector poSelector = new PoSelector(ByteArrayUtils.fromHex(poAid),
-                SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4,
-                PoSelector.RevisionTarget.TARGET_REV3, "AID: " + poAid);
+        PoSelector poSelector = new PoSelector(ByteArrayUtils.fromHex(CalypsoClassicInfo.AID),
+                SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN,
+                ContactlessProtocols.PROTOCOL_ISO14443_4, PoSelector.RevisionTarget.TARGET_REV3,
+                "AID: " + CalypsoClassicInfo.AID);
 
         /*
          * Prepare the reading order and keep the associated parser for later use once the selection
