@@ -214,6 +214,8 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
         AppendRecordRespPars appendEventPars =
                 poTransaction.prepareAppendRecordCmd(eventSfi, newEventData, "Event");
 
+        poTransaction.processPoCommands(ChannelState.KEEP_OPEN);
+
         poProcessStatus = poTransaction.processClosing(CommunicationMode.CONTACTLESS_MODE,
                 ChannelState.KEEP_OPEN);
 
@@ -224,7 +226,7 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
 
 
     // Optimised for online/remote operation
-    private void validateClap(PoTransaction poTransaction) throws KeypleReaderException {
+    private void validateClap(CalypsoPo detectedPO) throws KeypleReaderException {
 
         byte eventSfi = 0x08;
         byte countersSfi = 0x1B;
@@ -232,6 +234,8 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
         byte contractsSfi = 0x29;
 
         SeResponse dataReadInSession;
+        PoTransaction poTransaction = new PoTransaction(poReader, detectedPO, samReader, null);
+
 
         ReadRecordsRespPars readEventParser = poTransaction.prepareReadRecordsCmd(eventSfi,
                 ReadDataStructure.SINGLE_RECORD_DATA, (byte) 0x01, (byte) 0x00, "Event");
@@ -303,7 +307,9 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
             poTransaction.processClosing(PoTransaction.CommunicationMode.CONTACTLESS_MODE,
                     ChannelState.KEEP_OPEN);
 
-            poTransaction.processOpening(PoTransaction.ModificationMode.MULTIPLE, SESSION_LVL_LOAD,
+            poTransaction = new PoTransaction(poReader, detectedPO, samReader, null);
+
+            poTransaction.processOpening(PoTransaction.ModificationMode.ATOMIC, SESSION_LVL_LOAD,
                     (byte) 0x00, (byte) 0x00);
 
             byte[] newCounterData = new byte[] {0x00, 0x00, 0x05, 0x00, 0x00, 0x00};
@@ -312,14 +318,17 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
                     "Counter");
             counterValue = 5;
 
-            poTransaction.processClosing(PoTransaction.CommunicationMode.CONTACTLESS_MODE,
-                    ChannelState.KEEP_OPEN);
 
-            readCountersParser = poTransaction.prepareReadRecordsCmd(countersSfi,
-                    ReadDataStructure.SINGLE_COUNTER, (byte) 0x01, (byte) 0x00, "Counters");
+            // poTransaction.processClosing(PoTransaction.CommunicationMode.CONTACTLESS_MODE,
+            // ChannelState.KEEP_OPEN);
+            //
+            // readCountersParser = poTransaction.prepareReadRecordsCmd(countersSfi,
+            // ReadDataStructure.SINGLE_COUNTER, (byte) 0x01, (byte) 0x00, "Counters");
+            //
+            // poTransaction.processOpening(PoTransaction.ModificationMode.ATOMIC,
+            // SESSION_LVL_DEBIT,
+            // environmentSfi, (byte) 0x01);
 
-            poTransaction.processOpening(PoTransaction.ModificationMode.MULTIPLE, SESSION_LVL_DEBIT,
-                    environmentSfi, (byte) 0x01);
         }
 
         /*
@@ -337,11 +346,11 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
         byte[] dateToInsert = longToBytes(new Date().getTime());
         System.arraycopy(dateToInsert, 0, newEventData, 1, (Long.SIZE / Byte.SIZE));
 
-        poTransaction.prepareAppendRecordCmd(eventSfi, newEventData, "Event");
-
         poTransaction.prepareDecreaseCmd(countersSfi, (byte) 0x01, 1, "Counter decval=1");
 
-        byte[] updatedCounterValue = getByteArrayFromCounterValue(counterValue - 1);
+        poTransaction.prepareAppendRecordCmd(eventSfi, newEventData, "Event");
+
+        poTransaction.processPoCommands(ChannelState.KEEP_OPEN);
 
         poTransaction.processClosing(CommunicationMode.CONTACTLESS_MODE, ChannelState.KEEP_OPEN);
 
@@ -396,7 +405,7 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
             } else if (clapSe.isSelected()) {
 
                 PoTransaction poTransaction = new PoTransaction(poReader, clapSe, samReader, null);
-                validateClap(poTransaction);
+                validateClap(clapSe);
 
             } else if (cdLightSe.isSelected()) {
 
