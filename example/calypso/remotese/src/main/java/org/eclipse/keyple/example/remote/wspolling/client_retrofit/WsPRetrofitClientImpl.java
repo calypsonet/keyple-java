@@ -12,12 +12,8 @@
 package org.eclipse.keyple.example.remote.wspolling.client_retrofit;
 
 import java.util.concurrent.TimeUnit;
-import org.eclipse.keyple.example.remote.transport.ClientNode;
 import org.eclipse.keyple.example.remote.wspolling.WsPTransportDTO;
-import org.eclipse.keyple.plugin.remotese.transport.DtoHandler;
-import org.eclipse.keyple.plugin.remotese.transport.KeypleDto;
-import org.eclipse.keyple.plugin.remotese.transport.KeypleDtoHelper;
-import org.eclipse.keyple.plugin.remotese.transport.TransportDto;
+import org.eclipse.keyple.plugin.remotese.transport.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import okhttp3.OkHttpClient;

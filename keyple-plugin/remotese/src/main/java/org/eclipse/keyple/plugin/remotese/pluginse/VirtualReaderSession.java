@@ -12,7 +12,10 @@
 package org.eclipse.keyple.plugin.remotese.pluginse;
 
 
+import org.eclipse.keyple.plugin.remotese.transport.KeypleRemoteReaderException;
+import org.eclipse.keyple.seproxy.message.SeRequest;
 import org.eclipse.keyple.seproxy.message.SeRequestSet;
+import org.eclipse.keyple.seproxy.message.SeResponse;
 import org.eclipse.keyple.seproxy.message.SeResponseSet;
 
 public interface VirtualReaderSession {
@@ -26,15 +29,27 @@ public interface VirtualReaderSession {
 
 
     /**
-     * Blocking transmit
-     * 
-     * @param nativeReaderName : local reader to transmit to
-     * @param virtualReaderName : virtual reader that receives the order the transmit to
-     * @param seApplicationRequest : seApplicationRequest to transmit
+     * Blocking transmitSet
+     *
+     * @param nativeReaderName : local reader to transmitSet to
+     * @param virtualReaderName : virtual reader that receives the order the transmitSet to
+     * @param seRequestSet : seRequestSet to transmit
      * @return SeResponseSet
      */
-    SeResponseSet transmit(String nativeReaderName, String virtualReaderName,
-            SeRequestSet seApplicationRequest);
+    SeResponseSet transmitSet(String nativeReaderName, String virtualReaderName,
+            SeRequestSet seRequestSet) throws KeypleRemoteReaderException;
+
+
+    /**
+     * Blocking transmit
+     *
+     * @param nativeReaderName : local reader to transmitSet to
+     * @param virtualReaderName : virtual reader that receives the order the transmitSet to
+     * @param seRequest : seApplicationRequest to transmitSet
+     * @return SeResponseSet
+     */
+    SeResponse transmit(String nativeReaderName, String virtualReaderName, SeRequest seRequest)
+            throws KeypleRemoteReaderException;
 
 
 
@@ -43,7 +58,9 @@ public interface VirtualReaderSession {
      * 
      * @param seResponseSet : receive seResponseSet to be callback
      */
-    void asyncSetSeResponseSet(SeResponseSet seResponseSet);
+    void asyncSetSeResponseSet(SeResponseSet seResponseSet, KeypleRemoteReaderException e);
+
+
 
     /**
      * Has a seRequestSet in session (being transmitted)

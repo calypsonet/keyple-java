@@ -9,18 +9,18 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  ********************************************************************************/
-package org.eclipse.keyple.example.remote.transport;
+package org.eclipse.keyple.plugin.remotese.transport;
 
+import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 
-import org.eclipse.keyple.plugin.remotese.transport.TransportNode;
+public class KeypleRemoteReaderException extends KeypleReaderException {
 
-/**
- * Client type of TransportNode, connects to a ServerNode
- */
-public interface ClientNode extends TransportNode {
+    public KeypleRemoteReaderException(String message, Throwable cause) {
+        super(message, cause);
+    };
 
-    void connect();
-
-    void disconnect();
+    public KeypleRemoteReaderException(String message) {
+        super(message);
+    };
 
 }

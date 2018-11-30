@@ -9,31 +9,17 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  ********************************************************************************/
-package org.eclipse.keyple.plugin.remotese.nativese;
-
-import org.eclipse.keyple.plugin.remotese.transport.DtoSender;
-import org.eclipse.keyple.seproxy.SeProxyService;
-import org.junit.Before;
-import org.mockito.Mock;
-
-// @RunWith(MockitoJUnitRunner.class)
-public class NativeReaderServiceImplTest {
-
-    @Mock
-    SeProxyService seProxyService;
-
-    @Mock
-    DtoSender dtoSender;
-
-    private NativeReaderServiceImpl nse;
-
-    @Before
-    public void Setup() {
-
-        nse = new NativeReaderServiceImpl(dtoSender);
-
-    }
+package org.eclipse.keyple.plugin.remotese.transport;
 
 
+
+/**
+ * Client type of TransportNode, connects to a ServerNode
+ */
+public interface ClientNode extends TransportNode {
+
+    void connect();
+
+    void disconnect();
 
 }

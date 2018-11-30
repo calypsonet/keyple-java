@@ -11,22 +11,22 @@
  ********************************************************************************/
 package org.eclipse.keyple.plugin.remotese.nativese;
 
-import java.util.ArrayList;
-import java.util.Map;
+
+import org.eclipse.keyple.plugin.remotese.nativese.method.RmConnectReaderInvoker;
+import org.eclipse.keyple.plugin.remotese.nativese.method.RmConnectReaderParser;
+import org.eclipse.keyple.plugin.remotese.nativese.method.RmDisconnectReaderInvoker;
+import org.eclipse.keyple.plugin.remotese.nativese.method.RmTransmitExecutor;
 import org.eclipse.keyple.plugin.remotese.transport.*;
 import org.eclipse.keyple.plugin.remotese.transport.json.JsonParser;
 import org.eclipse.keyple.seproxy.ReaderPlugin;
 import org.eclipse.keyple.seproxy.SeProxyService;
-import org.eclipse.keyple.seproxy.SeReader;
 import org.eclipse.keyple.seproxy.event.ReaderEvent;
-import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderNotFoundException;
-import org.eclipse.keyple.seproxy.message.*;
 import org.eclipse.keyple.seproxy.message.ProxyReader;
 import org.eclipse.keyple.seproxy.plugin.AbstractObservableReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.google.gson.JsonObject;
+
 
 /**
  * Native Service to manage local reader and connect them to Remote Service
@@ -75,74 +75,66 @@ public class NativeReaderServiceImpl implements NativeReaderService, DtoHandler 
 
         logger.debug("onDto {}", KeypleDtoHelper.toJson(keypleDTO));
 
-        // receive a response to a reader_connect
-        if (keypleDTO.getAction().equals(KeypleDtoHelper.READER_CONNECT)
-                && !keypleDTO.isRequest()) {
-            logger.info("**** RESPONSE - READER_CONNECT ****");
+        RemoteMethod method = RemoteMethod.get(keypleDTO.getAction());
+        logger.debug("Remote Method called : {} - isRequest : {}", method, keypleDTO.isRequest());
 
-            // parse response
-            JsonObject body = JsonParser.getGson().fromJson(keypleDTO.getBody(), JsonObject.class);
-            Integer statusCode = body.get("statusCode").getAsInt();
-            String nativeReaderName = keypleDTO.getNativeReaderName();
-
-            // reader connection was a success
-            if (statusCode == 0) {
-                try {
-                    // observe reader to propagate reader events
-                    ProxyReader localReader = (ProxyReader) this.findLocalReader(nativeReaderName);
-                    if (localReader instanceof AbstractObservableReader) {
-                        logger.debug(
-                                "Add NativeReaderServiceImpl as an observer for native reader {}",
-                                localReader.getName());
-                        ((AbstractObservableReader) localReader).addObserver(this);
+        switch (method) {
+            case READER_CONNECT:
+                // process READER_CONNECT response
+                if (keypleDTO.isRequest()) {
+                    throw new IllegalStateException(
+                            "a READER_CONNECT request has been received by NativeReaderService");
+                } else {
+                    try {
+                        RemoteMethodParser<String> rmConnectReaderParser =
+                                new RmConnectReaderParser(this);
+                        String sessionId = rmConnectReaderParser.parseResponse(keypleDTO);
+                        logger.info(
+                                "A virtual reader has been created on Master side with sessionId {}",
+                                sessionId);
+                    } catch (KeypleRemoteReaderException e) {
+                        e.printStackTrace();
                     }
-                    // todo store sessionId in reader as a parameter?
-                    // nseSessionManager.addNewSession(sessionId, localReader.getName());
-
-                } catch (KeypleReaderNotFoundException e) {
-                    logger.warn(
-                            "While receiving a confirmation of Rse connection, local reader was not found");
+                    out = transportDto.nextTransportDTO(KeypleDtoHelper.NoResponse());
                 }
-            } else {
-                logger.warn("Receive a error statusCode {} {}", statusCode,
-                        KeypleDtoHelper.toJson(keypleDTO));
-            }
+                break;
 
-            out = transportDto.nextTransportDTO(KeypleDtoHelper.ACK());
-
-        } else if (keypleDTO.getAction().equals(KeypleDtoHelper.READER_TRANSMIT)) {
-            logger.info("**** ACTION - READER_TRANSMIT ****");
-
-            SeRequestSet seRequestSet =
-                    JsonParser.getGson().fromJson(keypleDTO.getBody(), SeRequestSet.class);
-
-            SeResponseSet seResponseSet = null;
-            String nativeReaderName = keypleDTO.getNativeReaderName();
-            try {
-                // execute transmit
-                seResponseSet =
-                        this.onTransmit(nativeReaderName, keypleDTO.getSessionId(), seRequestSet);
-            } catch (KeypleReaderException e) {
-                e.printStackTrace();
-            }
-            // prepare response
-            String parseBody = JsonParser.getGson().toJson(seResponseSet, SeResponseSet.class);
-            out = transportDto.nextTransportDTO(new KeypleDto(keypleDTO.getAction(), parseBody,
-                    false, keypleDTO.getSessionId(), nativeReaderName,
-                    keypleDTO.getVirtualReaderName(), keypleDTO.getNodeId()));
+            case READER_DISCONNECT:
+                // process READER_DISCONNECT response
+                if (keypleDTO.isRequest()) {
+                    throw new IllegalStateException(
+                            "a READER_DISCONNECT request has been received by NativeReaderService");
+                } else {
+                    // todo
+                    out = transportDto.nextTransportDTO(KeypleDtoHelper.NoResponse());
+                }
+                break;
 
 
-        } else {
+            case READER_TRANSMIT:
+                // must be a request
+                if (keypleDTO.isRequest()) {
+                    RemoteMethodExecutor rmTransmit = new RmTransmitExecutor(this);
+                    out = rmTransmit.execute(transportDto);
+                } else {
+                    throw new IllegalStateException(
+                            "a READER_TRANSMIT response has been received by NativeReaderService");
+                }
+                break;
 
-            if (KeypleDtoHelper.isACK(keypleDTO)) {
-                logger.info("**** ACK ****");
-            } else {
-                logger.info("**** ERROR - UNRECOGNIZED ****");
-                logger.error("Receive unrecognized message action : {} {} {} {}",
-                        keypleDTO.getAction(), keypleDTO.getSessionId(), keypleDTO.getBody(),
-                        keypleDTO.isRequest());
-            }
-            out = transportDto.nextTransportDTO(KeypleDtoHelper.NoResponse());
+
+            default:
+                if (KeypleDtoHelper.isACK(keypleDTO)) {
+                    logger.trace("**** ACK ****");
+                } else {
+                    logger.warn("**** ERROR - UNRECOGNIZED ****");
+                    logger.warn("Receive unrecognized message action : {} {} {} {}",
+                            keypleDTO.getAction(), keypleDTO.getSessionId(), keypleDTO.getBody(),
+                            keypleDTO.isRequest());
+                    throw new IllegalStateException(
+                            "a  ERROR - UNRECOGNIZED request has been received by NativeReaderService");
+                }
+                out = transportDto.nextTransportDTO(KeypleDtoHelper.NoResponse());
         }
 
         logger.debug("onDto response to be sent {}", KeypleDtoHelper.toJson(out.getKeypleDTO()));
@@ -155,47 +147,25 @@ public class NativeReaderServiceImpl implements NativeReaderService, DtoHandler 
     /**
      * Connect a local reader to Remote SE Plugin {@link NativeReaderService}
      * 
-     * @param nodeId : a chosen but unique terminal id (i.e AndroidDevice2)
+     * @param clientNodeId : a chosen but unique terminal id (i.e AndroidDevice2)
      * @param localReader : native reader to be connected
-     * @param options : map of options, not in used at the moment
      */
     @Override
-    public void connectReader(String nodeId, SeReader localReader, Map<String, Object> options) {
-        logger.info("connectReader {} {}", localReader.getName(), options);
-
-        JsonObject jsonObject = new JsonObject();
-
-        String data = jsonObject.toString();
-
-        dtoSender.sendDTO(new KeypleDto(KeypleDtoHelper.READER_CONNECT, data, true, null,
-                localReader.getName(), null, nodeId));
-
+    public void connectReader(ProxyReader localReader, String clientNodeId)
+            throws KeypleRemoteException {
+        logger.info("connectReader {} from device {}", localReader.getName(), clientNodeId);
+        dtoSender.sendDTO(new RmConnectReaderInvoker(localReader, clientNodeId).dto());
     }
 
     @Override
-    public void disconnectReader(String nodeId, SeReader localReader) {
-        logger.info("disconnectReader {} {}", localReader.getName());
-
-        // String data = jsonObject.toString();
-        dtoSender.sendDTO(new KeypleDto(KeypleDtoHelper.READER_DISCONNECT, "{}", true, null,
-                localReader.getName(), null, nodeId));
+    public void disconnectReader(ProxyReader localReader, String clientNodeId)
+            throws KeypleRemoteException {
+        logger.info("disconnectReader {} from device {}", localReader.getName(), clientNodeId);
+        dtoSender.sendDTO(new RmDisconnectReaderInvoker(localReader, clientNodeId).dto());
 
         // stop propagating the local reader events
         ((AbstractObservableReader) localReader).removeObserver(this);
 
-    }
-
-
-    // NseAPI
-    private SeResponseSet onTransmit(String nativeReaderName, String sessionId, SeRequestSet req)
-            throws KeypleReaderException {
-        try {
-            ProxyReader reader = (ProxyReader) findLocalReader(nativeReaderName);
-            return reader.transmitSet(req);
-        } catch (KeypleReaderNotFoundException e) {
-            e.printStackTrace();
-            return new SeResponseSet(new ArrayList<SeResponse>());// todo
-        }
     }
 
     /**
@@ -205,12 +175,13 @@ public class NativeReaderServiceImpl implements NativeReaderService, DtoHandler 
      * @return found reader if any
      * @throws KeypleReaderNotFoundException if not reader were found with this name
      */
-    private SeReader findLocalReader(String nativeReaderName) throws KeypleReaderNotFoundException {
+    public ProxyReader findLocalReader(String nativeReaderName)
+            throws KeypleReaderNotFoundException {
         logger.debug("Find local reader by name {} in {} plugin(s)", nativeReaderName,
-                seProxyService.getPlugins().size());
-        for (ReaderPlugin plugin : seProxyService.getPlugins()) {
+                seProxyService.getInstance().getPlugins().size());
+        for (ReaderPlugin plugin : seProxyService.getInstance().getPlugins()) {
             try {
-                return plugin.getReader(nativeReaderName);
+                return (ProxyReader) plugin.getReader(nativeReaderName);
             } catch (KeypleReaderNotFoundException e) {
                 // continue
             }
@@ -235,8 +206,13 @@ public class NativeReaderServiceImpl implements NativeReaderService, DtoHandler 
         // construct json data
         String data = JsonParser.getGson().toJson(event);
 
-        dtoSender.sendDTO(new KeypleDto(KeypleDtoHelper.READER_EVENT, data, true, null,
-                event.getReaderName(), null, this.dtoSender.getNodeId()));
+        try {
+            dtoSender.sendDTO(new KeypleDto(RemoteMethod.READER_EVENT.getName(), data, true, null,
+                    event.getReaderName(), null, this.dtoSender.getNodeId()));
+        } catch (KeypleRemoteException e) {
+            logger.error("Event " + event.toString()
+                    + " could not be sent though Remote Service Interface", e);
+        }
 
     }
 

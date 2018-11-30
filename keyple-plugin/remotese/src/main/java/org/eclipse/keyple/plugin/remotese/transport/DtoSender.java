@@ -24,14 +24,14 @@ public interface DtoSender extends Observable.Observer<KeypleDto> {
      * 
      * @param message to be sent
      */
-    void sendDTO(TransportDto message);
+    void sendDTO(TransportDto message) throws KeypleRemoteException;
 
     /**
      * Send DTO with no common information (usually a new message)
      * 
      * @param message to be sent
      */
-    void sendDTO(KeypleDto message);
+    void sendDTO(KeypleDto message) throws KeypleRemoteException;
 
     /**
      * get nodeId of this DtoSender, must identify the terminal. ie : androidDevice2

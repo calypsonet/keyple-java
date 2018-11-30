@@ -103,4 +103,16 @@ Examples :
 - A similar example can be found in the org.eclipse.keyple.example.remote.wspolling package.
 
 
-## Project: Remote Plugin Examples
+# Running the example
+
+After building the project (follow the procedure in the top README.md), you can execute 6 examples of Remote SE plugin :   
+- ``Demo_Webservice_MasterClient`` : Execute the demo with a webservice protocol, the master device uses the webservice client
+- ``Demo_Webservice_MasterServer`` : Execute the demo with a webservice protocol, the master device uses the webservice server 
+- ``Demo_WebserviceWithRetrofit_MasterClient`` : Execute the demo with a webservice protocol, the master device uses the webservice Retrofit client 
+- ``Demo_WebserviceWithRetrofit_MasterServer`` : Execute the demo with a webservice protocol, the master device uses the webservice server
+- ``DemoWsKMasterServer`` : Execute the demo with a websocket protocol, the master device uses the websocket server
+- ``DemoWsKMasterClient`` : Execute the demo with a websocket protocol, the master device uses the websocket client
+
+
+
+

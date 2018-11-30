@@ -22,6 +22,7 @@ import org.eclipse.keyple.seproxy.event.PluginEvent;
 import org.eclipse.keyple.seproxy.event.ReaderEvent;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderNotFoundException;
+import org.eclipse.keyple.seproxy.message.ProxyReader;
 import org.eclipse.keyple.util.Observable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,7 +48,7 @@ public final class RemoteSePlugin extends Observable implements ObservablePlugin
      */
     RemoteSePlugin(VirtualReaderSessionFactory sessionManager) {
         this.sessionManager = sessionManager;
-        logger.info("RemoteSePlugin");
+        logger.info("Init RemoteSePlugin");
     }
 
     @Override
@@ -96,8 +97,8 @@ public final class RemoteSePlugin extends Observable implements ObservablePlugin
      * Create a virtual reader
      *
      */
-    SeReader createVirtualReader(String clientNodeId, String nativeReaderName, DtoSender dtoSender)
-            throws KeypleReaderException {
+    public ProxyReader createVirtualReader(String clientNodeId, String nativeReaderName,
+            DtoSender dtoSender) throws KeypleReaderException {
         logger.debug("createVirtualReader for nativeReader {}", nativeReaderName);
 
         // create a new session for the new reader
@@ -108,7 +109,7 @@ public final class RemoteSePlugin extends Observable implements ObservablePlugin
 
         // check if reader is not already connected (by localReaderName)
         if (!isReaderConnected(nativeReaderName)) {
-            logger.info("Connecting a new RemoteSeReader with localReaderName {} with session {}",
+            logger.info("Create a new Virtual Reader with localReaderName {} with session {}",
                     nativeReaderName, session.getSessionId());
 
             final VirtualReader virtualReader = new VirtualReader(session, nativeReaderName);
@@ -122,10 +123,7 @@ public final class RemoteSePlugin extends Observable implements ObservablePlugin
                 }
             }.start();
 
-            logger.info("*****************************");
-            logger.info(" CONNECTED {} ", virtualReader.getName());
-            logger.info("*****************************");
-            return (SeReader) virtualReader;
+            return virtualReader;
         } else {
             throw new KeypleReaderException("Virtual Reader already exists");
         }
@@ -136,40 +134,31 @@ public final class RemoteSePlugin extends Observable implements ObservablePlugin
      * 
      * @param nativeReaderName name of the virtual reader to be deleted
      */
-    void disconnectRemoteReader(String nativeReaderName) throws KeypleReaderNotFoundException {
-        logger.debug("disconnectRemoteReader {}", nativeReaderName);
-
-        // check if reader is not already connected (by name)
-        if (isReaderConnected(nativeReaderName)) {
-            logger.info("DisconnectRemoteReader RemoteSeReader with name {} with session {}",
-                    nativeReaderName);
-
-            // retrieve virtual reader to delete
-            final VirtualReader virtualReader =
-                    (VirtualReader) this.getReaderByRemoteName(nativeReaderName);
-
-            // remove observers
-            ((VirtualReaderSessionImpl) virtualReader.getSession()).clearObservers();
-
-            // remove reader
-            virtualReaders.remove(virtualReader);
-
-            new Thread() {
-                public void run() {
-                    notifyObservers(new PluginEvent(getName(), virtualReader.getName(),
-                            PluginEvent.EventType.READER_DISCONNECTED));
-                }
-            }.start();
+    public void disconnectRemoteReader(String nativeReaderName)
+            throws KeypleReaderNotFoundException {
+        logger.debug("Disconnect Virtual reader {}", nativeReaderName);
 
 
-            logger.info("*****************************");
-            logger.info(" DISCONNECTED {} ", nativeReaderName);
-            logger.info("*****************************");
+        // retrieve virtual reader to delete
+        final VirtualReader virtualReader =
+                (VirtualReader) this.getReaderByRemoteName(nativeReaderName);
 
-        } else {
-            logger.warn("No remoteSeReader with name {} found", nativeReaderName);
-        }
-        // todo errors
+        logger.info("Disconnect VirtualReader with name {} with session {}", nativeReaderName);
+
+        // remove observers
+        ((VirtualReaderSessionImpl) virtualReader.getSession()).clearObservers();
+
+        // remove reader
+        virtualReaders.remove(virtualReader);
+
+        // send event READER_DISCONNECTED in a separate thread
+        new Thread() {
+            public void run() {
+                notifyObservers(new PluginEvent(getName(), virtualReader.getName(),
+                        PluginEvent.EventType.READER_DISCONNECTED));
+            }
+        }.start();
+
     }
 
     /**
@@ -178,10 +167,10 @@ public final class RemoteSePlugin extends Observable implements ObservablePlugin
      * @param event
      * @param sessionId : not used yet
      */
-    void onReaderEvent(ReaderEvent event, String sessionId) {
+    public void onReaderEvent(ReaderEvent event, String sessionId) {
         logger.debug("OnReaderEvent {}", event);
-        logger.debug("Dispatch ReaderEvent to the appropriate Reader {} {}", event.getReaderName(),
-                sessionId);
+        logger.debug("Dispatch ReaderEvent to the appropriate Reader : {} sessionId : {}",
+                event.getReaderName(), sessionId);
         try {
             // todo dispatch is managed by name, should take sessionId also
             VirtualReader virtualReader =

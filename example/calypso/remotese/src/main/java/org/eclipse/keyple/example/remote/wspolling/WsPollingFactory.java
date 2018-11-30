@@ -13,11 +13,11 @@ package org.eclipse.keyple.example.remote.wspolling;
 
 import java.io.IOException;
 import java.util.Random;
-import org.eclipse.keyple.example.remote.transport.ClientNode;
-import org.eclipse.keyple.example.remote.transport.ServerNode;
-import org.eclipse.keyple.example.remote.transport.TransportFactory;
 import org.eclipse.keyple.example.remote.wspolling.client.WsPClient;
 import org.eclipse.keyple.example.remote.wspolling.server.WsPServer;
+import org.eclipse.keyple.plugin.remotese.transport.ClientNode;
+import org.eclipse.keyple.plugin.remotese.transport.ServerNode;
+import org.eclipse.keyple.plugin.remotese.transport.TransportFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -50,17 +50,21 @@ public class WsPollingFactory extends TransportFactory {
     }
 
     @Override
-    public ClientNode getClient(Boolean isMaster) {
+    public ClientNode getClient() {
         logger.info("*** Create Ws Polling Client ***");
         return new WsPClient(protocol + bindUrl + ":" + port, keypleUrl, pollingUrl, clientNodeId);
     }
 
 
     @Override
-    public ServerNode getServer(Boolean isMaster) throws IOException {
+    public ServerNode getServer() {
 
         logger.info("*** Create Ws Polling Server ***");
-        return new WsPServer(bindUrl, port, keypleUrl, pollingUrl, clientNodeId + "server");
+        try {
+            return new WsPServer(bindUrl, port, keypleUrl, pollingUrl, clientNodeId + "server");
+        } catch (IOException e) {
+            return null;
+        }
 
     }
 }

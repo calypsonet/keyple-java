@@ -15,7 +15,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import java.io.IOException;
 import org.eclipse.keyple.plugin.remotese.transport.KeypleDto;
-import org.eclipse.keyple.plugin.remotese.transport.KeypleDtoHelper;
+import org.eclipse.keyple.plugin.remotese.transport.RemoteMethod;
 import org.junit.Before;
 import retrofit2.Response;
 
@@ -43,7 +43,7 @@ public class VirtualReaderClientClientTest {
     // @Test
     public void testPostDto() throws IOException {
 
-        KeypleDto dtoConnect = new KeypleDto(KeypleDtoHelper.READER_CONNECT,
+        KeypleDto dtoConnect = new KeypleDto(RemoteMethod.READER_CONNECT.getName(),
                 "{nativeReaderName:test, clientNodeId:testnode1}", true);
 
         WsPRetrofitClient rseClient = WsPRetrofitClientImpl.getRseAPIClient(BASE_URL);
@@ -51,7 +51,7 @@ public class VirtualReaderClientClientTest {
 
 
         assertEquals(200, resp.code());
-        assertEquals(KeypleDtoHelper.READER_CONNECT, resp.body().getAction());
+        assertEquals(RemoteMethod.READER_CONNECT.getName(), resp.body().getAction());
         assertFalse(resp.body().isRequest());
 
     }

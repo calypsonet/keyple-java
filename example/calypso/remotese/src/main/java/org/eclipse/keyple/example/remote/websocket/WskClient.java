@@ -12,11 +12,7 @@
 package org.eclipse.keyple.example.remote.websocket;
 
 import java.net.URI;
-import org.eclipse.keyple.example.remote.transport.ClientNode;
-import org.eclipse.keyple.plugin.remotese.transport.DtoHandler;
-import org.eclipse.keyple.plugin.remotese.transport.KeypleDto;
-import org.eclipse.keyple.plugin.remotese.transport.KeypleDtoHelper;
-import org.eclipse.keyple.plugin.remotese.transport.TransportDto;
+import org.eclipse.keyple.plugin.remotese.transport.*;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 import org.slf4j.Logger;

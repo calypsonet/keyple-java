@@ -118,4 +118,11 @@ public class KeypleDto {
         return virtualReaderName;
     }
 
+    @Override
+    public String toString() {
+        return String.format(
+                "KeypleDto : %s - isRequest : %s - native : %s - virtual : %s - clientNodeId : %s - sessionId : %s - body : %s",
+                this.getAction(), this.isRequest(), this.getNativeReaderName(),
+                this.getVirtualReaderName(), this.getNodeId(), this.getSessionId(), this.getBody());
+    }
 }

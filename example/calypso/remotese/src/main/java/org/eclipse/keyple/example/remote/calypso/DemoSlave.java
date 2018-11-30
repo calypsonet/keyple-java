@@ -12,20 +12,15 @@
 package org.eclipse.keyple.example.remote.calypso;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.SortedSet;
 import org.eclipse.keyple.example.calypso.pc.stub.se.StubHoplink;
-import org.eclipse.keyple.example.remote.transport.ClientNode;
-import org.eclipse.keyple.example.remote.transport.ServerNode;
-import org.eclipse.keyple.example.remote.transport.TransportFactory;
 import org.eclipse.keyple.plugin.remotese.nativese.NativeReaderServiceImpl;
-import org.eclipse.keyple.plugin.remotese.transport.TransportNode;
+import org.eclipse.keyple.plugin.remotese.transport.*;
 import org.eclipse.keyple.plugin.stub.StubPlugin;
 import org.eclipse.keyple.plugin.stub.StubProtocolSetting;
 import org.eclipse.keyple.plugin.stub.StubReader;
-import org.eclipse.keyple.seproxy.ReaderPlugin;
 import org.eclipse.keyple.seproxy.SeProxyService;
+import org.eclipse.keyple.seproxy.event.ObservablePlugin;
+import org.eclipse.keyple.seproxy.event.PluginEvent;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.protocol.SeProtocolSetting;
 import org.slf4j.Logger;
@@ -46,7 +41,7 @@ class DemoSlave {
     private TransportNode node;
 
     // NativeReaderServiceImpl, used to connectAReader and disconnect readers
-    private NativeReaderServiceImpl seRemoteService;
+    private NativeReaderServiceImpl nativeReaderService;
 
     // Client NodeId used to identify this terminal
     private final String nodeId = "node1";
@@ -68,7 +63,7 @@ class DemoSlave {
         if (isServer) {
             // Slave is server, start Server and wait for Master clients
             try {
-                node = transportFactory.getServer(false);
+                node = transportFactory.getServer();
                 // start server in a new thread
                 new Thread() {
                     @Override
@@ -83,7 +78,7 @@ class DemoSlave {
             }
         } else {
             // Slave is client, connectAReader to Master Server
-            node = transportFactory.getClient(false);
+            node = transportFactory.getClient();
             ((ClientNode) node).connect();
         }
     }
@@ -95,7 +90,8 @@ class DemoSlave {
      * @throws KeypleReaderException
      * @throws InterruptedException
      */
-    public void connectAReader() throws KeypleReaderException, InterruptedException {
+    public void connectAReader()
+            throws KeypleReaderException, InterruptedException, KeypleRemoteException {
 
 
         logger.info("Boot DemoSlave LocalReader ");
@@ -105,9 +101,21 @@ class DemoSlave {
 
         logger.info("Create Local StubPlugin");
         StubPlugin stubPlugin = StubPlugin.getInstance();
-        SortedSet<ReaderPlugin> plugins = SeProxyService.getInstance().getPlugins();
-        plugins.add(stubPlugin);
-        seProxyService.setPlugins(plugins);
+
+        SeProxyService.getInstance().addPlugin(stubPlugin);
+
+        ObservablePlugin.PluginObserver observer = new ObservablePlugin.PluginObserver() {
+            @Override
+            public void update(PluginEvent event) {
+                logger.info("Update - pluginEvent from inline observer", event);
+            }
+        };
+
+        // add observer to have the reader management done by the monitoring thread
+        stubPlugin.addObserver(observer);
+
+        Thread.sleep(100);
+
         stubPlugin.plugStubReader("stubClientSlave");
 
         Thread.sleep(1000);
@@ -122,17 +130,14 @@ class DemoSlave {
 
 
         // Binds node for outgoing KeypleDto
-        seRemoteService = new NativeReaderServiceImpl(node);
+        nativeReaderService = new NativeReaderServiceImpl(node);
 
         // Binds node for incoming KeypleDTo
-        seRemoteService.bindDtoEndpoint(node);
-
-        // no options used so far
-        Map<String, Object> options = new HashMap<String, Object>();
+        nativeReaderService.bindDtoEndpoint(node);
 
         // connect a reader to Remote Plugin
         logger.info("Connect remotely the StubPlugin ");
-        seRemoteService.connectReader(nodeId, localReader, options);
+        nativeReaderService.connectReader(localReader, nodeId);
 
     }
 
@@ -158,13 +163,13 @@ class DemoSlave {
 
     }
 
-    public void disconnect() throws KeypleReaderException {
+    public void disconnect() throws KeypleReaderException, KeypleRemoteException {
 
         logger.info("*************************");
         logger.info("Disconnect native reader ");
         logger.info("*************************");
 
-        seRemoteService.disconnectReader(nodeId, localReader);
+        nativeReaderService.disconnectReader(localReader, nodeId);
     }
 
 

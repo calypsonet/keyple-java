@@ -12,26 +12,32 @@
 package org.eclipse.keyple.plugin.remotese.common.json;
 
 
+import java.io.IOException;
 import java.util.*;
+import org.eclipse.keyple.seproxy.*;
 import org.eclipse.keyple.seproxy.ChannelState;
+import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
+import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.message.*;
 import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
 import org.eclipse.keyple.seproxy.protocol.ContactsProtocols;
 import org.eclipse.keyple.util.ByteArrayUtils;
 
-class SampleFactory {
+public class SampleFactory {
+
+    public static KeypleBaseException getAStackedKeypleException() {
+        return new KeypleReaderException("Keyple Reader Exception", new IOException("IO Error",
+                new IOException("IO Error2", new RuntimeException("sdfsdf"))));
+    }
+
+    public static KeypleBaseException getASimpleKeypleException() {
+        return new KeypleReaderException("Keyple Reader Exception");
+    }
 
 
-    public static SeRequestSet getASeRequest() {
+    public static SeRequestSet getASeRequestSet_ISO14443_4() {
         String poAid = "A000000291A000000191";
 
-        // build 1st seRequestSet with keep channel open to true
-        /*
-         * ReadRecordsCmdBuild poReadRecordCmd_T2Env = new ReadRecordsCmdBuild(PoRevision.REV3_1,
-         * (byte) 0x14, (byte) 0x01, true, (byte) 0x20, "Hoplink EF T2Environment");
-         * 
-         * 
-         */
         List<ApduRequest> poApduRequestList;
         poApduRequestList = Arrays.asList(new ApduRequest(ByteArrayUtils.fromHex("9000"), true));
 
@@ -41,6 +47,48 @@ class SampleFactory {
                 ContactlessProtocols.PROTOCOL_ISO14443_4, null);
 
         return new SeRequestSet(seRequest);
+
+    }
+
+
+    public static SeRequestSet getASeRequestSet() {
+        String poAid = "A000000291A000000191";
+
+        List<ApduRequest> poApduRequestList;
+        poApduRequestList = Arrays.asList(new ApduRequest(ByteArrayUtils.fromHex("9000"), true));
+
+        SeRequest.Selector selector = new SeRequest.AidSelector(ByteArrayUtils.fromHex(poAid));
+
+        SeRequest seRequest = new SeRequest(poApduRequestList, ChannelState.CLOSE_AFTER);
+
+        return new SeRequestSet(seRequest);
+
+    }
+
+    public static SeRequest getASeRequest_ISO14443_4() {
+        String poAid = "A000000291A000000191";
+
+        List<ApduRequest> poApduRequestList;
+        poApduRequestList = Arrays.asList(new ApduRequest(ByteArrayUtils.fromHex("9000"), true));
+
+        SeRequest.Selector selector = new SeRequest.AidSelector(ByteArrayUtils.fromHex(poAid));
+
+        SeRequest seRequest = new SeRequest(selector, poApduRequestList, ChannelState.CLOSE_AFTER,
+                ContactlessProtocols.PROTOCOL_ISO14443_4, null);
+        return seRequest;
+
+    }
+
+    public static SeRequest getASeRequest() {
+        String poAid = "A000000291A000000191";
+
+        List<ApduRequest> poApduRequestList;
+        poApduRequestList = Arrays.asList(new ApduRequest(ByteArrayUtils.fromHex("9000"), true));
+
+        SeRequest.Selector selector = new SeRequest.AidSelector(ByteArrayUtils.fromHex(poAid));
+
+        SeRequest seRequest = new SeRequest(poApduRequestList, ChannelState.CLOSE_AFTER);
+        return seRequest;
 
     }
 
@@ -90,6 +138,7 @@ class SampleFactory {
 
 
     }
+
 
 
 }

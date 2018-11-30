@@ -12,9 +12,11 @@
 package org.eclipse.keyple.plugin.remotese.pluginse;
 
 import java.util.Map;
+import org.eclipse.keyple.plugin.remotese.transport.KeypleRemoteReaderException;
 import org.eclipse.keyple.seproxy.SeReader;
 import org.eclipse.keyple.seproxy.event.ObservableReader;
 import org.eclipse.keyple.seproxy.event.ReaderEvent;
+import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.message.*;
 import org.eclipse.keyple.seproxy.message.ProxyReader;
 import org.eclipse.keyple.seproxy.protocol.SeProtocolSetting;
@@ -39,12 +41,12 @@ public final class VirtualReader extends Observable implements ObservableReader,
      * 
      * @param session Reader Session that helps communicate with
      *        {@link org.eclipse.keyple.plugin.remotese.transport.TransportNode}
-     * @param remoteName local name of the native reader on slave side
+     * @param nativeReaderName local name of the native reader on slave side
      */
-    VirtualReader(VirtualReaderSession session, String remoteName) {
+    VirtualReader(VirtualReaderSession session, String nativeReaderName) {
         this.session = session;
-        this.remoteName = remoteName;
-        this.name = "remote-" + remoteName;
+        this.remoteName = nativeReaderName;
+        this.name = "remote-" + nativeReaderName;
     }
 
     /**
@@ -59,14 +61,14 @@ public final class VirtualReader extends Observable implements ObservableReader,
 
     /**
      * Name of the Native Reader
-     * 
+     *
      * @return local name of the native reader (on slave device)
      */
     public String getNativeReaderName() {
         return remoteName;
     }
 
-    VirtualReaderSession getSession() {
+    public VirtualReaderSession getSession() {
         return session;
     }
 
@@ -77,21 +79,41 @@ public final class VirtualReader extends Observable implements ObservableReader,
     }
 
     /**
-     * Blocking Transmit
-     *
-     * @param seRequestSet : SeRequestSe to be transmitted
+     * Blocking TransmitSet
+     * 
+     * @param seRequestSet : SeRequestSet to be transmitted
      * @return seResponseSet : SeResponseSet
      * @throws IllegalArgumentException
+     * @throws KeypleReaderException
      */
     @Override
-    public SeResponseSet transmitSet(SeRequestSet seRequestSet) throws IllegalArgumentException {
-        return session.transmit(this.getNativeReaderName(), this.getName(), seRequestSet);
+    public SeResponseSet transmitSet(SeRequestSet seRequestSet)
+            throws IllegalArgumentException, KeypleReaderException {
+        try {
+            return session.transmitSet(this.getNativeReaderName(), this.getName(), seRequestSet);
+        } catch (KeypleRemoteReaderException e) {
+            // throw the cause of the RemoteReaderException (a KeypleReaderException)
+            throw (KeypleReaderException) e.getCause();
+        }
     }
 
+    /**
+     * Blocking Transmit
+     * 
+     * @param seRequest
+     * @return seResponse
+     * @throws IllegalArgumentException
+     * @throws KeypleReaderException
+     */
     @Override
-    public SeResponse transmit(SeRequest seApplicationRequest) throws IllegalArgumentException {
-        return session.transmit(this.getNativeReaderName(), this.getName(),
-                new SeRequestSet(seApplicationRequest)).getSingleResponse();
+    public SeResponse transmit(SeRequest seRequest)
+            throws IllegalArgumentException, KeypleReaderException {
+        try {
+            return session.transmit(this.getNativeReaderName(), this.getName(), seRequest);
+        } catch (KeypleRemoteReaderException e) {
+            // throw the cause of the RemoteReaderException (a KeypleReaderException)
+            throw (KeypleReaderException) e.getCause();
+        }
     }
 
 
@@ -112,13 +134,18 @@ public final class VirtualReader extends Observable implements ObservableReader,
      */
     void onRemoteReaderEvent(final ReaderEvent event) {
         final VirtualReader thisReader = this;
-        logger.info("*****************************");
-        logger.info(" EVENT {} ", event.getEventType());
-        logger.info("*****************************");
+
+        logger.debug(" EVENT {} ", event.getEventType());
         // notify observers in a separate thread
         new Thread() {
             public void run() {
-                thisReader.notifyObservers(event);
+                if (thisReader.countObservers() > 0) {
+                    thisReader.notifyObservers(event);
+                } else {
+                    logger.debug(
+                            "An event was received but no observers are declared into VirtualReader : {} {}",
+                            thisReader.getName(), event.getEventType());
+                }
             }
         }.start();
 
@@ -162,8 +189,8 @@ public final class VirtualReader extends Observable implements ObservableReader,
      */
 
     public void addObserver(ReaderObserver observer) {
-        logger.trace("[{}][{}] addObserver => Adding an observer.", this.getClass(),
-                this.getName());
+        logger.trace("[{}][{}] addObserver => Adding an observer {}", this.getName(),
+                observer.toString());
         super.addObserver(observer);
     }
 
@@ -174,7 +201,8 @@ public final class VirtualReader extends Observable implements ObservableReader,
      */
 
     public void removeObserver(ReaderObserver observer) {
-        logger.trace("[{}] removeObserver => Deleting a reader observer", this.getName());
+        logger.trace("[{}] removeObserver => Deleting a reader observer {}", this.getName(),
+                observer.toString());
         super.removeObserver(observer);
     }
 
@@ -189,8 +217,10 @@ public final class VirtualReader extends Observable implements ObservableReader,
      */
 
     public final void notifyObservers(ReaderEvent event) {
-        logger.trace("[{}] AbstractObservableReader => Notifying a reader event: ", this.getName(),
-                event);
+        logger.trace(
+                "[{}] AbstractObservableReader => Notifying a reader event: {} to #{} observers ",
+                this.getName(), event.getEventType(), this.countObservers());
+
         setChanged();
         super.notifyObservers(event);
 
@@ -199,7 +229,7 @@ public final class VirtualReader extends Observable implements ObservableReader,
     @Override
     public void setDefaultSelectionRequest(SelectionRequest selectionRequest,
             NotificationMode notificationMode) {
-        // todo does it makes sense here?
+        // todo : implement API
     }
 
 
