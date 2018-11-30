@@ -152,7 +152,7 @@ public class UseCase_Calypso2_DefaultSelectionNotification_Stub implements Reade
          * has been made.
          */
         readEnvironmentParser = poSelector.prepareReadRecordsCmd(SFI_EnvironmentAndHolder,
-                ReadDataStructure.SINGLE_RECORD_DATA, RECORD_NUMBER_1, (byte) 0x00,
+                ReadDataStructure.SINGLE_RECORD_DATA, RECORD_NUMBER_1,
                 String.format("EnvironmentAndHolder (SFI=%02X))", SFI_EnvironmentAndHolder));
 
         /*
@@ -240,8 +240,8 @@ public class UseCase_Calypso2_DefaultSelectionNotification_Stub implements Reade
                      */
                     ReadRecordsRespPars readEventLogParser = poTransaction.prepareReadRecordsCmd(
                             SFI_EventLog, ReadDataStructure.SINGLE_RECORD_DATA, RECORD_NUMBER_1,
-                            (byte) 0x00, String.format("EventLog (SFI=%02X, recnbr=%d))",
-                                    SFI_EventLog, RECORD_NUMBER_1));
+                            String.format("EventLog (SFI=%02X, recnbr=%d))", SFI_EventLog,
+                                    RECORD_NUMBER_1));
 
                     /*
                      * Actual PO communication: send the prepared read order, then close the channel

@@ -68,7 +68,7 @@ public class SeProtocolDetectionEngine extends AbstractReaderObserverEngine {
                             new ApduRequest(ByteArrayUtils.fromHex("FFCA000000"), false));
 
                     poSelector.prepareReadRecordsCmd(SFI_T2Environment,
-                            ReadDataStructure.SINGLE_RECORD_DATA, (byte) 0x01, (byte) 0x00,
+                            ReadDataStructure.SINGLE_RECORD_DATA, (byte) 0x01,
                             "Hoplink T2 Environment");
 
                     seSelection.prepareSelection(poSelector);

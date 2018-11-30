@@ -160,7 +160,6 @@ public class UseCase_Calypso1_ExplicitSelectionAid_Stub {
              */
             ReadRecordsRespPars readEnvironmentParser = poSelector.prepareReadRecordsCmd(
                     SFI_EnvironmentAndHolder, ReadDataStructure.SINGLE_RECORD_DATA, RECORD_NUMBER_1,
-                    (byte) 0x00,
                     String.format("EnvironmentAndHolder (SFI=%02X))", SFI_EnvironmentAndHolder));
 
             /*
@@ -200,7 +199,7 @@ public class UseCase_Calypso1_ExplicitSelectionAid_Stub {
                  */
                 ReadRecordsRespPars readEventLogParser = poTransaction.prepareReadRecordsCmd(
                         SFI_EventLog, ReadDataStructure.SINGLE_RECORD_DATA, RECORD_NUMBER_1,
-                        (byte) 0x00, String.format("EventLog (SFI=%02X, recnbr=%d))", SFI_EventLog,
+                        String.format("EventLog (SFI=%02X, recnbr=%d))", SFI_EventLog,
                                 RECORD_NUMBER_1));
 
                 /*

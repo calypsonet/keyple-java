@@ -25,6 +25,7 @@ import org.eclipse.keyple.seproxy.ChannelState;
 import org.eclipse.keyple.seproxy.SeReader;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
+import org.eclipse.keyple.seproxy.protocol.TransmissionMode;
 import org.eclipse.keyple.transaction.*;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.slf4j.Logger;
@@ -152,14 +153,14 @@ public class CalypsoClassicTransactionEngine extends AbstractReaderObserverEngin
 
         /* prepare Event Log read record */
         ReadRecordsRespPars readEventLogParser = poTransaction.prepareReadRecordsCmd(SFI_EventLog,
-                ReadDataStructure.SINGLE_RECORD_DATA, RECORD_NUMBER_1, (byte) 0x00,
+                ReadDataStructure.SINGLE_RECORD_DATA, RECORD_NUMBER_1,
                 String.format("EventLog (SFI=%02X, recnbr=%d))", SFI_EventLog, RECORD_NUMBER_1));
 
 
         /* prepare Contract List read record */
         ReadRecordsRespPars readContractListParser = poTransaction.prepareReadRecordsCmd(
                 SFI_ContractList, ReadDataStructure.SINGLE_RECORD_DATA, RECORD_NUMBER_1,
-                (byte) 0x00, String.format("ContractList (SFI=%02X))", SFI_ContractList));
+                String.format("ContractList (SFI=%02X))", SFI_ContractList));
 
         if (logger.isInfoEnabled()) {
             logger.info(
@@ -201,8 +202,8 @@ public class CalypsoClassicTransactionEngine extends AbstractReaderObserverEngin
             /*
              * A ratification command will be sent (CONTACTLESS_MODE).
              */
-            poProcessStatus = poTransaction.processClosing(
-                    PoTransaction.CommunicationMode.CONTACTLESS_MODE, ChannelState.KEEP_OPEN);
+            poProcessStatus = poTransaction.processClosing(TransmissionMode.CONTACTLESS,
+                    ChannelState.KEEP_OPEN);
 
         } else {
             /*
@@ -225,7 +226,7 @@ public class CalypsoClassicTransactionEngine extends AbstractReaderObserverEngin
             /* prepare Contract #1 read record */
             ReadRecordsRespPars readContractsParser = poTransaction.prepareReadRecordsCmd(
                     SFI_Contracts, ReadDataStructure.MULTIPLE_RECORD_DATA, RECORD_NUMBER_1,
-                    (byte) 0x00, String.format("Contracts (SFI=%02X, recnbr=%d)", SFI_Contracts,
+                    String.format("Contracts (SFI=%02X, recnbr=%d)", SFI_Contracts,
                             RECORD_NUMBER_1));
 
             /* proceed with the sending of commands, don't close the channel */
@@ -258,8 +259,8 @@ public class CalypsoClassicTransactionEngine extends AbstractReaderObserverEngin
             /*
              * A ratification command will be sent (CONTACTLESS_MODE).
              */
-            poProcessStatus = poTransaction.processClosing(
-                    PoTransaction.CommunicationMode.CONTACTLESS_MODE, ChannelState.KEEP_OPEN);
+            poProcessStatus = poTransaction.processClosing(TransmissionMode.CONTACTLESS,
+                    ChannelState.KEEP_OPEN);
 
             logger.info("Parsing Append EventLog file: " + appendEventLogParser.toString());
         }
@@ -303,8 +304,7 @@ public class CalypsoClassicTransactionEngine extends AbstractReaderObserverEngin
                         ContactlessProtocols.PROTOCOL_ISO14443_4, "Calypso selector");
 
         poSelectorCalypsoAid.prepareReadRecordsCmd(SFI_EventLog,
-                ReadDataStructure.SINGLE_RECORD_DATA, RECORD_NUMBER_1, (byte) 0x00,
-                "EventLog (selection step)");
+                ReadDataStructure.SINGLE_RECORD_DATA, RECORD_NUMBER_1, "EventLog (selection step)");
 
         seSelection.prepareSelection(poSelectorCalypsoAid);
 

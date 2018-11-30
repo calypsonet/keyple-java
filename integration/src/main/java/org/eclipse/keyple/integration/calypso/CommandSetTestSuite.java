@@ -11,7 +11,6 @@
  ********************************************************************************/
 package org.eclipse.keyple.integration.calypso;
 
-import static org.eclipse.keyple.calypso.transaction.PoTransaction.CommunicationMode;
 import static org.eclipse.keyple.integration.calypso.TestEngine.selectPO;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -25,6 +24,7 @@ import org.eclipse.keyple.calypso.transaction.PoTransaction;
 import org.eclipse.keyple.seproxy.ChannelState;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
+import org.eclipse.keyple.seproxy.protocol.TransmissionMode;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -67,14 +67,13 @@ public class CommandSetTestSuite {
         ReadRecordsRespPars readRecordsRespPars = poTransaction.prepareReadRecordsCmd(fileSfi,
                 readOneRecordFlag ? ReadDataStructure.SINGLE_RECORD_DATA
                         : ReadDataStructure.MULTIPLE_RECORD_DATA,
-                (byte) recordNumber, (byte) 0x00,
-                String.format("SFI=%02X, recnbr=%d", fileSfi, recordNumber));
+                (byte) recordNumber, String.format("SFI=%02X, recnbr=%d", fileSfi, recordNumber));
 
         boolean poProcessStatus = poTransaction.processOpening(
                 PoTransaction.ModificationMode.ATOMIC,
                 PoTransaction.SessionAccessLevel.SESSION_LVL_DEBIT, (byte) 0x00, (byte) 0x00);
 
-        poTransaction.processClosing(CommunicationMode.CONTACTLESS_MODE, ChannelState.KEEP_OPEN);
+        poTransaction.processClosing(TransmissionMode.CONTACTLESS, ChannelState.KEEP_OPEN);
         /*
          * System.out.println("DataRead#: " +
          * ByteArrayUtils.toHex(dataReadInSession.getApduResponses().get(1).getDataOut()));
@@ -100,7 +99,7 @@ public class CommandSetTestSuite {
                 String.format("SFI=%02X, recnbr=%d", sfi, recordNumber));
         poTransaction.processPoCommands(ChannelState.KEEP_OPEN);
 
-        poTransaction.processClosing(CommunicationMode.CONTACTLESS_MODE, ChannelState.KEEP_OPEN);
+        poTransaction.processClosing(TransmissionMode.CONTACTLESS, ChannelState.KEEP_OPEN);
     }
 
 
@@ -118,7 +117,7 @@ public class CommandSetTestSuite {
 
         poTransaction.processPoCommands(ChannelState.KEEP_OPEN);
 
-        poTransaction.processClosing(CommunicationMode.CONTACTLESS_MODE, ChannelState.KEEP_OPEN);
+        poTransaction.processClosing(TransmissionMode.CONTACTLESS, ChannelState.KEEP_OPEN);
     }
 
 
@@ -136,7 +135,7 @@ public class CommandSetTestSuite {
 
         poTransaction.processPoCommands(ChannelState.KEEP_OPEN);
 
-        poTransaction.processClosing(CommunicationMode.CONTACTLESS_MODE, ChannelState.KEEP_OPEN);
+        poTransaction.processClosing(TransmissionMode.CONTACTLESS, ChannelState.KEEP_OPEN);
     }
 
 
@@ -153,7 +152,7 @@ public class CommandSetTestSuite {
 
         poTransaction.processPoCommands(ChannelState.KEEP_OPEN);
 
-        poTransaction.processClosing(CommunicationMode.CONTACTLESS_MODE, ChannelState.KEEP_OPEN);
+        poTransaction.processClosing(TransmissionMode.CONTACTLESS, ChannelState.KEEP_OPEN);
     }
 
 
@@ -452,8 +451,7 @@ public class CommandSetTestSuite {
 
             poTransaction.processPoCommands(ChannelState.KEEP_OPEN);
 
-            poTransaction.processClosing(CommunicationMode.CONTACTLESS_MODE,
-                    ChannelState.KEEP_OPEN);
+            poTransaction.processClosing(TransmissionMode.CONTACTLESS, ChannelState.KEEP_OPEN);
 
             counterData[2] = 0x09;
 
@@ -503,8 +501,7 @@ public class CommandSetTestSuite {
 
             poTransaction.processPoCommands(ChannelState.KEEP_OPEN);
 
-            poTransaction.processClosing(CommunicationMode.CONTACTLESS_MODE,
-                    ChannelState.KEEP_OPEN);
+            poTransaction.processClosing(TransmissionMode.CONTACTLESS, ChannelState.KEEP_OPEN);
 
             counterData[2] = (byte) 0xFF;
 
@@ -552,8 +549,7 @@ public class CommandSetTestSuite {
 
             poTransaction.processPoCommands(ChannelState.KEEP_OPEN);
 
-            poTransaction.processClosing(CommunicationMode.CONTACTLESS_MODE,
-                    ChannelState.KEEP_OPEN);
+            poTransaction.processClosing(TransmissionMode.CONTACTLESS, ChannelState.KEEP_OPEN);
 
             ReadRecordsRespPars readRecordsRespPars =
                     readRecords((CalypsoPo) poData.getMatchingSe(),

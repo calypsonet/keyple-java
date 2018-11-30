@@ -25,6 +25,7 @@ import org.eclipse.keyple.seproxy.message.*;
 import org.eclipse.keyple.seproxy.plugin.AbstractStaticReader;
 import org.eclipse.keyple.seproxy.protocol.ContactsProtocols;
 import org.eclipse.keyple.seproxy.protocol.SeProtocol;
+import org.eclipse.keyple.seproxy.protocol.TransmissionMode;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.simalliance.openmobileapi.Channel;
 import org.simalliance.openmobileapi.Reader;
@@ -63,6 +64,15 @@ public final class AndroidOmapiReader extends AbstractStaticReader {
     public void setParameter(String key, String value) {
         Log.w(TAG, "No parameters are supported by AndroidOmapiReader");
         parameters.put(key, value);
+    }
+
+    /**
+     * The transmission mode is always CONTACTS in an OMAPI reader
+     *
+     * @return the current transmission mode
+     */
+    public TransmissionMode getTransmissionMode() {
+        return TransmissionMode.CONTACTLESS;
     }
 
     /**

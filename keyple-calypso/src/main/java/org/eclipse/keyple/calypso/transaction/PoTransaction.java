@@ -37,6 +37,7 @@ import org.eclipse.keyple.seproxy.SeReader;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.message.*;
 import org.eclipse.keyple.seproxy.message.ProxyReader;
+import org.eclipse.keyple.seproxy.protocol.TransmissionMode;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -693,12 +694,11 @@ public final class PoTransaction {
      * 
      * @param poModificationCommands a list of commands that can modify the PO memory content
      * @param poAnticipatedResponses a list of anticipated PO responses to the modification commands
-     * @param communicationMode the communication mode. If the communication mode is
-     *        CONTACTLESS_MODE, a ratification command will be generated and sent to the PO after
-     *        the Close Session command; the ratification will not be requested in the Close Session
-     *        command. On the contrary, if the communication mode is CONTACTS_MODE, no ratification
-     *        command will be sent to the PO and ratification will be requested in the Close Session
-     *        command
+     * @param transmissionMode the communication mode. If the communication mode is CONTACTLESS, a
+     *        ratification command will be generated and sent to the PO after the Close Session
+     *        command; the ratification will not be requested in the Close Session command. On the
+     *        contrary, if the communication mode is CONTACTS, no ratification command will be sent
+     *        to the PO and ratification will be requested in the Close Session command
      * @param channelState indicates if the SE channel of the PO reader must be closed after the
      *        last command
      * @return SeResponse close session response
@@ -709,7 +709,7 @@ public final class PoTransaction {
      *         </ul>
      */
     private SeResponse processAtomicClosing(List<PoModificationCommand> poModificationCommands,
-            List<ApduResponse> poAnticipatedResponses, CommunicationMode communicationMode,
+            List<ApduResponse> poAnticipatedResponses, TransmissionMode transmissionMode,
             ChannelState channelState) throws KeypleReaderException {
 
         if (currentState != SessionState.SESSION_OPEN) {
@@ -796,7 +796,7 @@ public final class PoTransaction {
         PoCustomReadCommandBuilder ratificationCommand;
         boolean ratificationAsked;
 
-        if (communicationMode == CommunicationMode.CONTACTLESS_MODE) {
+        if (transmissionMode == TransmissionMode.CONTACTLESS) {
             if (poRevision == PoRevision.REV2_4) {
                 ratificationCommand = new PoCustomReadCommandBuilder("Ratification command",
                         new ApduRequest(ratificationCmdApduLegacy, false));
@@ -955,12 +955,11 @@ public final class PoTransaction {
      * determined from previous reading operations.
      *
      * @param poModificationCommands a list of commands that can modify the PO memory content
-     * @param communicationMode the communication mode. If the communication mode is
-     *        CONTACTLESS_MODE, a ratification command will be generated and sent to the PO after
-     *        the Close Session command; the ratification will not be requested in the Close Session
-     *        command. On the contrary, if the communication mode is CONTACTS_MODE, no ratification
-     *        command will be sent to the PO and ratification will be requested in the Close Session
-     *        command
+     * @param transmissionMode the communication mode. If the communication mode is CONTACTLESS, a
+     *        ratification command will be generated and sent to the PO after the Close Session
+     *        command; the ratification will not be requested in the Close Session command. On the
+     *        contrary, if the communication mode is CONTACTS, no ratification command will be sent
+     *        to the PO and ratification will be requested in the Close Session command
      * @param channelState indicates if the SE channel of the PO reader must be closed after the
      *        last command
      * @return SeResponse close session response
@@ -971,12 +970,12 @@ public final class PoTransaction {
      *         </ul>
      */
     private SeResponse processAtomicClosing(List<PoModificationCommand> poModificationCommands,
-            CommunicationMode communicationMode, ChannelState channelState)
+            TransmissionMode transmissionMode, ChannelState channelState)
             throws KeypleReaderException {
         List<ApduResponse> poAnticipatedResponses =
                 AnticipatedResponseBuilder.getResponses(poModificationCommands);
         return processAtomicClosing(poModificationCommands, poAnticipatedResponses,
-                communicationMode, channelState);
+                transmissionMode, channelState);
     }
 
     /**
@@ -1034,15 +1033,6 @@ public final class PoTransaction {
      */
     public byte[] getOpenRecordDataRead() {
         return openRecordDataRead;
-    }
-
-    /**
-     * Two communication modes are available for the PO.
-     * 
-     * It will be taken into account to handle the ratification when closing the Secure Session.
-     */
-    public enum CommunicationMode {
-        CONTACTLESS_MODE, CONTACTS_MODE
     }
 
     /**
@@ -1505,10 +1495,9 @@ public final class PoTransaction {
                     }
                     /*
                      * Closes the session, resets the modifications buffer counters for the next
-                     * round
+                     * round (set the contact mode to avoid the transmission of the ratification)
                      */
-                    processAtomicClosing(null, CommunicationMode.CONTACTS_MODE,
-                            ChannelState.KEEP_OPEN);
+                    processAtomicClosing(null, TransmissionMode.CONTACTS, ChannelState.KEEP_OPEN);
                     resetModificationsBufferCounter();
                     /*
                      * Clear the list and add the command that did not fit in the PO modifications
@@ -1603,9 +1592,10 @@ public final class PoTransaction {
                         }
                         /*
                          * Close the session and reset the modifications buffer counters for the
-                         * next round
+                         * next round (set the contact mode to avoid the transmission of the
+                         * ratification)
                          */
-                        processAtomicClosing(null, CommunicationMode.CONTACTS_MODE,
+                        processAtomicClosing(null, TransmissionMode.CONTACTS,
                                 ChannelState.KEEP_OPEN);
                         resetModificationsBufferCounter();
                         /* We reopen a new session for the remaining commands to be sent */
@@ -1659,12 +1649,11 @@ public final class PoTransaction {
      * from the PO.</li>
      * </ul>
      * 
-     * @param communicationMode the communication mode. If the communication mode is
-     *        CONTACTLESS_MODE, a ratification command will be generated and sent to the PO after
-     *        the Close Session command; the ratification will not be requested in the Close Session
-     *        command. On the contrary, if the communication mode is CONTACTS_MODE, no ratification
-     *        command will be sent to the PO and ratification will be requested in the Close Session
-     *        command
+     * @param transmissionMode the communication mode. If the communication mode is CONTACTLESS, a
+     *        ratification command will be generated and sent to the PO after the Close Session
+     *        command; the ratification will not be requested in the Close Session command. On the
+     *        contrary, if the communication mode is CONTACTS, no ratification command will be sent
+     *        to the PO and ratification will be requested in the Close Session command
      * @param channelState indicates if the SE channel of the PO reader must be closed after the
      *        last command
      * @return true if all commands are successful
@@ -1674,7 +1663,7 @@ public final class PoTransaction {
      *         communication mode.</li>
      *         </ul>
      */
-    public boolean processClosing(CommunicationMode communicationMode, ChannelState channelState)
+    public boolean processClosing(TransmissionMode transmissionMode, ChannelState channelState)
             throws KeypleReaderException {
         boolean poProcessSuccess = true;
         boolean atLeastOneReadCommand = false;
@@ -1726,7 +1715,7 @@ public final class PoTransaction {
                     } else {
                         /* All commands in the list are 'modifying' */
                         seResponseClosing = processAtomicClosing(poAtomicCommandBuilderList,
-                                CommunicationMode.CONTACTS_MODE, ChannelState.KEEP_OPEN);
+                                TransmissionMode.CONTACTS, ChannelState.KEEP_OPEN);
                         resetModificationsBufferCounter();
                         sessionPreviouslyClosed = true;
                     }
@@ -1765,7 +1754,7 @@ public final class PoTransaction {
 
         /* Finally, close the session as requested */
         seResponseClosing =
-                processAtomicClosing(poAtomicCommandBuilderList, communicationMode, channelState);
+                processAtomicClosing(poAtomicCommandBuilderList, transmissionMode, channelState);
 
         /* Update parsers */
         if (!updateParsersWithResponses(seResponseClosing, abstractApduResponseParserIterator)) {
@@ -1870,8 +1859,13 @@ public final class PoTransaction {
      * @throws java.lang.IllegalArgumentException - if the request is inconsistent
      */
     public ReadRecordsRespPars prepareReadRecordsCmd(byte sfi,
-            ReadDataStructure readDataStructureEnum, byte firstRecordNumber, byte expectedLength,
+            ReadDataStructure readDataStructureEnum, byte firstRecordNumber, int expectedLength,
             String extraInfo) {
+
+        if (expectedLength < 0 || expectedLength > 250) {
+            throw new IllegalArgumentException("Bad length.");
+        }
+
         /*
          * the readJustOneRecord flag is set to false only in case of multiple read records, in all
          * other cases it is set to true
@@ -1880,7 +1874,7 @@ public final class PoTransaction {
                 !(readDataStructureEnum == readDataStructureEnum.MULTIPLE_RECORD_DATA);
 
         poCommandBuilderList.add(new ReadRecordsCmdBuild(calypsoPo.getPoClass(), sfi,
-                firstRecordNumber, readJustOneRecord, expectedLength, extraInfo));
+                firstRecordNumber, readJustOneRecord, (byte) expectedLength, extraInfo));
 
         ReadRecordsRespPars poResponseParser =
                 new ReadRecordsRespPars(firstRecordNumber, readDataStructureEnum);
@@ -1888,6 +1882,31 @@ public final class PoTransaction {
         poResponseParserList.add(poResponseParser);
 
         return poResponseParser;
+    }
+
+    /**
+     * Builds a ReadRecords command and add it to the list of commands to be sent with the next
+     * process command. No expected length is specified, the record output length is handled
+     * automatically.
+     * <p>
+     * Returns the associated response parser.
+     *
+     * @param sfi the sfi top select
+     * @param readDataStructureEnum read mode enum to indicate a SINGLE, MULTIPLE or COUNTER read
+     * @param firstRecordNumber the record number to read (or first record to read in case of
+     *        several records)
+     * @param extraInfo extra information included in the logs (can be null or empty)
+     * @return ReadRecordsRespPars the ReadRecords command response parser
+     * @throws java.lang.IllegalArgumentException - if record number &lt; 1
+     * @throws java.lang.IllegalArgumentException - if the request is inconsistent
+     */
+    public ReadRecordsRespPars prepareReadRecordsCmd(byte sfi,
+            ReadDataStructure readDataStructureEnum, byte firstRecordNumber, String extraInfo) {
+        if (poReader.getTransmissionMode() == TransmissionMode.CONTACTS) {
+            throw new IllegalArgumentException(
+                    "The expected length must be specified in contacts mode.");
+        }
+        return prepareReadRecordsCmd(sfi, readDataStructureEnum, firstRecordNumber, 0, extraInfo);
     }
 
     /**

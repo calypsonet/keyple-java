@@ -28,6 +28,7 @@ import org.eclipse.keyple.seproxy.SeReader;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 import org.eclipse.keyple.seproxy.exception.NoStackTraceThrowable;
 import org.eclipse.keyple.seproxy.protocol.Protocol;
+import org.eclipse.keyple.seproxy.protocol.TransmissionMode;
 import org.eclipse.keyple.transaction.*;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.slf4j.Logger;
@@ -159,7 +160,7 @@ public class UseCase_Calypso4_PoAuthentication_Pcsc {
                  */
                 ReadRecordsRespPars readEventLogParser = poTransaction.prepareReadRecordsCmd(
                         SFI_EventLog, ReadDataStructure.SINGLE_RECORD_DATA, RECORD_NUMBER_1,
-                        (byte) 0x00, String.format("EventLog (SFI=%02X, recnbr=%d))", SFI_EventLog,
+                        String.format("EventLog (SFI=%02X, recnbr=%d))", SFI_EventLog,
                                 RECORD_NUMBER_1));
 
 
@@ -184,7 +185,7 @@ public class UseCase_Calypso4_PoAuthentication_Pcsc {
                  */
                 ReadRecordsRespPars readEventLogParserBis = poTransaction.prepareReadRecordsCmd(
                         SFI_EventLog, ReadDataStructure.SINGLE_RECORD_DATA, RECORD_NUMBER_1,
-                        (byte) 0x00, String.format("EventLog (SFI=%02X, recnbr=%d))", SFI_EventLog,
+                        String.format("EventLog (SFI=%02X, recnbr=%d))", SFI_EventLog,
                                 RECORD_NUMBER_1));
 
                 poProcessStatus = poTransaction.processPoCommands(ChannelState.KEEP_OPEN);
@@ -212,8 +213,8 @@ public class UseCase_Calypso4_PoAuthentication_Pcsc {
                 /*
                  * A ratification command will be sent (CONTACTLESS_MODE).
                  */
-                poProcessStatus = poTransaction.processClosing(
-                        PoTransaction.CommunicationMode.CONTACTLESS_MODE, ChannelState.KEEP_OPEN);
+                poProcessStatus = poTransaction.processClosing(TransmissionMode.CONTACTLESS,
+                        ChannelState.KEEP_OPEN);
 
                 if (!poProcessStatus) {
                     throw new IllegalStateException("processClosing failure.");

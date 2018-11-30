@@ -14,6 +14,7 @@ package org.eclipse.keyple.seproxy;
 
 import org.eclipse.keyple.seproxy.exception.NoStackTraceThrowable;
 import org.eclipse.keyple.seproxy.protocol.SeProtocolSetting;
+import org.eclipse.keyple.seproxy.protocol.TransmissionMode;
 import org.eclipse.keyple.util.Configurable;
 import org.eclipse.keyple.util.Nameable;
 
@@ -58,4 +59,9 @@ public interface SeReader extends Nameable, Configurable, Comparable<SeReader> {
      * @param seProtocolSetting the protocol setting to be add to the plugin internal list
      */
     void addSeProtocolSetting(SeProtocolSetting seProtocolSetting);
+
+    /**
+     * @return the transmission mode in use with this SE reader
+     */
+    TransmissionMode getTransmissionMode();
 }

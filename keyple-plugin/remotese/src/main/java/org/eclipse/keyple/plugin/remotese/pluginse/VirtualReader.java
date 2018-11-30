@@ -20,6 +20,7 @@ import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.message.*;
 import org.eclipse.keyple.seproxy.message.ProxyReader;
 import org.eclipse.keyple.seproxy.protocol.SeProtocolSetting;
+import org.eclipse.keyple.seproxy.protocol.TransmissionMode;
 import org.eclipse.keyple.transaction.SelectionRequest;
 import org.eclipse.keyple.util.Observable;
 import org.slf4j.Logger;
@@ -57,6 +58,15 @@ public final class VirtualReader extends Observable implements ObservableReader,
     @Override
     public String getName() {
         return name;
+    }
+
+    /**
+     * TODO change this to handle the right transmission mode
+     *
+     * @return the current transmission mode
+     */
+    public TransmissionMode getTransmissionMode() {
+        return TransmissionMode.CONTACTLESS;
     }
 
     /**

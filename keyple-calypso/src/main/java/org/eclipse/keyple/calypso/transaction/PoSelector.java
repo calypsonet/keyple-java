@@ -103,12 +103,14 @@ public final class PoSelector extends SeSelector {
      * @param expectedLength the expected length of the record(s)
      * @param extraInfo extra information included in the logs (can be null or empty)
      */
-    // public void prepareReadRecordsCmd(byte sfi, byte firstRecordNumber, boolean
-    // readJustOneRecord,
-    // byte expectedLength, String extraInfo)
     public ReadRecordsRespPars prepareReadRecordsCmd(byte sfi,
-            ReadDataStructure readDataStructureEnum, byte firstRecordNumber, byte expectedLength,
+            ReadDataStructure readDataStructureEnum, byte firstRecordNumber, int expectedLength,
             String extraInfo) {
+
+        if (expectedLength < 0 || expectedLength > 250) {
+            throw new IllegalArgumentException("Bad length.");
+        }
+
         /*
          * the readJustOneRecord flag is set to false only in case of multiple read records, in all
          * other cases it is set to true
@@ -117,7 +119,7 @@ public final class PoSelector extends SeSelector {
                 !(readDataStructureEnum == readDataStructureEnum.MULTIPLE_RECORD_DATA);
 
         seSelectionApduRequestList.add(new ReadRecordsCmdBuild(poClass, sfi, firstRecordNumber,
-                readJustOneRecord, expectedLength, extraInfo).getApduRequest());
+                readJustOneRecord, (byte) expectedLength, extraInfo).getApduRequest());
 
         if (logger.isTraceEnabled()) {
             logger.trace("ReadRecords: SFI = {}, RECNUMBER = {}, JUSTONE = {}, EXPECTEDLENGTH = {}",
@@ -134,6 +136,25 @@ public final class PoSelector extends SeSelector {
         poResponseParserList.add(poResponseParser);
 
         return poResponseParser;
+    }
+
+    /**
+     * Prepare one or more read record ApduRequest based on the target revision to be executed
+     * following the selection. No expected length is specified, the record output length is handled
+     * automatically.
+     * <p>
+     * In the case of a mixed target (rev2 or rev3) two commands are prepared. The first one in rev3
+     * format, the second one in rev2 format (mainly class byte)
+     *
+     * @param sfi the sfi top select
+     * @param readDataStructureEnum read mode enum to indicate a SINGLE, MULTIPLE or COUNTER read
+     * @param firstRecordNumber the record number to read (or first record to read in case of
+     *        several records)
+     * @param extraInfo extra information included in the logs (can be null or empty)
+     */
+    public ReadRecordsRespPars prepareReadRecordsCmd(byte sfi,
+            ReadDataStructure readDataStructureEnum, byte firstRecordNumber, String extraInfo) {
+        return prepareReadRecordsCmd(sfi, readDataStructureEnum, firstRecordNumber, 0, extraInfo);
     }
 
     /**
