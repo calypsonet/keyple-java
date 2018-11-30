@@ -76,19 +76,17 @@ public class TestEngine {
         seSelection.prepareSelection(new PoSelector(
 
                 ByteArrayUtils.fromHex(PoFileStructureInfo.poAuditC0Aid),
-                SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN, null,
-                PoSelector.RevisionTarget.TARGET_REV3, "Audit C0"));
+                SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN, null, "Audit C0"));
 
         // Add CLAP AID to the list
-        seSelection.prepareSelection(new PoSelector(
-                ByteArrayUtils.fromHex(PoFileStructureInfo.clapAid), SeSelector.SelectMode.FIRST,
-                ChannelState.KEEP_OPEN, null, PoSelector.RevisionTarget.TARGET_REV3, "CLAP"));
+        seSelection.prepareSelection(
+                new PoSelector(ByteArrayUtils.fromHex(PoFileStructureInfo.clapAid),
+                        SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN, null, "CLAP"));
 
         // Add cdLight AID to the list
         seSelection.prepareSelection(
                 new PoSelector(ByteArrayUtils.fromHex(PoFileStructureInfo.cdLightAid),
-                        SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN, null,
-                        PoSelector.RevisionTarget.TARGET_REV2_REV3, "CDLight"));
+                        SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN, null, "CDLight"));
 
         if (seSelection.processExplicitSelection()) {
             return new PoFileStructureInfo(seSelection.getSelectedSe());

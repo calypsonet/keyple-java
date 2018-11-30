@@ -12,6 +12,7 @@
 package org.eclipse.keyple.calypso.command.po.builder;
 
 
+import org.eclipse.keyple.calypso.command.PoClass;
 import org.eclipse.keyple.calypso.command.po.*;
 
 /**
@@ -28,7 +29,7 @@ public final class DecreaseCmdBuild extends PoCommandBuilder
     /**
      * Instantiates a new decrease cmd build from command parameters.
      *
-     * @param revision the revision of the PO
+     * @param poClass indicates which CLA byte should be used for the Apdu
      * @param sfi SFI of the file to select or 00h for current EF
      * @param counterNumber &gt;= 01h: Counters file, number of the counter. 00h: Simulated Counter
      *        file.
@@ -39,13 +40,9 @@ public final class DecreaseCmdBuild extends PoCommandBuilder
      * @throws java.lang.IllegalArgumentException - if the command is inconsistent
      */
 
-    public DecreaseCmdBuild(PoRevision revision, byte sfi, byte counterNumber, int decValue,
+    public DecreaseCmdBuild(PoClass poClass, byte sfi, byte counterNumber, int decValue,
             String extraInfo) throws IllegalArgumentException {
         super(command, null);
-
-        if (revision != null) {
-            this.defaultRevision = revision;
-        }
 
         // only counter number >= 1 are allowed
         if (counterNumber < 1) {
@@ -63,7 +60,7 @@ public final class DecreaseCmdBuild extends PoCommandBuilder
         decValueBuffer[1] = (byte) ((decValue >> 8) & 0xFF);
         decValueBuffer[2] = (byte) (decValue & 0xFF);
 
-        byte cla = PoRevision.REV2_4.equals(this.defaultRevision) ? (byte) 0x94 : (byte) 0x00;
+        byte cla = poClass.getValue();
         byte p2 = (byte) (sfi * 8);
 
         /* this is a case4 command, we set Le = 0 */

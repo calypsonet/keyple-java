@@ -116,7 +116,7 @@ public class UseCase_Calypso3_Rev1Selection_Pcsc {
              * the selection and read additional information afterwards
              */
             PoSelector poSelector = new PoSelector(poAtrRegex, ChannelState.KEEP_OPEN, Protocol.ANY,
-                    PoSelector.RevisionTarget.TARGET_REV1, "ATR: " + poAtrRegex);
+                    "ATR: " + poAtrRegex);
 
             /*
              * Prepare the selection of the DF RT.

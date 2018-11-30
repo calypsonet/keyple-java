@@ -12,7 +12,7 @@
 package org.eclipse.keyple.calypso.command.po.builder;
 
 
-import org.eclipse.keyple.calypso.command.po.PoRevision;
+import org.eclipse.keyple.calypso.command.PoClass;
 import org.eclipse.keyple.command.AbstractApduCommandBuilder;
 import org.eclipse.keyple.seproxy.message.ApduRequest;
 import org.junit.Assert;
@@ -37,7 +37,7 @@ public class UpdateRecordCmdBuildTest {
         // revision 2.4
         byte[] request2_4 = new byte[] {(byte) 0x94, (byte) 0xDC, (byte) 0x01, 0x44, (byte) 0x05,
                 0x00, 0x01, 0x02, 0x03, 0x04};
-        apduCommandBuilder = new UpdateRecordCmdBuild(PoRevision.REV2_4, (byte) 0x08, record_number,
+        apduCommandBuilder = new UpdateRecordCmdBuild(PoClass.LEGACY, (byte) 0x08, record_number,
                 newRecordData, "TestRev2_4");
         ApduRequest = apduCommandBuilder.getApduRequest();
         Assert.assertArrayEquals(request2_4, ApduRequest.getBytes());
@@ -48,7 +48,7 @@ public class UpdateRecordCmdBuildTest {
         // revision 3.1
         byte[] request3_1 = new byte[] {(byte) 0x00, (byte) 0xDC, (byte) 0x01, 0x44, (byte) 0x05,
                 0x00, 0x01, 0x02, 0x03, 0x04};
-        apduCommandBuilder = new UpdateRecordCmdBuild(PoRevision.REV3_1, (byte) 0x08, record_number,
+        apduCommandBuilder = new UpdateRecordCmdBuild(PoClass.ISO, (byte) 0x08, record_number,
                 newRecordData, "TestRev3_1");
         ApduRequest = apduCommandBuilder.getApduRequest();
         Assert.assertArrayEquals(request3_1, ApduRequest.getBytes());
@@ -59,7 +59,7 @@ public class UpdateRecordCmdBuildTest {
         // revision 3.2
         byte[] request3_2 = new byte[] {(byte) 0x00, (byte) 0xDC, (byte) 0x01, 0x44, (byte) 0x05,
                 0x00, 0x01, 0x02, 0x03, 0x04};
-        apduCommandBuilder = new UpdateRecordCmdBuild(PoRevision.REV3_2, (byte) 0x08, record_number,
+        apduCommandBuilder = new UpdateRecordCmdBuild(PoClass.ISO, (byte) 0x08, record_number,
                 newRecordData, "TestRev3_2");
         ApduRequest = apduCommandBuilder.getApduRequest();
         Assert.assertArrayEquals(request3_2, ApduRequest.getBytes());

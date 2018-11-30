@@ -816,8 +816,8 @@ public final class PoTransaction {
         }
 
         /* Build the PO Close Session command. The last one for this session */
-        CloseSessionCmdBuild closeCommand =
-                new CloseSessionCmdBuild(poRevision, ratificationAsked, sessionTerminalSignature);
+        CloseSessionCmdBuild closeCommand = new CloseSessionCmdBuild(calypsoPo.getPoClass(),
+                ratificationAsked, sessionTerminalSignature);
 
         poApduRequestList.add(closeCommand.getApduRequest());
 
@@ -1879,7 +1879,7 @@ public final class PoTransaction {
         boolean readJustOneRecord =
                 !(readDataStructureEnum == readDataStructureEnum.MULTIPLE_RECORD_DATA);
 
-        poCommandBuilderList.add(new ReadRecordsCmdBuild(calypsoPo.getRevision(), sfi,
+        poCommandBuilderList.add(new ReadRecordsCmdBuild(calypsoPo.getPoClass(), sfi,
                 firstRecordNumber, readJustOneRecord, expectedLength, extraInfo));
 
         ReadRecordsRespPars poResponseParser =
@@ -1905,7 +1905,7 @@ public final class PoTransaction {
     public AppendRecordRespPars prepareAppendRecordCmd(byte sfi, byte[] newRecordData,
             String extraInfo) {
         poCommandBuilderList.add(
-                new AppendRecordCmdBuild(calypsoPo.getRevision(), sfi, newRecordData, extraInfo));
+                new AppendRecordCmdBuild(calypsoPo.getPoClass(), sfi, newRecordData, extraInfo));
 
         AppendRecordRespPars poResponseParser = new AppendRecordRespPars();
 
@@ -1930,8 +1930,8 @@ public final class PoTransaction {
      */
     public UpdateRecordRespPars prepareUpdateRecordCmd(byte sfi, byte recordNumber,
             byte[] newRecordData, String extraInfo) {
-        poCommandBuilderList.add(new UpdateRecordCmdBuild(calypsoPo.getRevision(), sfi,
-                recordNumber, newRecordData, extraInfo));
+        poCommandBuilderList.add(new UpdateRecordCmdBuild(calypsoPo.getPoClass(), sfi, recordNumber,
+                newRecordData, extraInfo));
 
         UpdateRecordRespPars poResponseParser = new UpdateRecordRespPars();
 
@@ -1958,7 +1958,7 @@ public final class PoTransaction {
      */
     public IncreaseRespPars prepareIncreaseCmd(byte sfi, byte counterNumber, int incValue,
             String extraInfo) {
-        poCommandBuilderList.add(new IncreaseCmdBuild(calypsoPo.getRevision(), sfi, counterNumber,
+        poCommandBuilderList.add(new IncreaseCmdBuild(calypsoPo.getPoClass(), sfi, counterNumber,
                 incValue, extraInfo));
 
         IncreaseRespPars poResponseParser = new IncreaseRespPars();
@@ -1986,7 +1986,7 @@ public final class PoTransaction {
      */
     public DecreaseRespPars prepareDecreaseCmd(byte sfi, byte counterNumber, int decValue,
             String extraInfo) {
-        poCommandBuilderList.add(new DecreaseCmdBuild(calypsoPo.getRevision(), sfi, counterNumber,
+        poCommandBuilderList.add(new DecreaseCmdBuild(calypsoPo.getPoClass(), sfi, counterNumber,
                 decValue, extraInfo));
         DecreaseRespPars poResponseParser = new DecreaseRespPars();
 

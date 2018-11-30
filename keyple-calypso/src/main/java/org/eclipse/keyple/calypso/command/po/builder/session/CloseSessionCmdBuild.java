@@ -12,9 +12,9 @@
 package org.eclipse.keyple.calypso.command.po.builder.session;
 
 
+import org.eclipse.keyple.calypso.command.PoClass;
 import org.eclipse.keyple.calypso.command.po.CalypsoPoCommands;
 import org.eclipse.keyple.calypso.command.po.PoCommandBuilder;
-import org.eclipse.keyple.calypso.command.po.PoRevision;
 import org.eclipse.keyple.util.ByteArrayUtils;
 
 // TODO: Auto-generated Javadoc
@@ -29,18 +29,15 @@ public final class CloseSessionCmdBuild extends PoCommandBuilder {
     /**
      * Instantiates a new CloseSessionCmdBuild depending of the revision of the PO.
      *
-     * @param revision of the PO
+     * @param poClass indicates which CLA byte should be used for the Apdu
      * @param ratificationAsked the ratification asked
      * @param terminalSessionSignature the sam half session signature
      * @throws java.lang.IllegalArgumentException - if the signature is null or has a wrong length
      * @throws java.lang.IllegalArgumentException - if the command is inconsistent
      */
-    public CloseSessionCmdBuild(PoRevision revision, boolean ratificationAsked,
+    public CloseSessionCmdBuild(PoClass poClass, boolean ratificationAsked,
             byte[] terminalSessionSignature) throws IllegalArgumentException {
         super(command, null);
-        if (revision != null) {
-            this.defaultRevision = revision;
-        }
         // The optional parameter terminalSessionSignature could contain 4 or 8
         // bytes.
         if (terminalSessionSignature != null && terminalSessionSignature.length != 4
@@ -49,8 +46,6 @@ public final class CloseSessionCmdBuild extends PoCommandBuilder {
                     + ByteArrayUtils.toHex(terminalSessionSignature));
         }
 
-        byte cla = PoRevision.REV2_4.equals(this.defaultRevision) ? (byte) 0x94 : (byte) 0x00;
-
         byte p1 = ratificationAsked ? (byte) 0x80 : (byte) 0x00;
         /*
          * case 4: this command contains incoming and outgoing data. We define le = 0, the actual
@@ -58,6 +53,7 @@ public final class CloseSessionCmdBuild extends PoCommandBuilder {
          */
         byte le = 0;
 
-        request = setApduRequest(cla, command, p1, (byte) 0x00, terminalSessionSignature, le);
+        request = setApduRequest(poClass.getValue(), command, p1, (byte) 0x00,
+                terminalSessionSignature, le);
     }
 }

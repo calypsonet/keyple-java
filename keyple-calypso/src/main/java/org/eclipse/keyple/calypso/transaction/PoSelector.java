@@ -16,9 +16,9 @@ package org.eclipse.keyple.calypso.transaction;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import org.eclipse.keyple.calypso.command.PoClass;
 import org.eclipse.keyple.calypso.command.po.PoCustomModificationCommandBuilder;
 import org.eclipse.keyple.calypso.command.po.PoCustomReadCommandBuilder;
-import org.eclipse.keyple.calypso.command.po.PoRevision;
 import org.eclipse.keyple.calypso.command.po.builder.ReadRecordsCmdBuild;
 import org.eclipse.keyple.calypso.command.po.builder.SelectFileCmdBuild;
 import org.eclipse.keyple.calypso.command.po.parser.ReadDataStructure;
@@ -41,47 +41,15 @@ import org.slf4j.LoggerFactory;
 public final class PoSelector extends SeSelector {
     private static final Logger logger = LoggerFactory.getLogger(PoSelector.class);
 
-    private final RevisionTarget revisionTarget;
+    private final PoClass poClass;
     /** The list to contain the parsers associated to the prepared commands */
-    private List<CommandParser> poResponseParserList = new ArrayList<CommandParser>();
-
-    /**
-     * Inner class to hold a apduResponseParser and a flag indicating whether this parser is
-     * associated with one or two command.
-     * <p>
-     * The goal of this class and its doubleParser flag is to handle the case where two commands
-     * were sent to a Calypso PO (case TARGET_REV2_REV3 of prepareReadRecordsCmd)
-     * <p>
-     * This flag will be tested when parsing the response to the selection.
-     * 
-     */
-    class CommandParser {
-        private final AbstractApduResponseParser apduResponseParser;
-        private final int numberOfRequests;
-
-        public CommandParser(AbstractApduResponseParser apduResponseParser, int numberOfRequests) {
-            this.apduResponseParser = apduResponseParser;
-            this.numberOfRequests = numberOfRequests;
-        }
-
-        public AbstractApduResponseParser getApduResponseParser() {
-            return apduResponseParser;
-        }
-
-        public int getNumberOfRequests() {
-            return numberOfRequests;
-        }
-    }
-
-    /**
-     * Selection targets definition
-     */
-    public enum RevisionTarget {
-        TARGET_REV1, TARGET_REV2, TARGET_REV3, TARGET_REV2_REV3
-    }
+    private List<AbstractApduResponseParser> poResponseParserList =
+            new ArrayList<AbstractApduResponseParser>();
 
     /**
      * Calypso PO revision 1 selector
+     * <p>
+     * The PO class is set to LEGACY in order to produce Apdus with legacy class byte
      * 
      * @param atrRegex a regular expression to compare with the ATR of the targeted Rev1 PO
      * @param channelState indicates whether the logical channel should remain open
@@ -89,18 +57,20 @@ public final class PoSelector extends SeSelector {
      * @param extraInfo information string
      */
     public PoSelector(String atrRegex, ChannelState channelState, SeProtocol protocolFlag,
-            RevisionTarget revisionTarget, String extraInfo) {
+            String extraInfo) {
         super(atrRegex, channelState, protocolFlag, extraInfo);
         setMatchingClass(CalypsoPo.class);
         setSelectorClass(PoSelector.class);
-        this.revisionTarget = RevisionTarget.TARGET_REV1;
+        poClass = PoClass.LEGACY;
         if (logger.isTraceEnabled()) {
-            logger.trace("Calypso {} selector", revisionTarget);
+            logger.trace("Calypso {} selector", poClass);
         }
     }
 
     /**
      * Calypso PO revision 2+ selector
+     * <p>
+     * The PO class is set to ISO in order to produce Apdus with ISO class byte
      *
      * @param aid a regular expression to compare with the ATR of the targeted Rev1 PO
      * @param selectMode a flag to indicate if the first or the next occurrence is requested
@@ -109,13 +79,13 @@ public final class PoSelector extends SeSelector {
      * @param extraInfo information string
      */
     public PoSelector(byte[] aid, SelectMode selectMode, ChannelState channelState,
-            SeProtocol protocolFlag, RevisionTarget revisionTarget, String extraInfo) {
+            SeProtocol protocolFlag, String extraInfo) {
         super(aid, selectMode, channelState, protocolFlag, extraInfo);
         setMatchingClass(CalypsoPo.class);
         setSelectorClass(PoSelector.class);
-        this.revisionTarget = RevisionTarget.TARGET_REV1;
+        poClass = PoClass.ISO;
         if (logger.isTraceEnabled()) {
-            logger.trace("Calypso {} selector", revisionTarget);
+            logger.trace("Calypso {} selector", poClass);
         }
     }
 
@@ -146,38 +116,9 @@ public final class PoSelector extends SeSelector {
         boolean readJustOneRecord =
                 !(readDataStructureEnum == readDataStructureEnum.MULTIPLE_RECORD_DATA);
 
-        switch (this.revisionTarget) {
-            case TARGET_REV1:
-                seSelectionApduRequestList
-                        .add(new ReadRecordsCmdBuild(PoRevision.REV1_0, sfi, firstRecordNumber,
-                                readJustOneRecord, expectedLength, extraInfo).getApduRequest());
-                break;
-            case TARGET_REV2:
-                seSelectionApduRequestList
-                        .add(new ReadRecordsCmdBuild(PoRevision.REV2_4, sfi, firstRecordNumber,
-                                readJustOneRecord, expectedLength, extraInfo).getApduRequest());
-                break;
-            case TARGET_REV3:
-                seSelectionApduRequestList
-                        .add(new ReadRecordsCmdBuild(PoRevision.REV3_1, sfi, firstRecordNumber,
-                                readJustOneRecord, expectedLength, extraInfo).getApduRequest());
-                break;
-            case TARGET_REV2_REV3:
-                /*
-                 * we add here two readrecord commands because the two targeted PO differs with the
-                 * expected apdu class (CLA)
-                 *
-                 * At most one response will be successful. The filling process of the parser will
-                 * select the first one that succeeds.
-                 */
-                seSelectionApduRequestList
-                        .add(new ReadRecordsCmdBuild(PoRevision.REV3_1, sfi, firstRecordNumber,
-                                readJustOneRecord, expectedLength, extraInfo).getApduRequest());
-                seSelectionApduRequestList
-                        .add(new ReadRecordsCmdBuild(PoRevision.REV2_4, sfi, firstRecordNumber,
-                                readJustOneRecord, expectedLength, extraInfo).getApduRequest());
-                break;
-        }
+        seSelectionApduRequestList.add(new ReadRecordsCmdBuild(poClass, sfi, firstRecordNumber,
+                readJustOneRecord, expectedLength, extraInfo).getApduRequest());
+
         if (logger.isTraceEnabled()) {
             logger.trace("ReadRecords: SFI = {}, RECNUMBER = {}, JUSTONE = {}, EXPECTEDLENGTH = {}",
                     sfi, firstRecordNumber, readJustOneRecord, expectedLength);
@@ -188,10 +129,9 @@ public final class PoSelector extends SeSelector {
                 new ReadRecordsRespPars(firstRecordNumber, readDataStructureEnum);
 
         /*
-         * keep the parser in a CommandParser list with the number of apduRequest associated with it
+         * keep the parser in the CommandParser list
          */
-        poResponseParserList.add(new CommandParser(poResponseParser,
-                this.revisionTarget == RevisionTarget.TARGET_REV2_REV3 ? 2 : 1));
+        poResponseParserList.add(poResponseParser);
 
         return poResponseParser;
     }
@@ -204,12 +144,9 @@ public final class PoSelector extends SeSelector {
      * @param extraInfo extra information included in the logs (can be null or empty)
      */
     public SelectFileRespPars prepareSelectFileDfCmd(byte[] path, String extraInfo) {
-        if (this.revisionTarget != RevisionTarget.TARGET_REV1) {
-            throw new IllegalArgumentException("Select File not allowed here for REV2 or REV3 PO.");
-        }
-        seSelectionApduRequestList.add(new SelectFileCmdBuild(PoRevision.REV1_0,
-                SelectFileCmdBuild.SelectControl.PATH_FROM_MF, SelectFileCmdBuild.SelectOptions.FCI,
-                path).getApduRequest());
+        seSelectionApduRequestList
+                .add(new SelectFileCmdBuild(poClass, SelectFileCmdBuild.SelectControl.PATH_FROM_MF,
+                        SelectFileCmdBuild.SelectOptions.FCI, path).getApduRequest());
         if (logger.isTraceEnabled()) {
             logger.trace("Select File: PATH = {}", ByteArrayUtils.toHex(path));
         }
@@ -220,8 +157,7 @@ public final class PoSelector extends SeSelector {
         /*
          * keep the parser in a CommandParser list with the number of apduRequest associated with it
          */
-        poResponseParserList.add(new CommandParser(poResponseParser,
-                this.revisionTarget == RevisionTarget.TARGET_REV2_REV3 ? 2 : 1));
+        poResponseParserList.add(poResponseParser);
 
         return poResponseParser;
     }
@@ -260,30 +196,26 @@ public final class PoSelector extends SeSelector {
      *
      * @param seResponse the seResponse from the PO
      */
-    public void updateParsersWithResponses(SeResponse seResponse) {
+    protected void updateParsersWithResponses(SeResponse seResponse) {
+        /* attempt to update the parsers only if the list is not empty! */
         if (poResponseParserList.size() != 0) {
-            /* attempt to update the parsers only if the list is not empty! */
-            Iterator<CommandParser> parserIterator = poResponseParserList.iterator();
+            Iterator<AbstractApduResponseParser> parserIterator = poResponseParserList.iterator();
             /* double loop to set apdu responses to corresponding parsers */
-            for (Iterator<ApduResponse> responseIterator =
-                    seResponse.getApduResponses().iterator(); responseIterator.hasNext();) {
+            for (ApduResponse apduResponse : seResponse.getApduResponses()) {
                 if (!parserIterator.hasNext()) {
                     throw new IllegalStateException("Parsers list and responses list mismatch! ");
                 }
-                CommandParser parser = parserIterator.next();
-                boolean parserUpdated = false;
-                for (int i = 0; i < parser.getNumberOfRequests(); i++) {
-                    if (!responseIterator.hasNext()) {
-                        throw new IllegalStateException(
-                                "Parsers list and responses list mismatch! ");
-                    }
-                    ApduResponse apduResponse = responseIterator.next();
-                    if (!parserUpdated && apduResponse.isSuccessful()) {
-                        parser.getApduResponseParser().setApduResponse(apduResponse);
-                        parserUpdated = true;
-                    }
+                parserIterator.next().setApduResponse(apduResponse);
+                if (!apduResponse.isSuccessful()) {
                 }
             }
         }
+    }
+
+    /**
+     * @return the PO class determined from the selection mode ATR/LEGACY, AID/ISO
+     */
+    public PoClass getPoClass() {
+        return poClass;
     }
 }

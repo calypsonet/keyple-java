@@ -12,7 +12,7 @@
 package org.eclipse.keyple.calypso.command.po.builder;
 
 
-import org.eclipse.keyple.calypso.command.po.PoRevision;
+import org.eclipse.keyple.calypso.command.PoClass;
 import org.eclipse.keyple.command.AbstractApduCommandBuilder;
 import org.eclipse.keyple.seproxy.message.ApduRequest;
 import org.junit.Assert;
@@ -26,7 +26,7 @@ public class GetDataCmdBuildTest {
     @Test
     public void getDataFCICmdBuild() {
         byte[] request = new byte[] {(byte) 0x94, (byte) 0xCA, (byte) 0x00, 0x6F, 0x00};
-        AbstractApduCommandBuilder apduCommandBuilder = new GetDataFciCmdBuild(PoRevision.REV2_4);
+        AbstractApduCommandBuilder apduCommandBuilder = new GetDataFciCmdBuild(PoClass.LEGACY);
         ApduRequest apduReq = apduCommandBuilder.getApduRequest();
         Assert.assertArrayEquals(request, apduReq.getBytes());
     }
@@ -35,7 +35,7 @@ public class GetDataCmdBuildTest {
     @Test
     public void getDataFCICmdBuild2() {
         byte[] request2 = new byte[] {(byte) 0x00, (byte) 0xCA, (byte) 0x00, 0x6F, 0x00};
-        AbstractApduCommandBuilder apduCommandBuilder = new GetDataFciCmdBuild(PoRevision.REV3_1);
+        AbstractApduCommandBuilder apduCommandBuilder = new GetDataFciCmdBuild(PoClass.ISO);
         ApduRequest apduReq = apduCommandBuilder.getApduRequest();
         Assert.assertArrayEquals(request2, apduReq.getBytes());
     }

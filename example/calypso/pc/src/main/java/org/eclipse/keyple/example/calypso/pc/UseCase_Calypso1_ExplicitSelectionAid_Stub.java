@@ -150,9 +150,9 @@ public class UseCase_Calypso1_ExplicitSelectionAid_Stub {
              * Calypso selection: configures a PoSelector with all the desired attributes to make
              * the selection and read additional information afterwards
              */
-            PoSelector poSelector = new PoSelector(ByteArrayUtils.fromHex(poAid),
-                    SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN, Protocol.ANY,
-                    PoSelector.RevisionTarget.TARGET_REV3, "AID: " + poAid);
+            PoSelector poSelector =
+                    new PoSelector(ByteArrayUtils.fromHex(poAid), SeSelector.SelectMode.FIRST,
+                            ChannelState.KEEP_OPEN, Protocol.ANY, "AID: " + poAid);
 
             /*
              * Prepare the reading order and keep the associated parser for later use once the

@@ -134,9 +134,9 @@ public class UseCase_Calypso5_MultipleSession_Pcsc {
              */
             /* Calypso AID */
             String poAid = "A0000004040125090101";
-            PoSelector poSelector = new PoSelector(ByteArrayUtils.fromHex(poAid),
-                    SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN, Protocol.ANY,
-                    PoSelector.RevisionTarget.TARGET_REV3, "AID: " + poAid);
+            PoSelector poSelector =
+                    new PoSelector(ByteArrayUtils.fromHex(poAid), SeSelector.SelectMode.FIRST,
+                            ChannelState.KEEP_OPEN, Protocol.ANY, "AID: " + poAid);
 
             /*
              * Add the selection case to the current selection (we could have added other cases

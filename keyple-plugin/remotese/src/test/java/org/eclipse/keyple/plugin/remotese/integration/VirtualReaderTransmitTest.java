@@ -13,7 +13,7 @@ package org.eclipse.keyple.plugin.remotese.integration;
 
 import java.util.Arrays;
 import java.util.List;
-import org.eclipse.keyple.calypso.command.po.PoRevision;
+import org.eclipse.keyple.calypso.command.PoClass;
 import org.eclipse.keyple.calypso.command.po.builder.ReadRecordsCmdBuild;
 import org.eclipse.keyple.plugin.remotese.common.json.SampleFactory;
 import org.eclipse.keyple.plugin.stub.StubReaderTest;
@@ -97,7 +97,7 @@ public class VirtualReaderTransmitTest extends VirtualReaderBaseTest {
         for (int i = 0; i < N_TIMES; i++) {
 
             // test
-            ReadRecordsCmdBuild poReadRecordCmd_T2Env = new ReadRecordsCmdBuild(PoRevision.REV3_1,
+            ReadRecordsCmdBuild poReadRecordCmd_T2Env = new ReadRecordsCmdBuild(PoClass.ISO,
                     (byte) 0x14, (byte) 0x01, true, (byte) 0x20, "");
             List<ApduRequest> poApduRequestList =
                     Arrays.asList(poReadRecordCmd_T2Env.getApduRequest());

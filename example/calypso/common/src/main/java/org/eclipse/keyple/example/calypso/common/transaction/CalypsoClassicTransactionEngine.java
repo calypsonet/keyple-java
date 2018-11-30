@@ -288,20 +288,19 @@ public class CalypsoClassicTransactionEngine extends AbstractReaderObserverEngin
         /*
          * Add selection case 1: Fake AID1, protocol ISO, target rev 3
          */
-        seSelection.prepareSelection(
-                new PoSelector(ByteArrayUtils.fromHex(poFakeAid1), SeSelector.SelectMode.FIRST,
-                        ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4,
-                        PoSelector.RevisionTarget.TARGET_REV3, "Selector with fake AID1"));
+        seSelection.prepareSelection(new PoSelector(ByteArrayUtils.fromHex(poFakeAid1),
+                SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN,
+                ContactlessProtocols.PROTOCOL_ISO14443_4, "Selector with fake AID1"));
 
         /*
          * Add selection case 2: Calypso application, protocol ISO, target rev 2 or 3
          *
          * addition of read commands to execute following the selection
          */
-        PoSelector poSelectorCalypsoAid = new PoSelector(
-                ByteArrayUtils.fromHex(CalypsoClassicInfo.AID), SeSelector.SelectMode.FIRST,
-                ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4,
-                PoSelector.RevisionTarget.TARGET_REV2_REV3, "Calypso selector");
+        PoSelector poSelectorCalypsoAid =
+                new PoSelector(ByteArrayUtils.fromHex(CalypsoClassicInfo.AID),
+                        SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN,
+                        ContactlessProtocols.PROTOCOL_ISO14443_4, "Calypso selector");
 
         poSelectorCalypsoAid.prepareReadRecordsCmd(SFI_EventLog,
                 ReadDataStructure.SINGLE_RECORD_DATA, RECORD_NUMBER_1, (byte) 0x00,
@@ -312,10 +311,9 @@ public class CalypsoClassicTransactionEngine extends AbstractReaderObserverEngin
         /*
          * Add selection case 3: Fake AID2, unspecified protocol, target rev 2 or 3
          */
-        seSelection.prepareSelection(
-                new PoSelector(ByteArrayUtils.fromHex(poFakeAid2), SeSelector.SelectMode.FIRST,
-                        ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4,
-                        PoSelector.RevisionTarget.TARGET_REV2_REV3, "Selector with fake AID2"));
+        seSelection.prepareSelection(new PoSelector(ByteArrayUtils.fromHex(poFakeAid2),
+                SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN,
+                ContactlessProtocols.PROTOCOL_ISO14443_4, "Selector with fake AID2"));
 
         return seSelection.getSelectionOperation();
     }
