@@ -11,9 +11,6 @@
  ********************************************************************************/
 package org.eclipse.keyple.integration.example.pc.calypso;
 
-import static org.eclipse.keyple.calypso.transaction.PoTransaction.CommunicationMode;
-import static org.eclipse.keyple.calypso.transaction.PoTransaction.SessionAccessLevel.SESSION_LVL_DEBIT;
-import static org.eclipse.keyple.calypso.transaction.PoTransaction.SessionAccessLevel.SESSION_LVL_LOAD;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -127,9 +124,9 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
         // Open Session with debit key #3 and reading the Environment at SFI 07h
         // Files to read during the beginning of the session: Event (SFI 0x08) and ContractList (SFI
         // 0x1E)
-        boolean poProcessStatus =
-                poTransaction.processOpening(PoTransaction.ModificationMode.ATOMIC,
-                        SESSION_LVL_DEBIT, environmentSfi, (byte) 0x01);
+        boolean poProcessStatus = poTransaction.processOpening(
+                PoTransaction.ModificationMode.ATOMIC,
+                PoTransaction.SessionAccessLevel.SESSION_LVL_DEBIT, environmentSfi, (byte) 0x01);
 
         /*
          * byte[] sessionData =
@@ -210,8 +207,8 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
         AppendRecordRespPars appendEventPars =
                 poTransaction.prepareAppendRecordCmd(eventSfi, newEventData, "Event");
 
-        poProcessStatus = poTransaction.processClosing(CommunicationMode.CONTACTLESS_MODE,
-                ChannelState.KEEP_OPEN);
+        poProcessStatus = poTransaction.processClosing(
+                PoTransaction.CommunicationMode.CONTACTLESS_MODE, ChannelState.KEEP_OPEN);
 
         System.out.println("\nValidation Successful!");
         System.out.println(
@@ -239,9 +236,9 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
         // Open Session with debit key #3 and reading the Environment at SFI 07h
         // Files to read during the beginning of the session: Event (SFI 0x08), Counters (SFI 0x1B)
         // and all records of the Contracts (SFI 0x29)
-        boolean poProcessStatus =
-                poTransaction.processOpening(PoTransaction.ModificationMode.ATOMIC,
-                        SESSION_LVL_DEBIT, environmentSfi, (byte) 0x01);
+        boolean poProcessStatus = poTransaction.processOpening(
+                PoTransaction.ModificationMode.ATOMIC,
+                PoTransaction.SessionAccessLevel.SESSION_LVL_DEBIT, environmentSfi, (byte) 0x01);
         /*
          * byte[] sessionData =
          * ByteArrayUtils.subLen(dataReadInSession.getApduResponses().get(0).getDataOut(), 0, 8);
@@ -296,8 +293,8 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
             poTransaction.processClosing(PoTransaction.CommunicationMode.CONTACTLESS_MODE,
                     ChannelState.KEEP_OPEN);
 
-            poTransaction.processOpening(PoTransaction.ModificationMode.ATOMIC, SESSION_LVL_LOAD,
-                    (byte) 0x00, (byte) 0x00);
+            poTransaction.processOpening(PoTransaction.ModificationMode.ATOMIC,
+                    PoTransaction.SessionAccessLevel.SESSION_LVL_LOAD, (byte) 0x00, (byte) 0x00);
 
             byte[] newCounterData = new byte[] {0x00, 0x00, 0x05, 0x00, 0x00, 0x00};
 
@@ -327,7 +324,8 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
 
         byte[] updatedCounterValue = getByteArrayFromCounterValue(counterValue - 1);
 
-        poTransaction.processClosing(CommunicationMode.CONTACTLESS_MODE, ChannelState.KEEP_OPEN);
+        poTransaction.processClosing(PoTransaction.CommunicationMode.CONTACTLESS_MODE,
+                ChannelState.KEEP_OPEN);
 
         System.out.println("\nValidation Successful!");
         System.out.println(

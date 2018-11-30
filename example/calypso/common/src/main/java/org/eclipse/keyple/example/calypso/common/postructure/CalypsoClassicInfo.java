@@ -37,6 +37,8 @@ public class CalypsoClassicInfo {
     public final static String SAM_C1_ATR_REGEX =
             "3B3F9600805A[0-9a-fA-F]{2}80C1[0-9a-fA-F]{14}829000";
 
+    public final static String ATR_REV1_REGEX = "3B8F8001805A0A0103200311........829000..";
+
     public final static byte RECORD_NUMBER_1 = 1;
     public final static byte RECORD_NUMBER_2 = 2;
     public final static byte RECORD_NUMBER_3 = 3;

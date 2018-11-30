@@ -11,7 +11,6 @@
  ********************************************************************************/
 package org.eclipse.keyple.example.generic.pc;
 
-import static org.eclipse.keyple.example.generic.pc.ReaderUtilities.getReaderByName;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -55,8 +54,8 @@ public class Demo_SeProtocolDetection_Pcsc {
         seProxyService.addPlugin(pcscPlugin);
 
         /* attempt to get the SeReader (the right reader should be ready here) */
-        SeReader poReader =
-                getReaderByName(seProxyService, PcscReadersSettings.PO_READER_NAME_REGEX);
+        SeReader poReader = ReaderUtilities.getReaderByName(seProxyService,
+                PcscReadersSettings.PO_READER_NAME_REGEX);
 
         if (poReader == null) {
             throw new IllegalStateException("Bad PO/SAM setup");

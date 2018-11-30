@@ -11,7 +11,6 @@
  ********************************************************************************/
 package org.eclipse.keyple.example.generic.pc;
 
-import static org.eclipse.keyple.example.generic.pc.PcscReadersSettings.PO_READER_NAME_REGEX;
 import java.util.regex.Pattern;
 import org.eclipse.keyple.plugin.pcsc.PcscProtocolSetting;
 import org.eclipse.keyple.plugin.pcsc.PcscReader;
@@ -55,7 +54,8 @@ public class ReaderUtilities {
      */
     public static SeReader getDefaultContactLessSeReader(SeProxyService seProxyService)
             throws KeypleBaseException {
-        SeReader seReader = ReaderUtilities.getReaderByName(seProxyService, PO_READER_NAME_REGEX);
+        SeReader seReader = ReaderUtilities.getReaderByName(seProxyService,
+                PcscReadersSettings.PO_READER_NAME_REGEX);
 
         ReaderUtilities.setContactlessSettings(seReader);
 

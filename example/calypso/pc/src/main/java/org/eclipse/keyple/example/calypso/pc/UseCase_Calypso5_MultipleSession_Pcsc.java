@@ -12,12 +12,11 @@
 package org.eclipse.keyple.example.calypso.pc;
 
 
-import static org.eclipse.keyple.example.calypso.common.postructure.CalypsoClassicInfo.SFI_EventLog;
-import static org.eclipse.keyple.example.calypso.common.postructure.CalypsoClassicInfo.eventLog_dataFill;
 import org.eclipse.keyple.calypso.command.po.parser.AppendRecordRespPars;
 import org.eclipse.keyple.calypso.transaction.CalypsoPo;
 import org.eclipse.keyple.calypso.transaction.PoSelector;
 import org.eclipse.keyple.calypso.transaction.PoTransaction;
+import org.eclipse.keyple.example.calypso.common.postructure.CalypsoClassicInfo;
 import org.eclipse.keyple.example.calypso.common.transaction.CalypsoUtilities;
 import org.eclipse.keyple.plugin.pcsc.PcscPlugin;
 import org.eclipse.keyple.seproxy.ChannelState;
@@ -25,7 +24,7 @@ import org.eclipse.keyple.seproxy.SeProxyService;
 import org.eclipse.keyple.seproxy.SeReader;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 import org.eclipse.keyple.seproxy.exception.NoStackTraceThrowable;
-import org.eclipse.keyple.seproxy.protocol.Protocol;
+import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
 import org.eclipse.keyple.transaction.MatchingSe;
 import org.eclipse.keyple.transaction.SeSelection;
 import org.eclipse.keyple.transaction.SeSelector;
@@ -133,10 +132,10 @@ public class UseCase_Calypso5_MultipleSession_Pcsc {
              * the selection and read additional information afterwards
              */
             /* Calypso AID */
-            String poAid = "A0000004040125090101";
-            PoSelector poSelector = new PoSelector(ByteArrayUtils.fromHex(poAid),
-                    SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN, Protocol.ANY,
-                    PoSelector.RevisionTarget.TARGET_REV3, "AID: " + poAid);
+            PoSelector poSelector = new PoSelector(ByteArrayUtils.fromHex(CalypsoClassicInfo.AID),
+                    SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN,
+                    ContactlessProtocols.PROTOCOL_ISO14443_4, PoSelector.RevisionTarget.TARGET_REV3,
+                    "AID: " + CalypsoClassicInfo.AID);
 
             /*
              * Add the selection case to the current selection (we could have added other cases
@@ -197,9 +196,11 @@ public class UseCase_Calypso5_MultipleSession_Pcsc {
                         nbCommands, modificationsBufferSize, modificationsBufferSize / 35);
 
                 for (int i = 0; i < nbCommands; i++) {
-                    appendRecordParsers[i] = poTransaction.prepareAppendRecordCmd(SFI_EventLog,
-                            ByteArrayUtils.fromHex(eventLog_dataFill),
-                            String.format("EventLog (SFI=%02X) #%d", SFI_EventLog, i));
+                    appendRecordParsers[i] =
+                            poTransaction.prepareAppendRecordCmd(CalypsoClassicInfo.SFI_EventLog,
+                                    ByteArrayUtils.fromHex(CalypsoClassicInfo.eventLog_dataFill),
+                                    String.format("EventLog (SFI=%02X) #%d",
+                                            CalypsoClassicInfo.SFI_EventLog, i));
                 }
 
                 /* proceed with the sending of commands, don't close the channel */
