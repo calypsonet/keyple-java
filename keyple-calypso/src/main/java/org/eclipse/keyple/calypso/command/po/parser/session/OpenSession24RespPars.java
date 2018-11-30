@@ -59,14 +59,14 @@ public final class OpenSession24RespPars extends AbstractOpenSessionRespPars {
                 break;
             case 34:
                 previousSessionRatified = true;
-                data = Arrays.copyOfRange(apduResponseData, 5, 29);
+                data = Arrays.copyOfRange(apduResponseData, 5, 34);
                 break;
             case 7:
                 previousSessionRatified = false;
                 break;
             case 36:
                 previousSessionRatified = false;
-                data = Arrays.copyOfRange(apduResponseData, 7, 29);
+                data = Arrays.copyOfRange(apduResponseData, 7, 36);
                 break;
             default:
                 throw new IllegalStateException(
