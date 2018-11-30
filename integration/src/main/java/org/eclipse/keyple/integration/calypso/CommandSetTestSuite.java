@@ -70,7 +70,7 @@ public class CommandSetTestSuite {
                 PoTransaction.ModificationMode.ATOMIC,
                 PoTransaction.SessionAccessLevel.SESSION_LVL_DEBIT, (byte) 0x00, (byte) 0x00);
 
-        poTransaction.processClosing(CommunicationMode.CONTACTLESS_MODE, ChannelState.CLOSE_AFTER);
+        poTransaction.processClosing(CommunicationMode.CONTACTLESS_MODE, ChannelState.KEEP_OPEN);
         /*
          * System.out.println("DataRead#: " +
          * ByteArrayUtils.toHex(dataReadInSession.getApduResponses().get(1).getDataOut()));
