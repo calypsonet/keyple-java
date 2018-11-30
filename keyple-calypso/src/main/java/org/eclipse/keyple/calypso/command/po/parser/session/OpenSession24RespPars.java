@@ -51,14 +51,22 @@ public final class OpenSession24RespPars extends AbstractOpenSessionRespPars {
          * </ul>
          */
 
+        byte[] data = null;
+
         switch (apduResponseData.length) {
             case 5:
-            case 34:
                 previousSessionRatified = true;
                 break;
+            case 34:
+                previousSessionRatified = true;
+                data = Arrays.copyOfRange(apduResponseData, 5, 29);
+                break;
             case 7:
+                previousSessionRatified = false;
+                break;
             case 36:
                 previousSessionRatified = false;
+                data = Arrays.copyOfRange(apduResponseData, 7, 29);
                 break;
             default:
                 throw new IllegalStateException(
@@ -69,6 +77,6 @@ public final class OpenSession24RespPars extends AbstractOpenSessionRespPars {
 
         return new SecureSession(Arrays.copyOfRange(apduResponseData, 1, 4),
                 Arrays.copyOfRange(apduResponseData, 4, 5), previousSessionRatified, false, kvc,
-                null, apduResponseData);
+                data, apduResponseData);
     }
 }

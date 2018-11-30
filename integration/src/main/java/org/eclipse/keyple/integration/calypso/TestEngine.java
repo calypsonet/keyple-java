@@ -26,6 +26,7 @@ import org.eclipse.keyple.seproxy.SeReader;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.exception.NoStackTraceThrowable;
+import org.eclipse.keyple.seproxy.protocol.Protocol;
 import org.eclipse.keyple.seproxy.protocol.SeProtocolSetting;
 import org.eclipse.keyple.transaction.SeSelection;
 import org.eclipse.keyple.transaction.SeSelector;
@@ -38,56 +39,25 @@ public class TestEngine {
     public static PoFileStructureInfo selectPO()
             throws IllegalArgumentException, KeypleReaderException {
 
-        try {
-            if (!samReader.isSePresent()) {
-                throw new IllegalStateException("No SAM present in the reader.");
-            }
-        } catch (NoStackTraceThrowable noStackTraceThrowable) {
-            throw new KeypleReaderException("Exception raised while checking SE presence.");
-        }
-
-        // operate PO multiselection
-        String SAM_ATR_REGEX = "3B3F9600805A[0-9a-fA-F]{2}80[0-9a-fA-F]{16}829000";
-
-        // check the availability of the SAM, open its physical and logical channels and keep it
-        // open
-        SeSelection samSelection = new SeSelection(samReader);
-
-        SeSelector samSelector =
-                new SeSelector(SAM_ATR_REGEX, ChannelState.CLOSE_AFTER, null, "SAM Selection");
-
-        /* Prepare selector, ignore MatchingSe here */
-        samSelection.prepareSelection(samSelector);
-
-        try {
-            if (!samSelection.processExplicitSelection()) {
-                System.out.println("Unable to open a logical channel for SAM!");
-                throw new IllegalStateException("SAM channel opening failure");
-            } else {
-            }
-        } catch (KeypleReaderException e) {
-            throw new IllegalStateException("Reader exception: " + e.getMessage());
-
-        }
-
         SeSelection seSelection = new SeSelection(poReader);
 
         // Add Audit C0 AID to the list
         seSelection.prepareSelection(new PoSelector(
 
                 ByteArrayUtils.fromHex(PoFileStructureInfo.poAuditC0Aid),
-                SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN, null,
+                SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN, Protocol.ANY,
                 PoSelector.RevisionTarget.TARGET_REV3, "Audit C0"));
 
         // Add CLAP AID to the list
-        seSelection.prepareSelection(new PoSelector(
-                ByteArrayUtils.fromHex(PoFileStructureInfo.clapAid), SeSelector.SelectMode.FIRST,
-                ChannelState.KEEP_OPEN, null, PoSelector.RevisionTarget.TARGET_REV3, "CLAP"));
+        seSelection.prepareSelection(
+                new PoSelector(ByteArrayUtils.fromHex(PoFileStructureInfo.clapAid),
+                        SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN, Protocol.ANY,
+                        PoSelector.RevisionTarget.TARGET_REV3, "CLAP"));
 
         // Add cdLight AID to the list
         seSelection.prepareSelection(
                 new PoSelector(ByteArrayUtils.fromHex(PoFileStructureInfo.cdLightAid),
-                        SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN, null,
+                        SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN, Protocol.ANY,
                         PoSelector.RevisionTarget.TARGET_REV2_REV3, "CDLight"));
 
         if (seSelection.processExplicitSelection()) {
@@ -125,10 +95,11 @@ public class TestEngine {
         poReader = getReader(seProxyService, PO_READER_NAME_REGEX);
         samReader = getReader(seProxyService, SAM_READER_NAME_REGEX);
 
-
         if (poReader == samReader || poReader == null || samReader == null) {
             throw new IllegalStateException("Bad PO/SAM setup");
         }
+
+        poReader.setParameter(PcscReader.SETTING_KEY_LOGGING, "true");
 
         System.out.println(
                 "\n==================================================================================");
@@ -143,6 +114,40 @@ public class TestEngine {
         // provide the reader with the map
         poReader.addSeProtocolSetting(
                 new SeProtocolSetting(PcscProtocolSetting.SETTING_PROTOCOL_ISO14443_4));
+
+        try {
+            if (!samReader.isSePresent()) {
+                throw new IllegalStateException("No SAM present in the reader.");
+            }
+        } catch (NoStackTraceThrowable noStackTraceThrowable) {
+            throw new KeypleReaderException("Exception raised while checking SE presence.");
+        }
+
+        // operate PO multiselection
+        String SAM_ATR_REGEX = "3B3F9600805A[0-9a-fA-F]{2}80[0-9a-fA-F]{16}829000";
+
+        // check the availability of the SAM, open its physical and logical channels and keep it
+        // open
+        SeSelection samSelection = new SeSelection(samReader);
+
+        SeSelector samSelector = new SeSelector(SAM_ATR_REGEX, ChannelState.KEEP_OPEN, Protocol.ANY,
+                "SAM Selection");
+
+        /* Prepare selector, ignore MatchingSe here */
+        samSelection.prepareSelection(samSelector);
+
+        try {
+            if (!samSelection.processExplicitSelection()) {
+                System.out.println("Unable to open a logical channel for SAM!");
+                throw new IllegalStateException("SAM channel opening failure");
+            } else {
+            }
+        } catch (KeypleReaderException e) {
+            throw new IllegalStateException("Reader exception: " + e.getMessage());
+
+        }
+
+
     }
 
 }
