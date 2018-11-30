@@ -23,7 +23,7 @@
 <tr>
 <td>
 <div class="infoBox" id="tests">
-<div class="counter">3</div>
+<div class="counter">5</div>
 <p>tests</p>
 </div>
 </td>
@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">0.053s</div>
+<div class="counter">0.056s</div>
 <p>duration</p>
 </div>
 </td>
@@ -63,9 +63,6 @@
 <li>
 <a href="#tab0">Tests</a>
 </li>
-<li>
-<a href="#tab1">Standard output</a>
-</li>
 </ul>
 <div id="tab0" class="tab">
 <h2>Tests</h2>
@@ -79,250 +76,30 @@
 </thead>
 <tr>
 <td class="success">testCompleteSeRequestSet</td>
-<td>0.006s</td>
+<td>0.002s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">testHoplinkSeRequestSet</td>
-<td>0.041s</td>
+<td>0.006s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">testSeResponseSet</td>
-<td>0.006s</td>
+<td>0.003s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">testSimpleKeypleException</td>
+<td>0.043s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">testStackedKeypleException</td>
+<td>0.002s</td>
 <td class="success">passed</td>
 </tr>
 </table>
-</div>
-<div id="tab1" class="tab">
-<h2>Standard output</h2>
-<span class="code">
-<pre>{
-  &quot;sortedRequests&quot;: [
-    {
-      &quot;selector&quot;: &quot;aidselector::A000000291A000000191&quot;,
-      &quot;apduRequests&quot;: [
-        {
-          &quot;bytes&quot;: [
-            -112,
-            0
-          ],
-          &quot;case4&quot;: true
-        }
-      ],
-      &quot;protocolFlag&quot;: &quot;PROTOCOL_ISO14443_4&quot;,
-      &quot;channelState&quot;: &quot;CLOSE_AFTER&quot;
-    }
-  ]
-}
-{
-  &quot;sortedRequests&quot;: [
-    {
-      &quot;selector&quot;: &quot;aidselector::A000000291A000000191&quot;,
-      &quot;apduRequests&quot;: [
-        {
-          &quot;bytes&quot;: [
-            -112,
-            0
-          ],
-          &quot;case4&quot;: true
-        }
-      ],
-      &quot;protocolFlag&quot;: &quot;PROTOCOL_ISO14443_4&quot;,
-      &quot;channelState&quot;: &quot;CLOSE_AFTER&quot;
-    }
-  ]
-}
-{
-  &quot;sortedRequests&quot;: [
-    {
-      &quot;selector&quot;: &quot;atrselector::/regex/&quot;,
-      &quot;apduRequests&quot;: [
-        {
-          &quot;bytes&quot;: [
-            -112,
-            0
-          ],
-          &quot;case4&quot;: true
-        }
-      ],
-      &quot;protocolFlag&quot;: &quot;PROTOCOL_ISO7816_3&quot;,
-      &quot;channelState&quot;: &quot;KEEP_OPEN&quot;
-    },
-    {
-      &quot;selector&quot;: &quot;aidselector::A000000291A000000191&quot;,
-      &quot;apduRequests&quot;: [
-        {
-          &quot;bytes&quot;: [
-            -112,
-            0
-          ],
-          &quot;case4&quot;: true
-        }
-      ],
-      &quot;protocolFlag&quot;: &quot;PROTOCOL_ISO14443_4&quot;,
-      &quot;channelState&quot;: &quot;CLOSE_AFTER&quot;
-    }
-  ]
-}
-{
-  &quot;sortedRequests&quot;: [
-    {
-      &quot;selector&quot;: &quot;atrselector::/regex/&quot;,
-      &quot;apduRequests&quot;: [
-        {
-          &quot;bytes&quot;: [
-            -112,
-            0
-          ],
-          &quot;case4&quot;: true
-        }
-      ],
-      &quot;protocolFlag&quot;: &quot;PROTOCOL_ISO7816_3&quot;,
-      &quot;channelState&quot;: &quot;KEEP_OPEN&quot;
-    },
-    {
-      &quot;selector&quot;: &quot;aidselector::A000000291A000000191&quot;,
-      &quot;apduRequests&quot;: [
-        {
-          &quot;bytes&quot;: [
-            -112,
-            0
-          ],
-          &quot;case4&quot;: true
-        }
-      ],
-      &quot;protocolFlag&quot;: &quot;PROTOCOL_ISO14443_4&quot;,
-      &quot;channelState&quot;: &quot;CLOSE_AFTER&quot;
-    }
-  ]
-}
-{
-  &quot;seResponses&quot;: [
-    {
-      &quot;channelPreviouslyOpen&quot;: true,
-      &quot;selectionStatus&quot;: {
-        &quot;fci&quot;: {
-          &quot;successful&quot;: true,
-          &quot;bytes&quot;: [
-            -112,
-            0
-          ]
-        },
-        &quot;hasMatched&quot;: true
-      },
-      &quot;apduResponses&quot;: [
-        {
-          &quot;successful&quot;: true,
-          &quot;bytes&quot;: [
-            -112,
-            0
-          ]
-        },
-        {
-          &quot;successful&quot;: true,
-          &quot;bytes&quot;: [
-            -112,
-            0
-          ]
-        }
-      ]
-    },
-    {
-      &quot;channelPreviouslyOpen&quot;: true,
-      &quot;selectionStatus&quot;: {
-        &quot;fci&quot;: {
-          &quot;successful&quot;: true,
-          &quot;bytes&quot;: [
-            -112,
-            0
-          ]
-        },
-        &quot;hasMatched&quot;: true
-      },
-      &quot;apduResponses&quot;: [
-        {
-          &quot;successful&quot;: true,
-          &quot;bytes&quot;: [
-            -112,
-            0
-          ]
-        },
-        {
-          &quot;successful&quot;: true,
-          &quot;bytes&quot;: [
-            -112,
-            0
-          ]
-        }
-      ]
-    }
-  ]
-}
-{
-  &quot;seResponses&quot;: [
-    {
-      &quot;channelPreviouslyOpen&quot;: true,
-      &quot;selectionStatus&quot;: {
-        &quot;fci&quot;: {
-          &quot;successful&quot;: true,
-          &quot;bytes&quot;: [
-            -112,
-            0
-          ]
-        },
-        &quot;hasMatched&quot;: true
-      },
-      &quot;apduResponses&quot;: [
-        {
-          &quot;successful&quot;: true,
-          &quot;bytes&quot;: [
-            -112,
-            0
-          ]
-        },
-        {
-          &quot;successful&quot;: true,
-          &quot;bytes&quot;: [
-            -112,
-            0
-          ]
-        }
-      ]
-    },
-    {
-      &quot;channelPreviouslyOpen&quot;: true,
-      &quot;selectionStatus&quot;: {
-        &quot;fci&quot;: {
-          &quot;successful&quot;: true,
-          &quot;bytes&quot;: [
-            -112,
-            0
-          ]
-        },
-        &quot;hasMatched&quot;: true
-      },
-      &quot;apduResponses&quot;: [
-        {
-          &quot;successful&quot;: true,
-          &quot;bytes&quot;: [
-            -112,
-            0
-          ]
-        },
-        {
-          &quot;successful&quot;: true,
-          &quot;bytes&quot;: [
-            -112,
-            0
-          ]
-        }
-      ]
-    }
-  ]
-}
-</pre>
-</span>
 </div>
 </div>
 <div id="footer">
@@ -332,7 +109,7 @@
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 4.5.1</a> at Nov 30, 2018 8:52:02 AM</p>
+<a href="http://www.gradle.org">Gradle 4.5.1</a> at Nov 30, 2018 8:57:10 AM</p>
 </div>
 </div>
 </body>
