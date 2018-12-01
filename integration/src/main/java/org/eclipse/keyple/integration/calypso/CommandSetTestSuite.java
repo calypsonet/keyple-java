@@ -326,7 +326,7 @@ public class CommandSetTestSuite {
 
         try {
 
-            PoFileStructureInfo poData = selectPO();
+            PoFileStructureInfo poData = TestEngine.selectPO();
             Boolean readOneRecordFlag = false;
             PoRevision poRevision = (new PoTransaction(TestEngine.poReader,
                     (CalypsoPo) poData.getMatchingSe(), TestEngine.samReader, null)).getRevision();
@@ -383,7 +383,7 @@ public class CommandSetTestSuite {
 
         try {
 
-            PoFileStructureInfo poData = selectPO();
+            PoFileStructureInfo poData = TestEngine.selectPO();
 
             byte[] recordData = new byte[poData.getEventFileData().getRecSize()];
             Arrays.fill(recordData, (byte) (0x01));
@@ -425,7 +425,7 @@ public class CommandSetTestSuite {
 
         try {
 
-            PoFileStructureInfo poData = selectPO();
+            PoFileStructureInfo poData = TestEngine.selectPO();
 
             PoTransaction poTransaction = new PoTransaction(TestEngine.poReader,
                     (CalypsoPo) poData.getMatchingSe(), TestEngine.samReader, null);
@@ -475,7 +475,7 @@ public class CommandSetTestSuite {
 
         try {
 
-            PoFileStructureInfo poData = selectPO();
+            PoFileStructureInfo poData = TestEngine.selectPO();
 
             PoTransaction poTransaction = new PoTransaction(TestEngine.poReader,
                     (CalypsoPo) poData.getMatchingSe(), TestEngine.samReader, null);
@@ -525,7 +525,7 @@ public class CommandSetTestSuite {
 
         try {
 
-            PoFileStructureInfo poData = selectPO();
+            PoFileStructureInfo poData = TestEngine.selectPO();
 
             PoTransaction poTransaction = new PoTransaction(TestEngine.poReader,
                     (CalypsoPo) poData.getMatchingSe(), TestEngine.samReader, null);

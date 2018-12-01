@@ -12,7 +12,6 @@
 package org.eclipse.keyple.example.calypso.pc;
 
 
-import static org.eclipse.keyple.example.calypso.common.postructure.CalypsoClassicInfo.*;
 import java.io.IOException;
 import org.eclipse.keyple.calypso.command.po.parser.ReadDataStructure;
 import org.eclipse.keyple.calypso.command.po.parser.ReadRecordsRespPars;
@@ -20,6 +19,7 @@ import org.eclipse.keyple.calypso.command.po.parser.SelectFileRespPars;
 import org.eclipse.keyple.calypso.transaction.CalypsoPo;
 import org.eclipse.keyple.calypso.transaction.PoSelector;
 import org.eclipse.keyple.calypso.transaction.PoTransaction;
+import org.eclipse.keyple.example.calypso.common.postructure.CalypsoClassicInfo;
 import org.eclipse.keyple.example.calypso.common.transaction.CalypsoUtilities;
 import org.eclipse.keyple.plugin.pcsc.PcscPlugin;
 import org.eclipse.keyple.seproxy.ChannelState;
@@ -27,7 +27,7 @@ import org.eclipse.keyple.seproxy.SeProxyService;
 import org.eclipse.keyple.seproxy.SeReader;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 import org.eclipse.keyple.seproxy.exception.NoStackTraceThrowable;
-import org.eclipse.keyple.seproxy.protocol.Protocol;
+import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
 import org.eclipse.keyple.transaction.SeSelection;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.slf4j.Logger;
@@ -149,8 +149,8 @@ public class UseCase_Calypso3_Rev1Selection_Pcsc {
                         ByteArrayUtils.toHex(selectFileRespPars.getSelectionData()));
 
                 /* Retrieve the data read from the parser updated during the selection process */
-                byte environmentAndHolder[] =
-                        (readEnvironmentParser.getRecords()).get((int) RECORD_NUMBER_1);
+                byte environmentAndHolder[] = (readEnvironmentParser.getRecords())
+                        .get((int) CalypsoClassicInfo.RECORD_NUMBER_1);
 
                 /* Log the result */
                 logger.info("Environment file data: {}",
@@ -185,7 +185,8 @@ public class UseCase_Calypso3_Rev1Selection_Pcsc {
                     /*
                      * Retrieve the data read from the parser updated during the transaction process
                      */
-                    byte eventLog[] = (readEventLogParser.getRecords()).get((int) RECORD_NUMBER_1);
+                    byte eventLog[] = (readEventLogParser.getRecords())
+                            .get((int) CalypsoClassicInfo.RECORD_NUMBER_1);
 
                     /* Log the result */
                     logger.info("EventLog file data: {}", ByteArrayUtils.toHex(eventLog));

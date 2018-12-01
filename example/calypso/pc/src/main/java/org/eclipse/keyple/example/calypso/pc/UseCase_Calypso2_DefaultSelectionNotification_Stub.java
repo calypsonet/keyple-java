@@ -12,12 +12,12 @@
 package org.eclipse.keyple.example.calypso.pc;
 
 
-import static org.eclipse.keyple.example.calypso.common.postructure.CalypsoClassicInfo.*;
 import org.eclipse.keyple.calypso.command.po.parser.ReadDataStructure;
 import org.eclipse.keyple.calypso.command.po.parser.ReadRecordsRespPars;
 import org.eclipse.keyple.calypso.transaction.CalypsoPo;
 import org.eclipse.keyple.calypso.transaction.PoSelector;
 import org.eclipse.keyple.calypso.transaction.PoTransaction;
+import org.eclipse.keyple.example.calypso.common.postructure.CalypsoClassicInfo;
 import org.eclipse.keyple.example.calypso.pc.stub.se.StubCalypsoClassic;
 import org.eclipse.keyple.plugin.stub.StubPlugin;
 import org.eclipse.keyple.plugin.stub.StubReader;
@@ -32,7 +32,7 @@ import org.eclipse.keyple.seproxy.event.PluginEvent;
 import org.eclipse.keyple.seproxy.event.ReaderEvent;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
-import org.eclipse.keyple.seproxy.protocol.Protocol;
+import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
 import org.eclipse.keyple.transaction.MatchingSe;
 import org.eclipse.keyple.transaction.SeSelection;
 import org.eclipse.keyple.transaction.SeSelector;
@@ -66,7 +66,6 @@ public class UseCase_Calypso2_DefaultSelectionNotification_Stub implements Reade
     protected static final Logger logger =
             LoggerFactory.getLogger(UseCase_Calypso2_DefaultSelectionNotification_Stub.class);
     private StubReader poReader;
-    private String poAid = "A0000004040125090101";
     private SeSelection seSelection;
     private ReadRecordsRespPars readEnvironmentParser;
     /**
@@ -216,8 +215,8 @@ public class UseCase_Calypso2_DefaultSelectionNotification_Stub implements Reade
                     /*
                      * Retrieve the data read from the parser updated during the selection process
                      */
-                    byte environmentAndHolder[] =
-                            (readEnvironmentParser.getRecords()).get((int) RECORD_NUMBER_1);
+                    byte environmentAndHolder[] = (readEnvironmentParser.getRecords())
+                            .get((int) CalypsoClassicInfo.RECORD_NUMBER_1);
 
                     /* Log the result */
                     logger.info("Environment file data: {}",
@@ -255,8 +254,8 @@ public class UseCase_Calypso2_DefaultSelectionNotification_Stub implements Reade
                              * Retrieve the data read from the parser updated during the transaction
                              * process
                              */
-                            byte eventLog[] =
-                                    (readEventLogParser.getRecords()).get((int) RECORD_NUMBER_1);
+                            byte eventLog[] = (readEventLogParser.getRecords())
+                                    .get((int) CalypsoClassicInfo.RECORD_NUMBER_1);
 
                             /* Log the result */
                             logger.info("EventLog file data: {}", ByteArrayUtils.toHex(eventLog));

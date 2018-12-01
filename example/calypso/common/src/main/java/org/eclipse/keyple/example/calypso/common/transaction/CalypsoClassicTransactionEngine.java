@@ -11,7 +11,6 @@
  ********************************************************************************/
 package org.eclipse.keyple.example.calypso.common.transaction;
 
-import static org.eclipse.keyple.example.calypso.common.postructure.CalypsoClassicInfo.*;
 import java.util.EnumMap;
 import org.eclipse.keyple.calypso.command.po.parser.AppendRecordRespPars;
 import org.eclipse.keyple.calypso.command.po.parser.ReadDataStructure;

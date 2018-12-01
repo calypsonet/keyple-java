@@ -11,8 +11,6 @@
  ********************************************************************************/
 package org.eclipse.keyple.integration.example.pc.calypso;
 
-import static org.eclipse.keyple.calypso.transaction.PoTransaction.SessionAccessLevel.SESSION_LVL_DEBIT;
-import static org.eclipse.keyple.calypso.transaction.PoTransaction.SessionAccessLevel.SESSION_LVL_LOAD;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;

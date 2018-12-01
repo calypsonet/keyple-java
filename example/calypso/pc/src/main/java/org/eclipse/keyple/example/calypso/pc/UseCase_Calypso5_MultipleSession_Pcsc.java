@@ -12,12 +12,11 @@
 package org.eclipse.keyple.example.calypso.pc;
 
 
-import static org.eclipse.keyple.example.calypso.common.postructure.CalypsoClassicInfo.SFI_EventLog;
-import static org.eclipse.keyple.example.calypso.common.postructure.CalypsoClassicInfo.eventLog_dataFill;
 import org.eclipse.keyple.calypso.command.po.parser.AppendRecordRespPars;
 import org.eclipse.keyple.calypso.transaction.CalypsoPo;
 import org.eclipse.keyple.calypso.transaction.PoSelector;
 import org.eclipse.keyple.calypso.transaction.PoTransaction;
+import org.eclipse.keyple.example.calypso.common.postructure.CalypsoClassicInfo;
 import org.eclipse.keyple.example.calypso.common.transaction.CalypsoUtilities;
 import org.eclipse.keyple.plugin.pcsc.PcscPlugin;
 import org.eclipse.keyple.seproxy.ChannelState;
@@ -198,9 +197,11 @@ public class UseCase_Calypso5_MultipleSession_Pcsc {
                         nbCommands, modificationsBufferSize, modificationsBufferSize / 35);
 
                 for (int i = 0; i < nbCommands; i++) {
-                    appendRecordParsers[i] = poTransaction.prepareAppendRecordCmd(SFI_EventLog,
-                            ByteArrayUtils.fromHex(eventLog_dataFill),
-                            String.format("EventLog (SFI=%02X) #%d", SFI_EventLog, i));
+                    appendRecordParsers[i] =
+                            poTransaction.prepareAppendRecordCmd(CalypsoClassicInfo.SFI_EventLog,
+                                    ByteArrayUtils.fromHex(CalypsoClassicInfo.eventLog_dataFill),
+                                    String.format("EventLog (SFI=%02X) #%d",
+                                            CalypsoClassicInfo.SFI_EventLog, i));
                 }
 
                 /* proceed with the sending of commands, don't close the channel */

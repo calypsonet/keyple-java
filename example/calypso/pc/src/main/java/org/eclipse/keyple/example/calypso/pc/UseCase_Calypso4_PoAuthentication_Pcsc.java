@@ -13,13 +13,12 @@ package org.eclipse.keyple.example.calypso.pc;
 
 
 
-import static org.eclipse.keyple.example.calypso.common.postructure.CalypsoClassicInfo.RECORD_NUMBER_1;
-import static org.eclipse.keyple.example.calypso.common.postructure.CalypsoClassicInfo.SFI_EventLog;
 import org.eclipse.keyple.calypso.command.po.parser.ReadDataStructure;
 import org.eclipse.keyple.calypso.command.po.parser.ReadRecordsRespPars;
 import org.eclipse.keyple.calypso.transaction.CalypsoPo;
 import org.eclipse.keyple.calypso.transaction.PoSelector;
 import org.eclipse.keyple.calypso.transaction.PoTransaction;
+import org.eclipse.keyple.example.calypso.common.postructure.CalypsoClassicInfo;
 import org.eclipse.keyple.example.calypso.common.transaction.CalypsoUtilities;
 import org.eclipse.keyple.plugin.pcsc.PcscPlugin;
 import org.eclipse.keyple.seproxy.ChannelState;
@@ -122,8 +121,6 @@ public class UseCase_Calypso4_PoAuthentication_Pcsc {
              * Calypso selection: configures a PoSelector with all the desired attributes to make
              * the selection and read additional information afterwards
              */
-            /* Calypso AID */
-            String poAid = "A0000004040125090101";
             PoSelector poSelector =
                     new PoSelector(ByteArrayUtils.fromHex(poAid), SeSelector.SelectMode.FIRST,
                             ChannelState.KEEP_OPEN, Protocol.ANY, "AID: " + poAid);
@@ -193,7 +190,8 @@ public class UseCase_Calypso4_PoAuthentication_Pcsc {
                 /*
                  * Retrieve the data read from the parser updated during the transaction process
                  */
-                byte eventLog[] = (readEventLogParser.getRecords()).get((int) RECORD_NUMBER_1);
+                byte eventLog[] = (readEventLogParser.getRecords())
+                        .get((int) CalypsoClassicInfo.RECORD_NUMBER_1);
 
                 /* Log the result */
                 logger.info("EventLog file data: {}", ByteArrayUtils.toHex(eventLog));
