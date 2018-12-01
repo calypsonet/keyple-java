@@ -30,7 +30,6 @@ import org.slf4j.LoggerFactory;
 public class UseCase_Generic3_MultiSelection_Pcsc {
     protected static final Logger logger =
             LoggerFactory.getLogger(UseCase_Generic1_ExplicitSelectionAid_Pcsc.class);
-    private static String seAid = "A0000004040125090101"; /* Here a Calypso AID */
 
     public static void main(String[] args)
             throws KeypleBaseException, InterruptedException, IOException, NoStackTraceThrowable {
@@ -66,22 +65,22 @@ public class UseCase_Generic3_MultiSelection_Pcsc {
 
             SeSelection seSelection = new SeSelection(seReader);
 
-            /* operate SE selection */
-            String poAidPrefix = "A000000404012509";
+            /* operate SE selection (change the AID here to adapt it to the SE used for the test) */
+            String seAidPrefix = "A000000404012509";
 
             /* AID based selection */
             matchingSeTable[0] =
-                    seSelection.prepareSelection(new SeSelector(ByteArrayUtils.fromHex(poAidPrefix),
+                    seSelection.prepareSelection(new SeSelector(ByteArrayUtils.fromHex(seAidPrefix),
                             SeSelector.SelectMode.FIRST, ChannelState.CLOSE_AFTER,
                             ContactlessProtocols.PROTOCOL_ISO14443_4, "Initial selection #1"));
             /* next selection */
             matchingSeTable[1] =
-                    seSelection.prepareSelection(new SeSelector(ByteArrayUtils.fromHex(poAidPrefix),
+                    seSelection.prepareSelection(new SeSelector(ByteArrayUtils.fromHex(seAidPrefix),
                             SeSelector.SelectMode.NEXT, ChannelState.CLOSE_AFTER,
                             ContactlessProtocols.PROTOCOL_ISO14443_4, "Next selection #2"));
             /* next selection */
             matchingSeTable[2] =
-                    seSelection.prepareSelection(new SeSelector(ByteArrayUtils.fromHex(poAidPrefix),
+                    seSelection.prepareSelection(new SeSelector(ByteArrayUtils.fromHex(seAidPrefix),
                             SeSelector.SelectMode.NEXT, ChannelState.CLOSE_AFTER,
                             ContactlessProtocols.PROTOCOL_ISO14443_4, "Next selection #3"));
             /*
