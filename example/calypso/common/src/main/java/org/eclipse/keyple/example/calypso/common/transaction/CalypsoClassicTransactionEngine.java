@@ -161,7 +161,7 @@ public class CalypsoClassicTransactionEngine extends AbstractReaderObserverEngin
         /* prepare Contract List read record */
         ReadRecordsRespPars readContractListParser = poTransaction.prepareReadRecordsCmd(
                 CalypsoClassicInfo.SFI_ContractList, ReadDataStructure.SINGLE_RECORD_DATA,
-                CalypsoClassicInfo.RECORD_NUMBER_1, (byte) 0x00,
+                CalypsoClassicInfo.RECORD_NUMBER_1,
                 String.format("ContractList (SFI=%02X))", CalypsoClassicInfo.SFI_ContractList));
 
         if (logger.isInfoEnabled()) {
@@ -228,7 +228,7 @@ public class CalypsoClassicTransactionEngine extends AbstractReaderObserverEngin
             /* prepare Contract #1 read record */
             ReadRecordsRespPars readContractsParser = poTransaction.prepareReadRecordsCmd(
                     CalypsoClassicInfo.SFI_Contracts, ReadDataStructure.MULTIPLE_RECORD_DATA,
-                    CalypsoClassicInfo.RECORD_NUMBER_1, (byte) 0x00,
+                    CalypsoClassicInfo.RECORD_NUMBER_1,
                     String.format("Contracts (SFI=%02X, recnbr=%d)",
                             CalypsoClassicInfo.SFI_Contracts, CalypsoClassicInfo.RECORD_NUMBER_1));
 
@@ -309,7 +309,7 @@ public class CalypsoClassicTransactionEngine extends AbstractReaderObserverEngin
 
         poSelectorCalypsoAid.prepareReadRecordsCmd(CalypsoClassicInfo.SFI_EventLog,
                 ReadDataStructure.SINGLE_RECORD_DATA, CalypsoClassicInfo.RECORD_NUMBER_1,
-                (byte) 0x00, "EventLog (selection step)");
+                "EventLog (selection step)");
 
         seSelection.prepareSelection(poSelectorCalypsoAid);
 
