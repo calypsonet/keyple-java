@@ -1922,7 +1922,7 @@ public final class PoTransaction {
             ReadDataStructure readDataStructureEnum, byte firstRecordNumber, String extraInfo) {
         if (poReader.getTransmissionMode() == TransmissionMode.CONTACTS) {
             throw new IllegalArgumentException(
-                    "The expected length must be specified in contacts mode.");
+                    "In contacts mode, the expected length must be specified.");
         }
         return prepareReadRecordsCmdInternal(sfi, readDataStructureEnum, firstRecordNumber, 0, extraInfo);
     }

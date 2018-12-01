@@ -29,7 +29,9 @@ import org.eclipse.keyple.seproxy.ChannelState;
 import org.eclipse.keyple.seproxy.message.ApduRequest;
 import org.eclipse.keyple.seproxy.message.ApduResponse;
 import org.eclipse.keyple.seproxy.message.SeResponse;
+import org.eclipse.keyple.seproxy.protocol.ContactsProtocols;
 import org.eclipse.keyple.seproxy.protocol.SeProtocol;
+import org.eclipse.keyple.seproxy.protocol.TransmissionMode;
 import org.eclipse.keyple.transaction.SeSelector;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.slf4j.Logger;
@@ -42,6 +44,8 @@ public final class PoSelector extends SeSelector {
     private static final Logger logger = LoggerFactory.getLogger(PoSelector.class);
 
     private final PoClass poClass;
+    private final SeProtocol protocolFlag;
+
     /** The list to contain the parsers associated to the prepared commands */
     private List<AbstractApduResponseParser> poResponseParserList =
             new ArrayList<AbstractApduResponseParser>();
@@ -62,6 +66,7 @@ public final class PoSelector extends SeSelector {
         setMatchingClass(CalypsoPo.class);
         setSelectorClass(PoSelector.class);
         poClass = PoClass.LEGACY;
+        this.protocolFlag = protocolFlag;
         if (logger.isTraceEnabled()) {
             logger.trace("Calypso {} selector", poClass);
         }
@@ -84,6 +89,7 @@ public final class PoSelector extends SeSelector {
         setMatchingClass(CalypsoPo.class);
         setSelectorClass(PoSelector.class);
         poClass = PoClass.ISO;
+        this.protocolFlag = protocolFlag;
         if (logger.isTraceEnabled()) {
             logger.trace("Calypso {} selector", poClass);
         }
@@ -103,13 +109,9 @@ public final class PoSelector extends SeSelector {
      * @param expectedLength the expected length of the record(s)
      * @param extraInfo extra information included in the logs (can be null or empty)
      */
-    public ReadRecordsRespPars prepareReadRecordsCmd(byte sfi,
+    private ReadRecordsRespPars prepareReadRecordsCmdInternal(byte sfi,
             ReadDataStructure readDataStructureEnum, byte firstRecordNumber, int expectedLength,
             String extraInfo) {
-
-        if (expectedLength < 0 || expectedLength > 250) {
-            throw new IllegalArgumentException("Bad length.");
-        }
 
         /*
          * the readJustOneRecord flag is set to false only in case of multiple read records, in all
@@ -140,6 +142,30 @@ public final class PoSelector extends SeSelector {
 
     /**
      * Prepare one or more read record ApduRequest based on the target revision to be executed
+     * following the selection.
+     * <p>The expected length is provided and its value is checked between 1 and 250.
+     * <p>
+     * In the case of a mixed target (rev2 or rev3) two commands are prepared. The first one in rev3
+     * format, the second one in rev2 format (mainly class byte)
+     *
+     * @param sfi the sfi top select
+     * @param readDataStructureEnum read mode enum to indicate a SINGLE, MULTIPLE or COUNTER read
+     * @param firstRecordNumber the record number to read (or first record to read in case of
+     *        several records)
+     * @param expectedLength the expected length of the record(s)
+     * @param extraInfo extra information included in the logs (can be null or empty)
+     */
+    public ReadRecordsRespPars prepareReadRecordsCmd(byte sfi,
+                                                     ReadDataStructure readDataStructureEnum, byte firstRecordNumber, int expectedLength,
+                                                     String extraInfo) {
+        if (expectedLength < 1 || expectedLength > 250) {
+            throw new IllegalArgumentException("Bad length.");
+        }
+        return prepareReadRecordsCmdInternal(sfi, readDataStructureEnum, firstRecordNumber, expectedLength, extraInfo);
+    }
+
+    /**
+     * Prepare one or more read record ApduRequest based on the target revision to be executed
      * following the selection. No expected length is specified, the record output length is handled
      * automatically.
      * <p>
@@ -154,6 +180,10 @@ public final class PoSelector extends SeSelector {
      */
     public ReadRecordsRespPars prepareReadRecordsCmd(byte sfi,
             ReadDataStructure readDataStructureEnum, byte firstRecordNumber, String extraInfo) {
+        if (protocolFlag == ContactsProtocols.PROTOCOL_ISO7816_3) {
+            throw new IllegalArgumentException(
+                    "In contacts mode, the expected length must be specified.");
+        }
         return prepareReadRecordsCmd(sfi, readDataStructureEnum, firstRecordNumber, 0, extraInfo);
     }
 
