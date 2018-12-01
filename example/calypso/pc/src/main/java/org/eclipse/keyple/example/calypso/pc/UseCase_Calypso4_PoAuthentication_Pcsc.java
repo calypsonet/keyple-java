@@ -26,7 +26,7 @@ import org.eclipse.keyple.seproxy.SeProxyService;
 import org.eclipse.keyple.seproxy.SeReader;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 import org.eclipse.keyple.seproxy.exception.NoStackTraceThrowable;
-import org.eclipse.keyple.seproxy.protocol.Protocol;
+import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
 import org.eclipse.keyple.seproxy.protocol.TransmissionMode;
 import org.eclipse.keyple.transaction.*;
 import org.eclipse.keyple.util.ByteArrayUtils;
@@ -121,9 +121,9 @@ public class UseCase_Calypso4_PoAuthentication_Pcsc {
              * Calypso selection: configures a PoSelector with all the desired attributes to make
              * the selection and read additional information afterwards
              */
-            PoSelector poSelector =
-                    new PoSelector(ByteArrayUtils.fromHex(poAid), SeSelector.SelectMode.FIRST,
-                            ChannelState.KEEP_OPEN, Protocol.ANY, "AID: " + poAid);
+            PoSelector poSelector = new PoSelector(ByteArrayUtils.fromHex(CalypsoClassicInfo.AID),
+                    SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN,
+                    ContactlessProtocols.PROTOCOL_ISO14443_4, "AID: " + CalypsoClassicInfo.AID);
 
             /*
              * Add the selection case to the current selection (we could have added other cases
@@ -156,9 +156,11 @@ public class UseCase_Calypso4_PoAuthentication_Pcsc {
                  * transaction has been processed.
                  */
                 ReadRecordsRespPars readEventLogParser = poTransaction.prepareReadRecordsCmd(
-                        SFI_EventLog, ReadDataStructure.SINGLE_RECORD_DATA, RECORD_NUMBER_1,
-                        String.format("EventLog (SFI=%02X, recnbr=%d))", SFI_EventLog,
-                                RECORD_NUMBER_1));
+                        CalypsoClassicInfo.SFI_EventLog, ReadDataStructure.SINGLE_RECORD_DATA,
+                        CalypsoClassicInfo.RECORD_NUMBER_1,
+                        String.format("EventLog (SFI=%02X, recnbr=%d))",
+                                CalypsoClassicInfo.SFI_EventLog,
+                                CalypsoClassicInfo.RECORD_NUMBER_1));
 
 
                 /*
@@ -181,9 +183,11 @@ public class UseCase_Calypso4_PoAuthentication_Pcsc {
                  * transaction has been processed.
                  */
                 ReadRecordsRespPars readEventLogParserBis = poTransaction.prepareReadRecordsCmd(
-                        SFI_EventLog, ReadDataStructure.SINGLE_RECORD_DATA, RECORD_NUMBER_1,
-                        String.format("EventLog (SFI=%02X, recnbr=%d))", SFI_EventLog,
-                                RECORD_NUMBER_1));
+                        CalypsoClassicInfo.SFI_EventLog, ReadDataStructure.SINGLE_RECORD_DATA,
+                        CalypsoClassicInfo.RECORD_NUMBER_1,
+                        String.format("EventLog (SFI=%02X, recnbr=%d))",
+                                CalypsoClassicInfo.SFI_EventLog,
+                                CalypsoClassicInfo.RECORD_NUMBER_1));
 
                 poProcessStatus = poTransaction.processPoCommands(ChannelState.KEEP_OPEN);
 

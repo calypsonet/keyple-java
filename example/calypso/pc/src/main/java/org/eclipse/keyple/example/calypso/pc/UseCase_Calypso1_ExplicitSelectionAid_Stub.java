@@ -149,17 +149,19 @@ public class UseCase_Calypso1_ExplicitSelectionAid_Stub {
              * Calypso selection: configures a PoSelector with all the desired attributes to make
              * the selection and read additional information afterwards
              */
-            PoSelector poSelector =
-                    new PoSelector(ByteArrayUtils.fromHex(poAid), SeSelector.SelectMode.FIRST,
-                            ChannelState.KEEP_OPEN, Protocol.ANY, "AID: " + poAid);
+            PoSelector poSelector = new PoSelector(ByteArrayUtils.fromHex(CalypsoClassicInfo.AID),
+                    SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN,
+                    ContactlessProtocols.PROTOCOL_ISO14443_4, "AID: " + CalypsoClassicInfo.AID);
 
             /*
              * Prepare the reading order and keep the associated parser for later use once the
              * selection has been made.
              */
             ReadRecordsRespPars readEnvironmentParser = poSelector.prepareReadRecordsCmd(
-                    SFI_EnvironmentAndHolder, ReadDataStructure.SINGLE_RECORD_DATA, RECORD_NUMBER_1,
-                    String.format("EnvironmentAndHolder (SFI=%02X))", SFI_EnvironmentAndHolder));
+                    CalypsoClassicInfo.SFI_EnvironmentAndHolder,
+                    ReadDataStructure.SINGLE_RECORD_DATA, CalypsoClassicInfo.RECORD_NUMBER_1,
+                    String.format("EnvironmentAndHolder (SFI=%02X))",
+                            CalypsoClassicInfo.SFI_EnvironmentAndHolder));
 
             /*
              * Add the selection case to the current selection (we could have added other cases
@@ -175,8 +177,8 @@ public class UseCase_Calypso1_ExplicitSelectionAid_Stub {
                 logger.info("The selection of the PO has succeeded.");
 
                 /* Retrieve the data read from the parser updated during the selection process */
-                byte environmentAndHolder[] =
-                        (readEnvironmentParser.getRecords()).get((int) RECORD_NUMBER_1);
+                byte environmentAndHolder[] = (readEnvironmentParser.getRecords())
+                        .get((int) CalypsoClassicInfo.RECORD_NUMBER_1);
 
                 /* Log the result */
                 logger.info("Environment file data: {}",
@@ -197,9 +199,11 @@ public class UseCase_Calypso1_ExplicitSelectionAid_Stub {
                  * transaction has been processed.
                  */
                 ReadRecordsRespPars readEventLogParser = poTransaction.prepareReadRecordsCmd(
-                        SFI_EventLog, ReadDataStructure.SINGLE_RECORD_DATA, RECORD_NUMBER_1,
-                        String.format("EventLog (SFI=%02X, recnbr=%d))", SFI_EventLog,
-                                RECORD_NUMBER_1));
+                        CalypsoClassicInfo.SFI_EventLog, ReadDataStructure.SINGLE_RECORD_DATA,
+                        CalypsoClassicInfo.RECORD_NUMBER_1,
+                        String.format("EventLog (SFI=%02X, recnbr=%d))",
+                                CalypsoClassicInfo.SFI_EventLog,
+                                CalypsoClassicInfo.RECORD_NUMBER_1));
 
                 /*
                  * Actual PO communication: send the prepared read order, then close the channel
@@ -211,7 +215,8 @@ public class UseCase_Calypso1_ExplicitSelectionAid_Stub {
                     /*
                      * Retrieve the data read from the parser updated during the transaction process
                      */
-                    byte eventLog[] = (readEventLogParser.getRecords()).get((int) RECORD_NUMBER_1);
+                    byte eventLog[] = (readEventLogParser.getRecords())
+                            .get((int) CalypsoClassicInfo.RECORD_NUMBER_1);
 
                     /* Log the result */
                     logger.info("EventLog file data: {}", ByteArrayUtils.toHex(eventLog));

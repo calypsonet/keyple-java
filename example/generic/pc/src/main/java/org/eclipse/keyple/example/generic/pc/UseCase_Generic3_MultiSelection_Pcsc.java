@@ -18,7 +18,7 @@ import org.eclipse.keyple.seproxy.SeProxyService;
 import org.eclipse.keyple.seproxy.SeReader;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 import org.eclipse.keyple.seproxy.exception.NoStackTraceThrowable;
-import org.eclipse.keyple.seproxy.protocol.Protocol;
+import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
 import org.eclipse.keyple.transaction.*;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.slf4j.Logger;
@@ -70,17 +70,20 @@ public class UseCase_Generic3_MultiSelection_Pcsc {
             String poAidPrefix = "A000000404012509";
 
             /* AID based selection */
-            matchingSeTable[0] = seSelection.prepareSelection(
-                    new SeSelector(ByteArrayUtils.fromHex(poAidPrefix), SeSelector.SelectMode.FIRST,
-                            ChannelState.CLOSE_AFTER, Protocol.ANY, "Initial selection #1"));
+            matchingSeTable[0] =
+                    seSelection.prepareSelection(new SeSelector(ByteArrayUtils.fromHex(poAidPrefix),
+                            SeSelector.SelectMode.FIRST, ChannelState.CLOSE_AFTER,
+                            ContactlessProtocols.PROTOCOL_ISO14443_4, "Initial selection #1"));
             /* next selection */
-            matchingSeTable[1] = seSelection.prepareSelection(
-                    new SeSelector(ByteArrayUtils.fromHex(poAidPrefix), SeSelector.SelectMode.NEXT,
-                            ChannelState.CLOSE_AFTER, Protocol.ANY, "Next selection #2"));
+            matchingSeTable[1] =
+                    seSelection.prepareSelection(new SeSelector(ByteArrayUtils.fromHex(poAidPrefix),
+                            SeSelector.SelectMode.NEXT, ChannelState.CLOSE_AFTER,
+                            ContactlessProtocols.PROTOCOL_ISO14443_4, "Next selection #2"));
             /* next selection */
-            matchingSeTable[2] = seSelection.prepareSelection(
-                    new SeSelector(ByteArrayUtils.fromHex(poAidPrefix), SeSelector.SelectMode.NEXT,
-                            ChannelState.CLOSE_AFTER, Protocol.ANY, "Next selection #3"));
+            matchingSeTable[2] =
+                    seSelection.prepareSelection(new SeSelector(ByteArrayUtils.fromHex(poAidPrefix),
+                            SeSelector.SelectMode.NEXT, ChannelState.CLOSE_AFTER,
+                            ContactlessProtocols.PROTOCOL_ISO14443_4, "Next selection #3"));
             /*
              * Actual SE communication: operate through a single request the SE selection
              */

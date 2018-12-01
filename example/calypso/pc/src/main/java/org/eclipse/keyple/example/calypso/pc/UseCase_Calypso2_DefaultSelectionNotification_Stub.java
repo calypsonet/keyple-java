@@ -143,16 +143,19 @@ public class UseCase_Calypso2_DefaultSelectionNotification_Stub implements Reade
          * Calypso selection: configures a PoSelector with all the desired attributes to make the
          * selection and read additional information afterwards
          */
-        PoSelector poSelector = new PoSelector(ByteArrayUtils.fromHex(poAid),
-                SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN, Protocol.ANY, "AID: " + poAid);
+        PoSelector poSelector = new PoSelector(ByteArrayUtils.fromHex(CalypsoClassicInfo.AID),
+                SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN,
+                ContactlessProtocols.PROTOCOL_ISO14443_4, "AID: " + CalypsoClassicInfo.AID);
 
         /*
          * Prepare the reading order and keep the associated parser for later use once the selection
          * has been made.
          */
-        readEnvironmentParser = poSelector.prepareReadRecordsCmd(SFI_EnvironmentAndHolder,
-                ReadDataStructure.SINGLE_RECORD_DATA, RECORD_NUMBER_1,
-                String.format("EnvironmentAndHolder (SFI=%02X))", SFI_EnvironmentAndHolder));
+        readEnvironmentParser =
+                poSelector.prepareReadRecordsCmd(CalypsoClassicInfo.SFI_EnvironmentAndHolder,
+                        ReadDataStructure.SINGLE_RECORD_DATA, CalypsoClassicInfo.RECORD_NUMBER_1,
+                        String.format("EnvironmentAndHolder (SFI=%02X))",
+                                CalypsoClassicInfo.SFI_EnvironmentAndHolder));
 
         /*
          * Add the selection case to the current selection (we could have added other cases here)
@@ -238,9 +241,11 @@ public class UseCase_Calypso2_DefaultSelectionNotification_Stub implements Reade
                      * the transaction has been processed.
                      */
                     ReadRecordsRespPars readEventLogParser = poTransaction.prepareReadRecordsCmd(
-                            SFI_EventLog, ReadDataStructure.SINGLE_RECORD_DATA, RECORD_NUMBER_1,
-                            String.format("EventLog (SFI=%02X, recnbr=%d))", SFI_EventLog,
-                                    RECORD_NUMBER_1));
+                            CalypsoClassicInfo.SFI_EventLog, ReadDataStructure.SINGLE_RECORD_DATA,
+                            CalypsoClassicInfo.RECORD_NUMBER_1,
+                            String.format("EventLog (SFI=%02X, recnbr=%d))",
+                                    CalypsoClassicInfo.SFI_EventLog,
+                                    CalypsoClassicInfo.RECORD_NUMBER_1));
 
                     /*
                      * Actual PO communication: send the prepared read order, then close the channel

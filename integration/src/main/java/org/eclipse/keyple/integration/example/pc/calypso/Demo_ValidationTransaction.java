@@ -124,9 +124,9 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
         // Open Session with debit key #3 and reading the Environment at SFI 07h
         // Files to read during the beginning of the session: Event (SFI 0x08) and ContractList (SFI
         // 0x1E)
-        boolean poProcessStatus =
-                poTransaction.processOpening(PoTransaction.ModificationMode.ATOMIC,
-                        SESSION_LVL_DEBIT, environmentSfi, (byte) 0x01);
+        boolean poProcessStatus = poTransaction.processOpening(
+                PoTransaction.ModificationMode.ATOMIC,
+                PoTransaction.SessionAccessLevel.SESSION_LVL_DEBIT, environmentSfi, (byte) 0x01);
 
         /*
          * byte[] sessionData =
@@ -236,9 +236,9 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
         // Open Session with debit key #3 and reading the Environment at SFI 07h
         // Files to read during the beginning of the session: Event (SFI 0x08), Counters (SFI 0x1B)
         // and all records of the Contracts (SFI 0x29)
-        boolean poProcessStatus =
-                poTransaction.processOpening(PoTransaction.ModificationMode.ATOMIC,
-                        SESSION_LVL_DEBIT, environmentSfi, (byte) 0x01);
+        boolean poProcessStatus = poTransaction.processOpening(
+                PoTransaction.ModificationMode.ATOMIC,
+                PoTransaction.SessionAccessLevel.SESSION_LVL_DEBIT, environmentSfi, (byte) 0x01);
         /*
          * byte[] sessionData =
          * ByteArrayUtils.subLen(dataReadInSession.getApduResponses().get(0).getDataOut(), 0, 8);
@@ -292,8 +292,8 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
 
             poTransaction.processClosing(TransmissionMode.CONTACTLESS, ChannelState.KEEP_OPEN);
 
-            poTransaction.processOpening(PoTransaction.ModificationMode.ATOMIC, SESSION_LVL_LOAD,
-                    (byte) 0x00, (byte) 0x00);
+            poTransaction.processOpening(PoTransaction.ModificationMode.ATOMIC,
+                    PoTransaction.SessionAccessLevel.SESSION_LVL_LOAD, (byte) 0x00, (byte) 0x00);
 
             byte[] newCounterData = new byte[] {0x00, 0x00, 0x05, 0x00, 0x00, 0x00};
 
