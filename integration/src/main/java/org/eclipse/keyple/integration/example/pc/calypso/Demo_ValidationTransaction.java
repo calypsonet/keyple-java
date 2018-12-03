@@ -227,7 +227,7 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
         SeResponse dataReadInSession;
 
         ReadRecordsRespPars readEventParser = poTransaction.prepareReadRecordsCmd(eventSfi,
-                ReadDataStructure.SINGLE_RECORD_DATA, (byte) 0x01, (byte) 0x00, "Event");
+                ReadDataStructure.SINGLE_RECORD_DATA, (byte) 0x01, "Event");
         ReadRecordsRespPars readCountersParser = poTransaction.prepareReadRecordsCmd(countersSfi,
                 ReadDataStructure.SINGLE_COUNTER, (byte) 0x01, "Counters");
         poTransaction.prepareReadRecordsCmd(contractsSfi, ReadDataStructure.MULTIPLE_RECORD_DATA,

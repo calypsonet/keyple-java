@@ -1895,7 +1895,7 @@ public final class PoTransaction {
      * @throws java.lang.IllegalArgumentException - if record number &lt; 1
      * @throws java.lang.IllegalArgumentException - if the request is inconsistent
      */
-    private ReadRecordsRespPars prepareReadRecordsCmd(byte sfi,
+    public ReadRecordsRespPars prepareReadRecordsCmd(byte sfi,
             ReadDataStructure readDataStructureEnum, byte firstRecordNumber, int expectedLength,
             String extraInfo) {
         if (expectedLength < 1 || expectedLength > 250) {

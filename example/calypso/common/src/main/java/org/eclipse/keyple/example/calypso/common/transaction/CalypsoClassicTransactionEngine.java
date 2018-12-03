@@ -153,9 +153,8 @@ public class CalypsoClassicTransactionEngine extends AbstractReaderObserverEngin
         /* prepare Event Log read record */
         ReadRecordsRespPars readEventLogParser = poTransaction.prepareReadRecordsCmd(
                 CalypsoClassicInfo.SFI_EventLog, ReadDataStructure.SINGLE_RECORD_DATA,
-                CalypsoClassicInfo.RECORD_NUMBER_1, (byte) 0x00,
-                String.format("EventLog (SFI=%02X, recnbr=%d))", CalypsoClassicInfo.SFI_EventLog,
-                        CalypsoClassicInfo.RECORD_NUMBER_1));
+                CalypsoClassicInfo.RECORD_NUMBER_1, String.format("EventLog (SFI=%02X, recnbr=%d))",
+                        CalypsoClassicInfo.SFI_EventLog, CalypsoClassicInfo.RECORD_NUMBER_1));
 
 
         /* prepare Contract List read record */
