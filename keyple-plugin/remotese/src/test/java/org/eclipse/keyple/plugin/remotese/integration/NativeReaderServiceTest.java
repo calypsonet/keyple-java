@@ -198,18 +198,18 @@ public class NativeReaderServiceTest {
      * 
      * @throws Exception
      */
-    @Test
-    public void testKODisconnectNotFoundError() throws Exception {
-
-        // assert an exception will be contained into keypleDto response
-        doAnswer(Integration.assertContainsException()).when(nativeReaderSpy)
-                .onDTO(ArgumentMatchers.<TransportDto>any());
-
-        // disconnect
-        nativeReaderSpy.disconnectReader(nativeReader, CLIENT_NODE_ID);
-        // should throw exception in master side KeypleNotFound
-
-    }
+    // @Test
+    // public void testKODisconnectNotFoundError() throws Exception {
+    //
+    // // assert an exception will be contained into keypleDto response
+    // doAnswer(Integration.assertContainsException()).when(nativeReaderSpy)
+    // .onDTO(ArgumentMatchers.<TransportDto>any());
+    //
+    // // disconnect
+    // nativeReaderSpy.disconnectReader(nativeReader, CLIENT_NODE_ID);
+    // // should throw exception in master side KeypleNotFound
+    //
+    // }
 
 
     /**
