@@ -20,7 +20,7 @@ if [ "$GH_EMAIL" = "" ]; then
 fi
 
 if [ "$GH_NAME" = "" ]; then
-    GH_NAME="CircleCI"
+    GH_NAME="CircleCI Pierre Terree"
 fi
 
 #now lets setup a new repo so we can update the gh-pages branch
