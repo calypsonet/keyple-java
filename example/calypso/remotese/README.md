@@ -112,7 +112,3 @@ After building the project (follow the procedure in the top README.md), you can 
 - ``Demo_WebserviceWithRetrofit_MasterServer`` : Execute the demo with a webservice protocol, the master device uses the webservice server
 - ``DemoWsKMasterServer`` : Execute the demo with a websocket protocol, the master device uses the websocket server
 - ``DemoWsKMasterClient`` : Execute the demo with a websocket protocol, the master device uses the websocket client
-
-
-
-

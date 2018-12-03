@@ -19,6 +19,7 @@ import org.eclipse.keyple.seproxy.exception.*;
 import org.eclipse.keyple.seproxy.plugin.AbstractThreadedLocalReader;
 import org.eclipse.keyple.seproxy.protocol.Protocol;
 import org.eclipse.keyple.seproxy.protocol.SeProtocol;
+import org.eclipse.keyple.seproxy.protocol.TransmissionMode;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,9 +27,13 @@ import org.slf4j.LoggerFactory;
 public final class PcscReader extends AbstractThreadedLocalReader {
 
     private static final Logger logger = LoggerFactory.getLogger(PcscReader.class);
+    public static final String SETTING_KEY_TRANSMISSION_MODE = "transmission_mode";
+    public static final String SETTING_TRANSMISSION_MODE_CONTACTS = "contacts";
+    public static final String SETTING_TRANSMISSION_MODE_CONTACTLESS = "contactless";
     public static final String SETTING_KEY_PROTOCOL = "protocol";
     public static final String SETTING_PROTOCOL_T0 = "T0";
     public static final String SETTING_PROTOCOL_T1 = "T1";
+    public static final String SETTING_PROTOCOL_T_CL = "TCL";
     public static final String SETTING_PROTOCOL_TX = "Tx";
     public static final String SETTING_KEY_MODE = "mode";
     public static final String SETTING_MODE_EXCLUSIVE = "exclusive";
@@ -41,6 +46,11 @@ public final class PcscReader extends AbstractThreadedLocalReader {
     public static final String SETTING_KEY_THREAD_TIMEOUT = "thread_wait_timeout";
     public static final String SETTING_KEY_LOGGING = "logging";
 
+    private static final String PROTOCOL_T0 = "T=0";
+    private static final String PROTOCOL_T1 = "T=1";
+    private static final String PROTOCOL_T_CL = "T=CL";
+    private static final String PROTOCOL_ANY = "T=0";
+
     private static final long SETTING_THREAD_TIMEOUT_DEFAULT = 5000;
 
     private final CardTerminal terminal;
@@ -48,6 +58,7 @@ public final class PcscReader extends AbstractThreadedLocalReader {
     private String parameterCardProtocol;
     private boolean cardExclusiveMode;
     private boolean cardReset;
+    private TransmissionMode transmissionMode;
 
     private Card card;
     private CardChannel channel;
@@ -72,6 +83,7 @@ public final class PcscReader extends AbstractThreadedLocalReader {
 
         // Using null values to use the standard method for defining default values
         try {
+            setParameter(SETTING_KEY_TRANSMISSION_MODE, null);
             setParameter(SETTING_KEY_PROTOCOL, null);
             setParameter(SETTING_KEY_MODE, null);
             setParameter(SETTING_KEY_DISCONNECT, null);
@@ -255,13 +267,25 @@ public final class PcscReader extends AbstractThreadedLocalReader {
         if (name == null) {
             throw new IllegalArgumentException("Parameter shouldn't be null");
         }
-        if (name.equals(SETTING_KEY_PROTOCOL)) {
+        if (name.equals(SETTING_KEY_TRANSMISSION_MODE)) {
+            if (value == null) {
+                transmissionMode = null;
+            } else if (value.equals(SETTING_TRANSMISSION_MODE_CONTACTS)) {
+                transmissionMode = TransmissionMode.CONTACTS;
+            } else if (value.equals(SETTING_TRANSMISSION_MODE_CONTACTLESS)) {
+                transmissionMode = TransmissionMode.CONTACTLESS;
+            } else {
+                throw new IllegalArgumentException("Bad tranmission mode " + name + " : " + value);
+            }
+        } else if (name.equals(SETTING_KEY_PROTOCOL)) {
             if (value == null || value.equals(SETTING_PROTOCOL_TX)) {
                 parameterCardProtocol = "*";
             } else if (value.equals(SETTING_PROTOCOL_T0)) {
                 parameterCardProtocol = "T=0";
             } else if (value.equals(SETTING_PROTOCOL_T1)) {
                 parameterCardProtocol = "T=1";
+            } else if (value.equals(SETTING_PROTOCOL_T_CL)) {
+                parameterCardProtocol = "T=CL";
             } else {
                 throw new IllegalArgumentException("Bad protocol " + name + " : " + value);
             }
@@ -403,6 +427,30 @@ public final class PcscReader extends AbstractThreadedLocalReader {
             this.channel = card.getBasicChannel();
         } catch (CardException e) {
             throw new KeypleChannelStateException("Error while opening Physical Channel", e);
+        }
+    }
+
+    /**
+     * The transmission mode can set with setParameter(SETTING_KEY_TRANSMISSION_MODE, )
+     * <p>
+     * When the transmission mode has not explicitly set, it is deduced from the protocol:
+     * <ul>
+     * <li>T=0: contacts mode</li>
+     * <li>T=1: contactless mode</li>
+     * </ul>
+     * 
+     * @return the current transmission mode
+     */
+    public TransmissionMode getTransmissionMode() {
+        if (transmissionMode != null) {
+            return transmissionMode;
+        } else {
+            if (parameterCardProtocol.contentEquals(PROTOCOL_T1)
+                    || parameterCardProtocol.contentEquals(PROTOCOL_T_CL)) {
+                return TransmissionMode.CONTACTLESS;
+            } else {
+                return TransmissionMode.CONTACTS;
+            }
         }
     }
 }

@@ -12,6 +12,7 @@
 package org.eclipse.keyple.calypso.command.po.builder.session;
 
 
+import org.eclipse.keyple.calypso.command.PoClass;
 import org.eclipse.keyple.calypso.command.po.CalypsoPoCommands;
 import org.eclipse.keyple.calypso.command.po.PoRevision;
 
@@ -43,8 +44,9 @@ public final class OpenSession24CmdBuild extends AbstractOpenSessionCmdBuild {
          */
         byte le = 0;
 
-        this.request = setApduRequest((byte) 0x94,
-                CalypsoPoCommands.getOpenSessionForRev(defaultRevision), p1, p2, samChallenge, le);
+        this.request = setApduRequest(PoClass.ISO.getValue(),
+                CalypsoPoCommands.getOpenSessionForRev(PoRevision.REV2_4), p1, p2, samChallenge,
+                le);
         if (extraInfo != null) {
             this.addSubName(extraInfo);
         }

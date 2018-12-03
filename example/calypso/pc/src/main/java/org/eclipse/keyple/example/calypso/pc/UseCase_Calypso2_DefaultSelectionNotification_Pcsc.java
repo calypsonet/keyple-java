@@ -115,8 +115,7 @@ public class UseCase_Calypso2_DefaultSelectionNotification_Pcsc implements Reade
          */
         PoSelector poSelector = new PoSelector(ByteArrayUtils.fromHex(CalypsoClassicInfo.AID),
                 SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN,
-                ContactlessProtocols.PROTOCOL_ISO14443_4, PoSelector.RevisionTarget.TARGET_REV3,
-                "AID: " + CalypsoClassicInfo.AID);
+                ContactlessProtocols.PROTOCOL_ISO14443_4, "AID: " + CalypsoClassicInfo.AID);
 
         /*
          * Prepare the reading order and keep the associated parser for later use once the selection
@@ -125,7 +124,7 @@ public class UseCase_Calypso2_DefaultSelectionNotification_Pcsc implements Reade
         readEnvironmentParser =
                 poSelector.prepareReadRecordsCmd(CalypsoClassicInfo.SFI_EnvironmentAndHolder,
                         ReadDataStructure.SINGLE_RECORD_DATA, CalypsoClassicInfo.RECORD_NUMBER_1,
-                        (byte) 0x00, String.format("EnvironmentAndHolder (SFI=%02X))",
+                        String.format("EnvironmentAndHolder (SFI=%02X))",
                                 CalypsoClassicInfo.SFI_EnvironmentAndHolder));
 
         /*
@@ -199,7 +198,7 @@ public class UseCase_Calypso2_DefaultSelectionNotification_Pcsc implements Reade
                      */
                     ReadRecordsRespPars readEventLogParser = poTransaction.prepareReadRecordsCmd(
                             CalypsoClassicInfo.SFI_EventLog, ReadDataStructure.SINGLE_RECORD_DATA,
-                            CalypsoClassicInfo.RECORD_NUMBER_1, (byte) 0x00,
+                            CalypsoClassicInfo.RECORD_NUMBER_1,
                             String.format("EventLog (SFI=%02X, recnbr=%d))",
                                     CalypsoClassicInfo.SFI_EventLog,
                                     CalypsoClassicInfo.RECORD_NUMBER_1));

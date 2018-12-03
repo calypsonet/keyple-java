@@ -16,7 +16,7 @@ mkdir gh-pages-branch
 cd gh-pages-branch
 
 if [ "$GH_EMAIL" = "" ]; then
-    GH_EMAIL=florent.clairambault@gmail.com
+    GH_EMAIL=pierre.terree@calypsonet.org
 fi
 
 if [ "$GH_NAME" = "" ]; then

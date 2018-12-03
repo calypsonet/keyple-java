@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
-import org.eclipse.keyple.calypso.command.po.PoRevision;
+import org.eclipse.keyple.calypso.command.PoClass;
 import org.eclipse.keyple.calypso.command.po.builder.ReadRecordsCmdBuild;
 import org.eclipse.keyple.seproxy.ChannelState;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
@@ -141,7 +141,7 @@ public class AndroidOmapiReaderTest {
     public void transmitWrongProtocol() throws KeypleBaseException {
         // init
         String poAid = "A000000291A000000191";
-        ReadRecordsCmdBuild poReadRecordCmd_T2Env = new ReadRecordsCmdBuild(PoRevision.REV3_1,
+        ReadRecordsCmdBuild poReadRecordCmd_T2Env = new ReadRecordsCmdBuild(PoClass.ISO,
                 (byte) 0x14, (byte) 0x01, true, (byte) 0x20, "Hoplink EF T2Environment");
         List<ApduRequest> poApduRequestList = Arrays.asList(poReadRecordCmd_T2Env.getApduRequest());
 
@@ -221,7 +221,7 @@ public class AndroidOmapiReaderTest {
     SeRequestSet getCalypsoRequestSample() {
         String poAid = "A000000291A000000191";
 
-        ReadRecordsCmdBuild poReadRecordCmd_T2Env = new ReadRecordsCmdBuild(PoRevision.REV3_1,
+        ReadRecordsCmdBuild poReadRecordCmd_T2Env = new ReadRecordsCmdBuild(PoClass.ISO,
                 (byte) 0x14, (byte) 0x01, true, (byte) 0x20, "Hoplink EF T2Environment");
 
         List<ApduRequest> poApduRequestList;

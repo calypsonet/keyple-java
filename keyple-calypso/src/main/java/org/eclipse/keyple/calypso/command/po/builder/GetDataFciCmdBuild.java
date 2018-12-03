@@ -11,9 +11,9 @@
  ********************************************************************************/
 package org.eclipse.keyple.calypso.command.po.builder;
 
+import org.eclipse.keyple.calypso.command.PoClass;
 import org.eclipse.keyple.calypso.command.po.CalypsoPoCommands;
 import org.eclipse.keyple.calypso.command.po.PoCommandBuilder;
-import org.eclipse.keyple.calypso.command.po.PoRevision;
 
 /**
  * This class provides the dedicated constructor to build the Get data APDU commands.
@@ -29,13 +29,12 @@ public final class GetDataFciCmdBuild extends PoCommandBuilder {
     /**
      * Instantiates a new GetDataFciCmdBuild.
      *
-     * @param revision the PO revision
+     * @param poClass indicates which CLA byte should be used for the Apdu
      */
-    public GetDataFciCmdBuild(PoRevision revision) {
+    public GetDataFciCmdBuild(PoClass poClass) {
         super(command, null);
-        // TODO check revision management
-        byte cla = PoRevision.REV2_4.equals(revision) ? (byte) 0x94 : (byte) 0x00;
 
-        request = setApduRequest(cla, command, (byte) 0x00, (byte) 0x6F, null, (byte) 0x00);
+        request = setApduRequest(poClass.getValue(), command, (byte) 0x00, (byte) 0x6F, null,
+                (byte) 0x00);
     }
 }

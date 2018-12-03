@@ -33,7 +33,6 @@ public abstract class AbstractOpenSessionCmdBuild extends PoCommandBuilder {
      */
     public AbstractOpenSessionCmdBuild(PoRevision revision) {
         super(CalypsoPoCommands.getOpenSessionForRev(revision), null);
-        defaultRevision = revision;
     }
 
     public static AbstractOpenSessionCmdBuild create(PoRevision revision, byte debitKeyIndex,

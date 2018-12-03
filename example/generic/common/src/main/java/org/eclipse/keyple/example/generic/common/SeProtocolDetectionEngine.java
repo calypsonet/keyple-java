@@ -62,14 +62,13 @@ public class SeProtocolDetectionEngine extends AbstractReaderObserverEngine {
 
                     PoSelector poSelector = new PoSelector(ByteArrayUtils.fromHex(HoplinkAID),
                             SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN,
-                            ContactlessProtocols.PROTOCOL_ISO14443_4,
-                            PoSelector.RevisionTarget.TARGET_REV3, "Hoplink selector");
+                            ContactlessProtocols.PROTOCOL_ISO14443_4, "Hoplink selector");
 
                     poSelector.preparePoCustomReadCmd("Standard Get Data",
                             new ApduRequest(ByteArrayUtils.fromHex("FFCA000000"), false));
 
                     poSelector.prepareReadRecordsCmd(SFI_T2Environment,
-                            ReadDataStructure.SINGLE_RECORD_DATA, (byte) 0x01, (byte) 0x00,
+                            ReadDataStructure.SINGLE_RECORD_DATA, (byte) 0x01,
                             "Hoplink T2 Environment");
 
                     seSelection.prepareSelection(poSelector);

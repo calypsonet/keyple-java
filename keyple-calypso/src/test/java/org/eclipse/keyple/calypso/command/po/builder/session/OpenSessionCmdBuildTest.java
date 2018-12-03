@@ -48,7 +48,7 @@ public class OpenSessionCmdBuildTest {
         byte keyIndex = (byte) 0x03;
         byte recordNumberToRead = (byte) 0x01;
         byte sfiToSelect = (byte) 0x08;
-        byte cla = (byte) 0x94;
+        byte cla = (byte) 0x00;
         byte p1 = (byte) (0x80 + (recordNumberToRead * 8) + keyIndex);
         byte p2 = (byte) (sfiToSelect * 8);
         byte cmd = (byte) 0x8A;
