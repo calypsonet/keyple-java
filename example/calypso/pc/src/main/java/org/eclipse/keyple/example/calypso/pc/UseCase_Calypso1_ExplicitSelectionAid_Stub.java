@@ -30,7 +30,7 @@ import org.eclipse.keyple.seproxy.event.ObservablePlugin.PluginObserver;
 import org.eclipse.keyple.seproxy.event.PluginEvent;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 import org.eclipse.keyple.seproxy.exception.NoStackTraceThrowable;
-import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
+import org.eclipse.keyple.seproxy.protocol.Protocol;
 import org.eclipse.keyple.transaction.SeSelection;
 import org.eclipse.keyple.transaction.SeSelector;
 import org.eclipse.keyple.util.ByteArrayUtils;
@@ -150,8 +150,8 @@ public class UseCase_Calypso1_ExplicitSelectionAid_Stub {
              * the selection and read additional information afterwards
              */
             PoSelector poSelector = new PoSelector(ByteArrayUtils.fromHex(CalypsoClassicInfo.AID),
-                    SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN,
-                    ContactlessProtocols.PROTOCOL_ISO14443_4, "AID: " + CalypsoClassicInfo.AID);
+                    SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN, Protocol.ANY,
+                    "AID: " + CalypsoClassicInfo.AID);
 
             /*
              * Prepare the reading order and keep the associated parser for later use once the
