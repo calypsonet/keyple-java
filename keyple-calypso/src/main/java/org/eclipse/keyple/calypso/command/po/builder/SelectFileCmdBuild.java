@@ -11,9 +11,9 @@
  ********************************************************************************/
 package org.eclipse.keyple.calypso.command.po.builder;
 
+import org.eclipse.keyple.calypso.command.PoClass;
 import org.eclipse.keyple.calypso.command.po.CalypsoPoCommands;
 import org.eclipse.keyple.calypso.command.po.PoCommandBuilder;
-import org.eclipse.keyple.calypso.command.po.PoRevision;
 
 /**
  * This class provides the dedicated constructor to build the Select File APDU commands.
@@ -34,13 +34,11 @@ public final class SelectFileCmdBuild extends PoCommandBuilder {
     /**
      * Instantiates a new SelectFileCmdBuild.
      *
-     * @param revision the PO revision
+     * @param poClass indicates which CLA byte should be used for the Apdu
      */
-    public SelectFileCmdBuild(PoRevision revision, SelectControl selectControl,
+    public SelectFileCmdBuild(PoClass poClass, SelectControl selectControl,
             SelectOptions selectOptions, byte[] selectData) {
         super(command, null);
-        byte cla = PoRevision.REV1_0.equals(revision) ? (byte) 0x94 : (byte) 0x00;
-
         byte p1 = 0;
         switch (selectControl) {
             case MF:
@@ -63,6 +61,6 @@ public final class SelectFileCmdBuild extends PoCommandBuilder {
                 break;
         }
 
-        request = setApduRequest(cla, command, p1, p2, selectData, (byte) 0x00);
+        request = setApduRequest(poClass.getValue(), command, p1, p2, selectData, (byte) 0x00);
     }
 }

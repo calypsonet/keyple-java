@@ -16,23 +16,23 @@ import org.eclipse.keyple.example.remote.wspolling.client_retrofit.WsPollingRetr
 import org.eclipse.keyple.plugin.remotese.transport.TransportFactory;
 
 /**
- * Demo Web Service with Retrofit http client library (Android friendly)
- * The master device uses the websocket master whereas the slave device uses the websocket client
+ * Demo Web Service with Retrofit http client library (Android friendly) The master device uses the
+ * websocket master whereas the slave device uses the websocket client
  */
 public class Demo_WebserviceWithRetrofit_MasterServer {
 
 
     public static void main(String[] args) throws Exception {
 
-        //Create the procotol factory
+        // Create the procotol factory
         TransportFactory factory = new WsPollingRetrofitFactory(); // HTTP Web Polling
 
-        //Launch the server thread
+        // Launch the server thread
         DemoThreads.startServer(true, factory);
 
         Thread.sleep(1000);
 
-        //Launch the client thread
+        // Launch the client thread
         DemoThreads.startClient(false, factory);
     }
 }

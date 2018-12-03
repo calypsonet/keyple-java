@@ -11,9 +11,9 @@
  ********************************************************************************/
 package org.eclipse.keyple.calypso.command.po.builder;
 
+import org.eclipse.keyple.calypso.command.PoClass;
 import org.eclipse.keyple.calypso.command.po.CalypsoPoCommands;
 import org.eclipse.keyple.calypso.command.po.PoCommandBuilder;
-import org.eclipse.keyple.calypso.command.po.PoRevision;
 import org.eclipse.keyple.calypso.command.po.PoSendableInSession;
 
 /**
@@ -28,7 +28,7 @@ public final class ReadRecordsCmdBuild extends PoCommandBuilder implements PoSen
     /**
      * Instantiates a new read records cmd build.
      *
-     * @param revision the revision of the PO
+     * @param poClass indicates which CLA byte should be used for the Apdu
      * @param sfi the sfi top select
      * @param firstRecordNumber the record number to read (or first record to read in case of
      *        several records)
@@ -38,24 +38,21 @@ public final class ReadRecordsCmdBuild extends PoCommandBuilder implements PoSen
      * @throws java.lang.IllegalArgumentException - if record number &lt; 1
      * @throws java.lang.IllegalArgumentException - if the request is inconsistent
      */
-    public ReadRecordsCmdBuild(PoRevision revision, byte sfi, byte firstRecordNumber,
+    public ReadRecordsCmdBuild(PoClass poClass, byte sfi, byte firstRecordNumber,
             boolean readJustOneRecord, byte expectedLength, String extraInfo)
             throws IllegalArgumentException {
         super(command, null);
-        if (revision != null) {
-            this.defaultRevision = revision;
-        }
 
         if (firstRecordNumber < 1) {
             throw new IllegalArgumentException("Bad record number (< 1)");
         }
 
-        byte cla = PoRevision.REV2_4.equals(this.defaultRevision) ? (byte) 0x94 : (byte) 0x00;
         byte p2 = (sfi == (byte) 0x00) ? (byte) 0x05 : (byte) ((byte) (sfi * 8) + 5);
         if (readJustOneRecord) {
             p2 = (byte) (p2 - (byte) 0x01);
         }
-        this.request = setApduRequest(cla, command, firstRecordNumber, p2, null, expectedLength);
+        this.request = setApduRequest(poClass.getValue(), command, firstRecordNumber, p2, null,
+                expectedLength);
         if (extraInfo != null) {
             this.addSubName(extraInfo);
         }
@@ -65,7 +62,7 @@ public final class ReadRecordsCmdBuild extends PoCommandBuilder implements PoSen
      * Instantiates a new read records cmd build without specifying the expected length. This
      * constructor is allowed only in contactless mode.
      *
-     * @param revision the revision of the PO
+     * @param poClass indicates which CLA byte should be used for the Apdu
      * @param sfi the sfi top select
      * @param firstRecordNumber the record number to read (or first record to read in case of
      *        several records)
@@ -74,8 +71,8 @@ public final class ReadRecordsCmdBuild extends PoCommandBuilder implements PoSen
      * @throws java.lang.IllegalArgumentException - if record number &lt; 1
      * @throws java.lang.IllegalArgumentException - if the request is inconsistent
      */
-    public ReadRecordsCmdBuild(PoRevision revision, byte sfi, byte firstRecordNumber,
+    public ReadRecordsCmdBuild(PoClass poClass, byte sfi, byte firstRecordNumber,
             boolean readJustOneRecord, String extraInfo) throws IllegalArgumentException {
-        this(revision, sfi, firstRecordNumber, readJustOneRecord, (byte) 0x00, extraInfo);
+        this(poClass, sfi, firstRecordNumber, readJustOneRecord, (byte) 0x00, extraInfo);
     }
 }

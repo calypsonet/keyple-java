@@ -15,7 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
-import org.eclipse.keyple.calypso.command.po.PoRevision;
+import org.eclipse.keyple.calypso.command.PoClass;
 import org.eclipse.keyple.calypso.command.po.builder.ReadRecordsCmdBuild;
 import org.eclipse.keyple.calypso.command.po.builder.UpdateRecordCmdBuild;
 import org.eclipse.keyple.plugin.android.omapi.AndroidOmapiPlugin;
@@ -148,15 +148,15 @@ public class OMAPITestFragment extends Fragment {
 
 
                     ReadRecordsCmdBuild poReadRecordCmd_T2Env =
-                            new ReadRecordsCmdBuild(PoRevision.REV3_1, (byte) 0x14, (byte) 0x01,
-                                    true, (byte) 0x20, "Hoplink EF T2Environment");
+                            new ReadRecordsCmdBuild(PoClass.ISO, (byte) 0x14, (byte) 0x01, true,
+                                    (byte) 0x20, "Hoplink EF T2Environment");
 
                     ReadRecordsCmdBuild poReadRecordCmd_T2Usage =
-                            new ReadRecordsCmdBuild(PoRevision.REV3_1, (byte) 0x1A, (byte) 0x01,
-                                    true, (byte) 0x30, "Hoplink EF T2Usage");
+                            new ReadRecordsCmdBuild(PoClass.ISO, (byte) 0x1A, (byte) 0x01, true,
+                                    (byte) 0x30, "Hoplink EF T2Usage");
 
                     UpdateRecordCmdBuild poUpdateRecordCmd_T2UsageFill = new UpdateRecordCmdBuild(
-                            PoRevision.REV3_1, (byte) 0x1A, (byte) 0x01,
+                            PoClass.ISO, (byte) 0x1A, (byte) 0x01,
                             ByteArrayUtils.fromHex(t2UsageRecord1_dataFill), "Hoplink EF T2Usage");
 
 

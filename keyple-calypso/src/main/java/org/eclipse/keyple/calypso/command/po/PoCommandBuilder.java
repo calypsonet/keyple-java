@@ -21,8 +21,6 @@ import org.eclipse.keyple.seproxy.message.ApduRequest;
  */
 public class PoCommandBuilder extends AbstractIso7816CommandBuilder {
 
-    protected PoRevision defaultRevision = PoRevision.REV3_1;
-
     /**
      * Constructor dedicated for the building of referenced Calypso commands
      * 

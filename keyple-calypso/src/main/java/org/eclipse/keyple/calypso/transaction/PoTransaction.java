@@ -37,6 +37,7 @@ import org.eclipse.keyple.seproxy.SeReader;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.message.*;
 import org.eclipse.keyple.seproxy.message.ProxyReader;
+import org.eclipse.keyple.seproxy.protocol.TransmissionMode;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -693,12 +694,11 @@ public final class PoTransaction {
      * 
      * @param poModificationCommands a list of commands that can modify the PO memory content
      * @param poAnticipatedResponses a list of anticipated PO responses to the modification commands
-     * @param communicationMode the communication mode. If the communication mode is
-     *        CONTACTLESS_MODE, a ratification command will be generated and sent to the PO after
-     *        the Close Session command; the ratification will not be requested in the Close Session
-     *        command. On the contrary, if the communication mode is CONTACTS_MODE, no ratification
-     *        command will be sent to the PO and ratification will be requested in the Close Session
-     *        command
+     * @param transmissionMode the communication mode. If the communication mode is CONTACTLESS, a
+     *        ratification command will be generated and sent to the PO after the Close Session
+     *        command; the ratification will not be requested in the Close Session command. On the
+     *        contrary, if the communication mode is CONTACTS, no ratification command will be sent
+     *        to the PO and ratification will be requested in the Close Session command
      * @param channelState indicates if the SE channel of the PO reader must be closed after the
      *        last command
      * @return SeResponse close session response
@@ -709,7 +709,7 @@ public final class PoTransaction {
      *         </ul>
      */
     private SeResponse processAtomicClosing(List<PoModificationCommand> poModificationCommands,
-            List<ApduResponse> poAnticipatedResponses, CommunicationMode communicationMode,
+            List<ApduResponse> poAnticipatedResponses, TransmissionMode transmissionMode,
             ChannelState channelState) throws KeypleReaderException {
 
         if (currentState != SessionState.SESSION_OPEN) {
@@ -796,7 +796,7 @@ public final class PoTransaction {
         PoCustomReadCommandBuilder ratificationCommand;
         boolean ratificationAsked;
 
-        if (communicationMode == CommunicationMode.CONTACTLESS_MODE) {
+        if (transmissionMode == TransmissionMode.CONTACTLESS) {
             if (poRevision == PoRevision.REV2_4) {
                 ratificationCommand = new PoCustomReadCommandBuilder("Ratification command",
                         new ApduRequest(ratificationCmdApduLegacy, false));
@@ -816,8 +816,8 @@ public final class PoTransaction {
         }
 
         /* Build the PO Close Session command. The last one for this session */
-        CloseSessionCmdBuild closeCommand =
-                new CloseSessionCmdBuild(poRevision, ratificationAsked, sessionTerminalSignature);
+        CloseSessionCmdBuild closeCommand = new CloseSessionCmdBuild(calypsoPo.getPoClass(),
+                ratificationAsked, sessionTerminalSignature);
 
         poApduRequestList.add(closeCommand.getApduRequest());
 
@@ -955,12 +955,11 @@ public final class PoTransaction {
      * determined from previous reading operations.
      *
      * @param poModificationCommands a list of commands that can modify the PO memory content
-     * @param communicationMode the communication mode. If the communication mode is
-     *        CONTACTLESS_MODE, a ratification command will be generated and sent to the PO after
-     *        the Close Session command; the ratification will not be requested in the Close Session
-     *        command. On the contrary, if the communication mode is CONTACTS_MODE, no ratification
-     *        command will be sent to the PO and ratification will be requested in the Close Session
-     *        command
+     * @param transmissionMode the communication mode. If the communication mode is CONTACTLESS, a
+     *        ratification command will be generated and sent to the PO after the Close Session
+     *        command; the ratification will not be requested in the Close Session command. On the
+     *        contrary, if the communication mode is CONTACTS, no ratification command will be sent
+     *        to the PO and ratification will be requested in the Close Session command
      * @param channelState indicates if the SE channel of the PO reader must be closed after the
      *        last command
      * @return SeResponse close session response
@@ -971,12 +970,12 @@ public final class PoTransaction {
      *         </ul>
      */
     private SeResponse processAtomicClosing(List<PoModificationCommand> poModificationCommands,
-            CommunicationMode communicationMode, ChannelState channelState)
+            TransmissionMode transmissionMode, ChannelState channelState)
             throws KeypleReaderException {
         List<ApduResponse> poAnticipatedResponses =
                 AnticipatedResponseBuilder.getResponses(poModificationCommands);
         return processAtomicClosing(poModificationCommands, poAnticipatedResponses,
-                communicationMode, channelState);
+                transmissionMode, channelState);
     }
 
     /**
@@ -1034,15 +1033,6 @@ public final class PoTransaction {
      */
     public byte[] getOpenRecordDataRead() {
         return openRecordDataRead;
-    }
-
-    /**
-     * Two communication modes are available for the PO.
-     * 
-     * It will be taken into account to handle the ratification when closing the Secure Session.
-     */
-    public enum CommunicationMode {
-        CONTACTLESS_MODE, CONTACTS_MODE
     }
 
     /**
@@ -1505,10 +1495,9 @@ public final class PoTransaction {
                     }
                     /*
                      * Closes the session, resets the modifications buffer counters for the next
-                     * round
+                     * round (set the contact mode to avoid the transmission of the ratification)
                      */
-                    processAtomicClosing(null, CommunicationMode.CONTACTS_MODE,
-                            ChannelState.KEEP_OPEN);
+                    processAtomicClosing(null, TransmissionMode.CONTACTS, ChannelState.KEEP_OPEN);
                     resetModificationsBufferCounter();
                     /*
                      * Clear the list and add the command that did not fit in the PO modifications
@@ -1603,9 +1592,10 @@ public final class PoTransaction {
                         }
                         /*
                          * Close the session and reset the modifications buffer counters for the
-                         * next round
+                         * next round (set the contact mode to avoid the transmission of the
+                         * ratification)
                          */
-                        processAtomicClosing(null, CommunicationMode.CONTACTS_MODE,
+                        processAtomicClosing(null, TransmissionMode.CONTACTS,
                                 ChannelState.KEEP_OPEN);
                         resetModificationsBufferCounter();
                         /* We reopen a new session for the remaining commands to be sent */
@@ -1659,12 +1649,11 @@ public final class PoTransaction {
      * from the PO.</li>
      * </ul>
      * 
-     * @param communicationMode the communication mode. If the communication mode is
-     *        CONTACTLESS_MODE, a ratification command will be generated and sent to the PO after
-     *        the Close Session command; the ratification will not be requested in the Close Session
-     *        command. On the contrary, if the communication mode is CONTACTS_MODE, no ratification
-     *        command will be sent to the PO and ratification will be requested in the Close Session
-     *        command
+     * @param transmissionMode the communication mode. If the communication mode is CONTACTLESS, a
+     *        ratification command will be generated and sent to the PO after the Close Session
+     *        command; the ratification will not be requested in the Close Session command. On the
+     *        contrary, if the communication mode is CONTACTS, no ratification command will be sent
+     *        to the PO and ratification will be requested in the Close Session command
      * @param channelState indicates if the SE channel of the PO reader must be closed after the
      *        last command
      * @return true if all commands are successful
@@ -1674,7 +1663,7 @@ public final class PoTransaction {
      *         communication mode.</li>
      *         </ul>
      */
-    public boolean processClosing(CommunicationMode communicationMode, ChannelState channelState)
+    public boolean processClosing(TransmissionMode transmissionMode, ChannelState channelState)
             throws KeypleReaderException {
         boolean poProcessSuccess = true;
         boolean atLeastOneReadCommand = false;
@@ -1726,7 +1715,7 @@ public final class PoTransaction {
                     } else {
                         /* All commands in the list are 'modifying' */
                         seResponseClosing = processAtomicClosing(poAtomicCommandBuilderList,
-                                CommunicationMode.CONTACTS_MODE, ChannelState.KEEP_OPEN);
+                                TransmissionMode.CONTACTS, ChannelState.KEEP_OPEN);
                         resetModificationsBufferCounter();
                         sessionPreviouslyClosed = true;
                     }
@@ -1765,7 +1754,7 @@ public final class PoTransaction {
 
         /* Finally, close the session as requested */
         seResponseClosing =
-                processAtomicClosing(poAtomicCommandBuilderList, communicationMode, channelState);
+                processAtomicClosing(poAtomicCommandBuilderList, transmissionMode, channelState);
 
         /* Update parsers */
         if (!updateParsersWithResponses(seResponseClosing, abstractApduResponseParserIterator)) {
@@ -1854,8 +1843,45 @@ public final class PoTransaction {
     }
 
     /**
+     * Internal method to handle expectedLength checks in public variants
+     * 
+     * @param sfi the sfi top select
+     * @param readDataStructureEnum read mode enum to indicate a SINGLE, MULTIPLE or COUNTER read
+     * @param firstRecordNumber the record number to read (or first record to read in case of
+     *        several records)
+     * @param expectedLength the expected length of the record(s)
+     * @param extraInfo extra information included in the logs (can be null or empty)
+     * @return ReadRecordsRespPars the ReadRecords command response parser
+     * @throws java.lang.IllegalArgumentException - if record number &lt; 1
+     * @throws java.lang.IllegalArgumentException - if the request is inconsistent
+     */
+    private ReadRecordsRespPars prepareReadRecordsCmdInternal(byte sfi,
+            ReadDataStructure readDataStructureEnum, byte firstRecordNumber, int expectedLength,
+            String extraInfo) {
+
+        /*
+         * the readJustOneRecord flag is set to false only in case of multiple read records, in all
+         * other cases it is set to true
+         */
+        boolean readJustOneRecord =
+                !(readDataStructureEnum == readDataStructureEnum.MULTIPLE_RECORD_DATA);
+
+        poCommandBuilderList.add(new ReadRecordsCmdBuild(calypsoPo.getPoClass(), sfi,
+                firstRecordNumber, readJustOneRecord, (byte) expectedLength, extraInfo));
+
+        ReadRecordsRespPars poResponseParser =
+                new ReadRecordsRespPars(firstRecordNumber, readDataStructureEnum);
+
+        poResponseParserList.add(poResponseParser);
+
+        return poResponseParser;
+    }
+
+    /**
      * Builds a ReadRecords command and add it to the list of commands to be sent with the next
-     * process command
+     * process command.
+     * <p>
+     * The expected length is provided and its value is checked between 1 and 250.
      * <p>
      * Returns the associated response parser.
      *
@@ -1870,24 +1896,39 @@ public final class PoTransaction {
      * @throws java.lang.IllegalArgumentException - if the request is inconsistent
      */
     public ReadRecordsRespPars prepareReadRecordsCmd(byte sfi,
-            ReadDataStructure readDataStructureEnum, byte firstRecordNumber, byte expectedLength,
+            ReadDataStructure readDataStructureEnum, byte firstRecordNumber, int expectedLength,
             String extraInfo) {
-        /*
-         * the readJustOneRecord flag is set to false only in case of multiple read records, in all
-         * other cases it is set to true
-         */
-        boolean readJustOneRecord =
-                !(readDataStructureEnum == readDataStructureEnum.MULTIPLE_RECORD_DATA);
+        if (expectedLength < 1 || expectedLength > 250) {
+            throw new IllegalArgumentException("Bad length.");
+        }
+        return prepareReadRecordsCmdInternal(sfi, readDataStructureEnum, firstRecordNumber,
+                expectedLength, extraInfo);
+    }
 
-        poCommandBuilderList.add(new ReadRecordsCmdBuild(calypsoPo.getRevision(), sfi,
-                firstRecordNumber, readJustOneRecord, expectedLength, extraInfo));
-
-        ReadRecordsRespPars poResponseParser =
-                new ReadRecordsRespPars(firstRecordNumber, readDataStructureEnum);
-
-        poResponseParserList.add(poResponseParser);
-
-        return poResponseParser;
+    /**
+     * Builds a ReadRecords command and add it to the list of commands to be sent with the next
+     * process command. No expected length is specified, the record output length is handled
+     * automatically.
+     * <p>
+     * Returns the associated response parser.
+     *
+     * @param sfi the sfi top select
+     * @param readDataStructureEnum read mode enum to indicate a SINGLE, MULTIPLE or COUNTER read
+     * @param firstRecordNumber the record number to read (or first record to read in case of
+     *        several records)
+     * @param extraInfo extra information included in the logs (can be null or empty)
+     * @return ReadRecordsRespPars the ReadRecords command response parser
+     * @throws java.lang.IllegalArgumentException - if record number &lt; 1
+     * @throws java.lang.IllegalArgumentException - if the request is inconsistent
+     */
+    public ReadRecordsRespPars prepareReadRecordsCmd(byte sfi,
+            ReadDataStructure readDataStructureEnum, byte firstRecordNumber, String extraInfo) {
+        if (poReader.getTransmissionMode() == TransmissionMode.CONTACTS) {
+            throw new IllegalArgumentException(
+                    "In contacts mode, the expected length must be specified.");
+        }
+        return prepareReadRecordsCmdInternal(sfi, readDataStructureEnum, firstRecordNumber, 0,
+                extraInfo);
     }
 
     /**
@@ -1905,7 +1946,7 @@ public final class PoTransaction {
     public AppendRecordRespPars prepareAppendRecordCmd(byte sfi, byte[] newRecordData,
             String extraInfo) {
         poCommandBuilderList.add(
-                new AppendRecordCmdBuild(calypsoPo.getRevision(), sfi, newRecordData, extraInfo));
+                new AppendRecordCmdBuild(calypsoPo.getPoClass(), sfi, newRecordData, extraInfo));
 
         AppendRecordRespPars poResponseParser = new AppendRecordRespPars();
 
@@ -1930,8 +1971,8 @@ public final class PoTransaction {
      */
     public UpdateRecordRespPars prepareUpdateRecordCmd(byte sfi, byte recordNumber,
             byte[] newRecordData, String extraInfo) {
-        poCommandBuilderList.add(new UpdateRecordCmdBuild(calypsoPo.getRevision(), sfi,
-                recordNumber, newRecordData, extraInfo));
+        poCommandBuilderList.add(new UpdateRecordCmdBuild(calypsoPo.getPoClass(), sfi, recordNumber,
+                newRecordData, extraInfo));
 
         UpdateRecordRespPars poResponseParser = new UpdateRecordRespPars();
 
@@ -1958,7 +1999,7 @@ public final class PoTransaction {
      */
     public IncreaseRespPars prepareIncreaseCmd(byte sfi, byte counterNumber, int incValue,
             String extraInfo) {
-        poCommandBuilderList.add(new IncreaseCmdBuild(calypsoPo.getRevision(), sfi, counterNumber,
+        poCommandBuilderList.add(new IncreaseCmdBuild(calypsoPo.getPoClass(), sfi, counterNumber,
                 incValue, extraInfo));
 
         IncreaseRespPars poResponseParser = new IncreaseRespPars();
@@ -1986,7 +2027,7 @@ public final class PoTransaction {
      */
     public DecreaseRespPars prepareDecreaseCmd(byte sfi, byte counterNumber, int decValue,
             String extraInfo) {
-        poCommandBuilderList.add(new DecreaseCmdBuild(calypsoPo.getRevision(), sfi, counterNumber,
+        poCommandBuilderList.add(new DecreaseCmdBuild(calypsoPo.getPoClass(), sfi, counterNumber,
                 decValue, extraInfo));
         DecreaseRespPars poResponseParser = new DecreaseRespPars();
 

@@ -12,6 +12,7 @@
 package org.eclipse.keyple.calypso.command.po.builder;
 
 
+import org.eclipse.keyple.calypso.command.PoClass;
 import org.eclipse.keyple.calypso.command.po.*;
 
 /**
@@ -28,7 +29,7 @@ public final class IncreaseCmdBuild extends PoCommandBuilder
     /**
      * Instantiates a new increase cmd build from command parameters.
      *
-     * @param revision the revision of the PO
+     * @param poClass indicates which CLA byte should be used for the Apdu
      * @param counterNumber &gt;= 01h: Counters file, number of the counter. 00h: Simulated Counter
      *        file.
      * @param sfi SFI of the file to select or 00h for current EF
@@ -38,13 +39,9 @@ public final class IncreaseCmdBuild extends PoCommandBuilder
      * @throws java.lang.IllegalArgumentException - if the decrement value is out of range
      * @throws java.lang.IllegalArgumentException - if the command is inconsistent
      */
-    public IncreaseCmdBuild(PoRevision revision, byte sfi, byte counterNumber, int incValue,
+    public IncreaseCmdBuild(PoClass poClass, byte sfi, byte counterNumber, int incValue,
             String extraInfo) throws IllegalArgumentException {
         super(command, null);
-
-        if (revision != null) {
-            this.defaultRevision = revision;
-        }
 
         // only counter number >= 1 are allowed
         if (counterNumber < 1) {
@@ -62,11 +59,11 @@ public final class IncreaseCmdBuild extends PoCommandBuilder
         incValueBuffer[1] = (byte) ((incValue >> 8) & 0xFF);
         incValueBuffer[2] = (byte) (incValue & 0xFF);
 
-        byte cla = PoRevision.REV2_4.equals(this.defaultRevision) ? (byte) 0x94 : (byte) 0x00;
         byte p2 = (byte) (sfi * 8);
 
         /* this is a case4 command, we set Le = 0 */
-        this.request = setApduRequest(cla, command, counterNumber, p2, incValueBuffer, (byte) 0x00);
+        this.request = setApduRequest(poClass.getValue(), command, counterNumber, p2,
+                incValueBuffer, (byte) 0x00);
         if (extraInfo != null) {
             this.addSubName(extraInfo);
         }

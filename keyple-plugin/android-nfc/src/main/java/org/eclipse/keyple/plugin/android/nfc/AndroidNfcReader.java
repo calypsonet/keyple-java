@@ -23,6 +23,7 @@ import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.plugin.AbstractSelectionLocalReader;
 import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
 import org.eclipse.keyple.seproxy.protocol.SeProtocol;
+import org.eclipse.keyple.seproxy.protocol.TransmissionMode;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -130,6 +131,16 @@ public final class AndroidNfcReader extends AbstractSelectionLocalReader
         }
 
     }
+
+    /**
+     * The transmission mode is always CONTACTLESS in a NFC reader
+     * 
+     * @return the current transmission mode
+     */
+    public TransmissionMode getTransmissionMode() {
+        return TransmissionMode.CONTACTLESS;
+    }
+
 
     /**
      * Callback function invoked by @{@link NfcAdapter} when a @{@link Tag} is discovered A

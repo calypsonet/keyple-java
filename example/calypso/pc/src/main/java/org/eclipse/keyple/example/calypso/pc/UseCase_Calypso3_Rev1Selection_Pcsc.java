@@ -116,8 +116,7 @@ public class UseCase_Calypso3_Rev1Selection_Pcsc {
              * the selection and read additional information afterwards
              */
             PoSelector poSelector = new PoSelector(poAtrRegex, ChannelState.KEEP_OPEN,
-                    ContactlessProtocols.PROTOCOL_B_PRIME, PoSelector.RevisionTarget.TARGET_REV1,
-                    "ATR: " + poAtrRegex);
+                    ContactlessProtocols.PROTOCOL_ISO14443_4, "ATR: " + poAtrRegex);
 
             /*
              * Prepare the selection of the DF RT.
@@ -132,7 +131,7 @@ public class UseCase_Calypso3_Rev1Selection_Pcsc {
             ReadRecordsRespPars readEnvironmentParser = poSelector.prepareReadRecordsCmd(
                     CalypsoClassicInfo.SFI_EnvironmentAndHolder,
                     ReadDataStructure.SINGLE_RECORD_DATA, CalypsoClassicInfo.RECORD_NUMBER_1,
-                    (byte) 0x00, String.format("EnvironmentAndHolder (SFI=%02X))",
+                    String.format("EnvironmentAndHolder (SFI=%02X))",
                             CalypsoClassicInfo.SFI_EnvironmentAndHolder));
 
             /*
@@ -175,7 +174,7 @@ public class UseCase_Calypso3_Rev1Selection_Pcsc {
                  */
                 ReadRecordsRespPars readEventLogParser = poTransaction.prepareReadRecordsCmd(
                         CalypsoClassicInfo.SFI_EventLog, ReadDataStructure.SINGLE_RECORD_DATA,
-                        CalypsoClassicInfo.RECORD_NUMBER_1, (byte) 0x00,
+                        CalypsoClassicInfo.RECORD_NUMBER_1,
                         String.format("EventLog (SFI=%02X, recnbr=%d))",
                                 CalypsoClassicInfo.SFI_EventLog,
                                 CalypsoClassicInfo.RECORD_NUMBER_1));

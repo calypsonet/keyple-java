@@ -13,7 +13,7 @@ package org.eclipse.keyple.example.remote.calypso;
 
 import java.util.Arrays;
 import java.util.List;
-import org.eclipse.keyple.calypso.command.po.PoRevision;
+import org.eclipse.keyple.calypso.command.PoClass;
 import org.eclipse.keyple.calypso.command.po.builder.ReadRecordsCmdBuild;
 import org.eclipse.keyple.plugin.remotese.pluginse.RemoteSePlugin;
 import org.eclipse.keyple.plugin.remotese.pluginse.VirtualReader;
@@ -43,7 +43,7 @@ class CommandSample {
             String poAid = "A000000291A000000191";
 
             // build 1st seRequestSet with keep channel open to true
-            ReadRecordsCmdBuild poReadRecordCmd_T2Env = new ReadRecordsCmdBuild(PoRevision.REV3_1,
+            ReadRecordsCmdBuild poReadRecordCmd_T2Env = new ReadRecordsCmdBuild(PoClass.ISO,
                     (byte) 0x14, (byte) 0x01, true, (byte) 0x20, "Hoplink EF T2Environment");
 
             List<ApduRequest> poApduRequestList;
@@ -60,7 +60,7 @@ class CommandSample {
                     seResponseSet);
 
             // build 1st seRequestSet with keep channel open to true
-            ReadRecordsCmdBuild poReadRecordCmd_T2Env2 = new ReadRecordsCmdBuild(PoRevision.REV3_1,
+            ReadRecordsCmdBuild poReadRecordCmd_T2Env2 = new ReadRecordsCmdBuild(PoClass.ISO,
                     (byte) 0x14, (byte) 0x01, true, (byte) 0x20, "Hoplink EF T2Environment");
 
             List<ApduRequest> poApduRequestList2;

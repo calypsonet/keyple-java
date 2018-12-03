@@ -13,6 +13,7 @@ package org.eclipse.keyple.calypso.transaction;
 
 
 
+import org.eclipse.keyple.calypso.command.PoClass;
 import org.eclipse.keyple.calypso.command.po.PoRevision;
 import org.eclipse.keyple.calypso.command.po.parser.GetDataFciRespPars;
 import org.eclipse.keyple.seproxy.message.SeResponse;
@@ -159,5 +160,12 @@ public final class CalypsoPo extends MatchingSe {
 
     public int getModificationsCounter() {
         return modificationsCounterMax;
+    }
+
+    /**
+     * @return the PO class determined from the selection mode for the current PO selector
+     */
+    public PoClass getPoClass() {
+        return poSelector.getPoClass();
     }
 }

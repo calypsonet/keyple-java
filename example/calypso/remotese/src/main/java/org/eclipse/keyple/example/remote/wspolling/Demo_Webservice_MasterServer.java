@@ -15,8 +15,8 @@ import org.eclipse.keyple.example.remote.calypso.DemoThreads;
 import org.eclipse.keyple.plugin.remotese.transport.TransportFactory;
 
 /**
- * Demo Web Service with jdk http client library
- * The master device uses the webservice server whereas the slave device uses the webservice client
+ * Demo Web Service with jdk http client library The master device uses the webservice server
+ * whereas the slave device uses the webservice client
  */
 public class Demo_Webservice_MasterServer {
 
@@ -24,12 +24,12 @@ public class Demo_Webservice_MasterServer {
 
         TransportFactory factory = new WsPollingFactory(); // HTTP Web Polling
 
-        //Launch the server thread
+        // Launch the server thread
         DemoThreads.startServer(true, factory);
 
         Thread.sleep(1000);
 
-        //Launch the client thread
+        // Launch the client thread
         DemoThreads.startClient(false, factory);
     }
 }

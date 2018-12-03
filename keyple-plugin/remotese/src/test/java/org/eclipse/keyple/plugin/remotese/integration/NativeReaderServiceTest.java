@@ -96,7 +96,7 @@ public class NativeReaderServiceTest {
 
         Thread.sleep(500);
 
-        //delete observer and monitor thread
+        // delete observer and monitor thread
         stubPlugin.removeObserver(stubPluginObserver);
 
         nativeReader.clearObservers();

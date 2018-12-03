@@ -25,6 +25,7 @@ import org.eclipse.keyple.seproxy.message.SeResponseSet;
 import org.eclipse.keyple.seproxy.plugin.AbstractThreadedLocalReader;
 import org.eclipse.keyple.seproxy.protocol.Protocol;
 import org.eclipse.keyple.seproxy.protocol.SeProtocol;
+import org.eclipse.keyple.seproxy.protocol.TransmissionMode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,9 +42,13 @@ public final class StubReader extends AbstractThreadedLocalReader {
 
     public static final String ALLOWED_PARAMETER_1 = "parameter1";
     public static final String ALLOWED_PARAMETER_2 = "parameter2";
+    public static final String CONTACTLESS_PARAMETER = "contactless";
+    public static final String CONTACTS_PARAMETER = "contacts";
 
     static final String pluginName = "StubPlugin";
     String readerName = "StubReader";
+
+    TransmissionMode transmissionMode = TransmissionMode.CONTACTLESS;
 
     public StubReader(String name) {
         super(pluginName, name);
@@ -122,6 +127,10 @@ public final class StubReader extends AbstractThreadedLocalReader {
     public void setParameter(String name, String value) throws KeypleReaderException {
         if (name.equals(ALLOWED_PARAMETER_1) || name.equals(ALLOWED_PARAMETER_2)) {
             parameters.put(name, value);
+        } else if (name.equals(CONTACTS_PARAMETER)) {
+            transmissionMode = TransmissionMode.CONTACTS;
+        } else if (name.equals(CONTACTLESS_PARAMETER)) {
+            transmissionMode = TransmissionMode.CONTACTLESS;
         } else {
             throw new KeypleReaderException("parameter name not supported : " + name);
         }
@@ -132,6 +141,12 @@ public final class StubReader extends AbstractThreadedLocalReader {
         return parameters;
     }
 
+    /**
+     * @return the current transmission mode
+     */
+    public TransmissionMode getTransmissionMode() {
+        return transmissionMode;
+    }
 
     /*
      * HELPERS TO TEST INTERNAL METHOD TODO : is this necessary?

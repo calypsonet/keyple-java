@@ -13,7 +13,7 @@ package org.eclipse.keyple.calypso.command.po.builder.session;
 
 
 
-import org.eclipse.keyple.calypso.command.po.PoRevision;
+import org.eclipse.keyple.calypso.command.PoClass;
 import org.eclipse.keyple.command.AbstractApduCommandBuilder;
 import org.eclipse.keyple.seproxy.message.ApduRequest;
 import org.junit.Assert;
@@ -32,13 +32,12 @@ public class CloseSessionCmdBuildTest {
                 (byte) 0xA8, 0x31, (byte) 0xC3, 0x3E, 0x00};
         byte[] terminalSessionSignature = new byte[] {(byte) 0xA8, 0x31, (byte) 0xC3, 0x3E};
         AbstractApduCommandBuilder apduCommandBuilder =
-                new CloseSessionCmdBuild(PoRevision.REV2_4, false, terminalSessionSignature);
+                new CloseSessionCmdBuild(PoClass.LEGACY, false, terminalSessionSignature);
         ApduRequest reqApdu = apduCommandBuilder.getApduRequest();
 
         Assert.assertArrayEquals(request2_4, reqApdu.getBytes());
 
-        apduCommandBuilder =
-                new CloseSessionCmdBuild(PoRevision.REV3_1, true, terminalSessionSignature);
+        apduCommandBuilder = new CloseSessionCmdBuild(PoClass.ISO, true, terminalSessionSignature);
         reqApdu = apduCommandBuilder.getApduRequest();
 
         Assert.assertArrayEquals(request3_1, reqApdu.getBytes());
