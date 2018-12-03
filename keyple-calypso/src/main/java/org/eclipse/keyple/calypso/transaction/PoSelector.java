@@ -185,7 +185,8 @@ public final class PoSelector extends SeSelector {
             throw new IllegalArgumentException(
                     "In contacts mode, the expected length must be specified.");
         }
-        return prepareReadRecordsCmd(sfi, readDataStructureEnum, firstRecordNumber, 0, extraInfo);
+        return prepareReadRecordsCmdInternal(sfi, readDataStructureEnum, firstRecordNumber, 0,
+                extraInfo);
     }
 
     /**

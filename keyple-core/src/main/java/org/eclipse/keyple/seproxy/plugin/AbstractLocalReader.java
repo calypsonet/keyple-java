@@ -21,6 +21,7 @@ import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.message.*;
 import org.eclipse.keyple.seproxy.protocol.SeProtocol;
 import org.eclipse.keyple.seproxy.protocol.SeProtocolSetting;
+import org.eclipse.keyple.transaction.SelectionRequest;
 import org.eclipse.keyple.transaction.SelectionResponse;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.slf4j.Logger;
@@ -91,6 +92,23 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
      */
     protected abstract boolean protocolFlagMatches(SeProtocol protocolFlag)
             throws KeypleReaderException;
+
+    /**
+     * If defined, the prepared setDefaultSelectionRequest will be processed as soon as a SE is
+     * inserted. The result of this request set will be added to the reader event.
+     * <p>
+     * Depending on the notification mode, the observer will be notified whenever an SE is inserted,
+     * regardless of the selection status, or only if the current SE matches the selection criteria.
+     *
+     * @param defaultSelectionRequest the {@link SelectionRequest} to be executed when a SE is
+     *        inserted
+     * @param notificationMode the notification mode enum (ALWAYS or MATCHED_ONLY)
+     */
+    public void setDefaultSelectionRequest(SelectionRequest defaultSelectionRequest,
+            ObservableReader.NotificationMode notificationMode) {
+        this.defaultSelectionRequest = defaultSelectionRequest;
+        this.notificationMode = notificationMode;
+    };
 
     /**
      * This method is invoked when a SE is removed
