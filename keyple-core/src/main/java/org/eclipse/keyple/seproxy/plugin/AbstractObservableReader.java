@@ -36,7 +36,7 @@ import org.slf4j.LoggerFactory;
  */
 
 public abstract class AbstractObservableReader extends AbstractLoggedObservable<ReaderEvent>
-        implements ProxyReader {
+        implements ObservableReader, ProxyReader {
 
     private static final Logger logger = LoggerFactory.getLogger(AbstractObservableReader.class);
 
@@ -72,21 +72,55 @@ public abstract class AbstractObservableReader extends AbstractLoggedObservable<
 
 
     /**
-     * If defined, the prepared setDefaultSelectionRequest will be processed as soon as a SE is
-     * inserted. The result of this request set will be added to the reader event.
+     * Starts the monitoring thread
      * <p>
-     * Depending on the notification mode, the observer will be notified whenever an SE is inserted,
-     * regardless of the selection status, or only if the current SE matches the selection criteria.
-     *
-     * @param defaultSelectionRequest the {@link SelectionRequest} to be executed when a SE is
-     *        inserted
-     * @param notificationMode the notification mode enum (ALWAYS or MATCHED_ONLY)
+     * This method has to be overloaded by the class that handle the monitoring thread. It will be
+     * called when a first observer is added.
      */
-    public void setDefaultSelectionRequest(SelectionRequest defaultSelectionRequest,
-            ObservableReader.NotificationMode notificationMode) {
-        this.defaultSelectionRequest = defaultSelectionRequest;
-        this.notificationMode = notificationMode;
-    };
+    protected void startObservation() {};
+
+    /**
+     * Ends the monitoring thread
+     * <p>
+     * This method has to be overloaded by the class that handle the monitoring thread. It will be
+     * called when the observer is removed.
+     */
+    protected void stopObservation() {};
+
+    /**
+     * Add a reader observer.
+     * <p>
+     * The observer will receive all the events produced by this reader (card insertion, removal,
+     * etc.)
+     * <p>
+     * The monitoring thread is started when the first observer is added.
+     *
+     * @param observer the observer object
+     */
+    public final void addObserver(ReaderObserver observer) {
+        super.addObserver(observer);
+        if (super.countObservers() == 1) {
+            logger.debug("Start the reader monitoring.");
+            startObservation();
+        }
+    }
+
+    /**
+     * Remove a reader observer.
+     * <p>
+     * The observer will do not receive any of the events produced by this reader.
+     * <p>
+     * The monitoring thread is ended when the last observer is removed.
+     *
+     * @param observer the observer object
+     */
+    public final void removeObserver(ReaderObserver observer) {
+        super.removeObserver(observer);
+        if (super.countObservers() == 0) {
+            logger.debug("Stop the reader monitoring.");
+            stopObservation();
+        }
+    }
 
     /**
      * Execute the transmission of a list of {@link SeRequest} and returns a list of
