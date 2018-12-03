@@ -31,7 +31,6 @@ import org.eclipse.keyple.seproxy.message.ApduResponse;
 import org.eclipse.keyple.seproxy.message.SeResponse;
 import org.eclipse.keyple.seproxy.protocol.ContactsProtocols;
 import org.eclipse.keyple.seproxy.protocol.SeProtocol;
-import org.eclipse.keyple.seproxy.protocol.TransmissionMode;
 import org.eclipse.keyple.transaction.SeSelector;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.slf4j.Logger;
@@ -143,7 +142,8 @@ public final class PoSelector extends SeSelector {
     /**
      * Prepare one or more read record ApduRequest based on the target revision to be executed
      * following the selection.
-     * <p>The expected length is provided and its value is checked between 1 and 250.
+     * <p>
+     * The expected length is provided and its value is checked between 1 and 250.
      * <p>
      * In the case of a mixed target (rev2 or rev3) two commands are prepared. The first one in rev3
      * format, the second one in rev2 format (mainly class byte)
@@ -156,12 +156,13 @@ public final class PoSelector extends SeSelector {
      * @param extraInfo extra information included in the logs (can be null or empty)
      */
     public ReadRecordsRespPars prepareReadRecordsCmd(byte sfi,
-                                                     ReadDataStructure readDataStructureEnum, byte firstRecordNumber, int expectedLength,
-                                                     String extraInfo) {
+            ReadDataStructure readDataStructureEnum, byte firstRecordNumber, int expectedLength,
+            String extraInfo) {
         if (expectedLength < 1 || expectedLength > 250) {
             throw new IllegalArgumentException("Bad length.");
         }
-        return prepareReadRecordsCmdInternal(sfi, readDataStructureEnum, firstRecordNumber, expectedLength, extraInfo);
+        return prepareReadRecordsCmdInternal(sfi, readDataStructureEnum, firstRecordNumber,
+                expectedLength, extraInfo);
     }
 
     /**

@@ -1844,6 +1844,7 @@ public final class PoTransaction {
 
     /**
      * Internal method to handle expectedLength checks in public variants
+     * 
      * @param sfi the sfi top select
      * @param readDataStructureEnum read mode enum to indicate a SINGLE, MULTIPLE or COUNTER read
      * @param firstRecordNumber the record number to read (or first record to read in case of
@@ -1879,7 +1880,8 @@ public final class PoTransaction {
     /**
      * Builds a ReadRecords command and add it to the list of commands to be sent with the next
      * process command.
-     * <p>The expected length is provided and its value is checked between 1 and 250.
+     * <p>
+     * The expected length is provided and its value is checked between 1 and 250.
      * <p>
      * Returns the associated response parser.
      *
@@ -1894,37 +1896,39 @@ public final class PoTransaction {
      * @throws java.lang.IllegalArgumentException - if the request is inconsistent
      */
     private ReadRecordsRespPars prepareReadRecordsCmd(byte sfi,
-                                                              ReadDataStructure readDataStructureEnum, byte firstRecordNumber, int expectedLength,
-                                                              String extraInfo) {
+            ReadDataStructure readDataStructureEnum, byte firstRecordNumber, int expectedLength,
+            String extraInfo) {
         if (expectedLength < 1 || expectedLength > 250) {
             throw new IllegalArgumentException("Bad length.");
         }
-        return prepareReadRecordsCmdInternal(sfi, readDataStructureEnum, firstRecordNumber, expectedLength, extraInfo);
+        return prepareReadRecordsCmdInternal(sfi, readDataStructureEnum, firstRecordNumber,
+                expectedLength, extraInfo);
     }
 
-        /**
-         * Builds a ReadRecords command and add it to the list of commands to be sent with the next
-         * process command. No expected length is specified, the record output length is handled
-         * automatically.
-         * <p>
-         * Returns the associated response parser.
-         *
-         * @param sfi the sfi top select
-         * @param readDataStructureEnum read mode enum to indicate a SINGLE, MULTIPLE or COUNTER read
-         * @param firstRecordNumber the record number to read (or first record to read in case of
-         *        several records)
-         * @param extraInfo extra information included in the logs (can be null or empty)
-         * @return ReadRecordsRespPars the ReadRecords command response parser
-         * @throws java.lang.IllegalArgumentException - if record number &lt; 1
-         * @throws java.lang.IllegalArgumentException - if the request is inconsistent
-         */
+    /**
+     * Builds a ReadRecords command and add it to the list of commands to be sent with the next
+     * process command. No expected length is specified, the record output length is handled
+     * automatically.
+     * <p>
+     * Returns the associated response parser.
+     *
+     * @param sfi the sfi top select
+     * @param readDataStructureEnum read mode enum to indicate a SINGLE, MULTIPLE or COUNTER read
+     * @param firstRecordNumber the record number to read (or first record to read in case of
+     *        several records)
+     * @param extraInfo extra information included in the logs (can be null or empty)
+     * @return ReadRecordsRespPars the ReadRecords command response parser
+     * @throws java.lang.IllegalArgumentException - if record number &lt; 1
+     * @throws java.lang.IllegalArgumentException - if the request is inconsistent
+     */
     public ReadRecordsRespPars prepareReadRecordsCmd(byte sfi,
             ReadDataStructure readDataStructureEnum, byte firstRecordNumber, String extraInfo) {
         if (poReader.getTransmissionMode() == TransmissionMode.CONTACTS) {
             throw new IllegalArgumentException(
                     "In contacts mode, the expected length must be specified.");
         }
-        return prepareReadRecordsCmdInternal(sfi, readDataStructureEnum, firstRecordNumber, 0, extraInfo);
+        return prepareReadRecordsCmdInternal(sfi, readDataStructureEnum, firstRecordNumber, 0,
+                extraInfo);
     }
 
     /**
