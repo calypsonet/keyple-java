@@ -25,6 +25,7 @@ import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.exception.NoStackTraceThrowable;
 import org.eclipse.keyple.seproxy.protocol.Protocol;
+import org.eclipse.keyple.seproxy.protocol.TransmissionMode;
 import org.eclipse.keyple.transaction.MatchingSe;
 import org.eclipse.keyple.transaction.SeSelection;
 import org.eclipse.keyple.transaction.SeSelector;
@@ -161,7 +162,7 @@ public class Demo_WriteName {
             poTransaction.prepareUpdateRecordCmd(environmentSid, (byte) 0x01, name.getBytes(),
                     "Environment");
 
-            poProcessStatus = poTransaction.processClosing(poReader.getTransmissionMode(),
+            poProcessStatus = poTransaction.processClosing(TransmissionMode.CONTACTLESS,
                     ChannelState.KEEP_OPEN);
 
             if (!poProcessStatus) {

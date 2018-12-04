@@ -39,6 +39,7 @@ import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.message.*;
 import org.eclipse.keyple.seproxy.protocol.Protocol;
 import org.eclipse.keyple.seproxy.protocol.SeProtocolSetting;
+import org.eclipse.keyple.seproxy.protocol.TransmissionMode;
 import org.eclipse.keyple.transaction.SeSelection;
 import org.eclipse.keyple.transaction.SeSelector;
 import org.eclipse.keyple.util.ByteArrayUtils;
@@ -184,7 +185,7 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
 
         poTransaction.processPoCommands(ChannelState.KEEP_OPEN);
 
-        poTransaction.processClosing(poReader.getTransmissionMode(), ChannelState.KEEP_OPEN);
+        poTransaction.processClosing(TransmissionMode.CONTACTLESS, ChannelState.KEEP_OPEN);
 
         System.out.println("\nValidation Successful!");
         System.out.println(
@@ -246,7 +247,7 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
 
             System.out.println("No value present in the card. Initiating auto top-up...");
 
-            poTransaction.processClosing(poReader.getTransmissionMode(), ChannelState.KEEP_OPEN);
+            poTransaction.processClosing(TransmissionMode.CONTACTLESS, ChannelState.KEEP_OPEN);
 
             poTransaction = new PoTransaction(poReader, detectedPO, samReader, null);
 
@@ -281,7 +282,7 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
 
         poTransaction.processPoCommands(ChannelState.KEEP_OPEN);
 
-        poTransaction.processClosing(poReader.getTransmissionMode(), ChannelState.KEEP_OPEN);
+        poTransaction.processClosing(TransmissionMode.CONTACTLESS, ChannelState.KEEP_OPEN);
 
         System.out.println("\nValidation Successful!");
         System.out.println(
