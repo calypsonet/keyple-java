@@ -29,7 +29,7 @@ public class RmConnectReaderParser implements RemoteMethodParser<String> {
     private static final Logger logger = LoggerFactory.getLogger(RmConnectReaderParser.class);
 
 
-    NativeReaderServiceImpl nativeReaderService;
+    private final NativeReaderServiceImpl nativeReaderService;
 
     public RmConnectReaderParser(NativeReaderServiceImpl nativeReaderService) {
         this.nativeReaderService = nativeReaderService;

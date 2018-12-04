@@ -15,15 +15,15 @@ import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import org.eclipse.keyple.plugin.remotese.transport.DtoSender;
-import org.eclipse.keyple.seproxy.ReaderPlugin;
+import org.eclipse.keyple.plugin.remotese.transport.RemoteMethodTxEngine;
 import org.eclipse.keyple.seproxy.SeReader;
-import org.eclipse.keyple.seproxy.event.ObservablePlugin;
 import org.eclipse.keyple.seproxy.event.PluginEvent;
 import org.eclipse.keyple.seproxy.event.ReaderEvent;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderNotFoundException;
 import org.eclipse.keyple.seproxy.message.ProxyReader;
-import org.eclipse.keyple.util.Observable;
+import org.eclipse.keyple.seproxy.plugin.AbstractObservablePlugin;
+import org.eclipse.keyple.seproxy.plugin.AbstractObservableReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,28 +32,24 @@ import org.slf4j.LoggerFactory;
  * Remote SE Plugin Creates a virtual reader when a remote readers connect Manages the dispatch of
  * events received from remote readers
  */
-public final class RemoteSePlugin extends Observable implements ObservablePlugin {
+public final class RemoteSePlugin extends AbstractObservablePlugin {
 
     private static final Logger logger = LoggerFactory.getLogger(RemoteSePlugin.class);
+    static final String PLUGIN_NAME = "RemoteSePlugin";
 
     // private final VirtualReaderSessionFactory sessionManager;
 
-    // virtual readers
-    private final SortedSet<VirtualReader> virtualReaders = new TreeSet<VirtualReader>();
-
     private final VirtualReaderSessionFactory sessionManager;
+    private final DtoSender sender;
 
     /**
      * Only {@link VirtualReaderService} can instanciate a RemoteSePlugin
      */
-    RemoteSePlugin(VirtualReaderSessionFactory sessionManager) {
+    RemoteSePlugin(VirtualReaderSessionFactory sessionManager, DtoSender sender) {
+        super(PLUGIN_NAME);
         this.sessionManager = sessionManager;
         logger.info("Init RemoteSePlugin");
-    }
-
-    @Override
-    public String getName() {
-        return "RemoteSePlugin";
+        this.sender = sender;
     }
 
     @Override
@@ -64,30 +60,12 @@ public final class RemoteSePlugin extends Observable implements ObservablePlugin
     @Override
     public void setParameter(String key, String value) throws IllegalArgumentException {}
 
-    @Override
-    public void setParameters(Map<String, String> parameters) throws IllegalArgumentException {
 
-    }
-
-    @Override
-    public SortedSet<? extends SeReader> getReaders() {
-        return virtualReaders;
-    }
-
-    @Override
-    public SeReader getReader(String name) throws KeypleReaderNotFoundException {
-        for (VirtualReader VirtualReader : virtualReaders) {
-            if (VirtualReader.getName().equals(name)) {
-                return VirtualReader;
-            }
-        }
-        throw new KeypleReaderNotFoundException("reader with name not found : " + name);
-    }
 
     public SeReader getReaderByRemoteName(String remoteName) throws KeypleReaderNotFoundException {
-        for (VirtualReader VirtualReader : virtualReaders) {
-            if (VirtualReader.getNativeReaderName().equals(remoteName)) {
-                return VirtualReader;
+        for (AbstractObservableReader virtualReader : readers) {
+            if (((VirtualReader) virtualReader).getNativeReaderName().equals(remoteName)) {
+                return virtualReader;
             }
         }
         throw new KeypleReaderNotFoundException(remoteName);
@@ -112,8 +90,11 @@ public final class RemoteSePlugin extends Observable implements ObservablePlugin
             logger.info("Create a new Virtual Reader with localReaderName {} with session {}",
                     nativeReaderName, session.getSessionId());
 
-            final VirtualReader virtualReader = new VirtualReader(session, nativeReaderName);
-            virtualReaders.add(virtualReader);
+            RemoteMethodTxEngine rmTxEngine = new RemoteMethodTxEngine(sender);
+
+            final VirtualReader virtualReader =
+                    new VirtualReader(session, nativeReaderName, rmTxEngine);
+            readers.add(virtualReader);
 
             // notify that a new reader is connected in a separated thread
             new Thread() {
@@ -149,7 +130,7 @@ public final class RemoteSePlugin extends Observable implements ObservablePlugin
         ((VirtualReaderSessionImpl) virtualReader.getSession()).clearObservers();
 
         // remove reader
-        virtualReaders.remove(virtualReader);
+        readers.remove(virtualReader);
 
         // send event READER_DISCONNECTED in a separate thread
         new Thread() {
@@ -172,7 +153,7 @@ public final class RemoteSePlugin extends Observable implements ObservablePlugin
         logger.debug("Dispatch ReaderEvent to the appropriate Reader : {} sessionId : {}",
                 event.getReaderName(), sessionId);
         try {
-            // todo dispatch is managed by name, should take sessionId also
+            // todo dispatch is managed by remote name, should take sessionId also
             VirtualReader virtualReader =
                     (VirtualReader) getReaderByRemoteName(event.getReaderName());
             virtualReader.onRemoteReaderEvent(event);
@@ -184,63 +165,24 @@ public final class RemoteSePlugin extends Observable implements ObservablePlugin
     }
 
 
-
-    /**
-     * Add an observer. This will allow to be notified about all readers or plugins events.
-     *
-     * @param observer Observer to notify
-     */
-
-    public void addObserver(ObservablePlugin.PluginObserver observer) {
-        logger.trace("[{}][{}] addObserver => Adding an observer.", this.getClass(),
-                this.getName());
-        super.addObserver(observer);
-    }
-
-    /**
-     * Remove an observer.
-     *
-     * @param observer Observer to stop notifying
-     */
-
-    public void removeObserver(ObservablePlugin.PluginObserver observer) {
-        logger.trace("[{}] removeObserver => Deleting a reader observer", this.getName());
-        super.removeObserver(observer);
-    }
-
-
-
-    /**
-     * This method shall be called only from a SE Proxy plugin or reader implementing
-     * AbstractObservableReader or AbstractObservablePlugin. Push a ReaderEvent / PluginEvent of the
-     * selected AbstractObservableReader / AbstractObservablePlugin to its registered Observer.
-     *
-     * @param event the event
-     */
-
-    public final void notifyObservers(PluginEvent event) {
-        logger.trace("[{}] AbstractObservableReader => Notifying a plugin event: ", this.getName(),
-                event);
-        setChanged();
-        super.notifyObservers(event);
-
-    }
-
     private Boolean isReaderConnected(String name) {
-        for (VirtualReader VirtualReader : virtualReaders) {
-            if (VirtualReader.getNativeReaderName().equals(name)) {
+        for (AbstractObservableReader virtualReader : readers) {
+            if (((VirtualReader) virtualReader).getNativeReaderName().equals(name)) {
                 return true;
             }
         }
         return false;
     }
 
-    // todo
     @Override
-    public int compareTo(ReaderPlugin o) {
-        return 0;
+    protected SortedSet<AbstractObservableReader> getNativeReaders() throws KeypleReaderException {
+        // init list with an empty list
+        return new TreeSet<AbstractObservableReader>();
     }
 
-
-
+    @Override
+    protected AbstractObservableReader getNativeReader(String s) throws KeypleReaderException {
+        // should not be call
+        throw new IllegalArgumentException("Use getReader method instead of getNativeReader");
+    }
 }

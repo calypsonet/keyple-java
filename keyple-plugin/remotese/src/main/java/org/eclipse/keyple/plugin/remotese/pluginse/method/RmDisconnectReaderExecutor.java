@@ -23,7 +23,7 @@ public class RmDisconnectReaderExecutor implements RemoteMethodExecutor {
     private static final Logger logger = LoggerFactory.getLogger(RmDisconnectReaderExecutor.class);
 
 
-    RemoteSePlugin plugin;
+    private final RemoteSePlugin plugin;
 
     public RmDisconnectReaderExecutor(RemoteSePlugin plugin) {
         this.plugin = plugin;

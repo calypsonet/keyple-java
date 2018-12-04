@@ -18,8 +18,8 @@ import org.eclipse.keyple.seproxy.message.ProxyReader;
 
 public class RmDisconnectReaderInvoker implements RemoteMethodInvoker {
 
-    ProxyReader localReader;
-    String clientNodeId;
+    private final ProxyReader localReader;
+    private final String clientNodeId;
 
     public RmDisconnectReaderInvoker(ProxyReader localReader, String clientNodeId) {
         this.localReader = localReader;

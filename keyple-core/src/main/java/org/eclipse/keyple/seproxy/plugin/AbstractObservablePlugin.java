@@ -21,7 +21,7 @@ import org.eclipse.keyple.seproxy.message.ProxyReader;
 /**
  * Observable plugin. These plugin can report when a reader is added or removed.
  */
-abstract class AbstractObservablePlugin extends AbstractLoggedObservable<PluginEvent>
+public abstract class AbstractObservablePlugin extends AbstractLoggedObservable<PluginEvent>
         implements ReaderPlugin {
 
     /**
@@ -32,7 +32,7 @@ abstract class AbstractObservablePlugin extends AbstractLoggedObservable<PluginE
 
     /**
      * Instanciates a new ReaderPlugin. Retrieve the current readers list.
-     *
+     * 
      * Gets the list for the native method the first time (null)
      * 
      * @param name name of the plugin

@@ -11,16 +11,6 @@
  ********************************************************************************/
 package org.eclipse.keyple.plugin.remotese.transport;
 
-import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
-
-public class KeypleRemoteException extends KeypleBaseException {
-
-    public KeypleRemoteException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
-    public KeypleRemoteException(String message) {
-        super(message);
-    }
-
+public interface RemoteMethodTxCallback<T> {
+    void get(T response, KeypleRemoteException exception);
 }

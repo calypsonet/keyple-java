@@ -42,20 +42,16 @@ public class KeypleDtoHelper {
                 nativeReaderName, virtualReaderName, clientNodeId);
     }
 
-    static public KeypleDto ACK() {
-        return new KeypleDto("ACK", "", false);// todo statusCode
-    }
-
-    static public Boolean isACK(KeypleDto keypleDto) {
-        return keypleDto.getAction().equals("ACK");
-    }
-
     static public Boolean isNoResponse(KeypleDto dto) {
         return dto == null || dto.getAction() == null || dto.getAction().isEmpty();
     }
 
     private static Boolean isKeypleDTO(String json) {
         return isKeypleDTO(JsonParser.getGson().fromJson(json, JsonObject.class));
+    }
+
+    static public KeypleDto ACK() {
+        return new KeypleDto("ACK", "ACK", false);
     }
 
     static public Boolean isKeypleDTO(JsonObject json) {

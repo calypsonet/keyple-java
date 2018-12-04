@@ -24,8 +24,8 @@ public class LocalTransportFactory extends TransportFactory {
      * LocalTransportFactory(){} static public LocalTransportFactory instance(){ return instance; }
      */
 
-    LocalClient theClient;
-    LocalServer theServer;
+    private final LocalClient theClient;
+    private final LocalServer theServer;
 
     public LocalTransportFactory() {
         theServer = new LocalServer();

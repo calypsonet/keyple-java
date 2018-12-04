@@ -12,28 +12,28 @@
 package org.eclipse.keyple.plugin.remotese.pluginse;
 
 import java.util.Map;
+import org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx;
+import org.eclipse.keyple.plugin.remotese.transport.KeypleRemoteException;
 import org.eclipse.keyple.plugin.remotese.transport.KeypleRemoteReaderException;
-import org.eclipse.keyple.seproxy.SeReader;
-import org.eclipse.keyple.seproxy.event.ObservableReader;
+import org.eclipse.keyple.plugin.remotese.transport.RemoteMethodTxEngine;
 import org.eclipse.keyple.seproxy.event.ReaderEvent;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.message.*;
-import org.eclipse.keyple.seproxy.message.ProxyReader;
+import org.eclipse.keyple.seproxy.plugin.AbstractObservableReader;
 import org.eclipse.keyple.seproxy.protocol.SeProtocolSetting;
 import org.eclipse.keyple.seproxy.protocol.TransmissionMode;
 import org.eclipse.keyple.transaction.SelectionRequest;
-import org.eclipse.keyple.util.Observable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Virtual Reader Behaves like the Remote Reader it emulates
  */
-public final class VirtualReader extends Observable implements ObservableReader, ProxyReader {
+public final class VirtualReader extends AbstractObservableReader {
 
     private final VirtualReaderSession session;
     private final String remoteName;
-    private final String name;
+    private final RemoteMethodTxEngine rmTx;
 
     private static final Logger logger = LoggerFactory.getLogger(VirtualReader.class);
 
@@ -44,20 +44,12 @@ public final class VirtualReader extends Observable implements ObservableReader,
      *        {@link org.eclipse.keyple.plugin.remotese.transport.TransportNode}
      * @param nativeReaderName local name of the native reader on slave side
      */
-    VirtualReader(VirtualReaderSession session, String nativeReaderName) {
+    VirtualReader(VirtualReaderSession session, String nativeReaderName,
+            RemoteMethodTxEngine rmTx) {
+        super(RemoteSePlugin.PLUGIN_NAME, "remote-" + nativeReaderName);
         this.session = session;
         this.remoteName = nativeReaderName;
-        this.name = "remote-" + nativeReaderName;
-    }
-
-    /**
-     * Local name of the virtual reader
-     * 
-     * @return name of the virtual reader
-     */
-    @Override
-    public String getName() {
-        return name;
+        this.rmTx = rmTx;
     }
 
     /**
@@ -82,6 +74,11 @@ public final class VirtualReader extends Observable implements ObservableReader,
         return session;
     }
 
+    public RemoteMethodTxEngine getRmTx() {
+        return rmTx;
+    }
+
+
     @Override
     public boolean isSePresent() {
         logger.error("isSePresent is not implemented yet");
@@ -97,12 +94,16 @@ public final class VirtualReader extends Observable implements ObservableReader,
      * @throws KeypleReaderException
      */
     @Override
-    public SeResponseSet transmitSet(SeRequestSet seRequestSet)
+    public SeResponseSet processSeRequestSet(SeRequestSet seRequestSet)
             throws IllegalArgumentException, KeypleReaderException {
+
+        RmTransmitTx transmit = new RmTransmitTx(seRequestSet, session.getSessionId(),
+                this.getNativeReaderName(), this.getName(), null);
         try {
-            return session.transmitSet(this.getNativeReaderName(), this.getName(), seRequestSet);
-        } catch (KeypleRemoteReaderException e) {
-            // throw the cause of the RemoteReaderException (a KeypleReaderException)
+            rmTx.register(transmit);
+            return transmit.get();
+        } catch (KeypleRemoteException e) {
+            e.printStackTrace();
             throw (KeypleReaderException) e.getCause();
         }
     }
@@ -116,10 +117,10 @@ public final class VirtualReader extends Observable implements ObservableReader,
      * @throws KeypleReaderException
      */
     @Override
-    public SeResponse transmit(SeRequest seRequest)
+    public SeResponse processSeRequest(SeRequest seRequest)
             throws IllegalArgumentException, KeypleReaderException {
         try {
-            return session.transmit(this.getNativeReaderName(), this.getName(), seRequest);
+            return this.processSeRequestSet(new SeRequestSet(seRequest)).getSingleResponse();
         } catch (KeypleRemoteReaderException e) {
             // throw the cause of the RemoteReaderException (a KeypleReaderException)
             throw (KeypleReaderException) e.getCause();
@@ -168,12 +169,6 @@ public final class VirtualReader extends Observable implements ObservableReader,
      */
 
 
-    // compare by name
-    @Override
-    public int compareTo(SeReader o) {
-        return o.getName().compareTo(this.getName());
-    }// todo
-
     @Override
     public Map<String, String> getParameters() {
         logger.error("getParameters is not implemented yet");
@@ -186,60 +181,9 @@ public final class VirtualReader extends Observable implements ObservableReader,
     }
 
     @Override
-    public void setParameters(Map<String, String> parameters) throws IllegalArgumentException {
-        logger.error("setParameters is not implemented yet");
-
-    }
-
-
-    /**
-     * Add an observer. This will allow to be notified about all readers or plugins events.
-     *
-     * @param observer Observer to notify
-     */
-
-    public void addObserver(ReaderObserver observer) {
-        logger.trace("[{}][{}] addObserver => Adding an observer {}", this.getName(),
-                observer.toString());
-        super.addObserver(observer);
-    }
-
-    /**
-     * Remove an observer.
-     *
-     * @param observer Observer to stop notifying
-     */
-
-    public void removeObserver(ReaderObserver observer) {
-        logger.trace("[{}] removeObserver => Deleting a reader observer {}", this.getName(),
-                observer.toString());
-        super.removeObserver(observer);
-    }
-
-
-
-    /**
-     * This method shall be called only from a SE Proxy plugin or reader implementing
-     * AbstractObservableReader or AbstractObservablePlugin. Push a ReaderEvent / PluginEvent of the
-     * selected AbstractObservableReader / AbstractObservablePlugin to its registered Observer.
-     *
-     * @param event the event
-     */
-
-    public final void notifyObservers(ReaderEvent event) {
-        logger.trace(
-                "[{}] AbstractObservableReader => Notifying a reader event: {} to #{} observers ",
-                this.getName(), event.getEventType(), this.countObservers());
-
-        setChanged();
-        super.notifyObservers(event);
-
-    }
-
-    @Override
     public void setDefaultSelectionRequest(SelectionRequest selectionRequest,
             NotificationMode notificationMode) {
-        // todo : implement API
+        logger.error("setDefaultSelectionRequest is not implemented yet");
     }
 
 
