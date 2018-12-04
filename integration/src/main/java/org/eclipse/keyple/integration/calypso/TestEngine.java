@@ -53,9 +53,9 @@ public class TestEngine {
                         SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN, Protocol.ANY, "CLAP"));
 
         // Add cdLight AID to the list
-        seSelection.prepareSelection(
-                new PoSelector(ByteArrayUtils.fromHex(PoFileStructureInfo.cdLightAid),
-                        SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN, Protocol.ANY, "CDLight"));
+        seSelection.prepareSelection(new PoSelector(
+                ByteArrayUtils.fromHex(PoFileStructureInfo.cdLightAid), SeSelector.SelectMode.FIRST,
+                ChannelState.KEEP_OPEN, Protocol.ANY, "CDLight"));
 
         if (seSelection.processExplicitSelection()) {
             return new PoFileStructureInfo(seSelection.getSelectedSe());
