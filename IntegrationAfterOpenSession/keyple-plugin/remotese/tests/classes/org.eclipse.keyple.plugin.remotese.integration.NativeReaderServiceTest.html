@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">5.746s</div>
+<div class="counter">5.747s</div>
 <p>duration</p>
 </div>
 </td>
@@ -89,17 +89,17 @@
 </tr>
 <tr>
 <td class="success">testKODisconnectServerError</td>
-<td>1.325s</td>
+<td>1.329s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">testOKConnect</td>
-<td>1.103s</td>
+<td>1.102s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">testOKConnectDisconnect</td>
-<td>1.107s</td>
+<td>1.105s</td>
 <td class="success">passed</td>
 </tr>
 </table>
@@ -137,8 +137,8 @@ java.lang.InterruptedException: sleep interrupted
 [Test worker] INFO NativeReaderServiceTest - *** Bind Slave Services
 [Test worker] INFO StubPlugin - Plugging a new reader with name testStubReader
 [Test worker] INFO NativeReaderServiceImpl - connectReader testStubReader from device testClientNodeId
-[Test worker] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1543934464098
-[Test worker] INFO NativeReaderServiceImpl - A virtual reader has been created on Master side with sessionId testStubReadertestClientNodeId1543934464098
+[Test worker] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1543939145534
+[Test worker] INFO NativeReaderServiceImpl - A virtual reader has been created on Master side with sessionId testStubReadertestClientNodeId1543939145534
 [Test worker] INFO NativeReaderServiceImpl - disconnectReader testStubReader from device testClientNodeId
 [Test worker] INFO RemoteSePlugin - Disconnect VirtualReader with name testStubReader with session null
 [Test worker] INFO NativeReaderServiceTest - TearDown Test
@@ -157,8 +157,8 @@ java.lang.InterruptedException: sleep interrupted
 [Test worker] INFO NativeReaderServiceTest - *** Bind Slave Services
 [Test worker] INFO StubPlugin - Plugging a new reader with name testStubReader
 [Test worker] INFO NativeReaderServiceImpl - connectReader testStubReader from device testClientNodeId
-[Test worker] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1543934465202
-[Test worker] INFO NativeReaderServiceImpl - A virtual reader has been created on Master side with sessionId testStubReadertestClientNodeId1543934465202
+[Test worker] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1543939146639
+[Test worker] INFO NativeReaderServiceImpl - A virtual reader has been created on Master side with sessionId testStubReadertestClientNodeId1543939146639
 [Test worker] INFO NativeReaderServiceImpl - connectReader testStubReader from device testClientNodeId
 org.eclipse.keyple.seproxy.exception.KeypleReaderException: Virtual Reader already exists
 	at org.eclipse.keyple.plugin.remotese.pluginse.RemoteSePlugin.createVirtualReader(RemoteSePlugin.java:128)
@@ -167,8 +167,8 @@ org.eclipse.keyple.seproxy.exception.KeypleReaderException: Virtual Reader alrea
 	at org.eclipse.keyple.plugin.remotese.transport.java.LocalServer.onLocalMessage(LocalServer.java:36)
 	at org.eclipse.keyple.plugin.remotese.transport.java.LocalClient.sendDTO(LocalClient.java:68)
 	at org.eclipse.keyple.plugin.remotese.nativese.NativeReaderServiceImpl.connectReader(NativeReaderServiceImpl.java:157)
-	at org.eclipse.keyple.plugin.remotese.nativese.NativeReaderServiceImpl$MockitoMock$924058947.connectReader$accessor$xOdNV6HH(Unknown Source)
-	at org.eclipse.keyple.plugin.remotese.nativese.NativeReaderServiceImpl$MockitoMock$924058947$auxiliary$0VNT88Oc.call(Unknown Source)
+	at org.eclipse.keyple.plugin.remotese.nativese.NativeReaderServiceImpl$MockitoMock$1250237894.connectReader$accessor$61TxxfX7(Unknown Source)
+	at org.eclipse.keyple.plugin.remotese.nativese.NativeReaderServiceImpl$MockitoMock$1250237894$auxiliary$z5JEbFS1.call(Unknown Source)
 	at org.mockito.internal.invocation.RealMethod$FromCallable.invoke(RealMethod.java:52)
 	at org.mockito.internal.creation.bytebuddy.InterceptedInvocation.callRealMethod(InterceptedInvocation.java:129)
 	at org.mockito.internal.stubbing.answers.CallsRealMethods.answer(CallsRealMethods.java:43)
@@ -179,7 +179,7 @@ org.eclipse.keyple.seproxy.exception.KeypleReaderException: Virtual Reader alrea
 	at org.mockito.internal.creation.bytebuddy.MockMethodInterceptor.doIntercept(MockMethodInterceptor.java:65)
 	at org.mockito.internal.creation.bytebuddy.MockMethodInterceptor.doIntercept(MockMethodInterceptor.java:51)
 	at org.mockito.internal.creation.bytebuddy.MockMethodInterceptor$DispatcherDefaultingToRealMethod.interceptSuperCallable(MockMethodInterceptor.java:135)
-	at org.eclipse.keyple.plugin.remotese.nativese.NativeReaderServiceImpl$MockitoMock$924058947.connectReader(Unknown Source)
+	at org.eclipse.keyple.plugin.remotese.nativese.NativeReaderServiceImpl$MockitoMock$1250237894.connectReader(Unknown Source)
 	at org.eclipse.keyple.plugin.remotese.integration.NativeReaderServiceTest.testKOConnectError(NativeReaderServiceTest.java:150)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
@@ -245,8 +245,8 @@ java.lang.InterruptedException: sleep interrupted
 [Test worker] INFO NativeReaderServiceTest - *** Bind Slave Services
 [Test worker] INFO StubPlugin - Plugging a new reader with name testStubReader
 [Test worker] INFO NativeReaderServiceImpl - connectReader testStubReader from device testClientNodeId
-[Test worker] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1543934466312
-[Test worker] INFO NativeReaderServiceImpl - A virtual reader has been created on Master side with sessionId testStubReadertestClientNodeId1543934466312
+[Test worker] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1543939147748
+[Test worker] INFO NativeReaderServiceImpl - A virtual reader has been created on Master side with sessionId testStubReadertestClientNodeId1543939147748
 [Test worker] INFO NativeReaderServiceTest - TearDown Test
 [Test worker] INFO StubPlugin - Unplugged reader with name testStubReader
 java.lang.InterruptedException: sleep interrupted
@@ -264,7 +264,7 @@ java.lang.InterruptedException: sleep interrupted
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 4.5.1</a> at Dec 4, 2018 2:41:26 PM</p>
+<a href="http://www.gradle.org">Gradle 4.5.1</a> at Dec 4, 2018 3:59:27 PM</p>
 </div>
 </div>
 </body>
