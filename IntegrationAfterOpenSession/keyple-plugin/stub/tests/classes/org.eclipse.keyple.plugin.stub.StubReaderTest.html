@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">8.263s</div>
+<div class="counter">8.270s</div>
 <p>duration</p>
 </div>
 </td>
@@ -79,7 +79,7 @@
 </thead>
 <tr>
 <td class="success">testATR</td>
-<td>0.408s</td>
+<td>0.420s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
@@ -89,7 +89,7 @@
 </tr>
 <tr>
 <td class="success">testInsert</td>
-<td>0.402s</td>
+<td>0.403s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
@@ -104,7 +104,7 @@
 </tr>
 <tr>
 <td class="success">testSetWrongParameter</td>
-<td>0.401s</td>
+<td>0.402s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
@@ -129,7 +129,7 @@
 </tr>
 <tr>
 <td class="success">transmit_partial_response_0</td>
-<td>0.502s</td>
+<td>0.501s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
@@ -139,7 +139,7 @@
 </tr>
 <tr>
 <td class="success">transmit_partial_response_2</td>
-<td>0.502s</td>
+<td>0.501s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
@@ -149,12 +149,12 @@
 </tr>
 <tr>
 <td class="success">transmit_partial_response_set_0</td>
-<td>0.503s</td>
+<td>0.501s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">transmit_partial_response_set_1</td>
-<td>0.506s</td>
+<td>0.503s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
@@ -189,12 +189,12 @@
 [observable-reader-events-1] TRACE org.eclipse.keyple.transaction.SeSelector - ATR based selection: ATRREGEX = 3B.*, KEEPCHANNELOPEN = KEEP_OPEN, PROTOCOLFLAG = ANY
 [observable-reader-events-1] TRACE org.eclipse.keyple.transaction.SeSelection - SELECTORREQUEST = SeRequest:{REQUESTS = [], SELECTOR = ATR regex:3B.*, KEEPCHANNELOPEN = KEEP_OPEN}, EXTRAINFO = Test ATR
 [observable-reader-events-1] TRACE org.eclipse.keyple.transaction.SeSelection - Transmit SELECTIONREQUEST (1 request(s))
-[observable-reader-events-1] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 205.0 ms.
+[observable-reader-events-1] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 215.8 ms.
 [observable-reader-events-1] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [], SELECTOR = ATR regex:3B.*, KEEPCHANNELOPEN = KEEP_OPEN}
 [observable-reader-events-1] TRACE org.eclipse.keyple.seproxy.plugin.AbstractSelectionLocalReader - [StubReaderTest] openLogicalChannelAndSelect =&gt; ATR: 3B8E800180318066409089120802830190000B
 [observable-reader-events-1] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processSeRequest =&gt; Logical channel opening success.
 [observable-reader-events-1] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processSeRequestSet =&gt; receive SeResponse:{RESPONSES = [], ATR = 3B8E800180318066409089120802830190000B, FCI = , HASMATCHED = true CHANNELWASOPEN = false}
-[observable-reader-events-1] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 2.2 ms.
+[observable-reader-events-1] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 2.5 ms.
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubPlugin - Unplugged reader with name StubReaderTest
 [Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-6] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader disconnected 
@@ -237,6 +237,7 @@
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubReaderTest - Stubplugin readers size 0
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubReaderTest - Stubplugin observers size 1
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubPlugin - Plugging a new reader with name StubReaderTest
+[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-8] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader connected 
 [Thread-8] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Add plugged reader to readers list.
 [Thread-9] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader connected 
@@ -261,13 +262,13 @@
 [Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubReaderTest - Stubplugin readers size 0
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubReaderTest - Stubplugin observers size 1
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubPlugin - Plugging a new reader with name StubReaderTest
@@ -280,7 +281,7 @@
 [observable-reader-events-3] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [], SELECTOR = AID:A000000291A000000191, KEEPCHANNELOPEN = KEEP_OPEN}
 [observable-reader-events-3] TRACE org.eclipse.keyple.seproxy.plugin.AbstractSelectionLocalReader - [StubReaderTest] openLogicalChannelAndSelect =&gt; ATR: 3B8E800180318066409089120802830190000B
 [observable-reader-events-3] TRACE org.eclipse.keyple.seproxy.plugin.AbstractSelectionLocalReader - [StubReaderTest] openLogicalChannelAndSelect =&gt; Select Application with AID = A000000291A000000191
-[observable-reader-events-3] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Internal Select Application&quot;, RAWDATA = 00A404000AA000000291A00000019100, case4, additional successful status codes = , elapsed 211.6 ms.
+[observable-reader-events-3] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Internal Select Application&quot;, RAWDATA = 00A404000AA000000291A00000019100, case4, additional successful status codes = , elapsed 211.5 ms.
 [observable-reader-events-3] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 6F25840BA000000291A00000019102A516BF0C13C70800000000C0E11FA653070A3C230C1410019000, elapsed 0.2 ms.
 [observable-reader-events-3] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processSeRequest =&gt; Logical channel opening success.
 [observable-reader-events-3] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processSeRequestSet =&gt; receive SeResponse:{RESPONSES = [], ATR = 3B8E800180318066409089120802830190000B, FCI = 6F25840BA000000291A00000019102A516BF0C13C70800000000C0E11FA653070A3C230C1410019000, HASMATCHED = true CHANNELWASOPEN = false}
@@ -296,22 +297,22 @@
 [Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [class org.eclipse.keyple.plugin.stub.StubPlugin][StubPlugin] addObserver =&gt; Adding an observer.
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - Start the plugin monitoring.
 [Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubReaderTest - Stubplugin readers size 0
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubReaderTest - Stubplugin observers size 1
@@ -324,24 +325,17 @@
 [Thread-11] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Remove unplugged reader from readers list.
 [Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [class org.eclipse.keyple.plugin.stub.StubPlugin][StubPlugin] addObserver =&gt; Adding an observer.
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - Start the plugin monitoring.
-[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
@@ -350,7 +344,14 @@
 [Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubReaderTest - Stubplugin readers size 0
+[Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubReaderTest - Stubplugin observers size 1
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubPlugin - Plugging a new reader with name StubReaderTest
 [Thread-12] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader connected 
@@ -361,82 +362,86 @@
 [Thread-12] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Remove unplugged reader from readers list.
 [Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [class org.eclipse.keyple.plugin.stub.StubPlugin][StubPlugin] addObserver =&gt; Adding an observer.
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - Start the plugin monitoring.
-[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubReaderTest - Stubplugin readers size 0
-[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubReaderTest - Stubplugin observers size 1
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubPlugin - Plugging a new reader with name StubReaderTest
 [Thread-13] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader connected 
 [Thread-13] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Add plugged reader to readers list.
+[Thread-12] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader connected 
+[Thread-12] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Add plugged reader to readers list.
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubPlugin - Unplugged reader with name StubReaderTest
 [Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-13] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader disconnected 
+[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-12] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader disconnected 
 [Thread-13] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Remove unplugged reader from readers list.
+[Thread-12] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Remove unplugged reader from readers list.
 [Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [class org.eclipse.keyple.plugin.stub.StubPlugin][StubPlugin] addObserver =&gt; Adding an observer.
-[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - Start the plugin monitoring.
-[Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - Start the plugin monitoring.
+[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubReaderTest - Stubplugin readers size 0
+[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubReaderTest - Stubplugin observers size 1
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubPlugin - Plugging a new reader with name StubReaderTest
 [Thread-14] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader connected 
@@ -444,7 +449,7 @@
 [Test worker] TRACE org.eclipse.keyple.transaction.SeSelector - ATR based selection: ATRREGEX = 3B.*, KEEPCHANNELOPEN = KEEP_OPEN, PROTOCOLFLAG = ANY
 [Test worker] TRACE org.eclipse.keyple.transaction.SeSelection - SELECTORREQUEST = SeRequest:{REQUESTS = [], SELECTOR = ATR regex:3B.*, KEEPCHANNELOPEN = KEEP_OPEN}, EXTRAINFO = ATR selection
 [Test worker] TRACE org.eclipse.keyple.transaction.SeSelection - Transmit SELECTIONREQUEST (1 request(s))
-[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 307.2 ms.
+[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 307.0 ms.
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [], SELECTOR = ATR regex:3B.*, KEEPCHANNELOPEN = KEEP_OPEN}
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractSelectionLocalReader - [StubReaderTest] openLogicalChannelAndSelect =&gt; ATR: 3B8E800180318066409089120802830190000B
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processSeRequest =&gt; Logical channel opening success.
@@ -452,33 +457,33 @@
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 0.3 ms.
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 1.0 ms.
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A420], SELECTOR = null, KEEPCHANNELOPEN = CLOSE_AFTER}
-[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A420, elapsed 308.8 ms.
+[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A420, elapsed 308.5 ms.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000000000009000, elapsed 0.1 ms.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] closeLogicalChannel =&gt; Closing of the logical channel.
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processSeRequestSet =&gt; receive SeResponse:{RESPONSES = [ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000000000009000], ATR = null, FCI = null, HASMATCHED = false CHANNELWASOPEN = true}
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] closeLogicalChannel =&gt; Closing of the logical channel.
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processSeRequestSet =&gt; Closing of the physical channel.
-[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 0.5 ms.
+[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 0.4 ms.
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubPlugin - Unplugged reader with name StubReaderTest
 [Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-6] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader disconnected 
 [Thread-6] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Remove unplugged reader from readers list.
 [Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [class org.eclipse.keyple.plugin.stub.StubPlugin][StubPlugin] addObserver =&gt; Adding an observer.
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - Start the plugin monitoring.
@@ -489,8 +494,8 @@
 [Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
@@ -499,71 +504,75 @@
 [Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubReaderTest - Stubplugin readers size 0
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubReaderTest - Stubplugin observers size 1
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubPlugin - Plugging a new reader with name StubReaderTest
 [Thread-15] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader connected 
+[Thread-6] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader connected 
 [Thread-15] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Add plugged reader to readers list.
+[Thread-6] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Add plugged reader to readers list.
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubPlugin - Unplugged reader with name StubReaderTest
+[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-15] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader disconnected 
+[Thread-6] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader disconnected 
+[Thread-6] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Remove unplugged reader from readers list.
 [Thread-15] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Remove unplugged reader from readers list.
-[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [class org.eclipse.keyple.plugin.stub.StubPlugin][StubPlugin] addObserver =&gt; Adding an observer.
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - Start the plugin monitoring.
+[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubReaderTest - Stubplugin readers size 0
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubReaderTest - Stubplugin observers size 1
+[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubPlugin - Plugging a new reader with name StubReaderTest
-[Thread-16] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader connected 
-[Thread-16] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Add plugged reader to readers list.
+[Thread-15] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader connected 
+[Thread-15] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Add plugged reader to readers list.
 [Test worker] TRACE org.eclipse.keyple.transaction.SeSelector - ATR based selection: ATRREGEX = 3B.*, KEEPCHANNELOPEN = KEEP_OPEN, PROTOCOLFLAG = ANY
 [Test worker] TRACE org.eclipse.keyple.transaction.SeSelection - SELECTORREQUEST = SeRequest:{REQUESTS = [], SELECTOR = ATR regex:3B.*, KEEPCHANNELOPEN = KEEP_OPEN}, EXTRAINFO = ATR selection
 [Test worker] TRACE org.eclipse.keyple.transaction.SeSelection - Transmit SELECTIONREQUEST (1 request(s))
-[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 300.5 ms.
+[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 300.6 ms.
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [], SELECTOR = ATR regex:3B.*, KEEPCHANNELOPEN = KEEP_OPEN}
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractSelectionLocalReader - [StubReaderTest] openLogicalChannelAndSelect =&gt; ATR: 3B8E800180318066409089120802830190000B
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processSeRequest =&gt; Logical channel opening success.
@@ -571,59 +580,59 @@
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 0.3 ms.
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 0.0 ms.
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [ApduRequest: NAME = &quot;Increase&quot;, RAWDATA = 003201A00300000000, case4], SELECTOR = null, KEEPCHANNELOPEN = CLOSE_AFTER}
-[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Increase&quot;, RAWDATA = 003201A00300000000, case4, elapsed 301.0 ms.
+[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Increase&quot;, RAWDATA = 003201A00300000000, case4, elapsed 301.1 ms.
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [0.2] transmit =&gt; SEREQUESTSET IO failure. elapsed null
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubPlugin - Unplugged reader with name StubReaderTest
-[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-6] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader disconnected 
-[Thread-6] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Remove unplugged reader from readers list.
 [Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-7] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader disconnected 
+[Thread-7] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Remove unplugged reader from readers list.
 [Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [class org.eclipse.keyple.plugin.stub.StubPlugin][StubPlugin] addObserver =&gt; Adding an observer.
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - Start the plugin monitoring.
 [Thread-17] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-17] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubReaderTest - Stubplugin readers size 0
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubReaderTest - Stubplugin observers size 1
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubPlugin - Plugging a new reader with name StubReaderTest
@@ -639,62 +648,62 @@
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processSeRequestSet =&gt; receive SeResponse:{RESPONSES = [], ATR = 3B8E800180318066409089120802830190000B, FCI = , HASMATCHED = true CHANNELWASOPEN = false}
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 0.3 ms.
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SEREQUEST = SeRequest:{REQUESTS = [ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201F400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400], SELECTOR = null, KEEPCHANNELOPEN = CLOSE_AFTER}, elapsed 0.0 ms.
-[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201F400, elapsed 300.9 ms.
+[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201F400, elapsed 300.8 ms.
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SEREQUEST IO failure. elapsed 0.1
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubPlugin - Unplugged reader with name StubReaderTest
-[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-6] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader disconnected 
-[Thread-6] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Remove unplugged reader from readers list.
 [Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-7] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader disconnected 
+[Thread-7] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Remove unplugged reader from readers list.
 [Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-17] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-17] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [class org.eclipse.keyple.plugin.stub.StubPlugin][StubPlugin] addObserver =&gt; Adding an observer.
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - Start the plugin monitoring.
 [Thread-18] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-17] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-18] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-17] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubReaderTest - Stubplugin readers size 0
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubReaderTest - Stubplugin observers size 1
@@ -704,73 +713,73 @@
 [Test worker] TRACE org.eclipse.keyple.transaction.SeSelector - ATR based selection: ATRREGEX = 3B.*, KEEPCHANNELOPEN = KEEP_OPEN, PROTOCOLFLAG = ANY
 [Test worker] TRACE org.eclipse.keyple.transaction.SeSelection - SELECTORREQUEST = SeRequest:{REQUESTS = [], SELECTOR = ATR regex:3B.*, KEEPCHANNELOPEN = KEEP_OPEN}, EXTRAINFO = ATR selection
 [Test worker] TRACE org.eclipse.keyple.transaction.SeSelection - Transmit SELECTIONREQUEST (1 request(s))
-[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 300.4 ms.
+[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 300.5 ms.
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [], SELECTOR = ATR regex:3B.*, KEEPCHANNELOPEN = KEEP_OPEN}
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractSelectionLocalReader - [StubReaderTest] openLogicalChannelAndSelect =&gt; ATR: 3B8E800180318066409089120802830190000B
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processSeRequest =&gt; Logical channel opening success.
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processSeRequestSet =&gt; receive SeResponse:{RESPONSES = [], ATR = 3B8E800180318066409089120802830190000B, FCI = , HASMATCHED = true CHANNELWASOPEN = false}
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 0.3 ms.
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SEREQUEST = SeRequest:{REQUESTS = [ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201F400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400], SELECTOR = null, KEEPCHANNELOPEN = CLOSE_AFTER}, elapsed 0.0 ms.
-[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, elapsed 300.8 ms.
+[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, elapsed 301.0 ms.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, elapsed 0.0 ms.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201F400, elapsed 0.0 ms.
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SEREQUEST IO failure. elapsed 0.2
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubPlugin - Unplugged reader with name StubReaderTest
-[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-6] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader disconnected 
-[Thread-6] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Remove unplugged reader from readers list.
 [Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-7] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader disconnected 
+[Thread-7] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Remove unplugged reader from readers list.
 [Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-17] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-18] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-17] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-18] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [class org.eclipse.keyple.plugin.stub.StubPlugin][StubPlugin] addObserver =&gt; Adding an observer.
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - Start the plugin monitoring.
 [Thread-19] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-17] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-18] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-19] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-17] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-18] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
@@ -789,75 +798,79 @@
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processSeRequestSet =&gt; receive SeResponse:{RESPONSES = [], ATR = 3B8E800180318066409089120802830190000B, FCI = , HASMATCHED = true CHANNELWASOPEN = false}
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 0.2 ms.
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SEREQUEST = SeRequest:{REQUESTS = [ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201F400], SELECTOR = null, KEEPCHANNELOPEN = CLOSE_AFTER}, elapsed 0.0 ms.
-[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, elapsed 300.8 ms.
-[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, elapsed 0.1 ms.
+[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, elapsed 300.7 ms.
+[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, elapsed 0.0 ms.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, elapsed 0.0 ms.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, elapsed 0.0 ms.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201F400, elapsed 0.0 ms.
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SEREQUEST IO failure. elapsed 0.3
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubPlugin - Unplugged reader with name StubReaderTest
-[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-6] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader disconnected 
-[Thread-6] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Remove unplugged reader from readers list.
-[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-9] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader disconnected 
+[Thread-10] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader disconnected 
+[Thread-8] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader disconnected 
+[Thread-8] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Remove unplugged reader from readers list.
+[Thread-10] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Remove unplugged reader from readers list.
+[Thread-9] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Remove unplugged reader from readers list.
 [Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-17] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-18] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-19] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-17] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-18] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-19] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [class org.eclipse.keyple.plugin.stub.StubPlugin][StubPlugin] addObserver =&gt; Adding an observer.
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - Start the plugin monitoring.
 [Thread-20] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-17] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-18] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-19] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-20] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-17] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-18] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-19] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubReaderTest - Stubplugin readers size 0
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubReaderTest - Stubplugin observers size 1
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubPlugin - Plugging a new reader with name StubReaderTest
@@ -866,87 +879,91 @@
 [Test worker] TRACE org.eclipse.keyple.transaction.SeSelector - ATR based selection: ATRREGEX = 3B.*, KEEPCHANNELOPEN = KEEP_OPEN, PROTOCOLFLAG = ANY
 [Test worker] TRACE org.eclipse.keyple.transaction.SeSelection - SELECTORREQUEST = SeRequest:{REQUESTS = [], SELECTOR = ATR regex:3B.*, KEEPCHANNELOPEN = KEEP_OPEN}, EXTRAINFO = ATR selection
 [Test worker] TRACE org.eclipse.keyple.transaction.SeSelection - Transmit SELECTIONREQUEST (1 request(s))
-[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 300.4 ms.
+[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 300.2 ms.
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [], SELECTOR = ATR regex:3B.*, KEEPCHANNELOPEN = KEEP_OPEN}
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractSelectionLocalReader - [StubReaderTest] openLogicalChannelAndSelect =&gt; ATR: 3B8E800180318066409089120802830190000B
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processSeRequest =&gt; Logical channel opening success.
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processSeRequestSet =&gt; receive SeResponse:{RESPONSES = [], ATR = 3B8E800180318066409089120802830190000B, FCI = , HASMATCHED = true CHANNELWASOPEN = false}
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 0.3 ms.
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SEREQUEST = SeRequest:{REQUESTS = [ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400], SELECTOR = null, KEEPCHANNELOPEN = CLOSE_AFTER}, elapsed 0.0 ms.
-[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, elapsed 300.8 ms.
+[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, elapsed 300.6 ms.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, elapsed 0.0 ms.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, elapsed 0.0 ms.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, elapsed 0.0 ms.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, elapsed 0.0 ms.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, elapsed 0.0 ms.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] closeLogicalChannel =&gt; Closing of the logical channel.
-[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SERESPONSE = SeResponse:{RESPONSES = [ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000], ATR = null, FCI = null, HASMATCHED = false CHANNELWASOPEN = true}, elapsed 0.3 ms.
+[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SERESPONSE = SeResponse:{RESPONSES = [ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000], ATR = null, FCI = null, HASMATCHED = false CHANNELWASOPEN = true}, elapsed 0.2 ms.
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubPlugin - Unplugged reader with name StubReaderTest
-[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-6] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader disconnected 
-[Thread-6] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Remove unplugged reader from readers list.
-[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-10] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader disconnected 
+[Thread-8] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader disconnected 
+[Thread-9] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader disconnected 
+[Thread-10] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Remove unplugged reader from readers list.
+[Thread-9] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Remove unplugged reader from readers list.
+[Thread-8] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Remove unplugged reader from readers list.
 [Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-17] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-18] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-19] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-20] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-17] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-18] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-19] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-20] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [class org.eclipse.keyple.plugin.stub.StubPlugin][StubPlugin] addObserver =&gt; Adding an observer.
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - Start the plugin monitoring.
 [Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-17] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-18] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-19] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-20] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-17] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-18] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-19] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-20] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubReaderTest - Stubplugin readers size 0
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubReaderTest - Stubplugin observers size 1
@@ -956,97 +973,205 @@
 [Test worker] TRACE org.eclipse.keyple.transaction.SeSelector - ATR based selection: ATRREGEX = 3B.*, KEEPCHANNELOPEN = KEEP_OPEN, PROTOCOLFLAG = ANY
 [Test worker] TRACE org.eclipse.keyple.transaction.SeSelection - SELECTORREQUEST = SeRequest:{REQUESTS = [], SELECTOR = ATR regex:3B.*, KEEPCHANNELOPEN = KEEP_OPEN}, EXTRAINFO = ATR selection
 [Test worker] TRACE org.eclipse.keyple.transaction.SeSelection - Transmit SELECTIONREQUEST (1 request(s))
-[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 300.5 ms.
+[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 300.4 ms.
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [], SELECTOR = ATR regex:3B.*, KEEPCHANNELOPEN = KEEP_OPEN}
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractSelectionLocalReader - [StubReaderTest] openLogicalChannelAndSelect =&gt; ATR: 3B8E800180318066409089120802830190000B
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processSeRequest =&gt; Logical channel opening success.
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processSeRequestSet =&gt; receive SeResponse:{RESPONSES = [], ATR = 3B8E800180318066409089120802830190000B, FCI = , HASMATCHED = true CHANNELWASOPEN = false}
-[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 0.3 ms.
+[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 0.2 ms.
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SEREQUESTSET = 3 SeRequest(s), elapsed 0.0 ms.
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201F400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400], SELECTOR = null, KEEPCHANNELOPEN = KEEP_OPEN}
-[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, elapsed 301.0 ms.
-[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, elapsed 0.1 ms.
+[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, elapsed 300.7 ms.
+[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, elapsed 0.0 ms.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, elapsed 0.0 ms.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, elapsed 0.0 ms.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201F400, elapsed 0.0 ms.
-[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [0.4] transmit =&gt; SEREQUESTSET IO failure. elapsed null
+[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [0.2] transmit =&gt; SEREQUESTSET IO failure. elapsed null
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubPlugin - Unplugged reader with name StubReaderTest
-[Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-21] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader disconnected 
-[Thread-21] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Remove unplugged reader from readers list.
-[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-9] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader disconnected 
+[Thread-10] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader disconnected 
+[Thread-8] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader disconnected 
+[Thread-9] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Remove unplugged reader from readers list.
+[Thread-10] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Remove unplugged reader from readers list.
+[Thread-8] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Remove unplugged reader from readers list.
 [Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-17] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-18] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-19] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-17] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-18] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-20] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-17] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-18] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-19] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-20] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [class org.eclipse.keyple.plugin.stub.StubPlugin][StubPlugin] addObserver =&gt; Adding an observer.
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - Start the plugin monitoring.
-[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-22] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-17] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-18] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-20] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-19] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-20] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-22] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-17] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-18] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-20] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-19] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-20] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubReaderTest - Stubplugin readers size 0
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubReaderTest - Stubplugin observers size 1
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubPlugin - Plugging a new reader with name StubReaderTest
 [Thread-22] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader connected 
 [Thread-22] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Add plugged reader to readers list.
+[Test worker] TRACE org.eclipse.keyple.transaction.SeSelector - ATR based selection: ATRREGEX = 3B.*, KEEPCHANNELOPEN = KEEP_OPEN, PROTOCOLFLAG = ANY
+[Test worker] TRACE org.eclipse.keyple.transaction.SeSelection - SELECTORREQUEST = SeRequest:{REQUESTS = [], SELECTOR = ATR regex:3B.*, KEEPCHANNELOPEN = KEEP_OPEN}, EXTRAINFO = ATR selection
+[Test worker] TRACE org.eclipse.keyple.transaction.SeSelection - Transmit SELECTIONREQUEST (1 request(s))
+[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 300.3 ms.
+[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [], SELECTOR = ATR regex:3B.*, KEEPCHANNELOPEN = KEEP_OPEN}
+[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractSelectionLocalReader - [StubReaderTest] openLogicalChannelAndSelect =&gt; ATR: 3B8E800180318066409089120802830190000B
+[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processSeRequest =&gt; Logical channel opening success.
+[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processSeRequestSet =&gt; receive SeResponse:{RESPONSES = [], ATR = 3B8E800180318066409089120802830190000B, FCI = , HASMATCHED = true CHANNELWASOPEN = false}
+[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 0.2 ms.
+[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SEREQUESTSET = 3 SeRequest(s), elapsed 0.0 ms.
+[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400], SELECTOR = null, KEEPCHANNELOPEN = KEEP_OPEN}
+[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, elapsed 300.6 ms.
+[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, elapsed 0.0 ms.
+[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, elapsed 0.0 ms.
+[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, elapsed 0.0 ms.
+[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, elapsed 0.0 ms.
+[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, elapsed 0.0 ms.
+[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, elapsed 0.0 ms.
+[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, elapsed 0.1 ms.
+[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processSeRequestSet =&gt; receive SeResponse:{RESPONSES = [ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000], ATR = null, FCI = null, HASMATCHED = false CHANNELWASOPEN = true}
+[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 0.5 ms.
+[Test worker] INFO org.eclipse.keyple.plugin.stub.StubPlugin - Unplugged reader with name StubReaderTest
+[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-8] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader disconnected 
+[Thread-9] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader disconnected 
+[Thread-10] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader disconnected 
+[Thread-8] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Remove unplugged reader from readers list.
+[Thread-9] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Remove unplugged reader from readers list.
+[Thread-10] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Remove unplugged reader from readers list.
+[Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-17] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-18] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-19] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-20] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-22] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-17] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-18] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-19] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-20] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-22] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [class org.eclipse.keyple.plugin.stub.StubPlugin][StubPlugin] addObserver =&gt; Adding an observer.
+[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - Start the plugin monitoring.
+[Thread-23] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-17] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-18] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-19] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-20] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-22] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-23] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-17] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-18] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-19] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-20] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-22] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Test worker] INFO org.eclipse.keyple.plugin.stub.StubReaderTest - Stubplugin readers size 0
+[Test worker] INFO org.eclipse.keyple.plugin.stub.StubReaderTest - Stubplugin observers size 1
+[Test worker] INFO org.eclipse.keyple.plugin.stub.StubPlugin - Plugging a new reader with name StubReaderTest
+[Thread-23] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader connected 
+[Thread-23] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Add plugged reader to readers list.
 [Test worker] TRACE org.eclipse.keyple.transaction.SeSelector - ATR based selection: ATRREGEX = 3B.*, KEEPCHANNELOPEN = KEEP_OPEN, PROTOCOLFLAG = ANY
 [Test worker] TRACE org.eclipse.keyple.transaction.SeSelection - SELECTORREQUEST = SeRequest:{REQUESTS = [], SELECTOR = ATR regex:3B.*, KEEPCHANNELOPEN = KEEP_OPEN}, EXTRAINFO = ATR selection
 [Test worker] TRACE org.eclipse.keyple.transaction.SeSelection - Transmit SELECTIONREQUEST (1 request(s))
@@ -1067,188 +1192,90 @@
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, elapsed 0.0 ms.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, elapsed 0.0 ms.
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processSeRequestSet =&gt; receive SeResponse:{RESPONSES = [ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000], ATR = null, FCI = null, HASMATCHED = false CHANNELWASOPEN = true}
-[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 0.4 ms.
-[Test worker] INFO org.eclipse.keyple.plugin.stub.StubPlugin - Unplugged reader with name StubReaderTest
-[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-7] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader disconnected 
-[Thread-7] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Remove unplugged reader from readers list.
-[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-17] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-18] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-20] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-19] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-22] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-17] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-18] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-20] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-19] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-22] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [class org.eclipse.keyple.plugin.stub.StubPlugin][StubPlugin] addObserver =&gt; Adding an observer.
-[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - Start the plugin monitoring.
-[Thread-23] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-17] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-18] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-20] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-19] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-22] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-23] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-17] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-18] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-20] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-19] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-22] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Test worker] INFO org.eclipse.keyple.plugin.stub.StubReaderTest - Stubplugin readers size 0
-[Test worker] INFO org.eclipse.keyple.plugin.stub.StubReaderTest - Stubplugin observers size 1
-[Test worker] INFO org.eclipse.keyple.plugin.stub.StubPlugin - Plugging a new reader with name StubReaderTest
-[Thread-23] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader connected 
-[Thread-23] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Add plugged reader to readers list.
-[Test worker] TRACE org.eclipse.keyple.transaction.SeSelector - ATR based selection: ATRREGEX = 3B.*, KEEPCHANNELOPEN = KEEP_OPEN, PROTOCOLFLAG = ANY
-[Test worker] TRACE org.eclipse.keyple.transaction.SeSelection - SELECTORREQUEST = SeRequest:{REQUESTS = [], SELECTOR = ATR regex:3B.*, KEEPCHANNELOPEN = KEEP_OPEN}, EXTRAINFO = ATR selection
-[Test worker] TRACE org.eclipse.keyple.transaction.SeSelection - Transmit SELECTIONREQUEST (1 request(s))
-[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 300.4 ms.
-[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [], SELECTOR = ATR regex:3B.*, KEEPCHANNELOPEN = KEEP_OPEN}
-[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractSelectionLocalReader - [StubReaderTest] openLogicalChannelAndSelect =&gt; ATR: 3B8E800180318066409089120802830190000B
-[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processSeRequest =&gt; Logical channel opening success.
-[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processSeRequestSet =&gt; receive SeResponse:{RESPONSES = [], ATR = 3B8E800180318066409089120802830190000B, FCI = , HASMATCHED = true CHANNELWASOPEN = false}
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 0.3 ms.
-[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SEREQUESTSET = 3 SeRequest(s), elapsed 0.0 ms.
-[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400], SELECTOR = null, KEEPCHANNELOPEN = KEEP_OPEN}
-[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, elapsed 300.9 ms.
-[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, elapsed 0.0 ms.
-[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, elapsed 0.0 ms.
-[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, elapsed 0.0 ms.
-[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, elapsed 0.0 ms.
-[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, elapsed 0.0 ms.
-[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, elapsed 0.0 ms.
-[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, elapsed 0.0 ms.
-[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processSeRequestSet =&gt; receive SeResponse:{RESPONSES = [ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000], ATR = null, FCI = null, HASMATCHED = false CHANNELWASOPEN = true}
-[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 0.5 ms.
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubPlugin - Unplugged reader with name StubReaderTest
-[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-7] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader disconnected 
-[Thread-7] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Remove unplugged reader from readers list.
 [Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-8] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader disconnected 
+[Thread-10] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader disconnected 
+[Thread-9] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader disconnected 
+[Thread-8] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Remove unplugged reader from readers list.
+[Thread-10] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Remove unplugged reader from readers list.
+[Thread-9] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Remove unplugged reader from readers list.
+[Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-17] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-18] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-20] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-19] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-20] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-22] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-23] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-17] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-18] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-20] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-17] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-18] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-19] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-20] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-22] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-23] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [class org.eclipse.keyple.plugin.stub.StubPlugin][StubPlugin] addObserver =&gt; Adding an observer.
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - Start the plugin monitoring.
 [Thread-24] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-17] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-18] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-20] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-17] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-18] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-19] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-20] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-22] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-23] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-24] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-17] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-18] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-20] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-17] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-18] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-19] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-20] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-22] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-23] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubReaderTest - Stubplugin readers size 0
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubReaderTest - Stubplugin observers size 1
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubPlugin - Plugging a new reader with name StubReaderTest
@@ -1262,10 +1289,10 @@
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractSelectionLocalReader - [StubReaderTest] openLogicalChannelAndSelect =&gt; ATR: 3B8E800180318066409089120802830190000B
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processSeRequest =&gt; Logical channel opening success.
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processSeRequestSet =&gt; receive SeResponse:{RESPONSES = [], ATR = 3B8E800180318066409089120802830190000B, FCI = , HASMATCHED = true CHANNELWASOPEN = false}
-[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 0.3 ms.
+[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 0.2 ms.
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SEREQUESTSET = 3 SeRequest(s), elapsed 0.0 ms.
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400], SELECTOR = null, KEEPCHANNELOPEN = KEEP_OPEN}
-[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, elapsed 300.8 ms.
+[Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, elapsed 300.6 ms.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, elapsed 0.0 ms.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, elapsed 0.0 ms.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, elapsed 0.0 ms.
@@ -1274,46 +1301,50 @@
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, elapsed 0.0 ms.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, elapsed 0.0 ms.
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractLocalReader - [StubReaderTest] processSeRequestSet =&gt; receive SeResponse:{RESPONSES = [ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000], ATR = null, FCI = null, HASMATCHED = false CHANNELWASOPEN = true}
-[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 0.5 ms.
+[Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservableReader - [StubReaderTest] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 0.3 ms.
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubPlugin - Unplugged reader with name StubReaderTest
-[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-7] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader disconnected 
-[Thread-7] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Remove unplugged reader from readers list.
-[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-8] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader disconnected 
+[Thread-9] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader disconnected 
+[Thread-10] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader disconnected 
+[Thread-8] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Remove unplugged reader from readers list.
+[Thread-9] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Remove unplugged reader from readers list.
+[Thread-10] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][StubReaderTest] Plugin thread =&gt; Remove unplugged reader from readers list.
+[Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-17] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-18] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-20] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-19] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-20] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-22] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-23] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-24] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-17] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-18] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-20] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-19] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-20] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-22] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-23] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-24] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 </pre>
@@ -1327,7 +1358,7 @@
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 4.5.1</a> at Dec 4, 2018 4:23:00 PM</p>
+<a href="http://www.gradle.org">Gradle 4.5.1</a> at Dec 4, 2018 5:02:00 PM</p>
 </div>
 </div>
 </body>
