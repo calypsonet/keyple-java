@@ -71,7 +71,8 @@ public class MatchingSe {
      * @return true or false
      */
     public final boolean isSelected() {
-        return channelIsKeptOpen && selectionSeResponse != null;
+        return channelIsKeptOpen && selectionSeResponse != null
+                && selectionSeResponse.getSelectionStatus().hasMatched();
     }
 
     /**

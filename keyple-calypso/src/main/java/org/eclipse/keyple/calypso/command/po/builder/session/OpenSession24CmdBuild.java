@@ -44,7 +44,7 @@ public final class OpenSession24CmdBuild extends AbstractOpenSessionCmdBuild {
          */
         byte le = 0;
 
-        this.request = setApduRequest(PoClass.ISO.getValue(),
+        this.request = setApduRequest(PoClass.LEGACY.getValue(),
                 CalypsoPoCommands.getOpenSessionForRev(PoRevision.REV2_4), p1, p2, samChallenge,
                 le);
         if (extraInfo != null) {
