@@ -17,7 +17,6 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.SortedSet;
 import java.util.concurrent.ConcurrentSkipListSet;
-import java.util.regex.Pattern;
 import org.eclipse.keyple.calypso.command.po.parser.AppendRecordRespPars;
 import org.eclipse.keyple.calypso.command.po.parser.ReadDataStructure;
 import org.eclipse.keyple.calypso.command.po.parser.ReadRecordsRespPars;
@@ -25,7 +24,6 @@ import org.eclipse.keyple.calypso.command.po.parser.UpdateRecordRespPars;
 import org.eclipse.keyple.calypso.transaction.CalypsoPo;
 import org.eclipse.keyple.calypso.transaction.PoSelector;
 import org.eclipse.keyple.calypso.transaction.PoTransaction;
-import org.eclipse.keyple.example.calypso.pc.PcscReadersSettings;
 import org.eclipse.keyple.integration.calypso.PoFileStructureInfo;
 import org.eclipse.keyple.plugin.pcsc.PcscPlugin;
 import org.eclipse.keyple.plugin.pcsc.PcscProtocolSetting;
@@ -39,8 +37,8 @@ import org.eclipse.keyple.seproxy.event.ReaderEvent;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.message.*;
+import org.eclipse.keyple.seproxy.protocol.Protocol;
 import org.eclipse.keyple.seproxy.protocol.SeProtocolSetting;
-import org.eclipse.keyple.seproxy.protocol.TransmissionMode;
 import org.eclipse.keyple.transaction.SeSelection;
 import org.eclipse.keyple.transaction.SeSelector;
 import org.eclipse.keyple.util.ByteArrayUtils;
@@ -114,7 +112,6 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
         byte contractListSfi = 0x1E;
         byte environmentSfi = 0x07;
 
-        SeResponse dataReadInSession;
 
         ReadRecordsRespPars readEventParser = poTransaction.prepareReadRecordsCmd(eventSfi,
                 ReadDataStructure.SINGLE_RECORD_DATA, (byte) 0x01, "Event");
@@ -124,42 +121,20 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
         // Open Session with debit key #3 and reading the Environment at SFI 07h
         // Files to read during the beginning of the session: Event (SFI 0x08) and ContractList (SFI
         // 0x1E)
-        boolean poProcessStatus = poTransaction.processOpening(
-                PoTransaction.ModificationMode.ATOMIC,
+        poTransaction.processOpening(PoTransaction.ModificationMode.ATOMIC,
                 PoTransaction.SessionAccessLevel.SESSION_LVL_DEBIT, environmentSfi, (byte) 0x01);
 
-        /*
-         * byte[] sessionData =
-         * ByteArrayUtils.subLen(dataReadInSession.getApduResponses().get(0).getDataOut(), 0, 8);
-         * byte[] environmentData =
-         * ByteArrayUtils.subIndex(dataReadInSession.getApduResponses().get(0).getDataOut(), 8,
-         * 29+8);
-         * 
-         * System.out.println("OpenSession#: " + ByteArrayUtils.toHex(sessionData) +
-         * ", Environment#:" + ByteArrayUtils.toHex(environmentData) +", SW1SW2: " +
-         * Integer.toHexString(dataReadInSession.getApduResponses().get(0).getStatusCode() &
-         * 0xFFFF));
-         * 
-         * System.out.println("Event#: " +
-         * ByteArrayUtils.toHex(dataReadInSession.getApduResponses().get(1).getDataOut()) +
-         * ", SW1SW2: " +
-         * Integer.toHexString(dataReadInSession.getApduResponses().get(1).getStatusCode() &
-         * 0xFFFF));
-         * 
-         * System.out.println("ContractList#: " +
-         * ByteArrayUtils.toHex(dataReadInSession.getApduResponses().get(2).getDataOut()) +
-         * ", SW1SW2: " +
-         * Integer.toHexString(dataReadInSession.getApduResponses().get(2).getStatusCode() &
-         * 0xFFFF));
-         */
-
         byte contractIndex = readContractListParser.getRecords().get(1)[0];
-        byte[] eventTimestampData =
-                Arrays.copyOfRange(readEventParser.getRecords().get(1), 1, (Long.SIZE / Byte.SIZE));
+        byte[] eventTimestampData = Arrays.copyOfRange(readEventParser.getRecords().get(1), 1,
+                (Long.SIZE / Byte.SIZE) + 1);
 
         String timeStampString = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss")
                 .format(new Date(bytesToLong(eventTimestampData)));
 
+        System.out.println(
+                "\t------------------------------------------------------------------------------");
+        String nameInPO = new String(poTransaction.getOpenRecordDataRead());
+        System.out.println("\tName in PO:: " + nameInPO);
         System.out.println(
                 "\t------------------------------------------------------------------------------");
         System.out.println("\tPrevious Event Information");
@@ -174,7 +149,7 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
                 ReadDataStructure.SINGLE_RECORD_DATA, (byte) (contractIndex + 1), (byte) 0x1D,
                 "Contract");
 
-        poProcessStatus = poTransaction.processPoCommands(ChannelState.KEEP_OPEN);
+        poTransaction.processPoCommands(ChannelState.KEEP_OPEN);
 
         System.out
                 .println("Reading contract #" + (contractIndex + 1) + " for current validation...");
@@ -207,8 +182,9 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
         AppendRecordRespPars appendEventPars =
                 poTransaction.prepareAppendRecordCmd(eventSfi, newEventData, "Event");
 
-        poProcessStatus =
-                poTransaction.processClosing(TransmissionMode.CONTACTLESS, ChannelState.KEEP_OPEN);
+        poTransaction.processPoCommands(ChannelState.KEEP_OPEN);
+
+        poTransaction.processClosing(poReader.getTransmissionMode(), ChannelState.KEEP_OPEN);
 
         System.out.println("\nValidation Successful!");
         System.out.println(
@@ -217,7 +193,7 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
 
 
     // Optimised for online/remote operation
-    private void validateClap(PoTransaction poTransaction) throws KeypleReaderException {
+    private void validateClap(CalypsoPo detectedPO) throws KeypleReaderException {
 
         byte eventSfi = 0x08;
         byte countersSfi = 0x1B;
@@ -225,6 +201,7 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
         byte contractsSfi = 0x29;
 
         SeResponse dataReadInSession;
+        PoTransaction poTransaction = new PoTransaction(poReader, detectedPO, samReader, null);
 
         ReadRecordsRespPars readEventParser = poTransaction.prepareReadRecordsCmd(eventSfi,
                 ReadDataStructure.SINGLE_RECORD_DATA, (byte) 0x01, "Event");
@@ -236,41 +213,21 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
         // Open Session with debit key #3 and reading the Environment at SFI 07h
         // Files to read during the beginning of the session: Event (SFI 0x08), Counters (SFI 0x1B)
         // and all records of the Contracts (SFI 0x29)
-        boolean poProcessStatus = poTransaction.processOpening(
-                PoTransaction.ModificationMode.ATOMIC,
+        poTransaction.processOpening(PoTransaction.ModificationMode.ATOMIC,
                 PoTransaction.SessionAccessLevel.SESSION_LVL_DEBIT, environmentSfi, (byte) 0x01);
-        /*
-         * byte[] sessionData =
-         * ByteArrayUtils.subLen(dataReadInSession.getApduResponses().get(0).getDataOut(), 0, 8);
-         * byte[] environmentData =
-         * ByteArrayUtils.subIndex(dataReadInSession.getApduResponses().get(0).getDataOut(), 8,
-         * 29+8);
-         * 
-         * System.out.println("OpenSession#: " + ByteArrayUtils.toHex(sessionData) +
-         * ", Environment#:" + ByteArrayUtils.toHex(environmentData) +", SW1SW2: " +
-         * Integer.toHexString(dataReadInSession.getApduResponses().get(0).getStatusCode() &
-         * 0xFFFF));
-         * 
-         * System.out.println("Event#: " +
-         * ByteArrayUtils.toHex(dataReadInSession.getApduResponses().get(1).getDataOut()) +
-         * ", SW1SW2: " +
-         * Integer.toHexString(dataReadInSession.getApduResponses().get(1).getStatusCode() &
-         * 0xFFFF));
-         * 
-         * System.out.println("Counters#: " +
-         * ByteArrayUtils.toHex(dataReadInSession.getApduResponses().get(2).getDataOut()) +
-         * ", SW1SW2: " +
-         * Integer.toHexString(dataReadInSession.getApduResponses().get(2).getStatusCode() &
-         * 0xFFFF));
-         */
-        byte[] eventTimestampData =
-                Arrays.copyOfRange(readEventParser.getRecords().get(1), 1, (Long.SIZE / Byte.SIZE));
+
+        byte[] eventTimestampData = Arrays.copyOfRange(readEventParser.getRecords().get(1), 1,
+                (Long.SIZE / Byte.SIZE) + 1);
 
         String timeStampString = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss")
                 .format(new Date(bytesToLong(eventTimestampData)));
 
-        int counterValue = readCountersParser.getCounters().get(1);
+        int counterValue = readCountersParser.getCounters().get(0);
 
+        System.out.println(
+                "\t------------------------------------------------------------------------------");
+        String nameInPO = new String(poTransaction.getOpenRecordDataRead());
+        System.out.println("\tName in PO:: " + nameInPO);
         System.out.println(
                 "\t------------------------------------------------------------------------------");
         System.out.println("\tPrevious Event Information");
@@ -284,13 +241,14 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
         System.out.println("All contracts read during the beginning of the current transaction...");
 
         // Perform automatic top-up when the value is 0 by closing the current session and opening a
-        // new one with a
-        // loading key
+        // new one with a loading key
         if (counterValue == 0) {
 
             System.out.println("No value present in the card. Initiating auto top-up...");
 
-            poTransaction.processClosing(TransmissionMode.CONTACTLESS, ChannelState.KEEP_OPEN);
+            poTransaction.processClosing(poReader.getTransmissionMode(), ChannelState.KEEP_OPEN);
+
+            poTransaction = new PoTransaction(poReader, detectedPO, samReader, null);
 
             poTransaction.processOpening(PoTransaction.ModificationMode.ATOMIC,
                     PoTransaction.SessionAccessLevel.SESSION_LVL_LOAD, (byte) 0x00, (byte) 0x00);
@@ -321,9 +279,9 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
 
         poTransaction.prepareDecreaseCmd(countersSfi, (byte) 0x01, 1, "Counter decval=1");
 
-        byte[] updatedCounterValue = getByteArrayFromCounterValue(counterValue - 1);
+        poTransaction.processPoCommands(ChannelState.KEEP_OPEN);
 
-        poTransaction.processClosing(TransmissionMode.CONTACTLESS, ChannelState.KEEP_OPEN);
+        poTransaction.processClosing(poReader.getTransmissionMode(), ChannelState.KEEP_OPEN);
 
         System.out.println("\nValidation Successful!");
         System.out.println(
@@ -337,48 +295,24 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
             // operate PO multiselection
             String poAuditC0Aid = "315449432E4943414C54"; // AID of the PO with Audit C0 profile
             String clapAid = "315449432E494341D62010029101"; // AID of the CLAP product being tested
-            String SAM_ATR_REGEX = "3B3F9600805A[0-9a-fA-F]{2}80[0-9a-fA-F]{16}829000";
             String cdLightAid = "315449432E494341"; // AID of the Rev2.4 PO emulating CDLight
-
-            // check the availability of the SAM, open its physical and logical channels and keep it
-            // open
-            // check the availability of the SAM, open its physical and logical channels and keep it
-            // open
-            SeSelection samSelection = new SeSelection(samReader);
-
-            SeSelector samSelector =
-                    new SeSelector(SAM_ATR_REGEX, ChannelState.KEEP_OPEN, null, "SAM Selection");
-
-            /* Prepare selector, ignore MatchingSe here */
-            samSelection.prepareSelection(samSelector);
-
-            try {
-                if (!samSelection.processExplicitSelection()) {
-                    System.out.println("Unable to open a logical channel for SAM!");
-                    throw new IllegalStateException("SAM channel opening failure");
-                } else {
-                }
-            } catch (KeypleReaderException e) {
-                throw new IllegalStateException("Reader exception: " + e.getMessage());
-
-            }
 
             SeSelection seSelection = new SeSelection(poReader);
 
             // Add Audit C0 AID to the list
-            CalypsoPo auditC0Se = (CalypsoPo) seSelection.prepareSelection(
-                    new PoSelector(ByteArrayUtils.fromHex(PoFileStructureInfo.poAuditC0Aid),
-                            SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN, null, "Audit C0"));
+            CalypsoPo auditC0Se = (CalypsoPo) seSelection.prepareSelection(new PoSelector(
+                    ByteArrayUtils.fromHex(PoFileStructureInfo.poAuditC0Aid),
+                    SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN, Protocol.ANY, "Audit C0"));
 
             // Add CLAP AID to the list
-            CalypsoPo clapSe = (CalypsoPo) seSelection.prepareSelection(
-                    new PoSelector(ByteArrayUtils.fromHex(PoFileStructureInfo.clapAid),
-                            SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN, null, "CLAP"));
+            CalypsoPo clapSe = (CalypsoPo) seSelection.prepareSelection(new PoSelector(
+                    ByteArrayUtils.fromHex(PoFileStructureInfo.clapAid),
+                    SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN, Protocol.ANY, "CLAP"));
 
             // Add cdLight AID to the list
-            CalypsoPo cdLightSe = (CalypsoPo) seSelection.prepareSelection(
-                    new PoSelector(ByteArrayUtils.fromHex(PoFileStructureInfo.cdLightAid),
-                            SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN, null, "CDLight"));
+            CalypsoPo cdLightSe = (CalypsoPo) seSelection.prepareSelection(new PoSelector(
+                    ByteArrayUtils.fromHex(PoFileStructureInfo.cdLightAid),
+                    SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN, Protocol.ANY, "CDLight"));
 
             if (!seSelection.processExplicitSelection()) {
                 throw new IllegalArgumentException("No recognizable PO detected.");
@@ -396,7 +330,7 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
             } else if (clapSe.isSelected()) {
 
                 PoTransaction poTransaction = new PoTransaction(poReader, clapSe, samReader, null);
-                validateClap(poTransaction);
+                validateClap(clapSe);
 
             } else if (cdLightSe.isSelected()) {
 
@@ -414,27 +348,6 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
         }
     }
 
-    /**
-     * Get the terminals with names that match the expected pattern
-     *
-     * @param seProxyService SE Proxy service
-     * @param pattern Pattern
-     * @return SeReader
-     * @throws KeypleReaderException Any error with the card communication
-     */
-    private static SeReader getReader(SeProxyService seProxyService, String pattern)
-            throws KeypleReaderException {
-        Pattern p = Pattern.compile(pattern);
-        for (ReaderPlugin plugin : seProxyService.getPlugins()) {
-            for (SeReader reader : plugin.getReaders()) {
-                if (p.matcher(reader.getName()).matches()) {
-                    return reader;
-                }
-            }
-        }
-        return null;
-    }
-
     private static final Object waitForEnd = new Object();
 
     public static void main(String[] args)
@@ -445,8 +358,10 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
         pluginsSet.add(PcscPlugin.getInstance());
         seProxyService.setPlugins(pluginsSet);
 
-        SeReader poReader = getReader(seProxyService, PcscReadersSettings.PO_READER_NAME_REGEX);
-        SeReader samReader = getReader(seProxyService, PcscReadersSettings.SAM_READER_NAME_REGEX);
+        SeReader poReader =
+                DemoUtilities.getReader(seProxyService, DemoUtilities.PO_READER_NAME_REGEX);
+        SeReader samReader =
+                DemoUtilities.getReader(seProxyService, DemoUtilities.SAM_READER_NAME_REGEX);
 
 
         if (poReader == samReader || poReader == null || samReader == null) {
@@ -466,6 +381,26 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
         // provide the reader with the map
         poReader.addSeProtocolSetting(
                 new SeProtocolSetting(PcscProtocolSetting.SETTING_PROTOCOL_ISO14443_4));
+
+        String SAM_ATR_REGEX = "3B3F9600805A[0-9a-fA-F]{2}80[0-9a-fA-F]{16}829000";
+
+        SeSelection samSelection = new SeSelection(samReader);
+
+        SeSelector samSelector = new SeSelector(SAM_ATR_REGEX, ChannelState.KEEP_OPEN, Protocol.ANY,
+                "SAM Selection");
+
+        /* Prepare selector, ignore MatchingSe here */
+        samSelection.prepareSelection(samSelector);
+
+        try {
+            if (!samSelection.processExplicitSelection()) {
+                System.out.println("Unable to open a logical channel for SAM!");
+                throw new IllegalStateException("SAM channel opening failure");
+            }
+        } catch (KeypleReaderException e) {
+            throw new IllegalStateException("Reader exception: " + e.getMessage());
+
+        }
 
         // Setting up ourselves as an observer
         Demo_ValidationTransaction observer = new Demo_ValidationTransaction();
