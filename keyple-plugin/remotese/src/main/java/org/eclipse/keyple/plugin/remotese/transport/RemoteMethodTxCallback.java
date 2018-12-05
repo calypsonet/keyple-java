@@ -9,20 +9,8 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  ********************************************************************************/
-package org.eclipse.keyple.plugin.remotese.pluginse;
+package org.eclipse.keyple.plugin.remotese.transport;
 
-import org.eclipse.keyple.plugin.remotese.transport.KeypleRemoteReaderException;
-import org.eclipse.keyple.seproxy.message.SeResponseSet;
-
-/**
- * Callback function used when seResponseSet is received
- */
-interface SeResponseSetCallback {
-
-    /**
-     * Callback called when SeResponseSet is received
-     * 
-     * @param seResponseSet : returns the seResponseSet
-     */
-    void get(SeResponseSet seResponseSet, KeypleRemoteReaderException exception);
+public interface RemoteMethodTxCallback<T> {
+    void get(T response, KeypleRemoteException exception);
 }

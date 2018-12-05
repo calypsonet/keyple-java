@@ -23,8 +23,8 @@ public class LocalServer implements ServerNode {
 
     private static final Logger logger = LoggerFactory.getLogger(LocalServer.class);
 
-    LocalClient theClient;
-    DtoHandler dtoHandler;
+    private LocalClient theClient;
+    private DtoHandler dtoHandler;
 
     public LocalServer() {}
 
