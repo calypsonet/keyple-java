@@ -33,7 +33,7 @@ public final class VirtualReader extends AbstractObservableReader {
 
     private final VirtualReaderSession session;
     private final String remoteName;
-    private final RemoteMethodTxEngine rmTx;
+    private final RemoteMethodTxEngine rmTxEngine;
 
     private static final Logger logger = LoggerFactory.getLogger(VirtualReader.class);
 
@@ -45,11 +45,11 @@ public final class VirtualReader extends AbstractObservableReader {
      * @param nativeReaderName local name of the native reader on slave side
      */
     VirtualReader(VirtualReaderSession session, String nativeReaderName,
-            RemoteMethodTxEngine rmTx) {
+            RemoteMethodTxEngine rmTxEngine) {
         super(RemoteSePlugin.PLUGIN_NAME, "remote-" + nativeReaderName);
         this.session = session;
         this.remoteName = nativeReaderName;
-        this.rmTx = rmTx;
+        this.rmTxEngine = rmTxEngine;
     }
 
     /**
@@ -58,7 +58,8 @@ public final class VirtualReader extends AbstractObservableReader {
      * @return the current transmission mode
      */
     public TransmissionMode getTransmissionMode() {
-        return TransmissionMode.CONTACTLESS;
+        logger.error("getTransmissionMode is not implemented yet");
+        return null;
     }
 
     /**
@@ -74,8 +75,8 @@ public final class VirtualReader extends AbstractObservableReader {
         return session;
     }
 
-    public RemoteMethodTxEngine getRmTx() {
-        return rmTx;
+    public RemoteMethodTxEngine getRmTxEngine() {
+        return rmTxEngine;
     }
 
 
@@ -100,7 +101,7 @@ public final class VirtualReader extends AbstractObservableReader {
         RmTransmitTx transmit = new RmTransmitTx(seRequestSet, session.getSessionId(),
                 this.getNativeReaderName(), this.getName(), null);
         try {
-            rmTx.register(transmit);
+            rmTxEngine.register(transmit);
             return transmit.get();
         } catch (KeypleRemoteException e) {
             e.printStackTrace();

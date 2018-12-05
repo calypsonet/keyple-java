@@ -28,7 +28,6 @@ public class RmConnectReaderParser implements RemoteMethodParser<String> {
 
     private static final Logger logger = LoggerFactory.getLogger(RmConnectReaderParser.class);
 
-
     private final NativeReaderServiceImpl nativeReaderService;
 
     public RmConnectReaderParser(NativeReaderServiceImpl nativeReaderService) {
@@ -57,8 +56,7 @@ public class RmConnectReaderParser implements RemoteMethodParser<String> {
                 }
 
 
-                // todo store sessionId in reader as a parameter?
-                // nseSessionManager.addNewSession(sessionId, localReader.getName());
+                //todo sessionId should be stored here
 
             } catch (KeypleReaderNotFoundException e) {
                 logger.warn(

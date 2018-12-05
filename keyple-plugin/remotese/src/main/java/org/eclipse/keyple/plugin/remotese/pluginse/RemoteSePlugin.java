@@ -153,7 +153,7 @@ public final class RemoteSePlugin extends AbstractObservablePlugin {
         logger.debug("Dispatch ReaderEvent to the appropriate Reader : {} sessionId : {}",
                 event.getReaderName(), sessionId);
         try {
-            // todo dispatch is managed by remote name, should take sessionId also
+            // TODO :  dispatch events is only managed by remote reader name, should take sessionId also
             VirtualReader virtualReader =
                     (VirtualReader) getReaderByRemoteName(event.getReaderName());
             virtualReader.onRemoteReaderEvent(event);
@@ -176,7 +176,7 @@ public final class RemoteSePlugin extends AbstractObservablePlugin {
 
     @Override
     protected SortedSet<AbstractObservableReader> getNativeReaders() throws KeypleReaderException {
-        // init list with an empty list
+        // not necessary
         return new TreeSet<AbstractObservableReader>();
     }
 

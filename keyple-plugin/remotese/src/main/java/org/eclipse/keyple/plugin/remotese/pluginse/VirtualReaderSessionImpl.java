@@ -18,8 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Manage RSE Reader Session Manage SeRequestSet to transmitSet and receive SeResponseSet in
- * blocking and non blocking way
+ * Manage RSE Reader Session
  */
 public class VirtualReaderSessionImpl extends Observable<KeypleDto>
         implements VirtualReaderSession {

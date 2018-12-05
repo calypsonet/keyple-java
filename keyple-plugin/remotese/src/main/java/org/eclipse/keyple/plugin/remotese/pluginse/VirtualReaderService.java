@@ -52,8 +52,7 @@ public class VirtualReaderService implements DtoHandler {
     }
 
     /**
-     * Set this service as the Dto Dispatcher in your {@link TransportNode} todo : can't it be the
-     * transport node that set the dispatcher instead?
+     * Set this service as the Dto Dispatcher in your {@link TransportNode}
      * 
      * @param node : incoming Dto point
      */
@@ -62,7 +61,7 @@ public class VirtualReaderService implements DtoHandler {
     }
 
     /**
-     * Retrieve the Rse Plugin todo : can't it be the SeProxyService?
+     * Retrieve the Rse Plugin
      * 
      * @return the Remote Se Plugin managing the Virtual Readers
      */
@@ -110,13 +109,13 @@ public class VirtualReaderService implements DtoHandler {
                     throw new IllegalStateException(
                             "a READER_TRANSMIT request has been received by VirtualReaderService");
                 } else {
-                    // process response
+                    // dispatch dto to the appropriate reader
                     try {
                         // find reader by sessionId
                         VirtualReader reader = getReaderBySessionId(keypleDTO.getSessionId());
 
-                        // process response
-                        return reader.getRmTx().onDTO(transportDto);
+                        // process response with the reader rmtx engine
+                        return reader.getRmTxEngine().onDTO(transportDto);
 
                     } catch (KeypleReaderNotFoundException e) {
                         // reader not found;
@@ -151,7 +150,7 @@ public class VirtualReaderService implements DtoHandler {
     // VirtualReader virtualReader = (VirtualReader) plugin
     // .getReaderByRemoteName(transportDto.getKeypleDTO().getNativeReaderName());
     //
-    // if ((virtualReader.getRmTx()).hasSeRequestSet()) {
+    // if ((virtualReader.getRmTxEngine()).hasSeRequestSet()) {
     //
     // // send back seRequestSet
     // out = transportDto

@@ -40,9 +40,5 @@ public class LocalTransportDto implements TransportDto {
         return new LocalTransportDto(keypleDto, theClient);
     }
 
-    @Override
-    public DtoSender getDtoSender() {
-        // not used
-        return null;
-    }
+
 }

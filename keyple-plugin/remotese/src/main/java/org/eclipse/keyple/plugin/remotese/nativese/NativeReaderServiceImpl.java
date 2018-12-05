@@ -92,7 +92,7 @@ public class NativeReaderServiceImpl
                                 new RmConnectReaderParser(this);
                         String sessionId = rmConnectReaderParser.parseResponse(keypleDTO);
                         logger.info(
-                                "A virtual reader has been created on Master side with sessionId {}",
+                                "Native Reader {} has been connected to Master with sessionId {}",keypleDTO.getNativeReaderName(),
                                 sessionId);
                     } catch (KeypleRemoteReaderException e) {
                         e.printStackTrace();
@@ -107,7 +107,8 @@ public class NativeReaderServiceImpl
                     throw new IllegalStateException(
                             "a READER_DISCONNECT request has been received by NativeReaderService");
                 } else {
-                    // todo
+                    logger.info(
+                            "Native Reader {} has been disconnected from Master",keypleDTO.getNativeReaderName());
                     out = transportDto.nextTransportDTO(KeypleDtoHelper.NoResponse());
                 }
                 break;

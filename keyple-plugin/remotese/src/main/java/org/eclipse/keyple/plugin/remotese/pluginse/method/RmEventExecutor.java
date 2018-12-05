@@ -34,6 +34,7 @@ public class RmEventExecutor implements RemoteMethodExecutor {
         // dispatch reader event
         plugin.onReaderEvent(event, keypleDto.getSessionId());
 
+        //chain response if needed
         // try {
         // VirtualReader virtualReader =
         // (VirtualReader) plugin.getReaderByRemoteName(keypleDto.getNativeReaderName());
