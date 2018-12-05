@@ -43,9 +43,9 @@ public class VirtualReaderBaseTest {
     private static final Logger logger = LoggerFactory.getLogger(VirtualReaderBaseTest.class);
 
     // Real objects
-    TransportFactory factory;
-    ObservablePlugin.PluginObserver stubPluginObserver;
-    NativeReaderServiceImpl nativeReaderService;
+    private TransportFactory factory;
+    private ObservablePlugin.PluginObserver stubPluginObserver;
+    private NativeReaderServiceImpl nativeReaderService;
     StubReader nativeReader;
     VirtualReader virtualReader;
 
@@ -101,7 +101,7 @@ public class VirtualReaderBaseTest {
 
         StubPlugin stubPlugin = StubPlugin.getInstance();
 
-        stubPlugin.getInstance().unplugReader(nativeReader.getName());
+        stubPlugin.unplugReader(nativeReader.getName());
 
         Thread.sleep(500);
 
@@ -130,7 +130,7 @@ public class VirtualReaderBaseTest {
         this.nativeReaderService.disconnectReader(nativeReader, nodeId);
     }
 
-    private VirtualReader getVirtualReader() {
+    private VirtualReader getVirtualReader() throws Exception {
         Assert.assertEquals(1, this.virtualReaderService.getPlugin().getReaders().size());
         return (VirtualReader) this.virtualReaderService.getPlugin().getReaders().first();
     }

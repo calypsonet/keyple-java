@@ -31,7 +31,7 @@ import org.mockito.stubbing.Answer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Integration {
+class Integration {
 
     private static final Logger logger = LoggerFactory.getLogger(Integration.class);
 

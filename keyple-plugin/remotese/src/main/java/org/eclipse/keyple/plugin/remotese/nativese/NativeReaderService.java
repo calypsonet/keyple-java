@@ -13,10 +13,9 @@ package org.eclipse.keyple.plugin.remotese.nativese;
 
 
 import org.eclipse.keyple.plugin.remotese.transport.KeypleRemoteException;
-import org.eclipse.keyple.seproxy.event.ObservableReader;
 import org.eclipse.keyple.seproxy.message.ProxyReader;
 
-public interface NativeReaderService extends ObservableReader.ReaderObserver {
+public interface NativeReaderService {
 
 
     /**

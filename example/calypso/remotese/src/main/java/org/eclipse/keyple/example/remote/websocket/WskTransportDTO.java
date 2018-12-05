@@ -53,11 +53,6 @@ class WskTransportDTO implements TransportDto {
         return new WskTransportDTO(keypleDto, this.socketWeb);
     }
 
-    @Override
-    public DtoSender getDtoSender() {
-        return wskNode;
-    }
-
     public WebSocket getSocketWeb() {
         return socketWeb;
     }
