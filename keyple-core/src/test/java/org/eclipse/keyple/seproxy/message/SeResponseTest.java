@@ -9,8 +9,9 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  ********************************************************************************/
-package org.eclipse.keyple.seproxy;
+package org.eclipse.keyple.seproxy.message;
 
+import org.eclipse.keyple.seproxy.message.ApduResponseTest;
 import org.eclipse.keyple.seproxy.message.SeResponse;
 import org.eclipse.keyple.seproxy.message.SelectionStatus;
 import org.junit.Assert;

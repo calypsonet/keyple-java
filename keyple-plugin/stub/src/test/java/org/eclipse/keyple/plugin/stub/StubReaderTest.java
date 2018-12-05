@@ -674,26 +674,7 @@ public class StubReaderTest {
 
 
 
-    @Test
-    public void testAddObserver() throws Exception {
-        reader.addObserver(obs1);
-        Assert.assertEquals(1, reader.countObservers());
-    }
 
-    @Test
-    public void testRemoveObserver() throws Exception {
-        testAddObserver();
-        reader.removeObserver(obs1);
-        Assert.assertEquals(0, reader.countObservers());
-    }
-
-    @Test
-    public void testAddRemoveObserver() throws Exception {
-        testAddObserver();
-        reader.addObserver(obs2);
-        reader.removeObserver(obs2);
-        Assert.assertEquals(1, reader.countObservers());
-    }
 
 
 
