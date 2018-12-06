@@ -31,19 +31,22 @@ import android.app.Activity;
 import android.content.Intent;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 
 
 /**
- * Implementation of {@link org.eclipse.keyple.seproxy.ProxyReader} to communicate with NFC Tag
- * though Android {@link NfcAdapter}
+ * Implementation of {@link org.eclipse.keyple.seproxy.SeReader} to communicate with NFC Tag though
+ * Android {@link NfcAdapter}
  *
  * Configure NFCAdapter Protocols with {@link AndroidNfcReader#setParameter(String, String)}
  *
  *
  */
+@RequiresApi(api = Build.VERSION_CODES.N)
 public final class AndroidNfcReader extends AbstractSelectionLocalReader
-        implements NfcAdapter.ReaderCallback {
+        implements NfcAdapter.ReaderCallback, NfcAdapter.OnTagRemovedListener {
 
     private static final Logger LOG = LoggerFactory.getLogger(AndroidNfcReader.class);
 
@@ -154,9 +157,7 @@ public final class AndroidNfcReader extends AbstractSelectionLocalReader
         LOG.info("Received Tag Discovered event");
         try {
             tagProxy = TagProxy.getTagProxy(tag);
-            notifyObservers(new ReaderEvent(PLUGIN_NAME, READER_NAME,
-                    ReaderEvent.EventType.SE_INSERTED, null));
-
+            cardInserted();
         } catch (KeypleReaderException e) {
             // print and do nothing
             e.printStackTrace();
@@ -164,6 +165,13 @@ public final class AndroidNfcReader extends AbstractSelectionLocalReader
         }
 
     }
+
+    // TODO check why the method is not called
+    @Override
+    public void onTagRemoved() {
+        cardRemoved();
+    }
+
 
     @Override
     public boolean isSePresent() {
