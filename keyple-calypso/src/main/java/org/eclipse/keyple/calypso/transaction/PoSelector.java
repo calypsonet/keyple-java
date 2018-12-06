@@ -264,11 +264,4 @@ public final class PoSelector extends SeSelector {
             }
         }
     }
-
-    /**
-     * @return the PO class determined from the selection mode ATR/LEGACY, AID/ISO
-     */
-    private PoClass getPoClass() {
-        return poClass;
-    }
 }
