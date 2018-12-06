@@ -35,6 +35,7 @@ import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
 import org.eclipse.keyple.seproxy.protocol.SeProtocolSetting;
 import org.eclipse.keyple.transaction.SeSelection;
 import org.eclipse.keyple.transaction.SeSelector;
+import org.eclipse.keyple.transaction.SelectionResponse;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -68,6 +69,10 @@ public class NFCTestFragment extends Fragment implements ObservableReader.Reader
     // UI
     private TextView mText;
 
+    private SeReader reader;
+    private SeSelection seSelection;
+    private ReadRecordsRespPars readEnvironmentParser;
+
 
     public static NFCTestFragment newInstance() {
         return new NFCTestFragment();
@@ -96,22 +101,65 @@ public class NFCTestFragment extends Fragment implements ObservableReader.Reader
         getFragmentManager().beginTransaction()
                 .add(AndroidNfcFragment.newInstance(), TAG_NFC_ANDROID_FRAGMENT).commit();
 
-
         try {
             // define task as an observer for ReaderEvents
             LOG.debug("Define this view as an observer for ReaderEvents");
-            SeReader reader = seProxyService.getPlugins().first().getReaders().first();
-            ((AndroidNfcReader) reader).addObserver(this);
+            reader = seProxyService.getPlugins().first().getReaders().first();
+            /* remove the observer if it already exist */
+            ((ObservableReader) reader).addObserver(this);
 
-            reader.setParameter("FLAG_READER_PRESENCE_CHECK_DELAY", "5000");
-            reader.setParameter("FLAG_READER_NO_PLATFORM_SOUNDS", "0");
+            reader.setParameter("FLAG_READER_PRESENCE_CHECK_DELAY", "100");
+            reader.setParameter("FLAG_READER_NO_PLATFORM_SOUNDS", "1");
             reader.setParameter("FLAG_READER_SKIP_NDEF_CHECK", "0");
 
 
             // with this protocol settings we activate the nfc for ISO1443_4 protocol
-            ((AndroidNfcReader) reader).addSeProtocolSetting(
+            ((ObservableReader) reader).addSeProtocolSetting(
                     new SeProtocolSetting(AndroidNfcProtocolSettings.SETTING_PROTOCOL_ISO14443_4));
 
+            /*
+             * Prepare a Calypso PO selection
+             */
+            seSelection = new SeSelection(reader);
+
+            /*
+             * Setting of an AID based selection of a Calypso REV3 PO
+             *
+             * Select the first application matching the selection AID whatever the SE communication
+             * protocol keep the logical channel open after the selection
+             */
+
+            /*
+             * Calypso selection: configures a PoSelector with all the desired attributes to make
+             * the selection and read additional information afterwards
+             */
+            PoSelector poSelector = new PoSelector(ByteArrayUtils.fromHex(CalypsoClassicInfo.AID),
+                    SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN,
+                    ContactlessProtocols.PROTOCOL_ISO14443_4, "AID: " + CalypsoClassicInfo.AID);
+
+            /*
+             * Prepare the reading order and keep the associated parser for later use once the
+             * selection has been made.
+             */
+            readEnvironmentParser = poSelector.prepareReadRecordsCmd(
+                    CalypsoClassicInfo.SFI_EnvironmentAndHolder,
+                    ReadDataStructure.SINGLE_RECORD_DATA, CalypsoClassicInfo.RECORD_NUMBER_1,
+                    String.format("EnvironmentAndHolder (SFI=%02X))",
+                            CalypsoClassicInfo.SFI_EnvironmentAndHolder));
+
+            /*
+             * Add the selection case to the current selection (we could have added other cases
+             * here)
+             */
+            seSelection.prepareSelection(poSelector);
+
+            /*
+             * Provide the SeReader with the selection operation to be processed when a PO is
+             * inserted.
+             */
+            ((ObservableReader) reader).setDefaultSelectionRequest(
+                    seSelection.getSelectionOperation(),
+                    ObservableReader.NotificationMode.MATCHED_ONLY);
 
             /*
              * uncomment to active protocol listening for Mifare ultralight ((AndroidNfcReader)
@@ -167,10 +215,13 @@ public class NFCTestFragment extends Fragment implements ObservableReader.Reader
                 LOG.info("New ReaderEvent received : " + event.toString());
 
                 switch (event.getEventType()) {
+                    case SE_MATCHED:
+                        runCalyspoTransaction(event.getDefaultSelectionResponse());
+                        break;
+
                     case SE_INSERTED:
 
                         // execute simple tests
-                        runHoplinkSimpleRead();
                         break;
 
                     case SE_REMOVAL:
@@ -190,18 +241,17 @@ public class NFCTestFragment extends Fragment implements ObservableReader.Reader
 
 
     /**
-     * Run Hoplink Simple read command
+     * Run Calypso simple read transaction
+     * 
+     * @param defaultSelectionResponse
      */
-    private void runHoplinkSimpleRead() {
-        LOG.debug("Running HopLink Simple Read Tests");
+    private void runCalyspoTransaction(final SelectionResponse defaultSelectionResponse) {
+        LOG.debug("Running Calypso Simple Read transaction");
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 try {
                     initTextView();
-
-                    SeReader reader = null;
-                    reader = SeProxyService.getInstance().getPlugins().first().getReaders().first();
 
                     /*
                      * print tag info in View
@@ -209,58 +259,13 @@ public class NFCTestFragment extends Fragment implements ObservableReader.Reader
                     mText.append("\n ---- \n");
                     mText.append(((AndroidNfcReader) reader).printTagId());
                     mText.append("\n ---- \n");
+                    if (seSelection.processDefaultSelection(defaultSelectionResponse)) {
+                        CalypsoPo calypsoPo = (CalypsoPo) seSelection.getSelectedSe();
 
-                    /*
-                     * Prepare a Calypso PO selection
-                     */
-                    SeSelection seSelection = new SeSelection(reader);
-
-                    byte[] poAid = ByteArrayUtils.fromHex(CalypsoClassicInfo.AID);
-
-                    /*
-                     * Setting up of an AID based selection of a Calypso REV3 PO
-                     *
-                     * Select the first application matching the selection AID whatever the SE
-                     * communication protocol keep the logical channel open after the selection
-                     */
-
-                    /*
-                     * Calypso selection: configures a PoSelector with all the desired attributes to
-                     * make the selection and read additional information afterwards
-                     */
-                    PoSelector poSelector = new PoSelector(poAid, SeSelector.SelectMode.FIRST,
-                            ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4,
-                            "AID: " + CalypsoClassicInfo.AID);
-
-                    /*
-                     * Prepare the reading order and keep the associated parser for later use once
-                     * the selection has been made.
-                     */
-                    ReadRecordsRespPars readEnvironmentParser = poSelector.prepareReadRecordsCmd(
-                            CalypsoClassicInfo.SFI_EnvironmentAndHolder,
-                            ReadDataStructure.SINGLE_RECORD_DATA,
-                            CalypsoClassicInfo.RECORD_NUMBER_1,
-                            String.format("EnvironmentAndHolder (SFI=%02X))",
-                                    CalypsoClassicInfo.SFI_EnvironmentAndHolder));
-
-                    appendColoredText(mText, "\n1st PO exchange:\n", Color.BLACK);
-                    mText.append(" * select a Calypso PO\n * read the environment file\n");
-
-                    /*
-                     * Add the selection case to the current selection (we could have added other
-                     * cases here)
-                     */
-                    CalypsoPo calypsoPo = (CalypsoPo) seSelection.prepareSelection(poSelector);
-
-                    /*
-                     * Actual PO communication: operate through a single request the Calypso PO
-                     * selection and the file read
-                     */
-                    if (seSelection.processExplicitSelection()) {
                         mText.append("\nCalypso PO selection: ");
                         appendColoredText(mText, "SUCCESS\n", Color.GREEN);
                         mText.append("AID: ");
-                        appendHexBuffer(mText, poAid);
+                        appendHexBuffer(mText, ByteArrayUtils.fromHex(CalypsoClassicInfo.AID));
 
                         /*
                          * Retrieve the data read from the parser updated during the selection
@@ -310,12 +315,12 @@ public class NFCTestFragment extends Fragment implements ObservableReader.Reader
                         appendColoredText(mText, "\n\nEnd of the Calypso PO processing.",
                                 Color.BLACK);
                     } else {
-                        mText.append("\nCalypso PO selection: ");
-                        appendColoredText(mText, "\nFAILURE\n", Color.RED);
-                        mText.append("AID: ");
-                        appendHexBuffer(mText, poAid);
-                        mText.append("\n\nThe selection of the PO has failed.");
+                        appendColoredText(mText,
+                                "The selection of the PO has failed. Should not have occurred due to the MATCHED_ONLY selection mode.",
+                                Color.RED);
                     }
+                } catch (KeypleReaderException e1) {
+                    e1.fillInStackTrace();
                 } catch (Exception e) {
                     LOG.debug("Exception: " + e.getMessage());
                     appendColoredText(mText, "Exception: " + e.getMessage(), Color.RED);
