@@ -163,9 +163,14 @@ public final class CalypsoPo extends MatchingSe {
     }
 
     /**
-     * @return the PO class determined from the selection mode for the current PO selector
+     * @return the PO class determined from the PO revision
      */
     public PoClass getPoClass() {
-        return poSelector.getPoClass();
+        /* Rev1 and Rev2 expects the legacy class byte while Rev3 expects the ISO class byte */
+        if (revision == PoRevision.REV1_0 || revision == PoRevision.REV2_4) {
+            return PoClass.LEGACY;
+        } else {
+            return PoClass.LEGACY;
+        }
     }
 }
