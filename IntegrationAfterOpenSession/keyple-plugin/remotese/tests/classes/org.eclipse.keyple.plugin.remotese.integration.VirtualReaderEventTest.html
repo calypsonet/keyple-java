@@ -3,17 +3,17 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <meta http-equiv="x-ua-compatible" content="IE=edge"/>
-<title>Test results - Class org.eclipse.keyple.plugin.remotese.integration.VirtualReaderInsertTest</title>
+<title>Test results - Class org.eclipse.keyple.plugin.remotese.integration.VirtualReaderEventTest</title>
 <link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
 <link href="../css/style.css" rel="stylesheet" type="text/css"/>
 <script src="../js/report.js" type="text/javascript"></script>
 </head>
 <body>
 <div id="content">
-<h1>Class org.eclipse.keyple.plugin.remotese.integration.VirtualReaderInsertTest</h1>
+<h1>Class org.eclipse.keyple.plugin.remotese.integration.VirtualReaderEventTest</h1>
 <div class="breadcrumbs">
 <a href="../index.html">all</a> &gt; 
-<a href="../packages/org.eclipse.keyple.plugin.remotese.integration.html">org.eclipse.keyple.plugin.remotese.integration</a> &gt; VirtualReaderInsertTest</div>
+<a href="../packages/org.eclipse.keyple.plugin.remotese.integration.html">org.eclipse.keyple.plugin.remotese.integration</a> &gt; VirtualReaderEventTest</div>
 <div id="summary">
 <table>
 <tr>
@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">3.224s</div>
+<div class="counter">3.225s</div>
 <p>duration</p>
 </div>
 </td>
@@ -79,7 +79,7 @@
 </thead>
 <tr>
 <td class="success">testInsert</td>
-<td>1.112s</td>
+<td>1.113s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
@@ -101,17 +101,17 @@
 [Test worker] INFO VirtualReaderBaseTest - *** Bind Slave Services
 [Test worker] INFO StubPlugin - Plugging a new reader with name testStubReader
 [Test worker] INFO NativeReaderServiceImpl - connectReader testStubReader from device testClientNodeId
-[Test worker] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1543942947966
-[Test worker] INFO NativeReaderServiceImpl - A virtual reader has been created on Master side with sessionId testStubReadertestClientNodeId1543942947966
-[Test worker] INFO VirtualReaderInsertTest - Insert and remove a Hoplink SE and wait 5 seconds for two SE events to be thrown
-[observable-reader-events-16] INFO NativeReaderServiceImpl - update Reader Event SE_INSERTED
-[observable-reader-events-16] INFO NativeReaderServiceImpl - update Reader Event SE_REMOVAL
+[Test worker] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1544088551590
+[Test worker] INFO NativeReaderServiceImpl - Native Reader testStubReader has been connected to Master with sessionId testStubReadertestClientNodeId1544088551590
+[Test worker] INFO VirtualReaderEventTest - Insert and remove a Hoplink SE and wait 5 seconds for two SE events to be thrown
+[observable-reader-events-13] INFO NativeReaderServiceImpl - update Reader Event SE_INSERTED
+[observable-reader-events-13] INFO NativeReaderServiceImpl - update Reader Event SE_REMOVAL
 [Test worker] INFO VirtualReaderBaseTest - TearDown Test
 [Test worker] INFO StubPlugin - Unplugged reader with name testStubReader
 java.lang.InterruptedException: sleep interrupted
 	at java.lang.Thread.sleep(Native Method)
 	at org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin$EventThread.run(AbstractThreadedObservablePlugin.java:128)
-[Thread-78] WARN AbstractThreadedObservablePlugin - [StubPlugin] An exception occurred while monitoring plugin: sleep interrupted, cause null
+[Thread-69] WARN AbstractThreadedObservablePlugin - [StubPlugin] An exception occurred while monitoring plugin: sleep interrupted, cause null
 [Test worker] INFO VirtualReaderBaseTest - End of TearDown Test
 [Test worker] INFO VirtualReaderBaseTest - ------------------------------
 [Test worker] INFO VirtualReaderBaseTest - Test testInsert
@@ -122,16 +122,16 @@ java.lang.InterruptedException: sleep interrupted
 [Test worker] INFO VirtualReaderBaseTest - *** Bind Slave Services
 [Test worker] INFO StubPlugin - Plugging a new reader with name testStubReader
 [Test worker] INFO NativeReaderServiceImpl - connectReader testStubReader from device testClientNodeId
-[Test worker] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1543942950077
-[Test worker] INFO NativeReaderServiceImpl - A virtual reader has been created on Master side with sessionId testStubReadertestClientNodeId1543942950077
-[Test worker] INFO VirtualReaderInsertTest - Insert a Hoplink SE and wait 5 seconds for a SE event to be thrown
-[observable-reader-events-17] INFO NativeReaderServiceImpl - update Reader Event SE_INSERTED
+[Test worker] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1544088553702
+[Test worker] INFO NativeReaderServiceImpl - Native Reader testStubReader has been connected to Master with sessionId testStubReadertestClientNodeId1544088553702
+[Test worker] INFO VirtualReaderEventTest - Insert a Hoplink SE and wait 5 seconds for a SE event to be thrown
+[observable-reader-events-14] INFO NativeReaderServiceImpl - update Reader Event SE_INSERTED
 [Test worker] INFO VirtualReaderBaseTest - TearDown Test
 [Test worker] INFO StubPlugin - Unplugged reader with name testStubReader
 java.lang.InterruptedException: sleep interrupted
 	at java.lang.Thread.sleep(Native Method)
 	at org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin$EventThread.run(AbstractThreadedObservablePlugin.java:128)
-[Thread-82] WARN AbstractThreadedObservablePlugin - [StubPlugin] An exception occurred while monitoring plugin: sleep interrupted, cause null
+[Thread-73] WARN AbstractThreadedObservablePlugin - [StubPlugin] An exception occurred while monitoring plugin: sleep interrupted, cause null
 [Test worker] INFO VirtualReaderBaseTest - End of TearDown Test
 </pre>
 </span>
@@ -144,7 +144,7 @@ java.lang.InterruptedException: sleep interrupted
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 4.5.1</a> at Dec 4, 2018 5:02:31 PM</p>
+<a href="http://www.gradle.org">Gradle 4.5.1</a> at Dec 6, 2018 9:29:20 AM</p>
 </div>
 </div>
 </body>
