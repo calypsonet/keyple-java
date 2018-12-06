@@ -93,4 +93,10 @@ dependencies {
     // https://mvnrepository.com/artifact/org.mockito/mockito-core
     testCompile group: 'org.mockito', name: 'mockito-core', version: '2.13.0'
 
+    // https://mvnrepository.com/artifact/org.mockito/mockito-core
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    //add slf4j simple logger implementation
+    testCompile 'org.slf4j:slf4j-simple:1.7.25'
+
 }

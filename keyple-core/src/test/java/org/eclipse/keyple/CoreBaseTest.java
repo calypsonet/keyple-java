@@ -9,24 +9,14 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  ********************************************************************************/
-package org.eclipse.keyple.seproxy;
+package org.eclipse.keyple;
 
+import org.junit.Rule;
+import org.junit.rules.TestName;
 
+public class CoreBaseTest {
 
-import org.eclipse.keyple.seproxy.message.ApduRequest;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.junit.MockitoJUnitRunner;
-
-@RunWith(MockitoJUnitRunner.class)
-public class AbstractApduBufferTest {
-    @Test
-    public void getBytes() {
-        byte[] command = new byte[3];
-        command[0] = (byte) 0x01;
-        ApduRequest request = new ApduRequest(command, true);
-        Assert.assertEquals(command, request.getBytes());
-    }
+    @Rule
+    public TestName name = new TestName();
 
 }

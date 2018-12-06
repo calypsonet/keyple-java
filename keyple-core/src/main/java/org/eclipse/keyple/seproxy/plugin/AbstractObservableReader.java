@@ -93,24 +93,27 @@ public abstract class AbstractObservableReader extends AbstractLoggedObservable<
      * The observer will receive all the events produced by this reader (card insertion, removal,
      * etc.)
      * <p>
-     * The monitoring thread is started when the first observer is added.
+     * The startObservation() is called when the first observer is added. (to start a monitoring
+     * thread for instance)
      *
      * @param observer the observer object
      */
     public final void addObserver(ReaderObserver observer) {
-        super.addObserver(observer);
-        if (super.countObservers() == 1) {
+        // if an observer is added to an empty list, start the observation
+        if (super.countObservers() == 0) {
             logger.debug("Start the reader monitoring.");
             startObservation();
         }
+        super.addObserver(observer);
     }
 
     /**
      * Remove a reader observer.
      * <p>
-     * The observer will do not receive any of the events produced by this reader.
+     * The observer will not receive any of the events produced by this reader.
      * <p>
-     * The monitoring thread is ended when the last observer is removed.
+     * The stopObservation() is called when the last observer is removed. (to stop a monitoring
+     * thread for instance)
      *
      * @param observer the observer object
      */

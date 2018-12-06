@@ -145,14 +145,15 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
                     ReaderEvent.EventType.SE_INSERTED, null));
             presenceNotified = true;
         } else {
+            /*
+             * a default request is defined, send it a notify according to the notification mode and
+             * the selection status
+             */
+            boolean aSeMatched = false;
             try {
-                /*
-                 * a default request is defined, send it a notify according to the notification mode
-                 * and the selection status
-                 */
-                boolean aSeMatched = false;
                 SeResponseSet seResponseSet =
                         processSeRequestSet(defaultSelectionRequest.getSelectionSeRequestSet());
+
                 for (SeResponse seResponse : seResponseSet.getResponses()) {
                     if (seResponse != null && seResponse.getSelectionStatus().hasMatched()) {
                         aSeMatched = true;
@@ -176,7 +177,9 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
                 }
             } catch (KeypleReaderException e) {
                 e.printStackTrace();
+                // in this case the card has been removed or not read correctly, do not throw event
             }
+
         }
     }
 
