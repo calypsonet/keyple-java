@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">18.823s</div>
+<div class="counter">18.899s</div>
 <p>duration</p>
 </div>
 </td>
@@ -79,7 +79,7 @@
 </thead>
 <tr>
 <td class="success">rse_transmit_Hoplink_Sucessfull</td>
-<td>2.139s</td>
+<td>2.226s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
@@ -89,17 +89,17 @@
 </tr>
 <tr>
 <td class="success">testKOTransmitSet_NoSE</td>
-<td>1.104s</td>
+<td>1.103s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">testKOTransmit_NoSE</td>
-<td>1.115s</td>
+<td>1.116s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">transmit_partial_response_0</td>
-<td>1.612s</td>
+<td>1.605s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
@@ -109,17 +109,17 @@
 </tr>
 <tr>
 <td class="success">transmit_partial_response_2</td>
-<td>1.606s</td>
+<td>1.605s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">transmit_partial_response_3</td>
-<td>1.604s</td>
+<td>1.605s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">transmit_partial_response_set_0</td>
-<td>1.609s</td>
+<td>1.607s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
@@ -129,7 +129,7 @@
 </tr>
 <tr>
 <td class="success">transmit_partial_response_set_2</td>
-<td>1.608s</td>
+<td>1.606s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
@@ -151,8 +151,8 @@
 [Test worker] INFO VirtualReaderBaseTest - *** Bind Slave Services
 [Test worker] INFO StubPlugin - Plugging a new reader with name testStubReader
 [Test worker] INFO NativeReaderServiceImpl - connectReader testStubReader from device testClientNodeId
-[Test worker] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1544138222156
-[Test worker] INFO NativeReaderServiceImpl - Native Reader testStubReader has been connected to Master with sessionId testStubReadertestClientNodeId1544138222156
+[Test worker] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1544138366491
+[Test worker] INFO NativeReaderServiceImpl - Native Reader testStubReader has been connected to Master with sessionId testStubReadertestClientNodeId1544138366491
 org.eclipse.keyple.plugin.remotese.transport.KeypleRemoteException: An exception occurs while calling the remote method transmitSet
 	at org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx.parseResponse(RmTransmitTx.java:58)
 	at org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx.parseResponse(RmTransmitTx.java:22)
@@ -172,7 +172,7 @@ Caused by: org.eclipse.keyple.seproxy.exception.KeypleReaderException: Fail to o
 java.lang.InterruptedException: sleep interrupted
 	at java.lang.Thread.sleep(Native Method)
 	at org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin$EventThread.run(AbstractThreadedObservablePlugin.java:147)
-[Thread-11] WARN AbstractThreadedObservablePlugin - [StubPlugin] An exception occurred while monitoring plugin: sleep interrupted, cause null
+[Thread-13] WARN AbstractThreadedObservablePlugin - [StubPlugin] An exception occurred while monitoring plugin: sleep interrupted, cause null
 [Test worker] INFO VirtualReaderBaseTest - End of TearDown Test
 [Test worker] INFO VirtualReaderBaseTest - ------------------------------
 [Test worker] INFO VirtualReaderBaseTest - Test rse_transmit_Hoplink_Sucessfull
@@ -183,9 +183,9 @@ java.lang.InterruptedException: sleep interrupted
 [Test worker] INFO VirtualReaderBaseTest - *** Bind Slave Services
 [Test worker] INFO StubPlugin - Plugging a new reader with name testStubReader
 [Test worker] INFO NativeReaderServiceImpl - connectReader testStubReader from device testClientNodeId
-[Test worker] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1544138223270
-[Test worker] INFO NativeReaderServiceImpl - Native Reader testStubReader has been connected to Master with sessionId testStubReadertestClientNodeId1544138223270
-[observable-reader-events-4] INFO NativeReaderServiceImpl - update Reader Event SE_INSERTED
+[Test worker] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1544138367605
+[Test worker] INFO NativeReaderServiceImpl - Native Reader testStubReader has been connected to Master with sessionId testStubReadertestClientNodeId1544138367605
+[observable-reader-events-5] INFO NativeReaderServiceImpl - update Reader Event SE_INSERTED
 [Test worker] INFO VirtualReaderTransmitTest - SeResponseSet returned as expected SeResponse:{RESPONSES = [ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000000000009000], ATR = null, FCI = null, HASMATCHED = false CHANNELWASOPEN = true}
 [Test worker] INFO VirtualReaderTransmitTest - SeResponseSet returned as expected SeResponse:{RESPONSES = [ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000000000009000], ATR = null, FCI = null, HASMATCHED = false CHANNELWASOPEN = true}
 [Test worker] INFO VirtualReaderTransmitTest - SeResponseSet returned as expected SeResponse:{RESPONSES = [ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000000000009000], ATR = null, FCI = null, HASMATCHED = false CHANNELWASOPEN = true}
@@ -201,7 +201,7 @@ java.lang.InterruptedException: sleep interrupted
 java.lang.InterruptedException: sleep interrupted
 	at java.lang.Thread.sleep(Native Method)
 	at org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin$EventThread.run(AbstractThreadedObservablePlugin.java:147)
-[Thread-14] WARN AbstractThreadedObservablePlugin - [StubPlugin] An exception occurred while monitoring plugin: sleep interrupted, cause null
+[Thread-16] WARN AbstractThreadedObservablePlugin - [StubPlugin] An exception occurred while monitoring plugin: sleep interrupted, cause null
 [Test worker] INFO VirtualReaderBaseTest - End of TearDown Test
 [Test worker] INFO VirtualReaderBaseTest - ------------------------------
 [Test worker] INFO VirtualReaderBaseTest - Test rse_transmit_no_response
@@ -212,9 +212,9 @@ java.lang.InterruptedException: sleep interrupted
 [Test worker] INFO VirtualReaderBaseTest - *** Bind Slave Services
 [Test worker] INFO StubPlugin - Plugging a new reader with name testStubReader
 [Test worker] INFO NativeReaderServiceImpl - connectReader testStubReader from device testClientNodeId
-[Test worker] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1544138225410
-[Test worker] INFO NativeReaderServiceImpl - Native Reader testStubReader has been connected to Master with sessionId testStubReadertestClientNodeId1544138225410
-[observable-reader-events-5] INFO NativeReaderServiceImpl - update Reader Event SE_INSERTED
+[Test worker] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1544138369831
+[Test worker] INFO NativeReaderServiceImpl - Native Reader testStubReader has been connected to Master with sessionId testStubReadertestClientNodeId1544138369831
+[observable-reader-events-6] INFO NativeReaderServiceImpl - update Reader Event SE_INSERTED
 org.eclipse.keyple.plugin.remotese.transport.KeypleRemoteException: An exception occurs while calling the remote method transmitSet
 	at org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx.parseResponse(RmTransmitTx.java:58)
 	at org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx.parseResponse(RmTransmitTx.java:22)
@@ -233,7 +233,7 @@ Caused by: org.eclipse.keyple.seproxy.exception.KeypleReaderException: No respon
 java.lang.InterruptedException: sleep interrupted
 	at java.lang.Thread.sleep(Native Method)
 	at org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin$EventThread.run(AbstractThreadedObservablePlugin.java:147)
-[Thread-28] WARN AbstractThreadedObservablePlugin - [StubPlugin] An exception occurred while monitoring plugin: sleep interrupted, cause null
+[Thread-30] WARN AbstractThreadedObservablePlugin - [StubPlugin] An exception occurred while monitoring plugin: sleep interrupted, cause null
 [Test worker] INFO VirtualReaderBaseTest - End of TearDown Test
 [Test worker] INFO VirtualReaderBaseTest - ------------------------------
 [Test worker] INFO VirtualReaderBaseTest - Test transmit_partial_response_set_0
@@ -244,9 +244,9 @@ java.lang.InterruptedException: sleep interrupted
 [Test worker] INFO VirtualReaderBaseTest - *** Bind Slave Services
 [Test worker] INFO StubPlugin - Plugging a new reader with name testStubReader
 [Test worker] INFO NativeReaderServiceImpl - connectReader testStubReader from device testClientNodeId
-[Test worker] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1544138227018
-[Test worker] INFO NativeReaderServiceImpl - Native Reader testStubReader has been connected to Master with sessionId testStubReadertestClientNodeId1544138227018
-[observable-reader-events-6] INFO NativeReaderServiceImpl - update Reader Event SE_INSERTED
+[Test worker] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1544138371439
+[Test worker] INFO NativeReaderServiceImpl - Native Reader testStubReader has been connected to Master with sessionId testStubReadertestClientNodeId1544138371439
+[observable-reader-events-7] INFO NativeReaderServiceImpl - update Reader Event SE_INSERTED
 org.eclipse.keyple.plugin.remotese.transport.KeypleRemoteException: An exception occurs while calling the remote method transmitSet
 	at org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx.parseResponse(RmTransmitTx.java:58)
 	at org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx.parseResponse(RmTransmitTx.java:22)
@@ -266,7 +266,7 @@ Caused by: org.eclipse.keyple.seproxy.exception.KeypleReaderException: No respon
 java.lang.InterruptedException: sleep interrupted
 	at java.lang.Thread.sleep(Native Method)
 	at org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin$EventThread.run(AbstractThreadedObservablePlugin.java:147)
-[Thread-33] WARN AbstractThreadedObservablePlugin - [StubPlugin] An exception occurred while monitoring plugin: sleep interrupted, cause null
+[Thread-35] WARN AbstractThreadedObservablePlugin - [StubPlugin] An exception occurred while monitoring plugin: sleep interrupted, cause null
 [Test worker] INFO VirtualReaderBaseTest - End of TearDown Test
 [Test worker] INFO VirtualReaderBaseTest - ------------------------------
 [Test worker] INFO VirtualReaderBaseTest - Test transmit_partial_response_set_1
@@ -277,15 +277,15 @@ java.lang.InterruptedException: sleep interrupted
 [Test worker] INFO VirtualReaderBaseTest - *** Bind Slave Services
 [Test worker] INFO StubPlugin - Plugging a new reader with name testStubReader
 [Test worker] INFO NativeReaderServiceImpl - connectReader testStubReader from device testClientNodeId
-[Test worker] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1544138228626
-[Test worker] INFO NativeReaderServiceImpl - Native Reader testStubReader has been connected to Master with sessionId testStubReadertestClientNodeId1544138228626
-[observable-reader-events-7] INFO NativeReaderServiceImpl - update Reader Event SE_INSERTED
+[Test worker] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1544138373046
+[Test worker] INFO NativeReaderServiceImpl - Native Reader testStubReader has been connected to Master with sessionId testStubReadertestClientNodeId1544138373046
+[observable-reader-events-8] INFO NativeReaderServiceImpl - update Reader Event SE_INSERTED
 [Test worker] INFO VirtualReaderBaseTest - TearDown Test
 [Test worker] INFO StubPlugin - Unplugged reader with name testStubReader
 java.lang.InterruptedException: sleep interrupted
 	at java.lang.Thread.sleep(Native Method)
 	at org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin$EventThread.run(AbstractThreadedObservablePlugin.java:147)
-[Thread-38] WARN AbstractThreadedObservablePlugin - [StubPlugin] An exception occurred while monitoring plugin: sleep interrupted, cause null
+[Thread-40] WARN AbstractThreadedObservablePlugin - [StubPlugin] An exception occurred while monitoring plugin: sleep interrupted, cause null
 [Test worker] INFO VirtualReaderBaseTest - End of TearDown Test
 [Test worker] INFO VirtualReaderBaseTest - ------------------------------
 [Test worker] INFO VirtualReaderBaseTest - Test transmit_partial_response_set_2
@@ -296,15 +296,15 @@ java.lang.InterruptedException: sleep interrupted
 [Test worker] INFO VirtualReaderBaseTest - *** Bind Slave Services
 [Test worker] INFO StubPlugin - Plugging a new reader with name testStubReader
 [Test worker] INFO NativeReaderServiceImpl - connectReader testStubReader from device testClientNodeId
-[Test worker] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1544138230233
-[Test worker] INFO NativeReaderServiceImpl - Native Reader testStubReader has been connected to Master with sessionId testStubReadertestClientNodeId1544138230233
-[observable-reader-events-8] INFO NativeReaderServiceImpl - update Reader Event SE_INSERTED
+[Test worker] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1544138374652
+[Test worker] INFO NativeReaderServiceImpl - Native Reader testStubReader has been connected to Master with sessionId testStubReadertestClientNodeId1544138374652
+[observable-reader-events-9] INFO NativeReaderServiceImpl - update Reader Event SE_INSERTED
 [Test worker] INFO VirtualReaderBaseTest - TearDown Test
 [Test worker] INFO StubPlugin - Unplugged reader with name testStubReader
 java.lang.InterruptedException: sleep interrupted
 	at java.lang.Thread.sleep(Native Method)
 	at org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin$EventThread.run(AbstractThreadedObservablePlugin.java:147)
-[Thread-43] WARN AbstractThreadedObservablePlugin - [StubPlugin] An exception occurred while monitoring plugin: sleep interrupted, cause null
+[Thread-45] WARN AbstractThreadedObservablePlugin - [StubPlugin] An exception occurred while monitoring plugin: sleep interrupted, cause null
 [Test worker] INFO VirtualReaderBaseTest - End of TearDown Test
 [Test worker] INFO VirtualReaderBaseTest - ------------------------------
 [Test worker] INFO VirtualReaderBaseTest - Test transmit_partial_response_set_3
@@ -315,15 +315,15 @@ java.lang.InterruptedException: sleep interrupted
 [Test worker] INFO VirtualReaderBaseTest - *** Bind Slave Services
 [Test worker] INFO StubPlugin - Plugging a new reader with name testStubReader
 [Test worker] INFO NativeReaderServiceImpl - connectReader testStubReader from device testClientNodeId
-[Test worker] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1544138231840
-[Test worker] INFO NativeReaderServiceImpl - Native Reader testStubReader has been connected to Master with sessionId testStubReadertestClientNodeId1544138231840
-[observable-reader-events-9] INFO NativeReaderServiceImpl - update Reader Event SE_INSERTED
+[Test worker] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1544138376259
+[Test worker] INFO NativeReaderServiceImpl - Native Reader testStubReader has been connected to Master with sessionId testStubReadertestClientNodeId1544138376259
+[observable-reader-events-10] INFO NativeReaderServiceImpl - update Reader Event SE_INSERTED
 [Test worker] INFO VirtualReaderBaseTest - TearDown Test
 [Test worker] INFO StubPlugin - Unplugged reader with name testStubReader
 java.lang.InterruptedException: sleep interrupted
 	at java.lang.Thread.sleep(Native Method)
 	at org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin$EventThread.run(AbstractThreadedObservablePlugin.java:147)
-[Thread-48] WARN AbstractThreadedObservablePlugin - [StubPlugin] An exception occurred while monitoring plugin: sleep interrupted, cause null
+[Thread-50] WARN AbstractThreadedObservablePlugin - [StubPlugin] An exception occurred while monitoring plugin: sleep interrupted, cause null
 [Test worker] INFO VirtualReaderBaseTest - End of TearDown Test
 [Test worker] INFO VirtualReaderBaseTest - ------------------------------
 [Test worker] INFO VirtualReaderBaseTest - Test transmit_partial_response_0
@@ -334,9 +334,9 @@ java.lang.InterruptedException: sleep interrupted
 [Test worker] INFO VirtualReaderBaseTest - *** Bind Slave Services
 [Test worker] INFO StubPlugin - Plugging a new reader with name testStubReader
 [Test worker] INFO NativeReaderServiceImpl - connectReader testStubReader from device testClientNodeId
-[Test worker] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1544138233446
-[Test worker] INFO NativeReaderServiceImpl - Native Reader testStubReader has been connected to Master with sessionId testStubReadertestClientNodeId1544138233446
-[observable-reader-events-10] INFO NativeReaderServiceImpl - update Reader Event SE_INSERTED
+[Test worker] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1544138377864
+[Test worker] INFO NativeReaderServiceImpl - Native Reader testStubReader has been connected to Master with sessionId testStubReadertestClientNodeId1544138377864
+[observable-reader-events-11] INFO NativeReaderServiceImpl - update Reader Event SE_INSERTED
 org.eclipse.keyple.plugin.remotese.transport.KeypleRemoteException: An exception occurs while calling the remote method transmitSet
 	at org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx.parseResponse(RmTransmitTx.java:58)
 	at org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx.parseResponse(RmTransmitTx.java:22)
@@ -356,7 +356,7 @@ Caused by: org.eclipse.keyple.seproxy.exception.KeypleReaderException: No respon
 java.lang.InterruptedException: sleep interrupted
 	at java.lang.Thread.sleep(Native Method)
 	at org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin$EventThread.run(AbstractThreadedObservablePlugin.java:147)
-[Thread-53] WARN AbstractThreadedObservablePlugin - [StubPlugin] An exception occurred while monitoring plugin: sleep interrupted, cause null
+[Thread-55] WARN AbstractThreadedObservablePlugin - [StubPlugin] An exception occurred while monitoring plugin: sleep interrupted, cause null
 [Test worker] INFO VirtualReaderBaseTest - End of TearDown Test
 [Test worker] INFO VirtualReaderBaseTest - ------------------------------
 [Test worker] INFO VirtualReaderBaseTest - Test transmit_partial_response_1
@@ -367,9 +367,9 @@ java.lang.InterruptedException: sleep interrupted
 [Test worker] INFO VirtualReaderBaseTest - *** Bind Slave Services
 [Test worker] INFO StubPlugin - Plugging a new reader with name testStubReader
 [Test worker] INFO NativeReaderServiceImpl - connectReader testStubReader from device testClientNodeId
-[Test worker] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1544138235058
-[Test worker] INFO NativeReaderServiceImpl - Native Reader testStubReader has been connected to Master with sessionId testStubReadertestClientNodeId1544138235058
-[observable-reader-events-11] INFO NativeReaderServiceImpl - update Reader Event SE_INSERTED
+[Test worker] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1544138379470
+[Test worker] INFO NativeReaderServiceImpl - Native Reader testStubReader has been connected to Master with sessionId testStubReadertestClientNodeId1544138379470
+[observable-reader-events-12] INFO NativeReaderServiceImpl - update Reader Event SE_INSERTED
 org.eclipse.keyple.plugin.remotese.transport.KeypleRemoteException: An exception occurs while calling the remote method transmitSet
 	at org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx.parseResponse(RmTransmitTx.java:58)
 	at org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx.parseResponse(RmTransmitTx.java:22)
@@ -389,7 +389,7 @@ Caused by: org.eclipse.keyple.seproxy.exception.KeypleReaderException: No respon
 java.lang.InterruptedException: sleep interrupted
 	at java.lang.Thread.sleep(Native Method)
 	at org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin$EventThread.run(AbstractThreadedObservablePlugin.java:147)
-[Thread-58] WARN AbstractThreadedObservablePlugin - [StubPlugin] An exception occurred while monitoring plugin: sleep interrupted, cause null
+[Thread-60] WARN AbstractThreadedObservablePlugin - [StubPlugin] An exception occurred while monitoring plugin: sleep interrupted, cause null
 [Test worker] INFO VirtualReaderBaseTest - End of TearDown Test
 [Test worker] INFO VirtualReaderBaseTest - ------------------------------
 [Test worker] INFO VirtualReaderBaseTest - Test transmit_partial_response_2
@@ -400,9 +400,9 @@ java.lang.InterruptedException: sleep interrupted
 [Test worker] INFO VirtualReaderBaseTest - *** Bind Slave Services
 [Test worker] INFO StubPlugin - Plugging a new reader with name testStubReader
 [Test worker] INFO NativeReaderServiceImpl - connectReader testStubReader from device testClientNodeId
-[Test worker] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1544138236664
-[Test worker] INFO NativeReaderServiceImpl - Native Reader testStubReader has been connected to Master with sessionId testStubReadertestClientNodeId1544138236664
-[observable-reader-events-12] INFO NativeReaderServiceImpl - update Reader Event SE_INSERTED
+[Test worker] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1544138381075
+[Test worker] INFO NativeReaderServiceImpl - Native Reader testStubReader has been connected to Master with sessionId testStubReadertestClientNodeId1544138381075
+[observable-reader-events-13] INFO NativeReaderServiceImpl - update Reader Event SE_INSERTED
 org.eclipse.keyple.plugin.remotese.transport.KeypleRemoteException: An exception occurs while calling the remote method transmitSet
 	at org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx.parseResponse(RmTransmitTx.java:58)
 	at org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx.parseResponse(RmTransmitTx.java:22)
@@ -422,7 +422,7 @@ Caused by: org.eclipse.keyple.seproxy.exception.KeypleReaderException: No respon
 java.lang.InterruptedException: sleep interrupted
 	at java.lang.Thread.sleep(Native Method)
 	at org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin$EventThread.run(AbstractThreadedObservablePlugin.java:147)
-[Thread-63] WARN AbstractThreadedObservablePlugin - [StubPlugin] An exception occurred while monitoring plugin: sleep interrupted, cause null
+[Thread-65] WARN AbstractThreadedObservablePlugin - [StubPlugin] An exception occurred while monitoring plugin: sleep interrupted, cause null
 [Test worker] INFO VirtualReaderBaseTest - End of TearDown Test
 [Test worker] INFO VirtualReaderBaseTest - ------------------------------
 [Test worker] INFO VirtualReaderBaseTest - Test transmit_partial_response_3
@@ -433,15 +433,15 @@ java.lang.InterruptedException: sleep interrupted
 [Test worker] INFO VirtualReaderBaseTest - *** Bind Slave Services
 [Test worker] INFO StubPlugin - Plugging a new reader with name testStubReader
 [Test worker] INFO NativeReaderServiceImpl - connectReader testStubReader from device testClientNodeId
-[Test worker] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1544138238270
-[Test worker] INFO NativeReaderServiceImpl - Native Reader testStubReader has been connected to Master with sessionId testStubReadertestClientNodeId1544138238270
-[observable-reader-events-13] INFO NativeReaderServiceImpl - update Reader Event SE_INSERTED
+[Test worker] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1544138382681
+[Test worker] INFO NativeReaderServiceImpl - Native Reader testStubReader has been connected to Master with sessionId testStubReadertestClientNodeId1544138382681
+[observable-reader-events-14] INFO NativeReaderServiceImpl - update Reader Event SE_INSERTED
 [Test worker] INFO VirtualReaderBaseTest - TearDown Test
 [Test worker] INFO StubPlugin - Unplugged reader with name testStubReader
 java.lang.InterruptedException: sleep interrupted
 	at java.lang.Thread.sleep(Native Method)
 	at org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin$EventThread.run(AbstractThreadedObservablePlugin.java:147)
-[Thread-68] WARN AbstractThreadedObservablePlugin - [StubPlugin] An exception occurred while monitoring plugin: sleep interrupted, cause null
+[Thread-70] WARN AbstractThreadedObservablePlugin - [StubPlugin] An exception occurred while monitoring plugin: sleep interrupted, cause null
 [Test worker] INFO VirtualReaderBaseTest - End of TearDown Test
 [Test worker] INFO VirtualReaderBaseTest - ------------------------------
 [Test worker] INFO VirtualReaderBaseTest - Test testKOTransmitSet_NoSE
@@ -452,8 +452,8 @@ java.lang.InterruptedException: sleep interrupted
 [Test worker] INFO VirtualReaderBaseTest - *** Bind Slave Services
 [Test worker] INFO StubPlugin - Plugging a new reader with name testStubReader
 [Test worker] INFO NativeReaderServiceImpl - connectReader testStubReader from device testClientNodeId
-[Test worker] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1544138239875
-[Test worker] INFO NativeReaderServiceImpl - Native Reader testStubReader has been connected to Master with sessionId testStubReadertestClientNodeId1544138239875
+[Test worker] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1544138384285
+[Test worker] INFO NativeReaderServiceImpl - Native Reader testStubReader has been connected to Master with sessionId testStubReadertestClientNodeId1544138384285
 org.eclipse.keyple.plugin.remotese.transport.KeypleRemoteException: An exception occurs while calling the remote method transmitSet
 	at org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx.parseResponse(RmTransmitTx.java:58)
 	at org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx.parseResponse(RmTransmitTx.java:22)
@@ -473,7 +473,7 @@ Caused by: org.eclipse.keyple.seproxy.exception.KeypleReaderException: Fail to o
 java.lang.InterruptedException: sleep interrupted
 	at java.lang.Thread.sleep(Native Method)
 	at org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin$EventThread.run(AbstractThreadedObservablePlugin.java:147)
-[Thread-73] WARN AbstractThreadedObservablePlugin - [StubPlugin] An exception occurred while monitoring plugin: sleep interrupted, cause null
+[Thread-75] WARN AbstractThreadedObservablePlugin - [StubPlugin] An exception occurred while monitoring plugin: sleep interrupted, cause null
 [Test worker] INFO VirtualReaderBaseTest - End of TearDown Test
 </pre>
 </span>
@@ -486,7 +486,7 @@ java.lang.InterruptedException: sleep interrupted
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 4.5.1</a> at Dec 6, 2018 11:17:26 PM</p>
+<a href="http://www.gradle.org">Gradle 4.5.1</a> at Dec 6, 2018 11:19:48 PM</p>
 </div>
 </div>
 </body>
