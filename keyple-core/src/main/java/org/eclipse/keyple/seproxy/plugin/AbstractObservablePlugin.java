@@ -13,16 +13,21 @@ package org.eclipse.keyple.seproxy.plugin;
 
 import java.util.SortedSet;
 import org.eclipse.keyple.seproxy.ReaderPlugin;
+import org.eclipse.keyple.seproxy.event.ObservablePlugin;
 import org.eclipse.keyple.seproxy.event.PluginEvent;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderNotFoundException;
 import org.eclipse.keyple.seproxy.message.ProxyReader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Observable plugin. These plugin can report when a reader is added or removed.
  */
-abstract class AbstractObservablePlugin extends AbstractLoggedObservable<PluginEvent>
+public abstract class AbstractObservablePlugin extends AbstractLoggedObservable<PluginEvent>
         implements ReaderPlugin {
+
+    private static final Logger logger = LoggerFactory.getLogger(AbstractObservablePlugin.class);
 
     /**
      * The list of readers
@@ -32,7 +37,7 @@ abstract class AbstractObservablePlugin extends AbstractLoggedObservable<PluginE
 
     /**
      * Instanciates a new ReaderPlugin. Retrieve the current readers list.
-     *
+     * 
      * Gets the list for the native method the first time (null)
      * 
      * @param name name of the plugin
@@ -81,6 +86,57 @@ abstract class AbstractObservablePlugin extends AbstractLoggedObservable<PluginE
      */
     protected abstract AbstractObservableReader getNativeReader(String name)
             throws KeypleReaderException;
+
+    /**
+     * Starts the monitoring thread
+     * <p>
+     * This method has to be overloaded by the class that handle the monitoring thread. It will be
+     * called when a first observer is added.
+     */
+    protected void startObservation() {};
+
+    /**
+     * Ends the monitoring thread
+     * <p>
+     * This method has to be overloaded by the class that handle the monitoring thread. It will be
+     * called when the observer is removed.
+     */
+    protected void stopObservation() {};
+
+    /**
+     * Add a plugin observer.
+     * <p>
+     * The observer will receive all the events produced by this plugin (reader insertion, removal,
+     * etc.)
+     * <p>
+     * The monitoring thread is started when the first observer is added.
+     *
+     * @param observer the observer object
+     */
+    public final void addObserver(ObservablePlugin.PluginObserver observer) {
+        super.addObserver(observer);
+        if (super.countObservers() == 1) {
+            logger.debug("Start the plugin monitoring.");
+            startObservation();
+        }
+    }
+
+    /**
+     * Remove a plugin observer.
+     * <p>
+     * The observer will do not receive any of the events produced by this plugin.
+     * <p>
+     * The monitoring thread is ended when the last observer is removed.
+     *
+     * @param observer the observer object
+     */
+    public final void removeObserver(ObservablePlugin.PluginObserver observer) {
+        super.removeObserver(observer);
+        if (super.countObservers() == 0) {
+            logger.debug("Stop the plugin monitoring.");
+            stopObservation();
+        }
+    }
 
     /**
      * Compare the name of the current ReaderPlugin to the name of the ReaderPlugin provided in

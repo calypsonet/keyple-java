@@ -24,9 +24,9 @@ import org.slf4j.LoggerFactory;
 /**
  * Test Virtual Reader Service with stub plugin and hoplink SE
  */
-public class VirtualReaderInsertTest extends VirtualReaderBaseTest {
+public class VirtualReaderEventTest extends VirtualReaderBaseTest {
 
-    private static final Logger logger = LoggerFactory.getLogger(VirtualReaderInsertTest.class);
+    private static final Logger logger = LoggerFactory.getLogger(VirtualReaderEventTest.class);
 
 
     /*
@@ -117,6 +117,9 @@ public class VirtualReaderInsertTest extends VirtualReaderBaseTest {
         lock.await(5, TimeUnit.SECONDS);
 
         Assert.assertEquals(0, lock.getCount());
+
+        //https://github.com/calypsonet/keyple-java/issues/420
+        //Assert.assertEquals(0, virtualReaderService.getPlugin().getReaders().size());
     }
 
 

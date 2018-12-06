@@ -9,24 +9,8 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  ********************************************************************************/
-package org.eclipse.keyple.seproxy;
+package org.eclipse.keyple.plugin.remotese.transport;
 
-
-
-import org.eclipse.keyple.seproxy.message.ApduRequest;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.junit.MockitoJUnitRunner;
-
-@RunWith(MockitoJUnitRunner.class)
-public class AbstractApduBufferTest {
-    @Test
-    public void getBytes() {
-        byte[] command = new byte[3];
-        command[0] = (byte) 0x01;
-        ApduRequest request = new ApduRequest(command, true);
-        Assert.assertEquals(command, request.getBytes());
-    }
-
+public interface RemoteMethodTxCallback<T> {
+    void get(T response, KeypleRemoteException exception);
 }

@@ -33,7 +33,7 @@ public enum RemoteMethod {
     // ****** Reverse Lookup Implementation************//
 
     // Lookup table
-    private static final Map<String, RemoteMethod> lookup = new HashMap();
+    private static final Map<String, RemoteMethod> lookup = new HashMap<String, RemoteMethod>();
 
     // Populate the lookup table on loading time
     static {

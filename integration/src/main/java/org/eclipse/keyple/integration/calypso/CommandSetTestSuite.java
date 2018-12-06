@@ -11,11 +11,11 @@
  ********************************************************************************/
 package org.eclipse.keyple.integration.calypso;
 
-import static org.eclipse.keyple.integration.calypso.TestEngine.selectPO;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.SortedMap;
 import org.eclipse.keyple.calypso.command.po.PoRevision;
 import org.eclipse.keyple.calypso.command.po.parser.ReadDataStructure;
 import org.eclipse.keyple.calypso.command.po.parser.ReadRecordsRespPars;
@@ -59,18 +59,17 @@ public class CommandSetTestSuite {
 
 
     private static ReadRecordsRespPars readRecords(CalypsoPo calypsoPo, Byte fileSfi,
-            Byte recordNumber, boolean readOneRecordFlag) throws KeypleReaderException {
+            Byte recordNumber, ReadDataStructure readDataStructureValue)
+            throws KeypleReaderException {
 
         PoTransaction poTransaction =
                 new PoTransaction(TestEngine.poReader, calypsoPo, TestEngine.samReader, null);
 
         ReadRecordsRespPars readRecordsRespPars = poTransaction.prepareReadRecordsCmd(fileSfi,
-                readOneRecordFlag ? ReadDataStructure.SINGLE_RECORD_DATA
-                        : ReadDataStructure.MULTIPLE_RECORD_DATA,
-                (byte) recordNumber, String.format("SFI=%02X, recnbr=%d", fileSfi, recordNumber));
+                readDataStructureValue, (byte) recordNumber,
+                String.format("SFI=%02X, recnbr=%d", fileSfi, recordNumber));
 
-        boolean poProcessStatus = poTransaction.processOpening(
-                PoTransaction.ModificationMode.ATOMIC,
+        poTransaction.processOpening(PoTransaction.ModificationMode.ATOMIC,
                 PoTransaction.SessionAccessLevel.SESSION_LVL_DEBIT, (byte) 0x00, (byte) 0x00);
 
         poTransaction.processClosing(TransmissionMode.CONTACTLESS, ChannelState.KEEP_OPEN);
@@ -161,7 +160,7 @@ public class CommandSetTestSuite {
 
         try {
 
-            PoFileStructureInfo poData = selectPO();
+            PoFileStructureInfo poData = TestEngine.selectPO();
 
             String genericCounterData =
                     "00000A 000100 000B00 010000 0C0000 0000B0 00C000 0F0000 00000D 0000";
@@ -174,9 +173,9 @@ public class CommandSetTestSuite {
             updateRecord((CalypsoPo) poData.getMatchingSe(), poData.getCountersFileData().getSfi(),
                     (byte) 0x01, counterData);
 
-            ReadRecordsRespPars readRecordsRespPars =
-                    readRecords((CalypsoPo) poData.getMatchingSe(),
-                            poData.getCountersFileData().getSfi(), (byte) 0x01, true);
+            ReadRecordsRespPars readRecordsRespPars = readRecords(
+                    (CalypsoPo) poData.getMatchingSe(), poData.getCountersFileData().getSfi(),
+                    (byte) 0x01, ReadDataStructure.SINGLE_RECORD_DATA);
             byte[] updatedCounterData = readRecordsRespPars.getRecords().get(1);
 
             Assertions.assertArrayEquals(counterData, updatedCounterData);
@@ -187,12 +186,9 @@ public class CommandSetTestSuite {
 
                     readRecordsRespPars = readRecords((CalypsoPo) poData.getMatchingSe(),
                             (byte) (poData.getSimulatedCountersFileData().getSfi() + i),
-                            (byte) 0x01, true);
+                            (byte) 0x01, ReadDataStructure.SINGLE_COUNTER);
 
-                    byte[] updatedSingleCounterData = readRecordsRespPars.getRecords().get(1);
-
-                    int updatedCounterValue =
-                            getCounterValueFromByteArray(updatedSingleCounterData, 1);
+                    int updatedCounterValue = readRecordsRespPars.getCounters().get(0);
 
                     int expectedCounterValue = getCounterValueFromByteArray(counterData, i + 1);
 
@@ -214,17 +210,17 @@ public class CommandSetTestSuite {
 
         try {
 
-            PoFileStructureInfo poData = selectPO();
+            PoFileStructureInfo poData = TestEngine.selectPO();
 
-            ReadRecordsRespPars readRecordsRespPars =
-                    readRecords((CalypsoPo) poData.getMatchingSe(),
-                            poData.getCountersFileData().getSfi(), (byte) 0x01, true);
+            ReadRecordsRespPars readRecordsRespPars = readRecords(
+                    (CalypsoPo) poData.getMatchingSe(), poData.getCountersFileData().getSfi(),
+                    (byte) 0x01, ReadDataStructure.MULTIPLE_COUNTER);
 
-            byte[] initialCounterData = readRecordsRespPars.getRecords().get(1);
+            SortedMap<Integer, Integer> initialCounterData = readRecordsRespPars.getCounters();
 
             for (int i = 0; i < (poData.getCountersFileData().getRecSize() / 3); i++) {
 
-                int counterValue = getCounterValueFromByteArray(initialCounterData, i + 1);
+                int counterValue = initialCounterData.get(i);
 
                 if (counterValue > 0) {
 
@@ -234,10 +230,11 @@ public class CommandSetTestSuite {
                             valueToDecrement);
 
                     readRecordsRespPars = readRecords((CalypsoPo) poData.getMatchingSe(),
-                            poData.getCountersFileData().getSfi(), (byte) 0x01, true);
+                            poData.getCountersFileData().getSfi(), (byte) 0x01,
+                            ReadDataStructure.MULTIPLE_COUNTER);
 
-                    byte[] updatedCounters = readRecordsRespPars.getRecords().get(1);
-                    int finalValue = getCounterValueFromByteArray(updatedCounters, i + 1);
+                    SortedMap<Integer, Integer> updatedCounters = readRecordsRespPars.getCounters();
+                    int finalValue = updatedCounters.get(i);
 
                     Assertions.assertEquals(counterValue - valueToDecrement, finalValue);
 
@@ -245,10 +242,9 @@ public class CommandSetTestSuite {
 
                         readRecordsRespPars = readRecords((CalypsoPo) poData.getMatchingSe(),
                                 (byte) (poData.getSimulatedCountersFileData().getSfi() + i),
-                                (byte) 0x01, true);
+                                (byte) 0x01, ReadDataStructure.SINGLE_COUNTER);
 
-                        updatedCounters = readRecordsRespPars.getRecords().get(1);
-                        finalValue = getCounterValueFromByteArray(updatedCounters, 1);
+                        finalValue = readRecordsRespPars.getCounters().get(0);
 
                         Assertions.assertEquals(counterValue - valueToDecrement, finalValue);
                     }
@@ -268,17 +264,18 @@ public class CommandSetTestSuite {
 
         try {
 
-            PoFileStructureInfo poData = selectPO();
+            PoFileStructureInfo poData = TestEngine.selectPO();
 
-            ReadRecordsRespPars readRecordsRespPars =
-                    readRecords((CalypsoPo) poData.getMatchingSe(),
-                            poData.getCountersFileData().getSfi(), (byte) 0x01, true);
+            ReadRecordsRespPars readRecordsRespPars = readRecords(
+                    (CalypsoPo) poData.getMatchingSe(), poData.getCountersFileData().getSfi(),
+                    (byte) 0x01, ReadDataStructure.MULTIPLE_COUNTER);
 
-            byte[] initialCounterData = readRecordsRespPars.getRecords().get(1);
+            SortedMap<Integer, Integer> initialCounterData = readRecordsRespPars.getCounters();
 
             for (int i = 0; i < (poData.getCountersFileData().getRecSize() / 3); i++) {
 
-                int counterValue = getCounterValueFromByteArray(initialCounterData, i + 1);
+                int counterValue = initialCounterData.get(i);
+
                 int maxValue = 0xFFFFFF;
 
                 if (counterValue < maxValue) {
@@ -289,11 +286,12 @@ public class CommandSetTestSuite {
                             valueToIncrement);
 
                     readRecordsRespPars = readRecords((CalypsoPo) poData.getMatchingSe(),
-                            poData.getCountersFileData().getSfi(), (byte) 0x01, true);
+                            poData.getCountersFileData().getSfi(), (byte) 0x01,
+                            ReadDataStructure.MULTIPLE_COUNTER);
 
-                    byte[] updatedCounters = readRecordsRespPars.getRecords().get(1);
+                    SortedMap<Integer, Integer> updatedCounters = readRecordsRespPars.getCounters();
 
-                    int finalValue = getCounterValueFromByteArray(updatedCounters, i + 1);
+                    int finalValue = updatedCounters.get(i);
 
                     Assertions.assertEquals(counterValue + valueToIncrement, finalValue);
 
@@ -301,11 +299,9 @@ public class CommandSetTestSuite {
 
                         readRecordsRespPars = readRecords((CalypsoPo) poData.getMatchingSe(),
                                 (byte) (poData.getSimulatedCountersFileData().getSfi() + i),
-                                (byte) 0x01, true);
+                                (byte) 0x01, ReadDataStructure.SINGLE_COUNTER);
 
-                        updatedCounters = readRecordsRespPars.getRecords().get(1);
-
-                        finalValue = getCounterValueFromByteArray(updatedCounters, 1);
+                        finalValue = readRecordsRespPars.getCounters().get(0);
 
                         Assertions.assertEquals(counterValue + valueToIncrement, finalValue);
                     }
@@ -327,7 +323,8 @@ public class CommandSetTestSuite {
         try {
 
             PoFileStructureInfo poData = TestEngine.selectPO();
-            Boolean readOneRecordFlag = false;
+            ReadDataStructure readDataStructureValue = ReadDataStructure.MULTIPLE_RECORD_DATA;
+
             PoRevision poRevision = (new PoTransaction(TestEngine.poReader,
                     (CalypsoPo) poData.getMatchingSe(), TestEngine.samReader, null)).getRevision();
 
@@ -345,12 +342,12 @@ public class CommandSetTestSuite {
             }
 
             if (poRevision == PoRevision.REV2_4) {
-                readOneRecordFlag = true;
+                readDataStructureValue = ReadDataStructure.SINGLE_RECORD_DATA;
             }
 
-            ReadRecordsRespPars readRecordsRespPars =
-                    readRecords((CalypsoPo) poData.getMatchingSe(),
-                            poData.getContractFileData().getSfi(), (byte) 0x01, readOneRecordFlag);
+            ReadRecordsRespPars readRecordsRespPars = readRecords(
+                    (CalypsoPo) poData.getMatchingSe(), poData.getContractFileData().getSfi(),
+                    (byte) 0x01, readDataStructureValue);
 
             if (poRevision == PoRevision.REV2_4) {
 
@@ -397,16 +394,17 @@ public class CommandSetTestSuite {
             appendRecord((CalypsoPo) poData.getMatchingSe(), poData.getEventFileData().getSfi(),
                     recordDataToAppend);
 
-            ReadRecordsRespPars readRecordsRespPars =
-                    readRecords((CalypsoPo) poData.getMatchingSe(),
-                            poData.getEventFileData().getSfi(), (byte) 0x01, true);
+            ReadRecordsRespPars readRecordsRespPars = readRecords(
+                    (CalypsoPo) poData.getMatchingSe(), poData.getEventFileData().getSfi(),
+                    (byte) 0x01, ReadDataStructure.SINGLE_RECORD_DATA);
 
             byte[] firstEventRecord = readRecordsRespPars.getRecords().get(1);
 
             Assertions.assertArrayEquals(recordDataToAppend, firstEventRecord);
 
             readRecordsRespPars = readRecords((CalypsoPo) poData.getMatchingSe(),
-                    poData.getEventFileData().getSfi(), (byte) 0x02, true);
+                    poData.getEventFileData().getSfi(), (byte) 0x02,
+                    ReadDataStructure.SINGLE_RECORD_DATA);
 
             byte[] secondEventRecord = readRecordsRespPars.getRecords().get(2);
 
@@ -449,15 +447,13 @@ public class CommandSetTestSuite {
                     0x01, String.format("SFI=%02X, index=1, decvalue=1",
                             poData.getCountersFileData().getSfi()));
 
-            poTransaction.processPoCommands(ChannelState.KEEP_OPEN);
-
             poTransaction.processClosing(TransmissionMode.CONTACTLESS, ChannelState.KEEP_OPEN);
 
             counterData[2] = 0x09;
 
-            ReadRecordsRespPars readRecordsRespPars =
-                    readRecords((CalypsoPo) poData.getMatchingSe(),
-                            poData.getCountersFileData().getSfi(), (byte) 0x01, true);
+            ReadRecordsRespPars readRecordsRespPars = readRecords(
+                    (CalypsoPo) poData.getMatchingSe(), poData.getCountersFileData().getSfi(),
+                    (byte) 0x01, ReadDataStructure.SINGLE_RECORD_DATA);
 
             byte[] updatedCounterData = readRecordsRespPars.getRecords().get(1);
 
@@ -499,15 +495,13 @@ public class CommandSetTestSuite {
                     0xFF, String.format("SFI=%02X, index=1, decvalue=255",
                             poData.getCountersFileData().getSfi()));
 
-            poTransaction.processPoCommands(ChannelState.KEEP_OPEN);
-
             poTransaction.processClosing(TransmissionMode.CONTACTLESS, ChannelState.KEEP_OPEN);
 
             counterData[2] = (byte) 0xFF;
 
-            ReadRecordsRespPars readRecordsRespPars =
-                    readRecords((CalypsoPo) poData.getMatchingSe(),
-                            poData.getCountersFileData().getSfi(), (byte) 0x01, true);
+            ReadRecordsRespPars readRecordsRespPars = readRecords(
+                    (CalypsoPo) poData.getMatchingSe(), poData.getCountersFileData().getSfi(),
+                    (byte) 0x01, ReadDataStructure.SINGLE_RECORD_DATA);
 
             byte[] updatedCounterData = readRecordsRespPars.getRecords().get(1);
 
@@ -547,24 +541,117 @@ public class CommandSetTestSuite {
                     recordDataToAppend,
                     String.format("SFI=%02X", poData.getEventFileData().getSfi()));
 
-            poTransaction.processPoCommands(ChannelState.KEEP_OPEN);
-
             poTransaction.processClosing(TransmissionMode.CONTACTLESS, ChannelState.KEEP_OPEN);
 
-            ReadRecordsRespPars readRecordsRespPars =
-                    readRecords((CalypsoPo) poData.getMatchingSe(),
-                            poData.getEventFileData().getSfi(), (byte) 0x01, true);
+            ReadRecordsRespPars readRecordsRespPars = readRecords(
+                    (CalypsoPo) poData.getMatchingSe(), poData.getEventFileData().getSfi(),
+                    (byte) 0x01, ReadDataStructure.SINGLE_RECORD_DATA);
 
             byte[] firstEventRecord = readRecordsRespPars.getRecords().get(1);
 
             Assertions.assertArrayEquals(recordDataToAppend, firstEventRecord);
 
             readRecordsRespPars = readRecords((CalypsoPo) poData.getMatchingSe(),
-                    poData.getEventFileData().getSfi(), (byte) 0x02, true);
+                    poData.getEventFileData().getSfi(), (byte) 0x02,
+                    ReadDataStructure.SINGLE_RECORD_DATA);
 
             byte[] secondEventRecord = readRecordsRespPars.getRecords().get(2);
 
             Assertions.assertArrayEquals(recordData, secondEventRecord);
+
+        } catch (Exception e) {
+
+            Assertions.fail("Exception caught: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+    }
+
+
+    @Test
+    public void testReadDataInOpenSession() {
+
+        try {
+
+            PoFileStructureInfo poData = TestEngine.selectPO();
+
+            PoTransaction poTransaction = new PoTransaction(TestEngine.poReader,
+                    (CalypsoPo) poData.getMatchingSe(), TestEngine.samReader, null);
+
+            byte[] recordData = new byte[poData.getEventFileData().getRecSize()];
+            Arrays.fill(recordData, (byte) (0xA5));
+
+            poTransaction.processOpening(PoTransaction.ModificationMode.ATOMIC,
+                    PoTransaction.SessionAccessLevel.SESSION_LVL_LOAD, (byte) 0x00, (byte) 0x00);
+
+            poTransaction.prepareUpdateRecordCmd(poData.getContractFileData().getSfi(),
+                    (byte) poData.getContractFileData().getRecNumb(), recordData,
+                    String.format("SFI=%02X, recnbr=%02X", poData.getContractFileData().getSfi(),
+                            poData.getContractFileData().getRecNumb()));
+
+            poTransaction.processPoCommands(ChannelState.KEEP_OPEN);
+
+            poTransaction.processClosing(TransmissionMode.CONTACTLESS, ChannelState.KEEP_OPEN);
+
+            poTransaction = new PoTransaction(TestEngine.poReader,
+                    (CalypsoPo) poData.getMatchingSe(), TestEngine.samReader, null);
+
+            poTransaction.processOpening(PoTransaction.ModificationMode.ATOMIC,
+                    PoTransaction.SessionAccessLevel.SESSION_LVL_DEBIT,
+                    poData.getContractFileData().getSfi(),
+                    (byte) poData.getContractFileData().getRecNumb());
+
+            poTransaction.processClosing(TransmissionMode.CONTACTLESS, ChannelState.KEEP_OPEN);
+
+            byte[] dataReadInSession = poTransaction.getOpenRecordDataRead();
+
+            Assertions.assertArrayEquals(recordData, dataReadInSession);
+
+        } catch (Exception e) {
+
+            Assertions.fail("Exception caught: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+    }
+
+
+    @Test
+    public void testWriteDataBeforeProcessOpening() {
+
+        try {
+
+            PoFileStructureInfo poData = TestEngine.selectPO();
+
+            PoTransaction poTransaction = new PoTransaction(TestEngine.poReader,
+                    (CalypsoPo) poData.getMatchingSe(), TestEngine.samReader, null);
+
+            byte[] recordData = new byte[poData.getEventFileData().getRecSize()];
+            Arrays.fill(recordData, (byte) (0xA9));
+
+            poTransaction.prepareUpdateRecordCmd(poData.getContractFileData().getSfi(),
+                    (byte) poData.getContractFileData().getRecNumb(), recordData,
+                    String.format("SFI=%02X, recnbr=%02X", poData.getContractFileData().getSfi(),
+                            poData.getContractFileData().getRecNumb()));
+
+            poTransaction.processOpening(PoTransaction.ModificationMode.ATOMIC,
+                    PoTransaction.SessionAccessLevel.SESSION_LVL_LOAD, (byte) 0x00, (byte) 0x00);
+
+            poTransaction.processClosing(TransmissionMode.CONTACTLESS, ChannelState.KEEP_OPEN);
+
+            poTransaction = new PoTransaction(TestEngine.poReader,
+                    (CalypsoPo) poData.getMatchingSe(), TestEngine.samReader, null);
+
+            poTransaction.processOpening(PoTransaction.ModificationMode.ATOMIC,
+                    PoTransaction.SessionAccessLevel.SESSION_LVL_DEBIT,
+                    poData.getContractFileData().getSfi(),
+                    (byte) poData.getContractFileData().getRecNumb());
+
+            poTransaction.processClosing(TransmissionMode.CONTACTLESS, ChannelState.KEEP_OPEN);
+
+            byte[] dataRead = poTransaction.getOpenRecordDataRead();
+
+            Assertions.assertArrayEquals(recordData, dataRead);
 
         } catch (Exception e) {
 

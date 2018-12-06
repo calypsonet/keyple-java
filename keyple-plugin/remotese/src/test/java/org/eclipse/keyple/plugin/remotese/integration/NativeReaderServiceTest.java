@@ -92,7 +92,7 @@ public class NativeReaderServiceTest {
 
 
         // delete stubReader
-        stubPlugin.getInstance().unplugReader(nativeReader.getName());
+        stubPlugin.unplugReader(nativeReader.getName());
 
         Thread.sleep(500);
 

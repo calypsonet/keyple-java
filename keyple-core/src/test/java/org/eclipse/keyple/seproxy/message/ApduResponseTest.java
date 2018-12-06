@@ -9,15 +9,13 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  ********************************************************************************/
-package org.eclipse.keyple.seproxy;
+package org.eclipse.keyple.seproxy.message;
 
 import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import org.eclipse.keyple.seproxy.message.AnswerToReset;
-import org.eclipse.keyple.seproxy.message.ApduResponse;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.junit.Before;
 import org.junit.Test;

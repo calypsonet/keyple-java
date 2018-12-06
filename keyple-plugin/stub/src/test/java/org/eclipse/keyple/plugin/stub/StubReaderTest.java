@@ -50,6 +50,8 @@ public class StubReaderTest {
 
     StubReader reader;
 
+    StubReader spyReader;
+
     Logger logger = LoggerFactory.getLogger(StubReaderTest.class);
 
     // init before each test
@@ -132,6 +134,9 @@ public class StubReaderTest {
 
         // lock thread for 2 seconds max to wait for the event
         lock.await(2, TimeUnit.SECONDS);
+        Assert.assertEquals(0, lock.getCount()); // should be 0 because countDown is called by
+                                                 // observer
+
     }
 
     @Test
@@ -153,13 +158,13 @@ public class StubReaderTest {
                         event.getDefaultSelectionResponse().getSelectionSeResponseSet()
                                 .getSingleResponse().getSelectionStatus().getAtr().getBytes(),
                         hoplinkSE().getATR());
-                /*
-                 * TODO add FCI to StubSecureElement
-                 * Assert.assertArrayEquals(event.getDefaultSelectionResponse().
-                 * getSelectionSeResponseSet()
-                 * .getSingleResponse().getSelectionStatus().getFci().getBytes(),
-                 * hoplinkSE().getFci()); // remove the SE to handle the notification success
-                 */
+
+                // TODO add FCI to StubSecureElement
+                // Assert.assertArrayEquals(
+                // event.getDefaultSelectionResponse().getSelectionSeResponseSet()
+                // .getSingleResponse().getSelectionStatus().getFci().getBytes(),
+                // hoplinkSE().getFci());
+
                 logger.debug("match event is correct");
                 // unlock thread
                 lock.countDown();
@@ -182,6 +187,89 @@ public class StubReaderTest {
 
         // lock thread for 2 seconds max to wait for the event
         lock.await(2, TimeUnit.SECONDS);
+        Assert.assertEquals(0, lock.getCount()); // should be 0 because countDown is called by
+                                                 // observer
+
+    }
+
+
+    @Test
+    public void testInsertNotMatching_MatchedOnly() throws InterruptedException {
+
+        // CountDown lock
+        final CountDownLatch lock = new CountDownLatch(1);
+
+        // add observer
+        reader.addObserver(new ObservableReader.ReaderObserver() {
+            @Override
+            public void update(ReaderEvent event) {
+                // no event is thrown
+                lock.countDown();// should not be called
+            }
+        });
+        String poAid = "A000000291A000000192";// not matching poAid
+
+        SeSelection seSelection = new SeSelection(reader);
+
+        SeSelector seSelector = new SeSelector(ByteArrayUtils.fromHex(poAid),
+                SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN, Protocol.ANY, "AID: " + poAid);
+
+        seSelection.prepareSelection(seSelector);
+
+        ((ObservableReader) reader).setDefaultSelectionRequest(seSelection.getSelectionOperation(),
+                ObservableReader.NotificationMode.MATCHED_ONLY);
+
+        // test
+        reader.insertSe(hoplinkSE());
+
+
+        // lock thread for 2 seconds max to wait for the event
+        lock.await(2, TimeUnit.SECONDS);
+        Assert.assertEquals(1, lock.getCount()); // should be 1 because countDown is never called
+    }
+
+    @Test
+    public void testInsertNotMatching_Always() throws InterruptedException {
+
+        // CountDown lock
+        final CountDownLatch lock = new CountDownLatch(1);
+
+        // add observer
+        reader.addObserver(new ObservableReader.ReaderObserver() {
+            @Override
+            public void update(ReaderEvent event) {
+                Assert.assertEquals(event.getReaderName(), reader.getName());
+                Assert.assertEquals(event.getPluginName(), StubPlugin.getInstance().getName());
+
+                // an SE_INSERTED event is thrown
+                Assert.assertEquals(ReaderEvent.EventType.SE_INSERTED, event.getEventType());
+
+                // card has not match
+                Assert.assertFalse(event.getDefaultSelectionResponse().getSelectionSeResponseSet()
+                        .getSingleResponse().getSelectionStatus().hasMatched());
+
+                lock.countDown();// should be called
+            }
+        });
+        String poAid = "A000000291A000000192";// not matching poAid
+
+        SeSelection seSelection = new SeSelection(reader);
+
+        SeSelector seSelector = new SeSelector(ByteArrayUtils.fromHex(poAid),
+                SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN, Protocol.ANY, "AID: " + poAid);
+
+        seSelection.prepareSelection(seSelector);
+
+        ((ObservableReader) reader).setDefaultSelectionRequest(seSelection.getSelectionOperation(),
+                ObservableReader.NotificationMode.ALWAYS);
+
+        // test
+        reader.insertSe(hoplinkSE());
+
+        // lock thread for 2 seconds max to wait for the event
+        lock.await(2, TimeUnit.SECONDS);
+        Assert.assertEquals(0, lock.getCount()); // should be 0 because countDown is called by
+                                                 // observer
     }
 
     @Test
@@ -194,6 +282,9 @@ public class StubReaderTest {
         reader.addObserver(new ObservableReader.ReaderObserver() {
             @Override
             public void update(ReaderEvent event) {
+
+                Assert.assertEquals(ReaderEvent.EventType.SE_INSERTED, event.getEventType());
+
                 SeSelection seSelection = new SeSelection(reader);
                 SeSelector seSelector =
                         new SeSelector("3B.*", ChannelState.KEEP_OPEN, Protocol.ANY, "Test ATR");
@@ -563,9 +654,27 @@ public class StubReaderTest {
     }
 
 
+    /**
+     * AbstractObservableReader methods test
+     * 
+     * @throws Exception
+     */
+
+
+    ObservableReader.ReaderObserver obs1 = new ObservableReader.ReaderObserver() {
+        @Override
+        public void update(ReaderEvent readerEvent) {}
+    };
+
+    ObservableReader.ReaderObserver obs2 = new ObservableReader.ReaderObserver() {
+        @Override
+        public void update(ReaderEvent readerEvent) {}
+    };
+
+
 
     /*
-     * HELPERS
+     * HELPER METHODS
      */
 
 
@@ -740,6 +849,10 @@ public class StubReaderTest {
             public byte[] processApdu(byte[] apduIn) throws KeypleIOReaderException {
                 addHexCommand("00 A4 04 00 0A A0 00 00 02 91 A0 00 00 01 91 00",
                         "6F25840BA000000291A00000019102A516BF0C13C70800000000C0E11FA653070A3C230C1410019000");
+
+                addHexCommand("00 A4 04 00 0A A0 00 00 02 91 A0 00 00 01 92 00", "6A82");
+
+
                 addHexCommand("00 B2 01 A4 20",
                         "00000000000000000000000000000000000000000000000000000000000000009000");
 
