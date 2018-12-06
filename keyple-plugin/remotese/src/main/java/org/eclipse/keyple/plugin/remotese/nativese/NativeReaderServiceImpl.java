@@ -20,6 +20,7 @@ import org.eclipse.keyple.plugin.remotese.transport.*;
 import org.eclipse.keyple.plugin.remotese.transport.json.JsonParser;
 import org.eclipse.keyple.seproxy.ReaderPlugin;
 import org.eclipse.keyple.seproxy.SeProxyService;
+import org.eclipse.keyple.seproxy.event.ObservableReader;
 import org.eclipse.keyple.seproxy.event.ReaderEvent;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderNotFoundException;
 import org.eclipse.keyple.seproxy.message.ProxyReader;
@@ -32,7 +33,8 @@ import org.slf4j.LoggerFactory;
  * Native Service to manage local reader and connect them to Remote Service
  *
  */
-public class NativeReaderServiceImpl implements NativeReaderService, DtoHandler {
+public class NativeReaderServiceImpl
+        implements NativeReaderService, DtoHandler, ObservableReader.ReaderObserver {
 
     private static final Logger logger = LoggerFactory.getLogger(NativeReaderServiceImpl.class);
 
@@ -53,7 +55,7 @@ public class NativeReaderServiceImpl implements NativeReaderService, DtoHandler 
 
 
     /**
-     * Listens to a TransportNode to dispatchDTO
+     * HandleDTO from a TransportNode onDto() method will be called by the transportNode
      * 
      * @param node : network entry point that receives DTO
      */
@@ -73,7 +75,7 @@ public class NativeReaderServiceImpl implements NativeReaderService, DtoHandler 
         KeypleDto keypleDTO = transportDto.getKeypleDTO();
         TransportDto out;
 
-        logger.debug("onDto {}", KeypleDtoHelper.toJson(keypleDTO));
+        logger.trace("onDto {}", KeypleDtoHelper.toJson(keypleDTO));
 
         RemoteMethod method = RemoteMethod.get(keypleDTO.getAction());
         logger.debug("Remote Method called : {} - isRequest : {}", method, keypleDTO.isRequest());
@@ -90,7 +92,7 @@ public class NativeReaderServiceImpl implements NativeReaderService, DtoHandler 
                                 new RmConnectReaderParser(this);
                         String sessionId = rmConnectReaderParser.parseResponse(keypleDTO);
                         logger.info(
-                                "A virtual reader has been created on Master side with sessionId {}",
+                                "Native Reader {} has been connected to Master with sessionId {}",keypleDTO.getNativeReaderName(),
                                 sessionId);
                     } catch (KeypleRemoteReaderException e) {
                         e.printStackTrace();
@@ -105,7 +107,8 @@ public class NativeReaderServiceImpl implements NativeReaderService, DtoHandler 
                     throw new IllegalStateException(
                             "a READER_DISCONNECT request has been received by NativeReaderService");
                 } else {
-                    // todo
+                    logger.info(
+                            "Native Reader {} has been disconnected from Master",keypleDTO.getNativeReaderName());
                     out = transportDto.nextTransportDTO(KeypleDtoHelper.NoResponse());
                 }
                 break;
@@ -124,17 +127,13 @@ public class NativeReaderServiceImpl implements NativeReaderService, DtoHandler 
 
 
             default:
-                if (KeypleDtoHelper.isACK(keypleDTO)) {
-                    logger.trace("**** ACK ****");
-                } else {
-                    logger.warn("**** ERROR - UNRECOGNIZED ****");
-                    logger.warn("Receive unrecognized message action : {} {} {} {}",
-                            keypleDTO.getAction(), keypleDTO.getSessionId(), keypleDTO.getBody(),
-                            keypleDTO.isRequest());
-                    throw new IllegalStateException(
-                            "a  ERROR - UNRECOGNIZED request has been received by NativeReaderService");
-                }
-                out = transportDto.nextTransportDTO(KeypleDtoHelper.NoResponse());
+
+                logger.warn("**** ERROR - UNRECOGNIZED ****");
+                logger.warn("Receive unrecognized message action : {} {} {} {}",
+                        keypleDTO.getAction(), keypleDTO.getSessionId(), keypleDTO.getBody(),
+                        keypleDTO.isRequest());
+                throw new IllegalStateException(
+                        "a  ERROR - UNRECOGNIZED request has been received by NativeReaderService");
         }
 
         logger.debug("onDto response to be sent {}", KeypleDtoHelper.toJson(out.getKeypleDTO()));
@@ -161,6 +160,7 @@ public class NativeReaderServiceImpl implements NativeReaderService, DtoHandler 
     public void disconnectReader(ProxyReader localReader, String clientNodeId)
             throws KeypleRemoteException {
         logger.info("disconnectReader {} from device {}", localReader.getName(), clientNodeId);
+
         dtoSender.sendDTO(new RmDisconnectReaderInvoker(localReader, clientNodeId).dto());
 
         // stop propagating the local reader events
@@ -178,8 +178,8 @@ public class NativeReaderServiceImpl implements NativeReaderService, DtoHandler 
     public ProxyReader findLocalReader(String nativeReaderName)
             throws KeypleReaderNotFoundException {
         logger.debug("Find local reader by name {} in {} plugin(s)", nativeReaderName,
-                seProxyService.getInstance().getPlugins().size());
-        for (ReaderPlugin plugin : seProxyService.getInstance().getPlugins()) {
+                seProxyService.getPlugins().size());
+        for (ReaderPlugin plugin : seProxyService.getPlugins()) {
             try {
                 return (ProxyReader) plugin.getReader(nativeReaderName);
             } catch (KeypleReaderNotFoundException e) {

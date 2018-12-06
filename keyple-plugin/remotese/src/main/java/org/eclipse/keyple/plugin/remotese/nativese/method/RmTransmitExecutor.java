@@ -25,7 +25,7 @@ public class RmTransmitExecutor implements RemoteMethodExecutor {
 
     private static final Logger logger = LoggerFactory.getLogger(RmTransmitExecutor.class);
 
-    NativeReaderServiceImpl nativeReaderService;
+    private final NativeReaderServiceImpl nativeReaderService;
 
     public RmTransmitExecutor(NativeReaderServiceImpl nativeReaderService) {
         this.nativeReaderService = nativeReaderService;
@@ -41,11 +41,11 @@ public class RmTransmitExecutor implements RemoteMethodExecutor {
         SeRequestSet seRequestSet =
                 JsonParser.getGson().fromJson(keypleDto.getBody(), SeRequestSet.class);
         String nativeReaderName = keypleDto.getNativeReaderName();
+        logger.trace("Execute locally seRequestSet : {}", seRequestSet);
 
         try {
             // find native reader by name
-            ProxyReader reader =
-                    (ProxyReader) nativeReaderService.findLocalReader(nativeReaderName);
+            ProxyReader reader = nativeReaderService.findLocalReader(nativeReaderName);
 
             // execute transmitSet
             seResponseSet = reader.transmitSet(seRequestSet);

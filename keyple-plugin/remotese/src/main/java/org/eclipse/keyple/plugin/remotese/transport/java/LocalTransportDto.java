@@ -17,8 +17,8 @@ import org.eclipse.keyple.plugin.remotese.transport.TransportDto;
 
 public class LocalTransportDto implements TransportDto {
 
-    KeypleDto keypleDto;
-    LocalClient theClient;
+    private final KeypleDto keypleDto;
+    private final LocalClient theClient;
 
 
     public LocalTransportDto(KeypleDto keypleDto, LocalClient theClient) {
@@ -40,9 +40,5 @@ public class LocalTransportDto implements TransportDto {
         return new LocalTransportDto(keypleDto, theClient);
     }
 
-    @Override
-    public DtoSender getDtoSender() {
-        // not used
-        return null;
-    }
+
 }

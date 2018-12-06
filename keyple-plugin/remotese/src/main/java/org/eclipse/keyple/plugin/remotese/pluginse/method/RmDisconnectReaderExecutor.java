@@ -23,7 +23,7 @@ public class RmDisconnectReaderExecutor implements RemoteMethodExecutor {
     private static final Logger logger = LoggerFactory.getLogger(RmDisconnectReaderExecutor.class);
 
 
-    RemoteSePlugin plugin;
+    private final RemoteSePlugin plugin;
 
     public RmDisconnectReaderExecutor(RemoteSePlugin plugin) {
         this.plugin = plugin;
@@ -38,7 +38,7 @@ public class RmDisconnectReaderExecutor implements RemoteMethodExecutor {
         String clientNodeId = keypleDto.getNodeId();
 
         try {
-            plugin.disconnectRemoteReader(nativeReaderName);// todo find by reader + nodeId
+            plugin.disconnectRemoteReader(nativeReaderName);
             return transportDto
                     .nextTransportDTO(new KeypleDto(RemoteMethod.READER_DISCONNECT.getName(), "{}",
                             false, null, nativeReaderName, null, clientNodeId));
