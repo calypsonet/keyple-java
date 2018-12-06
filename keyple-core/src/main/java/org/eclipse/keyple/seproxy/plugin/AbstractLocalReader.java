@@ -62,7 +62,7 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
      * @throws KeypleApplicationSelectionException if the application selection fails
      */
     protected abstract SelectionStatus openLogicalChannelAndSelect(SeRequest.Selector selector,
-                                                                   Set<Integer> successfulSelectionStatusCodes)
+            Set<Integer> successfulSelectionStatusCodes)
             throws KeypleApplicationSelectionException, KeypleReaderException;
 
     /**
@@ -105,7 +105,7 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
      * @param notificationMode the notification mode enum (ALWAYS or MATCHED_ONLY)
      */
     public void setDefaultSelectionRequest(SelectionRequest defaultSelectionRequest,
-                                           ObservableReader.NotificationMode notificationMode) {
+            ObservableReader.NotificationMode notificationMode) {
         this.defaultSelectionRequest = defaultSelectionRequest;
         this.notificationMode = notificationMode;
     };
@@ -167,6 +167,9 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
                                 ReaderEvent.EventType.SE_MATCHED,
                                 new SelectionResponse(seResponseSet)));
                         presenceNotified = true;
+                    } else {
+                        /* the SE did not match, close the logical channel */
+                        closeLogicalChannel();
                     }
                 } else {
                     /* notify an SE_INSERTED event with the received response */
@@ -437,8 +440,8 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
                 if (((SeRequest.AidSelector) seRequest.getSelector())
                         .getAidToSelect().length >= aidCurrentlySelected.length
                         && aidCurrentlySelected.equals(Arrays.copyOfRange(
-                        ((SeRequest.AidSelector) seRequest.getSelector()).getAidToSelect(),
-                        0, aidCurrentlySelected.length))) {
+                                ((SeRequest.AidSelector) seRequest.getSelector()).getAidToSelect(),
+                                0, aidCurrentlySelected.length))) {
                     // the AID changed, close the logical channel
                     if (logger.isTraceEnabled()) {
                         logger.trace(
