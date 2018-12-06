@@ -1,6 +1,21 @@
+/********************************************************************************
+ * Copyright (c) 2018 Calypso Networks Association https://www.calypsonet-asso.org/
+ *
+ * See the NOTICE file(s) distributed with this work for additional information regarding copyright
+ * ownership.
+ *
+ * This program and the accompanying materials are made available under the terms of the Eclipse
+ * Public License 2.0 which is available at http://www.eclipse.org/legal/epl-2.0
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ ********************************************************************************/
 package org.eclipse.keyple.seproxy.plugin;
 
 
+import static org.mockito.Mockito.doAnswer;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.CountDownLatch;
 import org.eclipse.keyple.CoreBaseTest;
 import org.eclipse.keyple.seproxy.event.ObservableReader;
 import org.eclipse.keyple.seproxy.event.ReaderEvent;
@@ -20,19 +35,14 @@ import org.mockito.stubbing.Answer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.CountDownLatch;
-
-import static org.mockito.Mockito.doAnswer;
-
 /**
  * Test methods linked to observability
  */
 @RunWith(MockitoJUnitRunner.class)
 public class AbstractObservableReaderTest extends CoreBaseTest {
 
-    private static final Logger logger = LoggerFactory.getLogger(AbstractObservableReaderTest.class);
+    private static final Logger logger =
+            LoggerFactory.getLogger(AbstractObservableReaderTest.class);
 
 
     final String PLUGIN_NAME = "abstractObservablePluginTest";
@@ -47,7 +57,7 @@ public class AbstractObservableReaderTest extends CoreBaseTest {
     CountDownLatch stopObservationCall;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         logger.info("------------------------------");
         logger.info("Test {}", name.getMethodName() + "");
         logger.info("------------------------------");
@@ -60,40 +70,39 @@ public class AbstractObservableReaderTest extends CoreBaseTest {
      */
 
     @Test
-    public void testAddObserver() throws Exception {
+    public void testAddObserver() {
         startObservationCall = new CountDownLatch(5);
         stopObservationCall = new CountDownLatch(5);
         spyReader.addObserver(obs1);
         Assert.assertEquals(1, spyReader.countObservers());
-        Assert.assertEquals(4, startObservationCall.getCount());//should be called once
-        Assert.assertEquals(5, stopObservationCall.getCount());//should not be called
+        Assert.assertEquals(4, startObservationCall.getCount());// should be called once
+        Assert.assertEquals(5, stopObservationCall.getCount());// should not be called
 
     }
 
     @Test
-    public void testRemoveObserver() throws Exception {
+    public void testRemoveObserver() {
         startObservationCall = new CountDownLatch(5);
         stopObservationCall = new CountDownLatch(5);
         spyReader.addObserver(obs1);
         spyReader.removeObserver(obs1);
         Assert.assertEquals(0, spyReader.countObservers());
-        Assert.assertEquals(4, startObservationCall.getCount());//should be called once
-        Assert.assertEquals(4, stopObservationCall.getCount());//should be called once
+        Assert.assertEquals(4, startObservationCall.getCount());// should be called once
+        Assert.assertEquals(4, stopObservationCall.getCount());// should be called once
 
     }
 
     @Test
-    public void testAddRemoveObserver() throws Exception {
+    public void testAddRemoveObserver() {
         startObservationCall = new CountDownLatch(5);
         stopObservationCall = new CountDownLatch(5);
         spyReader.addObserver(obs1);
         spyReader.addObserver(obs2);
         spyReader.removeObserver(obs2);
         Assert.assertEquals(1, spyReader.countObservers());
-        Assert.assertEquals(4, startObservationCall.getCount());//should be called once
-        Assert.assertEquals(5, stopObservationCall.getCount());//should not be called
+        Assert.assertEquals(4, startObservationCall.getCount());// should be called once
+        Assert.assertEquals(5, stopObservationCall.getCount());// should not be called
     }
-
 
 
 
@@ -103,11 +112,14 @@ public class AbstractObservableReaderTest extends CoreBaseTest {
 
 
 
-    AbstractObservableReader getBlankAbstractObservableReader(String pluginName, String readerName) {
+    AbstractObservableReader getBlankAbstractObservableReader(String pluginName,
+            String readerName) {
 
         return new AbstractLocalReader(pluginName, readerName) {
             @Override
-            protected SelectionStatus openLogicalChannelAndSelect(SeRequest.Selector selector, Set<Integer> successfulSelectionStatusCodes) throws KeypleApplicationSelectionException, KeypleReaderException {
+            protected SelectionStatus openLogicalChannelAndSelect(SeRequest.Selector selector,
+                    Set<Integer> successfulSelectionStatusCodes)
+                    throws KeypleApplicationSelectionException, KeypleReaderException {
                 return null;
             }
 
@@ -122,7 +134,8 @@ public class AbstractObservableReaderTest extends CoreBaseTest {
             }
 
             @Override
-            protected boolean protocolFlagMatches(SeProtocol protocolFlag) throws KeypleReaderException {
+            protected boolean protocolFlagMatches(SeProtocol protocolFlag)
+                    throws KeypleReaderException {
                 return false;
             }
 
@@ -142,7 +155,8 @@ public class AbstractObservableReaderTest extends CoreBaseTest {
             }
 
             @Override
-            public void setParameter(String key, String value) throws IllegalArgumentException, KeypleBaseException {
+            public void setParameter(String key, String value)
+                    throws IllegalArgumentException, KeypleBaseException {
 
             }
         };
@@ -150,17 +164,17 @@ public class AbstractObservableReaderTest extends CoreBaseTest {
 
 
 
-    ObservableReader.ReaderObserver getObserver () {
-        return new ObservableReader.ReaderObserver(){
+    ObservableReader.ReaderObserver getObserver() {
+        return new ObservableReader.ReaderObserver() {
             @Override
-            public void update (ReaderEvent readerEvent){}
-        } ;
+            public void update(ReaderEvent readerEvent) {}
+        };
     }
 
 
-    void initSpyReader(){
+    void initSpyReader() {
 
-        //track when startObservation is called
+        // track when startObservation is called
         doAnswer(new Answer() {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
@@ -169,7 +183,7 @@ public class AbstractObservableReaderTest extends CoreBaseTest {
             }
         }).when(spyReader).startObservation();
 
-        //track when stopObservation is called
+        // track when stopObservation is called
         doAnswer(new Answer() {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {

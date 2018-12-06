@@ -13,7 +13,6 @@ package org.eclipse.keyple.seproxy.event;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import org.eclipse.keyple.seproxy.event.ReaderEvent;
 import org.junit.Test;
 
 /**

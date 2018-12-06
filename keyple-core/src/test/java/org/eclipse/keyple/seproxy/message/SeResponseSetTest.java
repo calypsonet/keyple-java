@@ -14,8 +14,6 @@ package org.eclipse.keyple.seproxy.message;
 import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.eclipse.keyple.seproxy.message.*;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;

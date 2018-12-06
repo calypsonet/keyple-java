@@ -15,11 +15,7 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-
 import org.eclipse.keyple.seproxy.ChannelState;
-import org.eclipse.keyple.seproxy.message.ApduRequest;
-import org.eclipse.keyple.seproxy.message.ApduRequestTest;
-import org.eclipse.keyple.seproxy.message.SeRequest;
 import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
 import org.eclipse.keyple.seproxy.protocol.Protocol;
 import org.eclipse.keyple.seproxy.protocol.SeProtocol;
