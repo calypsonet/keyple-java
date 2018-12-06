@@ -409,11 +409,15 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
     protected final SeResponse processSeRequest(SeRequest seRequest)
             throws IllegalStateException, KeypleReaderException {
         boolean previouslyOpen = true;
-        SelectionStatus selectionStatus;
+        SelectionStatus selectionStatus = null;
 
         List<ApduResponse> apduResponseList = new ArrayList<ApduResponse>();
 
-        /* unless the selector is null, we try to open a logical channel */
+        /*
+         * unless the selector is null, we try to open a logical channel; if the channel was open
+         * and the PO is still matching we won't redo the selection and just use the current
+         * selection status
+         */
         if (seRequest.getSelector() != null) {
             /* check if AID changed if the channel is already open */
             if (isLogicalChannelOpen()
@@ -442,11 +446,14 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
                                 this.getName(), ByteArrayUtils.toHex(aidCurrentlySelected),
                                 seRequest.getSelector());
                     }
+                    /* close the channel (will reset the current selection status) */
                     closeLogicalChannel();
                 }
+                /* keep the current selection status (may be null if the current PO didn't match) */
                 selectionStatus = currentSelectionStatus;
             }
 
+            /* open the channel and do the selection if needed */
             if (!isLogicalChannelOpen()) {
                 previouslyOpen = false;
 
@@ -476,8 +483,6 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
                     /* The selection process failed, close the logical channel */
                     closeLogicalChannel();
                 }
-            } else {
-                selectionStatus = null;
             }
         } else {
             /* selector is null, we expect that the logical channel was previously opened */
@@ -504,6 +509,11 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
                     throw ex;
                 }
             }
+        }
+
+        /* close the channel if requested */
+        if (!seRequest.isKeepChannelOpen()) {
+            closeLogicalChannel();
         }
 
         return new SeResponse(previouslyOpen, selectionStatus, apduResponseList);

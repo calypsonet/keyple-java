@@ -27,7 +27,7 @@ public interface TransportDto {
     KeypleDto getKeypleDTO();
 
     /**
-     * Embed a Keyple DTO into a new TransportDto with common information
+     * Embed a Keyple DTO into a new TransportDto with transport information
      * 
      * @param keypleDto : keyple DTO to be embedded
      * @return Transport DTO with embedded keyple DTO
@@ -40,8 +40,8 @@ public interface TransportDto {
      * 
      * @return DtoSender if any
      */
-    // todo refactor this, is this necessary?
-    DtoSender getDtoSender();
+    //not in used
+    //DtoSender getDtoSender();
 
 
 

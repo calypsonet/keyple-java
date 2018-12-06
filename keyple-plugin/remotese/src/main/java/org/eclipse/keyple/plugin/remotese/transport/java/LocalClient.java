@@ -22,8 +22,8 @@ import org.slf4j.LoggerFactory;
 public class LocalClient implements ClientNode {
 
     private static final Logger logger = LoggerFactory.getLogger(LocalClient.class);
-    private LocalServer theServer;
-    DtoHandler dtoHandler;
+    private final LocalServer theServer;
+    private DtoHandler dtoHandler;
 
     public LocalClient(LocalServer server) {
         this.theServer = server;
@@ -35,7 +35,7 @@ public class LocalClient implements ClientNode {
             // send back response
             this.sendDTO(response);
         } else {
-            throw new IllegalStateException("no DtoHanlder defined");
+            throw new IllegalStateException("no DtoHandler defined");
         }
     }
 

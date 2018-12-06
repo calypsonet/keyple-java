@@ -99,6 +99,14 @@ public final class SeSelection {
                         throw new IllegalStateException(
                                 "The number of selection responses exceeds the number of prepared selectors.");
                     }
+                } else {
+
+                    if (!matchingSeIterator.hasNext()) {
+                        throw new IllegalStateException(
+                                "The number of selection responses exceeds the number of prepared selectors.");
+                    }
+
+                    matchingSeIterator.next();
                 }
             } else {
                 if (matchingSeIterator.hasNext()) {

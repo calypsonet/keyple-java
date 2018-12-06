@@ -17,10 +17,10 @@ public class KeypleRemoteException extends KeypleBaseException {
 
     public KeypleRemoteException(String message, Throwable cause) {
         super(message, cause);
-    };
+    }
 
     public KeypleRemoteException(String message) {
         super(message);
-    };
+    }
 
 }

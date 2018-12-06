@@ -20,8 +20,9 @@ import com.google.gson.JsonPrimitive;
 
 public class RmConnectReaderExecutor implements RemoteMethodExecutor {
 
-    RemoteSePlugin plugin;
-    DtoSender dtoSender;
+
+    private final RemoteSePlugin plugin;
+    private final DtoSender dtoSender;
 
     public RmConnectReaderExecutor(RemoteSePlugin plugin, DtoSender dtoSender) {
         this.plugin = plugin;
