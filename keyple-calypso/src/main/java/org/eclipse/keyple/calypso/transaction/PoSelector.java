@@ -117,7 +117,7 @@ public final class PoSelector extends SeSelector {
          * other cases it is set to true
          */
         boolean readJustOneRecord =
-                !(readDataStructureEnum == readDataStructureEnum.MULTIPLE_RECORD_DATA);
+                !(readDataStructureEnum == ReadDataStructure.MULTIPLE_RECORD_DATA);
 
         seSelectionApduRequestList.add(new ReadRecordsCmdBuild(poClass, sfi, firstRecordNumber,
                 readJustOneRecord, (byte) expectedLength, extraInfo).getApduRequest());
