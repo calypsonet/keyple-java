@@ -197,6 +197,13 @@ public class NFCTestFragment extends Fragment implements ObservableReader.Reader
                 inflater.inflate(org.eclipse.keyple.example.android.nfc.R.layout.fragment_nfc_test,
                         container, false);
         mText = view.findViewById(org.eclipse.keyple.example.android.nfc.R.id.text);
+        mText.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                initTextView();
+                return true;
+            }
+        });
         initTextView();
         return view;
     }
@@ -323,7 +330,7 @@ public class NFCTestFragment extends Fragment implements ObservableReader.Reader
                     e1.fillInStackTrace();
                 } catch (Exception e) {
                     LOG.debug("Exception: " + e.getMessage());
-                    appendColoredText(mText, "Exception: " + e.getMessage(), Color.RED);
+                    appendColoredText(mText, "\nException: " + e.getMessage(), Color.RED);
                     e.fillInStackTrace();
                 }
             }
@@ -341,21 +348,14 @@ public class NFCTestFragment extends Fragment implements ObservableReader.Reader
     public void onDestroy() {
         super.onDestroy();
 
-        try {
-            LOG.debug("Remove task as an observer for ReaderEvents");
-            SeProxyService seProxyService = SeProxyService.getInstance();
-            SeReader reader = seProxyService.getPlugins().first().getReaders().first();
-            ((ObservableReader) reader).removeObserver(this);
+        LOG.debug("Remove task as an observer for ReaderEvents");
+        ((ObservableReader) reader).removeObserver(this);
 
-            // destroy AndroidNFC fragment
-            FragmentManager fm = getFragmentManager();
-            Fragment f = fm.findFragmentByTag(TAG_NFC_ANDROID_FRAGMENT);
-            if (f != null) {
-                fm.beginTransaction().remove(f).commit();
-            }
-
-        } catch (KeypleReaderException e) {
-            e.printStackTrace();
+        // destroy AndroidNFC fragment
+        FragmentManager fm = getFragmentManager();
+        Fragment f = fm.findFragmentByTag(TAG_NFC_ANDROID_FRAGMENT);
+        if (f != null) {
+            fm.beginTransaction().remove(f).commit();
         }
     }
 
