@@ -174,7 +174,7 @@ public final class CalypsoPo extends MatchingSe {
             return PoClass.LEGACY;
         } else {
             if (logger.isTraceEnabled()) {
-                logger.trace("PO revision = {}, PO class = {}", revision, PoClass.LEGACY);
+                logger.trace("PO revision = {}, PO class = {}", revision, PoClass.ISO);
             }
             return PoClass.ISO;
         }
