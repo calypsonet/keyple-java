@@ -140,6 +140,7 @@ public final class AndroidNfcReader extends AbstractSelectionLocalReader
      * 
      * @return the current transmission mode
      */
+    @Override
     public TransmissionMode getTransmissionMode() {
         return TransmissionMode.CONTACTLESS;
     }
