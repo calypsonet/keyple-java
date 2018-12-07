@@ -31,9 +31,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 
 
 /**
@@ -44,9 +42,8 @@ import android.support.annotation.RequiresApi;
  *
  *
  */
-@RequiresApi(api = Build.VERSION_CODES.N)
 public final class AndroidNfcReader extends AbstractSelectionLocalReader
-        implements NfcAdapter.ReaderCallback, NfcAdapter.OnTagRemovedListener {
+        implements NfcAdapter.ReaderCallback {
 
     private static final Logger LOG = LoggerFactory.getLogger(AndroidNfcReader.class);
 
@@ -166,13 +163,6 @@ public final class AndroidNfcReader extends AbstractSelectionLocalReader
         }
 
     }
-
-    // TODO check why the method is not called
-    @Override
-    public void onTagRemoved() {
-        cardRemoved();
-    }
-
 
     @Override
     public boolean isSePresent() {
