@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private DrawerLayout mDrawerLayout;
-
+    private NFCTestFragment nfcTestFragment;
 
 
     /**
@@ -76,7 +76,9 @@ public class MainActivity extends AppCompatActivity {
     private void activateNFCTestView() {
         // init NFC Test Fragment
         LOG.debug("Insert NFC Test View Fragment");
-        NFCTestFragment nfcTestFragment = NFCTestFragment.newInstance();
+        if (nfcTestFragment == null) {
+            nfcTestFragment = NFCTestFragment.newInstance();
+        }
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(org.eclipse.keyple.example.android.nfc.R.id.fragment_container,
