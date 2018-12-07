@@ -109,7 +109,7 @@ public class NFCTestFragment extends Fragment implements ObservableReader.Reader
             ((ObservableReader) reader).addObserver(this);
 
             reader.setParameter("FLAG_READER_PRESENCE_CHECK_DELAY", "100");
-            reader.setParameter("FLAG_READER_NO_PLATFORM_SOUNDS", "1");
+            reader.setParameter("FLAG_READER_NO_PLATFORM_SOUNDS", "0");
             reader.setParameter("FLAG_READER_SKIP_NDEF_CHECK", "0");
 
 
