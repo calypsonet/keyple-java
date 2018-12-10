@@ -1,0 +1,102 @@
+plugins {
+    id 'maven-publish'
+}
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.6
+
+project.version = '1.0.0-RC4'
+
+apply plugin: 'java-library'
+
+
+//copy license file from root folder to each generated artifact
+task copyLICENSE(type: Copy) {
+    from file("${projectDir}/../../../../LICENSE")
+    into file("${buildDir}/resources/main/META-INF/")
+}
+
+//copy notice file from root folder to each generated artifact
+task copyNOTICE(type: Copy) {
+    from file("${projectDir}/../../../../NOTICE.md")
+    into file("${buildDir}/resources/main/META-INF/")
+}
+jar.dependsOn copyLICENSE, copyNOTICE
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'Keyple Plugin Stub',
+                'Implementation-Version': project.version
+    }
+}
+
+
+/*
+*/
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = project.group
+            artifactId = project.name
+            version = project.version
+
+            from components.java
+        }
+    }
+}
+
+/*
+Required to share unit tests
+ */
+configurations {
+    testArtifacts.extendsFrom testRuntime
+}
+
+task testJar(type: Jar) {
+    classifier "test"
+    from sourceSets.test.output
+}
+
+artifacts {
+    testArtifacts testJar
+}
+/*
+end of Required to share unit tests
+ */
+
+//build.dependsOn ":keyple-core:build" //refresh keyple-core if needed
+publishToMavenLocal.dependsOn ":java:component:keyple-core:publishToMavenLocal"
+
+dependencies {
+
+    //use java library : core
+    //implementation group: 'org.eclipse.keyple', name: 'keyple-core', version: '1.0.0-RC4'
+    implementation project(path:':java:component:keyple-core')
+
+    // https://mvnrepository.com/artifact/org.slf4j/slf4j-api
+    api group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
+
+
+    /*
+    Test
+     */
+
+    //use java library :  calypso
+    //testImplementation group: 'org.eclipse.keyple', name: 'keyple-calypso', version: '1.0.0-RC4'
+    testImplementation  project(path:':java:component:keyple-calypso')
+
+    // https://mvnrepository.com/artifact/junit/junit
+    testImplementation group: 'junit', name: 'junit', version: '4.12'
+
+    // https://mvnrepository.com/artifact/org.mockito/mockito-core
+    testImplementation group: 'org.mockito', name: 'mockito-core', version: '2.13.0'
+
+    testImplementation group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.25'
+
+}
+
+test {
+    include 'org/**'
+}

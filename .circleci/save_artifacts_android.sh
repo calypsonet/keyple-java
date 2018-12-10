@@ -10,8 +10,8 @@ find . -name "*.aar"  \
   -exec cp -rv {} ~/artifacts/jars \; \
   -exec cp -rv {} ~/pages/jars \;
 
-save_directory keyple-plugin/android-nfc
-save_directory keyple-plugin/android-omapi
+save_directory android/keyple-plugin/android-nfc
+save_directory android/keyple-plugin/android-omapi
 
 echo "End of save artifacts android"
 
