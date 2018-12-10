@@ -441,6 +441,7 @@ public final class PcscReader extends AbstractThreadedLocalReader {
      * 
      * @return the current transmission mode
      */
+    @Override
     public TransmissionMode getTransmissionMode() {
         if (transmissionMode != null) {
             return transmissionMode;

@@ -144,6 +144,7 @@ public final class StubReader extends AbstractThreadedLocalReader {
     /**
      * @return the current transmission mode
      */
+    @Override
     public TransmissionMode getTransmissionMode() {
         return transmissionMode;
     }

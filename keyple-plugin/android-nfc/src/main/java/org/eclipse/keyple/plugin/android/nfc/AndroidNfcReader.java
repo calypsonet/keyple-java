@@ -35,8 +35,8 @@ import android.os.Bundle;
 
 
 /**
- * Implementation of {@link org.eclipse.keyple.seproxy.ProxyReader} to communicate with NFC Tag
- * though Android {@link NfcAdapter}
+ * Implementation of {@link org.eclipse.keyple.seproxy.SeReader} to communicate with NFC Tag though
+ * Android {@link NfcAdapter}
  *
  * Configure NFCAdapter Protocols with {@link AndroidNfcReader#setParameter(String, String)}
  *
@@ -137,6 +137,7 @@ public final class AndroidNfcReader extends AbstractSelectionLocalReader
      * 
      * @return the current transmission mode
      */
+    @Override
     public TransmissionMode getTransmissionMode() {
         return TransmissionMode.CONTACTLESS;
     }
@@ -154,9 +155,7 @@ public final class AndroidNfcReader extends AbstractSelectionLocalReader
         LOG.info("Received Tag Discovered event");
         try {
             tagProxy = TagProxy.getTagProxy(tag);
-            notifyObservers(new ReaderEvent(PLUGIN_NAME, READER_NAME,
-                    ReaderEvent.EventType.SE_INSERTED, null));
-
+            cardInserted();
         } catch (KeypleReaderException e) {
             // print and do nothing
             e.printStackTrace();

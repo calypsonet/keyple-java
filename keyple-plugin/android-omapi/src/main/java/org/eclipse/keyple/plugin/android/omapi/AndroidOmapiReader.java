@@ -71,6 +71,7 @@ public final class AndroidOmapiReader extends AbstractStaticReader {
      *
      * @return the current transmission mode
      */
+    @Override
     public TransmissionMode getTransmissionMode() {
         return TransmissionMode.CONTACTLESS;
     }

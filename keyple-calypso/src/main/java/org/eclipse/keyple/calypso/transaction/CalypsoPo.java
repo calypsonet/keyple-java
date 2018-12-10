@@ -168,9 +168,15 @@ public final class CalypsoPo extends MatchingSe {
     public PoClass getPoClass() {
         /* Rev1 and Rev2 expects the legacy class byte while Rev3 expects the ISO class byte */
         if (revision == PoRevision.REV1_0 || revision == PoRevision.REV2_4) {
+            if (logger.isTraceEnabled()) {
+                logger.trace("PO revision = {}, PO class = {}", revision, PoClass.LEGACY);
+            }
             return PoClass.LEGACY;
         } else {
-            return PoClass.LEGACY;
+            if (logger.isTraceEnabled()) {
+                logger.trace("PO revision = {}, PO class = {}", revision, PoClass.ISO);
+            }
+            return PoClass.ISO;
         }
     }
 }

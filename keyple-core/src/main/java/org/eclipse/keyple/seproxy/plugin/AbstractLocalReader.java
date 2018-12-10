@@ -167,6 +167,9 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
                                 ReaderEvent.EventType.SE_MATCHED,
                                 new SelectionResponse(seResponseSet)));
                         presenceNotified = true;
+                    } else {
+                        /* the SE did not match, close the logical channel */
+                        closeLogicalChannel();
                     }
                 } else {
                     /* notify an SE_INSERTED event with the received response */
@@ -176,6 +179,8 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
                     presenceNotified = true;
                 }
             } catch (KeypleReaderException e) {
+                /* the last transmission failed, close the logical channel */
+                closeLogicalChannel();
                 e.printStackTrace();
                 // in this case the card has been removed or not read correctly, do not throw event
             }
@@ -225,7 +230,7 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
      * Execute a get response command in order to get outgoing data from specific cards answering
      * 9000 with no data although the command has outgoing data. Note that this method relies on the
      * right get response management by transmitApdu
-     * 
+     *
      * @param originalStatusCode the status code of the command that didn't returned data
      * @return ApduResponse the response to the get response command
      * @throws KeypleIOReaderException if the transmission fails.
@@ -322,8 +327,8 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
                         response = processSeRequest(request);
                     } catch (KeypleReaderException ex) {
                         /*
-                         * The process has been interrupted. We are launching a
-                         * KeypleReaderException with the responses collected so far.
+                         * The process has been interrupted. We launch a KeypleReaderException with
+                         * the responses collected so far.
                          */
                         /* Add the latest (and partial) SeResponse to the current list. */
                         responses.add(ex.getSeResponse());
@@ -378,7 +383,7 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
 
     /**
      * Tells if a logical channel is open
-     * 
+     *
      * @return true if the logical channel is open
      */
     protected final boolean isLogicalChannelOpen() {
@@ -413,6 +418,7 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
 
         List<ApduResponse> apduResponseList = new ArrayList<ApduResponse>();
 
+        logger.trace("[{}] processSeRequest => Logical channel open = {}", isLogicalChannelOpen());
         /*
          * unless the selector is null, we try to open a logical channel; if the channel was open
          * and the PO is still matching we won't redo the selection and just use the current
@@ -501,9 +507,10 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
                     apduResponseList.add(processApduRequest(apduRequest));
                 } catch (KeypleIOReaderException ex) {
                     /*
-                     * The process has been interrupted. We are launching a KeypleReaderException
-                     * with the Apdu responses collected so far.
+                     * The process has been interrupted. We close the logical channel and launch a
+                     * KeypleReaderException with the Apdu responses collected so far.
                      */
+                    closeLogicalChannel();
                     ex.setSeResponse(
                             new SeResponse(previouslyOpen, selectionStatus, apduResponseList));
                     throw ex;
