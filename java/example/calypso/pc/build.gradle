@@ -1,7 +1,3 @@
-plugins {
-    id 'maven-publish'
-}
-
 apply plugin: 'java'
 
 sourceCompatibility = 1.6
@@ -14,24 +10,6 @@ jar {
                 'Implementation-Version': project.version
     }
 }
-
-//publishing {
-//    publications {
-//        maven(MavenPublication) {
-//            groupId = project.group
-//            artifactId = project.name
-//            version = project.version
-//
-//            from components.java
-//        }
-//    }
-//}
-
-//build.dependsOn ":keyple-calypso:build" // build and install keyple-calypso if needed
-//build.dependsOn ":keyple-plugin:keyple-plugin-stub:build" // build and install keyple-plugin-stub if needed
-//build.dependsOn ":keyple-plugin:keyple-plugin-pcsc:build" // build and install keyple-plugin-pcsc if needed
-//build.finalizedBy publishToMavenLocal
-
 
 dependencies {
     //use keyple library : calypso
@@ -50,16 +28,15 @@ dependencies {
     implementation project(path:':java:component:keyple-plugin:keyple-plugin-pcsc')
 
     //use keyple example : generic-common
-    //implementation group: 'org.eclipse.keyple', name: 'example-generic-common', version: '1.0.0-RC4'
     implementation project(path: ':java:example:generic:example-generic-common')
 
     //use keyple example : generic-pc
-    //implementation group: 'org.eclipse.keyple', name: 'example-generic-pc', version: '1.0.0-RC4'
     implementation project(path: ':java:example:generic:example-generic-pc')
 
+    implementation project(path: ':java:example:calypso:example-calypso-common')
+    
     //https://mvnrepository.com/artifact/org.slf4j/slf4j-simple
     implementation group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.25'
     implementation group: 'org.slf4j', name: 'slf4j-ext', version: '1.7.25'
 
-    compile project(path: ':java:example:calypso:example-calypso-common')
 }

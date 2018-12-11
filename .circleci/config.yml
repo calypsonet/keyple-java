@@ -81,13 +81,13 @@ jobs:
         ############################
 
         - run: gradle wrapper --gradle-version 4.5.1
-        - run: ./gradlew :java:component:keyple-core:build --info
-        - run: ./gradlew :java:component:keyple-calypso:build --info
-        - run: ./gradlew :java:component:keyple-plugin:keyple-plugin-pcsc:build --info
-        - run: ./gradlew :java:component:keyple-plugin:keyple-plugin-stub:build --info
-        - run: ./gradlew :java:component:keyple-plugin:keyple-plugin-remotese:build --info
-        - run: ./gradlew :java:example:generic:example-generic-common:build  :java:example:generic:example-generic-pc:build
-        - run: ./gradlew :java:example:calypso:example-calypso-common:build  :java:example:calypso:example-calypso-pc:build
+        - run: ./gradlew build
+        #- run: ./gradlew :java:component:keyple-calypso:build --info
+        #- run: ./gradlew :java:component:keyple-plugin:keyple-plugin-pcsc:build --info
+        #- run: ./gradlew :java:component:keyple-plugin:keyple-plugin-stub:build --info
+        #- run: ./gradlew :java:component:keyple-plugin:keyple-plugin-remotese:build --info
+        #- run: ./gradlew :java:example:generic:example-generic-common:build  :java:example:generic:example-generic-pc:build
+        #- run: ./gradlew :java:example:calypso:example-calypso-common:build  :java:example:calypso:example-calypso-pc:build
         - run: ./gradlew javadoc aggregatedJavadocs
 
 
