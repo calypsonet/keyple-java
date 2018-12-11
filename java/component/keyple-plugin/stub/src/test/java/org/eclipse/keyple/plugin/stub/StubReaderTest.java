@@ -67,8 +67,6 @@ public class StubReaderTest {
             public void update(PluginEvent event) {}
         });
 
-        Thread.sleep(100);
-
         logger.info("Stubplugin readers size {}", stubPlugin.getReaders().size());
         Assert.assertEquals(0, stubPlugin.getReaders().size());
 
@@ -77,11 +75,7 @@ public class StubReaderTest {
 
         stubPlugin.plugStubReader("StubReaderTest");
 
-        Thread.sleep(100);
-
         reader = (StubReader) stubPlugin.getReader("StubReaderTest");
-
-        Thread.sleep(100);
     }
 
     @After
@@ -90,7 +84,6 @@ public class StubReaderTest {
         stubPlugin.clearObservers();
         reader.clearObservers();
         stubPlugin.getInstance().unplugReader("StubReaderTest");
-        Thread.sleep(100);
     }
 
 
@@ -135,7 +128,7 @@ public class StubReaderTest {
         // lock thread for 2 seconds max to wait for the event
         lock.await(2, TimeUnit.SECONDS);
         Assert.assertEquals(0, lock.getCount()); // should be 0 because countDown is called by
-                                                 // observer
+        // observer
 
     }
 
@@ -188,7 +181,7 @@ public class StubReaderTest {
         // lock thread for 2 seconds max to wait for the event
         lock.await(2, TimeUnit.SECONDS);
         Assert.assertEquals(0, lock.getCount()); // should be 0 because countDown is called by
-                                                 // observer
+        // observer
 
     }
 
@@ -224,7 +217,7 @@ public class StubReaderTest {
 
 
         // lock thread for 2 seconds max to wait for the event
-        lock.await(2, TimeUnit.SECONDS);
+        lock.await(100, TimeUnit.MILLISECONDS);
         Assert.assertEquals(1, lock.getCount()); // should be 1 because countDown is never called
     }
 
@@ -269,7 +262,7 @@ public class StubReaderTest {
         // lock thread for 2 seconds max to wait for the event
         lock.await(2, TimeUnit.SECONDS);
         Assert.assertEquals(0, lock.getCount()); // should be 0 because countDown is called by
-                                                 // observer
+        // observer
     }
 
     @Test
@@ -332,8 +325,6 @@ public class StubReaderTest {
         // init SE
         reader.insertSe(hoplinkSE());
 
-        Thread.sleep(100);
-
         // send the selection request
         selectSe(reader);
 
@@ -375,8 +366,6 @@ public class StubReaderTest {
         // init SE
         reader.insertSe(noApduResponseSE());
 
-        Thread.sleep(100);
-
         // add Protocol flag
         reader.addSeProtocolSetting(
                 new SeProtocolSetting(StubProtocolSetting.SETTING_PROTOCOL_ISO14443_4));
@@ -396,8 +385,6 @@ public class StubReaderTest {
 
         // init SE
         reader.insertSe(partialSE());
-
-        Thread.sleep(100);
 
         // add Protocol flag
         reader.addSeProtocolSetting(
@@ -424,8 +411,6 @@ public class StubReaderTest {
 
         // init SE
         reader.insertSe(partialSE());
-
-        Thread.sleep(100);
 
         // add Protocol flag
         reader.addSeProtocolSetting(
@@ -458,8 +443,6 @@ public class StubReaderTest {
         // init SE
         reader.insertSe(partialSE());
 
-        Thread.sleep(100);
-
         // add Protocol flag
         reader.addSeProtocolSetting(
                 new SeProtocolSetting(StubProtocolSetting.SETTING_PROTOCOL_ISO14443_4));
@@ -490,8 +473,6 @@ public class StubReaderTest {
         // init SE
         reader.insertSe(partialSE());
 
-        Thread.sleep(100);
-
         // add Protocol flag
         reader.addSeProtocolSetting(
                 new SeProtocolSetting(StubProtocolSetting.SETTING_PROTOCOL_ISO14443_4));
@@ -521,8 +502,6 @@ public class StubReaderTest {
         // init SE
         reader.insertSe(partialSE());
 
-        Thread.sleep(100);
-
         // add Protocol flag
         reader.addSeProtocolSetting(
                 new SeProtocolSetting(StubProtocolSetting.SETTING_PROTOCOL_ISO14443_4));
@@ -547,8 +526,6 @@ public class StubReaderTest {
         // init SE
         reader.insertSe(partialSE());
 
-        Thread.sleep(100);
-
         // add Protocol flag
         reader.addSeProtocolSetting(
                 new SeProtocolSetting(StubProtocolSetting.SETTING_PROTOCOL_ISO14443_4));
@@ -572,8 +549,6 @@ public class StubReaderTest {
         // init SE
         reader.insertSe(partialSE());
 
-        Thread.sleep(100);
-
         // add Protocol flag
         reader.addSeProtocolSetting(
                 new SeProtocolSetting(StubProtocolSetting.SETTING_PROTOCOL_ISO14443_4));
@@ -596,8 +571,6 @@ public class StubReaderTest {
 
         // init SE
         reader.insertSe(partialSE());
-
-        Thread.sleep(100);
 
         // add Protocol flag
         reader.addSeProtocolSetting(
@@ -656,7 +629,7 @@ public class StubReaderTest {
 
     /**
      * AbstractObservableReader methods test
-     * 
+     *
      * @throws Exception
      */
 
