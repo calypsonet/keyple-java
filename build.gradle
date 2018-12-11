@@ -10,17 +10,10 @@ plugins {
     id "com.diffplug.gradle.spotless" version "3.14.0"
 }
 
-project.ext {
-    enableMavenLocalRepo = false
-}
-
-subprojects {
-    group 'org.eclipse.keyple'
-}
-
-
 allprojects {
 
+    group 'org.eclipse.keyple'
+    
     configurations.all {
         // check for updates every build
         resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
