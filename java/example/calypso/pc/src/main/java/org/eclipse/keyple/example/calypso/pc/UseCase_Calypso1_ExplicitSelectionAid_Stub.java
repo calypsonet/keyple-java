@@ -21,16 +21,15 @@ import org.eclipse.keyple.calypso.transaction.PoTransaction;
 import org.eclipse.keyple.example.calypso.common.postructure.CalypsoClassicInfo;
 import org.eclipse.keyple.example.calypso.pc.stub.se.StubCalypsoClassic;
 import org.eclipse.keyple.plugin.stub.StubPlugin;
+import org.eclipse.keyple.plugin.stub.StubProtocolSetting;
 import org.eclipse.keyple.plugin.stub.StubReader;
 import org.eclipse.keyple.plugin.stub.StubSecureElement;
 import org.eclipse.keyple.seproxy.ChannelState;
 import org.eclipse.keyple.seproxy.SeProxyService;
-import org.eclipse.keyple.seproxy.event.ObservablePlugin;
-import org.eclipse.keyple.seproxy.event.ObservablePlugin.PluginObserver;
-import org.eclipse.keyple.seproxy.event.PluginEvent;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 import org.eclipse.keyple.seproxy.exception.NoStackTraceThrowable;
-import org.eclipse.keyple.seproxy.protocol.Protocol;
+import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
+import org.eclipse.keyple.seproxy.protocol.SeProtocolSetting;
 import org.eclipse.keyple.transaction.SeSelection;
 import org.eclipse.keyple.transaction.SeSelector;
 import org.eclipse.keyple.util.ByteArrayUtils;
@@ -62,24 +61,8 @@ public class UseCase_Calypso1_ExplicitSelectionAid_Stub {
     protected static final Logger logger =
             LoggerFactory.getLogger(UseCase_Calypso1_ExplicitSelectionAid_Stub.class);
 
-
-    static class StubPluginObserver implements PluginObserver {
-        /**
-         * Method invoked in the case of a plugin event
-         * 
-         * @param event
-         */
-        @Override
-        public void update(PluginEvent event) {
-            logger.info("Event: {}", event.getEventType());
-        }
-    }
-
     public static void main(String[] args)
             throws KeypleBaseException, InterruptedException, IOException, NoStackTraceThrowable {
-
-        /* Instantiate a PluginObserver to handle the stub reader insertion */
-        StubPluginObserver m = new StubPluginObserver();
 
         /* Get the instance of the SeProxyService (Singleton pattern) */
         SeProxyService seProxyService = SeProxyService.getInstance();
@@ -90,15 +73,8 @@ public class UseCase_Calypso1_ExplicitSelectionAid_Stub {
         /* Assign StubPlugin to the SeProxyService */
         seProxyService.addPlugin(stubPlugin);
 
-        /*
-         * Add a class observer to start the monitoring thread needed to handle the reader insertion
-         */
-        ((ObservablePlugin) stubPlugin).addObserver(m);
-
         /* Plug the PO stub reader. */
         stubPlugin.plugStubReader("poReader");
-
-        Thread.sleep(200);
 
         /*
          * Get a PO reader ready to work with Calypso PO.
@@ -110,14 +86,14 @@ public class UseCase_Calypso1_ExplicitSelectionAid_Stub {
             throw new IllegalStateException("Bad PO reader setup");
         }
 
+        poReader.addSeProtocolSetting(
+                new SeProtocolSetting(StubProtocolSetting.SETTING_PROTOCOL_ISO14443_4));
+
         /* Create 'virtual' Calypso PO */
         StubSecureElement calypsoStubSe = new StubCalypsoClassic();
 
         logger.info("Insert stub PO.");
         poReader.insertSe(calypsoStubSe);
-
-        /* Wait a while. */
-        Thread.sleep(100);
 
         logger.info(
                 "=============== UseCase Calypso #1: AID based explicit selection ==================");
@@ -150,8 +126,8 @@ public class UseCase_Calypso1_ExplicitSelectionAid_Stub {
              * the selection and read additional information afterwards
              */
             PoSelector poSelector = new PoSelector(ByteArrayUtils.fromHex(CalypsoClassicInfo.AID),
-                    SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN, Protocol.ANY,
-                    "AID: " + CalypsoClassicInfo.AID);
+                    SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN,
+                    ContactlessProtocols.PROTOCOL_ISO14443_4, "AID: " + CalypsoClassicInfo.AID);
 
             /*
              * Prepare the reading order and keep the associated parser for later use once the

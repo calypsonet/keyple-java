@@ -22,15 +22,15 @@ import org.eclipse.keyple.example.calypso.common.transaction.CalypsoUtilities;
 import org.eclipse.keyple.example.calypso.pc.stub.se.StubCalypsoClassic;
 import org.eclipse.keyple.example.calypso.pc.stub.se.StubSamCalypsoClassic;
 import org.eclipse.keyple.plugin.stub.StubPlugin;
+import org.eclipse.keyple.plugin.stub.StubProtocolSetting;
 import org.eclipse.keyple.plugin.stub.StubReader;
 import org.eclipse.keyple.plugin.stub.StubSecureElement;
 import org.eclipse.keyple.seproxy.ChannelState;
 import org.eclipse.keyple.seproxy.SeProxyService;
-import org.eclipse.keyple.seproxy.event.ObservablePlugin;
-import org.eclipse.keyple.seproxy.event.PluginEvent;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 import org.eclipse.keyple.seproxy.exception.NoStackTraceThrowable;
 import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
+import org.eclipse.keyple.seproxy.protocol.SeProtocolSetting;
 import org.eclipse.keyple.seproxy.protocol.TransmissionMode;
 import org.eclipse.keyple.transaction.MatchingSe;
 import org.eclipse.keyple.transaction.SeSelection;
@@ -69,25 +69,8 @@ public class UseCase_Calypso4_PoAuthentication_Stub {
     private static final Logger logger =
             LoggerFactory.getLogger(UseCase_Calypso4_PoAuthentication_Stub.class);
 
-    static class StubPluginObserver implements ObservablePlugin.PluginObserver {
-        /**
-         * Method invoked in the case of a plugin event
-         *
-         * @param event
-         */
-        @Override
-        public void update(PluginEvent event) {
-            logger.info("Event: {}", event.getEventType());
-        }
-    }
-
     public static void main(String[] args)
             throws KeypleBaseException, NoStackTraceThrowable, InterruptedException {
-
-
-        /* Instantiate a PluginObserver to handle the stub reader insertion */
-        UseCase_Calypso1_ExplicitSelectionAid_Stub.StubPluginObserver m =
-                new UseCase_Calypso1_ExplicitSelectionAid_Stub.StubPluginObserver();
 
         /* Get the instance of the SeProxyService (Singleton pattern) */
         SeProxyService seProxyService = SeProxyService.getInstance();
@@ -98,18 +81,11 @@ public class UseCase_Calypso4_PoAuthentication_Stub {
         /* Assign StubPlugin to the SeProxyService */
         seProxyService.addPlugin(stubPlugin);
 
-        /*
-         * Add a class observer to start the monitoring thread needed to handle the reader insertion
-         */
-        ((ObservablePlugin) stubPlugin).addObserver(m);
-
         /* Plug the PO stub reader. */
         stubPlugin.plugStubReader("poReader");
 
         /* Plug the SAM stub reader. */
         stubPlugin.plugStubReader("samReader");
-
-        Thread.sleep(200);
 
         /*
          * Get a PO and a SAM reader ready to work with a Calypso PO.
@@ -134,8 +110,6 @@ public class UseCase_Calypso4_PoAuthentication_Stub {
         logger.info("Insert stub SAM.");
         samReader.insertSe(calypsoSamStubSe);
 
-        /* Wait a while. */
-        Thread.sleep(100);
         /*
          * Open logical channel for the SAM inserted in the reader
          *
@@ -151,6 +125,9 @@ public class UseCase_Calypso4_PoAuthentication_Stub {
         logger.info("=============== UseCase Calypso #4: Po Authentication ==================");
         logger.info("= PO Reader  NAME = {}", poReader.getName());
         logger.info("= SAM Reader  NAME = {}", samReader.getName());
+
+        poReader.addSeProtocolSetting(
+                new SeProtocolSetting(StubProtocolSetting.SETTING_PROTOCOL_ISO14443_4));
 
         /* Check if a PO is present in the reader */
         if (poReader.isSePresent()) {
