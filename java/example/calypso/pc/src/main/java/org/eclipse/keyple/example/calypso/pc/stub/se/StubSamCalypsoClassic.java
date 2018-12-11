@@ -53,6 +53,12 @@ public class StubSamCalypsoClassic extends StubSecureElement {
                 "9000");
         /* Digest Update */
         addHexCommand("808C0000029000", "9000");
+        /* Digest Update */
+        addHexCommand("808C00000500B2014D00", "9000");
+        /* Digest Update */
+        addHexCommand(
+                "808C00007E011D00000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF021D00000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF031D00000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF041D00000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF9000",
+                "9000");
         /* Digest Close */
         addHexCommand("808E000004", "050607089000");
         /* Digest Authenticate */
