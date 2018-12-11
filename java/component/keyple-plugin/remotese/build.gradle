@@ -1,13 +1,10 @@
 plugins {
     id 'maven-publish'
 }
-project.group 'org.eclipse.keyple'
-project.version '0.1.0-SNAPSHOT'
-
 apply plugin: 'java'
-
-
 sourceCompatibility = 1.6
+project.version '0.1.0-SNAPSHOT'
+apply plugin: 'java-library'
 
 
 //Create jar for Native Reader Client
@@ -90,7 +87,6 @@ task copyNOTICE(type: Copy) {
 pluginJar.dependsOn copyLICENSE, copyNOTICE
 transportJar.dependsOn copyLICENSE, copyNOTICE
 nativeJar.dependsOn copyLICENSE, copyNOTICE
-
 
 
 configurations {
@@ -179,7 +175,6 @@ publishing {
     }
 }
 
-//build.finalizedBy publishToMavenLocal
 
 dependencies {
     //use java library : keyple core
@@ -189,7 +184,7 @@ dependencies {
 
     implementation 'com.google.code.gson:gson:2.8.5'
     // https://mvnrepository.com/artifact/org.slf4j/slf4j-api
-    implementation 'org.slf4j:slf4j-api:1.7.25'
+    api 'org.slf4j:slf4j-api:1.7.25'
     /*
         Tests
          */

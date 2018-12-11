@@ -1,7 +1,3 @@
-plugins {
-    id 'maven-publish'
-}
-
 apply plugin: 'java'
 
 sourceCompatibility = 1.6
@@ -10,44 +6,29 @@ project.version = '1.0.0-RC4'
 
 jar {
     manifest {
-        attributes 'Implementation-Title': 'Keyple Example Common',
+        attributes 'Implementation-Title': 'Keyple Calypso Example Common',
                 'Implementation-Version': project.version
     }
 }
 
-publishing {
-    publications {
-        maven(MavenPublication) {
-            groupId = project.group
-            artifactId = project.name
-            version = project.version
-
-            from components.java
-        }
-    }
-}
-//build.dependsOn ":keyple-calypso:build" // build and install keyple-calypso if needed
-//build.dependsOn ":keyple-core:build" // build and install keyple-core if needed
-//build.finalizedBy publishToMavenLocal
-
-
 dependencies {
 
     //use keyple library : core
-    //implementation group: 'org.eclipse.keyple', name: 'keyple-core', version: '1.0.0-RC4'
     implementation project(path:':java:component:keyple-core')
+    //implementation group: 'org.eclipse.keyple', name: 'keyple-core', version: '1.0.0-RC4'
 
     //use keyple library : calypso
-    //implementation group: 'org.eclipse.keyple', name: 'keyple-calypso', version: '1.0.0-RC4'
     implementation project(path:':java:component:keyple-calypso')
+    //implementation group: 'org.eclipse.keyple', name: 'keyple-calypso', version: '1.0.0-RC4' 
 
     //use keyple example : generic-common
-    //implementation group: 'org.eclipse.keyple', name: 'example-generic-common', version: '1.0.0-RC4'
     implementation project(path: ':java:example:generic:example-generic-common')
 
     //use keyple example : generic-pc
-    //implementation group: 'org.eclipse.keyple', name: 'example-generic-pc', version: '1.0.0-RC4'
     implementation project(path: ':java:example:generic:example-generic-pc')
+    
+    
+
 
     // https://mvnrepository.com/artifact/org.slf4j/slf4j-api
     implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'

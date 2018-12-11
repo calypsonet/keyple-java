@@ -1,7 +1,3 @@
-plugins {
-    id 'maven-publish'
-}
-
 apply plugin: 'java'
 
 sourceCompatibility = 1.6
@@ -15,22 +11,6 @@ jar {
                 'Implementation-Version': project.version
     }
 }
-
-//publishing {
-//    publications {
-//        maven(MavenPublication) {
-//            groupId = project.group
-//            artifactId = project.name
-//            version = project.version
-//
-//            from components.java
-//        }
-//    }
-//}
-
-//build.dependsOn ":keyple-calypso:build" // build and install keyple-calypso if needed
-//build.dependsOn ":keyple-core:build" // build and install keyple-core if needed
-//build.finalizedBy publishToMavenLocal
 
 
 dependencies {
