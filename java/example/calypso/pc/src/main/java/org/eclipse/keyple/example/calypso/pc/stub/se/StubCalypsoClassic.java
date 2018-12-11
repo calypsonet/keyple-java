@@ -22,7 +22,7 @@ import org.eclipse.keyple.util.ByteArrayUtils;
 public class StubCalypsoClassic extends StubSecureElement {
 
     final static String seProtocol = "PROTOCOL_ISO14443_4";
-    final String ATR_HEX = "3B8E800180318066409089120802830190000B";
+    final String ATR_HEX = "3B8880010000000000718100F9";
 
     public StubCalypsoClassic() {
         /* Select Application */
