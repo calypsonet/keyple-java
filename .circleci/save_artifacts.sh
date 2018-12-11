@@ -7,11 +7,11 @@ find . -name "keyple-*.jar" \
   -exec cp  -rv {} ~/artifacts/jars \; \
   -exec cp  -rv {} ~/pages/jars \;
 
-save_directory keyple-core
-save_directory keyple-calypso
-save_directory keyple-plugin/pcsc
-save_directory keyple-plugin/stub
-save_directory keyple-plugin/remotese
+save_directory java/component/keyple-core
+save_directory java/component/keyple-calypso
+save_directory java/component/keyple-plugin/pcsc
+save_directory java/component/keyple-plugin/stub
+save_directory java/component/keyple-plugin/remotese
 
 cp .build/web/* ~/pages/
 

@@ -68,22 +68,27 @@ allprojects {
 
 spotless {
     java {
-        target 'java/**/*.java'
-        licenseHeaderFile '.build/spotless.license.txt'
+        target '**/*.java'
+
+        licenseHeaderFile '../.build/spotless.license.txt'
+
         importOrder 'java', 'javax', 'org', 'com', 'com.diffplug', ''
+
         removeUnusedImports()
-        eclipse().configFile '.build/spotless.eclipseformat.xml'
+
+        eclipse().configFile '../.build/spotless.eclipseformat.xml'
     }
 
     format 'misc', {
-        target 'java/**/*.java', 'java/**/*.gradle', 'java/**/*.yml', 'java/**/*.md'
+        target '**/*.java', '**/*.gradle', '**/*.yml', '**/*.md'
+
         indentWithSpaces()
         endWithNewline()
     }
 }
 
 
-//create task to agregate javadoc
+//create task for to agragate javadoc
 task aggregatedJavadocs(type: Javadoc, description: 'Generate javadocs from all child projects as if it was a single project', group: 'Documentation') {
     println 'Create a aggregated javadoc Task to : ' + "$buildDir/docs/javadoc"
     destinationDir = file("$buildDir/docs/javadoc")
@@ -103,20 +108,20 @@ task aggregatedJavadocs(type: Javadoc, description: 'Generate javadocs from all 
 //dynamically configure the source
 aggregatedJavadocs.doFirst {
 
-    println "DoFirst in task  : aggregatedJavadocs"
+    //exclude the init file
+    excludes += "README.MD"
 
-    //add Java modules javadoc
-    def aggregatedJavaProjects = [project(":java:component:keyple-core"),
-                                  project(":java:component:keyple-calypso"),
-                                  project(":java:component:keyple-plugin:keyple-plugin-pcsc"),
-                                  project(":java:component:keyple-plugin:keyple-plugin-stub"),
-                                  project(":java:component:keyple-plugin:keyple-plugin-remotese")]
+    //add Android modules javadoc
+    def aggregatedAndroidProjects = [
+                                  project(":keyple-plugin:keyple-plugin-android-nfc"),
+                                  project(":keyple-plugin:keyple-plugin-android-omapi")]
 
-    aggregatedJavaProjects.each { aggregatedJavaProject ->
-        source += aggregatedJavaProject.javadoc.source
-        classpath += aggregatedJavaProject.javadoc.classpath
-        excludes += aggregatedJavaProject.javadoc.excludes
-        includes += aggregatedJavaProject.javadoc.includes
+    aggregatedAndroidProjects.each { aggregatedAndroidProject ->
+            source += aggregatedAndroidProject.generateDebugJavadoc.source
+            classpath += aggregatedAndroidProject.generateDebugJavadoc.classpath
+            excludes += aggregatedAndroidProject.generateDebugJavadoc.excludes
+            includes += aggregatedAndroidProject.generateDebugJavadoc.includes
 
     }
+
 }
