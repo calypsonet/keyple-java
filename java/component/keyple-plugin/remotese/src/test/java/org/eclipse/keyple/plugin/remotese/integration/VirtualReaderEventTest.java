@@ -15,11 +15,20 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import org.eclipse.keyple.plugin.stub.StubPlugin;
 import org.eclipse.keyple.plugin.stub.StubReaderTest;
+import org.eclipse.keyple.seproxy.ChannelState;
 import org.eclipse.keyple.seproxy.event.ObservableReader;
 import org.eclipse.keyple.seproxy.event.ReaderEvent;
+import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
+import org.eclipse.keyple.seproxy.protocol.Protocol;
+import org.eclipse.keyple.transaction.MatchingSe;
+import org.eclipse.keyple.transaction.SeSelection;
+import org.eclipse.keyple.transaction.SeSelector;
+import org.eclipse.keyple.util.ByteArrayUtils;
 import org.junit.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static org.eclipse.keyple.plugin.stub.StubReaderTest.hoplinkSE;
 
 /**
  * Test Virtual Reader Service with stub plugin and hoplink SE
@@ -120,6 +129,200 @@ public class VirtualReaderEventTest extends VirtualReaderBaseTest {
 
         // https://github.com/calypsonet/keyple-java/issues/420
         // Assert.assertEquals(0, virtualReaderService.getPlugin().getReaders().size());
+    }
+
+
+    @Test
+    public void testInsertMatchingSe() throws InterruptedException {
+
+        // CountDown lock
+        final CountDownLatch lock = new CountDownLatch(1);
+
+        // add observer
+        virtualReader.addObserver(new ObservableReader.ReaderObserver() {
+            @Override
+            public void update(ReaderEvent event) {
+                Assert.assertEquals(event.getReaderName(), nativeReader.getName());
+                Assert.assertEquals(event.getPluginName(), StubPlugin.getInstance().getName());
+                Assert.assertEquals(ReaderEvent.EventType.SE_MATCHED, event.getEventType());
+                Assert.assertTrue(event.getDefaultSelectionResponse().getSelectionSeResponseSet()
+                        .getSingleResponse().getSelectionStatus().hasMatched());
+
+                Assert.assertArrayEquals(
+                        event.getDefaultSelectionResponse().getSelectionSeResponseSet()
+                                .getSingleResponse().getSelectionStatus().getAtr().getBytes(),
+                        hoplinkSE().getATR());
+
+                // TODO add FCI to StubSecureElement
+                // Assert.assertArrayEquals(
+                // event.getDefaultSelectionResponse().getSelectionSeResponseSet()
+                // .getSingleResponse().getSelectionStatus().getFci().getBytes(),
+                // hoplinkSE().getFci());
+
+                logger.debug("match event is correct");
+                // unlock thread
+                lock.countDown();
+            }
+        });
+        String poAid = "A000000291A000000191";
+
+        SeSelection seSelection = new SeSelection(virtualReader);
+
+        SeSelector seSelector = new SeSelector(ByteArrayUtils.fromHex(poAid),
+                SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN, Protocol.ANY, "AID: " + poAid);
+
+        seSelection.prepareSelection(seSelector);
+
+        ((ObservableReader) virtualReader).setDefaultSelectionRequest(seSelection.getSelectionOperation(),
+                ObservableReader.NotificationMode.MATCHED_ONLY);
+
+        // wait 1 second
+        Thread.sleep(1000);
+
+        // test
+        nativeReader.insertSe(StubReaderTest.hoplinkSE());
+
+        // lock thread for 2 seconds max to wait for the event
+        lock.await(5, TimeUnit.SECONDS);
+        Assert.assertEquals(0, lock.getCount()); // should be 0 because countDown is called by
+        // observer
+
+    }
+
+
+    @Test
+    public void testInsertNotMatching_MatchedOnly() throws InterruptedException {
+
+        // CountDown lock
+        final CountDownLatch lock = new CountDownLatch(1);
+
+        // add observer
+        virtualReader.addObserver(new ObservableReader.ReaderObserver() {
+            @Override
+            public void update(ReaderEvent event) {
+                // no event should be thrown
+                Assert.fail();
+                lock.countDown();// should not be called
+            }
+        });
+        String poAid = "A000000291A000000192";// not matching poAid
+
+        SeSelection seSelection = new SeSelection(virtualReader);
+
+        SeSelector seSelector = new SeSelector(ByteArrayUtils.fromHex(poAid),
+                SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN, Protocol.ANY, "AID: " + poAid);
+
+        seSelection.prepareSelection(seSelector);
+
+        ((ObservableReader) virtualReader).setDefaultSelectionRequest(seSelection.getSelectionOperation(),
+                ObservableReader.NotificationMode.MATCHED_ONLY);
+
+        // wait 1 second
+        logger.debug("Wait 1 second before inserting SE");
+        Thread.sleep(1000);
+
+        // test
+        nativeReader.insertSe(StubReaderTest.hoplinkSE());
+
+
+        // lock thread for 2 seconds max to wait for the event
+        lock.await(5, TimeUnit.SECONDS);
+        Assert.assertEquals(1, lock.getCount()); // should be 1 because countDown is never called
+    }
+
+    @Test
+    public void testInsertNotMatching_Always() throws InterruptedException {
+
+        // CountDown lock
+        final CountDownLatch lock = new CountDownLatch(1);
+
+        // add observer
+        virtualReader.addObserver(new ObservableReader.ReaderObserver() {
+            @Override
+            public void update(ReaderEvent event) {
+                Assert.assertEquals(event.getReaderName(), nativeReader.getName());
+                Assert.assertEquals(event.getPluginName(), StubPlugin.getInstance().getName());
+
+                // an SE_INSERTED event is thrown
+                Assert.assertEquals(ReaderEvent.EventType.SE_INSERTED, event.getEventType());
+
+                // card has not match
+                Assert.assertFalse(event.getDefaultSelectionResponse().getSelectionSeResponseSet()
+                        .getSingleResponse().getSelectionStatus().hasMatched());
+
+                lock.countDown();// should be called
+            }
+        });
+        String poAid = "A000000291A000000192";// not matching poAid
+
+        SeSelection seSelection = new SeSelection(virtualReader);
+
+        SeSelector seSelector = new SeSelector(ByteArrayUtils.fromHex(poAid),
+                SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN, Protocol.ANY, "AID: " + poAid);
+
+        seSelection.prepareSelection(seSelector);
+
+        ((ObservableReader) virtualReader).setDefaultSelectionRequest(seSelection.getSelectionOperation(),
+                ObservableReader.NotificationMode.ALWAYS);
+
+        // wait 1 second
+        logger.debug("Wait 1 second before inserting SE");
+        Thread.sleep(1000);
+
+        // test
+        nativeReader.insertSe(StubReaderTest.hoplinkSE());
+
+        // lock thread for 2 seconds max to wait for the event
+        lock.await(5, TimeUnit.SECONDS);
+        Assert.assertEquals(0, lock.getCount()); // should be 0 because countDown is called by
+        // observer
+    }
+
+    @Test
+    public void testATR() throws InterruptedException {
+
+        // CountDown lock
+        final CountDownLatch lock = new CountDownLatch(1);
+
+        // add observer
+        virtualReader.addObserver(new ObservableReader.ReaderObserver() {
+            @Override
+            public void update(ReaderEvent event) {
+
+                Assert.assertEquals(ReaderEvent.EventType.SE_INSERTED, event.getEventType());
+
+                SeSelection seSelection = new SeSelection(virtualReader);
+                SeSelector seSelector =
+                        new SeSelector("3B.*", ChannelState.KEEP_OPEN, Protocol.ANY, "Test ATR");
+
+                /* Prepare selector, ignore MatchingSe here */
+                seSelection.prepareSelection(seSelector);
+
+                try {
+                    seSelection.processExplicitSelection();
+
+                    MatchingSe matchingSe = seSelection.getSelectedSe();
+
+                    Assert.assertNotNull(matchingSe);
+
+                } catch (KeypleReaderException e) {
+                    Assert.fail("Unexcepted exception");
+                }
+                // unlock thread
+                lock.countDown();
+            }
+        });
+
+        // wait 1 second
+        logger.debug("Wait 1 second before inserting SE");
+        Thread.sleep(1000);
+
+        // test
+        nativeReader.insertSe(StubReaderTest.hoplinkSE());
+
+        // lock thread for 2 seconds max to wait for the event
+        lock.await(5, TimeUnit.SECONDS);
+
     }
 
 

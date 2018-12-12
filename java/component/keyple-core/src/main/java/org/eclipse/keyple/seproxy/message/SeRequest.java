@@ -31,6 +31,7 @@ public final class SeRequest implements Serializable {
 
     static final long serialVersionUID = 6018469841127325812L;
 
+
     /**
      * The Selector inner class is dedicated to handle the selection of the SE either through a
      * selection command with AID (AtrSelector) or through a matching test between the SE ATR and a

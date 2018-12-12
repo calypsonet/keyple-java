@@ -16,8 +16,11 @@ import java.util.Map;
 
 public enum RemoteMethod {
 
-    READER_TRANSMIT("reader_transmit"), READER_CONNECT("reader_connect"), READER_DISCONNECT(
-            "reader_disconnect"), READER_EVENT("reader_event");
+    READER_TRANSMIT("reader_transmit"),
+    READER_CONNECT("reader_connect"),
+    READER_DISCONNECT("reader_disconnect"),
+    READER_EVENT("reader_event"),
+    DEFAULT_SELECTION_REQUEST("default_selection_request");
 
     private String name;
 
@@ -43,7 +46,7 @@ public enum RemoteMethod {
     }
 
     // This method can be used for reverse lookup purpose
-    public static RemoteMethod get(String url) {
-        return lookup.get(url);
+    public static RemoteMethod get(String name) {
+        return lookup.get(name);
     }
 }

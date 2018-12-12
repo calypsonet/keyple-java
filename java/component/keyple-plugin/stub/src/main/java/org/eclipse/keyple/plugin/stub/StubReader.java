@@ -206,7 +206,7 @@ public final class StubReader extends AbstractThreadedLocalReader {
             try {
                 Thread.sleep(10);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                logger.debug("Sleep was interrupted");
             }
         }
         return sePresent;
@@ -228,7 +228,7 @@ public final class StubReader extends AbstractThreadedLocalReader {
             try {
                 Thread.sleep(10);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                logger.debug("Sleep was interrupted");
             }
         }
         return !sePresent;

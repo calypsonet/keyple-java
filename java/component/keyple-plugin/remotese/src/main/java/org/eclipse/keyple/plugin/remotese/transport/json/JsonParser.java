@@ -26,15 +26,11 @@ public class JsonParser {
 
     static public Gson getGson() {
         final GsonBuilder gsonBuilder = new GsonBuilder();
-        gsonBuilder.registerTypeAdapter(ByteBuffer.class, new GsonByteBufferTypeAdapter());
+        //gsonBuilder.registerTypeAdapter(ByteBuffer.class, new GsonByteBufferTypeAdapter()); not in used anymore
         gsonBuilder.registerTypeAdapter(SeRequest.Selector.class, new GsonSelectorTypeAdapter());
         gsonBuilder.registerTypeAdapter(SeProtocol.class, new GsonSeProtocolTypeAdapter());
         gsonBuilder.setPrettyPrinting();
         return gsonBuilder.create();
-    }
-
-    static public Boolean isSeRequestSet(JsonObject obj) {
-        return obj.get("sortedRequests") != null;
     }
 
 }

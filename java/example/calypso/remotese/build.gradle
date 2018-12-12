@@ -39,8 +39,10 @@ dependencies {
 
     implementation project(path: ':java:example:calypso:example-calypso-pc')
     //implementation group: 'org.eclipse.keyple', name: 'example-calypso-pc', version: '1.+'
-    
-    
+
+    implementation project(path: ':java:example:calypso:example-calypso-common')
+
+
     // https://mvnrepository.com/artifact/org.java-websocket/Java-WebSocket/1.3.9
     implementation "org.java-websocket:Java-WebSocket:1.3.9"
 

@@ -38,18 +38,23 @@ public class DemoThreads {
 
                     } else {
                         DemoSlave slave = new DemoSlave(factory, true);
-                        logger.info("Wait for 5 seconds, then connectAReader to master");
+                        logger.info("Wait 5 seconds, then connectAReader to master");
                         Thread.sleep(5000);
                         slave.connectAReader();
-                        logger.info("Wait for 5 seconds, then insert SE");
+                        logger.info("Wait 5 seconds, then insert SE");
                         Thread.sleep(5000);
                         slave.insertSe();
-                        logger.info("Wait for 5 seconds, then remove SE");
+                        logger.info("Wait 5 seconds, then remove SE");
                         Thread.sleep(5000);
                         slave.removeSe();
-                        logger.info("Wait for 5 seconds, then disconnect reader");
+                        logger.info("Wait 5 seconds, then disconnect reader");
                         Thread.sleep(5000);
                         slave.disconnect();
+                        Thread.sleep(5000);
+
+                        logger.info("Wait 5 seconds, then shutdown jvm");
+                        Runtime runtime = Runtime.getRuntime();
+                        runtime.exit(0);
                     }
 
                 } catch (KeypleReaderNotFoundException e) {
@@ -81,15 +86,21 @@ public class DemoThreads {
                     } else {
                         DemoSlave slave = new DemoSlave(factory, false);
                         slave.connectAReader();
-                        logger.info("Wait for 5 seconds, then insert SE");
+                        logger.info("Wait 5 seconds, then insert SE");
                         Thread.sleep(5000);
                         slave.insertSe();
-                        logger.info("Wait for 5 seconds, then remove SE");
+                        logger.info("Wait 5 seconds, then remove SE");
                         Thread.sleep(5000);
                         slave.removeSe();
-                        logger.info("Wait for 5 seconds, then disconnect reader");
+                        logger.info("Wait 5 seconds, then disconnect reader");
                         Thread.sleep(5000);
                         slave.disconnect();
+
+                        logger.info("Wait 5 seconds, then shutdown jvm");
+                        Thread.sleep(5000);
+                        Runtime runtime = Runtime.getRuntime();
+                        runtime.exit(0);
+
                     }
 
                 } catch (KeypleReaderNotFoundException e) {
