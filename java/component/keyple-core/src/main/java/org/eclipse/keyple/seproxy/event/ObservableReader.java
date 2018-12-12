@@ -11,12 +11,11 @@
  ********************************************************************************/
 package org.eclipse.keyple.seproxy.event;
 
+import java.util.HashMap;
+import java.util.Map;
 import org.eclipse.keyple.seproxy.SeReader;
 import org.eclipse.keyple.transaction.SelectionRequest;
 import org.eclipse.keyple.util.Observable;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public interface ObservableReader extends SeReader {
     interface ReaderObserver extends Observable.Observer<ReaderEvent> {
@@ -38,7 +37,8 @@ public interface ObservableReader extends SeReader {
         // ****** Reverse Lookup Implementation************//
 
         // Lookup table
-        private static final Map<String, NotificationMode> lookup = new HashMap<String, NotificationMode>();
+        private static final Map<String, NotificationMode> lookup =
+                new HashMap<String, NotificationMode>();
 
         // Populate the lookup table on loading time
         static {

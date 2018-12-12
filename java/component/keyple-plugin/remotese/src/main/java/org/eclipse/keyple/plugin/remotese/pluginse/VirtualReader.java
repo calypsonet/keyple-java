@@ -12,7 +12,6 @@
 package org.eclipse.keyple.plugin.remotese.pluginse;
 
 import java.util.Map;
-
 import org.eclipse.keyple.plugin.remotese.pluginse.method.RmSetDefaultSelectionRequestTx;
 import org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx;
 import org.eclipse.keyple.plugin.remotese.transport.KeypleRemoteException;
@@ -187,14 +186,18 @@ public final class VirtualReader extends AbstractObservableReader {
     public void setDefaultSelectionRequest(SelectionRequest selectionRequest,
             NotificationMode notificationMode) {
 
-        RmSetDefaultSelectionRequestTx setDefaultSelectionRequest = new RmSetDefaultSelectionRequestTx(selectionRequest, notificationMode,
-                this.getNativeReaderName(), this.getName(), this.getSession().getSessionId(), null);
+        RmSetDefaultSelectionRequestTx setDefaultSelectionRequest =
+                new RmSetDefaultSelectionRequestTx(selectionRequest, notificationMode,
+                        this.getNativeReaderName(), this.getName(),
+                        this.getSession().getSessionId(), null);
 
         try {
             rmTxEngine.register(setDefaultSelectionRequest);
             setDefaultSelectionRequest.get();
         } catch (KeypleRemoteException e) {
-            logger.error("setDefaultSelectionRequest encounters an exception while communicating with slave", e);
+            logger.error(
+                    "setDefaultSelectionRequest encounters an exception while communicating with slave",
+                    e);
         }
     }
 

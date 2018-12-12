@@ -13,7 +13,6 @@ package org.eclipse.keyple.plugin.remotese.nativese;
 
 
 import org.eclipse.keyple.plugin.remotese.nativese.method.*;
-import org.eclipse.keyple.plugin.remotese.pluginse.method.RmSetDefaultSelectionRequestTx;
 import org.eclipse.keyple.plugin.remotese.transport.*;
 import org.eclipse.keyple.plugin.remotese.transport.json.JsonParser;
 import org.eclipse.keyple.seproxy.ReaderPlugin;
@@ -126,7 +125,8 @@ public class NativeReaderServiceImpl
             case DEFAULT_SELECTION_REQUEST:
                 // must be a request
                 if (keypleDTO.isRequest()) {
-                    RmSetDefaultSelectionRequestExecutor rmSetDefaultSelectionRequest = new RmSetDefaultSelectionRequestExecutor(this);
+                    RmSetDefaultSelectionRequestExecutor rmSetDefaultSelectionRequest =
+                            new RmSetDefaultSelectionRequestExecutor(this);
                     out = rmSetDefaultSelectionRequest.execute(transportDto);
                 } else {
                     throw new IllegalStateException(
@@ -205,7 +205,9 @@ public class NativeReaderServiceImpl
      */
     @Override
     public void update(ReaderEvent event) {
-        logger.info("NativeReaderServiceImpl listens for event from native Reader - Received Event {}", event.getEventType());
+        logger.info(
+                "NativeReaderServiceImpl listens for event from native Reader - Received Event {}",
+                event.getEventType());
 
         // retrieve last sessionId known for this reader
         // String sessionId = nseSessionManager.getLastSession(event.getReaderName());

@@ -29,7 +29,7 @@ public class RmTransmitTx extends RemoteMethodTx<SeResponseSet> {
 
     public RmTransmitTx(SeRequestSet seRequestSet, String sessionId, String nativeReaderName,
             String virtualReaderName, String clientNodeId) {
-        super(sessionId, nativeReaderName,virtualReaderName, clientNodeId);
+        super(sessionId, nativeReaderName, virtualReaderName, clientNodeId);
         this.seRequestSet = seRequestSet;
     }
 

@@ -11,6 +11,7 @@
  ********************************************************************************/
 package org.eclipse.keyple.plugin.remotese.integration;
 
+import static org.eclipse.keyple.plugin.stub.StubReaderTest.hoplinkSE;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import org.eclipse.keyple.plugin.stub.StubPlugin;
@@ -27,8 +28,6 @@ import org.eclipse.keyple.util.ByteArrayUtils;
 import org.junit.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import static org.eclipse.keyple.plugin.stub.StubReaderTest.hoplinkSE;
 
 /**
  * Test Virtual Reader Service with stub plugin and hoplink SE
@@ -173,7 +172,8 @@ public class VirtualReaderEventTest extends VirtualReaderBaseTest {
 
         seSelection.prepareSelection(seSelector);
 
-        ((ObservableReader) virtualReader).setDefaultSelectionRequest(seSelection.getSelectionOperation(),
+        ((ObservableReader) virtualReader).setDefaultSelectionRequest(
+                seSelection.getSelectionOperation(),
                 ObservableReader.NotificationMode.MATCHED_ONLY);
 
         // wait 1 second
@@ -214,7 +214,8 @@ public class VirtualReaderEventTest extends VirtualReaderBaseTest {
 
         seSelection.prepareSelection(seSelector);
 
-        ((ObservableReader) virtualReader).setDefaultSelectionRequest(seSelection.getSelectionOperation(),
+        ((ObservableReader) virtualReader).setDefaultSelectionRequest(
+                seSelection.getSelectionOperation(),
                 ObservableReader.NotificationMode.MATCHED_ONLY);
 
         // wait 1 second
@@ -262,8 +263,8 @@ public class VirtualReaderEventTest extends VirtualReaderBaseTest {
 
         seSelection.prepareSelection(seSelector);
 
-        ((ObservableReader) virtualReader).setDefaultSelectionRequest(seSelection.getSelectionOperation(),
-                ObservableReader.NotificationMode.ALWAYS);
+        ((ObservableReader) virtualReader).setDefaultSelectionRequest(
+                seSelection.getSelectionOperation(), ObservableReader.NotificationMode.ALWAYS);
 
         // wait 1 second
         logger.debug("Wait 1 second before inserting SE");
