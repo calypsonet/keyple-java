@@ -36,11 +36,11 @@ public class SampleFactory {
         return new KeypleReaderException("Keyple Reader Exception");
     }
 
-    public static SelectionRequest getSelectionRequest(){
+    public static SelectionRequest getSelectionRequest() {
         return new SelectionRequest(getASeRequestSet_ISO14443_4());
     }
 
-    public static ObservableReader.NotificationMode getNotificationMode(){
+    public static ObservableReader.NotificationMode getNotificationMode() {
         return ObservableReader.NotificationMode.ALWAYS;
     }
 

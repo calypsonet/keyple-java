@@ -62,7 +62,7 @@ public class JsonParserTest {
 
     @Test
     public void testNotificationMode() {
-        ObservableReader.NotificationMode notificationMode= SampleFactory.getNotificationMode();
+        ObservableReader.NotificationMode notificationMode = SampleFactory.getNotificationMode();
         testSerializeDeserializeObj(notificationMode, ObservableReader.NotificationMode.class);
     }
 

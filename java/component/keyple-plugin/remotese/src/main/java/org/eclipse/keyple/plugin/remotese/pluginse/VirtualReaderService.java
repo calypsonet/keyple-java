@@ -133,7 +133,7 @@ public class VirtualReaderService implements DtoHandler {
                 if (keypleDTO.isRequest()) {
                     throw new IllegalStateException(
                             "a READER_TRANSMIT request has been received by VirtualReaderService");
-                }else{
+                } else {
                     // dispatch dto to the appropriate reader
                     try {
                         // find reader by sessionId

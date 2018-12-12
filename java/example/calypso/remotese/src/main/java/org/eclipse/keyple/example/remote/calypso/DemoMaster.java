@@ -12,7 +12,6 @@
 package org.eclipse.keyple.example.remote.calypso;
 
 import java.io.IOException;
-
 import org.eclipse.keyple.calypso.command.po.parser.ReadDataStructure;
 import org.eclipse.keyple.calypso.command.po.parser.ReadRecordsRespPars;
 import org.eclipse.keyple.calypso.transaction.CalypsoPo;
@@ -26,7 +25,6 @@ import org.eclipse.keyple.plugin.remotese.transport.ClientNode;
 import org.eclipse.keyple.plugin.remotese.transport.ServerNode;
 import org.eclipse.keyple.plugin.remotese.transport.TransportFactory;
 import org.eclipse.keyple.plugin.remotese.transport.TransportNode;
-import org.eclipse.keyple.plugin.stub.StubReader;
 import org.eclipse.keyple.seproxy.ChannelState;
 import org.eclipse.keyple.seproxy.ReaderPlugin;
 import org.eclipse.keyple.seproxy.SeProxyService;
@@ -146,8 +144,7 @@ class DemoMaster implements org.eclipse.keyple.util.Observable.Observer {
                     try {
                         RemoteSePlugin remoteSEPlugin = (RemoteSePlugin) SeProxyService
                                 .getInstance().getPlugin("RemoteSePlugin");
-                        poReader =
-                                (VirtualReader) remoteSEPlugin.getReader(event.getReaderName());
+                        poReader = (VirtualReader) remoteSEPlugin.getReader(event.getReaderName());
 
                         /* set default selection request */
                         seSelection = new SeSelection(poReader);
@@ -155,35 +152,41 @@ class DemoMaster implements org.eclipse.keyple.util.Observable.Observer {
                         /*
                          * Setting of an AID based selection of a Calypso REV3 PO
                          *
-                         * Select the first application matching the selection AID whatever the SE communication
-                         * protocol keep the logical channel open after the selection
+                         * Select the first application matching the selection AID whatever the SE
+                         * communication protocol keep the logical channel open after the selection
                          */
 
                         /*
-                         * Calypso selection: configures a PoSelector with all the desired attributes to make the
-                         * selection and read additional information afterwards
+                         * Calypso selection: configures a PoSelector with all the desired
+                         * attributes to make the selection and read additional information
+                         * afterwards
                          */
-                        PoSelector poSelector = new PoSelector(ByteArrayUtils.fromHex(CalypsoClassicInfo.AID),
-                                SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN,
-                                ContactlessProtocols.PROTOCOL_ISO14443_4, "AID: " + CalypsoClassicInfo.AID);
+                        PoSelector poSelector =
+                                new PoSelector(ByteArrayUtils.fromHex(CalypsoClassicInfo.AID),
+                                        SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN,
+                                        ContactlessProtocols.PROTOCOL_ISO14443_4,
+                                        "AID: " + CalypsoClassicInfo.AID);
 
                         /*
-                         * Prepare the reading order and keep the associated parser for later use once the selection
-                         * has been made.
+                         * Prepare the reading order and keep the associated parser for later use
+                         * once the selection has been made.
                          */
-                        readEnvironmentParser =
-                                poSelector.prepareReadRecordsCmd(CalypsoClassicInfo.SFI_EnvironmentAndHolder,
-                                        ReadDataStructure.SINGLE_RECORD_DATA, CalypsoClassicInfo.RECORD_NUMBER_1,
-                                        String.format("EnvironmentAndHolder (SFI=%02X))",
-                                                CalypsoClassicInfo.SFI_EnvironmentAndHolder));
+                        readEnvironmentParser = poSelector.prepareReadRecordsCmd(
+                                CalypsoClassicInfo.SFI_EnvironmentAndHolder,
+                                ReadDataStructure.SINGLE_RECORD_DATA,
+                                CalypsoClassicInfo.RECORD_NUMBER_1,
+                                String.format("EnvironmentAndHolder (SFI=%02X))",
+                                        CalypsoClassicInfo.SFI_EnvironmentAndHolder));
 
                         /*
-                         * Add the selection case to the current selection (we could have added other cases here)
+                         * Add the selection case to the current selection (we could have added
+                         * other cases here)
                          */
                         seSelection.prepareSelection(poSelector);
 
                         /*
-                         * Provide the SeReader with the selection operation to be processed when a PO is inserted.
+                         * Provide the SeReader with the selection operation to be processed when a
+                         * PO is inserted.
                          */
                         ((ObservableReader) poReader).setDefaultSelectionRequest(
                                 seSelection.getSelectionOperation(),
@@ -218,10 +221,12 @@ class DemoMaster implements org.eclipse.keyple.util.Observable.Observer {
                     if (seSelection.processDefaultSelection(event.getDefaultSelectionResponse())) {
                         MatchingSe selectedSe = seSelection.getSelectedSe();
 
-                        logger.info("Observer notification: the selection of the PO has succeeded.");
+                        logger.info(
+                                "Observer notification: the selection of the PO has succeeded.");
 
                         /*
-                         * Retrieve the data read from the parser updated during the selection process
+                         * Retrieve the data read from the parser updated during the selection
+                         * process
                          */
                         byte environmentAndHolder[] = (readEnvironmentParser.getRecords())
                                 .get((int) CalypsoClassicInfo.RECORD_NUMBER_1);
@@ -242,33 +247,35 @@ class DemoMaster implements org.eclipse.keyple.util.Observable.Observer {
                                 new PoTransaction(poReader, (CalypsoPo) selectedSe);
 
                         /*
-                         * Prepare the reading order and keep the associated parser for later use once
-                         * the transaction has been processed.
+                         * Prepare the reading order and keep the associated parser for later use
+                         * once the transaction has been processed.
                          */
-                        ReadRecordsRespPars readEventLogParser = poTransaction.prepareReadRecordsCmd(
-                                CalypsoClassicInfo.SFI_EventLog, ReadDataStructure.SINGLE_RECORD_DATA,
-                                CalypsoClassicInfo.RECORD_NUMBER_1,
-                                String.format("EventLog (SFI=%02X, recnbr=%d))",
-                                        CalypsoClassicInfo.SFI_EventLog,
-                                        CalypsoClassicInfo.RECORD_NUMBER_1));
+                        ReadRecordsRespPars readEventLogParser =
+                                poTransaction.prepareReadRecordsCmd(CalypsoClassicInfo.SFI_EventLog,
+                                        ReadDataStructure.SINGLE_RECORD_DATA,
+                                        CalypsoClassicInfo.RECORD_NUMBER_1,
+                                        String.format("EventLog (SFI=%02X, recnbr=%d))",
+                                                CalypsoClassicInfo.SFI_EventLog,
+                                                CalypsoClassicInfo.RECORD_NUMBER_1));
 
                         /*
-                         * Actual PO communication: send the prepared read order, then close the channel
-                         * with the PO
+                         * Actual PO communication: send the prepared read order, then close the
+                         * channel with the PO
                          */
                         try {
                             if (poTransaction.processPoCommands(ChannelState.CLOSE_AFTER)) {
                                 logger.info("The reading of the EventLog has succeeded.");
 
                                 /*
-                                 * Retrieve the data read from the parser updated during the transaction
-                                 * process
+                                 * Retrieve the data read from the parser updated during the
+                                 * transaction process
                                  */
                                 byte eventLog[] = (readEventLogParser.getRecords())
                                         .get((int) CalypsoClassicInfo.RECORD_NUMBER_1);
 
                                 /* Log the result */
-                                logger.info("EventLog file data: {}", ByteArrayUtils.toHex(eventLog));
+                                logger.info("EventLog file data: {}",
+                                        ByteArrayUtils.toHex(eventLog));
                             }
                         } catch (KeypleReaderException e) {
                             e.printStackTrace();
@@ -288,7 +295,7 @@ class DemoMaster implements org.eclipse.keyple.util.Observable.Observer {
                     logger.info("SE_INSERTED {} {}", event.getPluginName(), event.getReaderName());
 
                     // Transmit a SeRequestSet to native reader
-                    //CommandSample.transmit(logger, event.getReaderName());
+                    // CommandSample.transmit(logger, event.getReaderName());
 
                     break;
                 case SE_REMOVAL:
