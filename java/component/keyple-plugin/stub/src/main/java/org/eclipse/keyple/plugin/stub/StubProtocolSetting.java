@@ -39,7 +39,9 @@ public enum StubProtocolSetting implements SeProtocolSettingList {
             ProtocolSetting.REGEX_PROTOCOL_MEMORY_ST25);
 
     /**
-     * Regular expressions to match ATRs produced by PcSc readers
+     * Regular expressions to match ATRs produced by Stub readers
+     * <p>
+     * To be compared with the StubSE protocol
      */
     public interface ProtocolSetting {
         public static String REGEX_PROTOCOL_ISO14443_4 = "PROTOCOL_ISO14443_4";

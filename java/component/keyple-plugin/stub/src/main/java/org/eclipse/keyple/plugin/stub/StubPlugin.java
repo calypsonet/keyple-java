@@ -99,9 +99,11 @@ public final class StubPlugin extends AbstractThreadedObservablePlugin {
     public void plugStubReader(String name) {
         if (!nativeStubReadersNames.contains(name)) {
             logger.info("Plugging a new reader with name " + name);
+            /* add the native reader to the native readers list */
             nativeStubReadersNames.add(name);
-            // StubReader stubReader = new StubReader(name);
-            // readers.add((AbstractObservableReader) stubReader);
+            /* add the reader as a new reader to the readers list */
+            StubReader stubReader = new StubReader(name);
+            readers.add((AbstractObservableReader) stubReader);
         } else {
             logger.error("Reader with name " + name + " was already plugged");
         }
@@ -118,6 +120,9 @@ public final class StubPlugin extends AbstractThreadedObservablePlugin {
         if (!nativeStubReadersNames.contains(name)) {
             logger.warn("No reader found with name " + name);
         } else {
+            /* remove the reader from the readers list */
+            readers.remove(getNativeReader(name));
+            /* remove the native reader from the native readers list */
             nativeStubReadersNames.remove(name);
             logger.info("Unplugged reader with name " + name);
         }

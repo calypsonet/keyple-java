@@ -22,7 +22,7 @@ import org.eclipse.keyple.util.ByteArrayUtils;
 public class StubCalypsoClassic extends StubSecureElement {
 
     final static String seProtocol = "PROTOCOL_ISO14443_4";
-    final String ATR_HEX = "3B8E800180318066409089120802830190000B";
+    final String ATR_HEX = "3B8880010000000000718100F9";
 
     public StubCalypsoClassic() {
         /* Select Application */
@@ -54,6 +54,9 @@ public class StubCalypsoClassic extends StubSecureElement {
         /* Read Records */
         addHexCommand("00B2014C00",
                 "00000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF9000");
+        /* Read Records */
+        addHexCommand("00B2014D00",
+                "011D00000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF021D00000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF031D00000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF041D00000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF9000");
         /* Append Record */
         addHexCommand("00E200401D00112233445566778899AABBCCDDEEFF00112233445566778899AABBCC",
                 "9000");
