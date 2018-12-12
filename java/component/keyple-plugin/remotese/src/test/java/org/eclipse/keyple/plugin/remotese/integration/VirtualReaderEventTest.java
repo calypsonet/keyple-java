@@ -11,6 +11,7 @@
  ********************************************************************************/
 package org.eclipse.keyple.plugin.remotese.integration;
 
+import static org.eclipse.keyple.plugin.stub.StubReaderTest.hoplinkSE;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import org.eclipse.keyple.plugin.stub.StubPlugin;
@@ -18,6 +19,7 @@ import org.eclipse.keyple.plugin.stub.StubReaderTest;
 import org.eclipse.keyple.seproxy.ChannelState;
 import org.eclipse.keyple.seproxy.event.ObservableReader;
 import org.eclipse.keyple.seproxy.event.ReaderEvent;
+import org.eclipse.keyple.seproxy.exception.KeypleIOReaderException;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.protocol.Protocol;
 import org.eclipse.keyple.transaction.MatchingSe;
@@ -27,8 +29,6 @@ import org.eclipse.keyple.util.ByteArrayUtils;
 import org.junit.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import static org.eclipse.keyple.plugin.stub.StubReaderTest.hoplinkSE;
 
 /**
  * Test Virtual Reader Service with stub plugin and hoplink SE
@@ -137,6 +137,7 @@ public class VirtualReaderEventTest extends VirtualReaderBaseTest {
 
         // CountDown lock
         final CountDownLatch lock = new CountDownLatch(1);
+        final String poAid = "A000000291A000000191";
 
         // add observer
         virtualReader.addObserver(new ObservableReader.ReaderObserver() {
@@ -153,18 +154,34 @@ public class VirtualReaderEventTest extends VirtualReaderBaseTest {
                                 .getSingleResponse().getSelectionStatus().getAtr().getBytes(),
                         hoplinkSE().getATR());
 
-                // TODO add FCI to StubSecureElement
-                // Assert.assertArrayEquals(
-                // event.getDefaultSelectionResponse().getSelectionSeResponseSet()
-                // .getSingleResponse().getSelectionStatus().getFci().getBytes(),
-                // hoplinkSE().getFci());
+                // retrieve the expected FCI from the Stub SE running the select application command
+                byte[] aid = ByteArrayUtils.fromHex(poAid);
+                byte[] selectApplicationCommand = new byte[6 + aid.length];
+                selectApplicationCommand[0] = (byte) 0x00; // CLA
+                selectApplicationCommand[1] = (byte) 0xA4; // INS
+                selectApplicationCommand[2] = (byte) 0x04; // P1: select by name
+                selectApplicationCommand[3] = (byte) 0x00; // P2: requests the first
+                selectApplicationCommand[4] = (byte) (aid.length); // Lc
+                System.arraycopy(aid, 0, selectApplicationCommand, 5, aid.length); // data
+
+                selectApplicationCommand[5 + aid.length] = (byte) 0x00; // Le
+                byte[] fci = null;
+                try {
+                    fci = hoplinkSE().processApdu(selectApplicationCommand);
+                } catch (KeypleIOReaderException e) {
+                    e.printStackTrace();
+                }
+
+                Assert.assertArrayEquals(
+                        event.getDefaultSelectionResponse().getSelectionSeResponseSet()
+                                .getSingleResponse().getSelectionStatus().getFci().getBytes(),
+                        fci);
 
                 logger.debug("match event is correct");
                 // unlock thread
                 lock.countDown();
             }
         });
-        String poAid = "A000000291A000000191";
 
         SeSelection seSelection = new SeSelection(virtualReader);
 
@@ -173,7 +190,8 @@ public class VirtualReaderEventTest extends VirtualReaderBaseTest {
 
         seSelection.prepareSelection(seSelector);
 
-        ((ObservableReader) virtualReader).setDefaultSelectionRequest(seSelection.getSelectionOperation(),
+        ((ObservableReader) virtualReader).setDefaultSelectionRequest(
+                seSelection.getSelectionOperation(),
                 ObservableReader.NotificationMode.MATCHED_ONLY);
 
         // wait 1 second
@@ -214,7 +232,8 @@ public class VirtualReaderEventTest extends VirtualReaderBaseTest {
 
         seSelection.prepareSelection(seSelector);
 
-        ((ObservableReader) virtualReader).setDefaultSelectionRequest(seSelection.getSelectionOperation(),
+        ((ObservableReader) virtualReader).setDefaultSelectionRequest(
+                seSelection.getSelectionOperation(),
                 ObservableReader.NotificationMode.MATCHED_ONLY);
 
         // wait 1 second
@@ -262,8 +281,8 @@ public class VirtualReaderEventTest extends VirtualReaderBaseTest {
 
         seSelection.prepareSelection(seSelector);
 
-        ((ObservableReader) virtualReader).setDefaultSelectionRequest(seSelection.getSelectionOperation(),
-                ObservableReader.NotificationMode.ALWAYS);
+        ((ObservableReader) virtualReader).setDefaultSelectionRequest(
+                seSelection.getSelectionOperation(), ObservableReader.NotificationMode.ALWAYS);
 
         // wait 1 second
         logger.debug("Wait 1 second before inserting SE");
