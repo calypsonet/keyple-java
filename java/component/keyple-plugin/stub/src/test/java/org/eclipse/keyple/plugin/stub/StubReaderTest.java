@@ -137,6 +137,7 @@ public class StubReaderTest {
 
         // CountDown lock
         final CountDownLatch lock = new CountDownLatch(1);
+        final String poAid = "A000000291A000000191";
 
         // add observer
         reader.addObserver(new ObservableReader.ReaderObserver() {
@@ -152,18 +153,34 @@ public class StubReaderTest {
                                 .getSingleResponse().getSelectionStatus().getAtr().getBytes(),
                         hoplinkSE().getATR());
 
-                // TODO add FCI to StubSecureElement
-                // Assert.assertArrayEquals(
-                // event.getDefaultSelectionResponse().getSelectionSeResponseSet()
-                // .getSingleResponse().getSelectionStatus().getFci().getBytes(),
-                // hoplinkSE().getFci());
+                // retrieve the expected FCI from the Stub SE running the select application command
+                byte[] aid = ByteArrayUtils.fromHex(poAid);
+                byte[] selectApplicationCommand = new byte[6 + aid.length];
+                selectApplicationCommand[0] = (byte) 0x00; // CLA
+                selectApplicationCommand[1] = (byte) 0xA4; // INS
+                selectApplicationCommand[2] = (byte) 0x04; // P1: select by name
+                selectApplicationCommand[3] = (byte) 0x00; // P2: requests the first
+                selectApplicationCommand[4] = (byte) (aid.length); // Lc
+                System.arraycopy(aid, 0, selectApplicationCommand, 5, aid.length); // data
+
+                selectApplicationCommand[5 + aid.length] = (byte) 0x00; // Le
+                byte[] fci = null;
+                try {
+                    fci = hoplinkSE().processApdu(selectApplicationCommand);
+                } catch (KeypleIOReaderException e) {
+                    e.printStackTrace();
+                }
+
+                Assert.assertArrayEquals(
+                        event.getDefaultSelectionResponse().getSelectionSeResponseSet()
+                                .getSingleResponse().getSelectionStatus().getFci().getBytes(),
+                        fci);
 
                 logger.debug("match event is correct");
                 // unlock thread
                 lock.countDown();
             }
         });
-        String poAid = "A000000291A000000191";
 
         SeSelection seSelection = new SeSelection(reader);
 
