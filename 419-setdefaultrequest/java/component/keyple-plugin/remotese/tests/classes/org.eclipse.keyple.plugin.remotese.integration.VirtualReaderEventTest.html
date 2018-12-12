@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">16.756s</div>
+<div class="counter">16.693s</div>
 <p>duration</p>
 </div>
 </td>
@@ -79,17 +79,17 @@
 </thead>
 <tr>
 <td class="success">testATR</td>
-<td>2.190s</td>
+<td>2.122s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">testInsert</td>
-<td>1.115s</td>
+<td>1.127s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">testInsertMatchingSe</td>
-<td>2.113s</td>
+<td>2.112s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
@@ -99,12 +99,12 @@
 </tr>
 <tr>
 <td class="success">testInsertNotMatching_MatchedOnly</td>
-<td>7.110s</td>
+<td>7.105s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">testRemoveEvent</td>
-<td>2.114s</td>
+<td>2.113s</td>
 <td class="success">passed</td>
 </tr>
 </table>
@@ -123,15 +123,14 @@
 [Test worker] DEBUG Integration - Stub plugin count observers : 1
 [Test worker] DEBUG Integration - Create a new StubReader : testStubReader
 [Test worker] INFO StubPlugin - Plugging a new reader with name testStubReader
-[Thread-4] DEBUG VirtualReaderBaseTest - Default Stub Plugin Observer : READER_CONNECTED
 [Test worker] INFO NativeReaderServiceImpl - connectReader testStubReader from device testClientNodeId
 [Test worker] DEBUG RemoteSePlugin - createVirtualReader for nativeReader testStubReader
-[Test worker] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1544611329513
+[Test worker] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1544611926797
 [Test worker] DEBUG NativeReaderServiceImpl - Remote Method called : READER_CONNECT - isRequest : false
 [Test worker] DEBUG NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
 [Test worker] DEBUG RmConnectReaderParser - Add NativeReaderServiceImpl as an observer for native reader testStubReader
 [Test worker] DEBUG AbstractObservableReader - Start the reader monitoring.
-[Test worker] INFO NativeReaderServiceImpl - Native Reader testStubReader has been connected to Master with sessionId testStubReadertestClientNodeId1544611329513
+[Test worker] INFO NativeReaderServiceImpl - Native Reader testStubReader has been connected to Master with sessionId testStubReadertestClientNodeId1544611926797
 [Test worker] DEBUG NativeReaderServiceImpl - onDto response to be sent {
   &quot;action&quot;: &quot;&quot;,
   &quot;body&quot;: &quot;&quot;,
@@ -139,37 +138,37 @@
 }
 [Test worker] DEBUG AbstractObservableReader - Start the reader monitoring.
 [Test worker] DEBUG VirtualReaderEventTest - Wait 1 second before inserting SE
-[observable-reader-events-1] INFO NativeReaderServiceImpl - NativeReaderServiceImpl listens for event from native Reader - Received Event SE_INSERTED
-[observable-reader-events-1] DEBUG RemoteSePlugin - OnReaderEvent org.eclipse.keyple.seproxy.event.ReaderEvent@6c5c076b
-[observable-reader-events-1] DEBUG RemoteSePlugin - Dispatch ReaderEvent to the appropriate Reader : testStubReader sessionId : null
-[observable-reader-events-1] DEBUG VirtualReader -  EVENT SE_INSERTED 
-[Thread-6] DEBUG AbstractObservableReader - [remote-testStubReader] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 1021.7 ms.
-[Thread-6] DEBUG RemoteMethodTxEngine - Register rm to engine : org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx@7a5f5ab5
-[Thread-6] DEBUG RemoteMethodTx - Blocking Get {}
-[Thread-7] DEBUG NativeReaderServiceImpl - Remote Method called : READER_TRANSMIT - isRequest : true
-[Thread-7] DEBUG NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
-[Thread-7] DEBUG AbstractObservableReader - [testStubReader] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 1160.8 ms.
-[Thread-7] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [], SELECTOR = ATR regex:3B.*, KEEPCHANNELOPEN = KEEP_OPEN}
-[Thread-7] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; receive SeResponse:{RESPONSES = [], ATR = 3B8E800180318066409089120802830190000B, FCI = , HASMATCHED = true CHANNELWASOPEN = false}
-[Thread-7] DEBUG AbstractObservableReader - [testStubReader] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 0.7 ms.
-[Thread-7] DEBUG NativeReaderServiceImpl - onDto response to be sent {
-  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1544611329513&quot;,
+[observable-reader-events-4] INFO NativeReaderServiceImpl - NativeReaderServiceImpl listens for event from native Reader - Received Event SE_INSERTED
+[observable-reader-events-4] DEBUG RemoteSePlugin - OnReaderEvent org.eclipse.keyple.seproxy.event.ReaderEvent@68c1d617
+[observable-reader-events-4] DEBUG RemoteSePlugin - Dispatch ReaderEvent to the appropriate Reader : testStubReader sessionId : null
+[observable-reader-events-4] DEBUG VirtualReader -  EVENT SE_INSERTED 
+[Thread-15] DEBUG AbstractObservableReader - [remote-testStubReader] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 1012.3 ms.
+[Thread-15] DEBUG RemoteMethodTxEngine - Register rm to engine : org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx@60081425
+[Thread-15] DEBUG RemoteMethodTx - Blocking Get {}
+[Thread-16] DEBUG NativeReaderServiceImpl - Remote Method called : READER_TRANSMIT - isRequest : true
+[Thread-16] DEBUG NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
+[Thread-16] DEBUG AbstractObservableReader - [testStubReader] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 1117.0 ms.
+[Thread-16] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [], SELECTOR = ATR regex:3B.*, KEEPCHANNELOPEN = KEEP_OPEN}
+[Thread-16] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; receive SeResponse:{RESPONSES = [], ATR = 3B8E800180318066409089120802830190000B, FCI = , HASMATCHED = true CHANNELWASOPEN = false}
+[Thread-16] DEBUG AbstractObservableReader - [testStubReader] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 0.6 ms.
+[Thread-16] DEBUG NativeReaderServiceImpl - onDto response to be sent {
+  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1544611926797&quot;,
   &quot;nativeReaderName&quot;: &quot;testStubReader&quot;,
   &quot;virtualReaderName&quot;: &quot;remote-testStubReader&quot;,
   &quot;action&quot;: &quot;reader_transmit&quot;,
   &quot;body&quot;: &quot;{\n  \&quot;seResponses\&quot;: [\n    {\n      \&quot;channelPreviouslyOpen\&quot;: false,\n      \&quot;selectionStatus\&quot;: {\n        \&quot;atr\&quot;: {\n          \&quot;atrBytes\&quot;: [\n            59,\n            -114,\n            -128,\n            1,\n            -128,\n            49,\n            -128,\n            102,\n            64,\n            -112,\n            -119,\n            18,\n            8,\n            2,\n            -125,\n            1,\n            -112,\n            0,\n            11\n          ]\n        },\n        \&quot;fci\&quot;: {\n          \&quot;successful\&quot;: false\n        },\n        \&quot;hasMatched\&quot;: true\n      },\n      \&quot;apduResponses\&quot;: []\n    }\n  ]\n}&quot;,
   &quot;isRequest&quot;: false
 }
-[Thread-7] DEBUG RemoteMethodTx - release lock
-[Thread-6] DEBUG RemoteMethodTx - tread unlock in RemoteMethodTx
-[Thread-6] DEBUG AbstractObservableReader - [remote-testStubReader] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 21.4 ms.
+[Thread-16] DEBUG RemoteMethodTx - release lock
+[Thread-15] DEBUG RemoteMethodTx - tread unlock in RemoteMethodTx
+[Thread-15] DEBUG AbstractObservableReader - [remote-testStubReader] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 5.6 ms.
 [Test worker] INFO VirtualReaderBaseTest - TearDown Test
 [Test worker] INFO StubPlugin - Unplugged reader with name testStubReader
 [Test worker] DEBUG AbstractObservablePlugin - Stop the plugin monitoring.
 java.lang.InterruptedException: sleep interrupted
 	at java.lang.Thread.sleep(Native Method)
 	at org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin$EventThread.run(AbstractThreadedObservablePlugin.java:147)
-[Thread-4] WARN AbstractThreadedObservablePlugin - [StubPlugin] An exception occurred while monitoring plugin: sleep interrupted, cause null
+[Thread-13] WARN AbstractThreadedObservablePlugin - [StubPlugin] An exception occurred while monitoring plugin: sleep interrupted, cause null
 [Test worker] INFO VirtualReaderBaseTest - End of TearDown Test
 [Test worker] INFO VirtualReaderBaseTest - ------------------------------
 [Test worker] INFO VirtualReaderBaseTest - Test testRemoveEvent
@@ -184,12 +183,12 @@ java.lang.InterruptedException: sleep interrupted
 [Test worker] INFO StubPlugin - Plugging a new reader with name testStubReader
 [Test worker] INFO NativeReaderServiceImpl - connectReader testStubReader from device testClientNodeId
 [Test worker] DEBUG RemoteSePlugin - createVirtualReader for nativeReader testStubReader
-[Test worker] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1544611331661
+[Test worker] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1544611928917
 [Test worker] DEBUG NativeReaderServiceImpl - Remote Method called : READER_CONNECT - isRequest : false
 [Test worker] DEBUG NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
 [Test worker] DEBUG RmConnectReaderParser - Add NativeReaderServiceImpl as an observer for native reader testStubReader
 [Test worker] DEBUG AbstractObservableReader - Start the reader monitoring.
-[Test worker] INFO NativeReaderServiceImpl - Native Reader testStubReader has been connected to Master with sessionId testStubReadertestClientNodeId1544611331661
+[Test worker] INFO NativeReaderServiceImpl - Native Reader testStubReader has been connected to Master with sessionId testStubReadertestClientNodeId1544611928917
 [Test worker] DEBUG NativeReaderServiceImpl - onDto response to be sent {
   &quot;action&quot;: &quot;&quot;,
   &quot;body&quot;: &quot;&quot;,
@@ -197,22 +196,22 @@ java.lang.InterruptedException: sleep interrupted
 }
 [Test worker] DEBUG AbstractObservableReader - Start the reader monitoring.
 [Test worker] INFO VirtualReaderEventTest - Insert and remove a Hoplink SE and wait 5 seconds for two SE events to be thrown
-[observable-reader-events-2] INFO NativeReaderServiceImpl - NativeReaderServiceImpl listens for event from native Reader - Received Event SE_INSERTED
-[observable-reader-events-2] DEBUG RemoteSePlugin - OnReaderEvent org.eclipse.keyple.seproxy.event.ReaderEvent@ee1956c
-[observable-reader-events-2] DEBUG RemoteSePlugin - Dispatch ReaderEvent to the appropriate Reader : testStubReader sessionId : null
-[observable-reader-events-2] DEBUG VirtualReader -  EVENT SE_INSERTED 
-[observable-reader-events-2] INFO NativeReaderServiceImpl - NativeReaderServiceImpl listens for event from native Reader - Received Event SE_REMOVAL
-[observable-reader-events-2] DEBUG RemoteSePlugin - OnReaderEvent org.eclipse.keyple.seproxy.event.ReaderEvent@266ac0
-[observable-reader-events-2] DEBUG RemoteSePlugin - Dispatch ReaderEvent to the appropriate Reader : testStubReader sessionId : null
-[observable-reader-events-2] DEBUG VirtualReader -  EVENT SE_REMOVAL 
-[Thread-11] DEBUG VirtualReaderEventTest - Reader Event is correct, release lock
+[observable-reader-events-5] INFO NativeReaderServiceImpl - NativeReaderServiceImpl listens for event from native Reader - Received Event SE_INSERTED
+[observable-reader-events-5] DEBUG RemoteSePlugin - OnReaderEvent org.eclipse.keyple.seproxy.event.ReaderEvent@14080af2
+[observable-reader-events-5] DEBUG RemoteSePlugin - Dispatch ReaderEvent to the appropriate Reader : testStubReader sessionId : null
+[observable-reader-events-5] DEBUG VirtualReader -  EVENT SE_INSERTED 
+[observable-reader-events-5] INFO NativeReaderServiceImpl - NativeReaderServiceImpl listens for event from native Reader - Received Event SE_REMOVAL
+[observable-reader-events-5] DEBUG RemoteSePlugin - OnReaderEvent org.eclipse.keyple.seproxy.event.ReaderEvent@1acfe603
+[observable-reader-events-5] DEBUG RemoteSePlugin - Dispatch ReaderEvent to the appropriate Reader : testStubReader sessionId : null
+[observable-reader-events-5] DEBUG VirtualReader -  EVENT SE_REMOVAL 
+[Thread-20] DEBUG VirtualReaderEventTest - Reader Event is correct, release lock
 [Test worker] INFO VirtualReaderBaseTest - TearDown Test
 [Test worker] INFO StubPlugin - Unplugged reader with name testStubReader
 [Test worker] DEBUG AbstractObservablePlugin - Stop the plugin monitoring.
 java.lang.InterruptedException: sleep interrupted
 	at java.lang.Thread.sleep(Native Method)
 	at org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin$EventThread.run(AbstractThreadedObservablePlugin.java:147)
-[Thread-8] WARN AbstractThreadedObservablePlugin - [StubPlugin] An exception occurred while monitoring plugin: sleep interrupted, cause null
+[Thread-17] WARN AbstractThreadedObservablePlugin - [StubPlugin] An exception occurred while monitoring plugin: sleep interrupted, cause null
 [Test worker] INFO VirtualReaderBaseTest - End of TearDown Test
 [Test worker] INFO VirtualReaderBaseTest - ------------------------------
 [Test worker] INFO VirtualReaderBaseTest - Test testInsertNotMatching_Always
@@ -227,22 +226,22 @@ java.lang.InterruptedException: sleep interrupted
 [Test worker] INFO StubPlugin - Plugging a new reader with name testStubReader
 [Test worker] INFO NativeReaderServiceImpl - connectReader testStubReader from device testClientNodeId
 [Test worker] DEBUG RemoteSePlugin - createVirtualReader for nativeReader testStubReader
-[Test worker] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1544611333776
+[Test worker] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1544611931031
 [Test worker] DEBUG NativeReaderServiceImpl - Remote Method called : READER_CONNECT - isRequest : false
 [Test worker] DEBUG NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
 [Test worker] DEBUG RmConnectReaderParser - Add NativeReaderServiceImpl as an observer for native reader testStubReader
 [Test worker] DEBUG AbstractObservableReader - Start the reader monitoring.
-[Test worker] INFO NativeReaderServiceImpl - Native Reader testStubReader has been connected to Master with sessionId testStubReadertestClientNodeId1544611333776
+[Test worker] INFO NativeReaderServiceImpl - Native Reader testStubReader has been connected to Master with sessionId testStubReadertestClientNodeId1544611931031
 [Test worker] DEBUG NativeReaderServiceImpl - onDto response to be sent {
   &quot;action&quot;: &quot;&quot;,
   &quot;body&quot;: &quot;&quot;,
   &quot;isRequest&quot;: false
 }
 [Test worker] DEBUG AbstractObservableReader - Start the reader monitoring.
-[Test worker] DEBUG RemoteMethodTxEngine - Register rm to engine : org.eclipse.keyple.plugin.remotese.pluginse.method.RmSetDefaultSelectionRequestTx@50ab4797
+[Test worker] DEBUG RemoteMethodTxEngine - Register rm to engine : org.eclipse.keyple.plugin.remotese.pluginse.method.RmSetDefaultSelectionRequestTx@6b7d020a
 [Test worker] DEBUG RemoteMethodTx - Blocking Get {}
-[Thread-14] DEBUG NativeReaderServiceImpl - Remote Method called : DEFAULT_SELECTION_REQUEST - isRequest : true
-[Thread-14] DEBUG RmSetDefaultSelectionRequestExecutor - {
+[Thread-23] DEBUG NativeReaderServiceImpl - Remote Method called : DEFAULT_SELECTION_REQUEST - isRequest : true
+[Thread-23] DEBUG RmSetDefaultSelectionRequestExecutor - {
   &quot;selectionSeRequestSet&quot;: {
     &quot;sortedRequests&quot;: [
       {
@@ -255,34 +254,34 @@ java.lang.InterruptedException: sleep interrupted
     ]
   }
 }
-[Thread-14] DEBUG RmSetDefaultSelectionRequestExecutor - always
-[Thread-14] DEBUG RmSetDefaultSelectionRequestExecutor - Execute locally SetDefaultSelectionRequest : ALWAYS - org.eclipse.keyple.transaction.SelectionRequest@6a3d7ff0
-[Thread-14] DEBUG NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
-[Thread-14] DEBUG RmSetDefaultSelectionRequestExecutor - testStubReader is an ObservableReader, invoke setDefaultSelectionRequest on it
-[Thread-14] DEBUG NativeReaderServiceImpl - onDto response to be sent {
-  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1544611333776&quot;,
+[Thread-23] DEBUG RmSetDefaultSelectionRequestExecutor - always
+[Thread-23] DEBUG RmSetDefaultSelectionRequestExecutor - Execute locally SetDefaultSelectionRequest : ALWAYS - org.eclipse.keyple.transaction.SelectionRequest@101781c7
+[Thread-23] DEBUG NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
+[Thread-23] DEBUG RmSetDefaultSelectionRequestExecutor - testStubReader is an ObservableReader, invoke setDefaultSelectionRequest on it
+[Thread-23] DEBUG NativeReaderServiceImpl - onDto response to be sent {
+  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1544611931031&quot;,
   &quot;nativeReaderName&quot;: &quot;testStubReader&quot;,
   &quot;virtualReaderName&quot;: &quot;remote-testStubReader&quot;,
   &quot;action&quot;: &quot;default_selection_request&quot;,
   &quot;body&quot;: &quot;{}&quot;,
   &quot;isRequest&quot;: false
 }
-[Thread-14] DEBUG RemoteMethodTx - release lock
+[Thread-23] DEBUG RemoteMethodTx - release lock
 [Test worker] DEBUG RemoteMethodTx - tread unlock in RemoteMethodTx
 [Test worker] DEBUG VirtualReaderEventTest - Wait 1 second before inserting SE
-[observable-reader-events-3] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [], SELECTOR = AID:A000000291A000000192, KEEPCHANNELOPEN = KEEP_OPEN}
-[observable-reader-events-3] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; receive SeResponse:{RESPONSES = [], ATR = 3B8E800180318066409089120802830190000B, FCI = 6A82, HASMATCHED = false CHANNELWASOPEN = false}
-[observable-reader-events-3] INFO NativeReaderServiceImpl - NativeReaderServiceImpl listens for event from native Reader - Received Event SE_INSERTED
-[observable-reader-events-3] DEBUG RemoteSePlugin - OnReaderEvent org.eclipse.keyple.seproxy.event.ReaderEvent@47f61cc2
-[observable-reader-events-3] DEBUG RemoteSePlugin - Dispatch ReaderEvent to the appropriate Reader : testStubReader sessionId : null
-[observable-reader-events-3] DEBUG VirtualReader -  EVENT SE_INSERTED 
+[observable-reader-events-6] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [], SELECTOR = AID:A000000291A000000192, KEEPCHANNELOPEN = KEEP_OPEN}
+[observable-reader-events-6] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; receive SeResponse:{RESPONSES = [], ATR = 3B8E800180318066409089120802830190000B, FCI = 6A82, HASMATCHED = false CHANNELWASOPEN = false}
+[observable-reader-events-6] INFO NativeReaderServiceImpl - NativeReaderServiceImpl listens for event from native Reader - Received Event SE_INSERTED
+[observable-reader-events-6] DEBUG RemoteSePlugin - OnReaderEvent org.eclipse.keyple.seproxy.event.ReaderEvent@7f7a0d0b
+[observable-reader-events-6] DEBUG RemoteSePlugin - Dispatch ReaderEvent to the appropriate Reader : testStubReader sessionId : null
+[observable-reader-events-6] DEBUG VirtualReader -  EVENT SE_INSERTED 
 [Test worker] INFO VirtualReaderBaseTest - TearDown Test
 [Test worker] INFO StubPlugin - Unplugged reader with name testStubReader
 [Test worker] DEBUG AbstractObservablePlugin - Stop the plugin monitoring.
 java.lang.InterruptedException: sleep interrupted
 	at java.lang.Thread.sleep(Native Method)
 	at org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin$EventThread.run(AbstractThreadedObservablePlugin.java:147)
-[Thread-12] WARN AbstractThreadedObservablePlugin - [StubPlugin] An exception occurred while monitoring plugin: sleep interrupted, cause null
+[Thread-21] WARN AbstractThreadedObservablePlugin - [StubPlugin] An exception occurred while monitoring plugin: sleep interrupted, cause null
 [Test worker] INFO VirtualReaderBaseTest - End of TearDown Test
 [Test worker] INFO VirtualReaderBaseTest - ------------------------------
 [Test worker] INFO VirtualReaderBaseTest - Test testInsertNotMatching_MatchedOnly
@@ -297,22 +296,22 @@ java.lang.InterruptedException: sleep interrupted
 [Test worker] INFO StubPlugin - Plugging a new reader with name testStubReader
 [Test worker] INFO NativeReaderServiceImpl - connectReader testStubReader from device testClientNodeId
 [Test worker] DEBUG RemoteSePlugin - createVirtualReader for nativeReader testStubReader
-[Test worker] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1544611335890
+[Test worker] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1544611933144
 [Test worker] DEBUG NativeReaderServiceImpl - Remote Method called : READER_CONNECT - isRequest : false
 [Test worker] DEBUG NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
 [Test worker] DEBUG RmConnectReaderParser - Add NativeReaderServiceImpl as an observer for native reader testStubReader
 [Test worker] DEBUG AbstractObservableReader - Start the reader monitoring.
-[Test worker] INFO NativeReaderServiceImpl - Native Reader testStubReader has been connected to Master with sessionId testStubReadertestClientNodeId1544611335890
+[Test worker] INFO NativeReaderServiceImpl - Native Reader testStubReader has been connected to Master with sessionId testStubReadertestClientNodeId1544611933144
 [Test worker] DEBUG NativeReaderServiceImpl - onDto response to be sent {
   &quot;action&quot;: &quot;&quot;,
   &quot;body&quot;: &quot;&quot;,
   &quot;isRequest&quot;: false
 }
 [Test worker] DEBUG AbstractObservableReader - Start the reader monitoring.
-[Test worker] DEBUG RemoteMethodTxEngine - Register rm to engine : org.eclipse.keyple.plugin.remotese.pluginse.method.RmSetDefaultSelectionRequestTx@3631a81
+[Test worker] DEBUG RemoteMethodTxEngine - Register rm to engine : org.eclipse.keyple.plugin.remotese.pluginse.method.RmSetDefaultSelectionRequestTx@647703f3
 [Test worker] DEBUG RemoteMethodTx - Blocking Get {}
-[Thread-18] DEBUG NativeReaderServiceImpl - Remote Method called : DEFAULT_SELECTION_REQUEST - isRequest : true
-[Thread-18] DEBUG RmSetDefaultSelectionRequestExecutor - {
+[Thread-27] DEBUG NativeReaderServiceImpl - Remote Method called : DEFAULT_SELECTION_REQUEST - isRequest : true
+[Thread-27] DEBUG RmSetDefaultSelectionRequestExecutor - {
   &quot;selectionSeRequestSet&quot;: {
     &quot;sortedRequests&quot;: [
       {
@@ -325,30 +324,30 @@ java.lang.InterruptedException: sleep interrupted
     ]
   }
 }
-[Thread-18] DEBUG RmSetDefaultSelectionRequestExecutor - matched_only
-[Thread-18] DEBUG RmSetDefaultSelectionRequestExecutor - Execute locally SetDefaultSelectionRequest : MATCHED_ONLY - org.eclipse.keyple.transaction.SelectionRequest@7844e85e
-[Thread-18] DEBUG NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
-[Thread-18] DEBUG RmSetDefaultSelectionRequestExecutor - testStubReader is an ObservableReader, invoke setDefaultSelectionRequest on it
-[Thread-18] DEBUG NativeReaderServiceImpl - onDto response to be sent {
-  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1544611335890&quot;,
+[Thread-27] DEBUG RmSetDefaultSelectionRequestExecutor - matched_only
+[Thread-27] DEBUG RmSetDefaultSelectionRequestExecutor - Execute locally SetDefaultSelectionRequest : MATCHED_ONLY - org.eclipse.keyple.transaction.SelectionRequest@390e2234
+[Thread-27] DEBUG NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
+[Thread-27] DEBUG RmSetDefaultSelectionRequestExecutor - testStubReader is an ObservableReader, invoke setDefaultSelectionRequest on it
+[Thread-27] DEBUG NativeReaderServiceImpl - onDto response to be sent {
+  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1544611933144&quot;,
   &quot;nativeReaderName&quot;: &quot;testStubReader&quot;,
   &quot;virtualReaderName&quot;: &quot;remote-testStubReader&quot;,
   &quot;action&quot;: &quot;default_selection_request&quot;,
   &quot;body&quot;: &quot;{}&quot;,
   &quot;isRequest&quot;: false
 }
-[Thread-18] DEBUG RemoteMethodTx - release lock
+[Thread-27] DEBUG RemoteMethodTx - release lock
 [Test worker] DEBUG RemoteMethodTx - tread unlock in RemoteMethodTx
 [Test worker] DEBUG VirtualReaderEventTest - Wait 1 second before inserting SE
-[observable-reader-events-4] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [], SELECTOR = AID:A000000291A000000192, KEEPCHANNELOPEN = KEEP_OPEN}
-[observable-reader-events-4] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; receive SeResponse:{RESPONSES = [], ATR = 3B8E800180318066409089120802830190000B, FCI = 6A82, HASMATCHED = false CHANNELWASOPEN = false}
+[observable-reader-events-7] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [], SELECTOR = AID:A000000291A000000192, KEEPCHANNELOPEN = KEEP_OPEN}
+[observable-reader-events-7] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; receive SeResponse:{RESPONSES = [], ATR = 3B8E800180318066409089120802830190000B, FCI = 6A82, HASMATCHED = false CHANNELWASOPEN = false}
 [Test worker] INFO VirtualReaderBaseTest - TearDown Test
 [Test worker] INFO StubPlugin - Unplugged reader with name testStubReader
 [Test worker] DEBUG AbstractObservablePlugin - Stop the plugin monitoring.
 java.lang.InterruptedException: sleep interrupted
 	at java.lang.Thread.sleep(Native Method)
 	at org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin$EventThread.run(AbstractThreadedObservablePlugin.java:147)
-[Thread-16] WARN AbstractThreadedObservablePlugin - [StubPlugin] An exception occurred while monitoring plugin: sleep interrupted, cause null
+[Thread-25] WARN AbstractThreadedObservablePlugin - [StubPlugin] An exception occurred while monitoring plugin: sleep interrupted, cause null
 [Test worker] INFO VirtualReaderBaseTest - End of TearDown Test
 [Test worker] INFO VirtualReaderBaseTest - ------------------------------
 [Test worker] INFO VirtualReaderBaseTest - Test testInsertMatchingSe
@@ -363,22 +362,22 @@ java.lang.InterruptedException: sleep interrupted
 [Test worker] INFO StubPlugin - Plugging a new reader with name testStubReader
 [Test worker] INFO NativeReaderServiceImpl - connectReader testStubReader from device testClientNodeId
 [Test worker] DEBUG RemoteSePlugin - createVirtualReader for nativeReader testStubReader
-[Test worker] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1544611343000
+[Test worker] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1544611940249
 [Test worker] DEBUG NativeReaderServiceImpl - Remote Method called : READER_CONNECT - isRequest : false
 [Test worker] DEBUG NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
 [Test worker] DEBUG RmConnectReaderParser - Add NativeReaderServiceImpl as an observer for native reader testStubReader
 [Test worker] DEBUG AbstractObservableReader - Start the reader monitoring.
-[Test worker] INFO NativeReaderServiceImpl - Native Reader testStubReader has been connected to Master with sessionId testStubReadertestClientNodeId1544611343000
+[Test worker] INFO NativeReaderServiceImpl - Native Reader testStubReader has been connected to Master with sessionId testStubReadertestClientNodeId1544611940249
 [Test worker] DEBUG NativeReaderServiceImpl - onDto response to be sent {
   &quot;action&quot;: &quot;&quot;,
   &quot;body&quot;: &quot;&quot;,
   &quot;isRequest&quot;: false
 }
 [Test worker] DEBUG AbstractObservableReader - Start the reader monitoring.
-[Test worker] DEBUG RemoteMethodTxEngine - Register rm to engine : org.eclipse.keyple.plugin.remotese.pluginse.method.RmSetDefaultSelectionRequestTx@23b28d39
+[Test worker] DEBUG RemoteMethodTxEngine - Register rm to engine : org.eclipse.keyple.plugin.remotese.pluginse.method.RmSetDefaultSelectionRequestTx@5701cad5
 [Test worker] DEBUG RemoteMethodTx - Blocking Get {}
-[Thread-21] DEBUG NativeReaderServiceImpl - Remote Method called : DEFAULT_SELECTION_REQUEST - isRequest : true
-[Thread-21] DEBUG RmSetDefaultSelectionRequestExecutor - {
+[Thread-30] DEBUG NativeReaderServiceImpl - Remote Method called : DEFAULT_SELECTION_REQUEST - isRequest : true
+[Thread-30] DEBUG RmSetDefaultSelectionRequestExecutor - {
   &quot;selectionSeRequestSet&quot;: {
     &quot;sortedRequests&quot;: [
       {
@@ -391,34 +390,34 @@ java.lang.InterruptedException: sleep interrupted
     ]
   }
 }
-[Thread-21] DEBUG RmSetDefaultSelectionRequestExecutor - matched_only
-[Thread-21] DEBUG RmSetDefaultSelectionRequestExecutor - Execute locally SetDefaultSelectionRequest : MATCHED_ONLY - org.eclipse.keyple.transaction.SelectionRequest@4235980d
-[Thread-21] DEBUG NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
-[Thread-21] DEBUG RmSetDefaultSelectionRequestExecutor - testStubReader is an ObservableReader, invoke setDefaultSelectionRequest on it
-[Thread-21] DEBUG NativeReaderServiceImpl - onDto response to be sent {
-  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1544611343000&quot;,
+[Thread-30] DEBUG RmSetDefaultSelectionRequestExecutor - matched_only
+[Thread-30] DEBUG RmSetDefaultSelectionRequestExecutor - Execute locally SetDefaultSelectionRequest : MATCHED_ONLY - org.eclipse.keyple.transaction.SelectionRequest@4024bcab
+[Thread-30] DEBUG NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
+[Thread-30] DEBUG RmSetDefaultSelectionRequestExecutor - testStubReader is an ObservableReader, invoke setDefaultSelectionRequest on it
+[Thread-30] DEBUG NativeReaderServiceImpl - onDto response to be sent {
+  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1544611940249&quot;,
   &quot;nativeReaderName&quot;: &quot;testStubReader&quot;,
   &quot;virtualReaderName&quot;: &quot;remote-testStubReader&quot;,
   &quot;action&quot;: &quot;default_selection_request&quot;,
   &quot;body&quot;: &quot;{}&quot;,
   &quot;isRequest&quot;: false
 }
-[Thread-21] DEBUG RemoteMethodTx - release lock
+[Thread-30] DEBUG RemoteMethodTx - release lock
 [Test worker] DEBUG RemoteMethodTx - tread unlock in RemoteMethodTx
-[observable-reader-events-5] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [], SELECTOR = AID:A000000291A000000191, KEEPCHANNELOPEN = KEEP_OPEN}
-[observable-reader-events-5] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; receive SeResponse:{RESPONSES = [], ATR = 3B8E800180318066409089120802830190000B, FCI = 6F25840BA000000291A00000019102A516BF0C13C70800000000C0E11FA653070A3C230C1410019000, HASMATCHED = true CHANNELWASOPEN = false}
-[observable-reader-events-5] INFO NativeReaderServiceImpl - NativeReaderServiceImpl listens for event from native Reader - Received Event SE_MATCHED
-[observable-reader-events-5] DEBUG RemoteSePlugin - OnReaderEvent org.eclipse.keyple.seproxy.event.ReaderEvent@7b1b01d6
-[observable-reader-events-5] DEBUG RemoteSePlugin - Dispatch ReaderEvent to the appropriate Reader : testStubReader sessionId : null
-[observable-reader-events-5] DEBUG VirtualReader -  EVENT SE_MATCHED 
-[Thread-22] DEBUG VirtualReaderEventTest - match event is correct
+[observable-reader-events-8] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [], SELECTOR = AID:A000000291A000000191, KEEPCHANNELOPEN = KEEP_OPEN}
+[observable-reader-events-8] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; receive SeResponse:{RESPONSES = [], ATR = 3B8E800180318066409089120802830190000B, FCI = 6F25840BA000000291A00000019102A516BF0C13C70800000000C0E11FA653070A3C230C1410019000, HASMATCHED = true CHANNELWASOPEN = false}
+[observable-reader-events-8] INFO NativeReaderServiceImpl - NativeReaderServiceImpl listens for event from native Reader - Received Event SE_MATCHED
+[observable-reader-events-8] DEBUG RemoteSePlugin - OnReaderEvent org.eclipse.keyple.seproxy.event.ReaderEvent@53e06b06
+[observable-reader-events-8] DEBUG RemoteSePlugin - Dispatch ReaderEvent to the appropriate Reader : testStubReader sessionId : null
+[observable-reader-events-8] DEBUG VirtualReader -  EVENT SE_MATCHED 
+[Thread-31] DEBUG VirtualReaderEventTest - match event is correct
 [Test worker] INFO VirtualReaderBaseTest - TearDown Test
 [Test worker] INFO StubPlugin - Unplugged reader with name testStubReader
 [Test worker] DEBUG AbstractObservablePlugin - Stop the plugin monitoring.
 java.lang.InterruptedException: sleep interrupted
 	at java.lang.Thread.sleep(Native Method)
 	at org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin$EventThread.run(AbstractThreadedObservablePlugin.java:147)
-[Thread-19] WARN AbstractThreadedObservablePlugin - [StubPlugin] An exception occurred while monitoring plugin: sleep interrupted, cause null
+[Thread-28] WARN AbstractThreadedObservablePlugin - [StubPlugin] An exception occurred while monitoring plugin: sleep interrupted, cause null
 [Test worker] INFO VirtualReaderBaseTest - End of TearDown Test
 [Test worker] INFO VirtualReaderBaseTest - ------------------------------
 [Test worker] INFO VirtualReaderBaseTest - Test testInsert
@@ -433,12 +432,12 @@ java.lang.InterruptedException: sleep interrupted
 [Test worker] INFO StubPlugin - Plugging a new reader with name testStubReader
 [Test worker] INFO NativeReaderServiceImpl - connectReader testStubReader from device testClientNodeId
 [Test worker] DEBUG RemoteSePlugin - createVirtualReader for nativeReader testStubReader
-[Test worker] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1544611345113
+[Test worker] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1544611942361
 [Test worker] DEBUG NativeReaderServiceImpl - Remote Method called : READER_CONNECT - isRequest : false
 [Test worker] DEBUG NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
 [Test worker] DEBUG RmConnectReaderParser - Add NativeReaderServiceImpl as an observer for native reader testStubReader
 [Test worker] DEBUG AbstractObservableReader - Start the reader monitoring.
-[Test worker] INFO NativeReaderServiceImpl - Native Reader testStubReader has been connected to Master with sessionId testStubReadertestClientNodeId1544611345113
+[Test worker] INFO NativeReaderServiceImpl - Native Reader testStubReader has been connected to Master with sessionId testStubReadertestClientNodeId1544611942361
 [Test worker] DEBUG NativeReaderServiceImpl - onDto response to be sent {
   &quot;action&quot;: &quot;&quot;,
   &quot;body&quot;: &quot;&quot;,
@@ -446,18 +445,18 @@ java.lang.InterruptedException: sleep interrupted
 }
 [Test worker] DEBUG AbstractObservableReader - Start the reader monitoring.
 [Test worker] INFO VirtualReaderEventTest - Insert a Hoplink SE and wait 5 seconds for a SE event to be thrown
-[observable-reader-events-6] INFO NativeReaderServiceImpl - NativeReaderServiceImpl listens for event from native Reader - Received Event SE_INSERTED
-[observable-reader-events-6] DEBUG RemoteSePlugin - OnReaderEvent org.eclipse.keyple.seproxy.event.ReaderEvent@7a4548e
-[observable-reader-events-6] DEBUG RemoteSePlugin - Dispatch ReaderEvent to the appropriate Reader : testStubReader sessionId : null
-[observable-reader-events-6] DEBUG VirtualReader -  EVENT SE_INSERTED 
-[Thread-25] DEBUG VirtualReaderEventTest - Reader Event is correct, release lock
+[observable-reader-events-9] INFO NativeReaderServiceImpl - NativeReaderServiceImpl listens for event from native Reader - Received Event SE_INSERTED
+[observable-reader-events-9] DEBUG RemoteSePlugin - OnReaderEvent org.eclipse.keyple.seproxy.event.ReaderEvent@5c1ab30a
+[observable-reader-events-9] DEBUG RemoteSePlugin - Dispatch ReaderEvent to the appropriate Reader : testStubReader sessionId : null
+[observable-reader-events-9] DEBUG VirtualReader -  EVENT SE_INSERTED 
+[Thread-34] DEBUG VirtualReaderEventTest - Reader Event is correct, release lock
 [Test worker] INFO VirtualReaderBaseTest - TearDown Test
 [Test worker] INFO StubPlugin - Unplugged reader with name testStubReader
 [Test worker] DEBUG AbstractObservablePlugin - Stop the plugin monitoring.
 java.lang.InterruptedException: sleep interrupted
 	at java.lang.Thread.sleep(Native Method)
 	at org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin$EventThread.run(AbstractThreadedObservablePlugin.java:147)
-[Thread-23] WARN AbstractThreadedObservablePlugin - [StubPlugin] An exception occurred while monitoring plugin: sleep interrupted, cause null
+[Thread-32] WARN AbstractThreadedObservablePlugin - [StubPlugin] An exception occurred while monitoring plugin: sleep interrupted, cause null
 [Test worker] INFO VirtualReaderBaseTest - End of TearDown Test
 </pre>
 </span>
@@ -470,7 +469,7 @@ java.lang.InterruptedException: sleep interrupted
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 4.5.1</a> at Dec 12, 2018 10:42:50 AM</p>
+<a href="http://www.gradle.org">Gradle 4.5.1</a> at Dec 12, 2018 10:52:42 AM</p>
 </div>
 </div>
 </body>
