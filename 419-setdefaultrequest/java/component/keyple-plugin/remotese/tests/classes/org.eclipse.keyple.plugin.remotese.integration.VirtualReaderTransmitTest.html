@@ -1,0 +1,1308 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - Class org.eclipse.keyple.plugin.remotese.integration.VirtualReaderTransmitTest</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>Class org.eclipse.keyple.plugin.remotese.integration.VirtualReaderTransmitTest</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/org.eclipse.keyple.plugin.remotese.integration.html">org.eclipse.keyple.plugin.remotese.integration</a> &gt; VirtualReaderTransmitTest</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">12</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">18.829s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Tests</a>
+</li>
+<li>
+<a href="#tab1">Standard error</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">rse_transmit_Hoplink_Sucessfull</td>
+<td>2.153s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">rse_transmit_no_response</td>
+<td>1.608s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">testKOTransmitSet_NoSE</td>
+<td>1.104s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">testKOTransmit_NoSE</td>
+<td>1.107s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">transmit_partial_response_0</td>
+<td>1.608s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">transmit_partial_response_1</td>
+<td>1.607s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">transmit_partial_response_2</td>
+<td>1.607s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">transmit_partial_response_3</td>
+<td>1.606s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">transmit_partial_response_set_0</td>
+<td>1.609s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">transmit_partial_response_set_1</td>
+<td>1.606s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">transmit_partial_response_set_2</td>
+<td>1.607s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">transmit_partial_response_set_3</td>
+<td>1.607s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div id="tab1" class="tab">
+<h2>Standard error</h2>
+<span class="code">
+<pre>[Test worker] INFO VirtualReaderBaseTest - ------------------------------
+[Test worker] INFO VirtualReaderBaseTest - Test testKOTransmit_NoSE
+[Test worker] INFO VirtualReaderBaseTest - ------------------------------
+[Test worker] INFO VirtualReaderBaseTest - *** Init LocalTransportFactory
+[Test worker] INFO VirtualReaderBaseTest - *** Bind Master Services
+[Test worker] INFO RemoteSePlugin - Init RemoteSePlugin
+[Test worker] INFO VirtualReaderBaseTest - *** Bind Slave Services
+[Test worker] DEBUG AbstractObservablePlugin - Start the plugin monitoring.
+[Test worker] DEBUG Integration - Stub plugin count observers : 1
+[Test worker] DEBUG Integration - Create a new StubReader : testStubReader
+[Test worker] INFO StubPlugin - Plugging a new reader with name testStubReader
+[Test worker] INFO NativeReaderServiceImpl - connectReader testStubReader from device testClientNodeId
+[Test worker] DEBUG RemoteSePlugin - createVirtualReader for nativeReader testStubReader
+[Test worker] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1544611346229
+[Test worker] DEBUG NativeReaderServiceImpl - Remote Method called : READER_CONNECT - isRequest : false
+[Test worker] DEBUG NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
+[Test worker] DEBUG RmConnectReaderParser - Add NativeReaderServiceImpl as an observer for native reader testStubReader
+[Test worker] DEBUG AbstractObservableReader - Start the reader monitoring.
+[Test worker] INFO NativeReaderServiceImpl - Native Reader testStubReader has been connected to Master with sessionId testStubReadertestClientNodeId1544611346229
+[Test worker] DEBUG NativeReaderServiceImpl - onDto response to be sent {
+  &quot;action&quot;: &quot;&quot;,
+  &quot;body&quot;: &quot;&quot;,
+  &quot;isRequest&quot;: false
+}
+[Test worker] DEBUG AbstractObservableReader - [remote-testStubReader] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 0.9 ms.
+[Test worker] DEBUG RemoteMethodTxEngine - Register rm to engine : org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx@1dc608c0
+[Test worker] DEBUG RemoteMethodTx - Blocking Get {}
+[Thread-28] DEBUG NativeReaderServiceImpl - Remote Method called : READER_TRANSMIT - isRequest : true
+[Thread-28] DEBUG NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
+[Thread-28] DEBUG AbstractObservableReader - [testStubReader] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 103.2 ms.
+[Thread-28] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [], SELECTOR = ATR regex:3B.*, KEEPCHANNELOPEN = KEEP_OPEN}
+[Thread-28] DEBUG AbstractObservableReader - [0.2] transmit =&gt; SEREQUESTSET channel failure. elapsed null
+[Thread-28] DEBUG NativeReaderServiceImpl - onDto response to be sent {
+  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1544611346229&quot;,
+  &quot;nativeReaderName&quot;: &quot;testStubReader&quot;,
+  &quot;virtualReaderName&quot;: &quot;remote-testStubReader&quot;,
+  &quot;action&quot;: &quot;reader_transmit&quot;,
+  &quot;body&quot;: &quot;{\n  \&quot;seResponseSet\&quot;: {\n    \&quot;seResponses\&quot;: [\n      null\n    ]\n  },\n  \&quot;detailMessage\&quot;: \&quot;Fail to open physical channel.\&quot;,\n  \&quot;stackTrace\&quot;: [],\n  \&quot;suppressedExceptions\&quot;: []\n}&quot;,
+  &quot;isRequest&quot;: false
+}
+[Thread-28] DEBUG RemoteMethodTx - release lock
+[Test worker] DEBUG RemoteMethodTx - tread unlock in RemoteMethodTx
+org.eclipse.keyple.plugin.remotese.transport.KeypleRemoteException: An exception occurs while calling the remote method transmitSet
+	at org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx.parseResponse(RmTransmitTx.java:52)
+	at org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx.parseResponse(RmTransmitTx.java:22)
+	at org.eclipse.keyple.plugin.remotese.transport.RemoteMethodTx.asyncSetResponse(RemoteMethodTx.java:126)
+	at org.eclipse.keyple.plugin.remotese.transport.RemoteMethodTxEngine.onDTO(RemoteMethodTxEngine.java:51)
+	at org.eclipse.keyple.plugin.remotese.pluginse.VirtualReaderService.onDTO(VirtualReaderService.java:118)
+	at org.eclipse.keyple.plugin.remotese.transport.java.LocalServer.onLocalMessage(LocalServer.java:36)
+	at org.eclipse.keyple.plugin.remotese.transport.java.LocalClient.sendDTO(LocalClient.java:53)
+	at org.eclipse.keyple.plugin.remotese.transport.java.LocalClient.onLocalMessage(LocalClient.java:36)
+	at org.eclipse.keyple.plugin.remotese.transport.java.LocalServer.sendDTO(LocalServer.java:70)
+	at org.eclipse.keyple.plugin.remotese.transport.RemoteMethodTx.asyncGet(RemoteMethodTx.java:70)
+	at org.eclipse.keyple.plugin.remotese.transport.RemoteMethodTx$1.run(RemoteMethodTx.java:86)
+Caused by: org.eclipse.keyple.seproxy.exception.KeypleReaderException: Fail to open physical channel.
+[Test worker] INFO VirtualReaderTransmitTest - KeypleReaderException was thrown as expected
+[Test worker] INFO VirtualReaderBaseTest - TearDown Test
+[Test worker] INFO StubPlugin - Unplugged reader with name testStubReader
+[Test worker] DEBUG AbstractObservablePlugin - Stop the plugin monitoring.
+java.lang.InterruptedException: sleep interrupted
+	at java.lang.Thread.sleep(Native Method)
+	at org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin$EventThread.run(AbstractThreadedObservablePlugin.java:147)
+[Thread-26] WARN AbstractThreadedObservablePlugin - [StubPlugin] An exception occurred while monitoring plugin: sleep interrupted, cause null
+[Test worker] INFO VirtualReaderBaseTest - End of TearDown Test
+[Test worker] INFO VirtualReaderBaseTest - ------------------------------
+[Test worker] INFO VirtualReaderBaseTest - Test rse_transmit_Hoplink_Sucessfull
+[Test worker] INFO VirtualReaderBaseTest - ------------------------------
+[Test worker] INFO VirtualReaderBaseTest - *** Init LocalTransportFactory
+[Test worker] INFO VirtualReaderBaseTest - *** Bind Master Services
+[Test worker] INFO RemoteSePlugin - Init RemoteSePlugin
+[Test worker] INFO VirtualReaderBaseTest - *** Bind Slave Services
+[Test worker] DEBUG AbstractObservablePlugin - Start the plugin monitoring.
+[Test worker] DEBUG Integration - Stub plugin count observers : 1
+[Test worker] DEBUG Integration - Create a new StubReader : testStubReader
+[Test worker] INFO StubPlugin - Plugging a new reader with name testStubReader
+[Test worker] INFO NativeReaderServiceImpl - connectReader testStubReader from device testClientNodeId
+[Test worker] DEBUG RemoteSePlugin - createVirtualReader for nativeReader testStubReader
+[Test worker] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1544611347336
+[Test worker] DEBUG NativeReaderServiceImpl - Remote Method called : READER_CONNECT - isRequest : false
+[Test worker] DEBUG NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
+[Test worker] DEBUG RmConnectReaderParser - Add NativeReaderServiceImpl as an observer for native reader testStubReader
+[Test worker] DEBUG AbstractObservableReader - Start the reader monitoring.
+[Test worker] INFO NativeReaderServiceImpl - Native Reader testStubReader has been connected to Master with sessionId testStubReadertestClientNodeId1544611347336
+[Test worker] DEBUG NativeReaderServiceImpl - onDto response to be sent {
+  &quot;action&quot;: &quot;&quot;,
+  &quot;body&quot;: &quot;&quot;,
+  &quot;isRequest&quot;: false
+}
+[observable-reader-events-8] INFO NativeReaderServiceImpl - NativeReaderServiceImpl listens for event from native Reader - Received Event SE_INSERTED
+[observable-reader-events-8] DEBUG RemoteSePlugin - OnReaderEvent org.eclipse.keyple.seproxy.event.ReaderEvent@3ebe5903
+[observable-reader-events-8] DEBUG RemoteSePlugin - Dispatch ReaderEvent to the appropriate Reader : testStubReader sessionId : null
+[observable-reader-events-8] DEBUG VirtualReader -  EVENT SE_INSERTED 
+[Thread-31] DEBUG VirtualReader - An event was received but no observers are declared into VirtualReader : remote-testStubReader SE_INSERTED
+[Test worker] DEBUG AbstractObservableReader - [remote-testStubReader] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 1000.9 ms.
+[Test worker] DEBUG RemoteMethodTxEngine - Register rm to engine : org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx@749dd476
+[Test worker] DEBUG RemoteMethodTx - Blocking Get {}
+[Thread-32] DEBUG NativeReaderServiceImpl - Remote Method called : READER_TRANSMIT - isRequest : true
+[Thread-32] DEBUG NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
+[Thread-32] DEBUG AbstractObservableReader - [testStubReader] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 1103.3 ms.
+[Thread-32] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [], SELECTOR = ATR regex:3B.*, KEEPCHANNELOPEN = KEEP_OPEN}
+[Thread-32] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; receive SeResponse:{RESPONSES = [], ATR = 3B8E800180318066409089120802830190000B, FCI = , HASMATCHED = true CHANNELWASOPEN = false}
+[Thread-32] DEBUG AbstractObservableReader - [testStubReader] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 0.3 ms.
+[Thread-32] DEBUG NativeReaderServiceImpl - onDto response to be sent {
+  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1544611347336&quot;,
+  &quot;nativeReaderName&quot;: &quot;testStubReader&quot;,
+  &quot;virtualReaderName&quot;: &quot;remote-testStubReader&quot;,
+  &quot;action&quot;: &quot;reader_transmit&quot;,
+  &quot;body&quot;: &quot;{\n  \&quot;seResponses\&quot;: [\n    {\n      \&quot;channelPreviouslyOpen\&quot;: false,\n      \&quot;selectionStatus\&quot;: {\n        \&quot;atr\&quot;: {\n          \&quot;atrBytes\&quot;: [\n            59,\n            -114,\n            -128,\n            1,\n            -128,\n            49,\n            -128,\n            102,\n            64,\n            -112,\n            -119,\n            18,\n            8,\n            2,\n            -125,\n            1,\n            -112,\n            0,\n            11\n          ]\n        },\n        \&quot;fci\&quot;: {\n          \&quot;successful\&quot;: false\n        },\n        \&quot;hasMatched\&quot;: true\n      },\n      \&quot;apduResponses\&quot;: []\n    }\n  ]\n}&quot;,
+  &quot;isRequest&quot;: false
+}
+[Thread-32] DEBUG RemoteMethodTx - release lock
+[Test worker] DEBUG RemoteMethodTx - tread unlock in RemoteMethodTx
+[Test worker] DEBUG AbstractObservableReader - [remote-testStubReader] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 3.4 ms.
+[Test worker] DEBUG AbstractObservableReader - [remote-testStubReader] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 9.7 ms.
+[Test worker] DEBUG RemoteMethodTxEngine - Register rm to engine : org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx@78f409a8
+[Test worker] DEBUG RemoteMethodTx - Blocking Get {}
+[Thread-33] DEBUG NativeReaderServiceImpl - Remote Method called : READER_TRANSMIT - isRequest : true
+[Thread-33] DEBUG NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
+[Thread-33] DEBUG AbstractObservableReader - [testStubReader] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 13.3 ms.
+[Thread-33] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A420], SELECTOR = null, KEEPCHANNELOPEN = KEEP_OPEN}
+[Thread-33] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; receive SeResponse:{RESPONSES = [ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000000000009000], ATR = null, FCI = null, HASMATCHED = false CHANNELWASOPEN = true}
+[Thread-33] DEBUG AbstractObservableReader - [testStubReader] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 0.4 ms.
+[Thread-33] DEBUG NativeReaderServiceImpl - onDto response to be sent {
+  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1544611347336&quot;,
+  &quot;nativeReaderName&quot;: &quot;testStubReader&quot;,
+  &quot;virtualReaderName&quot;: &quot;remote-testStubReader&quot;,
+  &quot;action&quot;: &quot;reader_transmit&quot;,
+  &quot;body&quot;: &quot;{\n  \&quot;seResponses\&quot;: [\n    {\n      \&quot;channelPreviouslyOpen\&quot;: true,\n      \&quot;apduResponses\&quot;: [\n        {\n          \&quot;successful\&quot;: true,\n          \&quot;bytes\&quot;: [\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            -112,\n            0\n          ]\n        }\n      ]\n    }\n  ]\n}&quot;,
+  &quot;isRequest&quot;: false
+}
+[Thread-33] DEBUG RemoteMethodTx - release lock
+[Test worker] DEBUG RemoteMethodTx - tread unlock in RemoteMethodTx
+[Test worker] DEBUG AbstractObservableReader - [remote-testStubReader] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 4.0 ms.
+[Test worker] INFO VirtualReaderTransmitTest - SeResponseSet returned as expected SeResponse:{RESPONSES = [ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000000000009000], ATR = null, FCI = null, HASMATCHED = false CHANNELWASOPEN = true}
+[Test worker] DEBUG AbstractObservableReader - [remote-testStubReader] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 0.2 ms.
+[Test worker] DEBUG RemoteMethodTxEngine - Register rm to engine : org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx@3c93340a
+[Test worker] DEBUG RemoteMethodTx - Blocking Get {}
+[Thread-34] DEBUG NativeReaderServiceImpl - Remote Method called : READER_TRANSMIT - isRequest : true
+[Thread-34] DEBUG NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
+[Thread-34] DEBUG AbstractObservableReader - [testStubReader] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 2.7 ms.
+[Thread-34] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A420], SELECTOR = null, KEEPCHANNELOPEN = KEEP_OPEN}
+[Thread-34] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; receive SeResponse:{RESPONSES = [ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000000000009000], ATR = null, FCI = null, HASMATCHED = false CHANNELWASOPEN = true}
+[Thread-34] DEBUG AbstractObservableReader - [testStubReader] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 0.3 ms.
+[Thread-34] DEBUG NativeReaderServiceImpl - onDto response to be sent {
+  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1544611347336&quot;,
+  &quot;nativeReaderName&quot;: &quot;testStubReader&quot;,
+  &quot;virtualReaderName&quot;: &quot;remote-testStubReader&quot;,
+  &quot;action&quot;: &quot;reader_transmit&quot;,
+  &quot;body&quot;: &quot;{\n  \&quot;seResponses\&quot;: [\n    {\n      \&quot;channelPreviouslyOpen\&quot;: true,\n      \&quot;apduResponses\&quot;: [\n        {\n          \&quot;successful\&quot;: true,\n          \&quot;bytes\&quot;: [\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            -112,\n            0\n          ]\n        }\n      ]\n    }\n  ]\n}&quot;,
+  &quot;isRequest&quot;: false
+}
+[Thread-34] DEBUG RemoteMethodTx - release lock
+[Test worker] DEBUG RemoteMethodTx - tread unlock in RemoteMethodTx
+[Test worker] DEBUG AbstractObservableReader - [remote-testStubReader] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 2.8 ms.
+[Test worker] INFO VirtualReaderTransmitTest - SeResponseSet returned as expected SeResponse:{RESPONSES = [ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000000000009000], ATR = null, FCI = null, HASMATCHED = false CHANNELWASOPEN = true}
+[Test worker] DEBUG AbstractObservableReader - [remote-testStubReader] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 0.1 ms.
+[Test worker] DEBUG RemoteMethodTxEngine - Register rm to engine : org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx@28791f73
+[Test worker] DEBUG RemoteMethodTx - Blocking Get {}
+[Thread-35] DEBUG NativeReaderServiceImpl - Remote Method called : READER_TRANSMIT - isRequest : true
+[Thread-35] DEBUG NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
+[Thread-35] DEBUG AbstractObservableReader - [testStubReader] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 2.7 ms.
+[Thread-35] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A420], SELECTOR = null, KEEPCHANNELOPEN = KEEP_OPEN}
+[Thread-35] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; receive SeResponse:{RESPONSES = [ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000000000009000], ATR = null, FCI = null, HASMATCHED = false CHANNELWASOPEN = true}
+[Thread-35] DEBUG AbstractObservableReader - [testStubReader] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 0.2 ms.
+[Thread-35] DEBUG NativeReaderServiceImpl - onDto response to be sent {
+  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1544611347336&quot;,
+  &quot;nativeReaderName&quot;: &quot;testStubReader&quot;,
+  &quot;virtualReaderName&quot;: &quot;remote-testStubReader&quot;,
+  &quot;action&quot;: &quot;reader_transmit&quot;,
+  &quot;body&quot;: &quot;{\n  \&quot;seResponses\&quot;: [\n    {\n      \&quot;channelPreviouslyOpen\&quot;: true,\n      \&quot;apduResponses\&quot;: [\n        {\n          \&quot;successful\&quot;: true,\n          \&quot;bytes\&quot;: [\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            -112,\n            0\n          ]\n        }\n      ]\n    }\n  ]\n}&quot;,
+  &quot;isRequest&quot;: false
+}
+[Thread-35] DEBUG RemoteMethodTx - release lock
+[Test worker] DEBUG RemoteMethodTx - tread unlock in RemoteMethodTx
+[Test worker] DEBUG AbstractObservableReader - [remote-testStubReader] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 2.3 ms.
+[Test worker] INFO VirtualReaderTransmitTest - SeResponseSet returned as expected SeResponse:{RESPONSES = [ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000000000009000], ATR = null, FCI = null, HASMATCHED = false CHANNELWASOPEN = true}
+[Test worker] DEBUG AbstractObservableReader - [remote-testStubReader] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 0.3 ms.
+[Test worker] DEBUG RemoteMethodTxEngine - Register rm to engine : org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx@5cdcb45a
+[Test worker] DEBUG RemoteMethodTx - Blocking Get {}
+[Thread-36] DEBUG NativeReaderServiceImpl - Remote Method called : READER_TRANSMIT - isRequest : true
+[Thread-36] DEBUG NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
+[Thread-36] DEBUG AbstractObservableReader - [testStubReader] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 2.3 ms.
+[Thread-36] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A420], SELECTOR = null, KEEPCHANNELOPEN = KEEP_OPEN}
+[Thread-36] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; receive SeResponse:{RESPONSES = [ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000000000009000], ATR = null, FCI = null, HASMATCHED = false CHANNELWASOPEN = true}
+[Thread-36] DEBUG AbstractObservableReader - [testStubReader] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 0.2 ms.
+[Thread-36] DEBUG NativeReaderServiceImpl - onDto response to be sent {
+  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1544611347336&quot;,
+  &quot;nativeReaderName&quot;: &quot;testStubReader&quot;,
+  &quot;virtualReaderName&quot;: &quot;remote-testStubReader&quot;,
+  &quot;action&quot;: &quot;reader_transmit&quot;,
+  &quot;body&quot;: &quot;{\n  \&quot;seResponses\&quot;: [\n    {\n      \&quot;channelPreviouslyOpen\&quot;: true,\n      \&quot;apduResponses\&quot;: [\n        {\n          \&quot;successful\&quot;: true,\n          \&quot;bytes\&quot;: [\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            -112,\n            0\n          ]\n        }\n      ]\n    }\n  ]\n}&quot;,
+  &quot;isRequest&quot;: false
+}
+[Thread-36] DEBUG RemoteMethodTx - release lock
+[Test worker] DEBUG RemoteMethodTx - tread unlock in RemoteMethodTx
+[Test worker] DEBUG AbstractObservableReader - [remote-testStubReader] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 2.6 ms.
+[Test worker] INFO VirtualReaderTransmitTest - SeResponseSet returned as expected SeResponse:{RESPONSES = [ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000000000009000], ATR = null, FCI = null, HASMATCHED = false CHANNELWASOPEN = true}
+[Test worker] DEBUG AbstractObservableReader - [remote-testStubReader] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 0.1 ms.
+[Test worker] DEBUG RemoteMethodTxEngine - Register rm to engine : org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx@b9ddaa2
+[Test worker] DEBUG RemoteMethodTx - Blocking Get {}
+[Thread-37] DEBUG NativeReaderServiceImpl - Remote Method called : READER_TRANSMIT - isRequest : true
+[Thread-37] DEBUG NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
+[Thread-37] DEBUG AbstractObservableReader - [testStubReader] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 2.5 ms.
+[Thread-37] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A420], SELECTOR = null, KEEPCHANNELOPEN = KEEP_OPEN}
+[Thread-37] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; receive SeResponse:{RESPONSES = [ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000000000009000], ATR = null, FCI = null, HASMATCHED = false CHANNELWASOPEN = true}
+[Thread-37] DEBUG AbstractObservableReader - [testStubReader] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 0.2 ms.
+[Thread-37] DEBUG NativeReaderServiceImpl - onDto response to be sent {
+  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1544611347336&quot;,
+  &quot;nativeReaderName&quot;: &quot;testStubReader&quot;,
+  &quot;virtualReaderName&quot;: &quot;remote-testStubReader&quot;,
+  &quot;action&quot;: &quot;reader_transmit&quot;,
+  &quot;body&quot;: &quot;{\n  \&quot;seResponses\&quot;: [\n    {\n      \&quot;channelPreviouslyOpen\&quot;: true,\n      \&quot;apduResponses\&quot;: [\n        {\n          \&quot;successful\&quot;: true,\n          \&quot;bytes\&quot;: [\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            -112,\n            0\n          ]\n        }\n      ]\n    }\n  ]\n}&quot;,
+  &quot;isRequest&quot;: false
+}
+[Thread-37] DEBUG RemoteMethodTx - release lock
+[Test worker] DEBUG RemoteMethodTx - tread unlock in RemoteMethodTx
+[Test worker] DEBUG AbstractObservableReader - [remote-testStubReader] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 2.3 ms.
+[Test worker] INFO VirtualReaderTransmitTest - SeResponseSet returned as expected SeResponse:{RESPONSES = [ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000000000009000], ATR = null, FCI = null, HASMATCHED = false CHANNELWASOPEN = true}
+[Test worker] DEBUG AbstractObservableReader - [remote-testStubReader] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 0.1 ms.
+[Test worker] DEBUG RemoteMethodTxEngine - Register rm to engine : org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx@1c5e6b55
+[Test worker] DEBUG RemoteMethodTx - Blocking Get {}
+[Thread-38] DEBUG NativeReaderServiceImpl - Remote Method called : READER_TRANSMIT - isRequest : true
+[Thread-38] DEBUG NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
+[Thread-38] DEBUG AbstractObservableReader - [testStubReader] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 2.4 ms.
+[Thread-38] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A420], SELECTOR = null, KEEPCHANNELOPEN = KEEP_OPEN}
+[Thread-38] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; receive SeResponse:{RESPONSES = [ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000000000009000], ATR = null, FCI = null, HASMATCHED = false CHANNELWASOPEN = true}
+[Thread-38] DEBUG AbstractObservableReader - [testStubReader] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 0.2 ms.
+[Thread-38] DEBUG NativeReaderServiceImpl - onDto response to be sent {
+  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1544611347336&quot;,
+  &quot;nativeReaderName&quot;: &quot;testStubReader&quot;,
+  &quot;virtualReaderName&quot;: &quot;remote-testStubReader&quot;,
+  &quot;action&quot;: &quot;reader_transmit&quot;,
+  &quot;body&quot;: &quot;{\n  \&quot;seResponses\&quot;: [\n    {\n      \&quot;channelPreviouslyOpen\&quot;: true,\n      \&quot;apduResponses\&quot;: [\n        {\n          \&quot;successful\&quot;: true,\n          \&quot;bytes\&quot;: [\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            -112,\n            0\n          ]\n        }\n      ]\n    }\n  ]\n}&quot;,
+  &quot;isRequest&quot;: false
+}
+[Thread-38] DEBUG RemoteMethodTx - release lock
+[Test worker] DEBUG RemoteMethodTx - tread unlock in RemoteMethodTx
+[Test worker] DEBUG AbstractObservableReader - [remote-testStubReader] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 3.0 ms.
+[Test worker] INFO VirtualReaderTransmitTest - SeResponseSet returned as expected SeResponse:{RESPONSES = [ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000000000009000], ATR = null, FCI = null, HASMATCHED = false CHANNELWASOPEN = true}
+[Test worker] DEBUG AbstractObservableReader - [remote-testStubReader] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 0.1 ms.
+[Test worker] DEBUG RemoteMethodTxEngine - Register rm to engine : org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx@6c088fa1
+[Test worker] DEBUG RemoteMethodTx - Blocking Get {}
+[Thread-39] DEBUG NativeReaderServiceImpl - Remote Method called : READER_TRANSMIT - isRequest : true
+[Thread-39] DEBUG NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
+[Thread-39] DEBUG AbstractObservableReader - [testStubReader] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 2.8 ms.
+[Thread-39] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A420], SELECTOR = null, KEEPCHANNELOPEN = KEEP_OPEN}
+[Thread-39] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; receive SeResponse:{RESPONSES = [ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000000000009000], ATR = null, FCI = null, HASMATCHED = false CHANNELWASOPEN = true}
+[Thread-39] DEBUG AbstractObservableReader - [testStubReader] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 0.2 ms.
+[Thread-39] DEBUG NativeReaderServiceImpl - onDto response to be sent {
+  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1544611347336&quot;,
+  &quot;nativeReaderName&quot;: &quot;testStubReader&quot;,
+  &quot;virtualReaderName&quot;: &quot;remote-testStubReader&quot;,
+  &quot;action&quot;: &quot;reader_transmit&quot;,
+  &quot;body&quot;: &quot;{\n  \&quot;seResponses\&quot;: [\n    {\n      \&quot;channelPreviouslyOpen\&quot;: true,\n      \&quot;apduResponses\&quot;: [\n        {\n          \&quot;successful\&quot;: true,\n          \&quot;bytes\&quot;: [\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            -112,\n            0\n          ]\n        }\n      ]\n    }\n  ]\n}&quot;,
+  &quot;isRequest&quot;: false
+}
+[Thread-39] DEBUG RemoteMethodTx - release lock
+[Test worker] DEBUG RemoteMethodTx - tread unlock in RemoteMethodTx
+[Test worker] DEBUG AbstractObservableReader - [remote-testStubReader] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 2.3 ms.
+[Test worker] INFO VirtualReaderTransmitTest - SeResponseSet returned as expected SeResponse:{RESPONSES = [ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000000000009000], ATR = null, FCI = null, HASMATCHED = false CHANNELWASOPEN = true}
+[Test worker] DEBUG AbstractObservableReader - [remote-testStubReader] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 0.1 ms.
+[Test worker] DEBUG RemoteMethodTxEngine - Register rm to engine : org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx@6dbad781
+[Test worker] DEBUG RemoteMethodTx - Blocking Get {}
+[Thread-40] DEBUG NativeReaderServiceImpl - Remote Method called : READER_TRANSMIT - isRequest : true
+[Thread-40] DEBUG NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
+[Thread-40] DEBUG AbstractObservableReader - [testStubReader] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 10.3 ms.
+[Thread-40] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A420], SELECTOR = null, KEEPCHANNELOPEN = KEEP_OPEN}
+[Thread-40] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; receive SeResponse:{RESPONSES = [ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000000000009000], ATR = null, FCI = null, HASMATCHED = false CHANNELWASOPEN = true}
+[Thread-40] DEBUG AbstractObservableReader - [testStubReader] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 0.2 ms.
+[Thread-40] DEBUG NativeReaderServiceImpl - onDto response to be sent {
+  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1544611347336&quot;,
+  &quot;nativeReaderName&quot;: &quot;testStubReader&quot;,
+  &quot;virtualReaderName&quot;: &quot;remote-testStubReader&quot;,
+  &quot;action&quot;: &quot;reader_transmit&quot;,
+  &quot;body&quot;: &quot;{\n  \&quot;seResponses\&quot;: [\n    {\n      \&quot;channelPreviouslyOpen\&quot;: true,\n      \&quot;apduResponses\&quot;: [\n        {\n          \&quot;successful\&quot;: true,\n          \&quot;bytes\&quot;: [\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            -112,\n            0\n          ]\n        }\n      ]\n    }\n  ]\n}&quot;,
+  &quot;isRequest&quot;: false
+}
+[Thread-40] DEBUG RemoteMethodTx - release lock
+[Test worker] DEBUG RemoteMethodTx - tread unlock in RemoteMethodTx
+[Test worker] DEBUG AbstractObservableReader - [remote-testStubReader] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 11.4 ms.
+[Test worker] INFO VirtualReaderTransmitTest - SeResponseSet returned as expected SeResponse:{RESPONSES = [ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000000000009000], ATR = null, FCI = null, HASMATCHED = false CHANNELWASOPEN = true}
+[Test worker] DEBUG AbstractObservableReader - [remote-testStubReader] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 0.1 ms.
+[Test worker] DEBUG RemoteMethodTxEngine - Register rm to engine : org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx@64048712
+[Test worker] DEBUG RemoteMethodTx - Blocking Get {}
+[Thread-41] DEBUG NativeReaderServiceImpl - Remote Method called : READER_TRANSMIT - isRequest : true
+[Thread-41] DEBUG NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
+[Thread-41] DEBUG AbstractObservableReader - [testStubReader] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 3.1 ms.
+[Thread-41] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A420], SELECTOR = null, KEEPCHANNELOPEN = KEEP_OPEN}
+[Thread-41] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; receive SeResponse:{RESPONSES = [ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000000000009000], ATR = null, FCI = null, HASMATCHED = false CHANNELWASOPEN = true}
+[Thread-41] DEBUG AbstractObservableReader - [testStubReader] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 0.2 ms.
+[Thread-41] DEBUG NativeReaderServiceImpl - onDto response to be sent {
+  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1544611347336&quot;,
+  &quot;nativeReaderName&quot;: &quot;testStubReader&quot;,
+  &quot;virtualReaderName&quot;: &quot;remote-testStubReader&quot;,
+  &quot;action&quot;: &quot;reader_transmit&quot;,
+  &quot;body&quot;: &quot;{\n  \&quot;seResponses\&quot;: [\n    {\n      \&quot;channelPreviouslyOpen\&quot;: true,\n      \&quot;apduResponses\&quot;: [\n        {\n          \&quot;successful\&quot;: true,\n          \&quot;bytes\&quot;: [\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            -112,\n            0\n          ]\n        }\n      ]\n    }\n  ]\n}&quot;,
+  &quot;isRequest&quot;: false
+}
+[Thread-41] DEBUG RemoteMethodTx - release lock
+[Test worker] DEBUG RemoteMethodTx - tread unlock in RemoteMethodTx
+[Test worker] DEBUG AbstractObservableReader - [remote-testStubReader] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 2.2 ms.
+[Test worker] INFO VirtualReaderTransmitTest - SeResponseSet returned as expected SeResponse:{RESPONSES = [ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000000000009000], ATR = null, FCI = null, HASMATCHED = false CHANNELWASOPEN = true}
+[Test worker] DEBUG AbstractObservableReader - [remote-testStubReader] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 0.1 ms.
+[Test worker] DEBUG RemoteMethodTxEngine - Register rm to engine : org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx@55606422
+[Test worker] DEBUG RemoteMethodTx - Blocking Get {}
+[Thread-42] DEBUG NativeReaderServiceImpl - Remote Method called : READER_TRANSMIT - isRequest : true
+[Thread-42] DEBUG NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
+[Thread-42] DEBUG AbstractObservableReader - [testStubReader] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 2.1 ms.
+[Thread-42] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A420], SELECTOR = null, KEEPCHANNELOPEN = KEEP_OPEN}
+[Thread-42] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; receive SeResponse:{RESPONSES = [ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000000000009000], ATR = null, FCI = null, HASMATCHED = false CHANNELWASOPEN = true}
+[Thread-42] DEBUG AbstractObservableReader - [testStubReader] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 0.2 ms.
+[Thread-42] DEBUG NativeReaderServiceImpl - onDto response to be sent {
+  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1544611347336&quot;,
+  &quot;nativeReaderName&quot;: &quot;testStubReader&quot;,
+  &quot;virtualReaderName&quot;: &quot;remote-testStubReader&quot;,
+  &quot;action&quot;: &quot;reader_transmit&quot;,
+  &quot;body&quot;: &quot;{\n  \&quot;seResponses\&quot;: [\n    {\n      \&quot;channelPreviouslyOpen\&quot;: true,\n      \&quot;apduResponses\&quot;: [\n        {\n          \&quot;successful\&quot;: true,\n          \&quot;bytes\&quot;: [\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            -112,\n            0\n          ]\n        }\n      ]\n    }\n  ]\n}&quot;,
+  &quot;isRequest&quot;: false
+}
+[Thread-42] DEBUG RemoteMethodTx - release lock
+[Test worker] DEBUG RemoteMethodTx - tread unlock in RemoteMethodTx
+[Test worker] DEBUG AbstractObservableReader - [remote-testStubReader] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 2.0 ms.
+[Test worker] INFO VirtualReaderTransmitTest - SeResponseSet returned as expected SeResponse:{RESPONSES = [ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000000000009000], ATR = null, FCI = null, HASMATCHED = false CHANNELWASOPEN = true}
+[Test worker] INFO VirtualReaderBaseTest - TearDown Test
+[Test worker] INFO StubPlugin - Unplugged reader with name testStubReader
+[Test worker] DEBUG AbstractObservablePlugin - Stop the plugin monitoring.
+java.lang.InterruptedException: sleep interrupted
+	at java.lang.Thread.sleep(Native Method)
+	at org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin$EventThread.run(AbstractThreadedObservablePlugin.java:147)
+[Thread-29] WARN AbstractThreadedObservablePlugin - [StubPlugin] An exception occurred while monitoring plugin: sleep interrupted, cause null
+[Test worker] INFO VirtualReaderBaseTest - End of TearDown Test
+[Test worker] INFO VirtualReaderBaseTest - ------------------------------
+[Test worker] INFO VirtualReaderBaseTest - Test rse_transmit_no_response
+[Test worker] INFO VirtualReaderBaseTest - ------------------------------
+[Test worker] INFO VirtualReaderBaseTest - *** Init LocalTransportFactory
+[Test worker] INFO VirtualReaderBaseTest - *** Bind Master Services
+[Test worker] INFO RemoteSePlugin - Init RemoteSePlugin
+[Test worker] INFO VirtualReaderBaseTest - *** Bind Slave Services
+[Test worker] DEBUG AbstractObservablePlugin - Start the plugin monitoring.
+[Test worker] DEBUG Integration - Stub plugin count observers : 1
+[Test worker] DEBUG Integration - Create a new StubReader : testStubReader
+[Test worker] INFO StubPlugin - Plugging a new reader with name testStubReader
+[Test worker] INFO NativeReaderServiceImpl - connectReader testStubReader from device testClientNodeId
+[Test worker] DEBUG RemoteSePlugin - createVirtualReader for nativeReader testStubReader
+[Test worker] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1544611349489
+[Test worker] DEBUG NativeReaderServiceImpl - Remote Method called : READER_CONNECT - isRequest : false
+[Test worker] DEBUG NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
+[Test worker] DEBUG RmConnectReaderParser - Add NativeReaderServiceImpl as an observer for native reader testStubReader
+[Test worker] DEBUG AbstractObservableReader - Start the reader monitoring.
+[Test worker] INFO NativeReaderServiceImpl - Native Reader testStubReader has been connected to Master with sessionId testStubReadertestClientNodeId1544611349489
+[Test worker] DEBUG NativeReaderServiceImpl - onDto response to be sent {
+  &quot;action&quot;: &quot;&quot;,
+  &quot;body&quot;: &quot;&quot;,
+  &quot;isRequest&quot;: false
+}
+[observable-reader-events-9] INFO NativeReaderServiceImpl - NativeReaderServiceImpl listens for event from native Reader - Received Event SE_INSERTED
+[observable-reader-events-9] DEBUG RemoteSePlugin - OnReaderEvent org.eclipse.keyple.seproxy.event.ReaderEvent@2febdb42
+[observable-reader-events-9] DEBUG RemoteSePlugin - Dispatch ReaderEvent to the appropriate Reader : testStubReader sessionId : null
+[observable-reader-events-9] DEBUG VirtualReader -  EVENT SE_INSERTED 
+[Thread-45] DEBUG VirtualReader - An event was received but no observers are declared into VirtualReader : remote-testStubReader SE_INSERTED
+[Test worker] DEBUG AbstractObservableReader - [remote-testStubReader] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 501.1 ms.
+[Test worker] DEBUG RemoteMethodTxEngine - Register rm to engine : org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx@66bc247a
+[Test worker] DEBUG RemoteMethodTx - Blocking Get {}
+[Thread-46] DEBUG NativeReaderServiceImpl - Remote Method called : READER_TRANSMIT - isRequest : true
+[Thread-46] DEBUG NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
+[Thread-46] DEBUG AbstractObservableReader - [testStubReader] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 602.9 ms.
+[Thread-46] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [], SELECTOR = ATR regex:3B.*, KEEPCHANNELOPEN = KEEP_OPEN}
+[Thread-46] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; receive SeResponse:{RESPONSES = [], ATR = 3B8E800180318066409089120802830190000B, FCI = , HASMATCHED = true CHANNELWASOPEN = false}
+[Thread-46] DEBUG AbstractObservableReader - [testStubReader] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 0.2 ms.
+[Thread-46] DEBUG NativeReaderServiceImpl - onDto response to be sent {
+  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1544611349489&quot;,
+  &quot;nativeReaderName&quot;: &quot;testStubReader&quot;,
+  &quot;virtualReaderName&quot;: &quot;remote-testStubReader&quot;,
+  &quot;action&quot;: &quot;reader_transmit&quot;,
+  &quot;body&quot;: &quot;{\n  \&quot;seResponses\&quot;: [\n    {\n      \&quot;channelPreviouslyOpen\&quot;: false,\n      \&quot;selectionStatus\&quot;: {\n        \&quot;atr\&quot;: {\n          \&quot;atrBytes\&quot;: [\n            59,\n            -114,\n            -128,\n            1,\n            -128,\n            49,\n            -128,\n            102,\n            64,\n            -112,\n            -119,\n            18,\n            8,\n            2,\n            -125,\n            1,\n            -112,\n            0,\n            11\n          ]\n        },\n        \&quot;fci\&quot;: {\n          \&quot;successful\&quot;: false\n        },\n        \&quot;hasMatched\&quot;: true\n      },\n      \&quot;apduResponses\&quot;: []\n    }\n  ]\n}&quot;,
+  &quot;isRequest&quot;: false
+}
+[Thread-46] DEBUG RemoteMethodTx - release lock
+[Test worker] DEBUG RemoteMethodTx - tread unlock in RemoteMethodTx
+[Test worker] DEBUG AbstractObservableReader - [remote-testStubReader] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 2.2 ms.
+[Test worker] DEBUG AbstractObservableReader - [remote-testStubReader] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 0.1 ms.
+[Test worker] DEBUG RemoteMethodTxEngine - Register rm to engine : org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx@121cc908
+[Test worker] DEBUG RemoteMethodTx - Blocking Get {}
+[Thread-47] DEBUG NativeReaderServiceImpl - Remote Method called : READER_TRANSMIT - isRequest : true
+[Thread-47] DEBUG NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
+[Thread-47] DEBUG AbstractObservableReader - [testStubReader] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 1.7 ms.
+[Thread-47] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [ApduRequest: NAME = &quot;Increase&quot;, RAWDATA = 003201A00300000000, case4], SELECTOR = null, KEEPCHANNELOPEN = CLOSE_AFTER}
+[Thread-47] DEBUG AbstractObservableReader - [0.2] transmit =&gt; SEREQUESTSET IO failure. elapsed null
+[Thread-47] DEBUG NativeReaderServiceImpl - onDto response to be sent {
+  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1544611349489&quot;,
+  &quot;nativeReaderName&quot;: &quot;testStubReader&quot;,
+  &quot;virtualReaderName&quot;: &quot;remote-testStubReader&quot;,
+  &quot;action&quot;: &quot;reader_transmit&quot;,
+  &quot;body&quot;: &quot;{\n  \&quot;seResponseSet\&quot;: {\n    \&quot;seResponses\&quot;: [\n      {\n        \&quot;channelPreviouslyOpen\&quot;: true,\n        \&quot;apduResponses\&quot;: []\n      }\n    ]\n  },\n  \&quot;seResponse\&quot;: {\n    \&quot;channelPreviouslyOpen\&quot;: true,\n    \&quot;apduResponses\&quot;: []\n  },\n  \&quot;detailMessage\&quot;: \&quot;No response available for this request.\&quot;,\n  \&quot;stackTrace\&quot;: [],\n  \&quot;suppressedExceptions\&quot;: []\n}&quot;,
+  &quot;isRequest&quot;: false
+}
+[Thread-47] DEBUG RemoteMethodTx - release lock
+[Test worker] DEBUG RemoteMethodTx - tread unlock in RemoteMethodTx
+org.eclipse.keyple.plugin.remotese.transport.KeypleRemoteException: An exception occurs while calling the remote method transmitSet
+	at org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx.parseResponse(RmTransmitTx.java:52)
+	at org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx.parseResponse(RmTransmitTx.java:22)
+	at org.eclipse.keyple.plugin.remotese.transport.RemoteMethodTx.asyncSetResponse(RemoteMethodTx.java:126)
+	at org.eclipse.keyple.plugin.remotese.transport.RemoteMethodTxEngine.onDTO(RemoteMethodTxEngine.java:51)
+	at org.eclipse.keyple.plugin.remotese.pluginse.VirtualReaderService.onDTO(VirtualReaderService.java:118)
+	at org.eclipse.keyple.plugin.remotese.transport.java.LocalServer.onLocalMessage(LocalServer.java:36)
+	at org.eclipse.keyple.plugin.remotese.transport.java.LocalClient.sendDTO(LocalClient.java:53)
+	at org.eclipse.keyple.plugin.remotese.transport.java.LocalClient.onLocalMessage(LocalClient.java:36)
+	at org.eclipse.keyple.plugin.remotese.transport.java.LocalServer.sendDTO(LocalServer.java:70)
+	at org.eclipse.keyple.plugin.remotese.transport.RemoteMethodTx.asyncGet(RemoteMethodTx.java:70)
+	at org.eclipse.keyple.plugin.remotese.transport.RemoteMethodTx$1.run(RemoteMethodTx.java:86)
+Caused by: org.eclipse.keyple.seproxy.exception.KeypleReaderException: No response available for this request.
+[Test worker] INFO VirtualReaderBaseTest - TearDown Test
+[Test worker] INFO StubPlugin - Unplugged reader with name testStubReader
+[Test worker] DEBUG AbstractObservablePlugin - Stop the plugin monitoring.
+java.lang.InterruptedException: sleep interrupted
+	at java.lang.Thread.sleep(Native Method)
+	at org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin$EventThread.run(AbstractThreadedObservablePlugin.java:147)
+[Thread-43] WARN AbstractThreadedObservablePlugin - [StubPlugin] An exception occurred while monitoring plugin: sleep interrupted, cause null
+[Test worker] INFO VirtualReaderBaseTest - End of TearDown Test
+[Test worker] INFO VirtualReaderBaseTest - ------------------------------
+[Test worker] INFO VirtualReaderBaseTest - Test transmit_partial_response_set_0
+[Test worker] INFO VirtualReaderBaseTest - ------------------------------
+[Test worker] INFO VirtualReaderBaseTest - *** Init LocalTransportFactory
+[Test worker] INFO VirtualReaderBaseTest - *** Bind Master Services
+[Test worker] INFO RemoteSePlugin - Init RemoteSePlugin
+[Test worker] INFO VirtualReaderBaseTest - *** Bind Slave Services
+[Test worker] DEBUG AbstractObservablePlugin - Start the plugin monitoring.
+[Test worker] DEBUG Integration - Stub plugin count observers : 1
+[Test worker] DEBUG Integration - Create a new StubReader : testStubReader
+[Test worker] INFO StubPlugin - Plugging a new reader with name testStubReader
+[Test worker] INFO NativeReaderServiceImpl - connectReader testStubReader from device testClientNodeId
+[Test worker] DEBUG RemoteSePlugin - createVirtualReader for nativeReader testStubReader
+[Test worker] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1544611351097
+[Test worker] DEBUG NativeReaderServiceImpl - Remote Method called : READER_CONNECT - isRequest : false
+[Test worker] DEBUG NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
+[Test worker] DEBUG RmConnectReaderParser - Add NativeReaderServiceImpl as an observer for native reader testStubReader
+[Test worker] DEBUG AbstractObservableReader - Start the reader monitoring.
+[Test worker] INFO NativeReaderServiceImpl - Native Reader testStubReader has been connected to Master with sessionId testStubReadertestClientNodeId1544611351097
+[Test worker] DEBUG NativeReaderServiceImpl - onDto response to be sent {
+  &quot;action&quot;: &quot;&quot;,
+  &quot;body&quot;: &quot;&quot;,
+  &quot;isRequest&quot;: false
+}
+[observable-reader-events-10] INFO NativeReaderServiceImpl - NativeReaderServiceImpl listens for event from native Reader - Received Event SE_INSERTED
+[observable-reader-events-10] DEBUG RemoteSePlugin - OnReaderEvent org.eclipse.keyple.seproxy.event.ReaderEvent@4564ad01
+[observable-reader-events-10] DEBUG RemoteSePlugin - Dispatch ReaderEvent to the appropriate Reader : testStubReader sessionId : null
+[observable-reader-events-10] DEBUG VirtualReader -  EVENT SE_INSERTED 
+[Thread-50] DEBUG VirtualReader - An event was received but no observers are declared into VirtualReader : remote-testStubReader SE_INSERTED
+[Test worker] DEBUG AbstractObservableReader - [remote-testStubReader] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 500.9 ms.
+[Test worker] DEBUG RemoteMethodTxEngine - Register rm to engine : org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx@31739332
+[Test worker] DEBUG RemoteMethodTx - Blocking Get {}
+[Thread-51] DEBUG NativeReaderServiceImpl - Remote Method called : READER_TRANSMIT - isRequest : true
+[Thread-51] DEBUG NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
+[Thread-51] DEBUG AbstractObservableReader - [testStubReader] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 603.0 ms.
+[Thread-51] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [], SELECTOR = ATR regex:3B.*, KEEPCHANNELOPEN = KEEP_OPEN}
+[Thread-51] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; receive SeResponse:{RESPONSES = [], ATR = 3B8E800180318066409089120802830190000B, FCI = , HASMATCHED = true CHANNELWASOPEN = false}
+[Thread-51] DEBUG AbstractObservableReader - [testStubReader] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 0.3 ms.
+[Thread-51] DEBUG NativeReaderServiceImpl - onDto response to be sent {
+  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1544611351097&quot;,
+  &quot;nativeReaderName&quot;: &quot;testStubReader&quot;,
+  &quot;virtualReaderName&quot;: &quot;remote-testStubReader&quot;,
+  &quot;action&quot;: &quot;reader_transmit&quot;,
+  &quot;body&quot;: &quot;{\n  \&quot;seResponses\&quot;: [\n    {\n      \&quot;channelPreviouslyOpen\&quot;: false,\n      \&quot;selectionStatus\&quot;: {\n        \&quot;atr\&quot;: {\n          \&quot;atrBytes\&quot;: [\n            59,\n            -114,\n            -128,\n            1,\n            -128,\n            49,\n            -128,\n            102,\n            64,\n            -112,\n            -119,\n            18,\n            8,\n            2,\n            -125,\n            1,\n            -112,\n            0,\n            11\n          ]\n        },\n        \&quot;fci\&quot;: {\n          \&quot;successful\&quot;: false\n        },\n        \&quot;hasMatched\&quot;: true\n      },\n      \&quot;apduResponses\&quot;: []\n    }\n  ]\n}&quot;,
+  &quot;isRequest&quot;: false
+}
+[Thread-51] DEBUG RemoteMethodTx - release lock
+[Test worker] DEBUG RemoteMethodTx - tread unlock in RemoteMethodTx
+[Test worker] DEBUG AbstractObservableReader - [remote-testStubReader] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 2.8 ms.
+[Test worker] DEBUG AbstractObservableReader - [remote-testStubReader] transmit =&gt; SEREQUESTSET = 3 SeRequest(s), elapsed 0.0 ms.
+[Test worker] DEBUG RemoteMethodTxEngine - Register rm to engine : org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx@46ca7414
+[Test worker] DEBUG RemoteMethodTx - Blocking Get {}
+[Thread-52] DEBUG NativeReaderServiceImpl - Remote Method called : READER_TRANSMIT - isRequest : true
+[Thread-52] DEBUG NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
+[Thread-52] DEBUG AbstractObservableReader - [testStubReader] transmit =&gt; SEREQUESTSET = 3 SeRequest(s), elapsed 2.2 ms.
+[Thread-52] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201F400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400], SELECTOR = null, KEEPCHANNELOPEN = KEEP_OPEN}
+[Thread-52] DEBUG AbstractObservableReader - [0.2] transmit =&gt; SEREQUESTSET IO failure. elapsed null
+[Thread-52] DEBUG NativeReaderServiceImpl - onDto response to be sent {
+  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1544611351097&quot;,
+  &quot;nativeReaderName&quot;: &quot;testStubReader&quot;,
+  &quot;virtualReaderName&quot;: &quot;remote-testStubReader&quot;,
+  &quot;action&quot;: &quot;reader_transmit&quot;,
+  &quot;body&quot;: &quot;{\n  \&quot;seResponseSet\&quot;: {\n    \&quot;seResponses\&quot;: [\n      {\n        \&quot;channelPreviouslyOpen\&quot;: true,\n        \&quot;apduResponses\&quot;: [\n          {\n            \&quot;successful\&quot;: true,\n            \&quot;bytes\&quot;: [\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              -112,\n              0\n            ]\n          },\n          {\n            \&quot;successful\&quot;: true,\n            \&quot;bytes\&quot;: [\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              -112,\n              0\n            ]\n          }\n        ]\n      }\n    ]\n  },\n  \&quot;seResponse\&quot;: {\n    \&quot;channelPreviouslyOpen\&quot;: true,\n    \&quot;apduResponses\&quot;: [\n      {\n        \&quot;successful\&quot;: true,\n        \&quot;bytes\&quot;: [\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          -112,\n          0\n        ]\n      },\n      {\n        \&quot;successful\&quot;: true,\n        \&quot;bytes\&quot;: [\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          -112,\n          0\n        ]\n      }\n    ]\n  },\n  \&quot;detailMessage\&quot;: \&quot;No response available for this request.\&quot;,\n  \&quot;stackTrace\&quot;: [],\n  \&quot;suppressedExceptions\&quot;: []\n}&quot;,
+  &quot;isRequest&quot;: false
+}
+[Thread-52] DEBUG RemoteMethodTx - release lock
+[Test worker] DEBUG RemoteMethodTx - tread unlock in RemoteMethodTx
+org.eclipse.keyple.plugin.remotese.transport.KeypleRemoteException: An exception occurs while calling the remote method transmitSet
+	at org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx.parseResponse(RmTransmitTx.java:52)
+	at org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx.parseResponse(RmTransmitTx.java:22)
+	at org.eclipse.keyple.plugin.remotese.transport.RemoteMethodTx.asyncSetResponse(RemoteMethodTx.java:126)
+	at org.eclipse.keyple.plugin.remotese.transport.RemoteMethodTxEngine.onDTO(RemoteMethodTxEngine.java:51)
+	at org.eclipse.keyple.plugin.remotese.pluginse.VirtualReaderService.onDTO(VirtualReaderService.java:118)
+	at org.eclipse.keyple.plugin.remotese.transport.java.LocalServer.onLocalMessage(LocalServer.java:36)
+	at org.eclipse.keyple.plugin.remotese.transport.java.LocalClient.sendDTO(LocalClient.java:53)
+	at org.eclipse.keyple.plugin.remotese.transport.java.LocalClient.onLocalMessage(LocalClient.java:36)
+	at org.eclipse.keyple.plugin.remotese.transport.java.LocalServer.sendDTO(LocalServer.java:70)
+	at org.eclipse.keyple.plugin.remotese.transport.RemoteMethodTx.asyncGet(RemoteMethodTx.java:70)
+	at org.eclipse.keyple.plugin.remotese.transport.RemoteMethodTx$1.run(RemoteMethodTx.java:86)
+Caused by: org.eclipse.keyple.seproxy.exception.KeypleReaderException: No response available for this request.
+[Test worker] INFO VirtualReaderTransmitTest - KeypleReaderException was thrown as expected : 1 SeReponse(s) SeResponse:{RESPONSES = [ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000], ATR = null, FCI = null, HASMATCHED = false CHANNELWASOPEN = true}
+[Test worker] INFO VirtualReaderBaseTest - TearDown Test
+[Test worker] INFO StubPlugin - Unplugged reader with name testStubReader
+[Test worker] DEBUG AbstractObservablePlugin - Stop the plugin monitoring.
+java.lang.InterruptedException: sleep interrupted
+	at java.lang.Thread.sleep(Native Method)
+	at org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin$EventThread.run(AbstractThreadedObservablePlugin.java:147)
+[Thread-48] WARN AbstractThreadedObservablePlugin - [StubPlugin] An exception occurred while monitoring plugin: sleep interrupted, cause null
+[Test worker] INFO VirtualReaderBaseTest - End of TearDown Test
+[Test worker] INFO VirtualReaderBaseTest - ------------------------------
+[Test worker] INFO VirtualReaderBaseTest - Test transmit_partial_response_set_1
+[Test worker] INFO VirtualReaderBaseTest - ------------------------------
+[Test worker] INFO VirtualReaderBaseTest - *** Init LocalTransportFactory
+[Test worker] INFO VirtualReaderBaseTest - *** Bind Master Services
+[Test worker] INFO RemoteSePlugin - Init RemoteSePlugin
+[Test worker] INFO VirtualReaderBaseTest - *** Bind Slave Services
+[Test worker] DEBUG AbstractObservablePlugin - Start the plugin monitoring.
+[Test worker] DEBUG Integration - Stub plugin count observers : 1
+[Test worker] DEBUG Integration - Create a new StubReader : testStubReader
+[Test worker] INFO StubPlugin - Plugging a new reader with name testStubReader
+[Test worker] INFO NativeReaderServiceImpl - connectReader testStubReader from device testClientNodeId
+[Test worker] DEBUG RemoteSePlugin - createVirtualReader for nativeReader testStubReader
+[Test worker] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1544611352706
+[Test worker] DEBUG NativeReaderServiceImpl - Remote Method called : READER_CONNECT - isRequest : false
+[Test worker] DEBUG NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
+[Test worker] DEBUG RmConnectReaderParser - Add NativeReaderServiceImpl as an observer for native reader testStubReader
+[Test worker] DEBUG AbstractObservableReader - Start the reader monitoring.
+[Test worker] INFO NativeReaderServiceImpl - Native Reader testStubReader has been connected to Master with sessionId testStubReadertestClientNodeId1544611352706
+[Test worker] DEBUG NativeReaderServiceImpl - onDto response to be sent {
+  &quot;action&quot;: &quot;&quot;,
+  &quot;body&quot;: &quot;&quot;,
+  &quot;isRequest&quot;: false
+}
+[observable-reader-events-11] INFO NativeReaderServiceImpl - NativeReaderServiceImpl listens for event from native Reader - Received Event SE_INSERTED
+[observable-reader-events-11] DEBUG RemoteSePlugin - OnReaderEvent org.eclipse.keyple.seproxy.event.ReaderEvent@1a1f6734
+[observable-reader-events-11] DEBUG RemoteSePlugin - Dispatch ReaderEvent to the appropriate Reader : testStubReader sessionId : null
+[observable-reader-events-11] DEBUG VirtualReader -  EVENT SE_INSERTED 
+[Thread-55] DEBUG VirtualReader - An event was received but no observers are declared into VirtualReader : remote-testStubReader SE_INSERTED
+[Test worker] DEBUG AbstractObservableReader - [remote-testStubReader] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 500.7 ms.
+[Test worker] DEBUG RemoteMethodTxEngine - Register rm to engine : org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx@6be45af6
+[Test worker] DEBUG RemoteMethodTx - Blocking Get {}
+[Thread-56] DEBUG NativeReaderServiceImpl - Remote Method called : READER_TRANSMIT - isRequest : true
+[Thread-56] DEBUG NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
+[Thread-56] DEBUG AbstractObservableReader - [testStubReader] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 602.4 ms.
+[Thread-56] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [], SELECTOR = ATR regex:3B.*, KEEPCHANNELOPEN = KEEP_OPEN}
+[Thread-56] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; receive SeResponse:{RESPONSES = [], ATR = 3B8E800180318066409089120802830190000B, FCI = , HASMATCHED = true CHANNELWASOPEN = false}
+[Thread-56] DEBUG AbstractObservableReader - [testStubReader] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 0.2 ms.
+[Thread-56] DEBUG NativeReaderServiceImpl - onDto response to be sent {
+  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1544611352706&quot;,
+  &quot;nativeReaderName&quot;: &quot;testStubReader&quot;,
+  &quot;virtualReaderName&quot;: &quot;remote-testStubReader&quot;,
+  &quot;action&quot;: &quot;reader_transmit&quot;,
+  &quot;body&quot;: &quot;{\n  \&quot;seResponses\&quot;: [\n    {\n      \&quot;channelPreviouslyOpen\&quot;: false,\n      \&quot;selectionStatus\&quot;: {\n        \&quot;atr\&quot;: {\n          \&quot;atrBytes\&quot;: [\n            59,\n            -114,\n            -128,\n            1,\n            -128,\n            49,\n            -128,\n            102,\n            64,\n            -112,\n            -119,\n            18,\n            8,\n            2,\n            -125,\n            1,\n            -112,\n            0,\n            11\n          ]\n        },\n        \&quot;fci\&quot;: {\n          \&quot;successful\&quot;: false\n        },\n        \&quot;hasMatched\&quot;: true\n      },\n      \&quot;apduResponses\&quot;: []\n    }\n  ]\n}&quot;,
+  &quot;isRequest&quot;: false
+}
+[Thread-56] DEBUG RemoteMethodTx - release lock
+[Test worker] DEBUG RemoteMethodTx - tread unlock in RemoteMethodTx
+[Test worker] DEBUG AbstractObservableReader - [remote-testStubReader] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 2.4 ms.
+[Test worker] DEBUG AbstractObservableReader - [remote-testStubReader] transmit =&gt; SEREQUESTSET = 3 SeRequest(s), elapsed 0.0 ms.
+[Test worker] DEBUG RemoteMethodTxEngine - Register rm to engine : org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx@18ae1778
+[Test worker] DEBUG RemoteMethodTx - Blocking Get {}
+[Thread-57] DEBUG NativeReaderServiceImpl - Remote Method called : READER_TRANSMIT - isRequest : true
+[Thread-57] DEBUG NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
+[Thread-57] DEBUG AbstractObservableReader - [testStubReader] transmit =&gt; SEREQUESTSET = 3 SeRequest(s), elapsed 1.9 ms.
+[Thread-57] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400], SELECTOR = null, KEEPCHANNELOPEN = KEEP_OPEN}
+[Thread-57] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; receive SeResponse:{RESPONSES = [ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000], ATR = null, FCI = null, HASMATCHED = false CHANNELWASOPEN = true}
+[Thread-57] DEBUG AbstractObservableReader - [testStubReader] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 0.3 ms.
+[Thread-57] DEBUG NativeReaderServiceImpl - onDto response to be sent {
+  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1544611352706&quot;,
+  &quot;nativeReaderName&quot;: &quot;testStubReader&quot;,
+  &quot;virtualReaderName&quot;: &quot;remote-testStubReader&quot;,
+  &quot;action&quot;: &quot;reader_transmit&quot;,
+  &quot;body&quot;: &quot;{\n  \&quot;seResponses\&quot;: [\n    {\n      \&quot;channelPreviouslyOpen\&quot;: true,\n      \&quot;apduResponses\&quot;: [\n        {\n          \&quot;successful\&quot;: true,\n          \&quot;bytes\&quot;: [\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            -112,\n            0\n          ]\n        },\n        {\n          \&quot;successful\&quot;: true,\n          \&quot;bytes\&quot;: [\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            -112,\n            0\n          ]\n        },\n        {\n          \&quot;successful\&quot;: true,\n          \&quot;bytes\&quot;: [\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            -112,\n            0\n          ]\n        },\n        {\n          \&quot;successful\&quot;: true,\n          \&quot;bytes\&quot;: [\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            -112,\n            0\n          ]\n        }\n      ]\n    }\n  ]\n}&quot;,
+  &quot;isRequest&quot;: false
+}
+[Thread-57] DEBUG RemoteMethodTx - release lock
+[Test worker] DEBUG RemoteMethodTx - tread unlock in RemoteMethodTx
+[Test worker] DEBUG AbstractObservableReader - [remote-testStubReader] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 2.3 ms.
+[Test worker] INFO VirtualReaderBaseTest - TearDown Test
+[Test worker] INFO StubPlugin - Unplugged reader with name testStubReader
+[Test worker] DEBUG AbstractObservablePlugin - Stop the plugin monitoring.
+java.lang.InterruptedException: sleep interrupted
+	at java.lang.Thread.sleep(Native Method)
+	at org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin$EventThread.run(AbstractThreadedObservablePlugin.java:147)
+[Thread-53] WARN AbstractThreadedObservablePlugin - [StubPlugin] An exception occurred while monitoring plugin: sleep interrupted, cause null
+[Test worker] INFO VirtualReaderBaseTest - End of TearDown Test
+[Test worker] INFO VirtualReaderBaseTest - ------------------------------
+[Test worker] INFO VirtualReaderBaseTest - Test transmit_partial_response_set_2
+[Test worker] INFO VirtualReaderBaseTest - ------------------------------
+[Test worker] INFO VirtualReaderBaseTest - *** Init LocalTransportFactory
+[Test worker] INFO VirtualReaderBaseTest - *** Bind Master Services
+[Test worker] INFO RemoteSePlugin - Init RemoteSePlugin
+[Test worker] INFO VirtualReaderBaseTest - *** Bind Slave Services
+[Test worker] DEBUG AbstractObservablePlugin - Start the plugin monitoring.
+[Test worker] DEBUG Integration - Stub plugin count observers : 1
+[Test worker] DEBUG Integration - Create a new StubReader : testStubReader
+[Test worker] INFO StubPlugin - Plugging a new reader with name testStubReader
+[Test worker] INFO NativeReaderServiceImpl - connectReader testStubReader from device testClientNodeId
+[Test worker] DEBUG RemoteSePlugin - createVirtualReader for nativeReader testStubReader
+[Test worker] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1544611354313
+[Test worker] DEBUG NativeReaderServiceImpl - Remote Method called : READER_CONNECT - isRequest : false
+[Test worker] DEBUG NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
+[Test worker] DEBUG RmConnectReaderParser - Add NativeReaderServiceImpl as an observer for native reader testStubReader
+[Test worker] DEBUG AbstractObservableReader - Start the reader monitoring.
+[Test worker] INFO NativeReaderServiceImpl - Native Reader testStubReader has been connected to Master with sessionId testStubReadertestClientNodeId1544611354313
+[Test worker] DEBUG NativeReaderServiceImpl - onDto response to be sent {
+  &quot;action&quot;: &quot;&quot;,
+  &quot;body&quot;: &quot;&quot;,
+  &quot;isRequest&quot;: false
+}
+[observable-reader-events-12] INFO NativeReaderServiceImpl - NativeReaderServiceImpl listens for event from native Reader - Received Event SE_INSERTED
+[observable-reader-events-12] DEBUG RemoteSePlugin - OnReaderEvent org.eclipse.keyple.seproxy.event.ReaderEvent@83d2d05
+[observable-reader-events-12] DEBUG RemoteSePlugin - Dispatch ReaderEvent to the appropriate Reader : testStubReader sessionId : null
+[observable-reader-events-12] DEBUG VirtualReader -  EVENT SE_INSERTED 
+[Thread-60] DEBUG VirtualReader - An event was received but no observers are declared into VirtualReader : remote-testStubReader SE_INSERTED
+[Test worker] DEBUG AbstractObservableReader - [remote-testStubReader] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 500.8 ms.
+[Test worker] DEBUG RemoteMethodTxEngine - Register rm to engine : org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx@1d26ca72
+[Test worker] DEBUG RemoteMethodTx - Blocking Get {}
+[Thread-61] DEBUG NativeReaderServiceImpl - Remote Method called : READER_TRANSMIT - isRequest : true
+[Thread-61] DEBUG NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
+[Thread-61] DEBUG AbstractObservableReader - [testStubReader] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 602.4 ms.
+[Thread-61] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [], SELECTOR = ATR regex:3B.*, KEEPCHANNELOPEN = KEEP_OPEN}
+[Thread-61] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; receive SeResponse:{RESPONSES = [], ATR = 3B8E800180318066409089120802830190000B, FCI = , HASMATCHED = true CHANNELWASOPEN = false}
+[Thread-61] DEBUG AbstractObservableReader - [testStubReader] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 0.2 ms.
+[Thread-61] DEBUG NativeReaderServiceImpl - onDto response to be sent {
+  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1544611354313&quot;,
+  &quot;nativeReaderName&quot;: &quot;testStubReader&quot;,
+  &quot;virtualReaderName&quot;: &quot;remote-testStubReader&quot;,
+  &quot;action&quot;: &quot;reader_transmit&quot;,
+  &quot;body&quot;: &quot;{\n  \&quot;seResponses\&quot;: [\n    {\n      \&quot;channelPreviouslyOpen\&quot;: false,\n      \&quot;selectionStatus\&quot;: {\n        \&quot;atr\&quot;: {\n          \&quot;atrBytes\&quot;: [\n            59,\n            -114,\n            -128,\n            1,\n            -128,\n            49,\n            -128,\n            102,\n            64,\n            -112,\n            -119,\n            18,\n            8,\n            2,\n            -125,\n            1,\n            -112,\n            0,\n            11\n          ]\n        },\n        \&quot;fci\&quot;: {\n          \&quot;successful\&quot;: false\n        },\n        \&quot;hasMatched\&quot;: true\n      },\n      \&quot;apduResponses\&quot;: []\n    }\n  ]\n}&quot;,
+  &quot;isRequest&quot;: false
+}
+[Thread-61] DEBUG RemoteMethodTx - release lock
+[Test worker] DEBUG RemoteMethodTx - tread unlock in RemoteMethodTx
+[Test worker] DEBUG AbstractObservableReader - [remote-testStubReader] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 2.2 ms.
+[Test worker] DEBUG AbstractObservableReader - [remote-testStubReader] transmit =&gt; SEREQUESTSET = 3 SeRequest(s), elapsed 0.0 ms.
+[Test worker] DEBUG RemoteMethodTxEngine - Register rm to engine : org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx@513fe358
+[Test worker] DEBUG RemoteMethodTx - Blocking Get {}
+[Thread-62] DEBUG NativeReaderServiceImpl - Remote Method called : READER_TRANSMIT - isRequest : true
+[Thread-62] DEBUG NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
+[Thread-62] DEBUG AbstractObservableReader - [testStubReader] transmit =&gt; SEREQUESTSET = 3 SeRequest(s), elapsed 2.2 ms.
+[Thread-62] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400], SELECTOR = null, KEEPCHANNELOPEN = KEEP_OPEN}
+[Thread-62] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; receive SeResponse:{RESPONSES = [ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000], ATR = null, FCI = null, HASMATCHED = false CHANNELWASOPEN = true}
+[Thread-62] DEBUG AbstractObservableReader - [testStubReader] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 0.3 ms.
+[Thread-62] DEBUG NativeReaderServiceImpl - onDto response to be sent {
+  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1544611354313&quot;,
+  &quot;nativeReaderName&quot;: &quot;testStubReader&quot;,
+  &quot;virtualReaderName&quot;: &quot;remote-testStubReader&quot;,
+  &quot;action&quot;: &quot;reader_transmit&quot;,
+  &quot;body&quot;: &quot;{\n  \&quot;seResponses\&quot;: [\n    {\n      \&quot;channelPreviouslyOpen\&quot;: true,\n      \&quot;apduResponses\&quot;: [\n        {\n          \&quot;successful\&quot;: true,\n          \&quot;bytes\&quot;: [\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            -112,\n            0\n          ]\n        },\n        {\n          \&quot;successful\&quot;: true,\n          \&quot;bytes\&quot;: [\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            -112,\n            0\n          ]\n        },\n        {\n          \&quot;successful\&quot;: true,\n          \&quot;bytes\&quot;: [\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            -112,\n            0\n          ]\n        },\n        {\n          \&quot;successful\&quot;: true,\n          \&quot;bytes\&quot;: [\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            -112,\n            0\n          ]\n        }\n      ]\n    }\n  ]\n}&quot;,
+  &quot;isRequest&quot;: false
+}
+[Thread-62] DEBUG RemoteMethodTx - release lock
+[Test worker] DEBUG RemoteMethodTx - tread unlock in RemoteMethodTx
+[Test worker] DEBUG AbstractObservableReader - [remote-testStubReader] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 2.5 ms.
+[Test worker] INFO VirtualReaderBaseTest - TearDown Test
+[Test worker] INFO StubPlugin - Unplugged reader with name testStubReader
+[Test worker] DEBUG AbstractObservablePlugin - Stop the plugin monitoring.
+java.lang.InterruptedException: sleep interrupted
+	at java.lang.Thread.sleep(Native Method)
+	at org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin$EventThread.run(AbstractThreadedObservablePlugin.java:147)
+[Thread-58] WARN AbstractThreadedObservablePlugin - [StubPlugin] An exception occurred while monitoring plugin: sleep interrupted, cause null
+[Test worker] INFO VirtualReaderBaseTest - End of TearDown Test
+[Test worker] INFO VirtualReaderBaseTest - ------------------------------
+[Test worker] INFO VirtualReaderBaseTest - Test transmit_partial_response_set_3
+[Test worker] INFO VirtualReaderBaseTest - ------------------------------
+[Test worker] INFO VirtualReaderBaseTest - *** Init LocalTransportFactory
+[Test worker] INFO VirtualReaderBaseTest - *** Bind Master Services
+[Test worker] INFO RemoteSePlugin - Init RemoteSePlugin
+[Test worker] INFO VirtualReaderBaseTest - *** Bind Slave Services
+[Test worker] DEBUG AbstractObservablePlugin - Start the plugin monitoring.
+[Test worker] DEBUG Integration - Stub plugin count observers : 1
+[Test worker] DEBUG Integration - Create a new StubReader : testStubReader
+[Test worker] INFO StubPlugin - Plugging a new reader with name testStubReader
+[Test worker] INFO NativeReaderServiceImpl - connectReader testStubReader from device testClientNodeId
+[Test worker] DEBUG RemoteSePlugin - createVirtualReader for nativeReader testStubReader
+[Test worker] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1544611355920
+[Test worker] DEBUG NativeReaderServiceImpl - Remote Method called : READER_CONNECT - isRequest : false
+[Test worker] DEBUG NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
+[Test worker] DEBUG RmConnectReaderParser - Add NativeReaderServiceImpl as an observer for native reader testStubReader
+[Test worker] DEBUG AbstractObservableReader - Start the reader monitoring.
+[Test worker] INFO NativeReaderServiceImpl - Native Reader testStubReader has been connected to Master with sessionId testStubReadertestClientNodeId1544611355920
+[Test worker] DEBUG NativeReaderServiceImpl - onDto response to be sent {
+  &quot;action&quot;: &quot;&quot;,
+  &quot;body&quot;: &quot;&quot;,
+  &quot;isRequest&quot;: false
+}
+[observable-reader-events-13] INFO NativeReaderServiceImpl - NativeReaderServiceImpl listens for event from native Reader - Received Event SE_INSERTED
+[observable-reader-events-13] DEBUG RemoteSePlugin - OnReaderEvent org.eclipse.keyple.seproxy.event.ReaderEvent@45c3f018
+[observable-reader-events-13] DEBUG RemoteSePlugin - Dispatch ReaderEvent to the appropriate Reader : testStubReader sessionId : null
+[observable-reader-events-13] DEBUG VirtualReader -  EVENT SE_INSERTED 
+[Thread-65] DEBUG VirtualReader - An event was received but no observers are declared into VirtualReader : remote-testStubReader SE_INSERTED
+[Test worker] DEBUG AbstractObservableReader - [remote-testStubReader] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 501.0 ms.
+[Test worker] DEBUG RemoteMethodTxEngine - Register rm to engine : org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx@7bb7d3f5
+[Test worker] DEBUG RemoteMethodTx - Blocking Get {}
+[Thread-66] DEBUG NativeReaderServiceImpl - Remote Method called : READER_TRANSMIT - isRequest : true
+[Thread-66] DEBUG NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
+[Thread-66] DEBUG AbstractObservableReader - [testStubReader] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 602.8 ms.
+[Thread-66] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [], SELECTOR = ATR regex:3B.*, KEEPCHANNELOPEN = KEEP_OPEN}
+[Thread-66] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; receive SeResponse:{RESPONSES = [], ATR = 3B8E800180318066409089120802830190000B, FCI = , HASMATCHED = true CHANNELWASOPEN = false}
+[Thread-66] DEBUG AbstractObservableReader - [testStubReader] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 0.2 ms.
+[Thread-66] DEBUG NativeReaderServiceImpl - onDto response to be sent {
+  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1544611355920&quot;,
+  &quot;nativeReaderName&quot;: &quot;testStubReader&quot;,
+  &quot;virtualReaderName&quot;: &quot;remote-testStubReader&quot;,
+  &quot;action&quot;: &quot;reader_transmit&quot;,
+  &quot;body&quot;: &quot;{\n  \&quot;seResponses\&quot;: [\n    {\n      \&quot;channelPreviouslyOpen\&quot;: false,\n      \&quot;selectionStatus\&quot;: {\n        \&quot;atr\&quot;: {\n          \&quot;atrBytes\&quot;: [\n            59,\n            -114,\n            -128,\n            1,\n            -128,\n            49,\n            -128,\n            102,\n            64,\n            -112,\n            -119,\n            18,\n            8,\n            2,\n            -125,\n            1,\n            -112,\n            0,\n            11\n          ]\n        },\n        \&quot;fci\&quot;: {\n          \&quot;successful\&quot;: false\n        },\n        \&quot;hasMatched\&quot;: true\n      },\n      \&quot;apduResponses\&quot;: []\n    }\n  ]\n}&quot;,
+  &quot;isRequest&quot;: false
+}
+[Thread-66] DEBUG RemoteMethodTx - release lock
+[Test worker] DEBUG RemoteMethodTx - tread unlock in RemoteMethodTx
+[Test worker] DEBUG AbstractObservableReader - [remote-testStubReader] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 2.2 ms.
+[Test worker] DEBUG AbstractObservableReader - [remote-testStubReader] transmit =&gt; SEREQUESTSET = 3 SeRequest(s), elapsed 0.2 ms.
+[Test worker] DEBUG RemoteMethodTxEngine - Register rm to engine : org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx@4d9d71b8
+[Test worker] DEBUG RemoteMethodTx - Blocking Get {}
+[Thread-67] DEBUG NativeReaderServiceImpl - Remote Method called : READER_TRANSMIT - isRequest : true
+[Thread-67] DEBUG NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
+[Thread-67] DEBUG AbstractObservableReader - [testStubReader] transmit =&gt; SEREQUESTSET = 3 SeRequest(s), elapsed 1.9 ms.
+[Thread-67] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400], SELECTOR = null, KEEPCHANNELOPEN = KEEP_OPEN}
+[Thread-67] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; receive SeResponse:{RESPONSES = [ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000], ATR = null, FCI = null, HASMATCHED = false CHANNELWASOPEN = true}
+[Thread-67] DEBUG AbstractObservableReader - [testStubReader] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 0.3 ms.
+[Thread-67] DEBUG NativeReaderServiceImpl - onDto response to be sent {
+  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1544611355920&quot;,
+  &quot;nativeReaderName&quot;: &quot;testStubReader&quot;,
+  &quot;virtualReaderName&quot;: &quot;remote-testStubReader&quot;,
+  &quot;action&quot;: &quot;reader_transmit&quot;,
+  &quot;body&quot;: &quot;{\n  \&quot;seResponses\&quot;: [\n    {\n      \&quot;channelPreviouslyOpen\&quot;: true,\n      \&quot;apduResponses\&quot;: [\n        {\n          \&quot;successful\&quot;: true,\n          \&quot;bytes\&quot;: [\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            -112,\n            0\n          ]\n        },\n        {\n          \&quot;successful\&quot;: true,\n          \&quot;bytes\&quot;: [\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            -112,\n            0\n          ]\n        },\n        {\n          \&quot;successful\&quot;: true,\n          \&quot;bytes\&quot;: [\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            -112,\n            0\n          ]\n        },\n        {\n          \&quot;successful\&quot;: true,\n          \&quot;bytes\&quot;: [\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            -112,\n            0\n          ]\n        }\n      ]\n    }\n  ]\n}&quot;,
+  &quot;isRequest&quot;: false
+}
+[Thread-67] DEBUG RemoteMethodTx - release lock
+[Test worker] DEBUG RemoteMethodTx - tread unlock in RemoteMethodTx
+[Test worker] DEBUG AbstractObservableReader - [remote-testStubReader] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 2.4 ms.
+[Test worker] INFO VirtualReaderBaseTest - TearDown Test
+[Test worker] INFO StubPlugin - Unplugged reader with name testStubReader
+[Test worker] DEBUG AbstractObservablePlugin - Stop the plugin monitoring.
+java.lang.InterruptedException: sleep interrupted
+	at java.lang.Thread.sleep(Native Method)
+	at org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin$EventThread.run(AbstractThreadedObservablePlugin.java:147)
+[Thread-63] WARN AbstractThreadedObservablePlugin - [StubPlugin] An exception occurred while monitoring plugin: sleep interrupted, cause null
+[Test worker] INFO VirtualReaderBaseTest - End of TearDown Test
+[Test worker] INFO VirtualReaderBaseTest - ------------------------------
+[Test worker] INFO VirtualReaderBaseTest - Test transmit_partial_response_0
+[Test worker] INFO VirtualReaderBaseTest - ------------------------------
+[Test worker] INFO VirtualReaderBaseTest - *** Init LocalTransportFactory
+[Test worker] INFO VirtualReaderBaseTest - *** Bind Master Services
+[Test worker] INFO RemoteSePlugin - Init RemoteSePlugin
+[Test worker] INFO VirtualReaderBaseTest - *** Bind Slave Services
+[Test worker] DEBUG AbstractObservablePlugin - Start the plugin monitoring.
+[Test worker] DEBUG Integration - Stub plugin count observers : 1
+[Test worker] DEBUG Integration - Create a new StubReader : testStubReader
+[Test worker] INFO StubPlugin - Plugging a new reader with name testStubReader
+[Test worker] INFO NativeReaderServiceImpl - connectReader testStubReader from device testClientNodeId
+[Test worker] DEBUG RemoteSePlugin - createVirtualReader for nativeReader testStubReader
+[Test worker] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1544611357528
+[Test worker] DEBUG NativeReaderServiceImpl - Remote Method called : READER_CONNECT - isRequest : false
+[Test worker] DEBUG NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
+[Test worker] DEBUG RmConnectReaderParser - Add NativeReaderServiceImpl as an observer for native reader testStubReader
+[Test worker] DEBUG AbstractObservableReader - Start the reader monitoring.
+[Test worker] INFO NativeReaderServiceImpl - Native Reader testStubReader has been connected to Master with sessionId testStubReadertestClientNodeId1544611357528
+[Test worker] DEBUG NativeReaderServiceImpl - onDto response to be sent {
+  &quot;action&quot;: &quot;&quot;,
+  &quot;body&quot;: &quot;&quot;,
+  &quot;isRequest&quot;: false
+}
+[observable-reader-events-14] INFO NativeReaderServiceImpl - NativeReaderServiceImpl listens for event from native Reader - Received Event SE_INSERTED
+[observable-reader-events-14] DEBUG RemoteSePlugin - OnReaderEvent org.eclipse.keyple.seproxy.event.ReaderEvent@13b8b0ff
+[observable-reader-events-14] DEBUG RemoteSePlugin - Dispatch ReaderEvent to the appropriate Reader : testStubReader sessionId : null
+[observable-reader-events-14] DEBUG VirtualReader -  EVENT SE_INSERTED 
+[Thread-70] DEBUG VirtualReader - An event was received but no observers are declared into VirtualReader : remote-testStubReader SE_INSERTED
+[Test worker] DEBUG AbstractObservableReader - [remote-testStubReader] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 500.7 ms.
+[Test worker] DEBUG RemoteMethodTxEngine - Register rm to engine : org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx@75334fdd
+[Test worker] DEBUG RemoteMethodTx - Blocking Get {}
+[Thread-71] DEBUG NativeReaderServiceImpl - Remote Method called : READER_TRANSMIT - isRequest : true
+[Thread-71] DEBUG NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
+[Thread-71] DEBUG AbstractObservableReader - [testStubReader] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 602.4 ms.
+[Thread-71] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [], SELECTOR = ATR regex:3B.*, KEEPCHANNELOPEN = KEEP_OPEN}
+[Thread-71] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; receive SeResponse:{RESPONSES = [], ATR = 3B8E800180318066409089120802830190000B, FCI = , HASMATCHED = true CHANNELWASOPEN = false}
+[Thread-71] DEBUG AbstractObservableReader - [testStubReader] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 0.2 ms.
+[Thread-71] DEBUG NativeReaderServiceImpl - onDto response to be sent {
+  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1544611357528&quot;,
+  &quot;nativeReaderName&quot;: &quot;testStubReader&quot;,
+  &quot;virtualReaderName&quot;: &quot;remote-testStubReader&quot;,
+  &quot;action&quot;: &quot;reader_transmit&quot;,
+  &quot;body&quot;: &quot;{\n  \&quot;seResponses\&quot;: [\n    {\n      \&quot;channelPreviouslyOpen\&quot;: false,\n      \&quot;selectionStatus\&quot;: {\n        \&quot;atr\&quot;: {\n          \&quot;atrBytes\&quot;: [\n            59,\n            -114,\n            -128,\n            1,\n            -128,\n            49,\n            -128,\n            102,\n            64,\n            -112,\n            -119,\n            18,\n            8,\n            2,\n            -125,\n            1,\n            -112,\n            0,\n            11\n          ]\n        },\n        \&quot;fci\&quot;: {\n          \&quot;successful\&quot;: false\n        },\n        \&quot;hasMatched\&quot;: true\n      },\n      \&quot;apduResponses\&quot;: []\n    }\n  ]\n}&quot;,
+  &quot;isRequest&quot;: false
+}
+[Thread-71] DEBUG RemoteMethodTx - release lock
+[Test worker] DEBUG RemoteMethodTx - tread unlock in RemoteMethodTx
+[Test worker] DEBUG AbstractObservableReader - [remote-testStubReader] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 2.2 ms.
+[Test worker] DEBUG AbstractObservableReader - [remote-testStubReader] transmit =&gt; SEREQUEST = SeRequest:{REQUESTS = [ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201F400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400], SELECTOR = null, KEEPCHANNELOPEN = CLOSE_AFTER}, elapsed 0.2 ms.
+[Test worker] DEBUG RemoteMethodTxEngine - Register rm to engine : org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx@5abd6d23
+[Test worker] DEBUG RemoteMethodTx - Blocking Get {}
+[Thread-72] DEBUG NativeReaderServiceImpl - Remote Method called : READER_TRANSMIT - isRequest : true
+[Thread-72] DEBUG NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
+[Thread-72] DEBUG AbstractObservableReader - [testStubReader] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 1.8 ms.
+[Thread-72] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201F400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400], SELECTOR = null, KEEPCHANNELOPEN = CLOSE_AFTER}
+[Thread-72] DEBUG AbstractObservableReader - [0.1] transmit =&gt; SEREQUESTSET IO failure. elapsed null
+[Thread-72] DEBUG NativeReaderServiceImpl - onDto response to be sent {
+  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1544611357528&quot;,
+  &quot;nativeReaderName&quot;: &quot;testStubReader&quot;,
+  &quot;virtualReaderName&quot;: &quot;remote-testStubReader&quot;,
+  &quot;action&quot;: &quot;reader_transmit&quot;,
+  &quot;body&quot;: &quot;{\n  \&quot;seResponseSet\&quot;: {\n    \&quot;seResponses\&quot;: [\n      {\n        \&quot;channelPreviouslyOpen\&quot;: true,\n        \&quot;apduResponses\&quot;: []\n      }\n    ]\n  },\n  \&quot;seResponse\&quot;: {\n    \&quot;channelPreviouslyOpen\&quot;: true,\n    \&quot;apduResponses\&quot;: []\n  },\n  \&quot;detailMessage\&quot;: \&quot;No response available for this request.\&quot;,\n  \&quot;stackTrace\&quot;: [],\n  \&quot;suppressedExceptions\&quot;: []\n}&quot;,
+  &quot;isRequest&quot;: false
+}
+[Thread-72] DEBUG RemoteMethodTx - release lock
+[Test worker] DEBUG RemoteMethodTx - tread unlock in RemoteMethodTx
+org.eclipse.keyple.plugin.remotese.transport.KeypleRemoteException: An exception occurs while calling the remote method transmitSet
+	at org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx.parseResponse(RmTransmitTx.java:52)
+	at org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx.parseResponse(RmTransmitTx.java:22)
+	at org.eclipse.keyple.plugin.remotese.transport.RemoteMethodTx.asyncSetResponse(RemoteMethodTx.java:126)
+	at org.eclipse.keyple.plugin.remotese.transport.RemoteMethodTxEngine.onDTO(RemoteMethodTxEngine.java:51)
+	at org.eclipse.keyple.plugin.remotese.pluginse.VirtualReaderService.onDTO(VirtualReaderService.java:118)
+	at org.eclipse.keyple.plugin.remotese.transport.java.LocalServer.onLocalMessage(LocalServer.java:36)
+	at org.eclipse.keyple.plugin.remotese.transport.java.LocalClient.sendDTO(LocalClient.java:53)
+	at org.eclipse.keyple.plugin.remotese.transport.java.LocalClient.onLocalMessage(LocalClient.java:36)
+	at org.eclipse.keyple.plugin.remotese.transport.java.LocalServer.sendDTO(LocalServer.java:70)
+	at org.eclipse.keyple.plugin.remotese.transport.RemoteMethodTx.asyncGet(RemoteMethodTx.java:70)
+	at org.eclipse.keyple.plugin.remotese.transport.RemoteMethodTx$1.run(RemoteMethodTx.java:86)
+Caused by: org.eclipse.keyple.seproxy.exception.KeypleReaderException: No response available for this request.
+[Test worker] INFO VirtualReaderTransmitTest - KeypleReaderException was thrown as expected : 1 SeReponse(s) SeResponse:{RESPONSES = [], ATR = null, FCI = null, HASMATCHED = false CHANNELWASOPEN = true}
+[Test worker] INFO VirtualReaderBaseTest - TearDown Test
+[Test worker] INFO StubPlugin - Unplugged reader with name testStubReader
+[Test worker] DEBUG AbstractObservablePlugin - Stop the plugin monitoring.
+java.lang.InterruptedException: sleep interrupted
+	at java.lang.Thread.sleep(Native Method)
+	at org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin$EventThread.run(AbstractThreadedObservablePlugin.java:147)
+[Thread-68] WARN AbstractThreadedObservablePlugin - [StubPlugin] An exception occurred while monitoring plugin: sleep interrupted, cause null
+[Test worker] INFO VirtualReaderBaseTest - End of TearDown Test
+[Test worker] INFO VirtualReaderBaseTest - ------------------------------
+[Test worker] INFO VirtualReaderBaseTest - Test transmit_partial_response_1
+[Test worker] INFO VirtualReaderBaseTest - ------------------------------
+[Test worker] INFO VirtualReaderBaseTest - *** Init LocalTransportFactory
+[Test worker] INFO VirtualReaderBaseTest - *** Bind Master Services
+[Test worker] INFO RemoteSePlugin - Init RemoteSePlugin
+[Test worker] INFO VirtualReaderBaseTest - *** Bind Slave Services
+[Test worker] DEBUG AbstractObservablePlugin - Start the plugin monitoring.
+[Test worker] DEBUG Integration - Stub plugin count observers : 1
+[Test worker] DEBUG Integration - Create a new StubReader : testStubReader
+[Test worker] INFO StubPlugin - Plugging a new reader with name testStubReader
+[Test worker] INFO NativeReaderServiceImpl - connectReader testStubReader from device testClientNodeId
+[Test worker] DEBUG RemoteSePlugin - createVirtualReader for nativeReader testStubReader
+[Test worker] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1544611359135
+[Test worker] DEBUG NativeReaderServiceImpl - Remote Method called : READER_CONNECT - isRequest : false
+[Test worker] DEBUG NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
+[Test worker] DEBUG RmConnectReaderParser - Add NativeReaderServiceImpl as an observer for native reader testStubReader
+[Test worker] DEBUG AbstractObservableReader - Start the reader monitoring.
+[Test worker] INFO NativeReaderServiceImpl - Native Reader testStubReader has been connected to Master with sessionId testStubReadertestClientNodeId1544611359135
+[Test worker] DEBUG NativeReaderServiceImpl - onDto response to be sent {
+  &quot;action&quot;: &quot;&quot;,
+  &quot;body&quot;: &quot;&quot;,
+  &quot;isRequest&quot;: false
+}
+[observable-reader-events-15] INFO NativeReaderServiceImpl - NativeReaderServiceImpl listens for event from native Reader - Received Event SE_INSERTED
+[observable-reader-events-15] DEBUG RemoteSePlugin - OnReaderEvent org.eclipse.keyple.seproxy.event.ReaderEvent@1c963937
+[observable-reader-events-15] DEBUG RemoteSePlugin - Dispatch ReaderEvent to the appropriate Reader : testStubReader sessionId : null
+[observable-reader-events-15] DEBUG VirtualReader -  EVENT SE_INSERTED 
+[Thread-75] DEBUG VirtualReader - An event was received but no observers are declared into VirtualReader : remote-testStubReader SE_INSERTED
+[Test worker] DEBUG AbstractObservableReader - [remote-testStubReader] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 500.7 ms.
+[Test worker] DEBUG RemoteMethodTxEngine - Register rm to engine : org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx@1dea1831
+[Test worker] DEBUG RemoteMethodTx - Blocking Get {}
+[Thread-76] DEBUG NativeReaderServiceImpl - Remote Method called : READER_TRANSMIT - isRequest : true
+[Thread-76] DEBUG NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
+[Thread-76] DEBUG AbstractObservableReader - [testStubReader] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 602.5 ms.
+[Thread-76] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [], SELECTOR = ATR regex:3B.*, KEEPCHANNELOPEN = KEEP_OPEN}
+[Thread-76] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; receive SeResponse:{RESPONSES = [], ATR = 3B8E800180318066409089120802830190000B, FCI = , HASMATCHED = true CHANNELWASOPEN = false}
+[Thread-76] DEBUG AbstractObservableReader - [testStubReader] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 0.3 ms.
+[Thread-76] DEBUG NativeReaderServiceImpl - onDto response to be sent {
+  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1544611359135&quot;,
+  &quot;nativeReaderName&quot;: &quot;testStubReader&quot;,
+  &quot;virtualReaderName&quot;: &quot;remote-testStubReader&quot;,
+  &quot;action&quot;: &quot;reader_transmit&quot;,
+  &quot;body&quot;: &quot;{\n  \&quot;seResponses\&quot;: [\n    {\n      \&quot;channelPreviouslyOpen\&quot;: false,\n      \&quot;selectionStatus\&quot;: {\n        \&quot;atr\&quot;: {\n          \&quot;atrBytes\&quot;: [\n            59,\n            -114,\n            -128,\n            1,\n            -128,\n            49,\n            -128,\n            102,\n            64,\n            -112,\n            -119,\n            18,\n            8,\n            2,\n            -125,\n            1,\n            -112,\n            0,\n            11\n          ]\n        },\n        \&quot;fci\&quot;: {\n          \&quot;successful\&quot;: false\n        },\n        \&quot;hasMatched\&quot;: true\n      },\n      \&quot;apduResponses\&quot;: []\n    }\n  ]\n}&quot;,
+  &quot;isRequest&quot;: false
+}
+[Thread-76] DEBUG RemoteMethodTx - release lock
+[Test worker] DEBUG RemoteMethodTx - tread unlock in RemoteMethodTx
+[Test worker] DEBUG AbstractObservableReader - [remote-testStubReader] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 2.6 ms.
+[Test worker] DEBUG AbstractObservableReader - [remote-testStubReader] transmit =&gt; SEREQUEST = SeRequest:{REQUESTS = [ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201F400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400], SELECTOR = null, KEEPCHANNELOPEN = CLOSE_AFTER}, elapsed 0.0 ms.
+[Test worker] DEBUG RemoteMethodTxEngine - Register rm to engine : org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx@50e0a6b1
+[Test worker] DEBUG RemoteMethodTx - Blocking Get {}
+[Thread-77] DEBUG NativeReaderServiceImpl - Remote Method called : READER_TRANSMIT - isRequest : true
+[Thread-77] DEBUG NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
+[Thread-77] DEBUG AbstractObservableReader - [testStubReader] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 1.9 ms.
+[Thread-77] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201F400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400], SELECTOR = null, KEEPCHANNELOPEN = CLOSE_AFTER}
+[Thread-77] DEBUG AbstractObservableReader - [0.1] transmit =&gt; SEREQUESTSET IO failure. elapsed null
+[Thread-77] DEBUG NativeReaderServiceImpl - onDto response to be sent {
+  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1544611359135&quot;,
+  &quot;nativeReaderName&quot;: &quot;testStubReader&quot;,
+  &quot;virtualReaderName&quot;: &quot;remote-testStubReader&quot;,
+  &quot;action&quot;: &quot;reader_transmit&quot;,
+  &quot;body&quot;: &quot;{\n  \&quot;seResponseSet\&quot;: {\n    \&quot;seResponses\&quot;: [\n      {\n        \&quot;channelPreviouslyOpen\&quot;: true,\n        \&quot;apduResponses\&quot;: [\n          {\n            \&quot;successful\&quot;: true,\n            \&quot;bytes\&quot;: [\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              -112,\n              0\n            ]\n          }\n        ]\n      }\n    ]\n  },\n  \&quot;seResponse\&quot;: {\n    \&quot;channelPreviouslyOpen\&quot;: true,\n    \&quot;apduResponses\&quot;: [\n      {\n        \&quot;successful\&quot;: true,\n        \&quot;bytes\&quot;: [\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          -112,\n          0\n        ]\n      }\n    ]\n  },\n  \&quot;detailMessage\&quot;: \&quot;No response available for this request.\&quot;,\n  \&quot;stackTrace\&quot;: [],\n  \&quot;suppressedExceptions\&quot;: []\n}&quot;,
+  &quot;isRequest&quot;: false
+}
+[Thread-77] DEBUG RemoteMethodTx - release lock
+[Test worker] DEBUG RemoteMethodTx - tread unlock in RemoteMethodTx
+org.eclipse.keyple.plugin.remotese.transport.KeypleRemoteException: An exception occurs while calling the remote method transmitSet
+	at org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx.parseResponse(RmTransmitTx.java:52)
+	at org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx.parseResponse(RmTransmitTx.java:22)
+	at org.eclipse.keyple.plugin.remotese.transport.RemoteMethodTx.asyncSetResponse(RemoteMethodTx.java:126)
+	at org.eclipse.keyple.plugin.remotese.transport.RemoteMethodTxEngine.onDTO(RemoteMethodTxEngine.java:51)
+	at org.eclipse.keyple.plugin.remotese.pluginse.VirtualReaderService.onDTO(VirtualReaderService.java:118)
+	at org.eclipse.keyple.plugin.remotese.transport.java.LocalServer.onLocalMessage(LocalServer.java:36)
+	at org.eclipse.keyple.plugin.remotese.transport.java.LocalClient.sendDTO(LocalClient.java:53)
+	at org.eclipse.keyple.plugin.remotese.transport.java.LocalClient.onLocalMessage(LocalClient.java:36)
+	at org.eclipse.keyple.plugin.remotese.transport.java.LocalServer.sendDTO(LocalServer.java:70)
+	at org.eclipse.keyple.plugin.remotese.transport.RemoteMethodTx.asyncGet(RemoteMethodTx.java:70)
+	at org.eclipse.keyple.plugin.remotese.transport.RemoteMethodTx$1.run(RemoteMethodTx.java:86)
+Caused by: org.eclipse.keyple.seproxy.exception.KeypleReaderException: No response available for this request.
+[Test worker] INFO VirtualReaderTransmitTest - KeypleReaderException was thrown as expected : 1 SeReponse(s) SeResponse:{RESPONSES = [ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000], ATR = null, FCI = null, HASMATCHED = false CHANNELWASOPEN = true}
+[Test worker] INFO VirtualReaderBaseTest - TearDown Test
+[Test worker] INFO StubPlugin - Unplugged reader with name testStubReader
+[Test worker] DEBUG AbstractObservablePlugin - Stop the plugin monitoring.
+java.lang.InterruptedException: sleep interrupted
+	at java.lang.Thread.sleep(Native Method)
+	at org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin$EventThread.run(AbstractThreadedObservablePlugin.java:147)
+[Thread-73] WARN AbstractThreadedObservablePlugin - [StubPlugin] An exception occurred while monitoring plugin: sleep interrupted, cause null
+[Test worker] INFO VirtualReaderBaseTest - End of TearDown Test
+[Test worker] INFO VirtualReaderBaseTest - ------------------------------
+[Test worker] INFO VirtualReaderBaseTest - Test transmit_partial_response_2
+[Test worker] INFO VirtualReaderBaseTest - ------------------------------
+[Test worker] INFO VirtualReaderBaseTest - *** Init LocalTransportFactory
+[Test worker] INFO VirtualReaderBaseTest - *** Bind Master Services
+[Test worker] INFO RemoteSePlugin - Init RemoteSePlugin
+[Test worker] INFO VirtualReaderBaseTest - *** Bind Slave Services
+[Test worker] DEBUG AbstractObservablePlugin - Start the plugin monitoring.
+[Test worker] DEBUG Integration - Stub plugin count observers : 1
+[Test worker] DEBUG Integration - Create a new StubReader : testStubReader
+[Test worker] INFO StubPlugin - Plugging a new reader with name testStubReader
+[Test worker] INFO NativeReaderServiceImpl - connectReader testStubReader from device testClientNodeId
+[Test worker] DEBUG RemoteSePlugin - createVirtualReader for nativeReader testStubReader
+[Test worker] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1544611360742
+[Test worker] DEBUG NativeReaderServiceImpl - Remote Method called : READER_CONNECT - isRequest : false
+[Test worker] DEBUG NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
+[Test worker] DEBUG RmConnectReaderParser - Add NativeReaderServiceImpl as an observer for native reader testStubReader
+[Test worker] DEBUG AbstractObservableReader - Start the reader monitoring.
+[Test worker] INFO NativeReaderServiceImpl - Native Reader testStubReader has been connected to Master with sessionId testStubReadertestClientNodeId1544611360742
+[Test worker] DEBUG NativeReaderServiceImpl - onDto response to be sent {
+  &quot;action&quot;: &quot;&quot;,
+  &quot;body&quot;: &quot;&quot;,
+  &quot;isRequest&quot;: false
+}
+[observable-reader-events-16] INFO NativeReaderServiceImpl - NativeReaderServiceImpl listens for event from native Reader - Received Event SE_INSERTED
+[observable-reader-events-16] DEBUG RemoteSePlugin - OnReaderEvent org.eclipse.keyple.seproxy.event.ReaderEvent@d7b1c12
+[observable-reader-events-16] DEBUG RemoteSePlugin - Dispatch ReaderEvent to the appropriate Reader : testStubReader sessionId : null
+[observable-reader-events-16] DEBUG VirtualReader -  EVENT SE_INSERTED 
+[Thread-80] DEBUG VirtualReader - An event was received but no observers are declared into VirtualReader : remote-testStubReader SE_INSERTED
+[Test worker] DEBUG AbstractObservableReader - [remote-testStubReader] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 500.7 ms.
+[Test worker] DEBUG RemoteMethodTxEngine - Register rm to engine : org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx@3e381738
+[Test worker] DEBUG RemoteMethodTx - Blocking Get {}
+[Thread-81] DEBUG NativeReaderServiceImpl - Remote Method called : READER_TRANSMIT - isRequest : true
+[Thread-81] DEBUG NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
+[Thread-81] DEBUG AbstractObservableReader - [testStubReader] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 602.1 ms.
+[Thread-81] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [], SELECTOR = ATR regex:3B.*, KEEPCHANNELOPEN = KEEP_OPEN}
+[Thread-81] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; receive SeResponse:{RESPONSES = [], ATR = 3B8E800180318066409089120802830190000B, FCI = , HASMATCHED = true CHANNELWASOPEN = false}
+[Thread-81] DEBUG AbstractObservableReader - [testStubReader] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 0.1 ms.
+[Thread-81] DEBUG NativeReaderServiceImpl - onDto response to be sent {
+  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1544611360742&quot;,
+  &quot;nativeReaderName&quot;: &quot;testStubReader&quot;,
+  &quot;virtualReaderName&quot;: &quot;remote-testStubReader&quot;,
+  &quot;action&quot;: &quot;reader_transmit&quot;,
+  &quot;body&quot;: &quot;{\n  \&quot;seResponses\&quot;: [\n    {\n      \&quot;channelPreviouslyOpen\&quot;: false,\n      \&quot;selectionStatus\&quot;: {\n        \&quot;atr\&quot;: {\n          \&quot;atrBytes\&quot;: [\n            59,\n            -114,\n            -128,\n            1,\n            -128,\n            49,\n            -128,\n            102,\n            64,\n            -112,\n            -119,\n            18,\n            8,\n            2,\n            -125,\n            1,\n            -112,\n            0,\n            11\n          ]\n        },\n        \&quot;fci\&quot;: {\n          \&quot;successful\&quot;: false\n        },\n        \&quot;hasMatched\&quot;: true\n      },\n      \&quot;apduResponses\&quot;: []\n    }\n  ]\n}&quot;,
+  &quot;isRequest&quot;: false
+}
+[Thread-81] DEBUG RemoteMethodTx - release lock
+[Test worker] DEBUG RemoteMethodTx - tread unlock in RemoteMethodTx
+[Test worker] DEBUG AbstractObservableReader - [remote-testStubReader] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 1.7 ms.
+[Test worker] DEBUG AbstractObservableReader - [remote-testStubReader] transmit =&gt; SEREQUEST = SeRequest:{REQUESTS = [ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201F400], SELECTOR = null, KEEPCHANNELOPEN = CLOSE_AFTER}, elapsed 0.1 ms.
+[Test worker] DEBUG RemoteMethodTxEngine - Register rm to engine : org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx@7cd85649
+[Test worker] DEBUG RemoteMethodTx - Blocking Get {}
+[Thread-82] DEBUG NativeReaderServiceImpl - Remote Method called : READER_TRANSMIT - isRequest : true
+[Thread-82] DEBUG NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
+[Thread-82] DEBUG AbstractObservableReader - [testStubReader] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 1.5 ms.
+[Thread-82] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201F400], SELECTOR = null, KEEPCHANNELOPEN = CLOSE_AFTER}
+[Thread-82] DEBUG AbstractObservableReader - [0.1] transmit =&gt; SEREQUESTSET IO failure. elapsed null
+[Thread-82] DEBUG NativeReaderServiceImpl - onDto response to be sent {
+  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1544611360742&quot;,
+  &quot;nativeReaderName&quot;: &quot;testStubReader&quot;,
+  &quot;virtualReaderName&quot;: &quot;remote-testStubReader&quot;,
+  &quot;action&quot;: &quot;reader_transmit&quot;,
+  &quot;body&quot;: &quot;{\n  \&quot;seResponseSet\&quot;: {\n    \&quot;seResponses\&quot;: [\n      {\n        \&quot;channelPreviouslyOpen\&quot;: true,\n        \&quot;apduResponses\&quot;: [\n          {\n            \&quot;successful\&quot;: true,\n            \&quot;bytes\&quot;: [\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              -112,\n              0\n            ]\n          },\n          {\n            \&quot;successful\&quot;: true,\n            \&quot;bytes\&quot;: [\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              0,\n              -112,\n              0\n            ]\n          }\n        ]\n      }\n    ]\n  },\n  \&quot;seResponse\&quot;: {\n    \&quot;channelPreviouslyOpen\&quot;: true,\n    \&quot;apduResponses\&quot;: [\n      {\n        \&quot;successful\&quot;: true,\n        \&quot;bytes\&quot;: [\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          -112,\n          0\n        ]\n      },\n      {\n        \&quot;successful\&quot;: true,\n        \&quot;bytes\&quot;: [\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          0,\n          -112,\n          0\n        ]\n      }\n    ]\n  },\n  \&quot;detailMessage\&quot;: \&quot;No response available for this request.\&quot;,\n  \&quot;stackTrace\&quot;: [],\n  \&quot;suppressedExceptions\&quot;: []\n}&quot;,
+  &quot;isRequest&quot;: false
+}
+[Thread-82] DEBUG RemoteMethodTx - release lock
+[Test worker] DEBUG RemoteMethodTx - tread unlock in RemoteMethodTx
+org.eclipse.keyple.plugin.remotese.transport.KeypleRemoteException: An exception occurs while calling the remote method transmitSet
+	at org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx.parseResponse(RmTransmitTx.java:52)
+	at org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx.parseResponse(RmTransmitTx.java:22)
+	at org.eclipse.keyple.plugin.remotese.transport.RemoteMethodTx.asyncSetResponse(RemoteMethodTx.java:126)
+	at org.eclipse.keyple.plugin.remotese.transport.RemoteMethodTxEngine.onDTO(RemoteMethodTxEngine.java:51)
+	at org.eclipse.keyple.plugin.remotese.pluginse.VirtualReaderService.onDTO(VirtualReaderService.java:118)
+	at org.eclipse.keyple.plugin.remotese.transport.java.LocalServer.onLocalMessage(LocalServer.java:36)
+	at org.eclipse.keyple.plugin.remotese.transport.java.LocalClient.sendDTO(LocalClient.java:53)
+	at org.eclipse.keyple.plugin.remotese.transport.java.LocalClient.onLocalMessage(LocalClient.java:36)
+	at org.eclipse.keyple.plugin.remotese.transport.java.LocalServer.sendDTO(LocalServer.java:70)
+	at org.eclipse.keyple.plugin.remotese.transport.RemoteMethodTx.asyncGet(RemoteMethodTx.java:70)
+	at org.eclipse.keyple.plugin.remotese.transport.RemoteMethodTx$1.run(RemoteMethodTx.java:86)
+Caused by: org.eclipse.keyple.seproxy.exception.KeypleReaderException: No response available for this request.
+[Test worker] INFO VirtualReaderTransmitTest - KeypleReaderException was thrown as expected : set : 1 SeReponse(s), seResponse : SeResponse:{RESPONSES = [ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000], ATR = null, FCI = null, HASMATCHED = false CHANNELWASOPEN = true}
+[Test worker] INFO VirtualReaderBaseTest - TearDown Test
+[Test worker] INFO StubPlugin - Unplugged reader with name testStubReader
+[Test worker] DEBUG AbstractObservablePlugin - Stop the plugin monitoring.
+java.lang.InterruptedException: sleep interrupted
+	at java.lang.Thread.sleep(Native Method)
+	at org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin$EventThread.run(AbstractThreadedObservablePlugin.java:147)
+[Thread-78] WARN AbstractThreadedObservablePlugin - [StubPlugin] An exception occurred while monitoring plugin: sleep interrupted, cause null
+[Test worker] INFO VirtualReaderBaseTest - End of TearDown Test
+[Test worker] INFO VirtualReaderBaseTest - ------------------------------
+[Test worker] INFO VirtualReaderBaseTest - Test transmit_partial_response_3
+[Test worker] INFO VirtualReaderBaseTest - ------------------------------
+[Test worker] INFO VirtualReaderBaseTest - *** Init LocalTransportFactory
+[Test worker] INFO VirtualReaderBaseTest - *** Bind Master Services
+[Test worker] INFO RemoteSePlugin - Init RemoteSePlugin
+[Test worker] INFO VirtualReaderBaseTest - *** Bind Slave Services
+[Test worker] DEBUG AbstractObservablePlugin - Start the plugin monitoring.
+[Test worker] DEBUG Integration - Stub plugin count observers : 1
+[Test worker] DEBUG Integration - Create a new StubReader : testStubReader
+[Test worker] INFO StubPlugin - Plugging a new reader with name testStubReader
+[Test worker] INFO NativeReaderServiceImpl - connectReader testStubReader from device testClientNodeId
+[Test worker] DEBUG RemoteSePlugin - createVirtualReader for nativeReader testStubReader
+[Test worker] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1544611362349
+[Test worker] DEBUG NativeReaderServiceImpl - Remote Method called : READER_CONNECT - isRequest : false
+[Test worker] DEBUG NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
+[Test worker] DEBUG RmConnectReaderParser - Add NativeReaderServiceImpl as an observer for native reader testStubReader
+[Test worker] DEBUG AbstractObservableReader - Start the reader monitoring.
+[Test worker] INFO NativeReaderServiceImpl - Native Reader testStubReader has been connected to Master with sessionId testStubReadertestClientNodeId1544611362349
+[Test worker] DEBUG NativeReaderServiceImpl - onDto response to be sent {
+  &quot;action&quot;: &quot;&quot;,
+  &quot;body&quot;: &quot;&quot;,
+  &quot;isRequest&quot;: false
+}
+[observable-reader-events-17] INFO NativeReaderServiceImpl - NativeReaderServiceImpl listens for event from native Reader - Received Event SE_INSERTED
+[observable-reader-events-17] DEBUG RemoteSePlugin - OnReaderEvent org.eclipse.keyple.seproxy.event.ReaderEvent@432b314c
+[observable-reader-events-17] DEBUG RemoteSePlugin - Dispatch ReaderEvent to the appropriate Reader : testStubReader sessionId : null
+[observable-reader-events-17] DEBUG VirtualReader -  EVENT SE_INSERTED 
+[Thread-85] DEBUG VirtualReader - An event was received but no observers are declared into VirtualReader : remote-testStubReader SE_INSERTED
+[Test worker] DEBUG AbstractObservableReader - [remote-testStubReader] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 501.1 ms.
+[Test worker] DEBUG RemoteMethodTxEngine - Register rm to engine : org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx@960c847
+[Test worker] DEBUG RemoteMethodTx - Blocking Get {}
+[Thread-86] DEBUG NativeReaderServiceImpl - Remote Method called : READER_TRANSMIT - isRequest : true
+[Thread-86] DEBUG NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
+[Thread-86] DEBUG AbstractObservableReader - [testStubReader] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 602.6 ms.
+[Thread-86] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [], SELECTOR = ATR regex:3B.*, KEEPCHANNELOPEN = KEEP_OPEN}
+[Thread-86] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; receive SeResponse:{RESPONSES = [], ATR = 3B8E800180318066409089120802830190000B, FCI = , HASMATCHED = true CHANNELWASOPEN = false}
+[Thread-86] DEBUG AbstractObservableReader - [testStubReader] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 0.2 ms.
+[Thread-86] DEBUG NativeReaderServiceImpl - onDto response to be sent {
+  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1544611362349&quot;,
+  &quot;nativeReaderName&quot;: &quot;testStubReader&quot;,
+  &quot;virtualReaderName&quot;: &quot;remote-testStubReader&quot;,
+  &quot;action&quot;: &quot;reader_transmit&quot;,
+  &quot;body&quot;: &quot;{\n  \&quot;seResponses\&quot;: [\n    {\n      \&quot;channelPreviouslyOpen\&quot;: false,\n      \&quot;selectionStatus\&quot;: {\n        \&quot;atr\&quot;: {\n          \&quot;atrBytes\&quot;: [\n            59,\n            -114,\n            -128,\n            1,\n            -128,\n            49,\n            -128,\n            102,\n            64,\n            -112,\n            -119,\n            18,\n            8,\n            2,\n            -125,\n            1,\n            -112,\n            0,\n            11\n          ]\n        },\n        \&quot;fci\&quot;: {\n          \&quot;successful\&quot;: false\n        },\n        \&quot;hasMatched\&quot;: true\n      },\n      \&quot;apduResponses\&quot;: []\n    }\n  ]\n}&quot;,
+  &quot;isRequest&quot;: false
+}
+[Thread-86] DEBUG RemoteMethodTx - release lock
+[Test worker] DEBUG RemoteMethodTx - tread unlock in RemoteMethodTx
+[Test worker] DEBUG AbstractObservableReader - [remote-testStubReader] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 1.9 ms.
+[Test worker] DEBUG AbstractObservableReader - [remote-testStubReader] transmit =&gt; SEREQUEST = SeRequest:{REQUESTS = [ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400], SELECTOR = null, KEEPCHANNELOPEN = CLOSE_AFTER}, elapsed 0.1 ms.
+[Test worker] DEBUG RemoteMethodTxEngine - Register rm to engine : org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx@294c7b95
+[Test worker] DEBUG RemoteMethodTx - Blocking Get {}
+[Thread-87] DEBUG NativeReaderServiceImpl - Remote Method called : READER_TRANSMIT - isRequest : true
+[Thread-87] DEBUG NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
+[Thread-87] DEBUG AbstractObservableReader - [testStubReader] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 1.7 ms.
+[Thread-87] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400, ApduRequest: NAME = &quot;Read Records&quot;, RAWDATA = 00B201A400], SELECTOR = null, KEEPCHANNELOPEN = CLOSE_AFTER}
+[Thread-87] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; receive SeResponse:{RESPONSES = [ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000], ATR = null, FCI = null, HASMATCHED = false CHANNELWASOPEN = true}
+[Thread-87] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; Closing of the physical channel.
+[Thread-87] DEBUG AbstractObservableReader - [testStubReader] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 0.3 ms.
+[Thread-87] DEBUG NativeReaderServiceImpl - onDto response to be sent {
+  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1544611362349&quot;,
+  &quot;nativeReaderName&quot;: &quot;testStubReader&quot;,
+  &quot;virtualReaderName&quot;: &quot;remote-testStubReader&quot;,
+  &quot;action&quot;: &quot;reader_transmit&quot;,
+  &quot;body&quot;: &quot;{\n  \&quot;seResponses\&quot;: [\n    {\n      \&quot;channelPreviouslyOpen\&quot;: true,\n      \&quot;apduResponses\&quot;: [\n        {\n          \&quot;successful\&quot;: true,\n          \&quot;bytes\&quot;: [\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            -112,\n            0\n          ]\n        },\n        {\n          \&quot;successful\&quot;: true,\n          \&quot;bytes\&quot;: [\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            -112,\n            0\n          ]\n        },\n        {\n          \&quot;successful\&quot;: true,\n          \&quot;bytes\&quot;: [\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            -112,\n            0\n          ]\n        }\n      ]\n    }\n  ]\n}&quot;,
+  &quot;isRequest&quot;: false
+}
+[Thread-87] DEBUG RemoteMethodTx - release lock
+[Test worker] DEBUG RemoteMethodTx - tread unlock in RemoteMethodTx
+[Test worker] DEBUG AbstractObservableReader - [remote-testStubReader] transmit =&gt; SERESPONSE = SeResponse:{RESPONSES = [ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000, ApduResponse: SUCCESS, RAWDATA = 00000000000000000000000000000000000000000000000000000000009000], ATR = null, FCI = null, HASMATCHED = false CHANNELWASOPEN = true}, elapsed 1.8 ms.
+[Test worker] INFO VirtualReaderBaseTest - TearDown Test
+[Test worker] INFO StubPlugin - Unplugged reader with name testStubReader
+[Test worker] DEBUG AbstractObservablePlugin - Stop the plugin monitoring.
+java.lang.InterruptedException: sleep interrupted
+	at java.lang.Thread.sleep(Native Method)
+	at org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin$EventThread.run(AbstractThreadedObservablePlugin.java:147)
+[Thread-83] WARN AbstractThreadedObservablePlugin - [StubPlugin] An exception occurred while monitoring plugin: sleep interrupted, cause null
+[Test worker] INFO VirtualReaderBaseTest - End of TearDown Test
+[Test worker] INFO VirtualReaderBaseTest - ------------------------------
+[Test worker] INFO VirtualReaderBaseTest - Test testKOTransmitSet_NoSE
+[Test worker] INFO VirtualReaderBaseTest - ------------------------------
+[Test worker] INFO VirtualReaderBaseTest - *** Init LocalTransportFactory
+[Test worker] INFO VirtualReaderBaseTest - *** Bind Master Services
+[Test worker] INFO RemoteSePlugin - Init RemoteSePlugin
+[Test worker] INFO VirtualReaderBaseTest - *** Bind Slave Services
+[Test worker] DEBUG AbstractObservablePlugin - Start the plugin monitoring.
+[Test worker] DEBUG Integration - Stub plugin count observers : 1
+[Test worker] DEBUG Integration - Create a new StubReader : testStubReader
+[Test worker] INFO StubPlugin - Plugging a new reader with name testStubReader
+[Test worker] INFO NativeReaderServiceImpl - connectReader testStubReader from device testClientNodeId
+[Test worker] DEBUG RemoteSePlugin - createVirtualReader for nativeReader testStubReader
+[Test worker] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1544611363955
+[Test worker] DEBUG NativeReaderServiceImpl - Remote Method called : READER_CONNECT - isRequest : false
+[Test worker] DEBUG NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
+[Test worker] DEBUG RmConnectReaderParser - Add NativeReaderServiceImpl as an observer for native reader testStubReader
+[Test worker] DEBUG AbstractObservableReader - Start the reader monitoring.
+[Test worker] INFO NativeReaderServiceImpl - Native Reader testStubReader has been connected to Master with sessionId testStubReadertestClientNodeId1544611363955
+[Test worker] DEBUG NativeReaderServiceImpl - onDto response to be sent {
+  &quot;action&quot;: &quot;&quot;,
+  &quot;body&quot;: &quot;&quot;,
+  &quot;isRequest&quot;: false
+}
+[Test worker] DEBUG AbstractObservableReader - [remote-testStubReader] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 0.8 ms.
+[Test worker] DEBUG RemoteMethodTxEngine - Register rm to engine : org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx@7b214a13
+[Test worker] DEBUG RemoteMethodTx - Blocking Get {}
+[Thread-90] DEBUG NativeReaderServiceImpl - Remote Method called : READER_TRANSMIT - isRequest : true
+[Thread-90] DEBUG NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
+[Thread-90] DEBUG AbstractObservableReader - [testStubReader] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 102.1 ms.
+[Thread-90] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [], SELECTOR = ATR regex:3B.*, KEEPCHANNELOPEN = KEEP_OPEN}
+[Thread-90] DEBUG AbstractObservableReader - [0.1] transmit =&gt; SEREQUESTSET channel failure. elapsed null
+[Thread-90] DEBUG NativeReaderServiceImpl - onDto response to be sent {
+  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1544611363955&quot;,
+  &quot;nativeReaderName&quot;: &quot;testStubReader&quot;,
+  &quot;virtualReaderName&quot;: &quot;remote-testStubReader&quot;,
+  &quot;action&quot;: &quot;reader_transmit&quot;,
+  &quot;body&quot;: &quot;{\n  \&quot;seResponseSet\&quot;: {\n    \&quot;seResponses\&quot;: [\n      null\n    ]\n  },\n  \&quot;detailMessage\&quot;: \&quot;Fail to open physical channel.\&quot;,\n  \&quot;stackTrace\&quot;: [],\n  \&quot;suppressedExceptions\&quot;: []\n}&quot;,
+  &quot;isRequest&quot;: false
+}
+[Thread-90] DEBUG RemoteMethodTx - release lock
+[Test worker] DEBUG RemoteMethodTx - tread unlock in RemoteMethodTx
+org.eclipse.keyple.plugin.remotese.transport.KeypleRemoteException: An exception occurs while calling the remote method transmitSet
+	at org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx.parseResponse(RmTransmitTx.java:52)
+	at org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx.parseResponse(RmTransmitTx.java:22)
+	at org.eclipse.keyple.plugin.remotese.transport.RemoteMethodTx.asyncSetResponse(RemoteMethodTx.java:126)
+	at org.eclipse.keyple.plugin.remotese.transport.RemoteMethodTxEngine.onDTO(RemoteMethodTxEngine.java:51)
+	at org.eclipse.keyple.plugin.remotese.pluginse.VirtualReaderService.onDTO(VirtualReaderService.java:118)
+	at org.eclipse.keyple.plugin.remotese.transport.java.LocalServer.onLocalMessage(LocalServer.java:36)
+	at org.eclipse.keyple.plugin.remotese.transport.java.LocalClient.sendDTO(LocalClient.java:53)
+	at org.eclipse.keyple.plugin.remotese.transport.java.LocalClient.onLocalMessage(LocalClient.java:36)
+	at org.eclipse.keyple.plugin.remotese.transport.java.LocalServer.sendDTO(LocalServer.java:70)
+	at org.eclipse.keyple.plugin.remotese.transport.RemoteMethodTx.asyncGet(RemoteMethodTx.java:70)
+	at org.eclipse.keyple.plugin.remotese.transport.RemoteMethodTx$1.run(RemoteMethodTx.java:86)
+Caused by: org.eclipse.keyple.seproxy.exception.KeypleReaderException: Fail to open physical channel.
+[Test worker] INFO VirtualReaderTransmitTest - KeypleReaderException was thrown as expected
+[Test worker] INFO VirtualReaderBaseTest - TearDown Test
+[Test worker] INFO StubPlugin - Unplugged reader with name testStubReader
+[Test worker] DEBUG AbstractObservablePlugin - Stop the plugin monitoring.
+java.lang.InterruptedException: sleep interrupted
+	at java.lang.Thread.sleep(Native Method)
+	at org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin$EventThread.run(AbstractThreadedObservablePlugin.java:147)
+[Thread-88] WARN AbstractThreadedObservablePlugin - [StubPlugin] An exception occurred while monitoring plugin: sleep interrupted, cause null
+[Test worker] INFO VirtualReaderBaseTest - End of TearDown Test
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="http://www.gradle.org">Gradle 4.5.1</a> at Dec 12, 2018 10:42:50 AM</p>
+</div>
+</div>
+</body>
+</html>
