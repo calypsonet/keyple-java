@@ -48,7 +48,7 @@ import org.slf4j.LoggerFactory;
  * control of one of its native reader to the Master. In response a {@link VirtualReader} is created
  * and accessible via {@link RemoteSePlugin} like any local reader
  */
-class DemoMaster implements org.eclipse.keyple.util.Observable.Observer {
+public class DemoMaster implements org.eclipse.keyple.util.Observable.Observer {
 
     private static final Logger logger = LoggerFactory.getLogger(DemoMaster.class);
     private SeSelection seSelection;

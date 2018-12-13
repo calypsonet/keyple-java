@@ -81,7 +81,8 @@ Once the configuration of the VirtualReaderService done, events are sent to obse
             ReaderEvent event = (ReaderEvent) o;
             switch (event.getEventType()) {
                 case SE_INSERTED:
-                    //do somehting when a SE is inserted in the remote slave reader
+                     
+                     //you code here
                     break;
             }
             //.. more events
