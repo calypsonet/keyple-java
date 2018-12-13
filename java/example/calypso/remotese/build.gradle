@@ -1,6 +1,3 @@
-plugins {
-    id 'maven-publish'
-}
 
 project.version '0.1.0-SNAPSHOT'
 
@@ -19,6 +16,7 @@ jar {
 
 
 /*
+cause problem because of 3 publications in keyple-plugin-remotese
 publishing {
     publications {
         maven(MavenPublication) {
