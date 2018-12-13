@@ -107,7 +107,8 @@ class Integration {
         seProxyService.addPlugin(stubPlugin);
 
         // add an stubPluginObserver to start the plugin monitoring thread
-        //stubPlugin.addObserver(observer); //do not observe so the monitoring thread is not created
+        // stubPlugin.addObserver(observer); //do not observe so the monitoring thread is not
+        // created
 
         logger.debug("Stub plugin count observers : {}", stubPlugin.countObservers());
 

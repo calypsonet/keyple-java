@@ -77,7 +77,7 @@ public abstract class AbstractThreadedObservablePlugin extends AbstractObservabl
      */
     @Override
     protected void stopObservation() {
-        if(thread != null){
+        if (thread != null) {
             thread.end();
         }
     }

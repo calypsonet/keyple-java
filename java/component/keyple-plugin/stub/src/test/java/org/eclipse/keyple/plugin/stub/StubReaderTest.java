@@ -81,7 +81,7 @@ public class StubReaderTest {
     @After
     public void tearDown() throws InterruptedException, KeypleReaderException {
         StubPlugin stubPlugin = StubPlugin.getInstance();
-        //stubPlugin.clearObservers();
+        // stubPlugin.clearObservers();
         reader.clearObservers();
         stubPlugin.getInstance().unplugReader("StubReaderTest");
     }
