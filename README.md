@@ -61,7 +61,7 @@ Here are the prerequisites to build the keyple components (jars) and to run the 
 - Gradle (any version as we use the gradle wrapper) [available here](https://gradle.org/install/)
 
 
-####Linux or Macos
+#### Linux or Macos
 Following commands will build all the artifacts at once. The first command is required to be executed at least once to build the gradle wrapper.  
 ```
 gradle wrapper --gradle-version 4.5.1
@@ -69,7 +69,7 @@ gradle wrapper --gradle-version 4.5.1
 ```
 
 
-####Windows
+#### Windows
 Following commands will build all the artifacts at once. The first command is required to be executed at least once to build the gradle wrapper.  
 ```
 gradle wrapper --gradle-version 4.5.1
@@ -77,7 +77,7 @@ gradle wrapper --gradle-version 4.5.1
 ```
 
 
-###Android components
+### Android components
 
 If you want to build the keyple android components (aar plugins, apk example app), you need : 
 - Java JDK 1.8 or newer (OMAPI app requires java 1.8)
@@ -92,7 +92,7 @@ For instance ``sdk.dir=/Users/user/Library/Android/sdk``
 
 
 
-####Linux or Macos
+#### Linux or Macos
 To build the plugins, execute the following commands in the **/android folder**, the first command is required to be executed at least once to build the gradle wrapper.  
 
 ```
@@ -107,7 +107,7 @@ To build the example app NFC and OMAPI
 ./gradlew -b ./example/calypso/omapi/build.gradle assembleDebug
 ```
 
-###Windows
+### Windows
 
 To build the plugins, execute the following commands in the **/android folder**, the first command is required to be executed at least once to build the gradle wrapper.  
 
