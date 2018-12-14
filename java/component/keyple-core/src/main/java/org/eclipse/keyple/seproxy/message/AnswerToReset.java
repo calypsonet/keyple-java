@@ -29,7 +29,6 @@ public class AnswerToReset {
         return atrBytes;
     }
 
-    @Override
     public boolean equals(Object o) {
         if (o == this) {
             return true;
@@ -42,7 +41,6 @@ public class AnswerToReset {
         return Arrays.equals(atr.getBytes(), this.atrBytes);
     }
 
-    @Override
     public int hashCode() {
         int hash = 17;
         hash = 19 * hash + (atrBytes == null ? 0 : Arrays.hashCode(atrBytes));
