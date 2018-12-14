@@ -11,6 +11,8 @@
  ********************************************************************************/
 package org.eclipse.keyple.seproxy.event;
 
+import java.util.HashMap;
+import java.util.Map;
 import org.eclipse.keyple.seproxy.SeReader;
 import org.eclipse.keyple.transaction.SelectionRequest;
 import org.eclipse.keyple.util.Observable;
@@ -20,7 +22,35 @@ public interface ObservableReader extends SeReader {
     }
 
     public enum NotificationMode {
-        ALWAYS, MATCHED_ONLY
+        ALWAYS("always"), MATCHED_ONLY("matched_only");
+
+        private String name;
+
+        NotificationMode(String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return this.name;
+        }
+
+        // ****** Reverse Lookup Implementation************//
+
+        // Lookup table
+        private static final Map<String, NotificationMode> lookup =
+                new HashMap<String, NotificationMode>();
+
+        // Populate the lookup table on loading time
+        static {
+            for (NotificationMode env : NotificationMode.values()) {
+                lookup.put(env.getName(), env);
+            }
+        }
+
+        // This method can be used for reverse lookup purpose
+        public static NotificationMode get(String name) {
+            return lookup.get(name);
+        }
     }
 
     void addObserver(ReaderObserver observer);

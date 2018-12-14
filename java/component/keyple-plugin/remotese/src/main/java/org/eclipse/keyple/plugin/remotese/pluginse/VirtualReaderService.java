@@ -128,8 +128,33 @@ public class VirtualReaderService implements DtoHandler {
                                 e);
                     }
                 }
+
+            case DEFAULT_SELECTION_REQUEST:
+                if (keypleDTO.isRequest()) {
+                    throw new IllegalStateException(
+                            "a READER_TRANSMIT request has been received by VirtualReaderService");
+                } else {
+                    // dispatch dto to the appropriate reader
+                    try {
+                        // find reader by sessionId
+                        VirtualReader reader = getReaderBySessionId(keypleDTO.getSessionId());
+
+                        // process response with the reader rmtx engine
+                        return reader.getRmTxEngine().onDTO(transportDto);
+
+                    } catch (KeypleReaderNotFoundException e) {
+                        // reader not found;
+                        throw new IllegalStateException(
+                                "Virtual Reader was not found while receiving a transmitSet response",
+                                e);
+                    } catch (KeypleReaderException e) {
+                        // reader not found;
+                        throw new IllegalStateException("Readers list has not been initializated",
+                                e);
+                    }
+                }
             default:
-                logger.debug("Default case");
+                logger.error("Receive a KeypleDto with no recognised action");
                 return transportDto.nextTransportDTO(KeypleDtoHelper.NoResponse());
         }
     }

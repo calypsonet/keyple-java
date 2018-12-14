@@ -24,19 +24,13 @@ public class RmTransmitTx extends RemoteMethodTx<SeResponseSet> {
     private static final Logger logger = LoggerFactory.getLogger(RmTransmitTx.class);
 
     private final SeRequestSet seRequestSet;
-    private final String sessionId;
-    private final String nativeReaderName;
-    private final String virtualReaderName;
-    private final String clientNodeId;
+
 
 
     public RmTransmitTx(SeRequestSet seRequestSet, String sessionId, String nativeReaderName,
             String virtualReaderName, String clientNodeId) {
+        super(sessionId, nativeReaderName, virtualReaderName, clientNodeId);
         this.seRequestSet = seRequestSet;
-        this.sessionId = sessionId;
-        this.nativeReaderName = nativeReaderName;
-        this.virtualReaderName = virtualReaderName;
-        this.clientNodeId = clientNodeId;
     }
 
     @Override

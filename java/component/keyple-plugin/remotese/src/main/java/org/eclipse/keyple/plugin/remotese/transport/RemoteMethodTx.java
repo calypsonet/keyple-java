@@ -24,6 +24,10 @@ import org.slf4j.LoggerFactory;
 public abstract class RemoteMethodTx<T> {
 
     private static final Logger logger = LoggerFactory.getLogger(RemoteMethodTx.class);
+    protected String sessionId;
+    protected String nativeReaderName;
+    protected String virtualReaderName;
+    protected String clientNodeId;
 
     // response
     private T response;
@@ -36,6 +40,15 @@ public abstract class RemoteMethodTx<T> {
     private RemoteMethodTxCallback<T> callback;
 
     private DtoSender sender;
+
+    protected RemoteMethodTx(String sessionId, String nativeReaderName, String virtualReaderName,
+            String clientNodeId) {
+        this.sessionId = sessionId;
+        this.nativeReaderName = nativeReaderName;
+        this.virtualReaderName = virtualReaderName;
+        this.clientNodeId = clientNodeId;
+    }
+
 
     void setDto(DtoSender sender) {
         this.sender = sender;
@@ -109,7 +122,6 @@ public abstract class RemoteMethodTx<T> {
      * @param keypleDto
      */
     void asyncSetResponse(KeypleDto keypleDto) {
-        logger.debug("asyncSetResponse : {} - remoteException : {}", response, remoteException);
         try {
             this.response = parseResponse(keypleDto);
             this.callback.get(response, null);

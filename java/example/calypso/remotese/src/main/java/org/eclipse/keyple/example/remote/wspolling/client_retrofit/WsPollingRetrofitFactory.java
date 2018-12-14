@@ -48,7 +48,7 @@ public class WsPollingRetrofitFactory extends TransportFactory {
         this.protocol = protocol;
     }
 
-    private WsPollingRetrofitFactory(Properties serverProp, String clientNodeId) {
+    public WsPollingRetrofitFactory(Properties serverProp, String clientNodeId) {
         if (serverProp.containsKey("server.port")) {
             this.port = Integer.decode(serverProp.getProperty("server.port"));
         }

@@ -201,6 +201,6 @@ dependencies {
 
     //use keyple library : keyple calypso
     //testImplementation 'org.eclipse.keyple:keyple-calypso:1.+'
-    implementation project(path:':java:component:keyple-calypso')
+    testImplementation project(path:':java:component:keyple-calypso')
 
 }
