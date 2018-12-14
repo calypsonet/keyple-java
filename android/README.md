@@ -1,6 +1,6 @@
 ## Building the examples and the Keyple components
 
-###Android components
+### Android components
 
 If you want to build the keyple android components (aar plugins, apk example app), you need : 
 - Java JDK 1.8 or newer (OMAPI app requires java 1.8)
@@ -15,7 +15,7 @@ For instance ``sdk.dir=/Users/user/Library/Android/sdk``
 
 
 
-####Linux or Macos
+#### Linux or Macos
 To build the plugins, execute the following commands in the **/android folder**, the first command is required to be executed at least once to build the gradle wrapper.  
 
 ```
@@ -30,7 +30,7 @@ To build the example app NFC and OMAPI
 ./gradlew -b ./example/calypso/omapi/build.gradle assembleDebug
 ```
 
-###Windows
+### Windows
 
 To build the plugins, execute the following commands in the **/android folder**, the first command is required to be executed at least once to build the gradle wrapper.  
 
