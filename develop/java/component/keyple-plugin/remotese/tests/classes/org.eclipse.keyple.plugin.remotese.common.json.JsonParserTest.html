@@ -23,7 +23,7 @@
 <tr>
 <td>
 <div class="infoBox" id="tests">
-<div class="counter">5</div>
+<div class="counter">7</div>
 <p>tests</p>
 </div>
 </td>
@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">0.015s</div>
+<div class="counter">0.022s</div>
 <p>duration</p>
 </div>
 </td>
@@ -63,6 +63,9 @@
 <li>
 <a href="#tab0">Tests</a>
 </li>
+<li>
+<a href="#tab1">Standard error</a>
+</li>
 </ul>
 <div id="tab0" class="tab">
 <h2>Tests</h2>
@@ -76,30 +79,369 @@
 </thead>
 <tr>
 <td class="success">testCompleteSeRequestSet</td>
-<td>0.002s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">testHoplinkSeRequestSet</td>
-<td>0.006s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">testSeResponseSet</td>
-<td>0.002s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">testSimpleKeypleException</td>
 <td>0.003s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
-<td class="success">testStackedKeypleException</td>
+<td class="success">testHoplinkSeRequestSet</td>
 <td>0.002s</td>
 <td class="success">passed</td>
 </tr>
+<tr>
+<td class="success">testNotificationMode</td>
+<td>0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">testSeResponseSet</td>
+<td>0.003s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">testSelectionRequest</td>
+<td>0.006s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">testSimpleKeypleException</td>
+<td>0.004s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">testStackedKeypleException</td>
+<td>0.003s</td>
+<td class="success">passed</td>
+</tr>
 </table>
+</div>
+<div id="tab1" class="tab">
+<h2>Standard error</h2>
+<span class="code">
+<pre>[Test worker] DEBUG JsonParserTest - json 1 : {
+  &quot;detailMessage&quot;: &quot;Keyple Reader Exception&quot;,
+  &quot;stackTrace&quot;: [],
+  &quot;suppressedExceptions&quot;: []
+}
+[Test worker] DEBUG JsonParserTest - deserializeObj : org.eclipse.keyple.seproxy.exception.KeypleBaseException: Keyple Reader Exception
+[Test worker] DEBUG JsonParserTest - json 2 : {
+  &quot;detailMessage&quot;: &quot;Keyple Reader Exception&quot;,
+  &quot;stackTrace&quot;: [],
+  &quot;suppressedExceptions&quot;: []
+}
+[Test worker] DEBUG JsonParserTest - json 1 : {
+  &quot;detailMessage&quot;: &quot;Keyple Reader Exception&quot;,
+  &quot;cause&quot;: {
+    &quot;detailMessage&quot;: &quot;IO Error&quot;,
+    &quot;cause&quot;: {
+      &quot;detailMessage&quot;: &quot;IO Error2&quot;,
+      &quot;cause&quot;: {
+        &quot;detailMessage&quot;: &quot;sdfsdf&quot;,
+        &quot;stackTrace&quot;: [],
+        &quot;suppressedExceptions&quot;: []
+      },
+      &quot;stackTrace&quot;: [],
+      &quot;suppressedExceptions&quot;: []
+    },
+    &quot;stackTrace&quot;: [],
+    &quot;suppressedExceptions&quot;: []
+  },
+  &quot;stackTrace&quot;: [],
+  &quot;suppressedExceptions&quot;: []
+}
+[Test worker] DEBUG JsonParserTest - deserializeObj : org.eclipse.keyple.seproxy.exception.KeypleBaseException: Keyple Reader Exception
+[Test worker] DEBUG JsonParserTest - json 2 : {
+  &quot;detailMessage&quot;: &quot;Keyple Reader Exception&quot;,
+  &quot;cause&quot;: {
+    &quot;detailMessage&quot;: &quot;IO Error&quot;,
+    &quot;cause&quot;: {
+      &quot;detailMessage&quot;: &quot;IO Error2&quot;,
+      &quot;cause&quot;: {
+        &quot;detailMessage&quot;: &quot;sdfsdf&quot;,
+        &quot;stackTrace&quot;: [],
+        &quot;suppressedExceptions&quot;: []
+      },
+      &quot;stackTrace&quot;: [],
+      &quot;suppressedExceptions&quot;: []
+    },
+    &quot;stackTrace&quot;: [],
+    &quot;suppressedExceptions&quot;: []
+  },
+  &quot;stackTrace&quot;: [],
+  &quot;suppressedExceptions&quot;: []
+}
+[Test worker] DEBUG JsonParserTest - json 1 : {
+  &quot;selectionSeRequestSet&quot;: {
+    &quot;sortedRequests&quot;: [
+      {
+        &quot;selector&quot;: &quot;aidselector::A000000291A000000191&quot;,
+        &quot;apduRequests&quot;: [
+          {
+            &quot;bytes&quot;: [
+              -112,
+              0
+            ],
+            &quot;case4&quot;: true
+          }
+        ],
+        &quot;protocolFlag&quot;: &quot;PROTOCOL_ISO14443_4&quot;,
+        &quot;channelState&quot;: &quot;CLOSE_AFTER&quot;
+      }
+    ]
+  }
+}
+[Test worker] DEBUG JsonParserTest - deserializeObj : org.eclipse.keyple.transaction.SelectionRequest@49056e10
+[Test worker] DEBUG JsonParserTest - json 2 : {
+  &quot;selectionSeRequestSet&quot;: {
+    &quot;sortedRequests&quot;: [
+      {
+        &quot;selector&quot;: &quot;aidselector::A000000291A000000191&quot;,
+        &quot;apduRequests&quot;: [
+          {
+            &quot;bytes&quot;: [
+              -112,
+              0
+            ],
+            &quot;case4&quot;: true
+          }
+        ],
+        &quot;protocolFlag&quot;: &quot;PROTOCOL_ISO14443_4&quot;,
+        &quot;channelState&quot;: &quot;CLOSE_AFTER&quot;
+      }
+    ]
+  }
+}
+[Test worker] DEBUG JsonParserTest - json 1 : &quot;ALWAYS&quot;
+[Test worker] DEBUG JsonParserTest - deserializeObj : ALWAYS
+[Test worker] DEBUG JsonParserTest - json 2 : &quot;ALWAYS&quot;
+[Test worker] DEBUG JsonParserTest - json 1 : {
+  &quot;sortedRequests&quot;: [
+    {
+      &quot;selector&quot;: &quot;aidselector::A000000291A000000191&quot;,
+      &quot;apduRequests&quot;: [
+        {
+          &quot;bytes&quot;: [
+            -112,
+            0
+          ],
+          &quot;case4&quot;: true
+        }
+      ],
+      &quot;protocolFlag&quot;: &quot;PROTOCOL_ISO14443_4&quot;,
+      &quot;channelState&quot;: &quot;CLOSE_AFTER&quot;
+    }
+  ]
+}
+[Test worker] DEBUG JsonParserTest - deserializeObj : 1 SeRequest(s)
+[Test worker] DEBUG JsonParserTest - json 2 : {
+  &quot;sortedRequests&quot;: [
+    {
+      &quot;selector&quot;: &quot;aidselector::A000000291A000000191&quot;,
+      &quot;apduRequests&quot;: [
+        {
+          &quot;bytes&quot;: [
+            -112,
+            0
+          ],
+          &quot;case4&quot;: true
+        }
+      ],
+      &quot;protocolFlag&quot;: &quot;PROTOCOL_ISO14443_4&quot;,
+      &quot;channelState&quot;: &quot;CLOSE_AFTER&quot;
+    }
+  ]
+}
+[Test worker] DEBUG JsonParserTest - json 1 : {
+  &quot;sortedRequests&quot;: [
+    {
+      &quot;selector&quot;: &quot;aidselector::A000000291A000000191&quot;,
+      &quot;apduRequests&quot;: [
+        {
+          &quot;bytes&quot;: [
+            -112,
+            0
+          ],
+          &quot;case4&quot;: true
+        }
+      ],
+      &quot;protocolFlag&quot;: &quot;PROTOCOL_ISO14443_4&quot;,
+      &quot;channelState&quot;: &quot;CLOSE_AFTER&quot;
+    },
+    {
+      &quot;selector&quot;: &quot;atrselector::/regex/&quot;,
+      &quot;apduRequests&quot;: [
+        {
+          &quot;bytes&quot;: [
+            -112,
+            0
+          ],
+          &quot;case4&quot;: true
+        }
+      ],
+      &quot;protocolFlag&quot;: &quot;PROTOCOL_ISO7816_3&quot;,
+      &quot;channelState&quot;: &quot;KEEP_OPEN&quot;
+    }
+  ]
+}
+[Test worker] DEBUG JsonParserTest - deserializeObj : 2 SeRequest(s)
+[Test worker] DEBUG JsonParserTest - json 2 : {
+  &quot;sortedRequests&quot;: [
+    {
+      &quot;selector&quot;: &quot;aidselector::A000000291A000000191&quot;,
+      &quot;apduRequests&quot;: [
+        {
+          &quot;bytes&quot;: [
+            -112,
+            0
+          ],
+          &quot;case4&quot;: true
+        }
+      ],
+      &quot;protocolFlag&quot;: &quot;PROTOCOL_ISO14443_4&quot;,
+      &quot;channelState&quot;: &quot;CLOSE_AFTER&quot;
+    },
+    {
+      &quot;selector&quot;: &quot;atrselector::/regex/&quot;,
+      &quot;apduRequests&quot;: [
+        {
+          &quot;bytes&quot;: [
+            -112,
+            0
+          ],
+          &quot;case4&quot;: true
+        }
+      ],
+      &quot;protocolFlag&quot;: &quot;PROTOCOL_ISO7816_3&quot;,
+      &quot;channelState&quot;: &quot;KEEP_OPEN&quot;
+    }
+  ]
+}
+[Test worker] DEBUG JsonParserTest - json 1 : {
+  &quot;seResponses&quot;: [
+    {
+      &quot;channelPreviouslyOpen&quot;: true,
+      &quot;selectionStatus&quot;: {
+        &quot;fci&quot;: {
+          &quot;successful&quot;: true,
+          &quot;bytes&quot;: [
+            -112,
+            0
+          ]
+        },
+        &quot;hasMatched&quot;: true
+      },
+      &quot;apduResponses&quot;: [
+        {
+          &quot;successful&quot;: true,
+          &quot;bytes&quot;: [
+            -112,
+            0
+          ]
+        },
+        {
+          &quot;successful&quot;: true,
+          &quot;bytes&quot;: [
+            -112,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      &quot;channelPreviouslyOpen&quot;: true,
+      &quot;selectionStatus&quot;: {
+        &quot;fci&quot;: {
+          &quot;successful&quot;: true,
+          &quot;bytes&quot;: [
+            -112,
+            0
+          ]
+        },
+        &quot;hasMatched&quot;: true
+      },
+      &quot;apduResponses&quot;: [
+        {
+          &quot;successful&quot;: true,
+          &quot;bytes&quot;: [
+            -112,
+            0
+          ]
+        },
+        {
+          &quot;successful&quot;: true,
+          &quot;bytes&quot;: [
+            -112,
+            0
+          ]
+        }
+      ]
+    }
+  ]
+}
+[Test worker] DEBUG JsonParserTest - deserializeObj : 2 SeReponse(s)
+[Test worker] DEBUG JsonParserTest - json 2 : {
+  &quot;seResponses&quot;: [
+    {
+      &quot;channelPreviouslyOpen&quot;: true,
+      &quot;selectionStatus&quot;: {
+        &quot;fci&quot;: {
+          &quot;successful&quot;: true,
+          &quot;bytes&quot;: [
+            -112,
+            0
+          ]
+        },
+        &quot;hasMatched&quot;: true
+      },
+      &quot;apduResponses&quot;: [
+        {
+          &quot;successful&quot;: true,
+          &quot;bytes&quot;: [
+            -112,
+            0
+          ]
+        },
+        {
+          &quot;successful&quot;: true,
+          &quot;bytes&quot;: [
+            -112,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      &quot;channelPreviouslyOpen&quot;: true,
+      &quot;selectionStatus&quot;: {
+        &quot;fci&quot;: {
+          &quot;successful&quot;: true,
+          &quot;bytes&quot;: [
+            -112,
+            0
+          ]
+        },
+        &quot;hasMatched&quot;: true
+      },
+      &quot;apduResponses&quot;: [
+        {
+          &quot;successful&quot;: true,
+          &quot;bytes&quot;: [
+            -112,
+            0
+          ]
+        },
+        {
+          &quot;successful&quot;: true,
+          &quot;bytes&quot;: [
+            -112,
+            0
+          ]
+        }
+      ]
+    }
+  ]
+}
+</pre>
+</span>
 </div>
 </div>
 <div id="footer">
@@ -109,7 +451,7 @@
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 4.5.1</a> at Dec 14, 2018 5:38:21 PM</p>
+<a href="http://www.gradle.org">Gradle 4.5.1</a> at Dec 14, 2018 5:47:44 PM</p>
 </div>
 </div>
 </body>
