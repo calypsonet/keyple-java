@@ -20,8 +20,6 @@ import org.eclipse.keyple.plugin.remotese.transport.java.LocalClient;
 import org.eclipse.keyple.plugin.remotese.transport.java.LocalTransportFactory;
 import org.eclipse.keyple.plugin.stub.StubPlugin;
 import org.eclipse.keyple.plugin.stub.StubReader;
-import org.eclipse.keyple.seproxy.event.ObservablePlugin;
-import org.eclipse.keyple.seproxy.event.PluginEvent;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -39,7 +37,6 @@ public class NativeReaderServiceTest {
 
     // Real objects
     TransportFactory factory;
-    ObservablePlugin.PluginObserver stubPluginObserver;
     VirtualReaderService virtualReaderService;
 
     StubReader nativeReader;
@@ -62,14 +59,6 @@ public class NativeReaderServiceTest {
         // only one client and one server
         factory = new LocalTransportFactory();
 
-        stubPluginObserver = new ObservablePlugin.PluginObserver() {
-            @Override
-            public void update(PluginEvent pluginEvent) {
-                logger.debug("Default Stub Plugin Observer : {}", pluginEvent);
-            }
-
-        };
-
         logger.info("*** Bind Master Services");
         // bind Master services to server
         virtualReaderService = Integration.bindMaster(factory.getServer());
@@ -78,7 +67,7 @@ public class NativeReaderServiceTest {
         // bind Slave services to client
         nativeReaderSpy = Integration.bindSlaveSpy(factory.getClient());
 
-        nativeReader = Integration.createStubReader(NATIVE_READER_NAME, stubPluginObserver);
+        nativeReader = Integration.createStubReader(NATIVE_READER_NAME);
 
     }
 
@@ -90,18 +79,17 @@ public class NativeReaderServiceTest {
 
         StubPlugin stubPlugin = StubPlugin.getInstance();
 
-
         // delete stubReader
         stubPlugin.unplugReader(nativeReader.getName());
 
-        Thread.sleep(500);
+        // Thread.sleep(500);
 
         // delete observer and monitor thread
-        stubPlugin.removeObserver(stubPluginObserver);
+        // stubPlugin.removeObserver(stubPluginObserver);
 
         nativeReader.clearObservers();
 
-        Thread.sleep(500);
+        // Thread.sleep(500);
     }
 
 

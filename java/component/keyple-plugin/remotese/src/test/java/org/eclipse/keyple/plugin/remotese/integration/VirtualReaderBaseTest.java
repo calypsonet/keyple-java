@@ -20,8 +20,6 @@ import org.eclipse.keyple.plugin.remotese.transport.java.LocalTransportFactory;
 import org.eclipse.keyple.plugin.stub.StubPlugin;
 import org.eclipse.keyple.plugin.stub.StubProtocolSetting;
 import org.eclipse.keyple.plugin.stub.StubReader;
-import org.eclipse.keyple.seproxy.event.ObservablePlugin;
-import org.eclipse.keyple.seproxy.event.PluginEvent;
 import org.eclipse.keyple.seproxy.protocol.SeProtocolSetting;
 import org.junit.*;
 import org.junit.rules.TestName;
@@ -44,7 +42,6 @@ public class VirtualReaderBaseTest {
 
     // Real objects
     private TransportFactory factory;
-    private ObservablePlugin.PluginObserver stubPluginObserver;
     private NativeReaderServiceImpl nativeReaderService;
     StubReader nativeReader;
     VirtualReader virtualReader;
@@ -69,14 +66,6 @@ public class VirtualReaderBaseTest {
         // server). Only one client and one server bound together.
         factory = new LocalTransportFactory();
 
-        stubPluginObserver = new ObservablePlugin.PluginObserver() {
-            @Override
-            public void update(PluginEvent pluginEvent) {
-                logger.debug("Default Stub Plugin Observer : {}", pluginEvent.getEventType());
-            }
-
-        };
-
         logger.info("*** Bind Master Services");
         // bind Master services to server
         virtualReaderService = Integration.bindMaster(factory.getServer());
@@ -86,11 +75,10 @@ public class VirtualReaderBaseTest {
         nativeReaderService = Integration.bindSlave(factory.getClient());
 
         // configure and connect a Stub Native reader
-        nativeReader = connectStubReader(NATIVE_READER_NAME, CLIENT_NODE_ID, stubPluginObserver);
+        nativeReader = connectStubReader(NATIVE_READER_NAME, CLIENT_NODE_ID);
 
         // test virtual reader
         virtualReader = getVirtualReader();
-
 
     }
 
@@ -103,23 +91,22 @@ public class VirtualReaderBaseTest {
 
         stubPlugin.unplugReader(nativeReader.getName());
 
-        Thread.sleep(500);
+        // Thread.sleep(500);
 
         nativeReader.clearObservers();
 
-        stubPlugin.removeObserver(stubPluginObserver);
+        // stubPlugin.removeObserver(stubPluginObserver);
 
-        Thread.sleep(500);
+        // Thread.sleep(500);
 
         logger.info("End of TearDown Test");
     }
 
 
 
-    private StubReader connectStubReader(String readerName, String nodeId,
-            ObservablePlugin.PluginObserver observer) throws Exception {
+    private StubReader connectStubReader(String readerName, String nodeId) throws Exception {
         // configure native reader
-        StubReader nativeReader = (StubReader) Integration.createStubReader(readerName, observer);
+        StubReader nativeReader = (StubReader) Integration.createStubReader(readerName);
         nativeReader.addSeProtocolSetting(
                 new SeProtocolSetting(StubProtocolSetting.SETTING_PROTOCOL_ISO14443_4));
         this.nativeReaderService.connectReader(nativeReader, nodeId);

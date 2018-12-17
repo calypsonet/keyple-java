@@ -22,7 +22,6 @@ import org.eclipse.keyple.plugin.stub.StubPlugin;
 import org.eclipse.keyple.plugin.stub.StubReader;
 import org.eclipse.keyple.seproxy.ReaderPlugin;
 import org.eclipse.keyple.seproxy.SeProxyService;
-import org.eclipse.keyple.seproxy.event.ObservablePlugin;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderNotFoundException;
 import org.junit.Assert;
 import org.mockito.Mockito;
@@ -98,8 +97,7 @@ class Integration {
      * @throws InterruptedException
      * @throws KeypleReaderNotFoundException
      */
-    public static StubReader createStubReader(String stubReaderName,
-            ObservablePlugin.PluginObserver observer)
+    public static StubReader createStubReader(String stubReaderName)
             throws InterruptedException, KeypleReaderNotFoundException {
         SeProxyService seProxyService = SeProxyService.getInstance();
 
