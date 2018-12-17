@@ -69,6 +69,8 @@ public class VirtualReaderEventTest extends VirtualReaderBaseTest {
 
         logger.info("Insert a Hoplink SE and wait 5 seconds for a SE event to be thrown");
 
+        Thread.sleep(500);
+
         // insert SE
         nativeReader.insertSe(StubReaderTest.hoplinkSE());
         // wait 5 seconds
@@ -117,7 +119,7 @@ public class VirtualReaderEventTest extends VirtualReaderBaseTest {
         nativeReader.insertSe(StubReaderTest.hoplinkSE());
 
         // wait 1 second
-        Thread.sleep(1000);
+        Thread.sleep(500);
 
         // remove SE
         nativeReader.removeSe();
@@ -238,14 +240,14 @@ public class VirtualReaderEventTest extends VirtualReaderBaseTest {
 
         // wait 1 second
         logger.debug("Wait 1 second before inserting SE");
-        Thread.sleep(1000);
+        Thread.sleep(500);
 
         // test
         nativeReader.insertSe(StubReaderTest.hoplinkSE());
 
 
         // lock thread for 2 seconds max to wait for the event
-        lock.await(5, TimeUnit.SECONDS);
+        lock.await(3, TimeUnit.SECONDS);
         Assert.assertEquals(1, lock.getCount()); // should be 1 because countDown is never called
     }
 
@@ -286,7 +288,7 @@ public class VirtualReaderEventTest extends VirtualReaderBaseTest {
 
         // wait 1 second
         logger.debug("Wait 1 second before inserting SE");
-        Thread.sleep(1000);
+        Thread.sleep(500);
 
         // test
         nativeReader.insertSe(StubReaderTest.hoplinkSE());
@@ -334,7 +336,7 @@ public class VirtualReaderEventTest extends VirtualReaderBaseTest {
 
         // wait 1 second
         logger.debug("Wait 1 second before inserting SE");
-        Thread.sleep(1000);
+        Thread.sleep(500);
 
         // test
         nativeReader.insertSe(StubReaderTest.hoplinkSE());
