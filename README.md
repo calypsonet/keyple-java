@@ -85,7 +85,7 @@ If you want to build the keyple android components (aar plugins, apk example app
 - Android sdk 26 should be installed on your machine [follow those instructions](http://www.androiddocs.com/sdk/installing/index.html)
 - Gradle (any version as we use the gradle wrapper) [available here](https://gradle.org/install/)
 
-To acknowledge where is installed you Android SDK, you need to create a file `local.properties` in the ```/android```, ``/android/example/calypso/nfc``, ```/android/example/calypso/omapi`` folders with the following content 
+To acknowledge where is installed you Android SDK, you need to create a file `local.properties` in the ```/android```, ``/android/example/calypso/nfc``, ```/android/example/calypso/omapi``` folders with the following content 
 `sdk.dir=absolut/path/to/where/your/android/sdk/is`
 
 For instance ``sdk.dir=/Users/user/Library/Android/sdk``
