@@ -23,11 +23,6 @@ public final class PluginEvent {
     private final String readerName;
 
     /**
-     * The type of event
-     */
-    private final EventType eventType;
-
-    /**
      * The different types of reader event
      */
     public enum EventType {
@@ -52,6 +47,11 @@ public final class PluginEvent {
             return name;
         }
     }
+
+    /**
+     * The type of event
+     */
+    private final EventType eventType;
 
     public PluginEvent(String pluginName, String readerName, EventType eventType) {
         this.pluginName = pluginName;

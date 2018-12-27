@@ -30,11 +30,6 @@ public final class ReaderEvent {
     private final String readerName;
 
     /**
-     * The type of event
-     */
-    private final EventType eventType;
-
-    /**
      * The response to the selection request
      */
     private final SelectionResponse defaultResponseSet;
@@ -74,6 +69,11 @@ public final class ReaderEvent {
             return name;
         }
     }
+
+    /**
+     * The type of event
+     */
+    private final EventType eventType;
 
     /**
      * ReaderEvent constructor for simple insertion notification mode
