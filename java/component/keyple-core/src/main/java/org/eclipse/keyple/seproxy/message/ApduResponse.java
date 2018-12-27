@@ -108,8 +108,13 @@ public final class ApduResponse implements Serializable {
 
     @Override
     public String toString() {
-        return "ApduResponse: " + (isSuccessful() ? "SUCCESS" : "FAILURE") + ", RAWDATA = "
-                + ByteArrayUtils.toHex(this.bytes);
+        String prefix;
+        if (isSuccessful()) {
+            prefix = "ApduResponse: SUCCESS, RAWDATA = ";
+        } else {
+            prefix = "ApduResponse: FAILURE, RAWDATA = ";
+        }
+        return prefix + ByteArrayUtils.toHex(this.bytes);
     }
 
     @Override
