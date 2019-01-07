@@ -72,7 +72,7 @@ public class MatchingSe {
      */
     public final boolean isSelected() {
         return channelIsKeptOpen && selectionSeResponse != null
-                && selectionSeResponse.getSelectionStatus().hasMatched();
+                && selectionSeResponse.getSelectionStatus() != null && selectionSeResponse.getSelectionStatus().hasMatched();
     }
 
     /**
@@ -82,5 +82,13 @@ public class MatchingSe {
      */
     public final String getExtraInfo() {
         return extraInfo;
+    }
+
+    /**
+     * Restore the initial state of the MatchingSe.
+     * This method should overloaded by the objects derived from MatchingSe.
+     */
+    public void reset(){
+        selectionSeResponse = null;
     }
 }
