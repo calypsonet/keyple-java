@@ -35,7 +35,7 @@ import org.slf4j.LoggerFactory;
 public final class RemoteSePlugin extends AbstractObservablePlugin {
 
     private static final Logger logger = LoggerFactory.getLogger(RemoteSePlugin.class);
-    static final String PLUGIN_NAME = "RemoteSePlugin";
+    public static final String PLUGIN_NAME = "RemoteSePlugin";
 
     // private final VirtualReaderSessionFactory sessionManager;
 
@@ -62,10 +62,10 @@ public final class RemoteSePlugin extends AbstractObservablePlugin {
 
 
 
-    public SeReader getReaderByRemoteName(String remoteName) throws KeypleReaderNotFoundException {
+    public VirtualReader getReaderByRemoteName(String remoteName) throws KeypleReaderNotFoundException {
         for (AbstractObservableReader virtualReader : readers) {
             if (((VirtualReader) virtualReader).getNativeReaderName().equals(remoteName)) {
-                return virtualReader;
+                return (VirtualReader)virtualReader;
             }
         }
         throw new KeypleReaderNotFoundException(remoteName);
@@ -90,7 +90,7 @@ public final class RemoteSePlugin extends AbstractObservablePlugin {
             logger.info("Create a new Virtual Reader with localReaderName {} with session {}",
                     nativeReaderName, session.getSessionId());
 
-            RemoteMethodTxEngine rmTxEngine = new RemoteMethodTxEngine(sender);
+            RemoteMethodTxEngine rmTxEngine = new RemoteMethodTxEngine(sender);//make this a factory
 
             final VirtualReader virtualReader =
                     new VirtualReader(session, nativeReaderName, rmTxEngine);

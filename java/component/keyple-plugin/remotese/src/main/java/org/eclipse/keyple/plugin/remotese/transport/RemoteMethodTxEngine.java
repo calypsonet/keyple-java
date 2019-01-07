@@ -47,6 +47,11 @@ public class RemoteMethodTxEngine implements DtoHandler {
             throw new IllegalArgumentException(
                     "RemoteMethodTxEngine expects a KeypleDto response. " + message.getKeypleDTO());
         }
+        if(remoteMethodTx == null){
+            throw new IllegalStateException(
+                    "RemoteMethodTxEngine receives a KeypleDto response but no remoteMethodTx are defined : " + message.getKeypleDTO());
+        }
+
         // only one operation is allowed at the time
         remoteMethodTx.asyncSetResponse(keypleDto);
 
