@@ -79,4 +79,8 @@ public class WsPollingRetrofitFactory extends TransportFactory {
         return new WsPServer(hostname, port, keypleUrl, pollingUrl, clientNodeId + "server");
 
     }
+
+    public String getBaseUrl(){
+        return protocol + hostname + ":" + port;
+    }
 }

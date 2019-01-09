@@ -97,12 +97,14 @@ public final class RemoteSePlugin extends AbstractObservablePlugin {
             readers.add(virtualReader);
 
             // notify that a new reader is connected in a separated thread
+            /*
             new Thread() {
                 public void run() {
-                    notifyObservers(new PluginEvent(getName(), virtualReader.getName(),
-                            PluginEvent.EventType.READER_CONNECTED));
                 }
             }.start();
+            */
+            notifyObservers(new PluginEvent(getName(), virtualReader.getName(),
+                    PluginEvent.EventType.READER_CONNECTED));
 
             return virtualReader;
         } else {
@@ -133,12 +135,10 @@ public final class RemoteSePlugin extends AbstractObservablePlugin {
         readers.remove(virtualReader);
 
         // send event READER_DISCONNECTED in a separate thread
-        new Thread() {
-            public void run() {
-                notifyObservers(new PluginEvent(getName(), virtualReader.getName(),
-                        PluginEvent.EventType.READER_DISCONNECTED));
-            }
-        }.start();
+        //new Thread() {public void run() { }}.start();
+
+        notifyObservers(new PluginEvent(getName(), virtualReader.getName(),
+                PluginEvent.EventType.READER_DISCONNECTED));
 
     }
 
