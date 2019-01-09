@@ -81,7 +81,17 @@ class Demo_Slave {
         } else {
             // Slave is client, connectAReader to Master Server
             node = transportFactory.getClient();
-            ((ClientNode) node).connect(null);
+            ((ClientNode) node).connect(new ClientNode.ConnectCallback() {
+                @Override
+                public void onConnectSuccess() {
+                    logger.info("*******************");
+                }
+
+                @Override
+                public void onConnectFailure() {
+
+                }
+            });
         }
     }
 
@@ -126,11 +136,8 @@ class Demo_Slave {
         localReader = (StubReader) stubPlugin.getReader("stubClientSlave");
 
         localReader.addSeProtocolSetting(
-                new SeProtocolSetting(StubProtocolSetting.SETTING_PROTOCOL_ISO14443_4)); // should
-                                                                                         // be in
-                                                                                         // master
-
-
+                new SeProtocolSetting(StubProtocolSetting.SETTING_PROTOCOL_ISO14443_4));
+                                                                                         
         // Binds node for outgoing KeypleDto
         nativeReaderService = new NativeReaderServiceImpl(node);
 

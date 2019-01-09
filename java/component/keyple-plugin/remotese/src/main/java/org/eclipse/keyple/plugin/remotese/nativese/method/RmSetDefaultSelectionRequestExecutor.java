@@ -46,8 +46,8 @@ public class RmSetDefaultSelectionRequestExecutor implements RemoteMethodExecuto
         JsonPrimitive selectionRequestJson = jsonObject.getAsJsonPrimitive("selectionRequest");
         JsonPrimitive notificationModeJson = jsonObject.getAsJsonPrimitive("notificationMode");
 
-        logger.debug(selectionRequestJson.getAsString());
-        logger.debug(notificationModeJson.getAsString());
+        logger.trace(selectionRequestJson.getAsString());
+        logger.trace(notificationModeJson.getAsString());
 
         SelectionRequest selectionRequest = JsonParser.getGson()
                 .fromJson(selectionRequestJson.getAsString(), SelectionRequest.class);
@@ -55,7 +55,7 @@ public class RmSetDefaultSelectionRequestExecutor implements RemoteMethodExecuto
                 ObservableReader.NotificationMode.get(notificationModeJson.getAsString());
 
         String nativeReaderName = keypleDto.getNativeReaderName();
-        logger.debug("Execute locally SetDefaultSelectionRequest : {} - {}", notificationMode,
+        logger.trace("Execute locally SetDefaultSelectionRequest : {} - {}", notificationMode,
                 selectionRequest);
 
         try {

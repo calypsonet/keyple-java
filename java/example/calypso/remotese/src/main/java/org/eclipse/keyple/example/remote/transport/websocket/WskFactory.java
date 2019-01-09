@@ -53,7 +53,7 @@ public class WskFactory extends TransportFactory {
         try {
             wskClient = new WskClient(new URI(protocol + "localhost:" + port + keypleUrl),
                     clientNodeId);
-            // wskClient.connectAReader();
+
             return wskClient;
         } catch (URISyntaxException e) {
             e.printStackTrace();

@@ -81,7 +81,7 @@ public class WsPRetrofitClientImpl implements ClientNode {
 
                 @Override
                 public void onFailure(Call<KeypleDto> call, Throwable t) {
-                    logger.debug("Receive exception : {} , {}", t.getMessage(), t.getClass());
+                    logger.trace("Receive exception : {} , {}", t.getMessage(), t.getClass());
 
                     // Log error here since request failed
                     if(t instanceof ConnectException){
@@ -92,7 +92,7 @@ public class WsPRetrofitClientImpl implements ClientNode {
                         }
                     } else
                     if(t instanceof SocketTimeoutException){
-                        logger.debug("polling ends by timeout, keep polling, error : {}", t.getMessage());
+                        logger.trace("polling ends by timeout, keep polling, error : {}", t.getMessage());
                         poll(nodeId);// recursive call to restart polling
                     } else{
                         logger.error("Unexpected error : {} , {}", t.getMessage(), t.getCause());
@@ -104,7 +104,7 @@ public class WsPRetrofitClientImpl implements ClientNode {
                 }
             });
         } else {
-            logger.debug("poll is not active, call startPollingWorker to activate again");
+            logger.warn("poll is not active, call startPollingWorker to activate again");
             // poll is not active, call startPollingWorker to activate again
         }
     }
@@ -144,7 +144,7 @@ public class WsPRetrofitClientImpl implements ClientNode {
     @Override
     public void sendDTO(TransportDto transportDto) {
         KeypleDto keypleDto = transportDto.getKeypleDTO();
-        logger.debug("Ws Client send DTO {}", KeypleDtoHelper.toJson(keypleDto));
+        logger.trace("Ws Client send DTO {}", KeypleDtoHelper.toJson(keypleDto));
 
         if (!KeypleDtoHelper.isNoResponse(transportDto.getKeypleDTO())) {
 

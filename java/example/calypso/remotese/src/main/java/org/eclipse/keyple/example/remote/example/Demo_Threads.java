@@ -9,7 +9,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  ********************************************************************************/
-package org.eclipse.keyple.example.remote.calypso;
+package org.eclipse.keyple.example.remote.example;
 
 
 import org.eclipse.keyple.plugin.remotese.transport.KeypleRemoteException;
@@ -19,9 +19,9 @@ import org.eclipse.keyple.seproxy.exception.KeypleReaderNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class DemoThreads {
+public class Demo_Threads {
 
-    private static final Logger logger = LoggerFactory.getLogger(DemoThreads.class);
+    private static final Logger logger = LoggerFactory.getLogger(Demo_Threads.class);
 
 
     static public void startServer(final Boolean isMaster, final TransportFactory factory) {
@@ -33,11 +33,11 @@ public class DemoThreads {
                     logger.info("**** Starting Server Thread ****");
 
                     if (isMaster) {
-                        DemoMaster master = new DemoMaster(factory, true);
+                        Demo_Master master = new Demo_Master(factory, true);
                         master.boot();
 
                     } else {
-                        DemoSlave slave = new DemoSlave(factory, true);
+                        Demo_Slave slave = new Demo_Slave(factory, true);
                         executeSlaveScenario(slave);
 
                     }
@@ -66,10 +66,10 @@ public class DemoThreads {
 
                 try {
                     if (isMaster) {
-                        DemoMaster master = new DemoMaster(factory, false);
+                        Demo_Master master = new Demo_Master(factory, false);
                         master.boot();
                     } else {
-                        DemoSlave slave = new DemoSlave(factory, false);
+                        Demo_Slave slave = new Demo_Slave(factory, false);
                         executeSlaveScenario(slave);
 
                     }
@@ -89,12 +89,18 @@ public class DemoThreads {
         client.start();
     }
 
-    static public void executeSlaveScenario(DemoSlave slave) throws KeypleReaderNotFoundException, InterruptedException,KeypleReaderException,KeypleRemoteException{
-        String sessionId = slave.connectAReader();
-        logger.info("Session created on server {}", sessionId);
-        logger.info("Wait 2 seconds, then insert SE");
+    static public void executeSlaveScenario(Demo_Slave slave) throws KeypleReaderNotFoundException, InterruptedException,KeypleReaderException,KeypleRemoteException{
+        logger.info("------------------------");
+        logger.info("Connect Reader to Master");
+        logger.info("------------------------");
 
-        Thread.sleep(2000);
+        String sessionId = slave.connectAReader();
+        logger.info("--------------------------------------------------");
+        logger.info("Session created on server {}", sessionId);
+        //logger.info("Wait 2 seconds, then insert SE");
+        logger.info("--------------------------------------------------");
+
+        //Thread.sleep(2000);
 
         logger.info("Inserting SE");
         slave.insertSe();

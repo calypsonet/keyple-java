@@ -141,7 +141,7 @@ public class NativeReaderServiceImpl
                         "a  ERROR - UNRECOGNIZED request has been received by NativeReaderService");
         }
 
-        logger.debug("onDto response to be sent {}", KeypleDtoHelper.toJson(out.getKeypleDTO()));
+        logger.trace("onDto response to be sent {}", KeypleDtoHelper.toJson(out.getKeypleDTO()));
         return out;
 
 

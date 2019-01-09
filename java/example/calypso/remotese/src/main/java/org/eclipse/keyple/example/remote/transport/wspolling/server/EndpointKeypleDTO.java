@@ -97,8 +97,8 @@ class EndpointKeypleDTO implements HttpHandler, TransportNode {
             OutputStream os = t.getResponseBody();
             os.write(responseBody.getBytes());
             os.close();
-            logger.debug("Outcoming Response Code {} ", responseCode);
-            logger.debug("Outcoming Response Body {} ", responseBody);
+            logger.trace("Outcoming Response Code {} ", responseCode);
+            logger.trace("Outcoming Response Body {} ", responseBody);
         } else {
             String responseBody = "{}";
             Integer responseCode = 200;
