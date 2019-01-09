@@ -90,10 +90,11 @@ public final class RemoteSePlugin extends AbstractObservablePlugin {
             logger.info("Create a new Virtual Reader with localReaderName {} with session {}",
                     nativeReaderName, session.getSessionId());
 
-            RemoteMethodTxEngine rmTxEngine = new RemoteMethodTxEngine(sender);
-
+            //Create virtual reader with a remote method engine so the reader can send dto
+            //with a session
+            //and the provided name
             final VirtualReader virtualReader =
-                    new VirtualReader(session, nativeReaderName, rmTxEngine);
+                    new VirtualReader(session, nativeReaderName, new RemoteMethodTxEngine(sender));
             readers.add(virtualReader);
 
             // notify that a new reader is connected in a separated thread
@@ -106,7 +107,7 @@ public final class RemoteSePlugin extends AbstractObservablePlugin {
 
             return virtualReader;
         } else {
-            throw new KeypleReaderException("Virtual Reader already exists");
+            throw new KeypleReaderException("Virtual Reader already exists for reader "+ nativeReaderName);
         }
     }
 

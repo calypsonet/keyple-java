@@ -91,7 +91,7 @@ class DemoSlave {
      * @throws KeypleReaderException
      * @throws InterruptedException
      */
-    public void connectAReader()
+    public String connectAReader()
             throws KeypleReaderException, InterruptedException, KeypleRemoteException {
 
 
@@ -138,7 +138,7 @@ class DemoSlave {
 
         // connect a reader to Remote Plugin
         logger.info("Connect remotely the StubPlugin ");
-        nativeReaderService.connectReader(localReader, nodeId);
+        return nativeReaderService.connectReader(localReader, nodeId);
 
     }
 

@@ -13,12 +13,14 @@ package org.eclipse.keyple.plugin.remotese.nativese;
 
 
 import org.eclipse.keyple.plugin.remotese.nativese.method.*;
+import org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx;
 import org.eclipse.keyple.plugin.remotese.transport.*;
 import org.eclipse.keyple.plugin.remotese.transport.json.JsonParser;
 import org.eclipse.keyple.seproxy.ReaderPlugin;
 import org.eclipse.keyple.seproxy.SeProxyService;
 import org.eclipse.keyple.seproxy.event.ObservableReader;
 import org.eclipse.keyple.seproxy.event.ReaderEvent;
+import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderNotFoundException;
 import org.eclipse.keyple.seproxy.message.ProxyReader;
 import org.eclipse.keyple.seproxy.plugin.AbstractObservableReader;
@@ -37,6 +39,8 @@ public class NativeReaderServiceImpl
 
     private final DtoSender dtoSender;
     private final SeProxyService seProxyService;
+    private final RemoteMethodTxEngine rmTxEngine;
+
     // private final NseSessionManager nseSessionManager;
 
     /**
@@ -47,6 +51,7 @@ public class NativeReaderServiceImpl
     public NativeReaderServiceImpl(DtoSender dtoSender) {
         this.seProxyService = SeProxyService.getInstance();
         this.dtoSender = dtoSender;
+        this.rmTxEngine = new RemoteMethodTxEngine(dtoSender);
         // this.nseSessionManager = new NseSessionManager();
     }
 
@@ -84,17 +89,10 @@ public class NativeReaderServiceImpl
                     throw new IllegalStateException(
                             "a READER_CONNECT request has been received by NativeReaderService");
                 } else {
-                    try {
-                        RemoteMethodParser<String> rmConnectReaderParser =
-                                new RmConnectReaderParser(this);
-                        String sessionId = rmConnectReaderParser.parseResponse(keypleDTO);
-                        logger.info(
-                                "Native Reader {} has been connected to Master with sessionId {}",
-                                keypleDTO.getNativeReaderName(), sessionId);
-                    } catch (KeypleRemoteReaderException e) {
-                        e.printStackTrace();
-                    }
-                    out = transportDto.nextTransportDTO(KeypleDtoHelper.NoResponse());
+
+                    out = this.rmTxEngine.onDTO(transportDto);
+
+                    //transportDto.nextTransportDTO(KeypleDtoHelper.NoResponse());
                 }
                 break;
 
@@ -157,10 +155,20 @@ public class NativeReaderServiceImpl
      * @param localReader : native reader to be connected
      */
     @Override
-    public void connectReader(ProxyReader localReader, String clientNodeId)
-            throws KeypleRemoteException {
+    public String connectReader(ProxyReader localReader, String clientNodeId)
+            throws KeypleReaderException{
+
         logger.info("connectReader {} from device {}", localReader.getName(), clientNodeId);
-        dtoSender.sendDTO(new RmConnectReaderInvoker(localReader, clientNodeId).dto());
+
+        RmConnectReaderTx connect = new RmConnectReaderTx(null,
+                localReader.getName(), null, clientNodeId, localReader, clientNodeId, this);
+        try {
+            rmTxEngine.register(connect);
+            return connect.get();
+        } catch (KeypleRemoteException e) {
+            throw new KeypleReaderException("An error occured while calling connectReader", e);
+        }
+
     }
 
     @Override
