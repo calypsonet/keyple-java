@@ -31,10 +31,6 @@ import org.slf4j.LoggerFactory;
  */
 public class VirtualReaderBaseTest {
 
-    // fail :
-    // transmitset : 0,1
-    // transmit : 0,2
-
     @Rule
     public TestName name = new TestName();
 
