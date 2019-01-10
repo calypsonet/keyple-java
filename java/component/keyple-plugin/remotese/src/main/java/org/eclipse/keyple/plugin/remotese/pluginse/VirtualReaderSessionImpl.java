@@ -17,6 +17,8 @@ import org.eclipse.keyple.util.Observable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.concurrent.BlockingQueue;
+
 /**
  * Manage RSE Reader Session
  */
@@ -26,17 +28,23 @@ public class VirtualReaderSessionImpl extends Observable<KeypleDto>
     private static final Logger logger = LoggerFactory.getLogger(VirtualReaderSessionImpl.class);
 
     private final String sessionId;
-
+    private final String slaveNodeId;
 
     // constructor
-    public VirtualReaderSessionImpl(String sessionId) {
+    public VirtualReaderSessionImpl(String sessionId, String slaveNodeId) {
         this.sessionId = sessionId;
+        this.slaveNodeId = slaveNodeId;
     }
 
 
     @Override
     public String getSessionId() {
         return sessionId;
+    }
+
+    @Override
+    public String getSlaveNodeId() {
+        return slaveNodeId;
     }
 
 

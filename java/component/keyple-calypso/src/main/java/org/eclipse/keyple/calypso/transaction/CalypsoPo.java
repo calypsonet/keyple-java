@@ -60,7 +60,6 @@ public final class CalypsoPo extends MatchingSe {
     @Override
     public void setSelectionResponse(SeResponse selectionResponse) {
         super.setSelectionResponse(selectionResponse);
-
         /* Update the parser objects with the responses obtained */
         poSelector.updateParsersWithResponses(selectionResponse);
 
@@ -178,5 +177,13 @@ public final class CalypsoPo extends MatchingSe {
             }
             return PoClass.ISO;
         }
+    }
+
+    @Override
+    public final void reset() {
+        super.reset();
+        applicationSerialNumber = null;
+        poAtr = null;
+        dfName = null;
     }
 }

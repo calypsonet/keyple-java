@@ -35,7 +35,7 @@ import org.slf4j.LoggerFactory;
 public final class RemoteSePlugin extends AbstractObservablePlugin {
 
     private static final Logger logger = LoggerFactory.getLogger(RemoteSePlugin.class);
-    static final String PLUGIN_NAME = "RemoteSePlugin";
+    public static final String PLUGIN_NAME = "RemoteSePlugin";
 
     // private final VirtualReaderSessionFactory sessionManager;
 
@@ -62,10 +62,10 @@ public final class RemoteSePlugin extends AbstractObservablePlugin {
 
 
 
-    public SeReader getReaderByRemoteName(String remoteName) throws KeypleReaderNotFoundException {
+    public VirtualReader getReaderByRemoteName(String remoteName) throws KeypleReaderNotFoundException {
         for (AbstractObservableReader virtualReader : readers) {
             if (((VirtualReader) virtualReader).getNativeReaderName().equals(remoteName)) {
-                return virtualReader;
+                return (VirtualReader)virtualReader;
             }
         }
         throw new KeypleReaderNotFoundException(remoteName);
@@ -98,12 +98,14 @@ public final class RemoteSePlugin extends AbstractObservablePlugin {
             readers.add(virtualReader);
 
             // notify that a new reader is connected in a separated thread
+            /*
             new Thread() {
                 public void run() {
-                    notifyObservers(new PluginEvent(getName(), virtualReader.getName(),
-                            PluginEvent.EventType.READER_CONNECTED));
                 }
             }.start();
+            */
+            notifyObservers(new PluginEvent(getName(), virtualReader.getName(),
+                    PluginEvent.EventType.READER_CONNECTED));
 
             return virtualReader;
         } else {
@@ -134,12 +136,10 @@ public final class RemoteSePlugin extends AbstractObservablePlugin {
         readers.remove(virtualReader);
 
         // send event READER_DISCONNECTED in a separate thread
-        new Thread() {
-            public void run() {
-                notifyObservers(new PluginEvent(getName(), virtualReader.getName(),
-                        PluginEvent.EventType.READER_DISCONNECTED));
-            }
-        }.start();
+        //new Thread() {public void run() { }}.start();
+
+        notifyObservers(new PluginEvent(getName(), virtualReader.getName(),
+                PluginEvent.EventType.READER_DISCONNECTED));
 
     }
 

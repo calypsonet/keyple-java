@@ -56,20 +56,14 @@ publishing {
 jar.dependsOn copyLICENSE, copyNOTICE,copyVersionFile
 
 dependencies {
-
     // https://mvnrepository.com/artifact/org.slf4j/slf4j-api
-    api group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
-
+    api 'org.slf4j:slf4j-api:1.7.25'
     // https://mvnrepository.com/artifact/org.mockito/mockito-core
-    testCompile group: 'junit', name: 'junit', version: '4.12'
-
+    testCompile 'junit:junit:4.12'
     // https://mvnrepository.com/artifact/org.mockito/mockito-core
-    testCompile group: 'org.mockito', name: 'mockito-core', version: '2.13.0'
-
+    testCompile 'org.mockito:mockito-core:2.13.0'
     // https://mvnrepository.com/artifact/org.mockito/mockito-core
-    testCompile group: 'junit', name: 'junit', version: '4.12'
-
+    testCompile 'junit:junit:4.12'
     //add slf4j simple logger implementation
     testCompile 'org.slf4j:slf4j-simple:1.7.25'
-
 }

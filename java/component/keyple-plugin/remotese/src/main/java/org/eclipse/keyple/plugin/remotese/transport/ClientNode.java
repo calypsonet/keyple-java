@@ -18,8 +18,13 @@ package org.eclipse.keyple.plugin.remotese.transport;
  */
 public interface ClientNode extends TransportNode {
 
-    void connect();
+    void connect(ConnectCallback connectCallback);
 
     void disconnect();
+
+    interface ConnectCallback{
+        void onConnectSuccess();
+        void onConnectFailure();
+    }
 
 }
