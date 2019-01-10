@@ -109,8 +109,8 @@ public class VirtualReaderBaseTest {
         return nativeReader;
     }
 
-    private void disconnectStubReader(StubReader nativeReader, String nodeId) throws Exception {
-        this.nativeReaderService.disconnectReader(nativeReader, nodeId);
+    private void disconnectStubReader(String sessionId, StubReader nativeReader, String nodeId) throws Exception {
+        this.nativeReaderService.disconnectReader(sessionId, nativeReader.getName(), nodeId);
     }
 
     private VirtualReader getVirtualReader() throws Exception {

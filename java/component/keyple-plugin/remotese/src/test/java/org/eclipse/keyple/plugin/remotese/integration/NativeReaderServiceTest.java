@@ -177,7 +177,7 @@ public class NativeReaderServiceTest {
     public void testOKConnectDisconnect() throws Exception {
 
         // connect
-        nativeReaderSpy.connectReader(nativeReader, CLIENT_NODE_ID);
+        String sessionId = nativeReaderSpy.connectReader(nativeReader, CLIENT_NODE_ID);
 
         VirtualReader virtualReader = (VirtualReader) virtualReaderService.getPlugin()
                 .getReaderByRemoteName(NATIVE_READER_NAME);
@@ -185,7 +185,7 @@ public class NativeReaderServiceTest {
         Assert.assertEquals(NATIVE_READER_NAME, virtualReader.getNativeReaderName());
 
         // disconnect
-        nativeReaderSpy.disconnectReader(nativeReader, CLIENT_NODE_ID);
+        nativeReaderSpy.disconnectReader(sessionId, nativeReader.getName(), CLIENT_NODE_ID);
 
         // assert that the virtual reader has been destroyed
         Assert.assertEquals(0, virtualReaderService.getPlugin().getReaders().size());
@@ -216,13 +216,13 @@ public class NativeReaderServiceTest {
      * 
      * @throws Exception
      */
-    @Test(expected = KeypleRemoteException.class)
+    @Test(expected = KeypleReaderException.class)
     public void testKODisconnectServerError() throws Exception {
 
         // bind Slave to faulty client
         nativeReaderSpy = Integration.bindSlaveSpy(new LocalClient(null));
 
-        nativeReaderSpy.disconnectReader(nativeReader, CLIENT_NODE_ID);
+        nativeReaderSpy.disconnectReader("null",nativeReader.getName(), CLIENT_NODE_ID);
         // should throw a KeypleRemoteException in slave side
     }
 

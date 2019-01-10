@@ -11,24 +11,32 @@
  ********************************************************************************/
 package org.eclipse.keyple.plugin.remotese.nativese.method;
 
+import com.google.gson.JsonObject;
 import org.eclipse.keyple.plugin.remotese.transport.KeypleDto;
 import org.eclipse.keyple.plugin.remotese.transport.RemoteMethod;
 import org.eclipse.keyple.plugin.remotese.transport.RemoteMethodInvoker;
 import org.eclipse.keyple.seproxy.message.ProxyReader;
 
+@Deprecated
 public class RmDisconnectReaderInvoker implements RemoteMethodInvoker {
 
-    private final ProxyReader localReader;
-    private final String clientNodeId;
+    private final String sessionId;
+    private final String nativeReaderName;
+    private final String slaveNodeId;
 
-    public RmDisconnectReaderInvoker(ProxyReader localReader, String clientNodeId) {
-        this.localReader = localReader;
-        this.clientNodeId = clientNodeId;
+    public RmDisconnectReaderInvoker(String sessionId, String nativeReaderName, String slaveNodeId) {
+        this.sessionId = sessionId;
+        this.nativeReaderName = nativeReaderName;
+        this.slaveNodeId = slaveNodeId;
     }
 
     @Override
     public KeypleDto dto() {
-        return new KeypleDto(RemoteMethod.READER_DISCONNECT.getName(), "{}", true, null,
-                localReader.getName(), null, clientNodeId);
+
+        JsonObject body = new JsonObject();
+        body.addProperty("sessionId", sessionId);
+
+        return new KeypleDto(RemoteMethod.READER_DISCONNECT.getName(), body.getAsString(), true, null,
+                nativeReaderName, null, slaveNodeId);
     }
 }

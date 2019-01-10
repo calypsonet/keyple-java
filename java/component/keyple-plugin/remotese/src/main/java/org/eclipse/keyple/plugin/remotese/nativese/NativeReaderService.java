@@ -30,8 +30,8 @@ public interface NativeReaderService {
     /**
      * Disconnect Physical Local Reader from Remote Se Master Server
      */
-    void disconnectReader(ProxyReader localReader, String clientNodeId)
-            throws KeypleRemoteException;
+    void disconnectReader(String sessionId, String nativeReaderName, String clientNodeId)
+            throws KeypleReaderException;
 
     /**
      * Find a local reader accross plugins

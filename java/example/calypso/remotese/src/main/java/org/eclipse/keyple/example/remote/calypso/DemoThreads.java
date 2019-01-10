@@ -103,7 +103,7 @@ public class DemoThreads {
         slave.removeSe();
         logger.info("Wait 2 seconds, then disconnect reader");
         Thread.sleep(2000);
-        slave.disconnect();
+        slave.disconnect(sessionId, null, null);
 
         logger.info("Wait 5 seconds, then shutdown jvm");
         Thread.sleep(2000);

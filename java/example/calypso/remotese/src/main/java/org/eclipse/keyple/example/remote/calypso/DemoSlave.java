@@ -167,13 +167,13 @@ class DemoSlave {
 
     }
 
-    public void disconnect() throws KeypleReaderException, KeypleRemoteException {
+    public void disconnect(String sessionId, String nativeReaderName, String slaveNodeId) throws KeypleReaderException, KeypleRemoteException {
 
         logger.info("*************************");
         logger.info("Disconnect native reader ");
         logger.info("*************************");
 
-        nativeReaderService.disconnectReader(localReader, nodeId);
+        nativeReaderService.disconnectReader(sessionId,localReader.getName(), slaveNodeId);
     }
 
 
