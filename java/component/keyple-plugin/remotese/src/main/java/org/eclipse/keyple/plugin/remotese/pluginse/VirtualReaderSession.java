@@ -24,4 +24,6 @@ public interface VirtualReaderSession {
 
     String getSlaveNodeId();
 
+
+
 }
