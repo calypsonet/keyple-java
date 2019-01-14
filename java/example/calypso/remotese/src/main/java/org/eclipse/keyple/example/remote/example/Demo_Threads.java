@@ -38,23 +38,8 @@ public class Demo_Threads {
 
                     } else {
                         Demo_Slave slave = new Demo_Slave(factory, true);
-                        logger.info("Wait 5 seconds, then connectAReader to master");
-                        Thread.sleep(5000);
-                        slave.connectAReader();
-                        logger.info("Wait 5 seconds, then insert SE");
-                        Thread.sleep(5000);
-                        slave.insertSe();
-                        logger.info("Wait 5 seconds, then remove SE");
-                        Thread.sleep(5000);
-                        slave.removeSe();
-                        logger.info("Wait 5 seconds, then disconnect reader");
-                        Thread.sleep(5000);
-                        slave.disconnect();
-                        Thread.sleep(5000);
+                        executeSlaveScenario(slave);
 
-                        logger.info("Wait 5 seconds, then shutdown jvm");
-                        Runtime runtime = Runtime.getRuntime();
-                        runtime.exit(0);
                     }
 
                 } catch (KeypleReaderNotFoundException e) {
@@ -85,21 +70,7 @@ public class Demo_Threads {
                         master.boot();
                     } else {
                         Demo_Slave slave = new Demo_Slave(factory, false);
-                        slave.connectAReader();
-                        logger.info("Wait 5 seconds, then insert SE");
-                        Thread.sleep(5000);
-                        slave.insertSe();
-                        logger.info("Wait 5 seconds, then remove SE");
-                        Thread.sleep(5000);
-                        slave.removeSe();
-                        logger.info("Wait 5 seconds, then disconnect reader");
-                        Thread.sleep(5000);
-                        slave.disconnect();
-
-                        logger.info("Wait 5 seconds, then shutdown jvm");
-                        Thread.sleep(5000);
-                        Runtime runtime = Runtime.getRuntime();
-                        runtime.exit(0);
+                        executeSlaveScenario(slave);
 
                     }
 
@@ -118,5 +89,33 @@ public class Demo_Threads {
         client.start();
     }
 
+    static public void executeSlaveScenario(Demo_Slave slave) throws KeypleReaderNotFoundException, InterruptedException,KeypleReaderException,KeypleRemoteException{
+        logger.info("------------------------");
+        logger.info("Connect Reader to Master");
+        logger.info("------------------------");
+
+        String sessionId = slave.connectAReader();
+        logger.info("--------------------------------------------------");
+        logger.info("Session created on server {}", sessionId);
+        //logger.info("Wait 2 seconds, then insert SE");
+        logger.info("--------------------------------------------------");
+
+        //Thread.sleep(2000);
+
+        logger.info("Inserting SE");
+        slave.insertSe();
+        logger.info("Wait 2 seconds, then remove SE");
+        Thread.sleep(2000);
+        slave.removeSe();
+        logger.info("Wait 2 seconds, then disconnect reader");
+        Thread.sleep(2000);
+        slave.disconnect();
+
+        logger.info("Wait 5 seconds, then shutdown jvm");
+        Thread.sleep(2000);
+        Runtime runtime = Runtime.getRuntime();
+        runtime.exit(0);
+
+    }
 
 }

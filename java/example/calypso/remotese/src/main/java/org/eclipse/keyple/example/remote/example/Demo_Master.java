@@ -130,21 +130,21 @@ public class Demo_Master implements org.eclipse.keyple.util.Observable.Observer 
      */
     @Override
     public void update(final Object o) {
-        logger.debug("UPDATE {}", o);
         final Demo_Master masterThread = this;
 
         // Receive a PluginEvent
         if (o instanceof PluginEvent) {
             PluginEvent event = (PluginEvent) o;
+            logger.info("UPDATE {} {} {}", event.getEventType(), event.getPluginName(), event.getReaderName());
             switch (event.getEventType()) {
                 case READER_CONNECTED:
-                    // a new virtual reader is connected, let's observe it readers event
-                    logger.info("READER_CONNECTED {} {}", event.getPluginName(),
-                            event.getReaderName());
+                    // a new virtual reader is connected, let's configure it
                     try {
                         RemoteSePlugin remoteSEPlugin = (RemoteSePlugin) SeProxyService
                                 .getInstance().getPlugin("RemoteSePlugin");
                         poReader = (VirtualReader) remoteSEPlugin.getReader(event.getReaderName());
+
+                        logger.info("Configure SeSelection");
 
                         /* set default selection request */
                         seSelection = new SeSelection(poReader);
@@ -167,6 +167,8 @@ public class Demo_Master implements org.eclipse.keyple.util.Observable.Observer 
                                         ContactlessProtocols.PROTOCOL_ISO14443_4,
                                         "AID: " + CalypsoClassicInfo.AID);
 
+                        logger.info("Create a PoSelector");
+
                         /*
                          * Prepare the reading order and keep the associated parser for later use
                          * once the selection has been made.
@@ -184,6 +186,8 @@ public class Demo_Master implements org.eclipse.keyple.util.Observable.Observer 
                          */
                         seSelection.prepareSelection(poSelector);
 
+                        logger.info("setDefaultSelectionRequest for PoReader {}", poReader.getName());
+
                         /*
                          * Provide the SeReader with the selection operation to be processed when a
                          * PO is inserted.
@@ -194,7 +198,7 @@ public class Demo_Master implements org.eclipse.keyple.util.Observable.Observer 
 
 
                         // observe reader events
-                        logger.info("Add ServerTicketingApp as a Observer of RSE reader");
+                        logger.info("Add Master Thread as a Observer of virtual reader {}", poReader.getName());
                         poReader.addObserver(masterThread);
 
                     } catch (KeypleReaderNotFoundException e) {
@@ -216,7 +220,9 @@ public class Demo_Master implements org.eclipse.keyple.util.Observable.Observer 
         // ReaderEvent
         else if (o instanceof ReaderEvent) {
             ReaderEvent event = (ReaderEvent) o;
+            logger.debug("UPDATE {} {} {} {}", event.getEventType(), event.getPluginName(), event.getReaderName(), event.getDefaultSelectionResponse());
             switch (event.getEventType()) {
+
                 case SE_MATCHED:
                     if (seSelection.processDefaultSelection(event.getDefaultSelectionResponse())) {
                         MatchingSe selectedSe = seSelection.getSelectedSe();

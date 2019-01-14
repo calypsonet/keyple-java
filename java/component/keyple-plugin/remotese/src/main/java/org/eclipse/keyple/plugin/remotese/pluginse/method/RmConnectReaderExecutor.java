@@ -17,8 +17,12 @@ import org.eclipse.keyple.plugin.remotese.transport.*;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class RmConnectReaderExecutor implements RemoteMethodExecutor {
+
+    private static final Logger logger = LoggerFactory.getLogger(RmConnectReaderExecutor.class);
 
 
     private final RemoteSePlugin plugin;
@@ -38,23 +42,37 @@ public class RmConnectReaderExecutor implements RemoteMethodExecutor {
         String nativeReaderName = keypleDto.getNativeReaderName();
         String clientNodeId = keypleDto.getNodeId();
 
-        // create a virtual Reader
         VirtualReader virtualReader = null;
         try {
+            // create a virtual Reader
             virtualReader = (VirtualReader) this.plugin.createVirtualReader(clientNodeId,
                     nativeReaderName, this.dtoSender);
-            // response
+
+            // create response
             JsonObject respBody = new JsonObject();
             respBody.add("statusCode", new JsonPrimitive(0));
+            respBody.add("sessionId", new JsonPrimitive(virtualReader.getSession().getSessionId()));
+
+            // build transport DTO with body
             return transportDto.nextTransportDTO(new KeypleDto(keypleDto.getAction(),
-                    respBody.toString(), false, virtualReader.getSession().getSessionId(),
-                    nativeReaderName, virtualReader.getName(), clientNodeId));
+                    respBody.toString(),
+                    false,
+                    virtualReader.getSession().getSessionId(),
+                    nativeReaderName,
+                    virtualReader.getName(),
+                    clientNodeId));
+
         } catch (KeypleReaderException e) {
             // virtual reader for remote reader already exists
-            e.printStackTrace();
-            // send the exception
+            logger.warn("Virtual reader already exists for reader " + nativeReaderName ,e);
+
+            // send the exception inside the dto
             return transportDto.nextTransportDTO(KeypleDtoHelper.ExceptionDTO(keypleDto.getAction(),
-                    e, null, nativeReaderName, null, clientNodeId));
+                    e,
+                    null,
+                    nativeReaderName,
+                    null,
+                    clientNodeId));
 
         }
     }

@@ -90,23 +90,26 @@ public final class RemoteSePlugin extends AbstractObservablePlugin {
             logger.info("Create a new Virtual Reader with localReaderName {} with session {}",
                     nativeReaderName, session.getSessionId());
 
-            RemoteMethodTxEngine rmTxEngine = new RemoteMethodTxEngine(sender);//make this a factory
-
+            //Create virtual reader with a remote method engine so the reader can send dto
+            //with a session
+            //and the provided name
             final VirtualReader virtualReader =
-                    new VirtualReader(session, nativeReaderName, rmTxEngine);
+                    new VirtualReader(session, nativeReaderName, new RemoteMethodTxEngine(sender));
             readers.add(virtualReader);
 
             // notify that a new reader is connected in a separated thread
+            /*
             new Thread() {
                 public void run() {
-                    notifyObservers(new PluginEvent(getName(), virtualReader.getName(),
-                            PluginEvent.EventType.READER_CONNECTED));
                 }
             }.start();
+            */
+            notifyObservers(new PluginEvent(getName(), virtualReader.getName(),
+                    PluginEvent.EventType.READER_CONNECTED));
 
             return virtualReader;
         } else {
-            throw new KeypleReaderException("Virtual Reader already exists");
+            throw new KeypleReaderException("Virtual Reader already exists for reader "+ nativeReaderName);
         }
     }
 
@@ -133,12 +136,10 @@ public final class RemoteSePlugin extends AbstractObservablePlugin {
         readers.remove(virtualReader);
 
         // send event READER_DISCONNECTED in a separate thread
-        new Thread() {
-            public void run() {
-                notifyObservers(new PluginEvent(getName(), virtualReader.getName(),
-                        PluginEvent.EventType.READER_DISCONNECTED));
-            }
-        }.start();
+        //new Thread() {public void run() { }}.start();
+
+        notifyObservers(new PluginEvent(getName(), virtualReader.getName(),
+                PluginEvent.EventType.READER_DISCONNECTED));
 
     }
 

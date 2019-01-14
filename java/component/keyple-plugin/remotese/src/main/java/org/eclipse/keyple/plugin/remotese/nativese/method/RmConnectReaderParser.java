@@ -23,7 +23,7 @@ import org.eclipse.keyple.seproxy.plugin.AbstractSelectionLocalReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
+@Deprecated
 public class RmConnectReaderParser implements RemoteMethodParser<String> {
 
     private static final Logger logger = LoggerFactory.getLogger(RmConnectReaderParser.class);

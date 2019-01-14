@@ -49,8 +49,8 @@ class EndpointPolling implements HttpHandler, TransportNode {
     @Override
     public void handle(HttpExchange t) {
 
-        logger.debug("Incoming HttpExchange {} ", t.toString());
-        logger.debug("Incoming Request {} ", t.getRequestMethod());
+        logger.trace("Incoming HttpExchange {} ", t.toString());
+        logger.trace("Incoming Request {} ", t.getRequestMethod());
         String requestMethod = t.getRequestMethod();
 
         if (requestMethod.equals("GET")) {
@@ -63,7 +63,7 @@ class EndpointPolling implements HttpHandler, TransportNode {
             // set httpExchange in queue
             requestQueue.add(t);
 
-            logger.debug("Receive a polling request {} from clientNodeId {} queue size {}",
+            logger.trace("Receive a polling request {} from clientNodeId {} queue size {}",
                     t.toString(), nodeId, requestQueue.size());
 
         }
@@ -80,18 +80,18 @@ class EndpointPolling implements HttpHandler, TransportNode {
 
     @Override
     public void sendDTO(TransportDto message) {
-        logger.warn("Send DTO with transport message {}", message);
+        logger.trace("Send DTO with transport message {}", message);
         this.sendDTO(message.getKeypleDTO());
     }
 
     @Override
     public void sendDTO(KeypleDto message) {
-        logger.debug("Using polling to send keypleDTO whose action : {}", message.getAction());
+        logger.debug("Using polling to send keypleDTO this action : {}", message.getAction());
 
         HttpExchange t;
         try {
             t = requestQueue.poll(10, TimeUnit.SECONDS);
-            logger.debug("Found a waiting HttpExchange {}", t != null ? t.toString() : "null");
+            logger.trace("Found a waiting HttpExchange {}", t != null ? t.toString() : "null");
             setHttpResponse(t, message);
         } catch (IOException e) {
             e.printStackTrace();
@@ -134,8 +134,8 @@ class EndpointPolling implements HttpHandler, TransportNode {
             OutputStream os = t.getResponseBody();
             os.write(responseBody.getBytes());
             os.close();
-            logger.debug("Outcoming Response Code {} ", responseCode);
-            logger.debug("Outcoming Response Body {} ", responseBody);
+            logger.trace("Outcoming Response Code {} ", responseCode);
+            logger.trace("Outcoming Response Body {} ", responseBody);
 
 
         } else {

@@ -64,23 +64,28 @@ class WskServer extends WebSocketServer implements ServerNode {
      */
     @Override
     public void onMessage(WebSocket conn, String message) {
-        logger.trace("Web socket onMessage {} {}", conn, message);
+        logger.trace("Server receive a message {} {}", conn, message);
         KeypleDto keypleDto = KeypleDtoHelper.fromJson(message);
 
         if (dtoHandler != null) {
+
+
+            if (isMaster) {
+                // if server is master, can have numerous clients
+                if (keypleDto.getNativeReaderName() != null) {
+                    logger.debug("Websocket connection has been mapped to session defined in message {} - {}", keypleDto.getNativeReaderName(), conn);
+
+                    addConnection(conn,keypleDto.getNativeReaderName(),keypleDto.getNodeId());
+                } else {
+                    logger.debug("No session defined in message, can not map websocket connection {} - {}", keypleDto.getNativeReaderName());
+                }
+            }
 
             // LOOP pass DTO and get DTO Response is any
             TransportDto transportDto =
                     dtoHandler.onDTO(new WskTransportDTO(keypleDto, conn, this));
 
-            if (isMaster) {
-                // if server is master, can have numerous clients
-                if (transportDto.getKeypleDTO().getSessionId() != null) {
-                    sessionId_Connection.put(transportDto.getKeypleDTO().getSessionId(), conn);
-                } else {
-                    logger.debug("No session defined in message {}", transportDto);
-                }
-            }
+
 
             this.sendDTO(transportDto);
         } else {
@@ -105,10 +110,14 @@ class WskServer extends WebSocketServer implements ServerNode {
      * TransportNode
      */
 
-    final private Map<String, Object> sessionId_Connection = new HashMap<String, Object>();
+    final private Map<String, WebSocket> nativeReaderName_session = new HashMap<String, WebSocket>();
 
-    private Object getConnection(String sessionId) {
-        return sessionId_Connection.get(sessionId);
+    private WebSocket getConnection(String nativeReaderName, String clientNodeId) {
+        return nativeReaderName_session.get(nativeReaderName+clientNodeId);
+    }
+
+    private WebSocket addConnection(WebSocket connection, String nativeReaderName, String clientNodeId) {
+        return nativeReaderName_session.put(nativeReaderName+clientNodeId,connection);
     }
 
     public void setDtoHandler(DtoHandler stubplugin) {
@@ -118,17 +127,19 @@ class WskServer extends WebSocketServer implements ServerNode {
 
     @Override
     public void sendDTO(TransportDto transportDto) {
-        logger.trace("sendDTO {} {}", KeypleDtoHelper.toJson(transportDto.getKeypleDTO()));
+        logger.trace("sendDTO with a TransportDto {} {}", KeypleDtoHelper.toJson(transportDto.getKeypleDTO()));
 
         if (KeypleDtoHelper.isNoResponse(transportDto.getKeypleDTO())) {
             logger.trace("Keyple DTO is empty, do not send it");
         } else {
 
             if (!isMaster) {
+                logger.trace("Wsk Server is slave, use the master web socket {}", masterWebSocket);
                 // if server is client -> use the master web socket
                 masterWebSocket.send(KeypleDtoHelper.toJson(transportDto.getKeypleDTO()));
             } else {
                 // server is master, can have numerous slave clients
+                logger.trace("Wsk Server is master, find to which client answer");
                 if (((WskTransportDTO) transportDto).getSocketWeb() != null) {
                     logger.trace("Use socketweb included in TransportDto");
                     ((WskTransportDTO) transportDto).getSocketWeb()
@@ -139,13 +150,13 @@ class WskServer extends WebSocketServer implements ServerNode {
                     if (transportDto.getKeypleDTO().getSessionId() == null) {
                         logger.warn("No sessionId defined in message, Keyple DTO can not be sent");
                     } else {
-                        logger.trace("Retrieve socketweb from sessionId");
-                        // retrieve connection object from the sessionId
-                        Object conn = getConnection(transportDto.getKeypleDTO().getSessionId());
-                        logger.trace("send DTO {} {}",
+                        logger.trace("Retrieve socketweb from nativeReaderName and clientNodeId {} {}", transportDto.getKeypleDTO().getNativeReaderName(), transportDto.getKeypleDTO().getNodeId());
+                        WebSocket conn = getConnection(transportDto.getKeypleDTO().getNativeReaderName(), transportDto.getKeypleDTO().getNodeId());
+
+                        logger.trace("send DTO with websocket {} {}",
                                 KeypleDtoHelper.toJson(transportDto.getKeypleDTO()), conn);
-                        ((WebSocket) conn)
-                                .send(KeypleDtoHelper.toJson(transportDto.getKeypleDTO()));
+
+                        conn.send(KeypleDtoHelper.toJson(transportDto.getKeypleDTO()));
                     }
                 }
 
