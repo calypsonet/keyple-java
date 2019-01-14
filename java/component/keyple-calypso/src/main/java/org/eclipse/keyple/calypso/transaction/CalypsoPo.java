@@ -83,7 +83,7 @@ public final class CalypsoPo extends MatchingSe {
             byte applicationTypeByte = poFciRespPars.getApplicationTypeByte();
             if ((applicationTypeByte & (1 << 7)) != 0) {
                 /* CLAP */
-                this.revision = PoRevision.REV3_1;
+                this.revision = PoRevision.REV3_1_CLAP;
             } else if ((applicationTypeByte >> 3) == (byte) (0x05)) {
                 this.revision = PoRevision.REV3_2;
             } else if ((applicationTypeByte >> 3) == (byte) (0x04)) {

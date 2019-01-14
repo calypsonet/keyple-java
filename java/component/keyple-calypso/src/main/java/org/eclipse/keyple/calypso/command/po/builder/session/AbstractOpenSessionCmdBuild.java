@@ -45,6 +45,7 @@ public abstract class AbstractOpenSessionCmdBuild extends PoCommandBuilder {
                 return new OpenSession24CmdBuild(debitKeyIndex, sessionTerminalChallenge, sfi,
                         recordNb, extraInfo);
             case REV3_1:
+            case REV3_1_CLAP:
                 return new OpenSession31CmdBuild(debitKeyIndex, sessionTerminalChallenge, sfi,
                         recordNb, extraInfo);
             case REV3_2:
