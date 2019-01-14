@@ -43,7 +43,7 @@ public enum PcscProtocolSetting implements SeProtocolSettingList {
      */
     public interface ProtocolSetting {
         public static String REGEX_PROTOCOL_ISO14443_4 =
-                "3B8880....................|3B8C800150.*";
+                "3B8880....................|3B8C800150.*|.*4F4D4141544C4153.*";
 
         public static String REGEX_PROTOCOL_B_PRIME = "3B8F8001805A0A0103200311........829000..";
 
