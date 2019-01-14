@@ -172,10 +172,17 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
                         closeLogicalChannel();
                     }
                 } else {
-                    /* notify an SE_INSERTED event with the received response */
-                    notifyObservers(new ReaderEvent(this.pluginName, this.name,
-                            ReaderEvent.EventType.SE_INSERTED,
-                            new SelectionResponse(seResponseSet)));
+                    if(aSeMatched) {
+                        /* The matched, notify an SE_MATCHED event with the received response */
+                        notifyObservers(new ReaderEvent(this.pluginName, this.name,
+                                ReaderEvent.EventType.SE_MATCHED,
+                                new SelectionResponse(seResponseSet)));
+                    } else {
+                        /* The didn't match, notify an SE_INSERTED event with the received response */
+                        notifyObservers(new ReaderEvent(this.pluginName, this.name,
+                                ReaderEvent.EventType.SE_INSERTED,
+                                new SelectionResponse(seResponseSet)));
+                    }
                     presenceNotified = true;
                 }
             } catch (KeypleReaderException e) {
