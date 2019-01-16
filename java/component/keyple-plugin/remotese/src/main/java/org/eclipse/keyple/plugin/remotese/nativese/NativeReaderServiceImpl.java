@@ -89,10 +89,8 @@ public class NativeReaderServiceImpl
                     throw new IllegalStateException(
                             "a READER_CONNECT request has been received by NativeReaderService");
                 } else {
-
+                    //send DTO to TxEngine
                     out = this.rmTxEngine.onDTO(transportDto);
-
-                    //transportDto.nextTransportDTO(KeypleDtoHelper.NoResponse());
                 }
                 break;
 
@@ -102,9 +100,8 @@ public class NativeReaderServiceImpl
                     throw new IllegalStateException(
                             "a READER_DISCONNECT request has been received by NativeReaderService");
                 } else {
-                    logger.info("Native Reader {} has been disconnected from Master",
-                            keypleDTO.getNativeReaderName());
-                    out = transportDto.nextTransportDTO(KeypleDtoHelper.NoResponse());
+                    //send DTO to TxEngine
+                    out = this.rmTxEngine.onDTO(transportDto);
                 }
                 break;
 
@@ -172,14 +169,26 @@ public class NativeReaderServiceImpl
     }
 
     @Override
-    public void disconnectReader(ProxyReader localReader, String clientNodeId)
-            throws KeypleRemoteException {
-        logger.info("disconnectReader {} from device {}", localReader.getName(), clientNodeId);
+    public void disconnectReader(String sessionId, String nativeReaderName, String clientNodeId)
+            throws KeypleReaderException {
+        logger.info("disconnectReader {} from device {}", nativeReaderName, clientNodeId);
 
-        dtoSender.sendDTO(new RmDisconnectReaderInvoker(localReader, clientNodeId).dto());
+        RmDisconnectReaderTx disconnect = new RmDisconnectReaderTx(sessionId,nativeReaderName,clientNodeId);
 
-        // stop propagating the local reader events
-        ((AbstractObservableReader) localReader).removeObserver(this);
+        try {
+            rmTxEngine.register(disconnect);
+            Boolean status =  disconnect.get();
+            ProxyReader nativeReader = findLocalReader(nativeReaderName);
+            if(nativeReader instanceof AbstractObservableReader){
+                // stop propagating the local reader events
+                ((AbstractObservableReader) nativeReader).removeObserver(this);
+            }
+        } catch (KeypleRemoteException e) {
+            throw new KeypleReaderException("An error occured while calling connectReader", e);
+        } catch (KeypleReaderNotFoundException e) {
+            e.printStackTrace();
+        }
+
 
     }
 
@@ -192,7 +201,7 @@ public class NativeReaderServiceImpl
      */
     public ProxyReader findLocalReader(String nativeReaderName)
             throws KeypleReaderNotFoundException {
-        logger.debug("Find local reader by name {} in {} plugin(s)", nativeReaderName,
+        logger.trace("Find local reader by name {} in {} plugin(s)", nativeReaderName,
                 seProxyService.getPlugins().size());
         for (ReaderPlugin plugin : seProxyService.getPlugins()) {
             try {

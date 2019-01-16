@@ -84,7 +84,7 @@ class Demo_Slave {
             ((ClientNode) node).connect(new ClientNode.ConnectCallback() {
                 @Override
                 public void onConnectSuccess() {
-                    logger.info("*******************");
+                    logger.info("Client connected");
                 }
 
                 @Override
@@ -175,13 +175,13 @@ class Demo_Slave {
 
     }
 
-    public void disconnect() throws KeypleReaderException, KeypleRemoteException {
+    public void disconnect(String sessionId, String nativeReaderName, String slaveNodeId) throws KeypleReaderException, KeypleRemoteException {
 
         logger.info("*************************");
         logger.info("Disconnect native reader ");
         logger.info("*************************");
 
-        nativeReaderService.disconnectReader(localReader, nodeId);
+        nativeReaderService.disconnectReader(sessionId,localReader.getName(), slaveNodeId);
     }
 
 

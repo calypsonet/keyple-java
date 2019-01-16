@@ -11,8 +11,10 @@
  ********************************************************************************/
 package org.eclipse.keyple.plugin.remotese.pluginse.method;
 
+import com.google.gson.JsonObject;
 import org.eclipse.keyple.plugin.remotese.pluginse.RemoteSePlugin;
 import org.eclipse.keyple.plugin.remotese.transport.*;
+import org.eclipse.keyple.plugin.remotese.transport.json.JsonParser;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,11 +38,15 @@ public class RmDisconnectReaderExecutor implements RemoteMethodExecutor {
 
         String nativeReaderName = keypleDto.getNativeReaderName();
         String clientNodeId = keypleDto.getNodeId();
+        String sessionId = keypleDto.getSessionId();
 
         try {
+            //todo use sessionId is present
             plugin.disconnectRemoteReader(nativeReaderName);
+            JsonObject body = new JsonObject();
+            body.addProperty("status", true);
             return transportDto
-                    .nextTransportDTO(new KeypleDto(RemoteMethod.READER_DISCONNECT.getName(), "{}",
+                    .nextTransportDTO(new KeypleDto(RemoteMethod.READER_DISCONNECT.getName(), JsonParser.getGson().toJson(body, JsonObject.class),
                             false, null, nativeReaderName, null, clientNodeId));
         } catch (KeypleReaderNotFoundException e) {
             logger.error("Impossible to disconnect reader " + nativeReaderName, e);

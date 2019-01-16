@@ -120,8 +120,8 @@ public final class RemoteSePlugin extends AbstractObservablePlugin {
      */
     public void disconnectRemoteReader(String nativeReaderName)
             throws KeypleReaderNotFoundException {
-        logger.debug("Disconnect Virtual reader {}", nativeReaderName);
 
+        logger.debug("Disconnect Virtual reader {}", nativeReaderName);
 
         // retrieve virtual reader to delete
         final VirtualReader virtualReader =

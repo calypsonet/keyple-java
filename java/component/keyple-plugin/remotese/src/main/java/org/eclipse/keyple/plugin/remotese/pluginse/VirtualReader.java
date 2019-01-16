@@ -51,6 +51,7 @@ public final class VirtualReader extends AbstractObservableReader {
         this.session = session;
         this.remoteName = nativeReaderName;
         this.rmTxEngine = rmTxEngine;
+        logger.info("A new virtual reader was created with session {}", session);
     }
 
     /**

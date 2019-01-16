@@ -44,8 +44,7 @@ class EndpointKeypleDTO implements HttpHandler, TransportNode {
     @Override
     public void handle(HttpExchange t) throws IOException {
 
-        logger.trace("Incoming HttpExchange {} ", t.toString());
-        logger.trace("Incoming Request {} ", t.getRequestMethod());
+        logger.trace("Incoming Request {} - {}", t.getRequestMethod(), t.toString());
         String requestMethod = t.getRequestMethod();
 
         if (requestMethod.equals("POST")) {

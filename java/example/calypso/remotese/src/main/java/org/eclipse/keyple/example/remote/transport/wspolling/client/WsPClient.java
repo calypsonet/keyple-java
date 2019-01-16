@@ -109,7 +109,7 @@ public class WsPClient implements ClientNode {
     @Override
     public void sendDTO(TransportDto transportDto) {
         KeypleDto keypleDto = transportDto.getKeypleDTO();
-        logger.debug("Ws Client send DTO {}", KeypleDtoHelper.toJson(keypleDto));
+        logger.trace("Ws Client send DTO {}", KeypleDtoHelper.toJson(keypleDto));
         if (!KeypleDtoHelper.isNoResponse(transportDto.getKeypleDTO())) {
             try {
                 // send keyple dto

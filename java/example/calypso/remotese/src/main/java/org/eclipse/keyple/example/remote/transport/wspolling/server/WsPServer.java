@@ -36,8 +36,13 @@ public class WsPServer implements ServerNode {
 
     private static final Logger logger = LoggerFactory.getLogger(WsPServer.class);
 
+    private  PublishQueueManager publishQueueManager = new PublishQueueManager();
+    //private PublishQueue<KeypleDto> keypleDtoQueue = new PublishQueue<KeypleDto>();
+
+    /*
     private final BlockingQueue<HttpExchange> requestQueue =
             new LinkedBlockingQueue<HttpExchange>();
+    */
 
     /**
      * Constructor
@@ -57,10 +62,12 @@ public class WsPServer implements ServerNode {
         this.pollingUrl = pollingUrl;
 
         // Create Endpoint for polling DTO
-        pollingEndpoint = new EndpointPolling(requestQueue, nodeId);
+        //pollingEndpoint = new EndpointPolling(requestQueue, nodeId);
+        pollingEndpoint = new EndpointPolling(publishQueueManager, nodeId);
 
         // Create Endpoint for sending DTO
         keypleDTOEndpoint = new EndpointKeypleDTO((DtoSender) pollingEndpoint, nodeId);
+
 
 
         // deploy endpoint
@@ -111,31 +118,6 @@ public class WsPServer implements ServerNode {
 
     }
 
-    // todo enable this?
-
-    /**
-     * Free httpExchange after 15 seconds
-     * 
-     * @param queue private void setPollingWorker(final Queue<HttpExchange> queue) {
-     * 
-     *        Thread PollingWorker = new Thread() { public void run() {
-     * 
-     *        logger.debug("Starting Polling Worker"); try { while (true) {
-     * 
-     * 
-     *        // wait for 15000 Thread.sleep(15000); logger.trace("Clear all HttpExchange waiting in
-     *        queue");
-     * 
-     *        synchronized (queue) { // close all httpEchange while (!queue.isEmpty()) {
-     *        HttpExchange lastHttpExchange = queue.poll(); lastHttpExchange.close(); } } }
-     * 
-     *        } catch (Exception e) { e.printStackTrace(); logger.error("Error in polling worker
-     *        {}", e.getCause()); }
-     * 
-     *        } };
-     * 
-     *        PollingWorker.start(); }
-     */
 
     public HttpServer getHttpServer(){
         return server;
