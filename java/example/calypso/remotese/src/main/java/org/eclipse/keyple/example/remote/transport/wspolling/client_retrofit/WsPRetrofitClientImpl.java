@@ -54,14 +54,12 @@ public class WsPRetrofitClientImpl implements ClientNode {
      * @param nodeId : terminal node Id (ie : androidDevice1)
      */
     private void startPollingWorker(final String nodeId) {
-
-        logger.trace("Polling clientNodeId {}", nodeId);
         this.poll = true;
         poll(nodeId);
     }
 
     private void poll(final String nodeId) {
-
+        logger.debug("Polling from node {}", nodeId);
         final WsPRetrofitClientImpl thisClient = this;
         // if poll is activated
         if (this.poll) {
@@ -73,9 +71,14 @@ public class WsPRetrofitClientImpl implements ClientNode {
                         thisClient.connectCallback.onConnectSuccess();
                     }
                     int statusCode = response.code();
+
                     logger.trace("Polling for clientNodeId {} receive a httpResponse http code {}",
                             nodeId, statusCode);
-                    processHttpResponseDTO(response);
+                    if(statusCode == 200){
+                        processHttpResponseDTO(response);
+                    }else{
+                        //204 : no response
+                    }
                     poll(nodeId);// recursive call to restart polling
                 }
 

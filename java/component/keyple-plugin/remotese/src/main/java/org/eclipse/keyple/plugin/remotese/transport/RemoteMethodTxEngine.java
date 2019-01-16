@@ -16,7 +16,10 @@ import org.slf4j.LoggerFactory;
 
 
 /**
- * Executor of RemoteMethodTx It manages : - send Dto - manage Dto Responses
+ * Executor of RemoteMethodTx
+ * It manages :
+ * - send Dto
+ * - Parse Dto Responses
  */
 public class RemoteMethodTxEngine implements DtoHandler {
 

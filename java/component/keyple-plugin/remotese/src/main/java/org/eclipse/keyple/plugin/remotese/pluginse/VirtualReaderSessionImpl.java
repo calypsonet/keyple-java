@@ -32,6 +32,12 @@ public class VirtualReaderSessionImpl extends Observable<KeypleDto>
 
     // constructor
     public VirtualReaderSessionImpl(String sessionId, String slaveNodeId) {
+        if(sessionId ==null){
+            throw new IllegalArgumentException("SessionId must not be null");
+        }
+        if(slaveNodeId ==null){
+            throw new IllegalArgumentException("SlaveNodeId must not be null");
+        }
         this.sessionId = sessionId;
         this.slaveNodeId = slaveNodeId;
     }
@@ -48,4 +54,9 @@ public class VirtualReaderSessionImpl extends Observable<KeypleDto>
     }
 
 
+    @Override
+    public String toString() {
+        return "sessionId:"+ sessionId +
+                " - slaveNodeId:" + slaveNodeId;
+    }
 }

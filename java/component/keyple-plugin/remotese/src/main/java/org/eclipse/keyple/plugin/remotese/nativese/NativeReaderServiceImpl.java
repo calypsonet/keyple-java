@@ -201,7 +201,7 @@ public class NativeReaderServiceImpl
      */
     public ProxyReader findLocalReader(String nativeReaderName)
             throws KeypleReaderNotFoundException {
-        logger.debug("Find local reader by name {} in {} plugin(s)", nativeReaderName,
+        logger.trace("Find local reader by name {} in {} plugin(s)", nativeReaderName,
                 seProxyService.getPlugins().size());
         for (ReaderPlugin plugin : seProxyService.getPlugins()) {
             try {
