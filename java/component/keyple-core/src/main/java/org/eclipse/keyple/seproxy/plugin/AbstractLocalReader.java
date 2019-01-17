@@ -370,7 +370,7 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
                             request);
                     SeResponse response = null;
                     try {
-                        response = processSeRequest(request);
+                        response = processSeRequestLogical(request);
                     } catch (KeypleReaderException ex) {
                         /*
                          * The process has been interrupted. We launch a KeypleReaderException with
@@ -394,11 +394,6 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
                 }
                 requestIndex++;
                 if (!request.isKeepChannelOpen()) {
-                    /*
-                     * always explicitly close the logical channel to possibly process a multiple
-                     * selection with the same AID
-                     */
-                    closeLogicalChannel();
                     if (lastRequestIndex == requestIndex) {
                         /*
                          * For the processing of the last SeRequest with a protocolFlag matching the
@@ -450,6 +445,7 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
     /**
      * Executes a request made of one or more Apdus and receives their answers. The selection of the
      * application is handled.
+     * <p>The logical channel is closed if requested.
      *
      * @param seRequest the SeRequest
      * @return the SeResponse to the SeRequest
@@ -459,12 +455,33 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
             "PMD.StdCyclomaticComplexity", "PMD.NPathComplexity", "PMD.ExcessiveMethodLength"})
     protected final SeResponse processSeRequest(SeRequest seRequest)
             throws IllegalStateException, KeypleReaderException {
+
+        SeResponse seResponse = processSeRequestLogical(seRequest);
+
+        /* close the channel if requested */
+        if (!seRequest.isKeepChannelOpen()) {
+            closeLogicalChannel();
+        }
+
+        return seResponse;
+    }
+
+    /**
+     * Implements the logical processSeRequest.
+     * <p>This method is called by processSeRequestSet and processSeRequest
+     * @param seRequest
+     * @return seResponse
+     * @throws IllegalStateException
+     * @throws KeypleReaderException
+     */
+    private SeResponse processSeRequestLogical(SeRequest seRequest)
+            throws IllegalStateException, KeypleReaderException {
         boolean previouslyOpen = true;
         SelectionStatus selectionStatus = null;
 
         List<ApduResponse> apduResponseList = new ArrayList<ApduResponse>();
 
-        logger.trace("[{}] processSeRequest => Logical channel open = {}", isLogicalChannelOpen());
+        logger.trace("[{}] processSeRequest => Logical channel open = {}", this.getName(), isLogicalChannelOpen());
         /*
          * unless the selector is null, we try to open a logical channel; if the channel was open
          * and the PO is still matching we won't redo the selection and just use the current
@@ -564,11 +581,6 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
             }
         }
 
-        /* close the channel if requested */
-        if (!seRequest.isKeepChannelOpen()) {
-            closeLogicalChannel();
-        }
-
         return new SeResponse(previouslyOpen, selectionStatus, apduResponseList);
     }
 
@@ -578,6 +590,7 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
      */
     protected Map<SeProtocol, String> protocolsMap = new HashMap<SeProtocol, String>();
 
+    @Override
     public void addSeProtocolSetting(SeProtocolSetting seProtocolSetting) {
         this.protocolsMap.putAll(seProtocolSetting.getProtocolsMap());
     }
