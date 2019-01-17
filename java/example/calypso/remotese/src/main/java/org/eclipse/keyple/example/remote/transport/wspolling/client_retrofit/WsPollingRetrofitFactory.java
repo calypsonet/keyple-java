@@ -40,7 +40,7 @@ public class WsPollingRetrofitFactory extends TransportFactory {
 
     public WsPollingRetrofitFactory() {}
 
-    private WsPollingRetrofitFactory(Integer port, String clientNodeId, String hostname,
+    public WsPollingRetrofitFactory(Integer port, String clientNodeId, String hostname,
             String protocol) {
         this.port = port;
         this.clientNodeId = clientNodeId;

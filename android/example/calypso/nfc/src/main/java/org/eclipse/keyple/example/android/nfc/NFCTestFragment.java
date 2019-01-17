@@ -39,11 +39,11 @@ import org.eclipse.keyple.transaction.SelectionResponse;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.text.Spannable;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
@@ -98,7 +98,8 @@ public class NFCTestFragment extends Fragment implements ObservableReader.Reader
         // 2 - add NFC Fragment to activity in order to communicate with Android Plugin
         LOG.debug("Add Keyple NFC Fragment to activity in order to "
                 + "communicate with Android Plugin");
-        getFragmentManager().beginTransaction()
+        FragmentManager fm = getFragmentManager();
+        fm.beginTransaction()
                 .add(AndroidNfcFragment.newInstance(), TAG_NFC_ANDROID_FRAGMENT).commit();
 
         try {
