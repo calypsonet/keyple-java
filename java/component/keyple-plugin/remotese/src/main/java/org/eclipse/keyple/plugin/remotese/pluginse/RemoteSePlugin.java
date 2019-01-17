@@ -82,9 +82,6 @@ public final class RemoteSePlugin extends AbstractObservablePlugin {
         // create a new session for the new reader
         VirtualReaderSession session = sessionManager.createSession(nativeReaderName, clientNodeId);
 
-        // DtoSender sends Dto when the session requires to
-        ((VirtualReaderSessionImpl) session).addObserver(dtoSender);
-
         // check if reader is not already connected (by localReaderName)
         if (!isReaderConnected(nativeReaderName)) {
             logger.info("Create a new Virtual Reader with localReaderName {} with session {}",
@@ -129,8 +126,8 @@ public final class RemoteSePlugin extends AbstractObservablePlugin {
 
         logger.info("Disconnect VirtualReader with name {} with session {}", nativeReaderName);
 
-        // remove observers
-        ((VirtualReaderSessionImpl) virtualReader.getSession()).clearObservers();
+        // remove observers of reader
+        virtualReader.clearObservers();
 
         // remove reader
         readers.remove(virtualReader);

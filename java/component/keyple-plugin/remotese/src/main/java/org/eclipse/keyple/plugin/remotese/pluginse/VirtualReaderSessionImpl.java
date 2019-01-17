@@ -22,7 +22,7 @@ import java.util.concurrent.BlockingQueue;
 /**
  * Manage RSE Reader Session
  */
-public class VirtualReaderSessionImpl extends Observable<KeypleDto>
+public class VirtualReaderSessionImpl
         implements VirtualReaderSession {
 
     private static final Logger logger = LoggerFactory.getLogger(VirtualReaderSessionImpl.class);
