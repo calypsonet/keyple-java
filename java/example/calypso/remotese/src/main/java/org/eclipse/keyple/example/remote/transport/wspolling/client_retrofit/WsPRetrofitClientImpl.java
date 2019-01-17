@@ -59,7 +59,7 @@ public class WsPRetrofitClientImpl implements ClientNode {
     }
 
     private void poll(final String nodeId) {
-        logger.debug("Polling from node {}", nodeId);
+        logger.trace("Polling from node {}", nodeId);
         final WsPRetrofitClientImpl thisClient = this;
         // if poll is activated
         if (this.poll) {
@@ -147,7 +147,7 @@ public class WsPRetrofitClientImpl implements ClientNode {
     @Override
     public void sendDTO(TransportDto transportDto) {
         KeypleDto keypleDto = transportDto.getKeypleDTO();
-        logger.trace("Ws Client send DTO {}", KeypleDtoHelper.toJson(keypleDto));
+        logger.trace("SendDto  {}", KeypleDtoHelper.toJson(keypleDto));
 
         if (!KeypleDtoHelper.isNoResponse(transportDto.getKeypleDTO())) {
 
@@ -160,7 +160,7 @@ public class WsPRetrofitClientImpl implements ClientNode {
                 @Override
                 public void onResponse(Call<KeypleDto> call, Response<KeypleDto> response) {
                     int statusCode = response.code();
-                    logger.trace("Receive response from sendDto {} {}",nodeId, statusCode);
+                    logger.trace("SendDto response {} {} {}",nodeId, statusCode, response.body());
                     processHttpResponseDTO(response);
                 }
 
@@ -204,6 +204,7 @@ public class WsPRetrofitClientImpl implements ClientNode {
     @Override
     public void connect(ConnectCallback connectCallback) {
         this.connectCallback = connectCallback;
+        logger.trace("Start Polling Worker");
         this.startPollingWorker(nodeId);
     }
 
