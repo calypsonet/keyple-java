@@ -102,7 +102,7 @@ public class UseCase_Calypso5_MultipleSession_Pcsc {
             throw new IllegalStateException("Bad PO or SAM reader setup");
         }
 
-        logger.info("=============== UseCase Calypso #4: Po Authentication ==================");
+        logger.info("=============== UseCase Calypso #5: Po Authentication ==================");
         logger.info("= PO Reader  NAME = {}", poReader.getName());
         logger.info("= SAM Reader  NAME = {}", samReader.getName());
 
