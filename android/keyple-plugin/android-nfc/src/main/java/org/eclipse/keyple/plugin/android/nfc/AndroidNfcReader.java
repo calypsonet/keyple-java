@@ -32,6 +32,7 @@ import android.content.Intent;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.os.Bundle;
+import android.util.Log;
 
 
 /**
@@ -155,13 +156,13 @@ public final class AndroidNfcReader extends AbstractSelectionLocalReader
         LOG.info("Received Tag Discovered event");
         try {
             tagProxy = TagProxy.getTagProxy(tag);
+            openPhysicalChannel();//force open physical channel at each tag presentation
             cardInserted();
         } catch (KeypleReaderException e) {
             // print and do nothing
             e.printStackTrace();
             LOG.error(e.getLocalizedMessage());
         }
-
     }
 
     @Override
@@ -178,13 +179,12 @@ public final class AndroidNfcReader extends AbstractSelectionLocalReader
 
     @Override
     protected boolean isPhysicalChannelOpen() {
-
         return tagProxy != null && tagProxy.isConnected();
     }
 
+
     @Override
     protected void openPhysicalChannel() throws KeypleChannelStateException {
-
         if (!isSePresent()) {
             try {
                 tagProxy.connect();
@@ -220,12 +220,14 @@ public final class AndroidNfcReader extends AbstractSelectionLocalReader
     @Override
     protected byte[] transmitApdu(byte[] apduIn) throws KeypleIOReaderException {
         // Initialization
-        LOG.debug("Data Length to be sent to tag : " + apduIn.length);
-        LOG.debug("Data in : " + ByteArrayUtils.toHex(apduIn));
-        byte[] data = apduIn;
-        byte[] dataOut;
+        LOG.debug("Send "+apduIn.length+" bytes to tag : " + ByteArrayUtils.toHex(apduIn));
+        byte[] dataOut = new byte[]{};
         try {
-            dataOut = tagProxy.transceive(data);
+            if(tagProxy.isConnected()){
+                dataOut = tagProxy.transceive(apduIn);
+            }else{
+                LOG.warn("Tag proxy is not connected while calling transmitApdu, consider re-open physical channel");
+            }
         } catch (IOException e) {
             e.printStackTrace();
             throw new KeypleIOReaderException("Error while transmitting APDU", e);

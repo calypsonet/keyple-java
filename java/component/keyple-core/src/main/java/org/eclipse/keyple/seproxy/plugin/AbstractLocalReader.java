@@ -425,7 +425,7 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
 
         List<ApduResponse> apduResponseList = new ArrayList<ApduResponse>();
 
-        logger.trace("[{}] processSeRequest => Logical channel open = {}", isLogicalChannelOpen());
+        logger.trace("[{}] processSeRequest => Logical channel open = {}", this.getName(), isLogicalChannelOpen());
         /*
          * unless the selector is null, we try to open a logical channel; if the channel was open
          * and the PO is still matching we won't redo the selection and just use the current
