@@ -119,7 +119,7 @@ public final class StubReader extends AbstractThreadedLocalReader {
 
 
     @Override
-    public boolean isSePresent() {
+    protected boolean checkSePresence() {
         return se != null;
     }
 

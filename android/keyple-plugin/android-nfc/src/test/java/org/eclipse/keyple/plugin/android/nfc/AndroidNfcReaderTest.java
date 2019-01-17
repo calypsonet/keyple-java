@@ -344,7 +344,7 @@ public class AndroidNfcReaderTest {
     public void isConnected() {
         insertSe();
         when(tagProxy.isConnected()).thenReturn(true);
-        assertEquals(true, reader.isSePresent());
+        assertEquals(true, reader.checkSePresence());
     }
 
 
