@@ -14,10 +14,7 @@ package org.eclipse.keyple.seproxy.plugin;
 import java.util.*;
 import org.eclipse.keyple.seproxy.event.ObservableReader;
 import org.eclipse.keyple.seproxy.event.ReaderEvent;
-import org.eclipse.keyple.seproxy.exception.KeypleApplicationSelectionException;
-import org.eclipse.keyple.seproxy.exception.KeypleChannelStateException;
-import org.eclipse.keyple.seproxy.exception.KeypleIOReaderException;
-import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
+import org.eclipse.keyple.seproxy.exception.*;
 import org.eclipse.keyple.seproxy.message.*;
 import org.eclipse.keyple.seproxy.protocol.SeProtocol;
 import org.eclipse.keyple.seproxy.protocol.SeProtocolSetting;
@@ -66,11 +63,52 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
             throws KeypleApplicationSelectionException, KeypleReaderException;
 
     /**
+     * Wrapper for the native method of the plugin specific local reader to verify the presence of
+     * the SE
+     * 
+     * @return true if the SE is present
+     * @throws NoStackTraceThrowable
+     */
+    protected abstract boolean checkSePresence() throws NoStackTraceThrowable;
+
+    /**
+     * Check the presence of a SE
+     * <p>
+     * For non observable reader, refresh the logical and physical channel status
+     * 
+     * @return true if the SE is present
+     */
+    public final boolean isSePresent() throws NoStackTraceThrowable {
+        if (checkSePresence()) {
+            return true;
+        } else {
+            if (isLogicalChannelOpen() || isPhysicalChannelOpen()) {
+                cardRemoved();
+            }
+            return false;
+        }
+    }
+
+    /**
+     * Attempts to open the physical channel
+     *
+     * @throws KeypleChannelStateException if the channel opening fails
+     */
+    protected abstract void openPhysicalChannel() throws KeypleChannelStateException;
+
+    /**
      * Closes the current physical channel.
      *
      * @throws KeypleChannelStateException if a reader error occurs
      */
     protected abstract void closePhysicalChannel() throws KeypleChannelStateException;
+
+    /**
+     * Tells if the physical channel is open or not
+     *
+     * @return true is the channel is open
+     */
+    protected abstract boolean isPhysicalChannelOpen();
 
     /**
      * Transmits a single APDU and receives its response. The implementation of this abstract method
@@ -115,11 +153,19 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
      * <p>
      * The SE will be notified removed only if it has been previously notified present
      */
-    protected void cardRemoved() {
+    protected final void cardRemoved() throws NoStackTraceThrowable {
         if (presenceNotified) {
             notifyObservers(new ReaderEvent(this.pluginName, this.name,
                     ReaderEvent.EventType.SE_REMOVAL, null));
             presenceNotified = false;
+        }
+        closeLogicalChannel();
+        try {
+            closePhysicalChannel();
+        } catch (KeypleChannelStateException e) {
+            logger.trace("[{}] Exception occured in waitForCardAbsent. Message: {}", this.getName(),
+                    e.getMessage());
+            throw new NoStackTraceThrowable();
         }
     }
 
@@ -138,7 +184,7 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
      * It will do nothing if a default selection is defined in MATCHED_ONLY mode but no SE matched
      * the selection.
      */
-    protected void cardInserted() {
+    protected final void cardInserted() {
         if (defaultSelectionRequest == null) {
             /* no default request is defined, just notify the SE insertion */
             notifyObservers(new ReaderEvent(this.pluginName, this.name,
