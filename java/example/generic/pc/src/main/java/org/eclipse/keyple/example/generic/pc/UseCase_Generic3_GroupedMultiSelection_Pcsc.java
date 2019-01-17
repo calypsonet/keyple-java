@@ -25,7 +25,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * The UseCase_Generic3_GroupedMultiSelection_Pcsc class illustrates the use of the select next mechanism
+ * The UseCase_Generic3_GroupedMultiSelection_Pcsc class illustrates the use of the select next
+ * mechanism
  */
 public class UseCase_Generic3_GroupedMultiSelection_Pcsc {
     protected static final Logger logger =
@@ -66,7 +67,7 @@ public class UseCase_Generic3_GroupedMultiSelection_Pcsc {
             SeSelection seSelection = new SeSelection(seReader);
 
             /* operate SE selection (change the AID here to adapt it to the SE used for the test) */
-            String seAidPrefix = "304554502E494341";
+            String seAidPrefix = "A000000404012509";
 
             /* AID based selection */
             matchingSeTable[0] =

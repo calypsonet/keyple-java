@@ -11,6 +11,7 @@
  ********************************************************************************/
 package org.eclipse.keyple.example.generic.pc;
 
+import java.io.IOException;
 import org.eclipse.keyple.plugin.pcsc.PcscPlugin;
 import org.eclipse.keyple.seproxy.ChannelState;
 import org.eclipse.keyple.seproxy.SeProxyService;
@@ -25,10 +26,9 @@ import org.eclipse.keyple.util.ByteArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
-
 /**
- * The UseCase_Generic3_GroupedMultiSelection_Pcsc class illustrates the use of the select next mechanism
+ * The UseCase_Generic3_GroupedMultiSelection_Pcsc class illustrates the use of the select next
+ * mechanism
  */
 public class UseCase_Generic4_SequentialMultiSelection_Pcsc {
     protected static final Logger logger =
@@ -58,11 +58,11 @@ public class UseCase_Generic4_SequentialMultiSelection_Pcsc {
         }
 
         logger.info(
-                "=============== UseCase Generic #4: AID based sequential explicit multiple selection " +
-                        "==================");
+                "=============== UseCase Generic #4: AID based sequential explicit multiple selection "
+                        + "==================");
         logger.info("= SE Reader  NAME = {}", seReader.getName());
 
-        MatchingSe matchingSeTable[] = new MatchingSe[3];
+        MatchingSe matchingSe;
 
         /* Check if a SE is present in the reader */
         if (seReader.isSePresent()) {
@@ -73,48 +73,65 @@ public class UseCase_Generic4_SequentialMultiSelection_Pcsc {
             String seAidPrefix = "A000000404012509";
 
             /* AID based selection */
-            matchingSeTable[0] =
+            matchingSe =
                     seSelection.prepareSelection(new SeSelector(ByteArrayUtils.fromHex(seAidPrefix),
-                            SeSelector.SelectMode.FIRST, ChannelState.CLOSE_AFTER,
+                            SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN,
                             ContactlessProtocols.PROTOCOL_ISO14443_4, "Initial selection #1"));
+
+            if (seSelection.processExplicitSelection()) {
+                logger.info("The SE matched the selection 1.");
+
+                if (matchingSe.getSelectionSeResponse() != null) {
+                    logger.info("Selection status for case {}: \n\t\tATR: {}\n\t\tFCI: {}", 1,
+                            ByteArrayUtils.toHex(matchingSe.getSelectionSeResponse()
+                                    .getSelectionStatus().getAtr().getBytes()),
+                            ByteArrayUtils.toHex(matchingSe.getSelectionSeResponse()
+                                    .getSelectionStatus().getFci().getDataOut()));
+                }
+            } else {
+                logger.info("The selection 1 process did not return any selected SE.");
+            }
+
             /* next selection */
-            matchingSeTable[1] =
+            matchingSe =
                     seSelection.prepareSelection(new SeSelector(ByteArrayUtils.fromHex(seAidPrefix),
-                            SeSelector.SelectMode.NEXT, ChannelState.CLOSE_AFTER,
+                            SeSelector.SelectMode.NEXT, ChannelState.KEEP_OPEN,
                             ContactlessProtocols.PROTOCOL_ISO14443_4, "Next selection #2"));
+
+            if (seSelection.processExplicitSelection()) {
+                logger.info("The SE matched the selection 2.");
+
+                if (matchingSe.getSelectionSeResponse() != null) {
+                    logger.info("Selection status for case {}: \n\t\tATR: {}\n\t\tFCI: {}", 2,
+                            ByteArrayUtils.toHex(matchingSe.getSelectionSeResponse()
+                                    .getSelectionStatus().getAtr().getBytes()),
+                            ByteArrayUtils.toHex(matchingSe.getSelectionSeResponse()
+                                    .getSelectionStatus().getFci().getDataOut()));
+                }
+            } else {
+                logger.info("The selection 2 process did not return any selected SE.");
+            }
+
             /* next selection */
-            matchingSeTable[2] =
+            matchingSe =
                     seSelection.prepareSelection(new SeSelector(ByteArrayUtils.fromHex(seAidPrefix),
                             SeSelector.SelectMode.NEXT, ChannelState.CLOSE_AFTER,
                             ContactlessProtocols.PROTOCOL_ISO14443_4, "Next selection #3"));
-            /*
-             * Actual SE communication: operate through a single request the SE selection
-             */
+
             if (seSelection.processExplicitSelection()) {
+                logger.info("The SE matched the selection 3.");
 
-                int matchedSelection = 0;
-                /* Count the number of SE that matched the selection */
-                for (int i = 0; i < matchingSeTable.length; i++) {
-                    if (matchingSeTable[i].getSelectionSeResponse() != null) {
-                        matchedSelection++;
-                    }
-                }
-                logger.info("The SE matched {} time(s) the selection.", matchedSelection);
-
-                for (int i = 0; i < matchingSeTable.length; i++) {
-
-                    if (matchingSeTable[i].getSelectionSeResponse() != null) {
-                        logger.info("Selection status for case {}: \n\t\tATR: {}\n\t\tFCI: {}",
-                                i + 1,
-                                ByteArrayUtils.toHex(matchingSeTable[i].getSelectionSeResponse()
-                                        .getSelectionStatus().getAtr().getBytes()),
-                                ByteArrayUtils.toHex(matchingSeTable[i].getSelectionSeResponse()
-                                        .getSelectionStatus().getFci().getDataOut()));
-                    }
+                if (matchingSe.getSelectionSeResponse() != null) {
+                    logger.info("Selection status for case {}: \n\t\tATR: {}\n\t\tFCI: {}", 3,
+                            ByteArrayUtils.toHex(matchingSe.getSelectionSeResponse()
+                                    .getSelectionStatus().getAtr().getBytes()),
+                            ByteArrayUtils.toHex(matchingSe.getSelectionSeResponse()
+                                    .getSelectionStatus().getFci().getDataOut()));
                 }
             } else {
-                logger.info("The selection process did not return any selected SE.");
+                logger.info("The selection 3 process did not return any selected SE.");
             }
+
         } else {
             logger.error("No SE were detected.");
         }
