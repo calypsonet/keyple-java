@@ -173,7 +173,16 @@ public final class SeSelection {
         SeResponseSet seResponseSet =
                 proxyReader.transmitSet(new SeRequestSet(selectionRequestSet));
 
-        return processSelection(new SelectionResponse(seResponseSet));
+        boolean selectionStatus = processSelection(new SelectionResponse(seResponseSet));
+
+        /*
+         * clear the selection request set and the matching SE list to enable to restart an
+         * additional selection if needed
+         */
+        selectionRequestSet.clear();
+        matchingSeList.clear();
+
+        return selectionStatus;
     }
 
     /**

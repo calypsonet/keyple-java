@@ -445,7 +445,8 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
     /**
      * Executes a request made of one or more Apdus and receives their answers. The selection of the
      * application is handled.
-     * <p>The logical channel is closed if requested.
+     * <p>
+     * The physical channel is closed if requested.
      *
      * @param seRequest the SeRequest
      * @return the SeResponse to the SeRequest
@@ -458,9 +459,9 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
 
         SeResponse seResponse = processSeRequestLogical(seRequest);
 
-        /* close the channel if requested */
+        /* close the physical channel if CLOSE_AFTER is requested */
         if (!seRequest.isKeepChannelOpen()) {
-            closeLogicalChannel();
+            closePhysicalChannel();
         }
 
         return seResponse;
@@ -468,7 +469,13 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
 
     /**
      * Implements the logical processSeRequest.
-     * <p>This method is called by processSeRequestSet and processSeRequest
+     * <p>
+     * This method is called by processSeRequestSet and processSeRequest
+     * <p>
+     * It opens both physical and logical channels if needed.
+     * <p>
+     * The logical channel is closed in the case where CLOSE_AFTER is requested
+     * 
      * @param seRequest
      * @return seResponse
      * @throws IllegalStateException
@@ -481,7 +488,8 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
 
         List<ApduResponse> apduResponseList = new ArrayList<ApduResponse>();
 
-        logger.trace("[{}] processSeRequest => Logical channel open = {}", this.getName(), isLogicalChannelOpen());
+        logger.trace("[{}] processSeRequest => Logical channel open = {}", this.getName(),
+                isLogicalChannelOpen());
         /*
          * unless the selector is null, we try to open a logical channel; if the channel was open
          * and the PO is still matching we won't redo the selection and just use the current
@@ -503,7 +511,16 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
                 if (aidCurrentlySelected == null) {
                     throw new IllegalStateException("AID currently selected shouldn't be null.");
                 }
-                if (((SeRequest.AidSelector) seRequest.getSelector())
+                if (((SeRequest.AidSelector) seRequest.getSelector()).isSelectNext()) {
+                    if (logger.isTraceEnabled()) {
+                        logger.trace(
+                                "[{}] processSeRequest => The current selection is a next selection, close the "
+                                        + "logical channel.",
+                                this.getName());
+                    }
+                    /* close the channel (will reset the current selection status) */
+                    closeLogicalChannel();
+                } else if (((SeRequest.AidSelector) seRequest.getSelector())
                         .getAidToSelect().length >= aidCurrentlySelected.length
                         && aidCurrentlySelected.equals(Arrays.copyOfRange(
                                 ((SeRequest.AidSelector) seRequest.getSelector()).getAidToSelect(),
@@ -579,6 +596,11 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
                     throw ex;
                 }
             }
+        }
+
+        /* close the logical channel if requested */
+        if (!seRequest.isKeepChannelOpen()) {
+            closeLogicalChannel();
         }
 
         return new SeResponse(previouslyOpen, selectionStatus, apduResponseList);
