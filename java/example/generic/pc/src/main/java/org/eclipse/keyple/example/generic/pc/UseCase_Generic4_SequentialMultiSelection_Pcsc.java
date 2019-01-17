@@ -11,7 +11,6 @@
  ********************************************************************************/
 package org.eclipse.keyple.example.generic.pc;
 
-import java.io.IOException;
 import org.eclipse.keyple.plugin.pcsc.PcscPlugin;
 import org.eclipse.keyple.seproxy.ChannelState;
 import org.eclipse.keyple.seproxy.SeProxyService;
@@ -19,15 +18,19 @@ import org.eclipse.keyple.seproxy.SeReader;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 import org.eclipse.keyple.seproxy.exception.NoStackTraceThrowable;
 import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
-import org.eclipse.keyple.transaction.*;
+import org.eclipse.keyple.transaction.MatchingSe;
+import org.eclipse.keyple.transaction.SeSelection;
+import org.eclipse.keyple.transaction.SeSelector;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
+
 /**
- * The UseCase_Generic3_MultiSelection_Pcsc class illustrates the use of the select next mechanism
+ * The UseCase_Generic3_GroupedMultiSelection_Pcsc class illustrates the use of the select next mechanism
  */
-public class UseCase_Generic3_MultiSelection_Pcsc {
+public class UseCase_Generic4_SequentialMultiSelection_Pcsc {
     protected static final Logger logger =
             LoggerFactory.getLogger(UseCase_Generic1_ExplicitSelectionAid_Pcsc.class);
 
@@ -55,7 +58,8 @@ public class UseCase_Generic3_MultiSelection_Pcsc {
         }
 
         logger.info(
-                "=============== UseCase Generic #3: AID based explicit selection ==================");
+                "=============== UseCase Generic #4: AID based sequential explicit multiple selection " +
+                        "==================");
         logger.info("= SE Reader  NAME = {}", seReader.getName());
 
         MatchingSe matchingSeTable[] = new MatchingSe[3];
