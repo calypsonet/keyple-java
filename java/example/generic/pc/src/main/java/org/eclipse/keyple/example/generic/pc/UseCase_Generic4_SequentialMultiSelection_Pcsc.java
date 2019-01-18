@@ -17,6 +17,7 @@ import org.eclipse.keyple.seproxy.ChannelState;
 import org.eclipse.keyple.seproxy.SeProxyService;
 import org.eclipse.keyple.seproxy.SeReader;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
+import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.exception.NoStackTraceThrowable;
 import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
 import org.eclipse.keyple.transaction.MatchingSe;
@@ -33,6 +34,22 @@ import org.slf4j.LoggerFactory;
 public class UseCase_Generic4_SequentialMultiSelection_Pcsc {
     protected static final Logger logger =
             LoggerFactory.getLogger(UseCase_Generic1_ExplicitSelectionAid_Pcsc.class);
+
+    private static void doAndAnalyseSelection(SeSelection seSelection, MatchingSe matchingSe, int index) throws KeypleReaderException {
+        if (seSelection.processExplicitSelection()) {
+            logger.info("The SE matched the selection {}.", index);
+
+            if (matchingSe.getSelectionSeResponse() != null) {
+                logger.info("Selection status for case {}: \n\t\tATR: {}\n\t\tFCI: {}", index,
+                        ByteArrayUtils.toHex(matchingSe.getSelectionSeResponse()
+                                .getSelectionStatus().getAtr().getBytes()),
+                        ByteArrayUtils.toHex(matchingSe.getSelectionSeResponse()
+                                .getSelectionStatus().getFci().getDataOut()));
+            }
+        } else {
+            logger.info("The selection 2 process did not return any selected SE.");
+        }
+    }
 
     public static void main(String[] args)
             throws KeypleBaseException, InterruptedException, IOException, NoStackTraceThrowable {
@@ -78,19 +95,7 @@ public class UseCase_Generic4_SequentialMultiSelection_Pcsc {
                             SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN,
                             ContactlessProtocols.PROTOCOL_ISO14443_4, "Initial selection #1"));
 
-            if (seSelection.processExplicitSelection()) {
-                logger.info("The SE matched the selection 1.");
-
-                if (matchingSe.getSelectionSeResponse() != null) {
-                    logger.info("Selection status for case {}: \n\t\tATR: {}\n\t\tFCI: {}", 1,
-                            ByteArrayUtils.toHex(matchingSe.getSelectionSeResponse()
-                                    .getSelectionStatus().getAtr().getBytes()),
-                            ByteArrayUtils.toHex(matchingSe.getSelectionSeResponse()
-                                    .getSelectionStatus().getFci().getDataOut()));
-                }
-            } else {
-                logger.info("The selection 1 process did not return any selected SE.");
-            }
+            doAndAnalyseSelection(seSelection, matchingSe, 1);
 
             /* next selection */
             matchingSe =
@@ -98,19 +103,7 @@ public class UseCase_Generic4_SequentialMultiSelection_Pcsc {
                             SeSelector.SelectMode.NEXT, ChannelState.KEEP_OPEN,
                             ContactlessProtocols.PROTOCOL_ISO14443_4, "Next selection #2"));
 
-            if (seSelection.processExplicitSelection()) {
-                logger.info("The SE matched the selection 2.");
-
-                if (matchingSe.getSelectionSeResponse() != null) {
-                    logger.info("Selection status for case {}: \n\t\tATR: {}\n\t\tFCI: {}", 2,
-                            ByteArrayUtils.toHex(matchingSe.getSelectionSeResponse()
-                                    .getSelectionStatus().getAtr().getBytes()),
-                            ByteArrayUtils.toHex(matchingSe.getSelectionSeResponse()
-                                    .getSelectionStatus().getFci().getDataOut()));
-                }
-            } else {
-                logger.info("The selection 2 process did not return any selected SE.");
-            }
+            doAndAnalyseSelection(seSelection, matchingSe, 2);
 
             /* next selection */
             matchingSe =
@@ -118,19 +111,7 @@ public class UseCase_Generic4_SequentialMultiSelection_Pcsc {
                             SeSelector.SelectMode.NEXT, ChannelState.CLOSE_AFTER,
                             ContactlessProtocols.PROTOCOL_ISO14443_4, "Next selection #3"));
 
-            if (seSelection.processExplicitSelection()) {
-                logger.info("The SE matched the selection 3.");
-
-                if (matchingSe.getSelectionSeResponse() != null) {
-                    logger.info("Selection status for case {}: \n\t\tATR: {}\n\t\tFCI: {}", 3,
-                            ByteArrayUtils.toHex(matchingSe.getSelectionSeResponse()
-                                    .getSelectionStatus().getAtr().getBytes()),
-                            ByteArrayUtils.toHex(matchingSe.getSelectionSeResponse()
-                                    .getSelectionStatus().getFci().getDataOut()));
-                }
-            } else {
-                logger.info("The selection 3 process did not return any selected SE.");
-            }
+            doAndAnalyseSelection(seSelection, matchingSe, 3);
 
         } else {
             logger.error("No SE were detected.");
