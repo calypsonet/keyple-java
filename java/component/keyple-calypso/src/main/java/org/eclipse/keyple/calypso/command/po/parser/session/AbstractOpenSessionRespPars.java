@@ -78,6 +78,7 @@ public abstract class AbstractOpenSessionRespPars extends AbstractApduResponsePa
             case REV2_4:
                 return new OpenSession24RespPars(response);
             case REV3_1:
+            case REV3_1_CLAP:
                 return new OpenSession31RespPars(response);
             case REV3_2:
                 return new OpenSession32RespPars(response);

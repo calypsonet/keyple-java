@@ -33,6 +33,11 @@ public enum PoRevision {
     REV3_1,
 
     /**
+     * Calypso Revision 3.1 CLAP (CLA 0x00, application type 0x90)
+     */
+    REV3_1_CLAP,
+
+    /**
      * Calypso Revision 3.2 (CLA 0x00)
      */
     REV3_2
