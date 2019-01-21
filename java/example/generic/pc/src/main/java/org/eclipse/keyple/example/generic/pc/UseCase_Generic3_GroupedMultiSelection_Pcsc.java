@@ -64,6 +64,7 @@ public class UseCase_Generic3_GroupedMultiSelection_Pcsc {
         /* Check if a SE is present in the reader */
         if (seReader.isSePresent()) {
 
+            /* CLOSE_AFTER pour assurer la sélection de toutes les applications */
             SeSelection seSelection = new SeSelection(seReader);
 
             /* operate SE selection (change the AID here to adapt it to the SE used for the test) */
