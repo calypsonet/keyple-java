@@ -22,6 +22,7 @@ import org.eclipse.keyple.seproxy.exception.KeypleIOReaderException;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.plugin.AbstractSelectionLocalReader;
 import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
+import org.eclipse.keyple.seproxy.protocol.Protocol;
 import org.eclipse.keyple.seproxy.protocol.SeProtocol;
 import org.eclipse.keyple.seproxy.protocol.TransmissionMode;
 import org.eclipse.keyple.util.ByteArrayUtils;
@@ -156,8 +157,12 @@ public final class AndroidNfcReader extends AbstractSelectionLocalReader
         LOG.info("Received Tag Discovered event");
         try {
             tagProxy = TagProxy.getTagProxy(tag);
+            LOG.info("Open physical Channel");
             openPhysicalChannel();//force open physical channel at each tag presentation
+
             cardInserted();
+            //LOG.info("Close logical  channel");
+            //closePhysicalChannel();
         } catch (KeypleReaderException e) {
             // print and do nothing
             e.printStackTrace();
@@ -187,7 +192,10 @@ public final class AndroidNfcReader extends AbstractSelectionLocalReader
     protected void openPhysicalChannel() throws KeypleChannelStateException {
         if (!isSePresent()) {
             try {
-                tagProxy.connect();
+                LOG.debug("Close Logical Channel");
+                closeLogicalChannel();
+                LOG.debug("Connect to tag..");
+            tagProxy.connect();
                 LOG.info("Tag connected successfully : " + printTagId());
 
             } catch (IOException e) {
@@ -239,7 +247,7 @@ public final class AndroidNfcReader extends AbstractSelectionLocalReader
 
     @Override
     protected boolean protocolFlagMatches(SeProtocol protocolFlag) {
-        return protocolsMap.containsKey(protocolFlag)
+        return protocolFlag.equals(Protocol.ANY) || protocolsMap.containsKey(protocolFlag)
                 && protocolsMap.get(protocolFlag).equals(tagProxy.getTech());
     }
 
