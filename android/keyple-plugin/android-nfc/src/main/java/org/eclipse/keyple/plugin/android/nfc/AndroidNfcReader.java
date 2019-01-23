@@ -157,12 +157,9 @@ public final class AndroidNfcReader extends AbstractSelectionLocalReader
         LOG.info("Received Tag Discovered event");
         try {
             tagProxy = TagProxy.getTagProxy(tag);
-            LOG.info("Open physical Channel");
+            LOG.info("Open physical Channel..");
             openPhysicalChannel();//force open physical channel at each tag presentation
-
             cardInserted();
-            //LOG.info("Close logical  channel");
-            //closePhysicalChannel();
         } catch (KeypleReaderException e) {
             // print and do nothing
             e.printStackTrace();
@@ -192,10 +189,10 @@ public final class AndroidNfcReader extends AbstractSelectionLocalReader
     protected void openPhysicalChannel() throws KeypleChannelStateException {
         if (!isSePresent()) {
             try {
-                LOG.debug("Close Logical Channel");
+                LOG.debug("Close Logical Channel..");
                 closeLogicalChannel();
                 LOG.debug("Connect to tag..");
-            tagProxy.connect();
+                tagProxy.connect();
                 LOG.info("Tag connected successfully : " + printTagId());
 
             } catch (IOException e) {
@@ -229,9 +226,9 @@ public final class AndroidNfcReader extends AbstractSelectionLocalReader
     protected byte[] transmitApdu(byte[] apduIn) throws KeypleIOReaderException {
         // Initialization
         LOG.debug("Send "+apduIn.length+" bytes to tag : " + ByteArrayUtils.toHex(apduIn));
-        byte[] dataOut = new byte[]{};
+        byte[] dataOut = null;
         try {
-            dataOut = tagProxy.transceive(data);
+            dataOut = tagProxy.transceive(apduIn);
             if(dataOut==null || dataOut.length <2){
                 throw new KeypleIOReaderException("Error while transmitting APDU, invalid out data buffer", e);
             }
