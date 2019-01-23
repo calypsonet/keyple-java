@@ -43,19 +43,16 @@ public class RmTransmitTx extends RemoteMethodTx<SeResponseSet> {
 
     @Override
     public SeResponseSet parseResponse(KeypleDto keypleDto) throws KeypleRemoteException {
-
         logger.trace("KeypleDto : {}", keypleDto);
         if (KeypleDtoHelper.containsException(keypleDto)) {
             logger.trace("KeypleDto contains an exception: {}", keypleDto);
             KeypleReaderException ex =
                     JsonParser.getGson().fromJson(keypleDto.getBody(), KeypleReaderException.class);
             throw new KeypleRemoteException(
-                    "An exception occurs while calling the remote method transmitSet", ex);
+                    "An exception occured while calling the remote method transmitSet", ex);
         } else {
             logger.trace("KeypleDto contains a response: {}", keypleDto);
             return JsonParser.getGson().fromJson(keypleDto.getBody(), SeResponseSet.class);
         }
     }
-
-
 }

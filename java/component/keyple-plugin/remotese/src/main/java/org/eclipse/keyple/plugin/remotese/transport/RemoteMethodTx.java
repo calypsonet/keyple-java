@@ -104,8 +104,9 @@ public abstract class RemoteMethodTx<T> {
             lock = new CountDownLatch(1);
             asyncGet.start();
             lock.await();
-            logger.debug("tread unlock in RemoteMethodTx");
+            logger.trace("tread unlock in RemoteMethodTx");
             if (this.remoteException != null) {
+                logger.debug("RemoteMethodTx contains an exception, throw it {}", remoteException);
                 throw remoteException;
             } else {
                 return response;

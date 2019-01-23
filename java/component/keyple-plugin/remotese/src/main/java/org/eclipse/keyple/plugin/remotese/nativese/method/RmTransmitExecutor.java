@@ -58,6 +58,7 @@ public class RmTransmitExecutor implements RemoteMethodExecutor {
                             keypleDto.getVirtualReaderName(), keypleDto.getNodeId()));
 
         } catch (KeypleReaderException e) {
+            logger.trace("A KeypleReaderException was thrown with partial seRequestSet : {}", e.getSeResponseSet()==null? "null": e.getSeResponseSet());
             // if an exception occurs, send it into a keypleDto to the Master
             out = transportDto.nextTransportDTO(KeypleDtoHelper.ExceptionDTO(
                     RemoteMethod.READER_TRANSMIT.getName(), e, keypleDto.getSessionId(),
