@@ -226,6 +226,9 @@ public final class AndroidNfcReader extends AbstractSelectionLocalReader
         byte[] dataOut;
         try {
             dataOut = tagProxy.transceive(data);
+            if(dataOut==null || dataOut.length <2){
+                throw new KeypleIOReaderException("Error while transmitting APDU, invalid out data buffer", e);
+            }
         } catch (IOException e) {
             e.printStackTrace();
             throw new KeypleIOReaderException("Error while transmitting APDU", e);
