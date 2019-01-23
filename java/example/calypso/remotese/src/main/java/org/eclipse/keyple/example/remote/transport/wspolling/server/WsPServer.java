@@ -37,7 +37,7 @@ public class WsPServer implements ServerNode {
     private static final Logger logger = LoggerFactory.getLogger(WsPServer.class);
 
     private  PublishQueueManager publishQueueManager = new PublishQueueManager();
-    //private PublishQueue<KeypleDto> keypleDtoQueue = new PublishQueue<KeypleDto>();
+    //private KeypleDtoPublishQueue<KeypleDto> keypleDtoQueue = new KeypleDtoPublishQueue<KeypleDto>();
 
     /*
     private final BlockingQueue<HttpExchange> requestQueue =

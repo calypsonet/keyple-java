@@ -59,7 +59,7 @@ public class WsPollingRetrofitFactory extends TransportFactory {
         if (serverProp.containsKey("server.protocol")) {
             this.protocol = serverProp.getProperty("server.protocol") + "://";
         }
-
+        logger.info("Creating factory with parameter {} {} {}", protocol, hostname, port);
         this.clientNodeId = clientNodeId;
     }
 

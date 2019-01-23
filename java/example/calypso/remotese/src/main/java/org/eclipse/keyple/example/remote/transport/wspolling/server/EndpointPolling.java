@@ -33,7 +33,7 @@ class EndpointPolling implements HttpHandler, TransportNode {
 
     private DtoHandler dtoHandler;
     private final String nodeId;
-    //private final PublishQueue<KeypleDto> keypleDtoQueue;
+    //private final KeypleDtoPublishQueue<KeypleDto> keypleDtoQueue;
     private final PublishQueueManager publishQueueManager;
 
     public EndpointPolling(PublishQueueManager publishQueueManager, String nodeId) {
@@ -60,7 +60,7 @@ class EndpointPolling implements HttpHandler, TransportNode {
             logger.trace("Receive a polling request for KeypleDto {} from clientNodeId {} ",
                     t.toString(), nodeId);
 
-            PublishQueue<KeypleDto> keypleDtoQueue;
+            KeypleDtoPublishQueue<KeypleDto> keypleDtoQueue;
             try {
                 if(!publishQueueManager.exists(nodeId)){
                     keypleDtoQueue = publishQueueManager.create(nodeId);
@@ -109,7 +109,7 @@ class EndpointPolling implements HttpHandler, TransportNode {
         logger.debug("Using polling to send keypleDTO this action : {}", message.getAction());
         logger.trace("Using polling to send keypleDTO : {}", message);
 
-        PublishQueue keypleDtoQueue = publishQueueManager.get(message.getNodeId());
+        KeypleDtoPublishQueue keypleDtoQueue = publishQueueManager.get(message.getNodeId());
         if(keypleDtoQueue==null){
             throw  new IllegalStateException("Keyple Dto Queue is null, what to do?");
         }

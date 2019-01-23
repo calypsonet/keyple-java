@@ -6,32 +6,31 @@ import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 public class PublishQueueManager {
 
     private final Logger logger = LoggerFactory.getLogger(PublishQueueManager.class);
 
 
-    final Map<String, PublishQueue<KeypleDto>> queues;
+    final Map<String, KeypleDtoPublishQueue<KeypleDto>> queues;
 
     public PublishQueueManager(){
 
         logger.info("Initialize PublishQueueManager");
-        queues = new HashMap<String, PublishQueue<KeypleDto>>();
+        queues = new HashMap<String, KeypleDtoPublishQueue<KeypleDto>>();
     }
 
-    public PublishQueue create(String webClientId){
-        logger.debug("Create a PublishQueue for webClientId {}", webClientId);
+    public KeypleDtoPublishQueue create(String webClientId){
+        logger.debug("Create a KeypleDtoPublishQueue for webClientId {}", webClientId);
         if(webClientId==null){
             throw  new IllegalArgumentException("webClientId must not be null");
         }
-        PublishQueue<KeypleDto> queue = new PublishQueue<KeypleDto>(webClientId);
+        KeypleDtoPublishQueue<KeypleDto> queue = new KeypleDtoPublishQueue<KeypleDto>(webClientId);
         queues.put(webClientId, queue);
         return queues.get(webClientId);
     }
 
-    public PublishQueue get(String webClientId){
+    public KeypleDtoPublishQueue get(String webClientId){
         if(webClientId==null){
             throw  new IllegalArgumentException("webClientId must not be null");
         }
