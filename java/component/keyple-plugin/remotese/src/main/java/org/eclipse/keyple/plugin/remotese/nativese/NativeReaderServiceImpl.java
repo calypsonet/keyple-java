@@ -179,7 +179,7 @@ public class NativeReaderServiceImpl
             rmTxEngine.register(disconnect);
             Boolean status =  disconnect.get();
             ProxyReader nativeReader = findLocalReader(nativeReaderName);
-            if(nativeReader instanceof AbstractObservableReader){
+            if(nativeReader instanceof AbstractObservableReader && ((AbstractObservableReader) nativeReader).countObservers() >0 ){
                 // stop propagating the local reader events
                 ((AbstractObservableReader) nativeReader).removeObserver(this);
             }
