@@ -164,9 +164,16 @@ public final class AndroidNfcReader extends AbstractSelectionLocalReader
 
     }
 
+    /**
+     *
+     * @return true if a SE is present
+     */
     @Override
-    public boolean isSePresent() {
+    protected boolean checkSePresence() {
         return tagProxy != null && tagProxy.isConnected();
+        // TODO: the right implementation is:
+        // return tagProxy != null;
+        // To be updated when the onTagRemoved will be available
     }
 
     @Override
@@ -184,8 +191,7 @@ public final class AndroidNfcReader extends AbstractSelectionLocalReader
 
     @Override
     protected void openPhysicalChannel() throws KeypleChannelStateException {
-
-        if (!isSePresent()) {
+        if (!checkSePresence()) {
             try {
                 tagProxy.connect();
                 LOG.info("Tag connected successfully : " + printTagId());

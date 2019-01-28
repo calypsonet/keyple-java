@@ -14,10 +14,7 @@ package org.eclipse.keyple.seproxy.plugin;
 import java.util.*;
 import org.eclipse.keyple.seproxy.event.ObservableReader;
 import org.eclipse.keyple.seproxy.event.ReaderEvent;
-import org.eclipse.keyple.seproxy.exception.KeypleApplicationSelectionException;
-import org.eclipse.keyple.seproxy.exception.KeypleChannelStateException;
-import org.eclipse.keyple.seproxy.exception.KeypleIOReaderException;
-import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
+import org.eclipse.keyple.seproxy.exception.*;
 import org.eclipse.keyple.seproxy.message.*;
 import org.eclipse.keyple.seproxy.protocol.SeProtocol;
 import org.eclipse.keyple.seproxy.protocol.SeProtocolSetting;
@@ -66,11 +63,52 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
             throws KeypleApplicationSelectionException, KeypleReaderException;
 
     /**
+     * Wrapper for the native method of the plugin specific local reader to verify the presence of
+     * the SE
+     * 
+     * @return true if the SE is present
+     * @throws NoStackTraceThrowable
+     */
+    protected abstract boolean checkSePresence() throws NoStackTraceThrowable;
+
+    /**
+     * Check the presence of a SE
+     * <p>
+     * For non observable reader, refresh the logical and physical channel status
+     * 
+     * @return true if the SE is present
+     */
+    public final boolean isSePresent() throws NoStackTraceThrowable {
+        if (checkSePresence()) {
+            return true;
+        } else {
+            if (isLogicalChannelOpen() || isPhysicalChannelOpen()) {
+                cardRemoved();
+            }
+            return false;
+        }
+    }
+
+    /**
+     * Attempts to open the physical channel
+     *
+     * @throws KeypleChannelStateException if the channel opening fails
+     */
+    protected abstract void openPhysicalChannel() throws KeypleChannelStateException;
+
+    /**
      * Closes the current physical channel.
      *
      * @throws KeypleChannelStateException if a reader error occurs
      */
     protected abstract void closePhysicalChannel() throws KeypleChannelStateException;
+
+    /**
+     * Tells if the physical channel is open or not
+     *
+     * @return true is the channel is open
+     */
+    protected abstract boolean isPhysicalChannelOpen();
 
     /**
      * Transmits a single APDU and receives its response. The implementation of this abstract method
@@ -115,11 +153,19 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
      * <p>
      * The SE will be notified removed only if it has been previously notified present
      */
-    protected void cardRemoved() {
+    protected final void cardRemoved() throws NoStackTraceThrowable {
         if (presenceNotified) {
             notifyObservers(new ReaderEvent(this.pluginName, this.name,
                     ReaderEvent.EventType.SE_REMOVAL, null));
             presenceNotified = false;
+        }
+        closeLogicalChannel();
+        try {
+            closePhysicalChannel();
+        } catch (KeypleChannelStateException e) {
+            logger.trace("[{}] Exception occured in waitForCardAbsent. Message: {}", this.getName(),
+                    e.getMessage());
+            throw new NoStackTraceThrowable();
         }
     }
 
@@ -138,7 +184,7 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
      * It will do nothing if a default selection is defined in MATCHED_ONLY mode but no SE matched
      * the selection.
      */
-    protected void cardInserted() {
+    protected final void cardInserted() {
         if (defaultSelectionRequest == null) {
             /* no default request is defined, just notify the SE insertion */
             notifyObservers(new ReaderEvent(this.pluginName, this.name,
@@ -172,10 +218,20 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
                         closeLogicalChannel();
                     }
                 } else {
-                    /* notify an SE_INSERTED event with the received response */
-                    notifyObservers(new ReaderEvent(this.pluginName, this.name,
-                            ReaderEvent.EventType.SE_INSERTED,
-                            new SelectionResponse(seResponseSet)));
+                    if (aSeMatched) {
+                        /* The SE matched, notify an SE_MATCHED event with the received response */
+                        notifyObservers(new ReaderEvent(this.pluginName, this.name,
+                                ReaderEvent.EventType.SE_MATCHED,
+                                new SelectionResponse(seResponseSet)));
+                    } else {
+                        /*
+                         * The SE didn't match, notify an SE_INSERTED event with the received
+                         * response
+                         */
+                        notifyObservers(new ReaderEvent(this.pluginName, this.name,
+                                ReaderEvent.EventType.SE_INSERTED,
+                                new SelectionResponse(seResponseSet)));
+                    }
                     presenceNotified = true;
                 }
             } catch (KeypleReaderException e) {
@@ -324,7 +380,7 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
                             request);
                     SeResponse response = null;
                     try {
-                        response = processSeRequest(request);
+                        response = processSeRequestLogical(request);
                     } catch (KeypleReaderException ex) {
                         /*
                          * The process has been interrupted. We launch a KeypleReaderException with
@@ -348,11 +404,6 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
                 }
                 requestIndex++;
                 if (!request.isKeepChannelOpen()) {
-                    /*
-                     * always explicitly close the logical channel to possibly process a multiple
-                     * selection with the same AID
-                     */
-                    closeLogicalChannel();
                     if (lastRequestIndex == requestIndex) {
                         /*
                          * For the processing of the last SeRequest with a protocolFlag matching the
@@ -404,6 +455,8 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
     /**
      * Executes a request made of one or more Apdus and receives their answers. The selection of the
      * application is handled.
+     * <p>
+     * The physical channel is closed if requested.
      *
      * @param seRequest the SeRequest
      * @return the SeResponse to the SeRequest
@@ -413,12 +466,40 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
             "PMD.StdCyclomaticComplexity", "PMD.NPathComplexity", "PMD.ExcessiveMethodLength"})
     protected final SeResponse processSeRequest(SeRequest seRequest)
             throws IllegalStateException, KeypleReaderException {
+
+        SeResponse seResponse = processSeRequestLogical(seRequest);
+
+        /* close the physical channel if CLOSE_AFTER is requested */
+        if (!seRequest.isKeepChannelOpen()) {
+            closePhysicalChannel();
+        }
+
+        return seResponse;
+    }
+
+    /**
+     * Implements the logical processSeRequest.
+     * <p>
+     * This method is called by processSeRequestSet and processSeRequest
+     * <p>
+     * It opens both physical and logical channels if needed.
+     * <p>
+     * The logical channel is closed in the case where CLOSE_AFTER is requested
+     * 
+     * @param seRequest
+     * @return seResponse
+     * @throws IllegalStateException
+     * @throws KeypleReaderException
+     */
+    private SeResponse processSeRequestLogical(SeRequest seRequest)
+            throws IllegalStateException, KeypleReaderException {
         boolean previouslyOpen = true;
         SelectionStatus selectionStatus = null;
 
         List<ApduResponse> apduResponseList = new ArrayList<ApduResponse>();
 
-        logger.trace("[{}] processSeRequest => Logical channel open = {}", isLogicalChannelOpen());
+        logger.trace("[{}] processSeRequest => Logical channel open = {}", this.getName(),
+                isLogicalChannelOpen());
         /*
          * unless the selector is null, we try to open a logical channel; if the channel was open
          * and the PO is still matching we won't redo the selection and just use the current
@@ -440,7 +521,16 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
                 if (aidCurrentlySelected == null) {
                     throw new IllegalStateException("AID currently selected shouldn't be null.");
                 }
-                if (((SeRequest.AidSelector) seRequest.getSelector())
+                if (((SeRequest.AidSelector) seRequest.getSelector()).isSelectNext()) {
+                    if (logger.isTraceEnabled()) {
+                        logger.trace(
+                                "[{}] processSeRequest => The current selection is a next selection, close the "
+                                        + "logical channel.",
+                                this.getName());
+                    }
+                    /* close the channel (will reset the current selection status) */
+                    closeLogicalChannel();
+                } else if (((SeRequest.AidSelector) seRequest.getSelector())
                         .getAidToSelect().length >= aidCurrentlySelected.length
                         && aidCurrentlySelected.equals(Arrays.copyOfRange(
                                 ((SeRequest.AidSelector) seRequest.getSelector()).getAidToSelect(),
@@ -518,7 +608,7 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
             }
         }
 
-        /* close the channel if requested */
+        /* close the logical channel if requested */
         if (!seRequest.isKeepChannelOpen()) {
             closeLogicalChannel();
         }
@@ -532,6 +622,7 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
      */
     protected Map<SeProtocol, String> protocolsMap = new HashMap<SeProtocol, String>();
 
+    @Override
     public void addSeProtocolSetting(SeProtocolSetting seProtocolSetting) {
         this.protocolsMap.putAll(seProtocolSetting.getProtocolsMap());
     }

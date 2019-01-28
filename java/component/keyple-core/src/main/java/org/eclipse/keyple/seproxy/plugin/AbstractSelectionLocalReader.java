@@ -45,20 +45,6 @@ public abstract class AbstractSelectionLocalReader extends AbstractLocalReader
     protected abstract byte[] getATR();
 
     /**
-     * Tells if the physical channel is open or not
-     *
-     * @return true is the channel is open
-     */
-    protected abstract boolean isPhysicalChannelOpen();
-
-    /**
-     * Attempts to open the physical channel
-     *
-     * @throws KeypleChannelStateException if the channel opening fails
-     */
-    protected abstract void openPhysicalChannel() throws KeypleChannelStateException;
-
-    /**
      * Opens a logical channel
      * 
      * @param selector the SE Selector: AID of the application to select or ATR regex

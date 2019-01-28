@@ -83,8 +83,16 @@ public final class AndroidOmapiReader extends AbstractStaticReader {
      * @throws KeypleReaderException
      */
     @Override
-    public boolean isSePresent() throws NoStackTraceThrowable {
+    protected boolean checkSePresence() throws NoStackTraceThrowable {
         return omapiReader.isSecureElementPresent();
+    }
+
+    public boolean isPhysicalChannelOpen() {
+        return true;
+    }
+
+    public void openPhysicalChannel() throws KeypleChannelStateException {
+
     }
 
     /**

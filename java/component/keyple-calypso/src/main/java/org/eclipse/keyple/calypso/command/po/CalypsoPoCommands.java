@@ -162,6 +162,7 @@ public enum CalypsoPoCommands implements CommandsTable {
             case REV2_4:
                 return OPEN_SESSION_24;
             case REV3_1:
+            case REV3_1_CLAP:
                 return OPEN_SESSION_31;
             case REV3_2:
                 return OPEN_SESSION_32;

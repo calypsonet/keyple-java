@@ -60,7 +60,6 @@ public final class CalypsoPo extends MatchingSe {
     @Override
     public void setSelectionResponse(SeResponse selectionResponse) {
         super.setSelectionResponse(selectionResponse);
-
         /* Update the parser objects with the responses obtained */
         poSelector.updateParsersWithResponses(selectionResponse);
 
@@ -84,7 +83,7 @@ public final class CalypsoPo extends MatchingSe {
             byte applicationTypeByte = poFciRespPars.getApplicationTypeByte();
             if ((applicationTypeByte & (1 << 7)) != 0) {
                 /* CLAP */
-                this.revision = PoRevision.REV3_1;
+                this.revision = PoRevision.REV3_1_CLAP;
             } else if ((applicationTypeByte >> 3) == (byte) (0x05)) {
                 this.revision = PoRevision.REV3_2;
             } else if ((applicationTypeByte >> 3) == (byte) (0x04)) {
@@ -178,5 +177,13 @@ public final class CalypsoPo extends MatchingSe {
             }
             return PoClass.ISO;
         }
+    }
+
+    @Override
+    protected final void reset() {
+        super.reset();
+        applicationSerialNumber = null;
+        poAtr = null;
+        dfName = null;
     }
 }
