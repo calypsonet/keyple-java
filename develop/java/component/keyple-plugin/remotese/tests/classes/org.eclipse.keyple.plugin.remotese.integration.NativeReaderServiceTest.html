@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">0.760s</div>
+<div class="counter">0.839s</div>
 <p>duration</p>
 </div>
 </td>
@@ -79,7 +79,7 @@
 </thead>
 <tr>
 <td class="success">testKOConnectError</td>
-<td>0.111s</td>
+<td>0.116s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
@@ -89,7 +89,7 @@
 </tr>
 <tr>
 <td class="success">testKODisconnectServerError</td>
-<td>0.330s</td>
+<td>0.358s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
@@ -99,7 +99,7 @@
 </tr>
 <tr>
 <td class="success">testOKConnectDisconnect</td>
-<td>0.114s</td>
+<td>0.160s</td>
 <td class="success">passed</td>
 </tr>
 </table>
@@ -143,11 +143,11 @@
   &quot;isRequest&quot;: true
 }
 [Test worker] DEBUG RemoteSePlugin - createVirtualReader for nativeReader testStubReader
-[Test worker] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1545303232519
+[Test worker] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1548674778277
 [Thread-4] TRACE AbstractLoggedObservable - [RemoteSePlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader connected 
 [Test worker] TRACE NativeReaderServiceImpl - onDto {
   &quot;clientNodeId&quot;: &quot;testClientNodeId&quot;,
-  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1545303232519&quot;,
+  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1548674778277&quot;,
   &quot;nativeReaderName&quot;: &quot;testStubReader&quot;,
   &quot;virtualReaderName&quot;: &quot;remote-testStubReader&quot;,
   &quot;action&quot;: &quot;reader_connect&quot;,
@@ -159,7 +159,7 @@
 [Test worker] DEBUG RmConnectReaderParser - Add NativeReaderServiceImpl as an observer for native reader testStubReader
 [Test worker] DEBUG AbstractObservableReader - Start the reader monitoring.
 [Test worker] TRACE AbstractLoggedObservable - [class org.eclipse.keyple.plugin.stub.StubReader][testStubReader] addObserver =&gt; Adding an observer.
-[Test worker] INFO NativeReaderServiceImpl - Native Reader testStubReader has been connected to Master with sessionId testStubReadertestClientNodeId1545303232519
+[Test worker] INFO NativeReaderServiceImpl - Native Reader testStubReader has been connected to Master with sessionId testStubReadertestClientNodeId1548674778277
 [Test worker] DEBUG NativeReaderServiceImpl - onDto response to be sent {
   &quot;action&quot;: &quot;&quot;,
   &quot;body&quot;: &quot;&quot;,
@@ -213,11 +213,11 @@
   &quot;isRequest&quot;: true
 }
 [Test worker] DEBUG RemoteSePlugin - createVirtualReader for nativeReader testStubReader
-[Test worker] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1545303232632
+[Test worker] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1548674778394
 [Thread-6] TRACE AbstractLoggedObservable - [RemoteSePlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader connected 
 [Test worker] TRACE NativeReaderServiceImpl - onDto {
   &quot;clientNodeId&quot;: &quot;testClientNodeId&quot;,
-  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1545303232632&quot;,
+  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1548674778394&quot;,
   &quot;nativeReaderName&quot;: &quot;testStubReader&quot;,
   &quot;virtualReaderName&quot;: &quot;remote-testStubReader&quot;,
   &quot;action&quot;: &quot;reader_connect&quot;,
@@ -229,7 +229,7 @@
 [Test worker] DEBUG RmConnectReaderParser - Add NativeReaderServiceImpl as an observer for native reader testStubReader
 [Test worker] DEBUG AbstractObservableReader - Start the reader monitoring.
 [Test worker] TRACE AbstractLoggedObservable - [class org.eclipse.keyple.plugin.stub.StubReader][testStubReader] addObserver =&gt; Adding an observer.
-[Test worker] INFO NativeReaderServiceImpl - Native Reader testStubReader has been connected to Master with sessionId testStubReadertestClientNodeId1545303232632
+[Test worker] INFO NativeReaderServiceImpl - Native Reader testStubReader has been connected to Master with sessionId testStubReadertestClientNodeId1548674778394
 [Test worker] DEBUG NativeReaderServiceImpl - onDto response to be sent {
   &quot;action&quot;: &quot;&quot;,
   &quot;body&quot;: &quot;&quot;,
@@ -252,8 +252,8 @@ org.eclipse.keyple.seproxy.exception.KeypleReaderException: Virtual Reader alrea
 	at org.eclipse.keyple.plugin.remotese.transport.java.LocalServer.onLocalMessage(LocalServer.java:36)
 	at org.eclipse.keyple.plugin.remotese.transport.java.LocalClient.sendDTO(LocalClient.java:68)
 	at org.eclipse.keyple.plugin.remotese.nativese.NativeReaderServiceImpl.connectReader(NativeReaderServiceImpl.java:163)
-	at org.eclipse.keyple.plugin.remotese.nativese.NativeReaderServiceImpl$MockitoMock$1859488309.connectReader$accessor$et7gzFoV(Unknown Source)
-	at org.eclipse.keyple.plugin.remotese.nativese.NativeReaderServiceImpl$MockitoMock$1859488309$auxiliary$AalKvtUZ.call(Unknown Source)
+	at org.eclipse.keyple.plugin.remotese.nativese.NativeReaderServiceImpl$MockitoMock$525657801.connectReader$accessor$cOjy8RLk(Unknown Source)
+	at org.eclipse.keyple.plugin.remotese.nativese.NativeReaderServiceImpl$MockitoMock$525657801$auxiliary$QW8ELYga.call(Unknown Source)
 	at org.mockito.internal.invocation.RealMethod$FromCallable.invoke(RealMethod.java:52)
 	at org.mockito.internal.creation.bytebuddy.InterceptedInvocation.callRealMethod(InterceptedInvocation.java:129)
 	at org.mockito.internal.stubbing.answers.CallsRealMethods.answer(CallsRealMethods.java:43)
@@ -264,7 +264,7 @@ org.eclipse.keyple.seproxy.exception.KeypleReaderException: Virtual Reader alrea
 	at org.mockito.internal.creation.bytebuddy.MockMethodInterceptor.doIntercept(MockMethodInterceptor.java:65)
 	at org.mockito.internal.creation.bytebuddy.MockMethodInterceptor.doIntercept(MockMethodInterceptor.java:51)
 	at org.mockito.internal.creation.bytebuddy.MockMethodInterceptor$DispatcherDefaultingToRealMethod.interceptSuperCallable(MockMethodInterceptor.java:135)
-	at org.eclipse.keyple.plugin.remotese.nativese.NativeReaderServiceImpl$MockitoMock$1859488309.connectReader(Unknown Source)
+	at org.eclipse.keyple.plugin.remotese.nativese.NativeReaderServiceImpl$MockitoMock$525657801.connectReader(Unknown Source)
 	at org.eclipse.keyple.plugin.remotese.integration.NativeReaderServiceTest.testKOConnectError(NativeReaderServiceTest.java:138)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
@@ -337,13 +337,13 @@ org.eclipse.keyple.seproxy.exception.KeypleReaderException: Virtual Reader alrea
   &quot;isRequest&quot;: true
 }
 [Test worker] DEBUG RemoteSePlugin - createVirtualReader for nativeReader testStubReader
-[Test worker] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1545303232743
-[Thread-7] TRACE AbstractLoggedObservable - [RemoteSePlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader connected 
+[Test worker] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1548674778510
 [Test worker] TRACE NativeReaderServiceImpl - onDto {
   &quot;clientNodeId&quot;: &quot;testClientNodeId&quot;,
-  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1545303232743&quot;,
+  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1548674778510&quot;,
   &quot;nativeReaderName&quot;: &quot;testStubReader&quot;,
   &quot;virtualReaderName&quot;: &quot;remote-testStubReader&quot;,
+[Thread-7] TRACE AbstractLoggedObservable - [RemoteSePlugin] AbstractObservableReader =&gt; Notifying a plugin event. EVENTNAME = Reader connected 
   &quot;action&quot;: &quot;reader_connect&quot;,
   &quot;body&quot;: &quot;{\&quot;statusCode\&quot;:0}&quot;,
   &quot;isRequest&quot;: false
@@ -353,7 +353,7 @@ org.eclipse.keyple.seproxy.exception.KeypleReaderException: Virtual Reader alrea
 [Test worker] DEBUG RmConnectReaderParser - Add NativeReaderServiceImpl as an observer for native reader testStubReader
 [Test worker] DEBUG AbstractObservableReader - Start the reader monitoring.
 [Test worker] TRACE AbstractLoggedObservable - [class org.eclipse.keyple.plugin.stub.StubReader][testStubReader] addObserver =&gt; Adding an observer.
-[Test worker] INFO NativeReaderServiceImpl - Native Reader testStubReader has been connected to Master with sessionId testStubReadertestClientNodeId1545303232743
+[Test worker] INFO NativeReaderServiceImpl - Native Reader testStubReader has been connected to Master with sessionId testStubReadertestClientNodeId1548674778510
 [Test worker] DEBUG NativeReaderServiceImpl - onDto response to be sent {
   &quot;action&quot;: &quot;&quot;,
   &quot;body&quot;: &quot;&quot;,
@@ -373,7 +373,7 @@ org.eclipse.keyple.seproxy.exception.KeypleReaderException: Virtual Reader alrea
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 4.5.1</a> at Dec 20, 2018 10:54:06 AM</p>
+<a href="http://www.gradle.org">Gradle 4.5.1</a> at Jan 28, 2019 11:26:32 AM</p>
 </div>
 </div>
 </body>
