@@ -99,8 +99,8 @@ public class NFCTestFragment extends Fragment implements ObservableReader.Reader
         LOG.debug("Add Keyple NFC Fragment to activity in order to "
                 + "communicate with Android Plugin");
         FragmentManager fm = getFragmentManager();
-        fm.beginTransaction()
-                .add(AndroidNfcFragment.newInstance(), TAG_NFC_ANDROID_FRAGMENT).commit();
+        fm.beginTransaction().add(AndroidNfcFragment.newInstance(), TAG_NFC_ANDROID_FRAGMENT)
+                .commit();
 
         try {
             // define task as an observer for ReaderEvents

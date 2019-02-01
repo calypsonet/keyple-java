@@ -15,7 +15,6 @@ import org.eclipse.keyple.plugin.android.nfc.AndroidNfcPlugin;
 import org.eclipse.keyple.seproxy.SeProxyService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;

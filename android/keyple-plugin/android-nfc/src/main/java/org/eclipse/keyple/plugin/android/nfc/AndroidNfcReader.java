@@ -33,7 +33,6 @@ import android.content.Intent;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.os.Bundle;
-import android.util.Log;
 
 
 /**
@@ -227,12 +226,13 @@ public final class AndroidNfcReader extends AbstractSelectionLocalReader
     @Override
     protected byte[] transmitApdu(byte[] apduIn) throws KeypleIOReaderException {
         // Initialization
-        LOG.debug("Send "+apduIn.length+" bytes to tag : " + ByteArrayUtils.toHex(apduIn));
+        LOG.debug("Send " + apduIn.length + " bytes to tag : " + ByteArrayUtils.toHex(apduIn));
         byte[] dataOut = null;
         try {
             dataOut = tagProxy.transceive(apduIn);
-            if(dataOut==null || dataOut.length <2){
-                throw new KeypleIOReaderException("Error while transmitting APDU, invalid out data buffer");
+            if (dataOut == null || dataOut.length < 2) {
+                throw new KeypleIOReaderException(
+                        "Error while transmitting APDU, invalid out data buffer");
             }
         } catch (IOException e) {
             throw new KeypleIOReaderException("Error while transmitting APDU", e);

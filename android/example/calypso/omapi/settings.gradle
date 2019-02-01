@@ -8,4 +8,3 @@ project(':java:component:keyple-core').projectDir = new File("../../../../java/c
 
 include ':java:component:keyple-calypso'
 project(':java:component:keyple-calypso').projectDir = new File("../../../../java/component/keyple-calypso")
-
