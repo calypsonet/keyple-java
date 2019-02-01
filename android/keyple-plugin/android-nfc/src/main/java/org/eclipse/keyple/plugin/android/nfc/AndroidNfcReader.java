@@ -22,6 +22,7 @@ import org.eclipse.keyple.seproxy.exception.KeypleIOReaderException;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.plugin.AbstractSelectionLocalReader;
 import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
+import org.eclipse.keyple.seproxy.protocol.Protocol;
 import org.eclipse.keyple.seproxy.protocol.SeProtocol;
 import org.eclipse.keyple.seproxy.protocol.TransmissionMode;
 import org.eclipse.keyple.util.ByteArrayUtils;
@@ -32,6 +33,7 @@ import android.content.Intent;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.os.Bundle;
+import android.util.Log;
 
 
 /**
@@ -161,7 +163,6 @@ public final class AndroidNfcReader extends AbstractSelectionLocalReader
             e.printStackTrace();
             LOG.error(e.getLocalizedMessage());
         }
-
     }
 
     /**
@@ -185,7 +186,6 @@ public final class AndroidNfcReader extends AbstractSelectionLocalReader
 
     @Override
     protected boolean isPhysicalChannelOpen() {
-
         return tagProxy != null && tagProxy.isConnected();
     }
 
@@ -193,6 +193,7 @@ public final class AndroidNfcReader extends AbstractSelectionLocalReader
     protected void openPhysicalChannel() throws KeypleChannelStateException {
         if (!checkSePresence()) {
             try {
+                LOG.debug("Connect to tag..");
                 tagProxy.connect();
                 LOG.info("Tag connected successfully : " + printTagId());
 
@@ -226,14 +227,14 @@ public final class AndroidNfcReader extends AbstractSelectionLocalReader
     @Override
     protected byte[] transmitApdu(byte[] apduIn) throws KeypleIOReaderException {
         // Initialization
-        LOG.debug("Data Length to be sent to tag : " + apduIn.length);
-        LOG.debug("Data in : " + ByteArrayUtils.toHex(apduIn));
-        byte[] data = apduIn;
-        byte[] dataOut;
+        LOG.debug("Send "+apduIn.length+" bytes to tag : " + ByteArrayUtils.toHex(apduIn));
+        byte[] dataOut = null;
         try {
-            dataOut = tagProxy.transceive(data);
+            dataOut = tagProxy.transceive(apduIn);
+            if(dataOut==null || dataOut.length <2){
+                throw new KeypleIOReaderException("Error while transmitting APDU, invalid out data buffer");
+            }
         } catch (IOException e) {
-            e.printStackTrace();
             throw new KeypleIOReaderException("Error while transmitting APDU", e);
         }
         LOG.debug("Data out : " + ByteArrayUtils.toHex(dataOut));
@@ -243,7 +244,8 @@ public final class AndroidNfcReader extends AbstractSelectionLocalReader
 
     @Override
     protected boolean protocolFlagMatches(SeProtocol protocolFlag) {
-        return protocolsMap.containsKey(protocolFlag)
+        // TODO Check the need for "ANY"
+        return protocolFlag.equals(Protocol.ANY) || protocolsMap.containsKey(protocolFlag)
                 && protocolsMap.get(protocolFlag).equals(tagProxy.getTech());
     }
 

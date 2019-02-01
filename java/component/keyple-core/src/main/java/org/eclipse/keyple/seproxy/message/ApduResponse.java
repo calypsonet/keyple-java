@@ -14,6 +14,8 @@ package org.eclipse.keyple.seproxy.message;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Set;
+
+import org.eclipse.keyple.seproxy.exception.KeypleIOReaderException;
 import org.eclipse.keyple.util.ByteArrayUtils;
 
 
@@ -49,14 +51,14 @@ public final class ApduResponse implements Serializable {
      * @param buffer apdu response data buffer (including sw1sw2)
      * @param successfulStatusCodes optional list of successful status codes other than 0x9000
      */
-    public ApduResponse(byte[] buffer, Set<Integer> successfulStatusCodes) {
+    public ApduResponse(byte[] buffer, Set<Integer> successfulStatusCodes) throws IllegalArgumentException {
 
         this.bytes = buffer;
         if (buffer == null) {
             this.successful = false;
         } else {
             if (buffer.length < 2) {
-                throw new IllegalArgumentException("Bad buffer (length < 2): " + buffer.length);
+                throw new IllegalArgumentException("Building an ApduResponse with a illegal buffer (length must be > 2): " + buffer.length);
             }
             int statusCode = ((buffer[buffer.length - 2] & 0x000000FF) << 8)
                     + (buffer[buffer.length - 1] & 0x000000FF);

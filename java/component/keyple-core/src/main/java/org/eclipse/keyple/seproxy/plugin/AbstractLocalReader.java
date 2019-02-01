@@ -390,6 +390,8 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
                         responses.add(ex.getSeResponse());
                         /* Build a SeResponseSet with the available data. */
                         ex.setSeResponseSet(new SeResponseSet(responses));
+                        logger.debug("[{}] processSeRequestSet => transmit : process interrupted, collect previous responses {}", this.getName(),
+                                responses);
                         throw ex;
                     }
                     responses.add(response);
@@ -600,6 +602,7 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
                      * The process has been interrupted. We close the logical channel and launch a
                      * KeypleReaderException with the Apdu responses collected so far.
                      */
+                    logger.debug("The process has been interrupted, collect Apdu responses collected so far");
                     closeLogicalChannel();
                     ex.setSeResponse(
                             new SeResponse(previouslyOpen, selectionStatus, apduResponseList));
