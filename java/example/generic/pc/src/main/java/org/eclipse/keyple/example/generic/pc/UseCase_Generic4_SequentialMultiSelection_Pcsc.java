@@ -36,7 +36,7 @@ public class UseCase_Generic4_SequentialMultiSelection_Pcsc {
             LoggerFactory.getLogger(UseCase_Generic1_ExplicitSelectionAid_Pcsc.class);
 
     private static void doAndAnalyseSelection(SeSelection seSelection, MatchingSe matchingSe,
-                                              int index) throws KeypleReaderException {
+            int index) throws KeypleReaderException {
         if (seSelection.processExplicitSelection()) {
             logger.info("The SE matched the selection {}.", index);
 
