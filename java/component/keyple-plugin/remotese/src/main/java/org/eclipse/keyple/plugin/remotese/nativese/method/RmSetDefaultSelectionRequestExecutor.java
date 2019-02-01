@@ -46,8 +46,8 @@ public class RmSetDefaultSelectionRequestExecutor implements RemoteMethodExecuto
         JsonPrimitive selectionRequestJson = jsonObject.getAsJsonPrimitive("selectionRequest");
         JsonPrimitive notificationModeJson = jsonObject.getAsJsonPrimitive("notificationMode");
 
-        logger.trace(selectionRequestJson.getAsString());
-        logger.trace(notificationModeJson.getAsString());
+        //logger.trace(selectionRequestJson.getAsString());
+        //logger.trace(notificationModeJson.getAsString());
 
         SelectionRequest selectionRequest = JsonParser.getGson()
                 .fromJson(selectionRequestJson.getAsString(), SelectionRequest.class);

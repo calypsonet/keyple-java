@@ -146,8 +146,8 @@ public class WsPRetrofitClientImpl implements ClientNode {
 
     @Override
     public void sendDTO(TransportDto transportDto) {
-        KeypleDto keypleDto = transportDto.getKeypleDTO();
-        logger.trace("SendDto  {}", KeypleDtoHelper.toJson(keypleDto));
+        final KeypleDto keypleDto = transportDto.getKeypleDTO();
+        logger.trace("sendDTO(), dtoId {} - {}",keypleDto.hashCode(), KeypleDtoHelper.toJson(keypleDto));
 
         if (!KeypleDtoHelper.isNoResponse(transportDto.getKeypleDTO())) {
 
@@ -160,7 +160,7 @@ public class WsPRetrofitClientImpl implements ClientNode {
                 @Override
                 public void onResponse(Call<KeypleDto> call, Response<KeypleDto> response) {
                     int statusCode = response.code();
-                    logger.trace("SendDto response {} {} {}",nodeId, statusCode, response.body());
+                    logger.trace("sendDTO#onResponse() {} - {} - {} - {}",keypleDto.hashCode(),nodeId, statusCode, response.body());
                     processHttpResponseDTO(response);
                 }
 
@@ -168,7 +168,7 @@ public class WsPRetrofitClientImpl implements ClientNode {
                 @Override
                 public void onFailure(Call<KeypleDto> call, Throwable t) {
                     // Log error here since request failed
-                    logger.trace("Receive failure from sendDto {}",t.getCause());
+                    logger.trace("sendDTO#onFailure() {} - {}",keypleDto.hashCode(),keypleDto.getAction(),t.getCause());
                     //startPollingWorker(nodeId);
                 }
             });
