@@ -12,7 +12,6 @@
 package org.eclipse.keyple.example.remote.example;
 
 import java.io.IOException;
-
 import org.eclipse.keyple.example.remote.example.calypso.StubCalypsoClassic;
 import org.eclipse.keyple.plugin.remotese.nativese.NativeReaderServiceImpl;
 import org.eclipse.keyple.plugin.remotese.transport.*;
@@ -137,7 +136,7 @@ class Demo_Slave {
 
         localReader.addSeProtocolSetting(
                 new SeProtocolSetting(StubProtocolSetting.SETTING_PROTOCOL_ISO14443_4));
-                                                                                         
+
         // Binds node for outgoing KeypleDto
         nativeReaderService = new NativeReaderServiceImpl(node);
 
@@ -175,13 +174,14 @@ class Demo_Slave {
 
     }
 
-    public void disconnect(String sessionId, String nativeReaderName, String slaveNodeId) throws KeypleReaderException, KeypleRemoteException {
+    public void disconnect(String sessionId, String nativeReaderName, String slaveNodeId)
+            throws KeypleReaderException, KeypleRemoteException {
 
         logger.info("*************************");
         logger.info("Disconnect native reader ");
         logger.info("*************************");
 
-        nativeReaderService.disconnectReader(sessionId,localReader.getName(), slaveNodeId);
+        nativeReaderService.disconnectReader(sessionId, localReader.getName(), slaveNodeId);
     }
 
 

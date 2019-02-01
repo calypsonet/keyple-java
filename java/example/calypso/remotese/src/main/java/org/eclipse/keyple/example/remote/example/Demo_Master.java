@@ -135,7 +135,8 @@ public class Demo_Master implements org.eclipse.keyple.util.Observable.Observer 
         // Receive a PluginEvent
         if (o instanceof PluginEvent) {
             PluginEvent event = (PluginEvent) o;
-            logger.info("UPDATE {} {} {}", event.getEventType(), event.getPluginName(), event.getReaderName());
+            logger.info("UPDATE {} {} {}", event.getEventType(), event.getPluginName(),
+                    event.getReaderName());
             switch (event.getEventType()) {
                 case READER_CONNECTED:
                     // a new virtual reader is connected, let's configure it
@@ -186,7 +187,8 @@ public class Demo_Master implements org.eclipse.keyple.util.Observable.Observer 
                          */
                         seSelection.prepareSelection(poSelector);
 
-                        logger.info("setDefaultSelectionRequest for PoReader {}", poReader.getName());
+                        logger.info("setDefaultSelectionRequest for PoReader {}",
+                                poReader.getName());
 
                         /*
                          * Provide the SeReader with the selection operation to be processed when a
@@ -198,7 +200,8 @@ public class Demo_Master implements org.eclipse.keyple.util.Observable.Observer 
 
 
                         // observe reader events
-                        logger.info("Add Master Thread as a Observer of virtual reader {}", poReader.getName());
+                        logger.info("Add Master Thread as a Observer of virtual reader {}",
+                                poReader.getName());
                         poReader.addObserver(masterThread);
 
                     } catch (KeypleReaderNotFoundException e) {
@@ -220,7 +223,8 @@ public class Demo_Master implements org.eclipse.keyple.util.Observable.Observer 
         // ReaderEvent
         else if (o instanceof ReaderEvent) {
             ReaderEvent event = (ReaderEvent) o;
-            logger.debug("UPDATE {} {} {} {}", event.getEventType(), event.getPluginName(), event.getReaderName(), event.getDefaultSelectionResponse());
+            logger.debug("UPDATE {} {} {} {}", event.getEventType(), event.getPluginName(),
+                    event.getReaderName(), event.getDefaultSelectionResponse());
             switch (event.getEventType()) {
 
                 case SE_MATCHED:

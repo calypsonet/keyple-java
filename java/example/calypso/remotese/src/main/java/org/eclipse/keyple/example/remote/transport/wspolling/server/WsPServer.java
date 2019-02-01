@@ -18,7 +18,6 @@ import java.util.concurrent.*;
 import org.eclipse.keyple.plugin.remotese.transport.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 
@@ -36,13 +35,13 @@ public class WsPServer implements ServerNode {
 
     private static final Logger logger = LoggerFactory.getLogger(WsPServer.class);
 
-    private  PublishQueueManager publishQueueManager = new PublishQueueManager();
-    //private PublishQueue<KeypleDto> keypleDtoQueue = new PublishQueue<KeypleDto>();
+    private PublishQueueManager publishQueueManager = new PublishQueueManager();
+    // private PublishQueue<KeypleDto> keypleDtoQueue = new PublishQueue<KeypleDto>();
 
     /*
-    private final BlockingQueue<HttpExchange> requestQueue =
-            new LinkedBlockingQueue<HttpExchange>();
-    */
+     * private final BlockingQueue<HttpExchange> requestQueue = new
+     * LinkedBlockingQueue<HttpExchange>();
+     */
 
     /**
      * Constructor
@@ -62,7 +61,7 @@ public class WsPServer implements ServerNode {
         this.pollingUrl = pollingUrl;
 
         // Create Endpoint for polling DTO
-        //pollingEndpoint = new EndpointPolling(requestQueue, nodeId);
+        // pollingEndpoint = new EndpointPolling(requestQueue, nodeId);
         pollingEndpoint = new EndpointPolling(publishQueueManager, nodeId);
 
         // Create Endpoint for sending DTO
@@ -119,7 +118,7 @@ public class WsPServer implements ServerNode {
     }
 
 
-    public HttpServer getHttpServer(){
+    public HttpServer getHttpServer() {
         return server;
     }
 

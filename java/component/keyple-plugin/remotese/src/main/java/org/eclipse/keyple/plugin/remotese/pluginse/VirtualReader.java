@@ -152,11 +152,8 @@ public final class VirtualReader extends AbstractObservableReader {
         logger.debug(" EVENT {} ", event.getEventType());
         // notify observers in a separate thread
         /*
-        new Thread() {
-            public void run() {
-            }
-        }.start();
-        */
+         * new Thread() { public void run() { } }.start();
+         */
 
         if (thisReader.countObservers() > 0) {
             thisReader.notifyObservers(event);

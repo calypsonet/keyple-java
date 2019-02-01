@@ -12,18 +12,14 @@
 package org.eclipse.keyple.plugin.remotese.pluginse;
 
 
-import org.eclipse.keyple.plugin.remotese.transport.KeypleDto;
-import org.eclipse.keyple.util.Observable;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.concurrent.BlockingQueue;
 
 /**
  * Manage RSE Reader Session
  */
-public class VirtualReaderSessionImpl
-        implements VirtualReaderSession {
+public class VirtualReaderSessionImpl implements VirtualReaderSession {
 
     private static final Logger logger = LoggerFactory.getLogger(VirtualReaderSessionImpl.class);
 
@@ -32,10 +28,10 @@ public class VirtualReaderSessionImpl
 
     // constructor
     public VirtualReaderSessionImpl(String sessionId, String slaveNodeId) {
-        if(sessionId ==null){
+        if (sessionId == null) {
             throw new IllegalArgumentException("SessionId must not be null");
         }
-        if(slaveNodeId ==null){
+        if (slaveNodeId == null) {
             throw new IllegalArgumentException("SlaveNodeId must not be null");
         }
         this.sessionId = sessionId;
@@ -56,7 +52,6 @@ public class VirtualReaderSessionImpl
 
     @Override
     public String toString() {
-        return "sessionId:"+ sessionId +
-                " - slaveNodeId:" + slaveNodeId;
+        return "sessionId:" + sessionId + " - slaveNodeId:" + slaveNodeId;
     }
 }

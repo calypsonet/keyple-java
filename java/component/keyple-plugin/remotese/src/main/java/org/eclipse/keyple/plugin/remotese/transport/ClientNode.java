@@ -22,8 +22,9 @@ public interface ClientNode extends TransportNode {
 
     void disconnect();
 
-    interface ConnectCallback{
+    interface ConnectCallback {
         void onConnectSuccess();
+
         void onConnectFailure();
     }
 

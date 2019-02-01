@@ -73,7 +73,8 @@ public class WskClient extends WebSocketClient implements ClientNode {
     public void sendDTO(KeypleDto keypleDto) {
         // if keypleDTO is no empty
         if (!KeypleDtoHelper.isNoResponse(keypleDto)) {
-            logger.trace("send message to server (KeypleDto) {}", KeypleDtoHelper.toJson(keypleDto));
+            logger.trace("send message to server (KeypleDto) {}",
+                    KeypleDtoHelper.toJson(keypleDto));
             this.send(KeypleDtoHelper.toJson(keypleDto));
         } else {
             logger.debug("No message to send back");
@@ -99,7 +100,7 @@ public class WskClient extends WebSocketClient implements ClientNode {
 
     @Override
     public void connect(ConnectCallback connectCallback) {
-        if(connectCallback!=null){
+        if (connectCallback != null) {
             logger.warn("Connection callback is not implemented for this client");
         }
         this.connect();

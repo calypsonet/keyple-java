@@ -11,7 +11,7 @@
  ********************************************************************************/
 package org.eclipse.keyple.plugin.remotese.integration;
 
-import static org.mockito.Mockito.doAnswer;
+
 import org.eclipse.keyple.plugin.remotese.nativese.NativeReaderServiceImpl;
 import org.eclipse.keyple.plugin.remotese.pluginse.VirtualReader;
 import org.eclipse.keyple.plugin.remotese.pluginse.VirtualReaderService;
@@ -22,7 +22,6 @@ import org.eclipse.keyple.plugin.stub.StubPlugin;
 import org.eclipse.keyple.plugin.stub.StubReader;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.junit.*;
-import org.junit.rules.ExpectedException;
 import org.junit.rules.TestName;
 import org.junit.runner.RunWith;
 import org.mockito.*;
@@ -140,8 +139,8 @@ public class NativeReaderServiceTest {
         String sessionId = nativeReaderSpy.connectReader(nativeReader, CLIENT_NODE_ID);
 
         // assert an exception will be contained into keypleDto response
-        //doAnswer(Integration.assertContainsException()).when(nativeReaderSpy)
-        //        .onDTO(ArgumentMatchers.<TransportDto>any());
+        // doAnswer(Integration.assertContainsException()).when(nativeReaderSpy)
+        // .onDTO(ArgumentMatchers.<TransportDto>any());
 
         // should throw a DTO with an exception in master side KeypleReaderException
         nativeReaderSpy.connectReader(nativeReader, CLIENT_NODE_ID);
@@ -222,7 +221,7 @@ public class NativeReaderServiceTest {
         // bind Slave to faulty client
         nativeReaderSpy = Integration.bindSlaveSpy(new LocalClient(null));
 
-        nativeReaderSpy.disconnectReader("null",nativeReader.getName(), CLIENT_NODE_ID);
+        nativeReaderSpy.disconnectReader("null", nativeReader.getName(), CLIENT_NODE_ID);
         // should throw a KeypleRemoteException in slave side
     }
 

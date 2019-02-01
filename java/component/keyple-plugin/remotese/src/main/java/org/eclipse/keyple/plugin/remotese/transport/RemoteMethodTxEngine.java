@@ -16,10 +16,7 @@ import org.slf4j.LoggerFactory;
 
 
 /**
- * Executor of RemoteMethodTx
- * It manages :
- * - send Dto
- * - Parse Dto Responses
+ * Executor of RemoteMethodTx It manages : - send Dto - Parse Dto Responses
  */
 public class RemoteMethodTxEngine implements DtoHandler {
 
@@ -50,9 +47,10 @@ public class RemoteMethodTxEngine implements DtoHandler {
             throw new IllegalArgumentException(
                     "RemoteMethodTxEngine expects a KeypleDto response. " + message.getKeypleDTO());
         }
-        if(remoteMethodTx == null){
+        if (remoteMethodTx == null) {
             throw new IllegalStateException(
-                    "RemoteMethodTxEngine receives a KeypleDto response but no remoteMethodTx are defined : " + message.getKeypleDTO());
+                    "RemoteMethodTxEngine receives a KeypleDto response but no remoteMethodTx are defined : "
+                            + message.getKeypleDTO());
         }
 
         // only one operation is allowed at the time

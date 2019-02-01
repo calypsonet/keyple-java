@@ -89,7 +89,8 @@ public class Demo_Threads {
         client.start();
     }
 
-    static public void executeSlaveScenario(Demo_Slave slave) throws KeypleReaderNotFoundException, InterruptedException,KeypleReaderException,KeypleRemoteException{
+    static public void executeSlaveScenario(Demo_Slave slave) throws KeypleReaderNotFoundException,
+            InterruptedException, KeypleReaderException, KeypleRemoteException {
         logger.info("------------------------");
         logger.info("Connect Reader to Master");
         logger.info("------------------------");
@@ -97,10 +98,10 @@ public class Demo_Threads {
         String sessionId = slave.connectAReader();
         logger.info("--------------------------------------------------");
         logger.info("Session created on server {}", sessionId);
-        //logger.info("Wait 2 seconds, then insert SE");
+        // logger.info("Wait 2 seconds, then insert SE");
         logger.info("--------------------------------------------------");
 
-        //Thread.sleep(2000);
+        // Thread.sleep(2000);
 
         logger.info("Inserting SE");
         slave.insertSe();

@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
-
 import org.eclipse.keyple.plugin.remotese.transport.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,13 +32,13 @@ class EndpointPolling implements HttpHandler, TransportNode {
 
     private DtoHandler dtoHandler;
     private final String nodeId;
-    //private final PublishQueue<KeypleDto> keypleDtoQueue;
+    // private final PublishQueue<KeypleDto> keypleDtoQueue;
     private final PublishQueueManager publishQueueManager;
 
     public EndpointPolling(PublishQueueManager publishQueueManager, String nodeId) {
         this.nodeId = nodeId;
         this.publishQueueManager = publishQueueManager;
-        //this.keypleDtoQueue = KeypleDtoQueue;
+        // this.keypleDtoQueue = KeypleDtoQueue;
     }
 
     @Override
@@ -62,26 +61,26 @@ class EndpointPolling implements HttpHandler, TransportNode {
 
             PublishQueue<KeypleDto> keypleDtoQueue;
             try {
-                if(!publishQueueManager.exists(nodeId)){
+                if (!publishQueueManager.exists(nodeId)) {
                     keypleDtoQueue = publishQueueManager.create(nodeId);
-                }else{
+                } else {
                     keypleDtoQueue = publishQueueManager.get(nodeId);
                 }
 
-                //get a KeypleDto (blocking method)
+                // get a KeypleDto (blocking method)
                 KeypleDto keypleDto = keypleDtoQueue.get(10000);
-                if(keypleDto == null){
-                    //time elapsed
+                if (keypleDto == null) {
+                    // time elapsed
                     logger.trace("No keypleDto received during elapsed time");
                     setNoContent(t);
-                }else{
+                } else {
                     logger.trace("Set keypleDto in response {}", keypleDto);
                     setHttpResponse(t, keypleDto);
                 }
 
             } catch (IOException e) {
                 e.printStackTrace();
-            } catch (InterruptedException e){
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
 
@@ -110,8 +109,8 @@ class EndpointPolling implements HttpHandler, TransportNode {
         logger.trace("Using polling to send keypleDTO : {}", message);
 
         PublishQueue keypleDtoQueue = publishQueueManager.get(message.getNodeId());
-        if(keypleDtoQueue==null){
-            throw  new IllegalStateException("Keyple Dto Queue is null, what to do?");
+        if (keypleDtoQueue == null) {
+            throw new IllegalStateException("Keyple Dto Queue is null, what to do?");
         }
         keypleDtoQueue.publish(message);
 
@@ -167,9 +166,9 @@ class EndpointPolling implements HttpHandler, TransportNode {
         Integer responseCode = 204;
         t.getResponseHeaders().add("Content-Type", "application/json");
         t.sendResponseHeaders(responseCode, -1);
-        //OutputStream os = t.getResponseBody();
-        //os.write(responseBody.getBytes());
-        //os.close();
+        // OutputStream os = t.getResponseBody();
+        // os.write(responseBody.getBytes());
+        // os.close();
 
     }
 }

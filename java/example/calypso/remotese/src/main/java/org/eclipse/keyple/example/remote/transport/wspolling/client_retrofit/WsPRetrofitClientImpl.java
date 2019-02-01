@@ -12,7 +12,6 @@
 package org.eclipse.keyple.example.remote.transport.wspolling.client_retrofit;
 
 import java.net.ConnectException;
-import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.util.concurrent.TimeUnit;
 import org.eclipse.keyple.example.remote.transport.wspolling.WsPTransportDTO;
@@ -67,17 +66,17 @@ public class WsPRetrofitClientImpl implements ClientNode {
             call.enqueue(new Callback<KeypleDto>() {
                 @Override
                 public void onResponse(Call<KeypleDto> call, Response<KeypleDto> response) {
-                    if(thisClient.connectCallback !=null){
+                    if (thisClient.connectCallback != null) {
                         thisClient.connectCallback.onConnectSuccess();
                     }
                     int statusCode = response.code();
 
                     logger.trace("Polling for clientNodeId {} receive a httpResponse http code {}",
                             nodeId, statusCode);
-                    if(statusCode == 200){
+                    if (statusCode == 200) {
                         processHttpResponseDTO(response);
-                    }else{
-                        //204 : no response
+                    } else {
+                        // 204 : no response
                     }
                     poll(nodeId);// recursive call to restart polling
                 }
@@ -87,20 +86,21 @@ public class WsPRetrofitClientImpl implements ClientNode {
                     logger.trace("Receive exception : {} , {}", t.getMessage(), t.getClass());
 
                     // Log error here since request failed
-                    if(t instanceof ConnectException){
-                        logger.error("Connection refused to server : {} , {}", t.getMessage(), t.getCause());
+                    if (t instanceof ConnectException) {
+                        logger.error("Connection refused to server : {} , {}", t.getMessage(),
+                                t.getCause());
                         thisClient.stopPollingWorker();
-                        if(thisClient.connectCallback !=null){
+                        if (thisClient.connectCallback != null) {
                             thisClient.connectCallback.onConnectFailure();
                         }
-                    } else
-                    if(t instanceof SocketTimeoutException){
-                        logger.trace("polling ends by timeout, keep polling, error : {}", t.getMessage());
+                    } else if (t instanceof SocketTimeoutException) {
+                        logger.trace("polling ends by timeout, keep polling, error : {}",
+                                t.getMessage());
                         poll(nodeId);// recursive call to restart polling
-                    } else{
+                    } else {
                         logger.error("Unexpected error : {} , {}", t.getMessage(), t.getCause());
                         poll(nodeId);// recursive call to restart polling
-                        if(thisClient.connectCallback !=null){
+                        if (thisClient.connectCallback != null) {
                             thisClient.connectCallback.onConnectFailure();
                         }
                     }
@@ -117,7 +117,7 @@ public class WsPRetrofitClientImpl implements ClientNode {
         this.poll = false;
     }
 
-    public Boolean isPolling(){
+    public Boolean isPolling() {
         return this.poll;
     }
 
@@ -153,23 +153,23 @@ public class WsPRetrofitClientImpl implements ClientNode {
 
             Call<KeypleDto> call = getRetrofitClient(baseUrl).postDto(keypleDto);
 
-            //post Keyple DTO
+            // post Keyple DTO
             call.enqueue(new Callback<KeypleDto>() {
 
-                //process response
+                // process response
                 @Override
                 public void onResponse(Call<KeypleDto> call, Response<KeypleDto> response) {
                     int statusCode = response.code();
-                    logger.trace("Receive response from sendDto {} {}",nodeId, statusCode);
+                    logger.trace("Receive response from sendDto {} {}", nodeId, statusCode);
                     processHttpResponseDTO(response);
                 }
 
-                //process failure
+                // process failure
                 @Override
                 public void onFailure(Call<KeypleDto> call, Throwable t) {
                     // Log error here since request failed
-                    logger.trace("Receive failure from sendDto {}",t.getCause());
-                    //startPollingWorker(nodeId);
+                    logger.trace("Receive failure from sendDto {}", t.getCause());
+                    // startPollingWorker(nodeId);
                 }
             });
 

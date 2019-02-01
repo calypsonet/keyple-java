@@ -13,7 +13,6 @@ package org.eclipse.keyple.plugin.remotese.nativese;
 
 
 import org.eclipse.keyple.plugin.remotese.nativese.method.*;
-import org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx;
 import org.eclipse.keyple.plugin.remotese.transport.*;
 import org.eclipse.keyple.plugin.remotese.transport.json.JsonParser;
 import org.eclipse.keyple.seproxy.ReaderPlugin;
@@ -89,7 +88,7 @@ public class NativeReaderServiceImpl
                     throw new IllegalStateException(
                             "a READER_CONNECT request has been received by NativeReaderService");
                 } else {
-                    //send DTO to TxEngine
+                    // send DTO to TxEngine
                     out = this.rmTxEngine.onDTO(transportDto);
                 }
                 break;
@@ -100,7 +99,7 @@ public class NativeReaderServiceImpl
                     throw new IllegalStateException(
                             "a READER_DISCONNECT request has been received by NativeReaderService");
                 } else {
-                    //send DTO to TxEngine
+                    // send DTO to TxEngine
                     out = this.rmTxEngine.onDTO(transportDto);
                 }
                 break;
@@ -153,12 +152,12 @@ public class NativeReaderServiceImpl
      */
     @Override
     public String connectReader(ProxyReader localReader, String clientNodeId)
-            throws KeypleReaderException{
+            throws KeypleReaderException {
 
         logger.info("connectReader {} from device {}", localReader.getName(), clientNodeId);
 
-        RmConnectReaderTx connect = new RmConnectReaderTx(null,
-                localReader.getName(), null, clientNodeId, localReader, clientNodeId, this);
+        RmConnectReaderTx connect = new RmConnectReaderTx(null, localReader.getName(), null,
+                clientNodeId, localReader, clientNodeId, this);
         try {
             rmTxEngine.register(connect);
             return connect.get();
@@ -173,13 +172,14 @@ public class NativeReaderServiceImpl
             throws KeypleReaderException {
         logger.info("disconnectReader {} from device {}", nativeReaderName, clientNodeId);
 
-        RmDisconnectReaderTx disconnect = new RmDisconnectReaderTx(sessionId,nativeReaderName,clientNodeId);
+        RmDisconnectReaderTx disconnect =
+                new RmDisconnectReaderTx(sessionId, nativeReaderName, clientNodeId);
 
         try {
             rmTxEngine.register(disconnect);
-            Boolean status =  disconnect.get();
+            Boolean status = disconnect.get();
             ProxyReader nativeReader = findLocalReader(nativeReaderName);
-            if(nativeReader instanceof AbstractObservableReader){
+            if (nativeReader instanceof AbstractObservableReader) {
                 // stop propagating the local reader events
                 ((AbstractObservableReader) nativeReader).removeObserver(this);
             }

@@ -80,7 +80,7 @@ public class WsPollingRetrofitFactory extends TransportFactory {
 
     }
 
-    public String getBaseUrl(){
+    public String getBaseUrl() {
         return protocol + hostname + ":" + port;
     }
 }

@@ -15,10 +15,10 @@ import org.eclipse.keyple.plugin.remotese.pluginse.RemoteSePlugin;
 import org.eclipse.keyple.plugin.remotese.pluginse.VirtualReader;
 import org.eclipse.keyple.plugin.remotese.transport.*;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 
 public class RmConnectReaderExecutor implements RemoteMethodExecutor {
 
@@ -55,24 +55,16 @@ public class RmConnectReaderExecutor implements RemoteMethodExecutor {
 
             // build transport DTO with body
             return transportDto.nextTransportDTO(new KeypleDto(keypleDto.getAction(),
-                    respBody.toString(),
-                    false,
-                    virtualReader.getSession().getSessionId(),
-                    nativeReaderName,
-                    virtualReader.getName(),
-                    clientNodeId));
+                    respBody.toString(), false, virtualReader.getSession().getSessionId(),
+                    nativeReaderName, virtualReader.getName(), clientNodeId));
 
         } catch (KeypleReaderException e) {
             // virtual reader for remote reader already exists
-            logger.warn("Virtual reader already exists for reader " + nativeReaderName ,e);
+            logger.warn("Virtual reader already exists for reader " + nativeReaderName, e);
 
             // send the exception inside the dto
             return transportDto.nextTransportDTO(KeypleDtoHelper.ExceptionDTO(keypleDto.getAction(),
-                    e,
-                    null,
-                    nativeReaderName,
-                    null,
-                    clientNodeId));
+                    e, null, nativeReaderName, null, clientNodeId));
 
         }
     }

@@ -12,7 +12,6 @@
 package org.eclipse.keyple.plugin.remotese.nativese;
 
 
-import org.eclipse.keyple.plugin.remotese.transport.KeypleRemoteException;
 import org.eclipse.keyple.seproxy.SeReader;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderNotFoundException;
@@ -35,6 +34,7 @@ public interface NativeReaderService {
 
     /**
      * Find a local reader accross plugins
+     * 
      * @param nativeReaderName
      * @return
      * @throws KeypleReaderNotFoundException
