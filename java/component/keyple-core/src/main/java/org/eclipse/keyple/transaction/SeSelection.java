@@ -81,7 +81,7 @@ public final class SeSelection {
     private boolean processSelection(SelectionResponse selectionResponse) {
         boolean selectionSuccessful = false;
         /* resets MatchingSe previous data */
-        for(MatchingSe matchingSe: matchingSeList) {
+        for (MatchingSe matchingSe : matchingSeList) {
             matchingSe.reset();
         }
         /* Check SeResponses */
@@ -89,7 +89,8 @@ public final class SeSelection {
         for (SeResponse seResponse : selectionResponse.getSelectionSeResponseSet().getResponses()) {
             if (seResponse != null) {
                 /* test if the selection is successful: we should have either a FCI or an ATR */
-                if (seResponse.getSelectionStatus() != null && seResponse.getSelectionStatus().hasMatched()) {
+                if (seResponse.getSelectionStatus() != null
+                        && seResponse.getSelectionStatus().hasMatched()) {
                     /* at least one is successful */
                     selectionSuccessful = true;
                     /* update the matchingSe list */

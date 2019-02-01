@@ -180,7 +180,7 @@ public final class CalypsoPo extends MatchingSe {
     }
 
     @Override
-    public final void reset() {
+    protected final void reset() {
         super.reset();
         applicationSerialNumber = null;
         poAtr = null;

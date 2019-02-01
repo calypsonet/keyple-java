@@ -116,7 +116,7 @@ public final class PcscReader extends AbstractThreadedLocalReader {
     }
 
     @Override
-    public boolean isSePresent() throws NoStackTraceThrowable {
+    protected boolean checkSePresence() throws NoStackTraceThrowable {
         try {
             return terminal.isCardPresent();
         } catch (CardException e) {
@@ -141,16 +141,10 @@ public final class PcscReader extends AbstractThreadedLocalReader {
     protected boolean waitForCardAbsent(long timeout) throws NoStackTraceThrowable {
         try {
             if (terminal.waitForCardAbsent(timeout)) {
-                closeLogicalChannel();
-                closePhysicalChannel();
                 return true;
             } else {
                 return false;
             }
-        } catch (KeypleChannelStateException e) {
-            logger.trace("[{}] Exception occured in waitForCardAbsent. Message: {}", this.getName(),
-                    e.getMessage());
-            throw new NoStackTraceThrowable();
         } catch (CardException e) {
             logger.trace("[{}] Exception occured in waitForCardAbsent. Message: {}", this.getName(),
                     e.getMessage());
@@ -382,6 +376,10 @@ public final class PcscReader extends AbstractThreadedLocalReader {
 
     /**
      * Tells if a physical channel is open
+     * <p>
+     * This status may be wrong if the card has been removed.
+     * <p>
+     * The caller should test the card presence with isSePresent before calling this method.
      * 
      * @return true if the physical channel is open
      */

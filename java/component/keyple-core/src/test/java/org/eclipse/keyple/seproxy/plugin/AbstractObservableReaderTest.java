@@ -129,6 +129,16 @@ public class AbstractObservableReaderTest extends CoreBaseTest {
             }
 
             @Override
+            protected void openPhysicalChannel() throws KeypleChannelStateException {
+
+            }
+
+            @Override
+            protected boolean isPhysicalChannelOpen() {
+                return false;
+            }
+
+            @Override
             protected byte[] transmitApdu(byte[] apduIn) throws KeypleIOReaderException {
                 return new byte[0];
             }
@@ -140,7 +150,7 @@ public class AbstractObservableReaderTest extends CoreBaseTest {
             }
 
             @Override
-            public boolean isSePresent() throws NoStackTraceThrowable {
+            protected boolean checkSePresence() throws NoStackTraceThrowable {
                 return false;
             }
 

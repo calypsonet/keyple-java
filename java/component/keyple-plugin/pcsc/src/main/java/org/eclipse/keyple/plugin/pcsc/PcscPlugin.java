@@ -179,28 +179,28 @@ public final class PcscPlugin extends AbstractThreadedObservablePlugin {
     }
 
     private CardTerminals getCardTerminals() {
-         try {
-         Class pcscterminal = null;
-         pcscterminal = Class.forName("sun.security.smartcardio.PCSCTerminals");
-         Field contextId = pcscterminal.getDeclaredField("contextId");
-         contextId.setAccessible(true);
+        try {
+            Class pcscterminal = null;
+            pcscterminal = Class.forName("sun.security.smartcardio.PCSCTerminals");
+            Field contextId = pcscterminal.getDeclaredField("contextId");
+            contextId.setAccessible(true);
 
-         if (contextId.getLong(pcscterminal) != 0L) {
-         Class pcsc = Class.forName("sun.security.smartcardio.PCSC");
-         Method SCardEstablishContext =
-         pcsc.getDeclaredMethod("SCardEstablishContext", new Class[] {Integer.TYPE});
-         SCardEstablishContext.setAccessible(true);
+            if (contextId.getLong(pcscterminal) != 0L) {
+                Class pcsc = Class.forName("sun.security.smartcardio.PCSC");
+                Method SCardEstablishContext =
+                        pcsc.getDeclaredMethod("SCardEstablishContext", new Class[] {Integer.TYPE});
+                SCardEstablishContext.setAccessible(true);
 
-         Field SCARD_SCOPE_USER = pcsc.getDeclaredField("SCARD_SCOPE_USER");
-         SCARD_SCOPE_USER.setAccessible(true);
+                Field SCARD_SCOPE_USER = pcsc.getDeclaredField("SCARD_SCOPE_USER");
+                SCARD_SCOPE_USER.setAccessible(true);
 
-         long newId = ((Long) SCardEstablishContext.invoke(pcsc,
-         new Object[] {Integer.valueOf(SCARD_SCOPE_USER.getInt(pcsc))})).longValue();
-         contextId.setLong(pcscterminal, newId);
-         }
-         } catch (Exception e) {
-         e.printStackTrace();
-         }
+                long newId = ((Long) SCardEstablishContext.invoke(pcsc,
+                        new Object[] {Integer.valueOf(SCARD_SCOPE_USER.getInt(pcsc))})).longValue();
+                contextId.setLong(pcscterminal, newId);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         if (factory == null) {
             factory = TerminalFactory.getDefault();
