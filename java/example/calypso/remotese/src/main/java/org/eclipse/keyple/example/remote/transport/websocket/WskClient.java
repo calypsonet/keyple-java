@@ -12,6 +12,8 @@
 package org.eclipse.keyple.example.remote.transport.websocket;
 
 import java.net.URI;
+
+import com.sun.org.apache.regexp.internal.recompile;
 import org.eclipse.keyple.plugin.remotese.transport.*;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
@@ -39,17 +41,27 @@ public class WskClient extends WebSocketClient implements ClientNode {
     }
 
     @Override
-    public void onMessage(String message) {
-        logger.trace("Web socket onMessage {}", message);
-        KeypleDto dto = KeypleDtoHelper.fromJson(message);
+    public void onMessage(final String message) {
 
-        // process dto
-        TransportDto transportDto = dtoHandler.onDTO(new WskTransportDTO(dto, null, this));
+        final WskClient thisClient = this;
 
-        // there is a response/request to send back
-        if (!KeypleDtoHelper.isNoResponse(transportDto.getKeypleDTO())) {
-            this.sendDTO(transportDto);
-        }
+        //process all incoming message in a separate thread to allow RemoteSE blocking API to work
+        new Thread(new Runnable(){
+            @Override
+            public void run() {
+                logger.trace("Web socket onMessage {}", message);
+                KeypleDto dto = KeypleDtoHelper.fromJson(message);
+
+                // process dto
+                TransportDto transportDto = dtoHandler.onDTO(new WskTransportDTO(dto, null, thisClient ));
+
+                // there is a response/request to send back
+                if (!KeypleDtoHelper.isNoResponse(transportDto.getKeypleDTO())) {
+                    thisClient.sendDTO(transportDto);
+                }
+            }
+        }).start();
+
     }
 
     @Override
