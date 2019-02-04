@@ -9,10 +9,10 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  ********************************************************************************/
-package org.eclipse.keyple.example.remote.example;
+package org.eclipse.keyple.example.remote.application;
 
 import java.io.IOException;
-import org.eclipse.keyple.example.remote.example.calypso.StubCalypsoClassic;
+import org.eclipse.keyple.example.remote.application.calypso.StubCalypsoClassic;
 import org.eclipse.keyple.plugin.remotese.nativese.NativeReaderServiceImpl;
 import org.eclipse.keyple.plugin.remotese.transport.*;
 import org.eclipse.keyple.plugin.stub.StubPlugin;

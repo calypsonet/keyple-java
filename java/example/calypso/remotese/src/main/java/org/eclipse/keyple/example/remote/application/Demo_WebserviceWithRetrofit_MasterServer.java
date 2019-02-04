@@ -9,28 +9,29 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  ********************************************************************************/
-package org.eclipse.keyple.example.remote.example;
+package org.eclipse.keyple.example.remote.application;
 
-import org.eclipse.keyple.example.remote.transport.websocket.WskFactory;
+import org.eclipse.keyple.example.remote.transport.wspolling.client_retrofit.WsPollingRetrofitFactory;
 import org.eclipse.keyple.plugin.remotese.transport.TransportFactory;
 
 /**
- * Demo websocket The master device uses the websocket client whereas the slave device uses the
- * websocket server
+ * Demo Web Service with Retrofit http client library (Android friendly) The master device uses the
+ * websocket master whereas the slave device uses the websocket client
  */
-public class Demo_Websocket_MasterClient {
+public class Demo_WebserviceWithRetrofit_MasterServer {
+
 
     public static void main(String[] args) throws Exception {
 
         // Create the procotol factory
-        TransportFactory factory = new WskFactory(false); // Web socket
+        TransportFactory factory = new WsPollingRetrofitFactory(); // HTTP Web Polling
 
         // Launch the server thread
-        Demo_Threads.startServer(false, factory);
+        Demo_Threads.startServer(true, factory);
 
         Thread.sleep(1000);
 
         // Launch the client thread
-        Demo_Threads.startClient(true, factory);
+        Demo_Threads.startClient(false, factory);
     }
 }
