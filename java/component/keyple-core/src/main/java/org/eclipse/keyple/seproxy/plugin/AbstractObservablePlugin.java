@@ -12,6 +12,7 @@
 package org.eclipse.keyple.seproxy.plugin;
 
 import java.util.SortedSet;
+import java.util.concurrent.ConcurrentSkipListSet;
 import org.eclipse.keyple.seproxy.ReaderPlugin;
 import org.eclipse.keyple.seproxy.event.ObservablePlugin;
 import org.eclipse.keyple.seproxy.event.PluginEvent;
@@ -66,6 +67,22 @@ public abstract class AbstractObservablePlugin extends AbstractLoggedObservable<
             throw new KeypleReaderException("List of readers has not been initialized");
         }
         return readers;
+    }
+
+    /**
+     * Returns the current list of reader names.
+     *
+     * The list of names is built from the current readers list
+     *
+     * @return a list of String
+     */
+    @Override
+    public final SortedSet<String> getReaderNames() {
+        SortedSet<String> readerNames = new ConcurrentSkipListSet<String>();
+        for (AbstractObservableReader reader : readers) {
+            readerNames.add(reader.getName());
+        }
+        return readerNames;
     }
 
     /**

@@ -102,6 +102,7 @@ public abstract class AbstractThreadedObservablePlugin extends AbstractObservabl
         }
 
         public void run() {
+            SortedSet<String> changedReaderNames = new ConcurrentSkipListSet<String>();
             try {
                 while (running) {
                     /* retrieves the current readers names list */
@@ -114,17 +115,31 @@ public abstract class AbstractThreadedObservablePlugin extends AbstractObservabl
                          * parse the current readers list, notify for disappeared readers, update
                          * readers list
                          */
+                        /* build changed reader names list */
+                        changedReaderNames.clear();
                         for (AbstractObservableReader reader : readers) {
                             if (!actualNativeReadersNames.contains(reader.getName())) {
-                                notifyObservers(new PluginEvent(this.pluginName, reader.getName(),
-                                        PluginEvent.EventType.READER_DISCONNECTED));
-                                readers.remove(reader);
-                                logger.trace(
-                                        "[{}][{}] Plugin thread => Remove unplugged reader from readers list.",
-                                        this.pluginName, reader.getName());
-                                /* remove reader name from the current list */
-                                nativeReadersNames.remove(reader.getName());
+                                changedReaderNames.add(reader.getName());
                             }
+                        }
+                        /* notify disconnections if any and update the reader list */
+                        if (changedReaderNames.size() > 0) {
+                            /* grouped notification */
+                            notifyObservers(new PluginEvent(this.pluginName, changedReaderNames,
+                                    PluginEvent.EventType.READER_DISCONNECTED));
+                            /* list update */
+                            for (AbstractObservableReader reader : readers) {
+                                if (!actualNativeReadersNames.contains(reader.getName())) {
+                                    readers.remove(reader);
+                                    logger.trace(
+                                            "[{}][{}] Plugin thread => Remove unplugged reader from readers list.",
+                                            this.pluginName, reader.getName());
+                                    /* remove reader name from the current list */
+                                    nativeReadersNames.remove(reader.getName());
+                                }
+                            }
+                            /* clean the list for a possible connection notification */
+                            changedReaderNames.clear();
                         }
                         /*
                          * parse the new readers list, notify for readers appearance, update readers
@@ -134,14 +149,19 @@ public abstract class AbstractThreadedObservablePlugin extends AbstractObservabl
                             if (!nativeReadersNames.contains(readerName)) {
                                 AbstractObservableReader reader = getNativeReader(readerName);
                                 readers.add(reader);
-                                notifyObservers(new PluginEvent(this.pluginName, reader.getName(),
-                                        PluginEvent.EventType.READER_CONNECTED));
+                                /* add to the notification list */
+                                changedReaderNames.add(readerName);
                                 logger.trace(
                                         "[{}][{}] Plugin thread => Add plugged reader to readers list.",
                                         this.pluginName, reader.getName());
                                 /* add reader name to the current list */
                                 nativeReadersNames.add(readerName);
                             }
+                        }
+                        /* notify connections if any */
+                        if (changedReaderNames.size() > 0) {
+                            notifyObservers(new PluginEvent(this.pluginName, changedReaderNames,
+                                    PluginEvent.EventType.READER_CONNECTED));
                         }
                     }
                     /* sleep for a while. */

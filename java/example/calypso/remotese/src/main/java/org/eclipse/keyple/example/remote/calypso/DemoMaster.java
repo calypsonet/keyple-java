@@ -140,11 +140,12 @@ public class DemoMaster implements org.eclipse.keyple.util.Observable.Observer {
                 case READER_CONNECTED:
                     // a new virtual reader is connected, let's observe it readers event
                     logger.info("READER_CONNECTED {} {}", event.getPluginName(),
-                            event.getReaderName());
+                            event.getReaderNames().first());
                     try {
                         RemoteSePlugin remoteSEPlugin = (RemoteSePlugin) SeProxyService
                                 .getInstance().getPlugin("RemoteSePlugin");
-                        poReader = (VirtualReader) remoteSEPlugin.getReader(event.getReaderName());
+                        poReader = (VirtualReader) remoteSEPlugin
+                                .getReader(event.getReaderNames().first());
 
                         /* set default selection request */
                         seSelection = new SeSelection(poReader);
@@ -209,7 +210,7 @@ public class DemoMaster implements org.eclipse.keyple.util.Observable.Observer {
                     break;
                 case READER_DISCONNECTED:
                     logger.info("READER_DISCONNECTED {} {}", event.getPluginName(),
-                            event.getReaderName());
+                            event.getReaderNames().first());
                     break;
             }
         }

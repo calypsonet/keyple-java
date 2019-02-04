@@ -11,6 +11,22 @@
  ********************************************************************************/
 package org.eclipse.keyple.seproxy.event;
 
+import java.util.SortedSet;
+import java.util.concurrent.ConcurrentSkipListSet;
+
+/**
+ * A {@link PluginEvent} is used to propagate a change of reader state in reader plugin.
+ * <p>
+ * The getReaderNames and getEventType methods allow the event recipient to retrieve the names of
+ * the readers involved and the type of the event.
+ * <p>
+ * At the moment, two types of events are supported: a connection or disconnection of the reader.
+ * <p>
+ * Since the event provides a list of reader names, a single event can be used to notify a change
+ * for one or more readers.
+ * <p>
+ * However, only one type of event is notified at a time.
+ */
 public final class PluginEvent {
     /**
      * The name of the plugin handling the reader that produced the event
@@ -18,9 +34,9 @@ public final class PluginEvent {
     private final String pluginName;
 
     /**
-     * The name of the reader involved
+     * The name of the readers involved
      */
-    private final String readerName;
+    private SortedSet<String> readerNames = new ConcurrentSkipListSet<String>();
 
     /**
      * The type of event
@@ -53,9 +69,29 @@ public final class PluginEvent {
         }
     }
 
+    /**
+     * Create a PluginEvent for a single reader
+     * 
+     * @param pluginName name of the plugin
+     * @param readerName name of the reader
+     * @param eventType type of the event, connection or disconnection
+     */
     public PluginEvent(String pluginName, String readerName, EventType eventType) {
         this.pluginName = pluginName;
-        this.readerName = readerName;
+        this.readerNames.add(readerName);
+        this.eventType = eventType;
+    }
+
+    /**
+     * Create a PluginEvent for multiple readers
+     * 
+     * @param pluginName name of the plugin
+     * @param readerNames list of reader names
+     * @param eventType type of the event, connection or disconnection
+     */
+    public PluginEvent(String pluginName, SortedSet<String> readerNames, EventType eventType) {
+        this.pluginName = pluginName;
+        this.readerNames.addAll(readerNames);
         this.eventType = eventType;
     }
 
@@ -63,8 +99,8 @@ public final class PluginEvent {
         return pluginName;
     }
 
-    public String getReaderName() {
-        return readerName;
+    public SortedSet<String> getReaderNames() {
+        return readerNames;
     }
 
     public EventType getEventType() {
