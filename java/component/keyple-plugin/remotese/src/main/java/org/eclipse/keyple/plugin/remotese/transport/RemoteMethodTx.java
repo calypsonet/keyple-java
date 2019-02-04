@@ -101,9 +101,8 @@ public abstract class RemoteMethodTx<T> {
 
         try {
             lock = new CountDownLatch(1);
-            logger.trace("" +
-                    "" +
-                    "Set callback on RemoteMethodTx {} {}", this.getClass().getCanonicalName(), this.hashCode());
+            logger.trace("" + "" + "Set callback on RemoteMethodTx {} {}",
+                    this.getClass().getCanonicalName(), this.hashCode());
             asyncGet.start();
             logger.trace("Lock {}, {}", this.getClass().getCanonicalName(), this.hashCode());
             lock.await();

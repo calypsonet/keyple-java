@@ -12,13 +12,12 @@
 package org.eclipse.keyple.example.remote.transport.websocket;
 
 import java.net.URI;
-
-import com.sun.org.apache.regexp.internal.recompile;
 import org.eclipse.keyple.plugin.remotese.transport.*;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 
 /**
  * Web socket client
@@ -45,15 +44,16 @@ public class WskClient extends WebSocketClient implements ClientNode {
 
         final WskClient thisClient = this;
 
-        //process all incoming message in a separate thread to allow RemoteSE blocking API to work
-        new Thread(new Runnable(){
+        // process all incoming message in a separate thread to allow RemoteSE blocking API to work
+        new Thread(new Runnable() {
             @Override
             public void run() {
                 logger.trace("Web socket onMessage {}", message);
                 KeypleDto dto = KeypleDtoHelper.fromJson(message);
 
                 // process dto
-                TransportDto transportDto = dtoHandler.onDTO(new WskTransportDTO(dto, null, thisClient ));
+                TransportDto transportDto =
+                        dtoHandler.onDTO(new WskTransportDTO(dto, null, thisClient));
 
                 // there is a response/request to send back
                 if (!KeypleDtoHelper.isNoResponse(transportDto.getKeypleDTO())) {

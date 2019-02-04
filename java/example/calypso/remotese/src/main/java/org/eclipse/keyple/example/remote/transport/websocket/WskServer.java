@@ -67,7 +67,7 @@ class WskServer extends WebSocketServer implements ServerNode {
 
         final WskServer thisServer = this;
 
-        //process all incoming message in a separate thread to allow RemoteSE blocking API to work
+        // process all incoming message in a separate thread to allow RemoteSE blocking API to work
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -84,7 +84,8 @@ class WskServer extends WebSocketServer implements ServerNode {
                                     "Websocket connection has been mapped to session defined in message {} - {}",
                                     keypleDto.getNativeReaderName(), conn);
 
-                            addConnection(conn, keypleDto.getNativeReaderName(), keypleDto.getNodeId());
+                            addConnection(conn, keypleDto.getNativeReaderName(),
+                                    keypleDto.getNodeId());
                         } else {
                             logger.debug(
                                     "No session defined in message, can not map websocket connection {} - {}",
