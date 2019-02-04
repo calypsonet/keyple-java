@@ -25,9 +25,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * The UseCase_Generic3_MultiSelection_Pcsc class illustrates the use of the select next mechanism
+ * The UseCase_Generic3_GroupedMultiSelection_Pcsc class illustrates the use of the select next
+ * mechanism
  */
-public class UseCase_Generic3_MultiSelection_Pcsc {
+public class UseCase_Generic3_GroupedMultiSelection_Pcsc {
     protected static final Logger logger =
             LoggerFactory.getLogger(UseCase_Generic1_ExplicitSelectionAid_Pcsc.class);
 
@@ -55,7 +56,7 @@ public class UseCase_Generic3_MultiSelection_Pcsc {
         }
 
         logger.info(
-                "=============== UseCase Generic #3: AID based explicit selection ==================");
+                "=============== UseCase Generic #3: AID based grouped explicit multiple selection ==================");
         logger.info("= SE Reader  NAME = {}", seReader.getName());
 
         MatchingSe matchingSeTable[] = new MatchingSe[3];
@@ -63,6 +64,7 @@ public class UseCase_Generic3_MultiSelection_Pcsc {
         /* Check if a SE is present in the reader */
         if (seReader.isSePresent()) {
 
+            /* CLOSE_AFTER pour assurer la sélection de toutes les applications */
             SeSelection seSelection = new SeSelection(seReader);
 
             /* operate SE selection (change the AID here to adapt it to the SE used for the test) */

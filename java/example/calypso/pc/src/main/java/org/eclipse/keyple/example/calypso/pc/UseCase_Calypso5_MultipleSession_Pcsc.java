@@ -26,7 +26,6 @@ import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 import org.eclipse.keyple.seproxy.exception.NoStackTraceThrowable;
 import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
 import org.eclipse.keyple.seproxy.protocol.TransmissionMode;
-import org.eclipse.keyple.transaction.MatchingSe;
 import org.eclipse.keyple.transaction.SeSelection;
 import org.eclipse.keyple.transaction.SeSelector;
 import org.eclipse.keyple.util.ByteArrayUtils;
@@ -102,7 +101,7 @@ public class UseCase_Calypso5_MultipleSession_Pcsc {
             throw new IllegalStateException("Bad PO or SAM reader setup");
         }
 
-        logger.info("=============== UseCase Calypso #4: Po Authentication ==================");
+        logger.info("=============== UseCase Calypso #5: Po Authentication ==================");
         logger.info("= PO Reader  NAME = {}", poReader.getName());
         logger.info("= SAM Reader  NAME = {}", samReader.getName());
 
@@ -149,8 +148,6 @@ public class UseCase_Calypso5_MultipleSession_Pcsc {
             if (seSelection.processExplicitSelection()) {
                 logger.info("The selection of the PO has succeeded.");
 
-                MatchingSe selectedSe = seSelection.getSelectedSe();
-
                 /* Go on with the reading of the first record of the EventLog file */
                 logger.info(
                         "==================================================================================");
@@ -159,8 +156,8 @@ public class UseCase_Calypso5_MultipleSession_Pcsc {
                 logger.info(
                         "==================================================================================");
 
-                PoTransaction poTransaction = new PoTransaction(poReader, (CalypsoPo) selectedSe,
-                        samReader, CalypsoUtilities.getSamSettings());
+                PoTransaction poTransaction = new PoTransaction(poReader, calypsoPo, samReader,
+                        CalypsoUtilities.getSamSettings());
 
                 /*
                  * Open Session for the debit key
@@ -184,7 +181,7 @@ public class UseCase_Calypso5_MultipleSession_Pcsc {
                  *
                  * We'll send one more command to demonstrate the MULTIPLE mode
                  */
-                int modificationsBufferSize = ((CalypsoPo) selectedSe).getModificationsCounter();
+                int modificationsBufferSize = calypsoPo.getModificationsCounter();
 
                 int nbCommands = (modificationsBufferSize / 35) + 1;
 
