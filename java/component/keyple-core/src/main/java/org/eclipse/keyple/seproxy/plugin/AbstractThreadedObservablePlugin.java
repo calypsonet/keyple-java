@@ -124,7 +124,6 @@ public abstract class AbstractThreadedObservablePlugin extends AbstractObservabl
                                         this.pluginName, reader.getName());
                                 /* remove reader name from the current list */
                                 nativeReadersNames.remove(reader.getName());
-                                reader = null;
                             }
                         }
                         /*
