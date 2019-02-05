@@ -86,8 +86,10 @@ public class LocalClient implements ClientNode {
 
 
     @Override
-    public void connect() {
-        // dummy
+    public void connect(ConnectCallback connectCallback) {
+        if (connectCallback != null) {
+            logger.warn("Connection callback is not implemented for this client");
+        }
         logger.info("Connect Local Client");
     }
 

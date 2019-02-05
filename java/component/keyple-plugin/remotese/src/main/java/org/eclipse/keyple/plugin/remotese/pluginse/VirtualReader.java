@@ -51,6 +51,7 @@ public final class VirtualReader extends AbstractObservableReader {
         this.session = session;
         this.remoteName = nativeReaderName;
         this.rmTxEngine = rmTxEngine;
+        logger.info("A new virtual reader was created with session {}", session);
     }
 
     /**
@@ -76,7 +77,7 @@ public final class VirtualReader extends AbstractObservableReader {
         return session;
     }
 
-    public RemoteMethodTxEngine getRmTxEngine() {
+    RemoteMethodTxEngine getRmTxEngine() {
         return rmTxEngine;
     }
 
@@ -100,7 +101,7 @@ public final class VirtualReader extends AbstractObservableReader {
             throws IllegalArgumentException, KeypleReaderException {
 
         RmTransmitTx transmit = new RmTransmitTx(seRequestSet, session.getSessionId(),
-                this.getNativeReaderName(), this.getName(), null);
+                this.getNativeReaderName(), this.getName(), session.getSlaveNodeId());
         try {
             rmTxEngine.register(transmit);
             return transmit.get();
@@ -149,18 +150,14 @@ public final class VirtualReader extends AbstractObservableReader {
         final VirtualReader thisReader = this;
 
         logger.debug(" EVENT {} ", event.getEventType());
-        // notify observers in a separate thread
-        new Thread() {
-            public void run() {
-                if (thisReader.countObservers() > 0) {
-                    thisReader.notifyObservers(event);
-                } else {
-                    logger.debug(
-                            "An event was received but no observers are declared into VirtualReader : {} {}",
-                            thisReader.getName(), event.getEventType());
-                }
-            }
-        }.start();
+
+        if (thisReader.countObservers() > 0) {
+            thisReader.notifyObservers(event);
+        } else {
+            logger.debug(
+                    "An event was received but no observers are declared into VirtualReader : {} {}",
+                    thisReader.getName(), event.getEventType());
+        }
 
     }
 
@@ -189,7 +186,7 @@ public final class VirtualReader extends AbstractObservableReader {
         RmSetDefaultSelectionRequestTx setDefaultSelectionRequest =
                 new RmSetDefaultSelectionRequestTx(selectionRequest, notificationMode,
                         this.getNativeReaderName(), this.getName(),
-                        this.getSession().getSessionId(), null);
+                        this.getSession().getSessionId(), session.getSlaveNodeId());
 
         try {
             rmTxEngine.register(setDefaultSelectionRequest);

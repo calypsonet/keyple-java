@@ -26,7 +26,7 @@ class VirtualReaderSessionFactory {
      * @return Session for this reader
      */
     public VirtualReaderSession createSession(String nativeReaderName, String nodeId) {
-        return new VirtualReaderSessionImpl(generateSessionId(nativeReaderName, nodeId));
+        return new VirtualReaderSessionImpl(generateSessionId(nativeReaderName, nodeId), nodeId);
     }
 
 

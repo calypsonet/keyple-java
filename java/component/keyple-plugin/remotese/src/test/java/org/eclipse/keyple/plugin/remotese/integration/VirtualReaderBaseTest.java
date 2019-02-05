@@ -31,10 +31,6 @@ import org.slf4j.LoggerFactory;
  */
 public class VirtualReaderBaseTest {
 
-    // fail :
-    // transmitset : 0,1
-    // transmit : 0,2
-
     @Rule
     public TestName name = new TestName();
 
@@ -113,8 +109,9 @@ public class VirtualReaderBaseTest {
         return nativeReader;
     }
 
-    private void disconnectStubReader(StubReader nativeReader, String nodeId) throws Exception {
-        this.nativeReaderService.disconnectReader(nativeReader, nodeId);
+    private void disconnectStubReader(String sessionId, StubReader nativeReader, String nodeId)
+            throws Exception {
+        this.nativeReaderService.disconnectReader(sessionId, nativeReader.getName(), nodeId);
     }
 
     private VirtualReader getVirtualReader() throws Exception {

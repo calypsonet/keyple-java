@@ -107,7 +107,7 @@ To build the example app NFC and OMAPI
 ./gradlew -b ./example/calypso/omapi/build.gradle assembleDebug
 ```
 
-### Windows
+#### Windows
 
 To build the plugins, execute the following commands in the **/android folder**, the first command is required to be executed at least once to build the gradle wrapper.  
 

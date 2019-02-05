@@ -78,7 +78,8 @@ public abstract class RemoteMethodTx<T> {
      * @throws KeypleRemoteException
      */
     final public T get() throws KeypleRemoteException {
-        logger.debug("Blocking Get {}");
+        logger.debug("Blocking Get {}", this.getClass().getCanonicalName());
+        final RemoteMethodTx thisInstance = this;
 
         Thread asyncGet = new Thread() {
             public void run() {
@@ -91,18 +92,21 @@ public abstract class RemoteMethodTx<T> {
                         }
                     });
                 } catch (KeypleRemoteException e) {
-                    logger.error("Exception while sending Dto");
+                    logger.error("Exception while sending Dto", e);
+                    thisInstance.remoteException = e;
                     lock.countDown();
                 }
             }
         };
 
         try {
-
             lock = new CountDownLatch(1);
+            logger.trace("" + "" + "Set callback on RemoteMethodTx {} {}",
+                    this.getClass().getCanonicalName(), this.hashCode());
             asyncGet.start();
+            logger.trace("Lock {}, {}", this.getClass().getCanonicalName(), this.hashCode());
             lock.await();
-            logger.debug("tread unlock in RemoteMethodTx");
+            logger.trace("Unlock {}, {}", this.getClass().getCanonicalName(), this.hashCode());
             if (this.remoteException != null) {
                 throw remoteException;
             } else {

@@ -22,6 +22,8 @@ public interface VirtualReaderSession {
      */
     String getSessionId();
 
+    String getSlaveNodeId();
+
 
 
 }

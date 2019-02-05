@@ -98,12 +98,14 @@ abstract class AbstractLoggedObservable<T> extends Observable<T> implements Name
 
         if (this instanceof AbstractObservableReader) {
             logger.trace(
-                    "[{}] AbstractObservableReader => Notifying a reader event. EVENTNAME = {}",
-                    this.getName(), ((ReaderEvent) event).getEventType().getName());
+                    "[{}] AbstractObservableReader => Notifying a reader event to {} observers. EVENTNAME = {}",
+                    this.getName(), this.countObservers(),
+                    ((ReaderEvent) event).getEventType().getName());
         } else if (this instanceof AbstractObservablePlugin) {
             logger.trace(
-                    "[{}] AbstractObservableReader => Notifying a plugin event. EVENTNAME = {} ",
-                    this.getName(), ((PluginEvent) event).getEventType().getName());
+                    "[{}] AbstractObservableReader => Notifying a plugin event to {} observers. EVENTNAME = {} ",
+                    this.getName(), this.countObservers(),
+                    ((PluginEvent) event).getEventType().getName());
         }
 
         setChanged();

@@ -135,4 +135,5 @@ dependencies {
     //implementation group: 'org.eclipse.keyple', name: 'keyple-plugin-android-nfc', version: '1.+'
     implementation project(path:':keyple-plugin:android-nfc')
 
+
 }

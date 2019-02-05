@@ -166,6 +166,9 @@ public final class PcscReader extends AbstractThreadedLocalReader {
             apduResponseData = channel.transmit(new CommandAPDU(apduIn));
         } catch (CardException e) {
             throw new KeypleIOReaderException(this.getName() + ":" + e.getMessage());
+        } catch (IllegalArgumentException e) {
+            // card could have been removed prematurely
+            throw new KeypleIOReaderException(this.getName() + ":" + e.getMessage());
         }
         return apduResponseData.getBytes();
     }

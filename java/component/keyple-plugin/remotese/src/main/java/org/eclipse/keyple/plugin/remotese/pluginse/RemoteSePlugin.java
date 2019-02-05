@@ -16,7 +16,6 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import org.eclipse.keyple.plugin.remotese.transport.DtoSender;
 import org.eclipse.keyple.plugin.remotese.transport.RemoteMethodTxEngine;
-import org.eclipse.keyple.seproxy.SeReader;
 import org.eclipse.keyple.seproxy.event.PluginEvent;
 import org.eclipse.keyple.seproxy.event.ReaderEvent;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
@@ -35,7 +34,7 @@ import org.slf4j.LoggerFactory;
 public final class RemoteSePlugin extends AbstractObservablePlugin {
 
     private static final Logger logger = LoggerFactory.getLogger(RemoteSePlugin.class);
-    static final String PLUGIN_NAME = "RemoteSePlugin";
+    public static final String PLUGIN_NAME = "RemoteSePlugin";
 
     // private final VirtualReaderSessionFactory sessionManager;
 
@@ -62,10 +61,11 @@ public final class RemoteSePlugin extends AbstractObservablePlugin {
 
 
 
-    public SeReader getReaderByRemoteName(String remoteName) throws KeypleReaderNotFoundException {
+    public VirtualReader getReaderByRemoteName(String remoteName)
+            throws KeypleReaderNotFoundException {
         for (AbstractObservableReader virtualReader : readers) {
             if (((VirtualReader) virtualReader).getNativeReaderName().equals(remoteName)) {
-                return virtualReader;
+                return (VirtualReader) virtualReader;
             }
         }
         throw new KeypleReaderNotFoundException(remoteName);
@@ -82,31 +82,29 @@ public final class RemoteSePlugin extends AbstractObservablePlugin {
         // create a new session for the new reader
         VirtualReaderSession session = sessionManager.createSession(nativeReaderName, clientNodeId);
 
-        // DtoSender sends Dto when the session requires to
-        ((VirtualReaderSessionImpl) session).addObserver(dtoSender);
-
         // check if reader is not already connected (by localReaderName)
         if (!isReaderConnected(nativeReaderName)) {
             logger.info("Create a new Virtual Reader with localReaderName {} with session {}",
                     nativeReaderName, session.getSessionId());
 
-            RemoteMethodTxEngine rmTxEngine = new RemoteMethodTxEngine(sender);
-
+            // Create virtual reader with a remote method engine so the reader can send dto
+            // with a session
+            // and the provided name
             final VirtualReader virtualReader =
-                    new VirtualReader(session, nativeReaderName, rmTxEngine);
+                    new VirtualReader(session, nativeReaderName, new RemoteMethodTxEngine(sender));
             readers.add(virtualReader);
 
             // notify that a new reader is connected in a separated thread
-            new Thread() {
-                public void run() {
-                    notifyObservers(new PluginEvent(getName(), virtualReader.getName(),
-                            PluginEvent.EventType.READER_CONNECTED));
-                }
-            }.start();
+            /*
+             * new Thread() { public void run() { } }.start();
+             */
+            notifyObservers(new PluginEvent(getName(), virtualReader.getName(),
+                    PluginEvent.EventType.READER_CONNECTED));
 
             return virtualReader;
         } else {
-            throw new KeypleReaderException("Virtual Reader already exists");
+            throw new KeypleReaderException(
+                    "Virtual Reader already exists for reader " + nativeReaderName);
         }
     }
 
@@ -117,8 +115,8 @@ public final class RemoteSePlugin extends AbstractObservablePlugin {
      */
     public void disconnectRemoteReader(String nativeReaderName)
             throws KeypleReaderNotFoundException {
-        logger.debug("Disconnect Virtual reader {}", nativeReaderName);
 
+        logger.debug("Disconnect Virtual reader {}", nativeReaderName);
 
         // retrieve virtual reader to delete
         final VirtualReader virtualReader =
@@ -126,19 +124,17 @@ public final class RemoteSePlugin extends AbstractObservablePlugin {
 
         logger.info("Disconnect VirtualReader with name {} with session {}", nativeReaderName);
 
-        // remove observers
-        ((VirtualReaderSessionImpl) virtualReader.getSession()).clearObservers();
+        // remove observers of reader
+        virtualReader.clearObservers();
 
         // remove reader
         readers.remove(virtualReader);
 
         // send event READER_DISCONNECTED in a separate thread
-        new Thread() {
-            public void run() {
-                notifyObservers(new PluginEvent(getName(), virtualReader.getName(),
-                        PluginEvent.EventType.READER_DISCONNECTED));
-            }
-        }.start();
+        // new Thread() {public void run() { }}.start();
+
+        notifyObservers(new PluginEvent(getName(), virtualReader.getName(),
+                PluginEvent.EventType.READER_DISCONNECTED));
 
     }
 

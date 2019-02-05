@@ -84,7 +84,6 @@ public class VirtualReaderService implements DtoHandler {
                 keypleDTO.isRequest(), KeypleDtoHelper.toJson(keypleDTO));
 
 
-
         switch (method) {
             case READER_CONNECT:
                 if (keypleDTO.isRequest()) {
