@@ -136,14 +136,15 @@ public class Demo_Master implements org.eclipse.keyple.util.Observable.Observer 
         if (o instanceof PluginEvent) {
             PluginEvent event = (PluginEvent) o;
             logger.info("UPDATE {} {} {}", event.getEventType(), event.getPluginName(),
-                    event.getReaderName());
+                    event.getReaderNames().first());
             switch (event.getEventType()) {
                 case READER_CONNECTED:
                     // a new virtual reader is connected, let's configure it
                     try {
                         RemoteSePlugin remoteSEPlugin = (RemoteSePlugin) SeProxyService
                                 .getInstance().getPlugin("RemoteSePlugin");
-                        poReader = (VirtualReader) remoteSEPlugin.getReader(event.getReaderName());
+                        poReader = (VirtualReader) remoteSEPlugin
+                                .getReader(event.getReaderNames().first());
 
                         logger.info("Configure SeSelection");
 

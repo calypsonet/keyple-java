@@ -51,5 +51,5 @@ dependencies {
     // https://mvnrepository.com/artifact/junit/junit
     testImplementation 'junit:junit:4.12'
     // https://mvnrepository.com/artifact/org.mockito/mockito-core
-    testImplementation 'org.mockito:mockito-core:2.13.0'
+    testImplementation 'org.mockito:mockito-core:2.23.4'
 }
