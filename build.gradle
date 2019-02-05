@@ -70,6 +70,7 @@ spotless {
 
     format 'misc', {
         target 'java/**/*.java', 'java/**/*.gradle', 'java/**/*.yml', 'java/**/*.md'
+
         indentWithSpaces()
         endWithNewline()
     }
@@ -78,7 +79,7 @@ spotless {
 
 //create task to agregate javadoc
 task aggregatedJavadocs(type: Javadoc, description: 'Generate javadocs from all child projects as if it was a single project', group: 'Documentation') {
-    println 'Create a aggregated javadoc Task to : ' + "$buildDir/docs/javadoc"
+    //println 'Create a aggregated javadoc Task to : ' + "$buildDir/docs/javadoc"
     destinationDir = file("$buildDir/docs/javadoc")
     title = "$project.name " +  project(":java:component:keyple-core").version + " version API"
     options.author true
@@ -96,7 +97,7 @@ task aggregatedJavadocs(type: Javadoc, description: 'Generate javadocs from all 
 //dynamically configure the source
 aggregatedJavadocs.doFirst {
 
-    println "DoFirst in task  : aggregatedJavadocs"
+    //println "DoFirst in task  : aggregatedJavadocs"
 
     //add Java modules javadoc
     def aggregatedJavaProjects = [project(":java:component:keyple-core"),

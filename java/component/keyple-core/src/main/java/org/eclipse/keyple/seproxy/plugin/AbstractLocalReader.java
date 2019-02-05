@@ -65,7 +65,7 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
     /**
      * Wrapper for the native method of the plugin specific local reader to verify the presence of
      * the SE
-     * 
+     *
      * @return true if the SE is present
      * @throws NoStackTraceThrowable
      */
@@ -75,7 +75,7 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
      * Check the presence of a SE
      * <p>
      * For non observable reader, refresh the logical and physical channel status
-     * 
+     *
      * @return true if the SE is present
      */
     public final boolean isSePresent() throws NoStackTraceThrowable {
@@ -390,6 +390,9 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
                         responses.add(ex.getSeResponse());
                         /* Build a SeResponseSet with the available data. */
                         ex.setSeResponseSet(new SeResponseSet(responses));
+                        logger.debug(
+                                "[{}] processSeRequestSet => transmit : process interrupted, collect previous responses {}",
+                                this.getName(), responses);
                         throw ex;
                     }
                     responses.add(response);
@@ -485,7 +488,7 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
      * It opens both physical and logical channels if needed.
      * <p>
      * The logical channel is closed in the case where CLOSE_AFTER is requested
-     * 
+     *
      * @param seRequest
      * @return seResponse
      * @throws IllegalStateException
@@ -600,6 +603,8 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
                      * The process has been interrupted. We close the logical channel and launch a
                      * KeypleReaderException with the Apdu responses collected so far.
                      */
+                    logger.debug(
+                            "The process has been interrupted, collect Apdu responses collected so far");
                     closeLogicalChannel();
                     ex.setSeResponse(
                             new SeResponse(previouslyOpen, selectionStatus, apduResponseList));

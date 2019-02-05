@@ -19,6 +19,7 @@ import org.eclipse.keyple.seproxy.ReaderPlugin;
 import org.eclipse.keyple.seproxy.SeProxyService;
 import org.eclipse.keyple.seproxy.event.ObservableReader;
 import org.eclipse.keyple.seproxy.event.ReaderEvent;
+import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderNotFoundException;
 import org.eclipse.keyple.seproxy.message.ProxyReader;
 import org.eclipse.keyple.seproxy.plugin.AbstractObservableReader;
@@ -37,6 +38,8 @@ public class NativeReaderServiceImpl
 
     private final DtoSender dtoSender;
     private final SeProxyService seProxyService;
+    private final RemoteMethodTxEngine rmTxEngine;
+
     // private final NseSessionManager nseSessionManager;
 
     /**
@@ -47,6 +50,7 @@ public class NativeReaderServiceImpl
     public NativeReaderServiceImpl(DtoSender dtoSender) {
         this.seProxyService = SeProxyService.getInstance();
         this.dtoSender = dtoSender;
+        this.rmTxEngine = new RemoteMethodTxEngine(dtoSender);
         // this.nseSessionManager = new NseSessionManager();
     }
 
@@ -84,17 +88,8 @@ public class NativeReaderServiceImpl
                     throw new IllegalStateException(
                             "a READER_CONNECT request has been received by NativeReaderService");
                 } else {
-                    try {
-                        RemoteMethodParser<String> rmConnectReaderParser =
-                                new RmConnectReaderParser(this);
-                        String sessionId = rmConnectReaderParser.parseResponse(keypleDTO);
-                        logger.info(
-                                "Native Reader {} has been connected to Master with sessionId {}",
-                                keypleDTO.getNativeReaderName(), sessionId);
-                    } catch (KeypleRemoteReaderException e) {
-                        e.printStackTrace();
-                    }
-                    out = transportDto.nextTransportDTO(KeypleDtoHelper.NoResponse());
+                    // send DTO to TxEngine
+                    out = this.rmTxEngine.onDTO(transportDto);
                 }
                 break;
 
@@ -104,9 +99,8 @@ public class NativeReaderServiceImpl
                     throw new IllegalStateException(
                             "a READER_DISCONNECT request has been received by NativeReaderService");
                 } else {
-                    logger.info("Native Reader {} has been disconnected from Master",
-                            keypleDTO.getNativeReaderName());
-                    out = transportDto.nextTransportDTO(KeypleDtoHelper.NoResponse());
+                    // send DTO to TxEngine
+                    out = this.rmTxEngine.onDTO(transportDto);
                 }
                 break;
 
@@ -143,7 +137,7 @@ public class NativeReaderServiceImpl
                         "a  ERROR - UNRECOGNIZED request has been received by NativeReaderService");
         }
 
-        logger.debug("onDto response to be sent {}", KeypleDtoHelper.toJson(out.getKeypleDTO()));
+        logger.trace("onDto response to be sent {}", KeypleDtoHelper.toJson(out.getKeypleDTO()));
         return out;
 
 
@@ -157,21 +151,44 @@ public class NativeReaderServiceImpl
      * @param localReader : native reader to be connected
      */
     @Override
-    public void connectReader(ProxyReader localReader, String clientNodeId)
-            throws KeypleRemoteException {
+    public String connectReader(ProxyReader localReader, String clientNodeId)
+            throws KeypleReaderException {
+
         logger.info("connectReader {} from device {}", localReader.getName(), clientNodeId);
-        dtoSender.sendDTO(new RmConnectReaderInvoker(localReader, clientNodeId).dto());
+
+        RmConnectReaderTx connect = new RmConnectReaderTx(null, localReader.getName(), null,
+                clientNodeId, localReader, clientNodeId, this);
+        try {
+            rmTxEngine.register(connect);
+            return connect.get();
+        } catch (KeypleRemoteException e) {
+            throw new KeypleReaderException("An error occured while calling connectReader", e);
+        }
+
     }
 
     @Override
-    public void disconnectReader(ProxyReader localReader, String clientNodeId)
-            throws KeypleRemoteException {
-        logger.info("disconnectReader {} from device {}", localReader.getName(), clientNodeId);
+    public void disconnectReader(String sessionId, String nativeReaderName, String clientNodeId)
+            throws KeypleReaderException {
+        logger.info("disconnectReader {} from device {}", nativeReaderName, clientNodeId);
 
-        dtoSender.sendDTO(new RmDisconnectReaderInvoker(localReader, clientNodeId).dto());
+        RmDisconnectReaderTx disconnect =
+                new RmDisconnectReaderTx(sessionId, nativeReaderName, clientNodeId);
 
-        // stop propagating the local reader events
-        ((AbstractObservableReader) localReader).removeObserver(this);
+        try {
+            rmTxEngine.register(disconnect);
+            Boolean status = disconnect.get();
+            ProxyReader nativeReader = findLocalReader(nativeReaderName);
+            if (nativeReader instanceof AbstractObservableReader) {
+                // stop propagating the local reader events
+                ((AbstractObservableReader) nativeReader).removeObserver(this);
+            }
+        } catch (KeypleRemoteException e) {
+            throw new KeypleReaderException("An error occured while calling connectReader", e);
+        } catch (KeypleReaderNotFoundException e) {
+            e.printStackTrace();
+        }
+
 
     }
 
@@ -184,7 +201,7 @@ public class NativeReaderServiceImpl
      */
     public ProxyReader findLocalReader(String nativeReaderName)
             throws KeypleReaderNotFoundException {
-        logger.debug("Find local reader by name {} in {} plugin(s)", nativeReaderName,
+        logger.trace("Find local reader by name {} in {} plugin(s)", nativeReaderName,
                 seProxyService.getPlugins().size());
         for (ReaderPlugin plugin : seProxyService.getPlugins()) {
             try {

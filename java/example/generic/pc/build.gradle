@@ -17,6 +17,7 @@ dependencies {
     //implementation group: 'org.eclipse.keyple', name: 'keyple-calypso', version: '1.+'
     implementation project(path:':java:component:keyple-calypso')
 
+    //implementation group: 'org.eclipse.keyple', name: 'keyple-core', version: '1.+'
     implementation project(path:':java:component:keyple-core')
 
     //use keyple library : plugin stub

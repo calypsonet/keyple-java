@@ -79,6 +79,7 @@ public abstract class RemoteMethodTx<T> {
      */
     final public T get() throws KeypleRemoteException {
         logger.debug("Blocking Get {}");
+        final RemoteMethodTx thisInstance = this;
 
         Thread asyncGet = new Thread() {
             public void run() {
@@ -91,7 +92,8 @@ public abstract class RemoteMethodTx<T> {
                         }
                     });
                 } catch (KeypleRemoteException e) {
-                    logger.error("Exception while sending Dto");
+                    logger.error("Exception while sending Dto", e);
+                    thisInstance.remoteException = e;
                     lock.countDown();
                 }
             }

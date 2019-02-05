@@ -16,6 +16,7 @@ import org.eclipse.keyple.plugin.remotese.transport.RemoteMethod;
 import org.eclipse.keyple.plugin.remotese.transport.RemoteMethodInvoker;
 import org.eclipse.keyple.seproxy.message.ProxyReader;
 
+@Deprecated
 public class RmConnectReaderInvoker implements RemoteMethodInvoker {
 
     private final ProxyReader localReader;

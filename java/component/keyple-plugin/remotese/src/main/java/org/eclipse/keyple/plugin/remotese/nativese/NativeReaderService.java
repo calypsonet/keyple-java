@@ -12,7 +12,9 @@
 package org.eclipse.keyple.plugin.remotese.nativese;
 
 
-import org.eclipse.keyple.plugin.remotese.transport.KeypleRemoteException;
+import org.eclipse.keyple.seproxy.SeReader;
+import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
+import org.eclipse.keyple.seproxy.exception.KeypleReaderNotFoundException;
 import org.eclipse.keyple.seproxy.message.ProxyReader;
 
 public interface NativeReaderService {
@@ -22,10 +24,21 @@ public interface NativeReaderService {
      * Connect Physical Local Reader to Remote SE Creates a Session to exchange data with this
      * Reader with an option to duplex connection
      */
-    void connectReader(ProxyReader localReader, String clientNodeId) throws KeypleRemoteException;
+    String connectReader(ProxyReader localReader, String clientNodeId) throws KeypleReaderException;
 
-    void disconnectReader(ProxyReader localReader, String clientNodeId)
-            throws KeypleRemoteException;
+    /**
+     * Disconnect Physical Local Reader from Remote Se Master Server
+     */
+    void disconnectReader(String sessionId, String nativeReaderName, String clientNodeId)
+            throws KeypleReaderException;
 
+    /**
+     * Find a local reader accross plugins
+     * 
+     * @param nativeReaderName
+     * @return
+     * @throws KeypleReaderNotFoundException
+     */
+    SeReader findLocalReader(String nativeReaderName) throws KeypleReaderNotFoundException;
 
 }
