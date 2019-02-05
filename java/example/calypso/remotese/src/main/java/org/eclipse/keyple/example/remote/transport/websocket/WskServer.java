@@ -63,39 +63,50 @@ class WskServer extends WebSocketServer implements ServerNode {
      * @param message : incoming message
      */
     @Override
-    public void onMessage(WebSocket conn, String message) {
-        logger.trace("Server receive a message {} {}", conn, message);
-        KeypleDto keypleDto = KeypleDtoHelper.fromJson(message);
+    public void onMessage(final WebSocket conn, final String message) {
 
-        if (dtoHandler != null) {
+        final WskServer thisServer = this;
+
+        // process all incoming message in a separate thread to allow RemoteSE blocking API to work
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                logger.trace("Server receive a message {} {}", conn, message);
+                KeypleDto keypleDto = KeypleDtoHelper.fromJson(message);
+
+                if (dtoHandler != null) {
 
 
-            if (isMaster) {
-                // if server is master, can have numerous clients
-                if (keypleDto.getNativeReaderName() != null) {
-                    logger.debug(
-                            "Websocket connection has been mapped to session defined in message {} - {}",
-                            keypleDto.getNativeReaderName(), conn);
+                    if (isMaster) {
+                        // if server is master, can have numerous clients
+                        if (keypleDto.getNativeReaderName() != null) {
+                            logger.debug(
+                                    "Websocket connection has been mapped to session defined in message {} - {}",
+                                    keypleDto.getNativeReaderName(), conn);
 
-                    addConnection(conn, keypleDto.getNativeReaderName(), keypleDto.getNodeId());
+                            addConnection(conn, keypleDto.getNativeReaderName(),
+                                    keypleDto.getNodeId());
+                        } else {
+                            logger.debug(
+                                    "No session defined in message, can not map websocket connection {} - {}",
+                                    keypleDto.getNativeReaderName());
+                        }
+                    }
+
+                    // LOOP pass DTO and get DTO Response is any
+                    TransportDto transportDto =
+                            dtoHandler.onDTO(new WskTransportDTO(keypleDto, conn, thisServer));
+
+
+                    thisServer.sendDTO(transportDto);
                 } else {
-                    logger.debug(
-                            "No session defined in message, can not map websocket connection {} - {}",
-                            keypleDto.getNativeReaderName());
+                    throw new IllegalStateException(
+                            "Received a message but no DtoHandler is defined to process the message");
                 }
-            }
-
-            // LOOP pass DTO and get DTO Response is any
-            TransportDto transportDto =
-                    dtoHandler.onDTO(new WskTransportDTO(keypleDto, conn, this));
+            };
+        }).start();
 
 
-
-            this.sendDTO(transportDto);
-        } else {
-            throw new IllegalStateException(
-                    "Received a message but no DtoHandler is defined to process the message");
-        }
     }
 
     @Override
