@@ -9,7 +9,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  ********************************************************************************/
-package org.eclipse.keyple.example.calypso.pc.stub.se;
+package org.eclipse.keyple.example.calypso.common.stub.se;
 
 
 import org.eclipse.keyple.plugin.stub.StubSecureElement;
