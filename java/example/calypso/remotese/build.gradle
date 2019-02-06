@@ -42,12 +42,12 @@ dependencies {
     //implementation group: 'org.eclipse.keyple', name: 'keyple-plugin-stub', version: '1.+'
     implementation project(path:':java:component:keyple-plugin:keyple-plugin-stub')
 
-    //remote stubse plugin (master)
+    //remote se plugin (master)
     //implementation( group: 'org.eclipse.keyple', name: 'keyple-plugin-remotese-plugin', version: '0.+',changing: true){
     //    exclude group: 'org.slf4j', module: 'slf4j-simple'
     //}
 
-    //remote stubse native reader (slave)
+    //remote se native reader (slave)
     //implementation group: 'org.eclipse.keyple', name: 'keyple-plugin-remotese-native-reader', version: '0.+'
     implementation project(path:':java:component:keyple-plugin:keyple-plugin-remotese')
 
