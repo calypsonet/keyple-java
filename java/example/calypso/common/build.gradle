@@ -21,12 +21,6 @@ dependencies {
     implementation project(path:':java:component:keyple-calypso')
     //implementation group: 'org.eclipse.keyple', name: 'keyple-calypso', version: '1.0.0-RC4' 
 
-    //use keyple example : generic-common
-    implementation project(path: ':java:example:generic:example-generic-common')
-
-    //use keyple example : generic-pc
-    implementation project(path: ':java:example:generic:example-generic-pc')
-
     //use keyple example : stub-plugin
     implementation project(path: ':java:component:keyple-plugin:keyple-plugin-stub')
 
