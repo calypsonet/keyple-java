@@ -11,20 +11,12 @@
  ********************************************************************************/
 package org.eclipse.keyple.plugin.remotese.integration;
 
+
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 import org.eclipse.keyple.plugin.remotese.pluginse.RemoteSePlugin;
-import org.eclipse.keyple.plugin.stub.StubPlugin;
-import org.eclipse.keyple.plugin.stub.StubReaderTest;
-import org.eclipse.keyple.seproxy.ChannelState;
-import org.eclipse.keyple.seproxy.event.ObservableReader;
 import org.eclipse.keyple.seproxy.event.PluginEvent;
-import org.eclipse.keyple.seproxy.event.ReaderEvent;
-import org.eclipse.keyple.seproxy.exception.KeypleIOReaderException;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
-import org.eclipse.keyple.seproxy.protocol.Protocol;
-import org.eclipse.keyple.transaction.MatchingSe;
-import org.eclipse.keyple.transaction.SeSelection;
-import org.eclipse.keyple.transaction.SeSelector;
-import org.eclipse.keyple.util.ByteArrayUtils;
 import org.eclipse.keyple.util.Observable;
 import org.junit.After;
 import org.junit.Assert;
@@ -33,14 +25,8 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.print.attribute.standard.MediaSize;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
-
-import static org.eclipse.keyple.plugin.stub.StubReaderTest.hoplinkSE;
-
 /**
- * Test VirtualPlugin event  READER_CONNECTED and READER_DISCONNECTED
+ * Test VirtualPlugin event READER_CONNECTED and READER_DISCONNECTED
  */
 public class VirtualPluginEventTest extends VirtualReaderBaseTest {
 
@@ -52,7 +38,7 @@ public class VirtualPluginEventTest extends VirtualReaderBaseTest {
     }
 
     @After
-    public void tearDown()throws Exception{
+    public void tearDown() throws Exception {
         clearStubpluginReaders();
     }
 
@@ -109,12 +95,13 @@ public class VirtualPluginEventTest extends VirtualReaderBaseTest {
                 if (event.getEventType() == PluginEvent.EventType.READER_CONNECTED) {
                     Assert.assertEquals(2, lock.getCount());
                     lock.countDown();
-                }else{
-                    //second event should be a READER_DISCONNECTED
+                } else {
+                    // second event should be a READER_DISCONNECTED
                     Assert.assertNotNull(event.getReaderNames().first());
                     Assert.assertEquals(1, event.getReaderNames().size());
                     Assert.assertEquals(remoteSePlugin.getName(), event.getPluginName());
-                    Assert.assertEquals(PluginEvent.EventType.READER_DISCONNECTED, event.getEventType());
+                    Assert.assertEquals(PluginEvent.EventType.READER_DISCONNECTED,
+                            event.getEventType());
                     lock.countDown();
                 }
             }
@@ -149,10 +136,11 @@ public class VirtualPluginEventTest extends VirtualReaderBaseTest {
         remoteSePlugin.addObserver(new Observable.Observer<PluginEvent>() {
             @Override
             public void update(PluginEvent event) {
-                //READER_CONNECTED should be raised only once, so lock.getCount() should be equals to 1
-                if(1 != lock.getCount()){
+                // READER_CONNECTED should be raised only once, so lock.getCount() should be equals
+                // to 1
+                if (1 != lock.getCount()) {
                     throw new IllegalStateException();
-                };
+                } ;
                 Assert.assertNotNull(event.getReaderNames().first());
                 Assert.assertEquals(1, event.getReaderNames().size());
                 Assert.assertEquals(remoteSePlugin.getName(), event.getPluginName());
@@ -170,11 +158,12 @@ public class VirtualPluginEventTest extends VirtualReaderBaseTest {
         // connect twice
         nativeReader = this.connectStubReader(NATIVE_READER_NAME, CLIENT_NODE_ID);
 
-        //a KeypleReaderException exception is thrown
+        // a KeypleReaderException exception is thrown
     }
 
     /**
      * Test disconnect a not connected reader
+     * 
      * @throws Exception
      */
     @Test(expected = KeypleReaderException.class)
@@ -184,13 +173,13 @@ public class VirtualPluginEventTest extends VirtualReaderBaseTest {
         remoteSePlugin.addObserver(new Observable.Observer<PluginEvent>() {
             @Override
             public void update(PluginEvent event) {
-                //READER_CONNECTED should not be called
+                // READER_CONNECTED should not be called
                 throw new IllegalStateException();
             }
         });
         this.disconnectStubReader("anysession", "A_NOT_CONNECTED_READER", CLIENT_NODE_ID);
 
-        //a KeypleReaderException exception is thrown
+        // a KeypleReaderException exception is thrown
     }
 
 

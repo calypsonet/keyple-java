@@ -56,16 +56,16 @@ public class VirtualReaderEventTest extends VirtualReaderBaseTest {
     }
 
     @After
-    public void tearDown()throws Exception{
+    public void tearDown() throws Exception {
         clearStubpluginReaders();
     }
 
 
-        /**
-         * Test SE_INSERTED Reader Event throwing and catching
-         *
-         * @throws Exception
-         */
+    /**
+     * Test SE_INSERTED Reader Event throwing and catching
+     *
+     * @throws Exception
+     */
     @Test
     public void testInsert() throws Exception {
 

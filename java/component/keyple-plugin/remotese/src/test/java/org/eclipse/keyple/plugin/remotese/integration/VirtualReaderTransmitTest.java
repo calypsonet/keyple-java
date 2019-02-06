@@ -49,7 +49,7 @@ public class VirtualReaderTransmitTest extends VirtualReaderBaseTest {
     }
 
     @After
-    public void tearDown()throws Exception{
+    public void tearDown() throws Exception {
         clearStubpluginReaders();
     }
 

@@ -34,7 +34,7 @@ public class PublishQueueManager {
     }
 
     public PublishQueue create(String webClientId) {
-            logger.debug("Create a PublishQueue for webClientId {}", webClientId);
+        logger.debug("Create a PublishQueue for webClientId {}", webClientId);
         if (webClientId == null) {
             throw new IllegalArgumentException("webClientId must not be null");
         }

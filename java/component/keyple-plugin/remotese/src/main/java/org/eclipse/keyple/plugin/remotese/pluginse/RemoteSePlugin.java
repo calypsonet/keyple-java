@@ -56,6 +56,7 @@ public final class RemoteSePlugin extends AbstractObservablePlugin {
 
     /**
      * Retrieve a reader by its native reader name
+     * 
      * @param remoteName : name of the reader on its native device
      * @return corresponding Virtual reader if exists
      * @throws KeypleReaderNotFoundException if no virtual reader match the native reader name
@@ -74,20 +75,20 @@ public final class RemoteSePlugin extends AbstractObservablePlugin {
      * Create a virtual reader
      *
      */
-     ProxyReader createVirtualReader(String clientNodeId, String nativeReaderName,
+    ProxyReader createVirtualReader(String clientNodeId, String nativeReaderName,
             DtoSender dtoSender) throws KeypleReaderException {
         logger.debug("createVirtualReader for nativeReader {}", nativeReaderName);
 
         // create a new session for the new reader
         VirtualReaderSession session = sessionManager.createSession(nativeReaderName, clientNodeId);
 
-        try{
-            if(getReaderByRemoteName(nativeReaderName)!=null){
+        try {
+            if (getReaderByRemoteName(nativeReaderName) != null) {
                 throw new KeypleReaderException(
                         "Virtual Reader already exists for reader " + nativeReaderName);
-            };
-        }catch (KeypleReaderNotFoundException e){
-            //no reader found, continue
+            } ;
+        } catch (KeypleReaderNotFoundException e) {
+            // no reader found, continue
         }
 
 
@@ -118,8 +119,7 @@ public final class RemoteSePlugin extends AbstractObservablePlugin {
      * 
      * @param nativeReaderName name of the virtual reader to be deleted
      */
-     void disconnectRemoteReader(String nativeReaderName)
-            throws KeypleReaderNotFoundException {
+    void disconnectRemoteReader(String nativeReaderName) throws KeypleReaderNotFoundException {
 
         logger.debug("Disconnect Virtual reader {}", nativeReaderName);
 
@@ -149,7 +149,7 @@ public final class RemoteSePlugin extends AbstractObservablePlugin {
      * @param event
      * @param sessionId : not used yet
      */
-     void onReaderEvent(ReaderEvent event, String sessionId) {
+    void onReaderEvent(ReaderEvent event, String sessionId) {
         logger.debug("OnReaderEvent {}", event);
         logger.debug("Dispatch ReaderEvent to the appropriate Reader : {} sessionId : {}",
                 event.getReaderName(), sessionId);
@@ -186,7 +186,7 @@ public final class RemoteSePlugin extends AbstractObservablePlugin {
 
     @Override
     public void setParameter(String key, String value) throws IllegalArgumentException {
-        parameters.put(key,value);
+        parameters.put(key, value);
     }
 
 }
