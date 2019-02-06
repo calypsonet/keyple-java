@@ -83,60 +83,62 @@ public class ObservableReaderNotificationEngine {
 
         @Override
         public void update(PluginEvent event) {
-            SeReader reader = null;
-            logger.info("PluginEvent: PLUGINNAME = {}, READERNAME = {}, EVENTTYPE = {}",
-                    event.getPluginName(), event.getReaderName(), event.getEventType());
+            for (String readerName : event.getReaderNames()) {
+                SeReader reader = null;
+                logger.info("PluginEvent: PLUGINNAME = {}, READERNAME = {}, EVENTTYPE = {}",
+                        event.getPluginName(), readerName, event.getEventType());
 
-            /* We retrieve the reader object from its name. */
-            try {
-                reader = SeProxyService.getInstance().getPlugin(event.getPluginName())
-                        .getReader(event.getReaderName());
-            } catch (KeyplePluginNotFoundException e) {
-                e.printStackTrace();
-            } catch (KeypleReaderNotFoundException e) {
-                e.printStackTrace();
-            }
-            switch (event.getEventType()) {
-                case READER_CONNECTED:
-                    logger.info("New reader! READERNAME = {}", reader.getName());
+                /* We retrieve the reader object from its name. */
+                try {
+                    reader = SeProxyService.getInstance().getPlugin(event.getPluginName())
+                            .getReader(readerName);
+                } catch (KeyplePluginNotFoundException e) {
+                    e.printStackTrace();
+                } catch (KeypleReaderNotFoundException e) {
+                    e.printStackTrace();
+                }
+                switch (event.getEventType()) {
+                    case READER_CONNECTED:
+                        logger.info("New reader! READERNAME = {}", reader.getName());
 
-                    /*
-                     * We are informed here of a disconnection of a reader.
-                     * 
-                     * We add an observer to this reader if this is possible.
-                     */
-                    if (reader instanceof ObservableReader) {
-                        if (readerObserver != null) {
-                            logger.info("Add observer READERNAME = {}", reader.getName());
-                            ((ObservableReader) reader).addObserver(readerObserver);
-                        } else {
-                            logger.info("No observer to add READERNAME = {}", reader.getName());
+                        /*
+                         * We are informed here of a disconnection of a reader.
+                         *
+                         * We add an observer to this reader if this is possible.
+                         */
+                        if (reader instanceof ObservableReader) {
+                            if (readerObserver != null) {
+                                logger.info("Add observer READERNAME = {}", reader.getName());
+                                ((ObservableReader) reader).addObserver(readerObserver);
+                            } else {
+                                logger.info("No observer to add READERNAME = {}", reader.getName());
+                            }
                         }
-                    }
-                    break;
-                case READER_DISCONNECTED:
-                    /*
-                     * We are informed here of a disconnection of a reader.
-                     *
-                     * The reader object still exists but will be removed from the reader list right
-                     * after. Thus, we can properly remove the observer attached to this reader
-                     * before the list update.
-                     */
-                    logger.info("Reader removed. READERNAME = {}", event.getReaderName());
-                    if (reader instanceof ObservableReader) {
-                        if (readerObserver != null) {
-                            logger.info("Remove observer READERNAME = {}", event.getReaderName());
-                            ((ObservableReader) reader).removeObserver(readerObserver);
-                        } else {
-                            logger.info("Unplugged reader READERNAME = {} wasn't observed.",
-                                    event.getReaderName());
+                        break;
+                    case READER_DISCONNECTED:
+                        /*
+                         * We are informed here of a disconnection of a reader.
+                         *
+                         * The reader object still exists but will be removed from the reader list
+                         * right after. Thus, we can properly remove the observer attached to this
+                         * reader before the list update.
+                         */
+                        logger.info("Reader removed. READERNAME = {}", readerName);
+                        if (reader instanceof ObservableReader) {
+                            if (readerObserver != null) {
+                                logger.info("Remove observer READERNAME = {}", readerName);
+                                ((ObservableReader) reader).removeObserver(readerObserver);
+                            } else {
+                                logger.info("Unplugged reader READERNAME = {} wasn't observed.",
+                                        readerName);
+                            }
                         }
-                    }
-                    break;
-                default:
-                    logger.info("Unexpected reader event. EVENT = {}",
-                            event.getEventType().getName());
-                    break;
+                        break;
+                    default:
+                        logger.info("Unexpected reader event. EVENT = {}",
+                                event.getEventType().getName());
+                        break;
+                }
             }
         }
     }
