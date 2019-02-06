@@ -9,7 +9,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  ********************************************************************************/
-package org.eclipse.keyple.example.calypso.common.transaction;
+package org.eclipse.keyple.example.calypso.pc.transaction;
 
 import java.util.EnumMap;
 import org.eclipse.keyple.calypso.command.po.parser.AppendRecordRespPars;
