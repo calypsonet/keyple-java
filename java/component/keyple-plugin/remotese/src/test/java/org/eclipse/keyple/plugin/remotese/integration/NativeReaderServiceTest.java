@@ -29,6 +29,9 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Test NativeReaderService API methods : connectReader and DisconnectReader
+ */
 @RunWith(MockitoJUnitRunner.class)
 public class NativeReaderServiceTest {
 

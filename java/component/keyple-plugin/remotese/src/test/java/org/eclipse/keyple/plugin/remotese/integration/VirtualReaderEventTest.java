@@ -42,12 +42,30 @@ public class VirtualReaderEventTest extends VirtualReaderBaseTest {
      * SE EVENTS
      */
 
+    @Before
+    public void setUp() throws Exception {
 
-    /**
-     * Test SE_INSERTED Reader Event throwing and catching
-     * 
-     * @throws Exception
-     */
+        initKeypleServices();
+
+        // configure and connect a Stub Native reader
+        nativeReader = this.connectStubReader(NATIVE_READER_NAME, CLIENT_NODE_ID);
+
+        // test virtual reader
+        virtualReader = getVirtualReader();
+
+    }
+
+    @After
+    public void tearDown()throws Exception{
+        clearStubpluginReaders();
+    }
+
+
+        /**
+         * Test SE_INSERTED Reader Event throwing and catching
+         *
+         * @throws Exception
+         */
     @Test
     public void testInsert() throws Exception {
 
@@ -69,10 +87,9 @@ public class VirtualReaderEventTest extends VirtualReaderBaseTest {
 
         logger.info("Insert a Hoplink SE and wait 5 seconds for a SE event to be thrown");
 
-        Thread.sleep(500);
-
         // insert SE
         nativeReader.insertSe(StubReaderTest.hoplinkSE());
+
         // wait 5 seconds
         lock.await(5, TimeUnit.SECONDS);
 
@@ -118,7 +135,7 @@ public class VirtualReaderEventTest extends VirtualReaderBaseTest {
         // insert SE
         nativeReader.insertSe(StubReaderTest.hoplinkSE());
 
-        // wait 1 second
+        // wait 0,5 second
         Thread.sleep(500);
 
         // remove SE

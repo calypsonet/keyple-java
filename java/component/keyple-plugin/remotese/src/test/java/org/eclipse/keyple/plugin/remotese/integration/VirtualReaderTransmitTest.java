@@ -20,7 +20,9 @@ import org.eclipse.keyple.plugin.stub.StubReaderTest;
 import org.eclipse.keyple.seproxy.ChannelState;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.message.*;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,6 +34,24 @@ public class VirtualReaderTransmitTest extends VirtualReaderBaseTest {
 
     private static final Logger logger = LoggerFactory.getLogger(VirtualReaderTransmitTest.class);
 
+
+    @Before
+    public void setUp() throws Exception {
+
+        initKeypleServices();
+
+        // configure and connect a Stub Native reader
+        nativeReader = this.connectStubReader(NATIVE_READER_NAME, CLIENT_NODE_ID);
+
+        // test virtual reader
+        virtualReader = getVirtualReader();
+
+    }
+
+    @After
+    public void tearDown()throws Exception{
+        clearStubpluginReaders();
+    }
 
     /*
      * TRANSMITS

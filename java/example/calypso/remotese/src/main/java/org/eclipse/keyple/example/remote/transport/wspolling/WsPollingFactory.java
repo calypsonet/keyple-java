@@ -41,12 +41,24 @@ public class WsPollingFactory extends TransportFactory {
 
     private WsPollingFactory(Integer port, String pollingUrl, String keypleUrl, String clientNodeId,
             String bindUrl, String protocol) {
-        this.port = port;
-        this.pollingUrl = pollingUrl;
-        this.keypleUrl = keypleUrl;
-        this.clientNodeId = clientNodeId;
-        this.bindUrl = bindUrl;
-        this.protocol = protocol;
+        if(port!=null){
+            this.port = port;
+        }
+        if(pollingUrl!=null){
+            this.pollingUrl = pollingUrl;
+        }
+        if(keypleUrl!=null){
+            this.keypleUrl = keypleUrl;
+        }
+        if(clientNodeId!=null){
+            this.clientNodeId = clientNodeId;
+        }
+        if(bindUrl!=null){
+            this.bindUrl = bindUrl;
+        }
+        if(protocol!=null){
+            this.protocol = protocol;
+        }
     }
 
     @Override

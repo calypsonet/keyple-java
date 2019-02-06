@@ -17,11 +17,14 @@ import org.eclipse.keyple.plugin.remotese.transport.KeypleDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Manages the KeypleDto polling publish queue
+ */
 public class PublishQueueManager {
 
     private final Logger logger = LoggerFactory.getLogger(PublishQueueManager.class);
 
-
+    // clientId
     final Map<String, PublishQueue<KeypleDto>> queues;
 
     public PublishQueueManager() {
@@ -31,7 +34,7 @@ public class PublishQueueManager {
     }
 
     public PublishQueue create(String webClientId) {
-        logger.debug("Create a PublishQueue for webClientId {}", webClientId);
+            logger.debug("Create a PublishQueue for webClientId {}", webClientId);
         if (webClientId == null) {
             throw new IllegalArgumentException("webClientId must not be null");
         }
