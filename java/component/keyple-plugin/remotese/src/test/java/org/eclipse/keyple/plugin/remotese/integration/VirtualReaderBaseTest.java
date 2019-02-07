@@ -81,7 +81,7 @@ public class VirtualReaderBaseTest {
 
         // if nativeReader was initialized during test, unplug it
         if (nativeReader != null) {
-            stubPlugin.unplugStubReader(nativeReader.getName(),true);
+            stubPlugin.unplugStubReader(nativeReader.getName(), true);
             nativeReader.clearObservers();
         }
 
