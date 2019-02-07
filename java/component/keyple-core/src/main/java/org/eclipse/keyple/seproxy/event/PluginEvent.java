@@ -11,6 +11,7 @@
  ********************************************************************************/
 package org.eclipse.keyple.seproxy.event;
 
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.concurrent.ConcurrentSkipListSet;
 
@@ -89,7 +90,7 @@ public final class PluginEvent {
      * @param readerNames list of reader names
      * @param eventType type of the event, connection or disconnection
      */
-    public PluginEvent(String pluginName, SortedSet<String> readerNames, EventType eventType) {
+    public PluginEvent(String pluginName, Set<String> readerNames, EventType eventType) {
         this.pluginName = pluginName;
         this.readerNames.addAll(readerNames);
         this.eventType = eventType;

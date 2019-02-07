@@ -55,8 +55,8 @@ public class Demo_CalypsoClassic_Stub {
         /*
          * Plug PO and SAM stub readers.
          */
-        stubPlugin.plugStubReader("poReader");
-        stubPlugin.plugStubReader("samReader");
+        stubPlugin.plugStubReader("poReader", true);
+        stubPlugin.plugStubReader("samReader", true);
 
         StubReader poReader = null, samReader = null;
         try {

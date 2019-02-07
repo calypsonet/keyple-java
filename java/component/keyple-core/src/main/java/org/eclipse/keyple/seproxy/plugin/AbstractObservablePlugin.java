@@ -47,7 +47,7 @@ public abstract class AbstractObservablePlugin extends AbstractLoggedObservable<
         super(name);
         if (readers == null) {
             try {
-                readers = getNativeReaders();
+                readers = initNativeReaders();
             } catch (KeypleReaderException e) {
                 e.printStackTrace();
             }
@@ -86,22 +86,26 @@ public abstract class AbstractObservablePlugin extends AbstractLoggedObservable<
     }
 
     /**
-     * Gets a list of native readers from the native methods
+     * Fetch connected native readers (from third party library) and returns a list of corresponding
+     * {@link org.eclipse.keyple.seproxy.plugin.AbstractObservableReader}
+     * {@link org.eclipse.keyple.seproxy.plugin.AbstractObservableReader} are new instances.
      * 
      * @return the list of AbstractObservableReader objects.
      * @throws KeypleReaderException if a reader error occurs
      */
-    protected abstract SortedSet<AbstractObservableReader> getNativeReaders()
+    protected abstract SortedSet<AbstractObservableReader> initNativeReaders()
             throws KeypleReaderException;
 
     /**
-     * Gets the specific reader whose is provided as an argument.
-     * 
-     * @param name the of the reader
-     * @return the AbstractObservableReader object (null if not found)
+     * Fetch connected native reader (from third party library) by its name Returns the current
+     * {@link org.eclipse.keyple.seproxy.plugin.AbstractObservableReader} if it is already listed.
+     * Creates and returns a new {@link org.eclipse.keyple.seproxy.plugin.AbstractObservableReader}
+     * if not.
+     *
+     * @return the list of AbstractObservableReader objects.
      * @throws KeypleReaderException if a reader error occurs
      */
-    protected abstract AbstractObservableReader getNativeReader(String name)
+    protected abstract AbstractObservableReader fetchNativeReader(String name)
             throws KeypleReaderException;
 
     /**

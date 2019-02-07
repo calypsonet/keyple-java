@@ -171,15 +171,21 @@ public final class RemoteSePlugin extends AbstractObservablePlugin {
         return false;
     }
 
+    /**
+     * Init Native Readers to empty Set
+     */
     @Override
-    protected SortedSet<AbstractObservableReader> getNativeReaders() throws KeypleReaderException {
-        // not necessary
+    protected SortedSet<AbstractObservableReader> initNativeReaders() throws KeypleReaderException {
         return new TreeSet<AbstractObservableReader>();
     }
 
+    /**
+     * Not used
+     */
     @Override
-    protected AbstractObservableReader getNativeReader(String s) throws KeypleReaderException {
+    protected AbstractObservableReader fetchNativeReader(String name) throws KeypleReaderException {
         // should not be call
-        throw new IllegalArgumentException("Use getReader method instead of getNativeReader");
+        throw new IllegalArgumentException(
+                "fetchNativeReader is not used in this plugin, did you meant to use getReader?");
     }
 }

@@ -85,7 +85,7 @@ public class VirtualReaderBaseTest {
 
         StubPlugin stubPlugin = StubPlugin.getInstance();
 
-        stubPlugin.unplugReader(nativeReader.getName());
+        stubPlugin.unplugStubReader(nativeReader.getName(), true);
 
         // Thread.sleep(500);
 

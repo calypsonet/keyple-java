@@ -87,7 +87,7 @@ public class UseCase_Calypso2_DefaultSelectionNotification_Stub implements Reade
         seProxyService.addPlugin(stubPlugin);
 
         /* Plug the PO stub reader. */
-        stubPlugin.plugStubReader("poReader");
+        stubPlugin.plugStubReader("poReader", true);
 
         /*
          * Get a PO reader ready to work with Calypso PO.

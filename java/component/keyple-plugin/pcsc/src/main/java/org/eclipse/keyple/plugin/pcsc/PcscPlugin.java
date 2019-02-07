@@ -81,7 +81,13 @@ public final class PcscPlugin extends AbstractThreadedObservablePlugin {
         return this;
     }
 
-    protected SortedSet<String> getNativeReadersNames() throws KeypleReaderException {
+    /**
+     * Fetch the list of connected native reader (from smartcardio) and returns their names
+     *
+     * @return connected readers' name list
+     * @throws KeypleReaderException if a reader error occurs
+     */
+    protected SortedSet<String> fetchNativeReadersNames() throws KeypleReaderException {
         SortedSet<String> nativeReadersNames = new ConcurrentSkipListSet<String>();
         CardTerminals terminals = getCardTerminals();
         try {
@@ -93,7 +99,7 @@ public final class PcscPlugin extends AbstractThreadedObservablePlugin {
                 logger.trace("No reader available.");
             } else {
                 logger.trace(
-                        "[{}] getNativeReadersNames => Terminal list is not accessible. Exception: {}",
+                        "[{}] fetchNativeReadersNames => Terminal list is not accessible. Exception: {}",
                         this.getName(), e.getMessage());
                 throw new KeypleReaderException("Could not access terminals list", e);
             }
@@ -102,15 +108,15 @@ public final class PcscPlugin extends AbstractThreadedObservablePlugin {
     }
 
     /**
-     * Gets the list of all native readers
+     * Fetch connected native readers (from smartcard.io) and returns a list of corresponding
+     * {@link org.eclipse.keyple.seproxy.plugin.AbstractObservableReader}
+     * {@link org.eclipse.keyple.seproxy.plugin.AbstractObservableReader} are new instances.
      *
-     * New reader objects are created.
-     *
-     * @return the list of new readers.
+     * @return the list of AbstractObservableReader objects.
      * @throws KeypleReaderException if a reader error occurs
      */
     @Override
-    protected SortedSet<AbstractObservableReader> getNativeReaders() throws KeypleReaderException {
+    protected SortedSet<AbstractObservableReader> initNativeReaders() throws KeypleReaderException {
         SortedSet<AbstractObservableReader> nativeReaders =
                 new ConcurrentSkipListSet<AbstractObservableReader>();
 
@@ -134,11 +140,8 @@ public final class PcscPlugin extends AbstractThreadedObservablePlugin {
     }
 
     /**
-     * Gets the reader whose name is provided as an argument.
-     *
-     * Returns the current reader if it is already listed.
-     *
-     * Creates and returns a new reader if not.
+     * Fetch the reader whose name is provided as an argument. Returns the current reader if it is
+     * already listed. Creates and returns a new reader if not.
      *
      * Throws an exception if the wanted reader is not found.
      *
@@ -147,7 +150,7 @@ public final class PcscPlugin extends AbstractThreadedObservablePlugin {
      * @throws KeypleReaderException if a reader error occurs
      */
     @Override
-    protected AbstractObservableReader getNativeReader(String name) throws KeypleReaderException {
+    protected AbstractObservableReader fetchNativeReader(String name) throws KeypleReaderException {
         // return the current reader if it is already listed
         for (AbstractObservableReader reader : readers) {
             if (reader.getName().equals(name)) {
