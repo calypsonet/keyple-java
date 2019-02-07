@@ -48,8 +48,7 @@ public class VirtualReaderBaseTest {
     // Spy Object
     VirtualReaderService virtualReaderService;
 
-    @Before
-    public void setTup() throws Exception {
+    protected void initKeypleServices() throws Exception {
         logger.info("------------------------------");
         logger.info("Test {}", name.getMethodName());
         logger.info("------------------------------");
@@ -70,26 +69,23 @@ public class VirtualReaderBaseTest {
         // bind Slave services to client
         nativeReaderService = Integration.bindSlave(factory.getClient());
 
-        // configure and connect a Stub Native reader
-        nativeReader = connectStubReader(NATIVE_READER_NAME, CLIENT_NODE_ID);
 
-        // test virtual reader
-        virtualReader = getVirtualReader();
 
     }
 
-    @After
-    public void tearDown() throws Exception {
+    protected void clearStubpluginReaders() throws Exception {
 
         logger.info("TearDown Test");
 
         StubPlugin stubPlugin = StubPlugin.getInstance();
 
-        stubPlugin.unplugStubReader(nativeReader.getName(), true);
+        // if nativeReader was initialized during test, unplug it
+        if (nativeReader != null) {
+            stubPlugin.unplugStubReader(nativeReader.getName(),true);
+            nativeReader.clearObservers();
+        }
 
-        // Thread.sleep(500);
 
-        nativeReader.clearObservers();
 
         // stubPlugin.removeObserver(stubPluginObserver);
 
@@ -100,7 +96,7 @@ public class VirtualReaderBaseTest {
 
 
 
-    private StubReader connectStubReader(String readerName, String nodeId) throws Exception {
+    protected StubReader connectStubReader(String readerName, String nodeId) throws Exception {
         // configure native reader
         StubReader nativeReader = (StubReader) Integration.createStubReader(readerName);
         nativeReader.addSeProtocolSetting(
@@ -109,12 +105,12 @@ public class VirtualReaderBaseTest {
         return nativeReader;
     }
 
-    private void disconnectStubReader(String sessionId, StubReader nativeReader, String nodeId)
+    protected void disconnectStubReader(String sessionId, String nativeReaderName, String nodeId)
             throws Exception {
-        this.nativeReaderService.disconnectReader(sessionId, nativeReader.getName(), nodeId);
+        this.nativeReaderService.disconnectReader(sessionId, nativeReaderName, nodeId);
     }
 
-    private VirtualReader getVirtualReader() throws Exception {
+    protected VirtualReader getVirtualReader() throws Exception {
         Assert.assertEquals(1, this.virtualReaderService.getPlugin().getReaders().size());
         return (VirtualReader) this.virtualReaderService.getPlugin().getReaders().first();
     }
