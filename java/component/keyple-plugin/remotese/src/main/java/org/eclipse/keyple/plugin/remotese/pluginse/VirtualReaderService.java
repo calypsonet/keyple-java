@@ -11,9 +11,6 @@
  ********************************************************************************/
 package org.eclipse.keyple.plugin.remotese.pluginse;
 
-import org.eclipse.keyple.plugin.remotese.pluginse.method.RmConnectReaderExecutor;
-import org.eclipse.keyple.plugin.remotese.pluginse.method.RmDisconnectReaderExecutor;
-import org.eclipse.keyple.plugin.remotese.pluginse.method.RmEventExecutor;
 import org.eclipse.keyple.plugin.remotese.transport.*;
 import org.eclipse.keyple.seproxy.SeProxyService;
 import org.eclipse.keyple.seproxy.SeReader;

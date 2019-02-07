@@ -17,11 +17,14 @@ import org.eclipse.keyple.plugin.remotese.transport.KeypleDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Manages the KeypleDto polling publish queue
+ */
 public class PublishQueueManager {
 
     private final Logger logger = LoggerFactory.getLogger(PublishQueueManager.class);
 
-
+    // clientId
     final Map<String, PublishQueue<KeypleDto>> queues;
 
     public PublishQueueManager() {

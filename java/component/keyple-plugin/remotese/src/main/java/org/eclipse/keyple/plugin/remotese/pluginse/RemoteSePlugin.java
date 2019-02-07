@@ -11,6 +11,7 @@
  ********************************************************************************/
 package org.eclipse.keyple.plugin.remotese.pluginse;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -40,6 +41,7 @@ public final class RemoteSePlugin extends AbstractObservablePlugin {
 
     private final VirtualReaderSessionFactory sessionManager;
     private final DtoSender sender;
+    private final Map<String, String> parameters;
 
     /**
      * Only {@link VirtualReaderService} can instanciate a RemoteSePlugin
@@ -49,18 +51,16 @@ public final class RemoteSePlugin extends AbstractObservablePlugin {
         this.sessionManager = sessionManager;
         logger.info("Init RemoteSePlugin");
         this.sender = sender;
+        this.parameters = new HashMap<String, String>();
     }
 
-    @Override
-    public Map<String, String> getParameters() {
-        return null;
-    }
-
-    @Override
-    public void setParameter(String key, String value) throws IllegalArgumentException {}
-
-
-
+    /**
+     * Retrieve a reader by its native reader name
+     * 
+     * @param remoteName : name of the reader on its native device
+     * @return corresponding Virtual reader if exists
+     * @throws KeypleReaderNotFoundException if no virtual reader match the native reader name
+     */
     public VirtualReader getReaderByRemoteName(String remoteName)
             throws KeypleReaderNotFoundException {
         for (AbstractObservableReader virtualReader : readers) {
@@ -75,37 +75,43 @@ public final class RemoteSePlugin extends AbstractObservablePlugin {
      * Create a virtual reader
      *
      */
-    public ProxyReader createVirtualReader(String clientNodeId, String nativeReaderName,
+    ProxyReader createVirtualReader(String clientNodeId, String nativeReaderName,
             DtoSender dtoSender) throws KeypleReaderException {
         logger.debug("createVirtualReader for nativeReader {}", nativeReaderName);
 
         // create a new session for the new reader
         VirtualReaderSession session = sessionManager.createSession(nativeReaderName, clientNodeId);
 
-        // check if reader is not already connected (by localReaderName)
-        if (!isReaderConnected(nativeReaderName)) {
-            logger.info("Create a new Virtual Reader with localReaderName {} with session {}",
-                    nativeReaderName, session.getSessionId());
-
-            // Create virtual reader with a remote method engine so the reader can send dto
-            // with a session
-            // and the provided name
-            final VirtualReader virtualReader =
-                    new VirtualReader(session, nativeReaderName, new RemoteMethodTxEngine(sender));
-            readers.add(virtualReader);
-
-            // notify that a new reader is connected in a separated thread
-            /*
-             * new Thread() { public void run() { } }.start();
-             */
-            notifyObservers(new PluginEvent(getName(), virtualReader.getName(),
-                    PluginEvent.EventType.READER_CONNECTED));
-
-            return virtualReader;
-        } else {
-            throw new KeypleReaderException(
-                    "Virtual Reader already exists for reader " + nativeReaderName);
+        try {
+            if (getReaderByRemoteName(nativeReaderName) != null) {
+                throw new KeypleReaderException(
+                        "Virtual Reader already exists for reader " + nativeReaderName);
+            } ;
+        } catch (KeypleReaderNotFoundException e) {
+            // no reader found, continue
         }
+
+
+        // check if reader is not already connected (by localReaderName)
+        logger.info("Create a new Virtual Reader with localReaderName {} with session {}",
+                nativeReaderName, session.getSessionId());
+
+        // Create virtual reader with a remote method engine so the reader can send dto
+        // with a session
+        // and the provided name
+        final VirtualReader virtualReader =
+                new VirtualReader(session, nativeReaderName, new RemoteMethodTxEngine(sender));
+        readers.add(virtualReader);
+
+        // notify that a new reader is connected in a separated thread
+        /*
+         * new Thread() { public void run() { } }.start();
+         */
+        notifyObservers(new PluginEvent(getName(), virtualReader.getName(),
+                PluginEvent.EventType.READER_CONNECTED));
+
+        return virtualReader;
+
     }
 
     /**
@@ -113,8 +119,7 @@ public final class RemoteSePlugin extends AbstractObservablePlugin {
      * 
      * @param nativeReaderName name of the virtual reader to be deleted
      */
-    public void disconnectRemoteReader(String nativeReaderName)
-            throws KeypleReaderNotFoundException {
+    void disconnectRemoteReader(String nativeReaderName) throws KeypleReaderNotFoundException {
 
         logger.debug("Disconnect Virtual reader {}", nativeReaderName);
 
@@ -144,7 +149,7 @@ public final class RemoteSePlugin extends AbstractObservablePlugin {
      * @param event
      * @param sessionId : not used yet
      */
-    public void onReaderEvent(ReaderEvent event, String sessionId) {
+    void onReaderEvent(ReaderEvent event, String sessionId) {
         logger.debug("OnReaderEvent {}", event);
         logger.debug("Dispatch ReaderEvent to the appropriate Reader : {} sessionId : {}",
                 event.getReaderName(), sessionId);
@@ -162,15 +167,6 @@ public final class RemoteSePlugin extends AbstractObservablePlugin {
     }
 
 
-    private Boolean isReaderConnected(String name) {
-        for (AbstractObservableReader virtualReader : readers) {
-            if (((VirtualReader) virtualReader).getNativeReaderName().equals(name)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     @Override
     protected SortedSet<AbstractObservableReader> getNativeReaders() throws KeypleReaderException {
         // not necessary
@@ -182,4 +178,15 @@ public final class RemoteSePlugin extends AbstractObservablePlugin {
         // should not be call
         throw new IllegalArgumentException("Use getReader method instead of getNativeReader");
     }
+
+    @Override
+    public Map<String, String> getParameters() {
+        return parameters;
+    }
+
+    @Override
+    public void setParameter(String key, String value) throws IllegalArgumentException {
+        parameters.put(key, value);
+    }
+
 }
