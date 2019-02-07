@@ -9,7 +9,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  ********************************************************************************/
-package org.eclipse.keyple.example.calypso.common.transaction;
+package org.eclipse.keyple.example.calypso.pc.transaction;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

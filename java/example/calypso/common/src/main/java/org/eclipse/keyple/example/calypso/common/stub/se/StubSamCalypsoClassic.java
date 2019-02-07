@@ -9,7 +9,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  ********************************************************************************/
-package org.eclipse.keyple.example.calypso.pc.stub.se;
+package org.eclipse.keyple.example.calypso.common.stub.se;
 
 
 import org.eclipse.keyple.plugin.stub.StubSecureElement;
@@ -18,43 +18,46 @@ import org.eclipse.keyple.util.ByteArrayUtils;
 /**
  * This class is an example of a Stub SAM
  */
-public class StubSamHoplink extends StubSecureElement {
+public class StubSamCalypsoClassic extends StubSecureElement {
 
     final static String seProtocol = "PROTOCOL_ISO7816_3";
     final String ATR_HEX = "3B3F9600805A0080C120000012345678829000";// serial number : 12345678
 
-    public StubSamHoplink() {
+    public StubSamCalypsoClassic() {
         /* Select Diversifier */
         addHexCommand("8014 0000 08 0000000011223344", "9000");
         /* Get Challenge */
         addHexCommand("0084000004", "C1C2C3C49000");
         /* Digest Init */
         addHexCommand(
-                "808A00FF3A300E03082ED700300E300102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F202122232425262728292A2B2C2D2E2F30",
+                "808A00FF27307E0308306C00307E1D24B928480800000606F000120000000000000000000000000000000000",
                 "9000");
         /* Digest Update */
-        addHexCommand("808C00000500B201A420", "9000");
+        addHexCommand("808C00000500B2014400", "9000");
         /* Digest Update */
-        addHexCommand(
-                "808C00002200000000000000000000000000000000000000000000000000000000000000009000",
+        addHexCommand("808C00001F00112233445566778899AABBCCDDEEFF00112233445566778899AABBCC9000",
                 "9000");
         /* Digest Update */
-        addHexCommand("808C00000500B201D430", "9000");
+        addHexCommand("808C00000500B201F400", "9000");
         /* Digest Update */
-        addHexCommand(
-                "808C0000320102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F202122232425262728292A2B2C2D2E2F309000",
+        addHexCommand("808C00001F00000000000000000000000000000000000000000000000000000000009000",
                 "9000");
         /* Digest Update */
-        addHexCommand("808C00000500B201A420", "9000");
+        addHexCommand("808C00000500B2014C00", "9000");
         /* Digest Update */
-        addHexCommand(
-                "808C00002200000000000000000000000000000000000000000000000000000000000000009000",
+        addHexCommand("808C00001F00000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF9000",
                 "9000");
         /* Digest Update */
-        addHexCommand("808C00000500B201D430", "9000");
+        addHexCommand(
+                "808C00002200E200401D00112233445566778899AABBCCDDEEFF00112233445566778899AABBCC",
+                "9000");
+        /* Digest Update */
+        addHexCommand("808C0000029000", "9000");
+        /* Digest Update */
+        addHexCommand("808C00000500B2014D00", "9000");
         /* Digest Update */
         addHexCommand(
-                "808C0000320102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F202122232425262728292A2B2C2D2E2F309000",
+                "808C00007E011D00000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF021D00000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF031D00000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF041D00000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF9000",
                 "9000");
         /* Digest Close */
         addHexCommand("808E000004", "050607089000");
