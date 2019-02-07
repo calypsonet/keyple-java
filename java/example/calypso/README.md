@@ -70,7 +70,7 @@
 |`HoplinkInfo.java`|This class provides Hoplink data elements (files definitions).|
 |`HoplinkTransactionEngine.java`|This class provides all the mechanisms to implement to perform a ticketing scenario with an Hoplink Secure Session.<br>It is independent of the platform.|
 
-  - `org.eclipse.keyple.example.calypso.pc.stub.se`
+  - `org.eclipse.keyple.example.calypso.common.stub.se`
 
 |File|Description|
 |:---|---|
