@@ -85,7 +85,7 @@ public final class AndroidNfcPlugin extends AbstractStaticPlugin {
      *         singleton @{@link AndroidNfcReader}
      */
     @Override
-    protected SortedSet<AbstractObservableReader> getNativeReaders() {
+    protected SortedSet<AbstractObservableReader> initNativeReaders() {
         // return the only one reader in a list
         SortedSet<AbstractObservableReader> readers =
                 new ConcurrentSkipListSet<AbstractObservableReader>();
@@ -100,7 +100,8 @@ public final class AndroidNfcPlugin extends AbstractStaticPlugin {
      * @param name : name of the reader to retrieve
      * @return instance of @{@link AndroidNfcReader}
      */
-    protected AbstractObservableReader getNativeReader(String name) {
+    @Override
+    protected AbstractObservableReader fetchNativeReader(String name) {
         return readers.first();
     }
 }

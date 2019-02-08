@@ -13,7 +13,7 @@ package org.eclipse.keyple.seproxy.event;
 
 import java.util.Set;
 import java.util.SortedSet;
-import java.util.concurrent.ConcurrentSkipListSet;
+import java.util.TreeSet;
 
 /**
  * A {@link PluginEvent} is used to propagate a change of reader state in reader plugin.
@@ -37,7 +37,7 @@ public final class PluginEvent {
     /**
      * The name of the readers involved
      */
-    private SortedSet<String> readerNames = new ConcurrentSkipListSet<String>();
+    private SortedSet<String> readerNames = new TreeSet<String>();
 
     /**
      * The type of event

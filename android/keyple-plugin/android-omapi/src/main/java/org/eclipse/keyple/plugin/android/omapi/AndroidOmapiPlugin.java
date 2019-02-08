@@ -15,7 +15,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
+
+import org.eclipse.keyple.seproxy.event.ObservableReader;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
+import org.eclipse.keyple.seproxy.exception.KeypleReaderNotFoundException;
 import org.eclipse.keyple.seproxy.plugin.AbstractObservableReader;
 import org.eclipse.keyple.seproxy.plugin.AbstractStaticPlugin;
 import org.simalliance.openmobileapi.Reader;
@@ -76,7 +79,7 @@ public final class AndroidOmapiPlugin extends AbstractStaticPlugin implements SE
      */
 
     @Override
-    protected SortedSet<AbstractObservableReader> getNativeReaders() {
+    protected SortedSet<AbstractObservableReader> initNativeReaders() {
 
         SortedSet<AbstractObservableReader> readers = new TreeSet<AbstractObservableReader>();
 
@@ -110,16 +113,17 @@ public final class AndroidOmapiPlugin extends AbstractStaticPlugin implements SE
 
     }
 
+    /**
+     * Fetch connected native reader (from third party library) by its name Returns the current
+     * {@link org.eclipse.keyple.seproxy.plugin.AbstractObservableReader} if it is already listed.
+     *
+     * @return the list of AbstractObservableReader objects.
+     * @throws KeypleReaderNotFoundException if reader is not found
+     */
     @Override
-    protected AbstractObservableReader getNativeReader(String name) throws KeypleReaderException {
-        for (AbstractObservableReader aReader : readers) {
-            if (aReader.getName().equals(name)) {
-                return aReader;
-            }
-        }
-        return null;
-
-    }
+    protected AbstractObservableReader fetchNativeReader(String name) throws KeypleReaderNotFoundException {
+        return (AbstractObservableReader) this.getReader(name);
+    };
 
     /**
      * Do not call this method directly. Invoked by Open Mobile {@link SEService} when connected
@@ -133,7 +137,7 @@ public final class AndroidOmapiPlugin extends AbstractStaticPlugin implements SE
         Log.i(TAG, "Retrieve available readers...");
 
         // init readers
-        readers = getNativeReaders();
+        readers = initNativeReaders();
     }
 
     private Map<String, String> parameters = new HashMap<String, String>();// not in use in this
