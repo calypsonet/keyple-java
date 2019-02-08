@@ -29,8 +29,8 @@ package org.eclipse.keyple.example.calypso.common.postructure;
  * </ul>
  */
 public class CalypsoClassicInfo {
-    /** Calypso default AID */
-    public final static String AID = "A0000004040125090101";
+    /** AID: Keyple test kit profile 1, Application 2 */
+    public final static String AID = "315449432E49434131";
     /// ** 1TIC.ICA AID */
     // public final static String AID = "315449432E494341";
     /** SAM C1 regular expression: platform, version and serial number values are ignored */
