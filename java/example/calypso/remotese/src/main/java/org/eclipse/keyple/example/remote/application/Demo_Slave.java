@@ -120,7 +120,7 @@ class Demo_Slave {
 
         Thread.sleep(100);
 
-        stubPlugin.plugStubReader("stubClientSlave");
+        stubPlugin.plugStubReader("stubClientSlave", true);
 
         Thread.sleep(1000);
 
