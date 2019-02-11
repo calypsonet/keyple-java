@@ -407,10 +407,6 @@ public final class PcscReader extends AbstractThreadedLocalReader {
         // channel
         try {
             if (card == null) {
-                if (isLogicalChannelOpen()) {
-                    throw new KeypleChannelStateException(
-                            "Logical channel found open while physical channel is not!");
-                }
                 this.card = this.terminal.connect(parameterCardProtocol);
                 if (cardExclusiveMode) {
                     card.beginExclusive();
