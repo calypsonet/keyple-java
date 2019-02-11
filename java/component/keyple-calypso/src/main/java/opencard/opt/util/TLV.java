@@ -75,7 +75,7 @@ public class TLV {
     }
 
     /**
-     * Create a <tt>TLV</tt> object from an ASN.1 BER encoded byte array.
+     * Create a <code>TLV</code> object from an ASN.1 BER encoded byte array.
      * <p>
      *
      * @param binary A byte array containing the binary representation of a TLV structure, encoded
@@ -94,11 +94,12 @@ public class TLV {
     }
 
     /**
-     * Create a <tt>TLV</tt> object from an ASN.1 BER encoded byte array.
+     * Create a <code>TLV</code> object from an ASN.1 BER encoded byte array.
      * <p>
      *
      * @param binary A byte array containing the binary representation of a TLV structure, encoded
      *        conforming to the ASN.1 Basic Encoding Rules defined in ISO 8825.
+     * @param offset An integer value giving the offset, where the binary representation starts.
      */
     public TLV(byte[] binary, int[] offset) {
         tag = new Tag(0, (byte) 0, false); // This is a primitive TLV
@@ -112,14 +113,13 @@ public class TLV {
     }
 
     /**
-     * Create a TLV object from the given <tt>Tag</tt> object and data.
+     * Create a TLV object from the given <code>Tag</code> object and data.
      * <p>
-     * <p>
-     * If the given <tt>Tag</tt> object has the constructed bit set, the result will be a TLV tree,
-     * otherwise it's just a primitive TLV that contains the data given in value field.
+     * If the given <code>Tag</code> object has the constructed bit set, the result will be a TLV
+     * tree, otherwise it's just a primitive TLV that contains the data given in value field.
      * <p>
      *
-     * @param tag An instance of class <tt>Tag</tt> representing the tag field of the TLV to be
+     * @param tag An instance of class <code>Tag</code> representing the tag field of the TLV to be
      *        created.
      * @param value An array of bytes representing the Value field of the TLV to be created.
      */
@@ -150,7 +150,7 @@ public class TLV {
      * Create a primitive TLV object from a given tag and positive integer.
      * <p>
      *
-     * @param tag An instance of class <tt>Tag</tt> representing the tag field of the TLV to be
+     * @param tag An instance of class <code>Tag</code> representing the tag field of the TLV to be
      *        created.
      * @param number An integer representing the Value field of the TLV to be created.
      */
@@ -184,13 +184,13 @@ public class TLV {
     }
 
     /**
-     * Create a constructed TLV object from the given <tt>Tag</tt> object and <tt>TLV</tt> object to
-     * be contained.
+     * Create a constructed TLV object from the given <code>Tag</code> object and <code>TLV</code>
+     * object to be contained.
      *
-     * @param tag An instance of class <tt>Tag</tt> representing the tag field of the TLV to be
+     * @param tag An instance of class <code>Tag</code> representing the tag field of the TLV to be
      *        created.
-     * @param tlv An instance of class <tt>TLV</tt> representing the Value field of the TLV to be
-     *        created.
+     * @param tlv An instance of class <code>TLV</code> representing the Value field of the TLV to
+     *        be created.
      */
     public TLV(Tag tag, TLV tlv) {
         this.tag = new Tag(tag);
@@ -209,10 +209,12 @@ public class TLV {
     }
 
     /**
-     * Add the given <tt>TLV</tt> object to this <tt>TLV</tt> instance (only if constructed).
+     * Add the given <code>TLV</code> object to this <code>TLV</code> instance (only if
+     * constructed).
      * <p>
      *
-     * @param tlv The <tt>TLV</tt> object to be concatenated to this <tt>TLV</tt> instance.
+     * @param tlv The <code>TLV</code> object to be concatenated to this <code>TLV</code> instance.
+     * @return The <code>TLV</code> object
      */
     public TLV add(TLV tlv) {
         TLV iterTLV;
@@ -246,12 +248,13 @@ public class TLV {
      * Search for a given tag value and return the first TLV found.
      * <p>
      *
-     * @param tag The <tt>Tag</tt> object representing the tag to be searched for, <tt>null</tt> for
-     *        any tag.
-     * @param cursor A reference to a <tt>TLV</tt> object where the search should start; if
-     *        <tt>null</tt>, the search is started with the child of this <tt>TLV</tt> instance.
-     * @return The first <tt>TLV</tt> object found, which has the given tag value; <tt>null</tt> if
-     *         no match is found.
+     * @param tag The <code>Tag</code> object representing the tag to be searched for,
+     *        <code>null</code> for any tag.
+     * @param cursor A reference to a <code>TLV</code> object where the search should start; if
+     *        <code>null</code>, the search is started with the child of this <code>TLV</code>
+     *        instance.
+     * @return The first <code>TLV</code> object found, which has the given tag value;
+     *         <code>null</code> if no match is found.
      */
     public TLV findTag(Tag tag, TLV cursor) {
         TLV iterTLV;
@@ -276,14 +279,14 @@ public class TLV {
     }
 
     /**
-     * Read a <tt>TLV</tt> object from a binary representation.
+     * Read a <code>TLV</code> object from a binary representation.
      * <p>
      *
      * @param binary A byte array containing the binary representation of a TLV structure, encoded
      *        conforming to the ASN.1 Basic Encoding Rules defined in ISO 8825.
      * @param offset An integer value giving the offset, where the binary representation starts.
-     * @param tlv The <tt>TLV</tt> object to be read from the binary representation.
-     * @param parent The <tt>TLV</tt> object representing the parent of the object to be read.
+     * @param tlv The <code>TLV</code> object to be read from the binary representation.
+     * @param parent The <code>TLV</code> object representing the parent of the object to be read.
      */
     private static void fromBinary(byte[] binary, int[] offset, TLV tlv, TLV parent) {
         int i = 0;
@@ -445,7 +448,7 @@ public class TLV {
      * Get the tag of this TLV.
      * <p>
      *
-     * @return The <tt>Tag</tt> object of this <tt>TLV</tt> object.
+     * @return The <code>Tag</code> object of this <code>TLV</code> object.
      */
     public Tag tag() {
         return tag;
@@ -455,7 +458,8 @@ public class TLV {
      * BER-code this TLV.
      * <p>
      *
-     * @return A byte array containing the BER-coded representation of this <tt>TLV</tt> instance.
+     * @return A byte array containing the BER-coded representation of this <code>TLV</code>
+     *         instance.
      */
     public byte[] toBinary() {
         int[] offset = {0};
@@ -470,7 +474,7 @@ public class TLV {
      * <p>
      *
      * @return A byte array containing the BER-coded binary representation of the value field of
-     *         this <tt>TLV</tt> instance.
+     *         this <code>TLV</code> instance.
      */
     public byte[] toBinaryContent() {
         int[] offset = {0};
@@ -514,7 +518,7 @@ public class TLV {
      * Convert this TLV's value field to it's BER-coded representation.
      * <p>
      *
-     * @param binary The byte array to which the BER-coded representation of this <tt>TLV</tt>
+     * @param binary The byte array to which the BER-coded representation of this <code>TLV</code>
      *        instance shall be written.
      * @param offset An integer giving the offset into the byte array, from where the BER-coded
      *        representation shall start.
@@ -570,7 +574,7 @@ public class TLV {
      * Convert a TLV to a string.
      * <p>
      *
-     * @return A <tt>String</tt> object representing this <tt>TLV</tt> object.
+     * @return A <code>String</code> object representing this <code>TLV</code> object.
      */
     public String toString() {
         return "Tag: " + tag + ", Length: " + length + ", Value: " + ByteArrayUtils.toHex(value);
@@ -580,9 +584,10 @@ public class TLV {
      * Convert a TLV to a string.
      * <p>
      *
-     * @param ht A <tt>Hashtable</tt> object mapping <tt>Tag</tt> objects to <String> objects.
+     * @param ht A <code>Hashtable</code> object mapping <code>Tag</code> objects to &lt;String&gt;
+     *        objects.
      * @param level An integer value giving the indention level to be used.
-     * @return A <tt>String</tt> object representing this <tt>TLV</tt> object.
+     * @return A <code>String</code> object representing this <code>TLV</code> object.
      */
     public String toString(Hashtable ht, int level) {
         StringBuilder s = new StringBuilder();
@@ -641,8 +646,8 @@ public class TLV {
      * Get the value field of this TLV as a byte array.
      * <p>
      *
-     * @return A byte array representing the value field of this <tt>TLV</tt> instance;
-     *         <tt>null</tt> if the TLV is constructed.
+     * @return A byte array representing the value field of this <code>TLV</code> instance;
+     *         <code>null</code> if the TLV is constructed.
      */
     public byte[] valueAsByteArray() {
         return value;
@@ -652,7 +657,7 @@ public class TLV {
      * Get the value of this TLV as a positive integer number.
      * <p>
      *
-     * @return An integer representing the value (unsigned int) of this <tt>TLV</tt> instance's
+     * @return An integer representing the value (unsigned int) of this <code>TLV</code> instance's
      *         value field.
      */
     public int valueAsNumber() {
