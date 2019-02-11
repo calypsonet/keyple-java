@@ -154,8 +154,6 @@ public final class RemoteSePlugin extends AbstractObservablePlugin {
         logger.debug("Dispatch ReaderEvent to the appropriate Reader : {} sessionId : {}",
                 event.getReaderName(), sessionId);
         try {
-            // TODO : dispatch events is only managed by remote reader name, should take sessionId
-            // also
             VirtualReader virtualReader =
                     (VirtualReader) getReaderByRemoteName(event.getReaderName());
             virtualReader.onRemoteReaderEvent(event);
