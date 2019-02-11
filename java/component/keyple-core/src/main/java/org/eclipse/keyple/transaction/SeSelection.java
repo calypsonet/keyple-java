@@ -80,6 +80,13 @@ public final class SeSelection {
 
     private boolean processSelection(SelectionResponse selectionResponse) {
         boolean selectionSuccessful = false;
+
+        /* null pointer exception protection */
+        if (selectionResponse == null) {
+            logger.error("selectionResponse shouldn't be null in processSelection.");
+            return false;
+        }
+
         /* resets MatchingSe previous data */
         for (MatchingSe matchingSe : matchingSeList) {
             matchingSe.reset();
