@@ -62,6 +62,8 @@ public abstract class AbstractObservableReader extends AbstractLoggedObservable<
      * Reader constructor
      * <p>
      * Force the definition of a name through the use of super method.
+     * <p>
+     * Initialize the time measurement
      *
      * @param pluginName the name of the plugin that instantiated the reader
      * @param readerName the name of the reader
