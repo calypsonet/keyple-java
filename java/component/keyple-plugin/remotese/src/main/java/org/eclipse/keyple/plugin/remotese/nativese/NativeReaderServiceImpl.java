@@ -216,7 +216,8 @@ public class NativeReaderServiceImpl
     // NativeReaderService
 
     /**
-     * Do not call this method directly This method is called by a Observable<{@link ReaderEvent}>
+     * Do not call this method directly This method is called by a
+     * Observable&lt;{@link ReaderEvent}&gt;
      * 
      * @param event event to be propagated to master device
      */
