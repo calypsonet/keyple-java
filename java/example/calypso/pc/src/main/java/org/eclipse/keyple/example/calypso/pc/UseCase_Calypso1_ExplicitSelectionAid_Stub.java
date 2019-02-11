@@ -74,7 +74,7 @@ public class UseCase_Calypso1_ExplicitSelectionAid_Stub {
         seProxyService.addPlugin(stubPlugin);
 
         /* Plug the PO stub reader. */
-        stubPlugin.plugStubReader("poReader");
+        stubPlugin.plugStubReader("poReader", true);
 
         /*
          * Get a PO reader ready to work with Calypso PO.

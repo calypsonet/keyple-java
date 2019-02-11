@@ -82,10 +82,10 @@ public class UseCase_Calypso4_PoAuthentication_Stub {
         seProxyService.addPlugin(stubPlugin);
 
         /* Plug the PO stub reader. */
-        stubPlugin.plugStubReader("poReader");
+        stubPlugin.plugStubReader("poReader", true);
 
         /* Plug the SAM stub reader. */
-        stubPlugin.plugStubReader("samReader");
+        stubPlugin.plugStubReader("samReader", true);
 
         /*
          * Get a PO and a SAM reader ready to work with a Calypso PO.

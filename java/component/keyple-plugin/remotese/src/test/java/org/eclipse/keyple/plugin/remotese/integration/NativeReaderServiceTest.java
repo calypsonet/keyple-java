@@ -24,7 +24,6 @@ import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.junit.*;
 import org.junit.rules.TestName;
 import org.junit.runner.RunWith;
-import org.mockito.*;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -89,7 +88,7 @@ public class NativeReaderServiceTest {
         StubPlugin stubPlugin = StubPlugin.getInstance();
 
         // delete stubReader
-        stubPlugin.unplugReader(nativeReader.getName());
+        stubPlugin.unplugStubReader(nativeReader.getName(), true);
 
         // Thread.sleep(500);
 

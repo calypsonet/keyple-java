@@ -45,12 +45,12 @@ public class Demo_ObservableReaderNotification_Stub {
         Thread.sleep(200);
 
         System.out.println("Plug reader 1.");
-        stubPlugin.plugStubReader("Reader1");
+        stubPlugin.plugStubReader("Reader1", true);
 
         Thread.sleep(100);
 
         System.out.println("Plug reader 2.");
-        stubPlugin.plugStubReader("Reader2");
+        stubPlugin.plugStubReader("Reader2", true);
 
         Thread.sleep(1000);
 
@@ -83,25 +83,25 @@ public class Demo_ObservableReaderNotification_Stub {
         Thread.sleep(100);
 
         System.out.println("Plug reader 1 again (twice).");
-        stubPlugin.plugStubReader("Reader1");
+        stubPlugin.plugStubReader("Reader1", true);
 
         System.out.println("Unplug reader 1.");
-        stubPlugin.unplugReader("Reader1");
+        stubPlugin.unplugStubReader("Reader1", true);
 
         Thread.sleep(100);
 
         System.out.println("Plug reader 1 again.");
-        stubPlugin.plugStubReader("Reader1");
+        stubPlugin.plugStubReader("Reader1", true);
 
         Thread.sleep(100);
 
         System.out.println("Unplug reader 2.");
-        stubPlugin.unplugReader("Reader2");
+        stubPlugin.unplugStubReader("Reader2", true);
 
         Thread.sleep(100);
 
         System.out.println("Unplug reader 2.");
-        stubPlugin.unplugReader("Reader1");
+        stubPlugin.unplugStubReader("Reader1", true);
 
         System.out.println("END.");
 

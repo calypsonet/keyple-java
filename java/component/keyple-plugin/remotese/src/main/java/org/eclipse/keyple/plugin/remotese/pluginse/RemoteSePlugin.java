@@ -56,7 +56,7 @@ public final class RemoteSePlugin extends AbstractObservablePlugin {
 
     /**
      * Retrieve a reader by its native reader name
-     * 
+     *
      * @param remoteName : name of the reader on its native device
      * @return corresponding Virtual reader if exists
      * @throws KeypleReaderNotFoundException if no virtual reader match the native reader name
@@ -154,8 +154,6 @@ public final class RemoteSePlugin extends AbstractObservablePlugin {
         logger.debug("Dispatch ReaderEvent to the appropriate Reader : {} sessionId : {}",
                 event.getReaderName(), sessionId);
         try {
-            // TODO : dispatch events is only managed by remote reader name, should take sessionId
-            // also
             VirtualReader virtualReader =
                     (VirtualReader) getReaderByRemoteName(event.getReaderName());
             virtualReader.onRemoteReaderEvent(event);
@@ -167,16 +165,22 @@ public final class RemoteSePlugin extends AbstractObservablePlugin {
     }
 
 
+    /**
+     * Init Native Readers to empty Set
+     */
     @Override
-    protected SortedSet<AbstractObservableReader> getNativeReaders() throws KeypleReaderException {
-        // not necessary
+    protected SortedSet<AbstractObservableReader> initNativeReaders() throws KeypleReaderException {
         return new TreeSet<AbstractObservableReader>();
     }
 
+    /**
+     * Not used
+     */
     @Override
-    protected AbstractObservableReader getNativeReader(String s) throws KeypleReaderException {
+    protected AbstractObservableReader fetchNativeReader(String name) throws KeypleReaderException {
         // should not be call
-        throw new IllegalArgumentException("Use getReader method instead of getNativeReader");
+        throw new IllegalArgumentException(
+                "fetchNativeReader is not used in this plugin, did you meant to use getReader?");
     }
 
     @Override

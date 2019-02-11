@@ -40,17 +40,21 @@ public abstract class AbstractThreadedObservablePlugin extends AbstractObservabl
     protected long threadWaitTimeout = SETTING_THREAD_TIMEOUT_DEFAULT;
 
     /**
-     * List of names of the connected readers
+     * List of names of the physical (native) connected readers This list helps synchronizing
+     * physical readers managed by third-party library such as smardcard.io and the list of keyple
+     * {@link org.eclipse.keyple.seproxy.SeReader} Insertion, removal, and access operations safely
+     * execute concurrently by multiple threads.
      */
-    private static SortedSet<String> nativeReadersNames = new ConcurrentSkipListSet<String>();
+    private SortedSet<String> nativeReadersNames = new ConcurrentSkipListSet<String>();
 
     /**
-     * Returns the list of names of all connected readers
+     * Fetch the list of connected native reader (usually from third party library) and returns
+     * their names (or id)
      *
-     * @return readers names list
+     * @return connected readers' name list
      * @throws KeypleReaderException if a reader error occurs
      */
-    abstract protected SortedSet<String> getNativeReadersNames() throws KeypleReaderException;
+    abstract protected SortedSet<String> fetchNativeReadersNames() throws KeypleReaderException;
 
     /**
      * Constructor
@@ -106,7 +110,7 @@ public abstract class AbstractThreadedObservablePlugin extends AbstractObservabl
             try {
                 while (running) {
                     /* retrieves the current readers names list */
-                    SortedSet<String> actualNativeReadersNames = getNativeReadersNames();
+                    SortedSet<String> actualNativeReadersNames = fetchNativeReadersNames();
                     /*
                      * checks if it has changed this algorithm favors cases where nothing change
                      */
@@ -147,7 +151,7 @@ public abstract class AbstractThreadedObservablePlugin extends AbstractObservabl
                          */
                         for (String readerName : actualNativeReadersNames) {
                             if (!nativeReadersNames.contains(readerName)) {
-                                AbstractObservableReader reader = getNativeReader(readerName);
+                                AbstractObservableReader reader = fetchNativeReader(readerName);
                                 readers.add(reader);
                                 /* add to the notification list */
                                 changedReaderNames.add(readerName);

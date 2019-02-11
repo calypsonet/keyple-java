@@ -37,14 +37,8 @@ public class AndroidNfcPluginTest {
     // init before each test
     @Before
     public void SetUp() throws IOException {
-        PowerMockito.mockStatic(AndroidNfcReader.class);
-        when(AndroidNfcReader.getInstance()).thenReturn(PowerMockito.mock(AndroidNfcReader.class));
-
         // get unique instance
         plugin = AndroidNfcPlugin.getInstance();
-
-        // reset parameters
-
     }
 
 
@@ -90,7 +84,7 @@ public class AndroidNfcPluginTest {
     }
 
     @Test
-    public void getName() throws IOException {
+    public void getName() throws Exception {
         Assert.assertTrue(plugin.getName().equals(AndroidNfcPlugin.PLUGIN_NAME));
     }
 
@@ -99,15 +93,15 @@ public class AndroidNfcPluginTest {
      */
 
     @Test
-    public void getNativeReader() throws IOException {
-        assertThat(plugin.getNativeReader(AndroidNfcReader.READER_NAME),
+    public void getNativeReader() throws Exception {
+        assertThat(plugin.getReader(AndroidNfcReader.READER_NAME),
                 instanceOf(AndroidNfcReader.class));
     }
 
     @Test
-    public void getNativeReaders() throws IOException {
-        Assert.assertTrue(plugin.getNativeReaders().size() == 1);
-        assertThat(plugin.getNativeReaders().first(), instanceOf(AndroidNfcReader.class));
+    public void getNativeReaders() throws Exception {
+        Assert.assertTrue(plugin.getReaders().size() == 1);
+        assertThat(plugin.getReaders().first(), instanceOf(AndroidNfcReader.class));
     }
 
 

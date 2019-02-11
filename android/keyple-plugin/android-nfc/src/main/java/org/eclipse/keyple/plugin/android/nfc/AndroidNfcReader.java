@@ -80,7 +80,7 @@ public final class AndroidNfcReader extends AbstractSelectionLocalReader
      * Holder of singleton
      */
     private static class SingletonHolder {
-        private final static AndroidNfcReader instance = new AndroidNfcReader();
+        final static AndroidNfcReader instance = new AndroidNfcReader();
     }
 
     /**

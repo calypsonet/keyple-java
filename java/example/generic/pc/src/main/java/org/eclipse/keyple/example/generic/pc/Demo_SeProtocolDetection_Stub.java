@@ -70,7 +70,7 @@ Demo_SeProtocolDetection_Stub {
         /*
          * Plug PO reader.
          */
-        stubPlugin.plugStubReader("poReader");
+        stubPlugin.plugStubReader("poReader", true);
 
         Thread.sleep(200);
 

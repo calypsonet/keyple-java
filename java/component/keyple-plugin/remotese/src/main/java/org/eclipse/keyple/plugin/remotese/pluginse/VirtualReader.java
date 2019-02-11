@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
 public final class VirtualReader extends AbstractObservableReader {
 
     private final VirtualReaderSession session;
-    private final String remoteName;
+    private final String nativeReaderName;
     private final RemoteMethodTxEngine rmTxEngine;
 
     private static final Logger logger = LoggerFactory.getLogger(VirtualReader.class);
@@ -49,7 +49,7 @@ public final class VirtualReader extends AbstractObservableReader {
             RemoteMethodTxEngine rmTxEngine) {
         super(RemoteSePlugin.PLUGIN_NAME, "remote-" + nativeReaderName);
         this.session = session;
-        this.remoteName = nativeReaderName;
+        this.nativeReaderName = nativeReaderName;
         this.rmTxEngine = rmTxEngine;
         logger.info("A new virtual reader was created with session {}", session);
     }
@@ -70,7 +70,7 @@ public final class VirtualReader extends AbstractObservableReader {
      * @return local name of the native reader (on slave device)
      */
     public String getNativeReaderName() {
-        return remoteName;
+        return nativeReaderName;
     }
 
     public VirtualReaderSession getSession() {
@@ -97,7 +97,7 @@ public final class VirtualReader extends AbstractObservableReader {
      * @throws KeypleReaderException
      */
     @Override
-    public SeResponseSet processSeRequestSet(SeRequestSet seRequestSet)
+    protected SeResponseSet processSeRequestSet(SeRequestSet seRequestSet)
             throws IllegalArgumentException, KeypleReaderException {
 
         RmTransmitTx transmit = new RmTransmitTx(seRequestSet, session.getSessionId(),
@@ -120,7 +120,7 @@ public final class VirtualReader extends AbstractObservableReader {
      * @throws KeypleReaderException
      */
     @Override
-    public SeResponse processSeRequest(SeRequest seRequest)
+    protected SeResponse processSeRequest(SeRequest seRequest)
             throws IllegalArgumentException, KeypleReaderException {
         try {
             return this.processSeRequestSet(new SeRequestSet(seRequest)).getSingleResponse();
