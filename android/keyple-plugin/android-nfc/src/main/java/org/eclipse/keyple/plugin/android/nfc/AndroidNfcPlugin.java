@@ -14,6 +14,7 @@ package org.eclipse.keyple.plugin.android.nfc;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.concurrent.ConcurrentSkipListSet;
 import org.eclipse.keyple.seproxy.plugin.AbstractObservableReader;
 import org.eclipse.keyple.seproxy.plugin.AbstractStaticPlugin;
@@ -50,7 +51,7 @@ public final class AndroidNfcPlugin extends AbstractStaticPlugin {
 
     private final static AndroidNfcPlugin uniqueInstance = new AndroidNfcPlugin();
 
-    static final String PLUGIN_NAME = "AndroidNFCPlugin";
+    static final String PLUGIN_NAME = "AndroidNfcPlugin";
 
     private final Map<String, String> parameters = new HashMap<String, String>();// not in use in
                                                                                  // this
@@ -58,7 +59,7 @@ public final class AndroidNfcPlugin extends AbstractStaticPlugin {
     // plugin
 
     private AndroidNfcPlugin() {
-        super("AndroidNFCPlugin");
+        super(PLUGIN_NAME);
     }
 
     public static AndroidNfcPlugin getInstance() {
@@ -85,10 +86,11 @@ public final class AndroidNfcPlugin extends AbstractStaticPlugin {
      *         singleton @{@link AndroidNfcReader}
      */
     @Override
-    protected SortedSet<AbstractObservableReader> getNativeReaders() {
+    protected SortedSet<AbstractObservableReader> initNativeReaders() {
+        LOG.debug("InitNativeReader() add the unique instance of AndroidNfcReader");
         // return the only one reader in a list
         SortedSet<AbstractObservableReader> readers =
-                new ConcurrentSkipListSet<AbstractObservableReader>();
+                new TreeSet<AbstractObservableReader>();
         readers.add(AndroidNfcReader.getInstance());
         return readers;
     }
@@ -100,7 +102,8 @@ public final class AndroidNfcPlugin extends AbstractStaticPlugin {
      * @param name : name of the reader to retrieve
      * @return instance of @{@link AndroidNfcReader}
      */
-    protected AbstractObservableReader getNativeReader(String name) {
+    @Override
+    protected AbstractObservableReader fetchNativeReader(String name) {
         return readers.first();
     }
 }

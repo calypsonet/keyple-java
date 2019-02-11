@@ -13,10 +13,13 @@ package org.eclipse.keyple.example.calypso.pc;
 
 import java.util.SortedSet;
 import java.util.concurrent.ConcurrentSkipListSet;
-import org.eclipse.keyple.example.calypso.common.transaction.CalypsoClassicTransactionEngine;
-import org.eclipse.keyple.example.calypso.pc.stub.se.*;
-import org.eclipse.keyple.plugin.stub.*;
+import org.eclipse.keyple.example.calypso.common.stub.se.StubCalypsoClassic;
+import org.eclipse.keyple.example.calypso.common.stub.se.StubSamCalypsoClassic;
+import org.eclipse.keyple.example.calypso.pc.transaction.CalypsoClassicTransactionEngine;
+import org.eclipse.keyple.plugin.stub.StubPlugin;
 import org.eclipse.keyple.plugin.stub.StubProtocolSetting;
+import org.eclipse.keyple.plugin.stub.StubReader;
+import org.eclipse.keyple.plugin.stub.StubSecureElement;
 import org.eclipse.keyple.seproxy.ReaderPlugin;
 import org.eclipse.keyple.seproxy.SeProxyService;
 import org.eclipse.keyple.seproxy.event.ObservableReader;
@@ -55,8 +58,8 @@ public class Demo_CalypsoClassic_Stub {
         /*
          * Plug PO and SAM stub readers.
          */
-        stubPlugin.plugStubReader("poReader");
-        stubPlugin.plugStubReader("samReader");
+        stubPlugin.plugStubReader("poReader", true);
+        stubPlugin.plugStubReader("samReader", true);
 
         StubReader poReader = null, samReader = null;
         try {

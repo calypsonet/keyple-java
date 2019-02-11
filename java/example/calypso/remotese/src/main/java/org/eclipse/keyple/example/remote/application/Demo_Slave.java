@@ -44,10 +44,6 @@ class Demo_Slave {
     // NativeReaderServiceImpl, used to connectAReader and disconnect readers
     private NativeReaderServiceImpl nativeReaderService;
 
-    // Client NodeId used to identify this terminal
-    private final String nodeId = "node1";
-
-
     /**
      * At startup, create the {@link TransportNode} object, either a {@link ClientNode} or a
      * {@link ServerNode}
@@ -107,9 +103,6 @@ class Demo_Slave {
 
         logger.info("Boot DemoSlave LocalReader ");
 
-        // get seProxyService
-        SeProxyService seProxyService = SeProxyService.getInstance();
-
         logger.info("Create Local StubPlugin");
         StubPlugin stubPlugin = StubPlugin.getInstance();
 
@@ -127,7 +120,7 @@ class Demo_Slave {
 
         Thread.sleep(100);
 
-        stubPlugin.plugStubReader("stubClientSlave");
+        stubPlugin.plugStubReader("stubClientSlave", true);
 
         Thread.sleep(1000);
 
@@ -145,7 +138,7 @@ class Demo_Slave {
 
         // connect a reader to Remote Plugin
         logger.info("Connect remotely the StubPlugin ");
-        return nativeReaderService.connectReader(localReader, nodeId);
+        return nativeReaderService.connectReader(localReader, node.getNodeId());
 
     }
 

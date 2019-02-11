@@ -18,9 +18,9 @@ import org.eclipse.keyple.calypso.transaction.CalypsoPo;
 import org.eclipse.keyple.calypso.transaction.PoSelector;
 import org.eclipse.keyple.calypso.transaction.PoTransaction;
 import org.eclipse.keyple.example.calypso.common.postructure.CalypsoClassicInfo;
-import org.eclipse.keyple.example.calypso.common.transaction.CalypsoUtilities;
-import org.eclipse.keyple.example.calypso.pc.stub.se.StubCalypsoClassic;
-import org.eclipse.keyple.example.calypso.pc.stub.se.StubSamCalypsoClassic;
+import org.eclipse.keyple.example.calypso.common.stub.se.StubCalypsoClassic;
+import org.eclipse.keyple.example.calypso.common.stub.se.StubSamCalypsoClassic;
+import org.eclipse.keyple.example.calypso.pc.transaction.CalypsoUtilities;
 import org.eclipse.keyple.plugin.stub.StubPlugin;
 import org.eclipse.keyple.plugin.stub.StubProtocolSetting;
 import org.eclipse.keyple.plugin.stub.StubReader;
@@ -82,10 +82,10 @@ public class UseCase_Calypso4_PoAuthentication_Stub {
         seProxyService.addPlugin(stubPlugin);
 
         /* Plug the PO stub reader. */
-        stubPlugin.plugStubReader("poReader");
+        stubPlugin.plugStubReader("poReader", true);
 
         /* Plug the SAM stub reader. */
-        stubPlugin.plugStubReader("samReader");
+        stubPlugin.plugStubReader("samReader", true);
 
         /*
          * Get a PO and a SAM reader ready to work with a Calypso PO.

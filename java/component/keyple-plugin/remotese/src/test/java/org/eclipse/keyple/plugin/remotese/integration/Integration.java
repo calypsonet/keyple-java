@@ -111,7 +111,7 @@ class Integration {
         logger.debug("Stub plugin count observers : {}", stubPlugin.countObservers());
 
         logger.debug("Create a new StubReader : {}", stubReaderName);
-        stubPlugin.plugStubReader(stubReaderName);
+        stubPlugin.plugStubReader(stubReaderName, true);
 
         Thread.sleep(100);
 

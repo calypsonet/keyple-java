@@ -12,7 +12,7 @@
 package org.eclipse.keyple.example.calypso.pc;
 
 
-import org.eclipse.keyple.example.calypso.common.transaction.CalypsoClassicTransactionEngine;
+import org.eclipse.keyple.example.calypso.pc.transaction.CalypsoClassicTransactionEngine;
 import org.eclipse.keyple.example.generic.pc.ReaderUtilities;
 import org.eclipse.keyple.plugin.pcsc.PcscPlugin;
 import org.eclipse.keyple.plugin.pcsc.PcscProtocolSetting;

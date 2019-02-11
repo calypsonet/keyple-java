@@ -19,7 +19,7 @@ import org.eclipse.keyple.calypso.transaction.CalypsoPo;
 import org.eclipse.keyple.calypso.transaction.PoSelector;
 import org.eclipse.keyple.calypso.transaction.PoTransaction;
 import org.eclipse.keyple.example.calypso.common.postructure.CalypsoClassicInfo;
-import org.eclipse.keyple.example.calypso.pc.stub.se.StubCalypsoClassic;
+import org.eclipse.keyple.example.calypso.common.stub.se.StubCalypsoClassic;
 import org.eclipse.keyple.plugin.stub.StubPlugin;
 import org.eclipse.keyple.plugin.stub.StubProtocolSetting;
 import org.eclipse.keyple.plugin.stub.StubReader;
@@ -74,7 +74,7 @@ public class UseCase_Calypso1_ExplicitSelectionAid_Stub {
         seProxyService.addPlugin(stubPlugin);
 
         /* Plug the PO stub reader. */
-        stubPlugin.plugStubReader("poReader");
+        stubPlugin.plugStubReader("poReader", true);
 
         /*
          * Get a PO reader ready to work with Calypso PO.

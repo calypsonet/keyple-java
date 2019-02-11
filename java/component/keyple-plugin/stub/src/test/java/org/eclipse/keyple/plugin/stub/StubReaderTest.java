@@ -73,7 +73,7 @@ public class StubReaderTest {
         logger.info("Stubplugin observers size {}", stubPlugin.countObservers());
         Assert.assertEquals(1, stubPlugin.countObservers());
 
-        stubPlugin.plugStubReader("StubReaderTest");
+        stubPlugin.plugStubReader("StubReaderTest", true);
 
         reader = (StubReader) stubPlugin.getReader("StubReaderTest");
     }
@@ -83,7 +83,7 @@ public class StubReaderTest {
         StubPlugin stubPlugin = StubPlugin.getInstance();
         stubPlugin.clearObservers();
         reader.clearObservers();
-        stubPlugin.getInstance().unplugReader("StubReaderTest");
+        stubPlugin.getInstance().unplugStubReader("StubReaderTest", true);
     }
 
 
