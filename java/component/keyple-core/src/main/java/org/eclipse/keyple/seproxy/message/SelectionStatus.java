@@ -16,15 +16,15 @@ import java.util.Arrays;
 public class SelectionStatus {
     private final AnswerToReset atr;
     private final ApduResponse fci;
-    private final boolean hasMatched;
+    private final boolean isMatching;
 
-    public SelectionStatus(AnswerToReset atr, ApduResponse fci, boolean hasMatched) {
+    public SelectionStatus(AnswerToReset atr, ApduResponse fci, boolean isMatching) {
         if (atr == null && fci == null) {
             throw new IllegalArgumentException("Atr and Fci can't be null at the same time.");
         }
         this.atr = atr;
         this.fci = fci;
-        this.hasMatched = hasMatched;
+        this.isMatching = isMatching;
     }
 
     public AnswerToReset getAtr() {
@@ -36,7 +36,7 @@ public class SelectionStatus {
     }
 
     public boolean hasMatched() {
-        return hasMatched;
+        return isMatching;
     }
 
     @Override
@@ -52,13 +52,13 @@ public class SelectionStatus {
                 : selectionStatus.getAtr().equals(this.atr) && selectionStatus.getFci() == null
                         ? this.fci == null
                         : selectionStatus.getFci().equals(this.fci)
-                                && selectionStatus.hasMatched() == hasMatched;
+                                && selectionStatus.hasMatched() == isMatching;
     }
 
     @Override
     public int hashCode() {
         int hash = 17;
-        hash = 19 * hash + (hasMatched ? 0 : 1);
+        hash = 19 * hash + (isMatching ? 0 : 1);
         hash = 31 * hash + (atr == null ? 0 : Arrays.hashCode(atr.getBytes()));
         hash = 7 * hash + (fci == null ? 0 : Arrays.hashCode(fci.getBytes()));
         return hash;

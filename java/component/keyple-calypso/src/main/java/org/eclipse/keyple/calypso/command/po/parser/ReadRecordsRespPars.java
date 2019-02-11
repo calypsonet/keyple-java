@@ -16,7 +16,10 @@ import org.eclipse.keyple.command.AbstractApduResponseParser;
 import org.eclipse.keyple.util.ByteArrayUtils;
 
 /**
- * Read Records (00B2) response parser. See specs: Calypso / page 89 / 9.4.7 Read Records
+ * Read Records (00B2) response parser. See specs: Calypso / page 89 / 9.4.7 Read Records The
+ * {@link ReadRecordsRespPars} class holds the data resulting from a Read Records command. It
+ * provides methods to retrieve these data according to the file structure profile specified in the
+ * command preparation step: SINGLE or MULTIPLE RECORD or COUNTER.
  */
 public final class ReadRecordsRespPars extends AbstractApduResponseParser {
 
@@ -75,6 +78,8 @@ public final class ReadRecordsRespPars extends AbstractApduResponseParser {
      * Parses the Apdu response as a data record (single or multiple), retrieves the records and
      * place it in an map.
      * <p>
+     * The map index follows the PO specification, i.e. starts at 1 for the first record.
+     * <p>
      * An empty map is returned if no data is available.
      * 
      * @return a map of records
@@ -113,6 +118,8 @@ public final class ReadRecordsRespPars extends AbstractApduResponseParser {
      * Parses the Apdu response as a counter record (single or multiple), retrieves the counters
      * values and place it in an map indexed with the counter number.
      * <p>
+     * The map index follows the PO specification, i.e. starts at 1 for the first counter.
+     * <p>
      * An empty map is returned if no data is available.
      *
      * @return a map of counters
@@ -133,7 +140,7 @@ public final class ReadRecordsRespPars extends AbstractApduResponseParser {
             byte[] apdu = response.getDataOut();
             int numberOfCounters = apdu.length / 3;
             int index = 0;
-            int key = 0;
+            int key = 1; /* the first counter is indexed 1 */
             for (int i = 0; i < numberOfCounters; i++) {
                 /*
                  * convert the 3-byte unsigned value of the counter into an integer (up to 2^24 -1)
