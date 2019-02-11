@@ -38,6 +38,13 @@ public abstract class AbstractSelectionLocalReader extends AbstractLocalReader
     }
 
     /**
+     * Attempts to open the physical channel
+     *
+     * @throws KeypleChannelStateException if the channel opening fails
+     */
+    protected abstract void openPhysicalChannel() throws KeypleChannelStateException;
+
+    /**
      * Gets the SE Answer to reset
      *
      * @return ATR returned by the SE or reconstructed by the reader (contactless)
