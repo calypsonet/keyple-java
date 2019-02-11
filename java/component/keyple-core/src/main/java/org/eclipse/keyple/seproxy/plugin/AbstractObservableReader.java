@@ -29,36 +29,38 @@ import org.slf4j.LoggerFactory;
 
 
 /**
- * 
- * Abstract definition of an observable reader. Factorizes setSetProtocols and will factorize the
- * transmit method logging
- * 
+ * Abstract definition of an observable reader.
+ * <ul>
+ * <li>High level logging and benchmarking of SeRequestSet and SeRequest transmission</li>
+ * <li>Observability management</li>
+ * <li>Name-based comparison of ProxyReader (required for SortedSet&lt;ProxyReader&gt;)</li>
+ * <li>Plugin naming management</li>
+ * </ul>
  */
 
 public abstract class AbstractObservableReader extends AbstractLoggedObservable<ReaderEvent>
         implements ObservableReader, ProxyReader {
 
+    /** logger */
     private static final Logger logger = LoggerFactory.getLogger(AbstractObservableReader.class);
 
-    private long before; // timestamp recorder
+    /** Timestamp recorder */
+    private long before;
 
+    /** Contains the name of the plugin */
     protected final String pluginName;
 
-    /** the default SelectionRequest to be executed upon SE insertion */
+    /** The default SelectionRequest to be executed upon SE insertion */
     protected SelectionRequest defaultSelectionRequest;
 
     /** Indicate if all SE detected should be notified or only matching SE */
     protected ObservableReader.NotificationMode notificationMode;
 
-    protected abstract SeResponseSet processSeRequestSet(SeRequestSet requestSet)
-            throws KeypleIOReaderException, KeypleChannelStateException, KeypleReaderException;
-
-    protected abstract SeResponse processSeRequest(SeRequest seRequest)
-            throws KeypleIOReaderException, KeypleChannelStateException, KeypleReaderException;
+    /** ==== Constructor =================================================== */
 
     /**
      * Reader constructor
-     *
+     * <p>
      * Force the definition of a name through the use of super method.
      *
      * @param pluginName the name of the plugin that instantiated the reader
@@ -67,67 +69,47 @@ public abstract class AbstractObservableReader extends AbstractLoggedObservable<
     protected AbstractObservableReader(String pluginName, String readerName) {
         super(readerName);
         this.pluginName = pluginName;
-        this.before = System.nanoTime();
+        this.before = System.nanoTime(); /*
+                                          * provides an initial value for measuring the
+                                          * inter-exchange time. The first measurement gives the
+                                          * time elapsed since the plugin was loaded.
+                                          */
     }
 
+    /** ==== Utility methods =============================================== */
 
     /**
-     * Starts the monitoring thread
+     * Gets the name of plugin provided in the constructor.
      * <p>
-     * This method has to be overloaded by the class that handle the monitoring thread. It will be
-     * called when a first observer is added.
+     * The method will be used particularly for logging purposes. The plugin name is also part of
+     * the ReaderEvent and PluginEvent objects.
+     * 
+     * @return the plugin name String
      */
-    protected void startObservation() {};
+    protected final String getPluginName() {
+        return pluginName;
+    }
 
     /**
-     * Ends the monitoring thread
-     * <p>
-     * This method has to be overloaded by the class that handle the monitoring thread. It will be
-     * called when the observer is removed.
-     */
-    protected void stopObservation() {};
-
-    /**
-     * Add a reader observer.
-     * <p>
-     * The observer will receive all the events produced by this reader (card insertion, removal,
-     * etc.)
-     * <p>
-     * The startObservation() is called when the first observer is added. (to start a monitoring
-     * thread for instance)
+     * Compare the name of the current SeReader to the name of the SeReader provided in argument
      *
-     * @param observer the observer object
+     * @param seReader a SeReader object
+     * @return true if the names match (The method is needed for the SortedSet lists)
      */
-    public final void addObserver(ReaderObserver observer) {
-        // if an observer is added to an empty list, start the observation
-        if (super.countObservers() == 0) {
-            logger.debug("Start the reader monitoring.");
-            startObservation();
-        }
-        super.addObserver(observer);
+    public final int compareTo(SeReader seReader) {
+        return this.getName().compareTo(seReader.getName());
     }
 
-    /**
-     * Remove a reader observer.
-     * <p>
-     * The observer will not receive any of the events produced by this reader.
-     * <p>
-     * The stopObservation() is called when the last observer is removed. (to stop a monitoring
-     * thread for instance)
-     *
-     * @param observer the observer object
-     */
-    public final void removeObserver(ReaderObserver observer) {
-        super.removeObserver(observer);
-        if (super.countObservers() == 0) {
-            logger.debug("Stop the reader monitoring.");
-            stopObservation();
-        }
-    }
+    /** ==== High level communication API ================================== */
 
     /**
      * Execute the transmission of a list of {@link SeRequest} and returns a list of
      * {@link SeResponse}
+     * <p>
+     * The global execution time (inter-exchange and communication) and the SeRequestSet content is
+     * logged (DEBUG level).
+     * <p>
+     * As the method is final, it cannot be extended.
      *
      * @param requestSet the request set
      * @return responseSet the response set
@@ -178,8 +160,25 @@ public abstract class AbstractObservableReader extends AbstractLoggedObservable<
     }
 
     /**
-     * Execute the transmission of a {@link SeRequest} and returns a {@link SeResponse}
+     * Abstract method implemented by the AbstractLocalReader and VirtualReader classes.
+     * <p>
+     * This method is handled by transmitSet.
      * 
+     * @param requestSet the SeRequestSet to be processed
+     * @return the SeResponseSet (responses to the SeRequestSet)
+     * @throws KeypleReaderException if reader error occurs
+     */
+    protected abstract SeResponseSet processSeRequestSet(SeRequestSet requestSet)
+            throws KeypleReaderException;
+
+    /**
+     * Execute the transmission of a {@link SeRequest} and returns a {@link SeResponse}
+     * <p>
+     * The individual execution time (inter-exchange and communication) and the SeRequestSet content
+     * is logged (DEBUG level).
+     * <p>
+     * As the method is final, it cannot be extended.
+     *
      * @param seRequest the request to be transmitted
      * @return the received response
      * @throws KeypleReaderException if a reader error occurs
@@ -231,19 +230,75 @@ public abstract class AbstractObservableReader extends AbstractLoggedObservable<
     }
 
     /**
-     * @return Plugin name
+     * Abstract method implemented by the AbstractLocalReader and VirtualReader classes.
+     * <p>
+     * This method is handled by transmit.
+     * 
+     * @param seRequest the SeRequestSet to be processed
+     * @return the SeResponse (responses to the SeRequest)
+     * @throws KeypleReaderException if reader error occurs
      */
-    protected final String getPluginName() {
-        return pluginName;
+    protected abstract SeResponse processSeRequest(SeRequest seRequest)
+            throws KeypleReaderException;
+
+    /** ==== Methods specific to observability ============================= */
+
+    /**
+     * Starts the monitoring of the reader activity (especially card insertion and removal)
+     * <p>
+     * This method has to be overloaded by the class that handle the monitoring thread ( e.g.
+     * {@link AbstractThreadedLocalReader}).
+     * <p>
+     * It will be called when a first observer is added (see addObserver).
+     */
+    protected void startObservation() {};
+
+    /**
+     * Ends the monitoring of the reader activity
+     * <p>
+     * This method has to be overloaded by the class that handle the monitoring thread (e.g.
+     * {@link AbstractThreadedLocalReader}). It will be called when the observer is removed.
+     * <p>
+     * It will be called when the last observer is removed (see removeObserver).
+     *
+     */
+    protected void stopObservation() {};
+
+    /**
+     * Add a reader observer.
+     * <p>
+     * The observer will receive all the events produced by this reader (card insertion, removal,
+     * etc.)
+     * <p>
+     * The startObservation() is called when the first observer is added. (to start a monitoring
+     * thread for instance)
+     *
+     * @param observer the observer object
+     */
+    public final void addObserver(ReaderObserver observer) {
+        // if an observer is added to an empty list, start the observation
+        if (super.countObservers() == 0) {
+            logger.debug("Start the reader monitoring.");
+            startObservation();
+        }
+        super.addObserver(observer);
     }
 
     /**
-     * Compare the name of the current SeReader to the name of the SeReader provided in argument
-     * 
-     * @param seReader a SeReader object
-     * @return true if the names match (The method is needed for the SortedSet lists)
+     * Remove a reader observer.
+     * <p>
+     * The observer will not receive any of the events produced by this reader.
+     * <p>
+     * The stopObservation() is called when the last observer is removed. (to stop a monitoring
+     * thread for instance)
+     *
+     * @param observer the observer object
      */
-    public final int compareTo(SeReader seReader) {
-        return this.getName().compareTo(seReader.getName());
+    public final void removeObserver(ReaderObserver observer) {
+        super.removeObserver(observer);
+        if (super.countObservers() == 0) {
+            logger.debug("Stop the reader monitoring.");
+            stopObservation();
+        }
     }
 }
