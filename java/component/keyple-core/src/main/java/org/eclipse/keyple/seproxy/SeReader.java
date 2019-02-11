@@ -56,7 +56,7 @@ public interface SeReader extends Nameable, Configurable, Comparable<SeReader> {
      * A reader plugin will handle a list of protocol settings in order to target multiple types of
      * SE.
      * 
-     * @param seProtocolSetting the protocol setting to be add to the plugin internal list
+     * @param seProtocolSetting the protocol setting to be added to the plugin internal list
      */
     void addSeProtocolSetting(SeProtocolSetting seProtocolSetting);
 
