@@ -44,12 +44,12 @@ publishing {
 dependencies {
     implementation project(path: ':java:component:keyple-core')
     // https://mvnrepository.com/artifact/org.slf4j/slf4j-api
-    api 'org.slf4j:slf4j-api:1.7.25'
+    api "org.slf4j:slf4j-api:${slf4japi_version}"
     /*
         Test
          */
     // https://mvnrepository.com/artifact/junit/junit
-    testImplementation 'junit:junit:4.12'
+    testImplementation "junit:junit:${junit_version}"
     // https://mvnrepository.com/artifact/org.mockito/mockito-core
-    testImplementation 'org.mockito:mockito-core:2.23.4'
+    testImplementation "org.mockito:mockito-core:${mockitocore_version}"
 }

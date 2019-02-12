@@ -14,7 +14,6 @@ package org.eclipse.keyple.plugin.android.nfc;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.junit.Assert.assertThat;
-import static org.powermock.api.mockito.PowerMockito.when;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,7 +22,6 @@ import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import junit.framework.Assert;
