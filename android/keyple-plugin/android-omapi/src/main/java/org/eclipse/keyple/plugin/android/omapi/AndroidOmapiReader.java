@@ -44,6 +44,7 @@ public final class AndroidOmapiReader extends AbstractStaticReader {
     private static final String TAG = AndroidOmapiReader.class.getSimpleName();
 
     private Reader omapiReader;
+    private Session session = null;
     private Channel openChannel = null;
     private byte[] openApplication = null;
     private Map<String, String> parameters = new HashMap<String, String>();
@@ -73,7 +74,7 @@ public final class AndroidOmapiReader extends AbstractStaticReader {
      */
     @Override
     public TransmissionMode getTransmissionMode() {
-        return TransmissionMode.CONTACTLESS;
+        return TransmissionMode.CONTACTS;
     }
 
     /**
@@ -87,69 +88,186 @@ public final class AndroidOmapiReader extends AbstractStaticReader {
         return omapiReader.isSecureElementPresent();
     }
 
-    public boolean isPhysicalChannelOpen() {
-        return true;
-    }
-
-    public void openPhysicalChannel() throws KeypleChannelStateException {
-
+    /**
+     * Get the SE Answer To Reset
+     * @return a byte array containing the ATR or null if no session was available
+     */
+    @Override
+    protected byte[] getATR() {
+        if(session != null) {
+            Log.i(TAG, "Retrieveing ATR from session...");
+            return session.getATR();
+        }
+        else {
+            return null;
+        }
     }
 
     /**
-     * Open a Channel to the application AID if not open yet. see {@link Reader#openSession()} see
-     * {@link Session#openLogicalChannel(byte[])}
-     * 
-     * @param selector: AID of the application to select
-     * @return Array : index[0] : ATR and index[1] :FCI
-     * @throws KeypleReaderException
+     * Operate a ATR based logical channel opening.
+     * <p>
+     * An OMAPI basic channel is open and the ATR is checked with the regular expression available
+     * in the AtrSelector.
+     * @param atrSelector the ATR matching data (a regular expression used to compare the SE ATR to
+     *        the expected one)
+     * @return the SelectionStatus
+     * @throws KeypleIOReaderException if an IOException occurs
      */
     @Override
-    protected SelectionStatus openLogicalChannelAndSelect(SeRequest.Selector selector,
-            Set<Integer> successfulSelectionStatusCodes)
-            throws KeypleChannelStateException, KeypleApplicationSelectionException {
-        byte[][] atrAndFci = new byte[2][];
-        byte[] aid = ((SeRequest.AidSelector) selector).getAidToSelect();
-        try {
-            if (openChannel != null && !openChannel.isClosed() && openApplication != null
-                    && openApplication.equals(aid)) {
-                Log.i(TAG, "Channel is already open to aid : " + ByteArrayUtils.toHex(aid));
+    protected final SelectionStatus openLogicalChannelByAtr(SeRequest.AtrSelector atrSelector)
+            throws KeypleIOReaderException {
+        boolean selectionHasMatched;
+        byte[] atr = getATR();
 
-                atrAndFci[0] = openChannel.getSession().getATR();
-                atrAndFci[1] = openChannel.getSelectResponse();
-
-
-            } else {
-
-                Log.i(TAG, "Opening channel to aid : " + ByteArrayUtils.toHex(aid));
-
-                // open physical channel
-                Session session = omapiReader.openSession();
-
-                // get ATR from session
-                Log.i(TAG, "Retrieveing ATR from session...");
-                atrAndFci[0] = session.getATR();
-
-                Log.i(TAG, "Create logical openChannel within the session...");
-                openChannel = session.openLogicalChannel(aid);
-
-                // get FCI
-                atrAndFci[1] = openChannel.getSelectResponse();
-
-            }
-        } catch (IOException e) {
-            throw new KeypleChannelStateException(
-                    "Error while opening channel, aid :" + ByteArrayUtils.toHex(aid), e.getCause());
-        } catch (SecurityException e) {
-            throw new KeypleChannelStateException(
-                    "Error while opening channel, aid :" + ByteArrayUtils.toHex(aid), e.getCause());
-        } catch (NoSuchElementException e) {
-            throw new KeypleApplicationSelectionException(
-                    "Error while selecting application : " + ByteArrayUtils.toHex(aid), e);
+        if (atr == null) {
+            throw new KeypleIOReaderException("Didn't get an ATR from the SE.");
         }
 
-        return new SelectionStatus(new AnswerToReset(atrAndFci[0]),
-                new ApduResponse(atrAndFci[1], null), true);
+        if (session == null) {
+            throw new KeypleIOReaderException("Session is null.");
+        }
+
+        try {
+            openChannel = session.openBasicChannel(null);
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new KeypleIOReaderException("IOException while opening basic channel.");
+        }
+
+        if (openChannel == null) {
+            throw new KeypleIOReaderException("Failed to open a basic channel.");
+        }
+
+        Log.d(TAG,"[" + this.getName()+"] openLogicalChannelByAtr => ATR: " + ByteArrayUtils.toHex(atr));
+
+        if (atrSelector.atrMatches(atr)) {
+            selectionHasMatched = true;
+        } else {
+            Log.d(TAG,"[" + this.getName() + "] openLogicalChannelByAtr => ATR Selection failed. SELECTOR = " + atrSelector);
+            selectionHasMatched = false;
+        }
+        return new SelectionStatus(new AnswerToReset(atr), new ApduResponse(null, null),
+                selectionHasMatched);
     }
+
+    /**
+     * Operate a AID based logical channel opening.
+     * <p>
+     * An OMAPI logical channel is open and the select response is checked with successful codes available
+     * in the AidSelector.
+     * @param aidSelector the targeted application selector
+     * @return the SelectionStatus
+     * @throws KeypleIOReaderException if an IOException occurs
+     */
+    @Override
+    protected final SelectionStatus openLogicalChannelByAid(SeRequest.AidSelector aidSelector) throws KeypleIOReaderException, KeypleApplicationSelectionException {
+        ApduResponse fciResponse;
+        byte[] atr;
+
+        byte[] aid = aidSelector.getAidToSelect();
+
+        if (aid != null) {
+            Log.i(TAG, "Create logical openChannel within the session...");
+            try {
+                openChannel = session.openLogicalChannel(aid);
+            } catch (IOException e) {
+                e.printStackTrace();
+                throw new KeypleIOReaderException("IOException while opening logical channel.");
+            } catch (NoSuchElementException e) {
+                throw new KeypleApplicationSelectionException(
+                        "Error while selecting application : " + ByteArrayUtils.toHex(aid), e);
+            }
+
+            if (openChannel == null) {
+                throw new KeypleIOReaderException("Failed to open a logical channel.");
+            }
+
+            /* get the FCI and build an ApduResponse */
+            fciResponse = new ApduResponse(openChannel.getSelectResponse(), aidSelector.getSuccessfulSelectionStatusCodes());
+
+            /* get the ATR*/
+            atr = getATR();
+        } else {
+            throw new IllegalArgumentException("AID must not be null for an AidSelector.");
+        }
+        return new SelectionStatus(new AnswerToReset(atr), fciResponse,
+                fciResponse.isSuccessful());
+    }
+
+    @Override
+    public boolean isPhysicalChannelOpen() {
+        if(session != null && !session.isClosed()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public void openPhysicalChannel() throws KeypleChannelStateException {
+        try {
+            session = omapiReader.openSession();
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new KeypleChannelStateException("IOException while opening physical channel.");
+        }
+    }
+
+//    /**
+//     * Open a Channel to the application AID if not open yet. see {@link Reader#openSession()} see
+//     * {@link Session#openLogicalChannel(byte[])}
+//     *
+//     * @param selector: AID of the application to select
+//     * @return Array : index[0] : ATR and index[1] :FCI
+//     * @throws KeypleReaderException
+//     */
+//    @Override
+//    protected SelectionStatus openLogicalChannelAndSelect(SeRequest.Selector selector,
+//            Set<Integer> successfulSelectionStatusCodes)
+//            throws KeypleChannelStateException, KeypleApplicationSelectionException {
+//        byte[][] atrAndFci = new byte[2][];
+//        byte[] aid = ((SeRequest.AidSelector) selector).getAidToSelect();
+//        try {
+//            if (openChannel != null && !openChannel.isClosed() && openApplication != null
+//                    && openApplication.equals(aid)) {
+//                Log.i(TAG, "Channel is already open to aid : " + ByteArrayUtils.toHex(aid));
+//
+//                atrAndFci[0] = openChannel.getSession().getATR();
+//                atrAndFci[1] = openChannel.getSelectResponse();
+//
+//
+//            } else {
+//
+//                Log.i(TAG, "Opening channel to aid : " + ByteArrayUtils.toHex(aid));
+//
+//                // open physical channel
+//                Session session = omapiReader.openSession();
+//
+//                // get ATR from session
+//                Log.i(TAG, "Retrieveing ATR from session...");
+//                atrAndFci[0] = session.getATR();
+//
+//                Log.i(TAG, "Create logical openChannel within the session...");
+//                openChannel = session.openLogicalChannel(aid);
+//
+//                // get FCI
+//                atrAndFci[1] = openChannel.getSelectResponse();
+//
+//            }
+//        } catch (IOException e) {
+//            throw new KeypleChannelStateException(
+//                    "Error while opening channel, aid :" + ByteArrayUtils.toHex(aid), e.getCause());
+//        } catch (SecurityException e) {
+//            throw new KeypleChannelStateException(
+//                    "Error while opening channel, aid :" + ByteArrayUtils.toHex(aid), e.getCause());
+//        } catch (NoSuchElementException e) {
+//            throw new KeypleApplicationSelectionException(
+//                    "Error while selecting application : " + ByteArrayUtils.toHex(aid), e);
+//        }
+//
+//        return new SelectionStatus(new AnswerToReset(atrAndFci[0]),
+//                new ApduResponse(atrAndFci[1], null), true);
+//    }
 
     /**
      * Close session see {@link Session#close()}
