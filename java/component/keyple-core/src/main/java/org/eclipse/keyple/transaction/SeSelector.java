@@ -153,11 +153,12 @@ public class SeSelector {
         SeRequest seSelectionRequest;
         if (!isSelectionByAid()) {
             seSelectionRequest = new SeRequest(new SeRequest.AtrSelector(getAtrRegex()),
-                    seSelectionApduRequestList, channelState, protocolFlag, null);
+                    seSelectionApduRequestList, channelState, protocolFlag);
         } else {
-            seSelectionRequest = new SeRequest(new SeRequest.AidSelector(getAid(), getSelectMode()),
-                    seSelectionApduRequestList, channelState, protocolFlag,
-                    selectApplicationSuccessfulStatusCodes);
+            seSelectionRequest = new SeRequest(
+                    new SeRequest.AidSelector(getAid(), selectApplicationSuccessfulStatusCodes,
+                            getSelectMode()),
+                    seSelectionApduRequestList, channelState, protocolFlag);
         }
         return seSelectionRequest;
     }
