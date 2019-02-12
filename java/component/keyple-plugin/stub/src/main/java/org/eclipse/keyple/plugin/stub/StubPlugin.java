@@ -177,7 +177,6 @@ public final class StubPlugin extends AbstractThreadedObservablePlugin {
      * id)
      *
      * @return connected readers' name list
-     * @throws KeypleReaderException if a reader error occurs
      */
     @Override
     protected SortedSet<String> fetchNativeReadersNames() {
@@ -215,7 +214,6 @@ public final class StubPlugin extends AbstractThreadedObservablePlugin {
      *
      * @param name name of the reader
      * @return the reader object
-     * @throws KeypleReaderException if a reader error occurs
      */
     @Override
     protected AbstractObservableReader fetchNativeReader(String name) {

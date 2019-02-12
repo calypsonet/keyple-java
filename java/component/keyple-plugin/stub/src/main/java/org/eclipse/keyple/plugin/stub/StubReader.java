@@ -174,7 +174,6 @@ public final class StubReader extends AbstractThreadedLocalReader {
     public void insertSe(StubSecureElement _se) {
         /* clean channels status */
         if (isPhysicalChannelOpen()) {
-            closeLogicalChannel();
             try {
                 closePhysicalChannel();
             } catch (KeypleReaderException e) {
