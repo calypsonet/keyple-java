@@ -32,49 +32,57 @@ import org.slf4j.LoggerFactory;
 @SuppressWarnings({"PMD.TooManyMethods", "PMD.CyclomaticComplexity"})
 public abstract class AbstractLocalReader extends AbstractObservableReader {
 
+    /** logger */
     private static final Logger logger = LoggerFactory.getLogger(AbstractLocalReader.class);
-    private static final byte[] getResponseHackRequestBytes = ByteArrayUtils.fromHex("00C0000000");
-    private boolean logicalChannelIsOpen = false;
-    private byte[] aidCurrentlySelected;
-    private SelectionStatus currentSelectionStatus;
-    private boolean presenceNotified = false;
-    private long before; // timestamp recorder
 
+    /** predefined "get response" byte array */
+    private static final byte[] getResponseHackRequestBytes = ByteArrayUtils.fromHex("00C0000000");
+
+    /** logical channel status flag */
+    private boolean logicalChannelIsOpen = false;
+
+    /** current AID if any */
+    private byte[] aidCurrentlySelected;
+
+    /** current selection status */
+    private SelectionStatus currentSelectionStatus;
+
+    /** notification status flag used to avoid redundant notifications */
+    private boolean presenceNotified = false;
+
+    /** Timestamp recorder */
+    private long before;
+
+    /** ==== Constructor =================================================== */
+
+    /**
+     * Reader constructor
+     * <p>
+     * Force the definition of a name through the use of super method.
+     * <p>
+     * Initialize the time measurement
+     *
+     * @param pluginName the name of the plugin that instantiated the reader
+     * @param readerName the name of the reader
+     */
     public AbstractLocalReader(String pluginName, String readerName) {
         super(pluginName, readerName);
-        this.before = System.nanoTime();
+        this.before = System.nanoTime(); /*
+                                          * provides an initial value for measuring the
+                                          * inter-exchange time. The first measurement gives the
+                                          * time elapsed since the plugin was loaded.
+                                          */
     }
 
-    /**
-     * Open (if needed) a physical channel (try to connect a card to the terminal, attempt to select
-     * the application)
-     *
-     * @param selector the SE Selector: either the AID of the application to select or an ATR
-     *        selection regular expression
-     * @param successfulSelectionStatusCodes the list of successful status code for the select
-     *        command
-     * @return a {@link SelectionStatus} object containing the SE ATR, the SE FCI and a flag giving
-     *         the selection process result. When ATR or FCI are not available, they are set to null
-     * @throws KeypleReaderException if a reader error occurs
-     * @throws KeypleApplicationSelectionException if the application selection fails
-     */
-    protected abstract SelectionStatus openLogicalChannelAndSelect(SeRequest.Selector selector,
-            Set<Integer> successfulSelectionStatusCodes)
-            throws KeypleApplicationSelectionException, KeypleReaderException;
-
-    /**
-     * Wrapper for the native method of the plugin specific local reader to verify the presence of
-     * the SE
-     *
-     * @return true if the SE is present
-     * @throws NoStackTraceThrowable
-     */
-    protected abstract boolean checkSePresence() throws NoStackTraceThrowable;
+    /** ==== Card presence management ====================================== */
 
     /**
      * Check the presence of a SE
      * <p>
-     * For non observable reader, refresh the logical and physical channel status
+     * This method is recommended for non-observable readers.
+     * <p>
+     * When the card is not present the logical and physical channels status may be refreshed
+     * through a call to the cardRemoved method.
      *
      * @return true if the SE is present
      */
@@ -90,92 +98,29 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
     }
 
     /**
-     * Attempts to open the physical channel
-     *
-     * @throws KeypleChannelStateException if the channel opening fails
-     */
-    protected abstract void openPhysicalChannel() throws KeypleChannelStateException;
-
-    /**
-     * Closes the current physical channel.
-     *
-     * @throws KeypleChannelStateException if a reader error occurs
-     */
-    protected abstract void closePhysicalChannel() throws KeypleChannelStateException;
-
-    /**
-     * Tells if the physical channel is open or not
-     *
-     * @return true is the channel is open
-     */
-    protected abstract boolean isPhysicalChannelOpen();
-
-    /**
-     * Transmits a single APDU and receives its response. The implementation of this abstract method
-     * must handle the case where the SE response is 61xy and execute the appropriate get response
-     * command
-     *
-     * @param apduIn byte buffer containing the ingoing data
-     * @return apduResponse byte buffer containing the outgoing data.
-     * @throws KeypleIOReaderException if the transmission fails
-     */
-    protected abstract byte[] transmitApdu(byte[] apduIn) throws KeypleIOReaderException;
-
-    /**
-     * Test if the current protocol matches the flag
-     *
-     * @param protocolFlag the protocol flag
-     * @return true if the current protocol matches the provided protocol flag
-     * @throws KeypleReaderException in case of a reader exception
-     */
-    protected abstract boolean protocolFlagMatches(SeProtocol protocolFlag)
-            throws KeypleReaderException;
-
-    /**
-     * If defined, the prepared setDefaultSelectionRequest will be processed as soon as a SE is
-     * inserted. The result of this request set will be added to the reader event.
+     * Wrapper for the native method of the plugin specific local reader to verify the presence of
+     * the SE.
      * <p>
-     * Depending on the notification mode, the observer will be notified whenever an SE is inserted,
-     * regardless of the selection status, or only if the current SE matches the selection criteria.
-     *
-     * @param defaultSelectionRequest the {@link SelectionRequest} to be executed when a SE is
-     *        inserted
-     * @param notificationMode the notification mode enum (ALWAYS or MATCHED_ONLY)
-     */
-    public void setDefaultSelectionRequest(SelectionRequest defaultSelectionRequest,
-            ObservableReader.NotificationMode notificationMode) {
-        this.defaultSelectionRequest = defaultSelectionRequest;
-        this.notificationMode = notificationMode;
-    };
-
-    /**
-     * This method is invoked when a SE is removed
+     * This method must be implemented by the ProxyReader plugin (e.g. Pcsc reader plugin).
      * <p>
-     * The SE will be notified removed only if it has been previously notified present
+     * This method is invoked by isSePresent.
+     *
+     * @return true if the SE is present
+     * @throws NoStackTraceThrowable exception without stack trace
      */
-    protected final void cardRemoved() throws NoStackTraceThrowable {
-        if (presenceNotified) {
-            notifyObservers(new ReaderEvent(this.pluginName, this.name,
-                    ReaderEvent.EventType.SE_REMOVAL, null));
-            presenceNotified = false;
-        }
-        closeLogicalChannel();
-        try {
-            closePhysicalChannel();
-        } catch (KeypleChannelStateException e) {
-            logger.trace("[{}] Exception occured in waitForCardAbsent. Message: {}", this.getName(),
-                    e.getMessage());
-            throw new NoStackTraceThrowable();
-        }
-    }
+    protected abstract boolean checkSePresence() throws NoStackTraceThrowable;
 
     /**
-     * This method is invoked when a SE is inserted
+     * This method is invoked when a SE is inserted in the case of an observable reader.
+     * <p>
+     * e.g. from the monitoring thread in the case of a Pcsc plugin
+     * ({@link AbstractThreadedLocalReader)}) or from the NfcAdapter callback method onTagDiscovered
+     * in the case of a Android NFC plugin.
      * <p>
      * It will fire an ReaderEvent in the following cases:
      * <ul>
      * <li>SE_INSERTED: if no default selection request was defined</li>
-     * <li>SE_MATCHED: if a default selection request was defined in any mode a SE matched the
+     * <li>SE_MATCHED: if a default selection request was defined in any mode and a SE matched the
      * selection</li>
      * <li>SE_INSERTED: if a default selection request was defined in ALWAYS mode but no SE matched
      * the selection (the SelectionResponse is however transmitted)</li>
@@ -245,90 +190,136 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
     }
 
     /**
-     * Transmits an ApduRequest and receives the ApduResponse with time measurement.
-     *
-     * @param apduRequest APDU request
-     * @return APDU response
-     * @throws KeypleIOReaderException Exception faced
+     * This method is invoked when a SE is removed in the case of an observable reader
+     * ({@link AbstractThreadedLocalReader}).
+     * <p>
+     * It will also be invoked if isSePresent is called and at least one of the physical or logical
+     * channels is still open (case of a non-observable reader)
+     * <p>
+     * The SE will be notified removed only if it has been previously notified present (observable
+     * reader only)
      */
-    protected final ApduResponse processApduRequest(ApduRequest apduRequest)
-            throws KeypleIOReaderException {
-        ApduResponse apduResponse;
-        if (logger.isTraceEnabled()) {
-            long timeStamp = System.nanoTime();
-            double elapsedMs = (double) ((timeStamp - before) / 100000) / 10;
-            this.before = timeStamp;
-            logger.trace("[{}] processApduRequest => {}, elapsed {} ms.", this.getName(),
-                    apduRequest, elapsedMs);
+    protected final void cardRemoved() throws NoStackTraceThrowable {
+        if (presenceNotified) {
+            notifyObservers(new ReaderEvent(this.pluginName, this.name,
+                    ReaderEvent.EventType.SE_REMOVAL, null));
+            presenceNotified = false;
         }
-
-        byte[] buffer = apduRequest.getBytes();
-        apduResponse =
-                new ApduResponse(transmitApdu(buffer), apduRequest.getSuccessfulStatusCodes());
-
-        if (apduRequest.isCase4() && apduResponse.getDataOut().length == 0
-                && apduResponse.isSuccessful()) {
-            // do the get response command but keep the original status code
-            apduResponse = case4HackGetResponse(apduResponse.getStatusCode());
+        closeLogicalChannel();
+        try {
+            closePhysicalChannel();
+        } catch (KeypleChannelStateException e) {
+            logger.trace("[{}] Exception occured in waitForCardAbsent. Message: {}", this.getName(),
+                    e.getMessage());
+            throw new NoStackTraceThrowable();
         }
+    }
 
-        if (logger.isTraceEnabled()) {
-            long timeStamp = System.nanoTime();
-            double elapsedMs = (double) ((timeStamp - before) / 100000) / 10;
-            this.before = timeStamp;
-            logger.trace("[{}] processApduRequest => {}, elapsed {} ms.", this.getName(),
-                    apduResponse, elapsedMs);
-        }
-        return apduResponse;
+    /** ==== Physical and logical channels management ====================== */
+
+    /**
+     * This abstract method must be implemented by the class that provides the selection mechanism
+     * (e.g {@link AbstractThreadedLocalReader} or AndroidOmapiReader).
+     * <p>
+     * Its role is to open (if needed) a physical channel and try to establish a logical channel.
+     * <p>
+     * The logical opening is done either by sending a Select Application command (AID based
+     * selection) or by checking the current ATR received from the SE (ATR based selection).
+     * <p>
+     * If the selection is successful, the logical channel is considered open. On the contrary, if
+     * the selection fails, the logical channel remains closed.
+     *
+     * @param selector the SE Selector: either the AID of the application to select or an ATR
+     *        selection regular expression
+     * @param successfulSelectionStatusCodes the list of successful status code for the select
+     *        command
+     * @return a {@link SelectionStatus} object containing the SE ATR, the SE FCI and a flag giving
+     *         the selection process result. When ATR or FCI are not available, they are set to null
+     *         but they can't be both null at the same time.
+     * @throws KeypleReaderException if a reader error occurs
+     * @throws KeypleApplicationSelectionException if the application selection fails
+     */
+    protected abstract SelectionStatus openLogicalChannelAndSelect(SeRequest.Selector selector,
+            Set<Integer> successfulSelectionStatusCodes)
+            throws KeypleApplicationSelectionException, KeypleReaderException;
+
+    /**
+     * Closes the current physical channel.
+     * <p>
+     * This method must be implemented by the ProxyReader plugin (e.g. Pcsc/Nfc/Omapi Reader).
+     *
+     * @throws KeypleChannelStateException if a reader error occurs
+     */
+    protected abstract void closePhysicalChannel() throws KeypleChannelStateException;
+
+    /**
+     * Tells if the physical channel is open or not
+     * <p>
+     * This method must be implemented by the ProxyReader plugin (e.g. Pcsc/Nfc/Omapi Reader).
+     *
+     * @return true is the channel is open
+     */
+    protected abstract boolean isPhysicalChannelOpen();
+
+    /**
+     * Tells if a logical channel is open
+     *
+     * @return true if the logical channel is open
+     */
+    final boolean isLogicalChannelOpen() {
+        return logicalChannelIsOpen;
     }
 
     /**
-     * Execute a get response command in order to get outgoing data from specific cards answering
-     * 9000 with no data although the command has outgoing data. Note that this method relies on the
-     * right get response management by transmitApdu
-     *
-     * @param originalStatusCode the status code of the command that didn't returned data
-     * @return ApduResponse the response to the get response command
-     * @throws KeypleIOReaderException if the transmission fails.
+     * Close the logical channel.
      */
-    private ApduResponse case4HackGetResponse(int originalStatusCode)
-            throws KeypleIOReaderException {
-        /*
-         * build a get response command the actual length expected by the SE in the get response
-         * command is handled in transmitApdu
-         */
-        if (logger.isTraceEnabled()) {
-            long timeStamp = System.nanoTime();
-            double elapsedMs = (double) ((timeStamp - this.before) / 100000) / 10;
-            this.before = timeStamp;
-            logger.trace(
-                    "[{}] case4HackGetResponse => ApduRequest: NAME = \"Internal Get Response\", RAWDATA = {}, elapsed = {}",
-                    this.getName(), ByteArrayUtils.toHex(getResponseHackRequestBytes), elapsedMs);
-        }
-
-        byte[] getResponseHackResponseBytes = transmitApdu(getResponseHackRequestBytes);
-
-        /* we expect here a 0x9000 status code */
-        ApduResponse getResponseHackResponse = new ApduResponse(getResponseHackResponseBytes, null);
-
-        if (logger.isTraceEnabled()) {
-            long timeStamp = System.nanoTime();
-            double elapsedMs = (double) ((timeStamp - this.before) / 100000) / 10;
-            this.before = timeStamp;
-            logger.trace("[{}] case4HackGetResponse => Internal {}, elapsed {} ms.", this.getName(),
-                    getResponseHackResponseBytes, elapsedMs);
-        }
-
-        if (getResponseHackResponse.isSuccessful()) {
-            // replace the two last status word bytes by the original status word
-            getResponseHackResponseBytes[getResponseHackResponseBytes.length - 2] =
-                    (byte) (originalStatusCode >> 8);
-            getResponseHackResponseBytes[getResponseHackResponseBytes.length - 1] =
-                    (byte) (originalStatusCode & 0xFF);
-        }
-        return getResponseHackResponse;
+    private void closeLogicalChannel() {
+        logger.trace("[{}] closeLogicalChannel => Closing of the logical channel.", this.getName());
+        logicalChannelIsOpen = false;
+        aidCurrentlySelected = null;
+        currentSelectionStatus = null;
     }
 
+    /** ==== Protocol management =========================================== */
+
+    /**
+     * PO selection map associating seProtocols and selection strings.
+     * <p>
+     * The String associated with a particular protocol can be anything that is relevant to be
+     * interpreted by reader plugins implementing protocolFlagMatches (e.g. ATR regex for Pcsc
+     * plugins, technology name for Nfc plugins, etc).
+     */
+    protected Map<SeProtocol, String> protocolsMap = new HashMap<SeProtocol, String>();
+
+    /**
+     * Defines the protocol setting Map to allow SE to be differentiated according to their
+     * communication protocol.
+     * 
+     * @param seProtocolSetting the protocol setting to be added to the plugin internal list
+     */
+    @Override
+    public void addSeProtocolSetting(SeProtocolSetting seProtocolSetting) {
+        this.protocolsMap.putAll(seProtocolSetting.getProtocolsMap());
+    }
+
+    /**
+     * Test if the current protocol matches the provided protocol flag.
+     * <p>
+     * The method must be implemented by the ProxyReader plugin.
+     * <p>
+     * The protocol flag is used to retrieve from the protocolsMap the String used to differentiate
+     * this particular protocol. (e.g. in PC/SC the only way to identify the SE protocol is to
+     * analyse the ATR returned by the reader [ISO SE and memory card SE have specific ATR], in
+     * Android Nfc the SE protocol can be deduced with the TagTechnology interface).
+     * 
+     * @param protocolFlag the protocol flag
+     * @return true if the current protocol matches the provided protocol flag
+     * @throws KeypleReaderException in case of a reader exception
+     */
+    protected abstract boolean protocolFlagMatches(SeProtocol protocolFlag)
+            throws KeypleReaderException;
+
+    /** ==== SeRequestSe and SeRequest transmission management ============= */
 
     /**
      * Do the transmission of all needed requestSet requests contained in the provided requestSet
@@ -436,26 +427,6 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
     }
 
     /**
-     * Tells if a logical channel is open
-     *
-     * @return true if the logical channel is open
-     */
-    protected final boolean isLogicalChannelOpen() {
-        return logicalChannelIsOpen;
-    }
-
-    protected final void closeLogicalChannel() {
-        logger.trace("[{}] closeLogicalChannel => Closing of the logical channel.", this.getName());
-        logicalChannelIsOpen = false;
-        aidCurrentlySelected = null;
-        currentSelectionStatus = null;
-    }
-
-    private void setLogicalChannelOpen() {
-        logicalChannelIsOpen = true;
-    }
-
-    /**
      * Executes a request made of one or more Apdus and receives their answers. The selection of the
      * application is handled.
      * <p>
@@ -483,11 +454,11 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
     /**
      * Implements the logical processSeRequest.
      * <p>
-     * This method is called by processSeRequestSet and processSeRequest
+     * This method is called by processSeRequestSet and processSeRequest.
      * <p>
      * It opens both physical and logical channels if needed.
      * <p>
-     * The logical channel is closed in the case where CLOSE_AFTER is requested
+     * The logical channel is closed when CLOSE_AFTER is requested.
      *
      * @param seRequest
      * @return seResponse
@@ -571,7 +542,8 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
 
                 if (selectionStatus.hasMatched()) {
                     /* The selection process succeeded, the logical channel is open */
-                    setLogicalChannelOpen();
+                    logicalChannelIsOpen = true;
+
                     if (selectionStatus.getFci().isSuccessful()) {
                         /* the selection AID based was successful, keep the aid */
                         aidCurrentlySelected =
@@ -621,14 +593,125 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
         return new SeResponse(previouslyOpen, selectionStatus, apduResponseList);
     }
 
-    /**
-     * PO selection map associating seProtocols and selection strings (e.g. ATR regex for Pcsc
-     * plugins)
-     */
-    protected Map<SeProtocol, String> protocolsMap = new HashMap<SeProtocol, String>();
+    /** ==== APDU transmission management ================================== */
 
-    @Override
-    public void addSeProtocolSetting(SeProtocolSetting seProtocolSetting) {
-        this.protocolsMap.putAll(seProtocolSetting.getProtocolsMap());
+    /**
+     * Transmits an ApduRequest and receives the ApduResponse
+     * <p>
+     * The time measurement is carried out and logged with the detailed information of the exchanges
+     * (TRACE level).
+     *
+     * @param apduRequest APDU request
+     * @return APDU response
+     * @throws KeypleIOReaderException Exception faced
+     */
+    protected final ApduResponse processApduRequest(ApduRequest apduRequest)
+            throws KeypleIOReaderException {
+        ApduResponse apduResponse;
+        if (logger.isTraceEnabled()) {
+            long timeStamp = System.nanoTime();
+            double elapsedMs = (double) ((timeStamp - before) / 100000) / 10;
+            this.before = timeStamp;
+            logger.trace("[{}] processApduRequest => {}, elapsed {} ms.", this.getName(),
+                    apduRequest, elapsedMs);
+        }
+
+        byte[] buffer = apduRequest.getBytes();
+        apduResponse =
+                new ApduResponse(transmitApdu(buffer), apduRequest.getSuccessfulStatusCodes());
+
+        if (apduRequest.isCase4() && apduResponse.getDataOut().length == 0
+                && apduResponse.isSuccessful()) {
+            // do the get response command but keep the original status code
+            apduResponse = case4HackGetResponse(apduResponse.getStatusCode());
+        }
+
+        if (logger.isTraceEnabled()) {
+            long timeStamp = System.nanoTime();
+            double elapsedMs = (double) ((timeStamp - before) / 100000) / 10;
+            this.before = timeStamp;
+            logger.trace("[{}] processApduRequest => {}, elapsed {} ms.", this.getName(),
+                    apduResponse, elapsedMs);
+        }
+        return apduResponse;
     }
+
+    /**
+     * Execute a get response command in order to get outgoing data from specific cards answering
+     * 9000 with no data although the command has outgoing data. Note that this method relies on the
+     * right get response management by transmitApdu
+     *
+     * @param originalStatusCode the status code of the command that didn't returned data
+     * @return ApduResponse the response to the get response command
+     * @throws KeypleIOReaderException if the transmission fails.
+     */
+    private ApduResponse case4HackGetResponse(int originalStatusCode)
+            throws KeypleIOReaderException {
+        /*
+         * build a get response command the actual length expected by the SE in the get response
+         * command is handled in transmitApdu
+         */
+        if (logger.isTraceEnabled()) {
+            long timeStamp = System.nanoTime();
+            double elapsedMs = (double) ((timeStamp - this.before) / 100000) / 10;
+            this.before = timeStamp;
+            logger.trace(
+                    "[{}] case4HackGetResponse => ApduRequest: NAME = \"Internal Get Response\", RAWDATA = {}, elapsed = {}",
+                    this.getName(), ByteArrayUtils.toHex(getResponseHackRequestBytes), elapsedMs);
+        }
+
+        byte[] getResponseHackResponseBytes = transmitApdu(getResponseHackRequestBytes);
+
+        /* we expect here a 0x9000 status code */
+        ApduResponse getResponseHackResponse = new ApduResponse(getResponseHackResponseBytes, null);
+
+        if (logger.isTraceEnabled()) {
+            long timeStamp = System.nanoTime();
+            double elapsedMs = (double) ((timeStamp - this.before) / 100000) / 10;
+            this.before = timeStamp;
+            logger.trace("[{}] case4HackGetResponse => Internal {}, elapsed {} ms.", this.getName(),
+                    getResponseHackResponseBytes, elapsedMs);
+        }
+
+        if (getResponseHackResponse.isSuccessful()) {
+            // replace the two last status word bytes by the original status word
+            getResponseHackResponseBytes[getResponseHackResponseBytes.length - 2] =
+                    (byte) (originalStatusCode >> 8);
+            getResponseHackResponseBytes[getResponseHackResponseBytes.length - 1] =
+                    (byte) (originalStatusCode & 0xFF);
+        }
+        return getResponseHackResponse;
+    }
+
+    /**
+     * Transmits a single APDU and receives its response.
+     * <p>
+     * This abstract method must be implemented by the ProxyReader plugin (e.g. Pcsc, Nfc). The
+     * implementation must handle the case where the SE response is 61xy and execute the appropriate
+     * get response command.
+     *
+     * @param apduIn byte buffer containing the ingoing data
+     * @return apduResponse byte buffer containing the outgoing data.
+     * @throws KeypleIOReaderException if the transmission fails
+     */
+    protected abstract byte[] transmitApdu(byte[] apduIn) throws KeypleIOReaderException;
+
+    /** ==== Default selection assignment ================================== */
+
+    /**
+     * If defined, the prepared setDefaultSelectionRequest will be processed as soon as a SE is
+     * inserted. The result of this request set will be added to the reader event.
+     * <p>
+     * Depending on the notification mode, the observer will be notified whenever an SE is inserted,
+     * regardless of the selection status, or only if the current SE matches the selection criteria.
+     *
+     * @param defaultSelectionRequest the {@link SelectionRequest} to be executed when a SE is
+     *        inserted
+     * @param notificationMode the notification mode enum (ALWAYS or MATCHED_ONLY)
+     */
+    public void setDefaultSelectionRequest(SelectionRequest defaultSelectionRequest,
+            ObservableReader.NotificationMode notificationMode) {
+        this.defaultSelectionRequest = defaultSelectionRequest;
+        this.notificationMode = notificationMode;
+    };
 }

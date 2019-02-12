@@ -129,11 +129,6 @@ public class AbstractObservableReaderTest extends CoreBaseTest {
             }
 
             @Override
-            protected void openPhysicalChannel() throws KeypleChannelStateException {
-
-            }
-
-            @Override
             protected boolean isPhysicalChannelOpen() {
                 return false;
             }

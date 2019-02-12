@@ -89,7 +89,6 @@ public class Tag {
 
     /**
      * Create a null tag.
-     * <p>
      */
     public Tag() {
         tag = 0;
@@ -101,7 +100,7 @@ public class Tag {
      * Clone a tag.
      * <p>
      * 
-     * @param t The <tt>Tag</tt> object to be cloned.
+     * @param t The <code>Tag</code> object to be cloned.
      */
     public Tag(Tag t) {
         this.tag = t.tag;
@@ -115,8 +114,8 @@ public class Tag {
      * 
      * @param tag An integer representing the value of the tag.
      * @param tagClass A byte value representing the class of the tag.
-     * @param constructed A boolean value <tt>true</tt> signals that the tag is constructed,
-     *        <tt>false</tt> signals that the tag is primitive.
+     * @param constructed A boolean value <code>true</code> signals that the tag is constructed,
+     *        <code>false</code> signals that the tag is primitive.
      */
     public Tag(int tag, byte tagClass, boolean constructed) {
         this.tag = tag;
@@ -161,7 +160,7 @@ public class Tag {
     }
 
     /**
-     * Initialize the <tt>Tag</tt> object from a BER-coded binary representation.
+     * Initialize the <code>Tag</code> object from a BER-coded binary representation.
      * <p>
      * 
      * @param binary A byte array containing the BER-coded tag.
@@ -244,7 +243,7 @@ public class Tag {
     }
 
     /**
-     * Set the tag number, class and constructed flag of this <tt>Tag</tt> to the given values.
+     * Set the tag number, class and constructed flag of this <code>Tag</code> to the given values.
      * <p>
      * 
      * @param tag An integer value giving the tag value.
@@ -258,7 +257,7 @@ public class Tag {
     }
 
     /**
-     * Set the constructed flag of this <tt>Tag</tt> to the given value.
+     * Set the constructed flag of this <code>Tag</code> to the given value.
      * <p>
      * 
      * @param constructed A boolean representing the constructed flag.
@@ -278,10 +277,10 @@ public class Tag {
     }
 
     /**
-     * Check whether this <tt>Tag</tt> is constructed.
+     * Check whether this <code>Tag</code> is constructed.
      * <p>
      * 
-     * @return <tt>true</tt> if it is constructed, <tt>false</tt> otherwise.
+     * @return <code>true</code> if it is constructed, <code>false</code> otherwise.
      */
     public boolean isConstructed() {
         return constructed;
@@ -301,8 +300,8 @@ public class Tag {
      * Check for equality.
      * <p>
      * 
-     * @return <tt>true</tt>, if this <tt>Tag</tt> instance equals the given tag, <tt>false</tt>
-     *         otherwise.
+     * @return <code>true</code>, if this <code>Tag</code> instance equals the given tag,
+     *         <code>false</code> otherwise.
      */
     public boolean equals(Object o) {
         return ((this.tag == ((Tag) o).tag) && (this.tagclass == ((Tag) o).tagclass));
