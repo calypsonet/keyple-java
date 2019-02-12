@@ -46,7 +46,6 @@ public final class AndroidOmapiReader extends AbstractStaticReader {
     private Reader omapiReader;
     private Session session = null;
     private Channel openChannel = null;
-    private byte[] openApplication = null;
     private Map<String, String> parameters = new HashMap<String, String>();
 
     protected AndroidOmapiReader(String pluginName, Reader omapiReader, String readerName) {
@@ -213,61 +212,6 @@ public final class AndroidOmapiReader extends AbstractStaticReader {
         }
     }
 
-//    /**
-//     * Open a Channel to the application AID if not open yet. see {@link Reader#openSession()} see
-//     * {@link Session#openLogicalChannel(byte[])}
-//     *
-//     * @param selector: AID of the application to select
-//     * @return Array : index[0] : ATR and index[1] :FCI
-//     * @throws KeypleReaderException
-//     */
-//    @Override
-//    protected SelectionStatus openLogicalChannelAndSelect(SeRequest.Selector selector,
-//            Set<Integer> successfulSelectionStatusCodes)
-//            throws KeypleChannelStateException, KeypleApplicationSelectionException {
-//        byte[][] atrAndFci = new byte[2][];
-//        byte[] aid = ((SeRequest.AidSelector) selector).getAidToSelect();
-//        try {
-//            if (openChannel != null && !openChannel.isClosed() && openApplication != null
-//                    && openApplication.equals(aid)) {
-//                Log.i(TAG, "Channel is already open to aid : " + ByteArrayUtils.toHex(aid));
-//
-//                atrAndFci[0] = openChannel.getSession().getATR();
-//                atrAndFci[1] = openChannel.getSelectResponse();
-//
-//
-//            } else {
-//
-//                Log.i(TAG, "Opening channel to aid : " + ByteArrayUtils.toHex(aid));
-//
-//                // open physical channel
-//                Session session = omapiReader.openSession();
-//
-//                // get ATR from session
-//                Log.i(TAG, "Retrieveing ATR from session...");
-//                atrAndFci[0] = session.getATR();
-//
-//                Log.i(TAG, "Create logical openChannel within the session...");
-//                openChannel = session.openLogicalChannel(aid);
-//
-//                // get FCI
-//                atrAndFci[1] = openChannel.getSelectResponse();
-//
-//            }
-//        } catch (IOException e) {
-//            throw new KeypleChannelStateException(
-//                    "Error while opening channel, aid :" + ByteArrayUtils.toHex(aid), e.getCause());
-//        } catch (SecurityException e) {
-//            throw new KeypleChannelStateException(
-//                    "Error while opening channel, aid :" + ByteArrayUtils.toHex(aid), e.getCause());
-//        } catch (NoSuchElementException e) {
-//            throw new KeypleApplicationSelectionException(
-//                    "Error while selecting application : " + ByteArrayUtils.toHex(aid), e);
-//        }
-//
-//        return new SelectionStatus(new AnswerToReset(atrAndFci[0]),
-//                new ApduResponse(atrAndFci[1], null), true);
-//    }
 
     /**
      * Close session see {@link Session#close()}
@@ -277,10 +221,9 @@ public final class AndroidOmapiReader extends AbstractStaticReader {
     @Override
     protected void closePhysicalChannel() {
         // close physical channel if exists
-        if (openApplication != null) {
+        if (openChannel != null) {
             openChannel.getSession().close();
             openChannel = null;
-            openApplication = null;
         }
     }
 
