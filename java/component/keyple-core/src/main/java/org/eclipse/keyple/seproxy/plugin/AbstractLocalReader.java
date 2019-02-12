@@ -114,7 +114,7 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
      * This method is invoked when a SE is inserted in the case of an observable reader.
      * <p>
      * e.g. from the monitoring thread in the case of a Pcsc plugin
-     * ({@link AbstractThreadedLocalReader)}) or from the NfcAdapter callback method onTagDiscovered
+     * ({@link AbstractSelectionLocalReader}) or from the NfcAdapter callback method onTagDiscovered
      * in the case of a Android NFC plugin.
      * <p>
      * It will fire an ReaderEvent in the following cases:
@@ -185,7 +185,6 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
                 e.printStackTrace();
                 // in this case the card has been removed or not read correctly, do not throw event
             }
-
         }
     }
 
@@ -218,30 +217,102 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
     /** ==== Physical and logical channels management ====================== */
 
     /**
-     * This abstract method must be implemented by the class that provides the selection mechanism
-     * (e.g {@link AbstractThreadedLocalReader} or AndroidOmapiReader).
+     * This abstract method must be implemented by the derived class in order to provide the SE ATR
+     * when available.
      * <p>
-     * Its role is to open (if needed) a physical channel and try to establish a logical channel.
+     * Gets the SE Answer to reset
+     *
+     * @return ATR returned by the SE or reconstructed by the reader (contactless)
+     */
+    protected abstract byte[] getATR();
+
+    /**
+     * This abstract method must be implemented by the derived class in order to provide a selection
+     * mechanism based on ATR.
+     * <p>
+     * The AtrSelector provided in argument holds all the needed data to handle the ATR matching
+     * process and build the resulting SelectionStatus.
+     *
+     * @param atrSelector the ATR matching data (a regular expression used to compare the SE ATR to
+     *        the expected one)
+     * @return the SelectionStatus containing the actual ATR and the matching status flag.
+     */
+    protected abstract SelectionStatus openLogicalChannelByAtr(SeRequest.AtrSelector atrSelector)
+            throws KeypleIOReaderException;
+
+
+
+    /**
+     * This abstract method must be implemented by the derived class in order to provide a selection
+     * mechanism based on AID.
+     * <p>
+     * The AidSelector provided in argument holds all the needed data to handle the select
+     * application command and build the resulting SelectionStatus.
+     * 
+     * @param aidSelector the targeted application selector
+     * @return the SelectionStatus containing the FCI data and the matching status flag.
+     */
+    protected abstract SelectionStatus openLogicalChannelByAid(SeRequest.AidSelector aidSelector)
+            throws KeypleIOReaderException, KeypleApplicationSelectionException;
+
+    /**
+     * Open (if needed) a physical channel and try to establish a logical channel.
      * <p>
      * The logical opening is done either by sending a Select Application command (AID based
      * selection) or by checking the current ATR received from the SE (ATR based selection).
      * <p>
      * If the selection is successful, the logical channel is considered open. On the contrary, if
      * the selection fails, the logical channel remains closed.
-     *
+     * <p>
+     * This method relies on the abstracts methods openLogicalChannelByAtr and
+     * openLogicalChannelByAid implemented either by {@link AbstractSelectionLocalReader} or by any
+     * other derived class that provides a SE selection mechanism (e.g. OmapiReader).
+     * 
      * @param selector the SE Selector: either the AID of the application to select or an ATR
      *        selection regular expression
-     * @param successfulSelectionStatusCodes the list of successful status code for the select
-     *        command
      * @return a {@link SelectionStatus} object containing the SE ATR, the SE FCI and a flag giving
      *         the selection process result. When ATR or FCI are not available, they are set to null
      *         but they can't be both null at the same time.
-     * @throws KeypleReaderException if a reader error occurs
+     * @throws KeypleIOReaderException if a reader error occurs
      * @throws KeypleApplicationSelectionException if the application selection fails
      */
-    protected abstract SelectionStatus openLogicalChannelAndSelect(SeRequest.Selector selector,
-            Set<Integer> successfulSelectionStatusCodes)
-            throws KeypleApplicationSelectionException, KeypleReaderException;
+    protected final SelectionStatus openLogicalChannelAndSelect(SeRequest.Selector selector)
+            throws KeypleChannelStateException, KeypleIOReaderException,
+            KeypleApplicationSelectionException {
+
+        SelectionStatus selectionStatus;
+
+        if (selector == null) {
+            throw new KeypleChannelStateException("Try to open logical channel without selector.");
+        }
+
+        if (!isLogicalChannelOpen()) {
+            /*
+             * init of the physical SE channel: if not yet established, opening of a new physical
+             * channel
+             */
+            if (!isPhysicalChannelOpen()) {
+                openPhysicalChannel();
+            }
+            if (!isPhysicalChannelOpen()) {
+                throw new KeypleChannelStateException("Fail to open physical channel.");
+            }
+        }
+
+        if (selector instanceof SeRequest.AidSelector) {
+            selectionStatus = openLogicalChannelByAid((SeRequest.AidSelector) selector);
+        } else {
+            selectionStatus = openLogicalChannelByAtr((SeRequest.AtrSelector) selector);
+        }
+        return selectionStatus;
+    }
+
+    /**
+     * Attempts to open the physical channel
+     *
+     * @throws KeypleChannelStateException if the channel opening fails
+     */
+    protected abstract void openPhysicalChannel() throws KeypleChannelStateException;
 
     /**
      * Closes the current physical channel.
@@ -528,8 +599,7 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
                 previouslyOpen = false;
 
                 try {
-                    selectionStatus = openLogicalChannelAndSelect(seRequest.getSelector(),
-                            seRequest.getSuccessfulSelectionStatusCodes());
+                    selectionStatus = openLogicalChannelAndSelect(seRequest.getSelector());
                     logger.trace("[{}] processSeRequest => Logical channel opening success.",
                             this.getName());
                 } catch (KeypleApplicationSelectionException e) {
