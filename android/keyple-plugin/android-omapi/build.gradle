@@ -127,10 +127,10 @@ dependencies {
     implementation fileTree(include: ['*.jar'], exclude: ['org.simalliance.openmobileapi.jar'], dir: 'libs')
 
 
-    implementation 'com.android.support:support-v4:26.1.0'
-    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation "com.android.support:support-v4:${android_support_version}"
+    implementation "com.android.support:appcompat-v7:${android_support_version}"
 
-    implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
+    implementation "org.slf4j:slf4j-api:${slf4japi_version}"
 
     //implementation group: 'org.eclipse.keyple', name: 'keyple-core', version: '1.0.0-RC4'
     implementation project(path:":java:component:keyple-core")
@@ -148,13 +148,12 @@ dependencies {
     testImplementation files('libs/org.simalliance.openmobileapi.jar')
 
     /**Power mock**/
-    androidTestImplementation "org.mockito:mockito-android:2.7.21"
-    androidTestImplementation "org.powermock:powermock-api-mockito:1.6.6"
-    androidTestImplementation 'org.powermock:powermock-module-junit4:1.6.6'
+    androidTestImplementation "org.mockito:mockito-android:${mockito_android_version}"
+    androidTestImplementation "org.powermock:powermock-api-mockito:${powermock_version}"
+    androidTestImplementation "org.powermock:powermock-module-junit4:${powermock_version}"
 
-    testImplementation 'junit:junit:4.12'
-    testImplementation 'org.powermock:powermock-api-mockito:1.6.6'
-    testImplementation 'org.powermock:powermock-module-junit4:1.6.6'
-
+    testImplementation "junit:junit:${junit_version}"
+    testImplementation "org.powermock:powermock-api-mockito:${powermock_version}"
+    testImplementation "org.powermock:powermock-module-junit4:${powermock_version}"
     /**End of power mock **/
 }

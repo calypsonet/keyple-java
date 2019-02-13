@@ -43,22 +43,20 @@ publishing {
 dependencies {
 
     //use keyple library : core
-    //implementation group: 'org.eclipse.keyple', name: 'keyple-core', version: '1.+'
     implementation project(path:':java:component:keyple-core')
 
     // https://mvnrepository.com/artifact/org.slf4j/slf4j-api
-    api group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
+    api "org.slf4j:slf4j-api:${slf4japi_version}"
 
     /*
     Test
      */
 
-
     // https://mvnrepository.com/artifact/junit/junit
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    testImplementation "junit:junit:${junit_version}"
 
     // https://mvnrepository.com/artifact/org.mockito/mockito-core
-    testCompile group: 'org.mockito', name: 'mockito-core', version: '2.23.4'
+    testImplementation "org.mockito:mockito-core:${mockitocore_version}"
 }
 
 test {
