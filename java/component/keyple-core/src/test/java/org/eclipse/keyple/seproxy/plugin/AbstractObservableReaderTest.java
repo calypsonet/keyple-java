@@ -14,7 +14,6 @@ package org.eclipse.keyple.seproxy.plugin;
 
 import static org.mockito.Mockito.doAnswer;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 import org.eclipse.keyple.CoreBaseTest;
 import org.eclipse.keyple.seproxy.event.ObservableReader;
@@ -116,12 +115,6 @@ public class AbstractObservableReaderTest extends CoreBaseTest {
             String readerName) {
 
         return new AbstractLocalReader(pluginName, readerName) {
-            @Override
-            protected SelectionStatus openLogicalChannelAndSelect(SeRequest.Selector selector,
-                    Set<Integer> successfulSelectionStatusCodes)
-                    throws KeypleApplicationSelectionException, KeypleReaderException {
-                return null;
-            }
 
             @Override
             protected void closePhysicalChannel() throws KeypleChannelStateException {
@@ -147,6 +140,27 @@ public class AbstractObservableReaderTest extends CoreBaseTest {
             @Override
             protected boolean checkSePresence() throws NoStackTraceThrowable {
                 return false;
+            }
+
+            @Override
+            protected byte[] getATR() {
+                return new byte[0];
+            }
+
+            @Override
+            protected SelectionStatus openLogicalChannelByAtr(SeRequest.AtrSelector atrSelector) {
+                return null;
+            }
+
+            @Override
+            protected SelectionStatus openLogicalChannelByAid(SeRequest.AidSelector aidSelector)
+                    throws KeypleIOReaderException {
+                return null;
+            }
+
+            @Override
+            protected void openPhysicalChannel() throws KeypleChannelStateException {
+
             }
 
             @Override
