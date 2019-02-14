@@ -39,6 +39,15 @@ public final class SeRequest implements Serializable {
      *
      */
     public static abstract class Selector {
+        /**
+         * List of status codes in response to the select application command that should be
+         * considered successful although they are different from 9000
+         */
+        Set<Integer> successfulSelectionStatusCodes = new LinkedHashSet<Integer>();
+
+        public Set<Integer> getSuccessfulSelectionStatusCodes() {
+            return successfulSelectionStatusCodes;
+        }
     }
 
     public static final class AidSelector extends SeRequest.Selector {
@@ -61,13 +70,24 @@ public final class SeRequest implements Serializable {
          * AID based selector
          * 
          * @param aidToSelect byte array
+         * @param successfulSelectionStatusCodes list of additional successful status words
          */
-        public AidSelector(byte[] aidToSelect) {
+        public AidSelector(byte[] aidToSelect, Set<Integer> successfulSelectionStatusCodes) {
             if (aidToSelect.length < AID_MIN_LENGTH || aidToSelect.length > AID_MAX_LENGTH) {
                 throw new IllegalArgumentException(
                         String.format("Bad AID length: %d", aidToSelect.length));
             }
             this.aidToSelect = aidToSelect;
+            this.successfulSelectionStatusCodes = successfulSelectionStatusCodes;
+        }
+
+        /**
+         * AID based selector without successfulSelectionStatusCodes
+         *
+         * @param aidToSelect byte array
+         */
+        public AidSelector(byte[] aidToSelect) {
+            this(aidToSelect, null);
         }
 
         /**
@@ -80,10 +100,12 @@ public final class SeRequest implements Serializable {
          * </ul>
          * 
          * @param aidToSelect byte array
+         * @param successfulSelectionStatusCodes list of additional successful status words
          * @param selectMode selection mode FIRST or NEXT
          */
-        public AidSelector(byte[] aidToSelect, SeSelector.SelectMode selectMode) {
-            this(aidToSelect);
+        public AidSelector(byte[] aidToSelect, Set<Integer> successfulSelectionStatusCodes,
+                SeSelector.SelectMode selectMode) {
+            this(aidToSelect, successfulSelectionStatusCodes);
             this.selectMode = selectMode;
         }
 
@@ -103,6 +125,15 @@ public final class SeRequest implements Serializable {
          */
         public boolean isSelectNext() {
             return selectMode == SeSelector.SelectMode.NEXT;
+        }
+
+        /**
+         * Gets the list of successful selection status codes
+         *
+         * @return the list of status codes
+         */
+        public Set<Integer> getSuccessfulSelectionStatusCodes() {
+            return successfulSelectionStatusCodes;
         }
 
         /**
@@ -176,12 +207,6 @@ public final class SeRequest implements Serializable {
     private final Selector selector;
 
     /**
-     * List of status codes in response to the select application command that should be considered
-     * successful although they are different from 9000
-     */
-    private Set<Integer> successfulSelectionStatusCodes = new LinkedHashSet<Integer>();
-
-    /**
      * contains a group of APDUCommand to operate on the selected SE application by the SE reader.
      */
     private List<ApduRequest> apduRequests;
@@ -217,11 +242,9 @@ public final class SeRequest implements Serializable {
      * @param apduRequests the apdu requests
      * @param channelState the keep channel open
      * @param protocolFlag the expected protocol
-     * @param successfulSelectionStatusCodes a list of successful status codes for the select
-     *        application command
      */
     public SeRequest(Selector selector, List<ApduRequest> apduRequests, ChannelState channelState,
-            SeProtocol protocolFlag, Set<Integer> successfulSelectionStatusCodes) {
+            SeProtocol protocolFlag) {
         if (protocolFlag == null) {
             throw new IllegalArgumentException("¨protocolFlag can't be null");
         }
@@ -229,7 +252,6 @@ public final class SeRequest implements Serializable {
         this.apduRequests = apduRequests;
         this.channelState = channelState;
         this.protocolFlag = protocolFlag;
-        this.successfulSelectionStatusCodes = successfulSelectionStatusCodes;
     }
 
     /**
@@ -239,7 +261,7 @@ public final class SeRequest implements Serializable {
      * @param channelState a flag to tell if the channel has to be closed at the end
      */
     public SeRequest(List<ApduRequest> apduRequests, ChannelState channelState) {
-        this(null, apduRequests, channelState, Protocol.ANY, null);
+        this(null, apduRequests, channelState, Protocol.ANY);
     }
 
 
@@ -279,15 +301,6 @@ public final class SeRequest implements Serializable {
      */
     public SeProtocol getProtocolFlag() {
         return protocolFlag;
-    }
-
-    /**
-     * Gets the list of successful selection status codes
-     * 
-     * @return the list of status codes
-     */
-    public Set<Integer> getSuccessfulSelectionStatusCodes() {
-        return successfulSelectionStatusCodes;
     }
 
     @Override
