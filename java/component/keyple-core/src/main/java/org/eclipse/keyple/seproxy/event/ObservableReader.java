@@ -34,20 +34,31 @@ public interface ObservableReader extends SeReader {
             return this.name;
         }
 
-        // ****** Reverse Lookup Implementation************//
+        /**
+         * Reverse Lookup Implementation
+         * <p>
+         * The purpose of the lookup Map and its associated method is to allow the serialization and
+         * deserialization of the enum of the notification mode, especially in remote context.
+         */
 
-        // Lookup table
+        /**
+         * Lookup table
+         */
         private static final Map<String, NotificationMode> lookup =
                 new HashMap<String, NotificationMode>();
 
-        // Populate the lookup table on loading time
+        /**
+         * Populating the lookup table on loading time
+         */
         static {
             for (NotificationMode env : NotificationMode.values()) {
                 lookup.put(env.getName(), env);
             }
         }
 
-        // This method can be used for reverse lookup purpose
+        /**
+         * This method can be used for reverse lookup purpose
+         */
         public static NotificationMode get(String name) {
             return lookup.get(name);
         }

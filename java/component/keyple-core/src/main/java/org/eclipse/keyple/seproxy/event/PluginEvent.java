@@ -40,11 +40,6 @@ public final class PluginEvent {
     private SortedSet<String> readerNames = new TreeSet<String>();
 
     /**
-     * The type of event
-     */
-    private final EventType eventType;
-
-    /**
      * The different types of reader event
      */
     public enum EventType {
@@ -71,8 +66,13 @@ public final class PluginEvent {
     }
 
     /**
+     * The type of event
+     */
+    private final EventType eventType;
+
+    /**
      * Create a PluginEvent for a single reader
-     * 
+     *
      * @param pluginName name of the plugin
      * @param readerName name of the reader
      * @param eventType type of the event, connection or disconnection
@@ -85,7 +85,7 @@ public final class PluginEvent {
 
     /**
      * Create a PluginEvent for multiple readers
-     * 
+     *
      * @param pluginName name of the plugin
      * @param readerNames list of reader names
      * @param eventType type of the event, connection or disconnection

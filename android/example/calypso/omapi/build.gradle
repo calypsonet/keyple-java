@@ -115,31 +115,43 @@ repositories {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], exclude: ['org.simalliance.openmobileapi.jar'], dir: 'libs')
-    implementation 'com.android.support:support-v4:26.1.0'
-    implementation 'com.android.support:appcompat-v7:26.1.0'
-    implementation 'com.android.support:design:26.1.0'
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.1'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-
+    
+    /*
+   Keyple dependencies
+    */
     implementation project(path:':java:component:keyple-calypso')
-
     implementation project(path:':java:component:keyple-core')
-
     implementation project(path:':keyple-plugin:android-omapi')
 
-
-    //use keyple library : keyple calypso
-    //implementation group: 'org.eclipse.keyple', name: 'keyple-calypso', version: '1.+'
-
-    //use keyple plugin: keyple android omapi
-    //implementation group: 'org.eclipse.keyple', name: 'keyple-plugin-android-omapi', version: '1.+'
-
+    /*
+    OMAPI dependencies
+     */
     compileOnly files('libs/org.simalliance.openmobileapi.jar')
 
-    //use keyple plugin: keyple android omapi
-    //testImplementation group: 'org.eclipse.keyple', name: 'keyple-plugin-android-omapi', version: '1.+'
+    /*
+    Android dependencies
+     */
+    
+    implementation "com.android.support:support-v4:${android_support_version}"
+    implementation "com.android.support:appcompat-v7:${android_support_version}"
+    implementation "com.android.support:design:${android_support_version}"
+    implementation "com.android.support.constraint:constraint-layout:${android_support_constraint_version}"
+
+    /*
+  Log
+   */
+    //slf4j logback for android - https://github.com/tony19/logback-android
+    implementation "org.slf4j:slf4j-api:${slf4japi_version}"
+    implementation "com.github.tony19:logback-android:${android_logback_version}"
+
+
+    /*
+    Test
+     */
+    testImplementation "junit:junit:${junit_version}"
+    androidTestImplementation "com.android.support.test:runner:${android_support_test}"
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:${android_support_espresso}"
+
 
 }
 

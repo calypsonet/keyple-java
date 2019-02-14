@@ -15,8 +15,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
-
-import org.eclipse.keyple.seproxy.event.ObservableReader;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderNotFoundException;
 import org.eclipse.keyple.seproxy.plugin.AbstractObservableReader;
@@ -121,7 +119,8 @@ public final class AndroidOmapiPlugin extends AbstractStaticPlugin implements SE
      * @throws KeypleReaderNotFoundException if reader is not found
      */
     @Override
-    protected AbstractObservableReader fetchNativeReader(String name) throws KeypleReaderNotFoundException {
+    protected AbstractObservableReader fetchNativeReader(String name)
+            throws KeypleReaderNotFoundException {
         return (AbstractObservableReader) this.getReader(name);
     };
 

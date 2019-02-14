@@ -15,7 +15,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
-import java.util.concurrent.ConcurrentSkipListSet;
 import org.eclipse.keyple.seproxy.plugin.AbstractObservableReader;
 import org.eclipse.keyple.seproxy.plugin.AbstractStaticPlugin;
 import org.slf4j.Logger;
@@ -89,8 +88,7 @@ public final class AndroidNfcPlugin extends AbstractStaticPlugin {
     protected SortedSet<AbstractObservableReader> initNativeReaders() {
         LOG.debug("InitNativeReader() add the unique instance of AndroidNfcReader");
         // return the only one reader in a list
-        SortedSet<AbstractObservableReader> readers =
-                new TreeSet<AbstractObservableReader>();
+        SortedSet<AbstractObservableReader> readers = new TreeSet<AbstractObservableReader>();
         readers.add(AndroidNfcReader.getInstance());
         return readers;
     }
