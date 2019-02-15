@@ -130,6 +130,16 @@ public final class VirtualReader extends AbstractObservableReader {
         }
     }
 
+    @Override
+    protected void startObservation() {
+
+    }
+
+    @Override
+    protected void stopObservation() {
+
+    }
+
 
     @Override
     public void addSeProtocolSetting(SeProtocolSetting seProtocolSetting) {

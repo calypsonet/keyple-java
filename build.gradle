@@ -32,28 +32,35 @@ allprojects {
         ruleSets = [
                 "java-basic",
                 "java-braces",
-                // "java-strings",
-                // "java-imports",
-                // "java-unnecessary",
-                // "java-unusedcode",
-                //"java-metrics",
-                // "java-empty",
-                // "java-codesize",
-                // "java-clone",
-                // "java-typeresolution",
-                // "java-strictexception",
-                // "java-finalizers",
-                // "java-migrating",
-                // "java-logging-java",
-                // "java-controversial"  // 8 issues
-                // "java-sunsecure"      // 1 issue
-                // "java-junit"          // 1 issue
-                // "java-optimizations"  // 44 issues
-                // "java-naming",        // 9 issues
-                // "java-coupling"       // 2 issues
-                // "java-design"         // 19 issues
-                // "java-comments"       // 87 issues --> Kind of conflicting with spotless
+                "java-strings",
+                "java-imports",
+                "java-unnecessary",
+                "java-unusedcode",
+//                "java-metrics",
+                "java-empty",
+                "java-codesize",
+                "java-clone",
+                "java-typeresolution",
+                "java-strictexception",
+                "java-finalizers",
+                "java-migrating",
+                "java-logging-java",
+//                 "java-controversial",
+                "java-sunsecure",
+                "java-junit",
+                "java-optimizations",
+                "java-naming",
+                "java-coupling",
+                "java-design",
+                "java-comments"
         ]
+        // PMD priorities levels:
+        // 1. Change absolutely required. Behavior is critically broken/buggy.
+        // 2. Change highly recommended. Behavior is quite likely to be broken/buggy.
+        // 3. Change recommended. Behavior is confusing, perhaps buggy, and/or against standards/best practices.
+        // 4. Change optional. Behavior is not likely to be buggy, but more just flies in the face of standards/style/good taste.
+        // 5. Change highly optional. Nice to have, such as a consistent naming policy for package/class/fields…
+        rulePriority = 1
     }
 }
 
