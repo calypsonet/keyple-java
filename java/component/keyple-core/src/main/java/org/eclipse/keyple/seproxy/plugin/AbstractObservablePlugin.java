@@ -111,18 +111,18 @@ public abstract class AbstractObservablePlugin extends AbstractLoggedObservable<
     /**
      * Starts the monitoring thread
      * <p>
-     * This abstract method has to be implemented by the class that handle the monitoring thread. It
-     * will be called when a first observer is added.
+     * This method has to be overloaded by the class that handle the monitoring thread. It will be
+     * called when a first observer is added.
      */
-    protected abstract void startObservation();
+    protected void startObservation() {};
 
     /**
      * Ends the monitoring thread
      * <p>
-     * This abstract method has to be implemented by the class that handle the monitoring thread. It
-     * will be called when the observer is removed.
+     * This method has to be overloaded by the class that handle the monitoring thread. It will be
+     * called when the observer is removed.
      */
-    protected abstract void stopObservation();
+    protected void stopObservation() {};
 
     /**
      * Add a plugin observer.

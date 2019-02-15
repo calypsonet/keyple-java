@@ -26,12 +26,12 @@ public abstract class AbstractStaticReader extends AbstractLocalReader {
     /** Prevents the use of observers that are not available in a static reader context */
 
     public final void addObserver(Observer observer) {
-        throw new IllegalAccessError(
+        throw new RuntimeException(
                 "Abstract Static Reader does not support Observers, do not use this function");
     }
 
     public final void removeObserver(Observer observer) {
-        throw new IllegalAccessError(
+        throw new RuntimeException(
                 "Abstract Static Reader does not support Observers, do not use this function");
     }
 }

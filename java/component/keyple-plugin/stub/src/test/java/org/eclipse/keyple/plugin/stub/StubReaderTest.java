@@ -925,7 +925,7 @@ public class StubReaderTest {
         return new StubSecureElement() {
             @Override
             public byte[] getATR() {
-                return new byte[0];
+                return null;
             }
 
             @Override

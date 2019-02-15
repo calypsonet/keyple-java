@@ -184,16 +184,6 @@ public final class RemoteSePlugin extends AbstractObservablePlugin {
     }
 
     @Override
-    protected void startObservation() {
-
-    }
-
-    @Override
-    protected void stopObservation() {
-
-    }
-
-    @Override
     public Map<String, String> getParameters() {
         return parameters;
     }

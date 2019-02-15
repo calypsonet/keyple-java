@@ -65,9 +65,8 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
         }
     }
 
-    public static byte[] longToBytes(long lg) {
+    public static byte[] longToBytes(long l) {
         byte[] result = new byte[8];
-        long l = lg;
         for (int i = 7; i >= 0; i--) {
             result[i] = (byte) (l & 0xFF);
             l >>= 8;
@@ -99,10 +98,9 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
 
         byte[] result = new byte[3];
 
-        int counter = inCounterValue;
         for (int i = 2; i >= 0; i--) {
             result[i] = (byte) (inCounterValue & 0xFF);
-            counter >>= 8;
+            inCounterValue >>= 8;
         }
 
         return result;
