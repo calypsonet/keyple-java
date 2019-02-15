@@ -52,6 +52,7 @@ public final class AndroidOmapiPlugin extends AbstractStaticPlugin implements SE
         super(PLUGIN_NAME);
         seServiceFactory = AndroidOmapiPlugin.getSeServiceFactory();
         seService = seServiceFactory.connectToSe(this);
+        Log.i(TAG, "OMAPI SEService version: " + seService.getVersion());
     }
 
 
