@@ -49,7 +49,7 @@ import org.eclipse.keyple.util.ByteArrayUtils;
  *
  * @author Thomas Schaeck
  * @version $Id: TLV.java,v 1.2 2005/09/19 10:21:22 asc Exp $
- * @see opencard.opt.util.Tag
+ * @see Tag
  */
 
 public class TLV {
