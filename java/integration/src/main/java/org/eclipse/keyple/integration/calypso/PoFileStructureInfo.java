@@ -17,6 +17,7 @@ import org.eclipse.keyple.seproxy.message.SeResponse;
 import org.eclipse.keyple.transaction.MatchingSe;
 import org.eclipse.keyple.util.ByteArrayUtils;
 
+@SuppressWarnings("PMD.VariableNamingConventions")
 public class PoFileStructureInfo {
 
     public final static String poAuditC0Aid = "315449432E4943414C54"; // AID of the Rev3 PO with

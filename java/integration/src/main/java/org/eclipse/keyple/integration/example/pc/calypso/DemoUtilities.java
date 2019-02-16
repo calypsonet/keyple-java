@@ -19,8 +19,8 @@ import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 
 public class DemoUtilities {
 
-    public static String PO_READER_NAME_REGEX = ".*(ASK|ACS).*";
-    public static String SAM_READER_NAME_REGEX =
+    public final static String PO_READER_NAME_REGEX = ".*(ASK|ACS).*";
+    public final static String SAM_READER_NAME_REGEX =
             ".*(Cherry TC|SCM Microsystems|Identive|HID|Generic).*";
 
     /**

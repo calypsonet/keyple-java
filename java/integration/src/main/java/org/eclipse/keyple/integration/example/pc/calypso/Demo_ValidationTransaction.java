@@ -44,6 +44,7 @@ import org.eclipse.keyple.transaction.SeSelection;
 import org.eclipse.keyple.transaction.SeSelector;
 import org.eclipse.keyple.util.ByteArrayUtils;
 
+@SuppressWarnings("PMD.VariableNamingConventions")
 public class Demo_ValidationTransaction implements ObservableReader.ReaderObserver {
 
     private SeReader poReader, samReader;
@@ -65,8 +66,9 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
         }
     }
 
-    public static byte[] longToBytes(long l) {
+    public static byte[] longToBytes(long lg) {
         byte[] result = new byte[8];
+        long l = lg;
         for (int i = 7; i >= 0; i--) {
             result[i] = (byte) (l & 0xFF);
             l >>= 8;
@@ -98,9 +100,10 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
 
         byte[] result = new byte[3];
 
+        int counter = inCounterValue;
         for (int i = 2; i >= 0; i--) {
             result[i] = (byte) (inCounterValue & 0xFF);
-            inCounterValue >>= 8;
+            counter >>= 8;
         }
 
         return result;
@@ -383,7 +386,7 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
         poReader.addSeProtocolSetting(
                 new SeProtocolSetting(PcscProtocolSetting.SETTING_PROTOCOL_ISO14443_4));
 
-        String SAM_ATR_REGEX = "3B3F9600805A[0-9a-fA-F]{2}80[0-9a-fA-F]{16}829000";
+        final String SAM_ATR_REGEX = "3B3F9600805A[0-9a-fA-F]{2}80[0-9a-fA-F]{16}829000";
 
         SeSelection samSelection = new SeSelection(samReader);
 

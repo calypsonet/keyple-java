@@ -117,6 +117,16 @@ public class AbstractObservableReaderTest extends CoreBaseTest {
         return new AbstractLocalReader(pluginName, readerName) {
 
             @Override
+            protected void startObservation() {
+
+            }
+
+            @Override
+            protected void stopObservation() {
+
+            }
+
+            @Override
             protected void closePhysicalChannel() throws KeypleChannelStateException {
 
             }

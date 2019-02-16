@@ -166,7 +166,7 @@ public class Tag {
      * @param binary A byte array containing the BER-coded tag.
      * @param offset An integer giving an offset into the byte array from where to start.
      */
-    public void fromBinary(byte[] binary, int[] offset) {
+    public final void fromBinary(byte[] binary, int[] offset) {
         // Get class of tag (encoded in bits 7,6 of first byte)
         tagclass = (byte) ((binary[offset[0]] & 0xC0) >>> 6);
 
