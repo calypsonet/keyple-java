@@ -263,4 +263,14 @@ public final class AndroidOmapiReader extends AbstractStaticReader {
     protected boolean protocolFlagMatches(SeProtocol protocolFlag) {
         return protocolFlag.equals(ContactsProtocols.PROTOCOL_ISO7816_3);
     }
+
+    @Override
+    protected void startObservation() {
+
+    }
+
+    @Override
+    protected void stopObservation() {
+
+    }
 }
