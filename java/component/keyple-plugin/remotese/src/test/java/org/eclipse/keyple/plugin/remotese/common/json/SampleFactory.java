@@ -50,7 +50,7 @@ public class SampleFactory {
         List<ApduRequest> poApduRequestList;
         poApduRequestList = Arrays.asList(new ApduRequest(ByteArrayUtils.fromHex("9000"), true));
 
-        SeRequest.Selector selector = new SeRequest.AidSelector(ByteArrayUtils.fromHex(poAid));
+        Selector selector = new SeRequest.AidSelector(ByteArrayUtils.fromHex(poAid));
 
         SeRequest seRequest = new SeRequest(selector, poApduRequestList, ChannelState.CLOSE_AFTER,
                 ContactlessProtocols.PROTOCOL_ISO14443_4);
@@ -66,7 +66,7 @@ public class SampleFactory {
         List<ApduRequest> poApduRequestList;
         poApduRequestList = Arrays.asList(new ApduRequest(ByteArrayUtils.fromHex("9000"), true));
 
-        SeRequest.Selector selector = new SeRequest.AidSelector(ByteArrayUtils.fromHex(poAid));
+        Selector selector = new SeRequest.AidSelector(ByteArrayUtils.fromHex(poAid));
 
         SeRequest seRequest = new SeRequest(poApduRequestList, ChannelState.CLOSE_AFTER);
 
@@ -80,7 +80,7 @@ public class SampleFactory {
         List<ApduRequest> poApduRequestList;
         poApduRequestList = Arrays.asList(new ApduRequest(ByteArrayUtils.fromHex("9000"), true));
 
-        SeRequest.Selector selector = new SeRequest.AidSelector(ByteArrayUtils.fromHex(poAid));
+        Selector selector = new SeRequest.AidSelector(ByteArrayUtils.fromHex(poAid));
 
         SeRequest seRequest = new SeRequest(selector, poApduRequestList, ChannelState.CLOSE_AFTER,
                 ContactlessProtocols.PROTOCOL_ISO14443_4);
@@ -94,7 +94,7 @@ public class SampleFactory {
         List<ApduRequest> poApduRequestList;
         poApduRequestList = Arrays.asList(new ApduRequest(ByteArrayUtils.fromHex("9000"), true));
 
-        SeRequest.Selector selector = new SeRequest.AidSelector(ByteArrayUtils.fromHex(poAid));
+        Selector selector = new SeRequest.AidSelector(ByteArrayUtils.fromHex(poAid));
 
         SeRequest seRequest = new SeRequest(poApduRequestList, ChannelState.CLOSE_AFTER);
         return seRequest;
@@ -110,8 +110,8 @@ public class SampleFactory {
 
         poApduRequestList = Arrays.asList(new ApduRequest(ByteArrayUtils.fromHex("9000"), true));
 
-        SeRequest.Selector aidSelector = new SeRequest.AidSelector(ByteArrayUtils.fromHex(poAid));
-        SeRequest.Selector atrSelector = new SeRequest.AtrSelector("/regex/");
+        Selector aidSelector = new SeRequest.AidSelector(ByteArrayUtils.fromHex(poAid));
+        Selector atrSelector = new SeRequest.AtrSelector("/regex/");
 
         SeRequest seRequest = new SeRequest(aidSelector, poApduRequestList,
                 ChannelState.CLOSE_AFTER, ContactlessProtocols.PROTOCOL_ISO14443_4);

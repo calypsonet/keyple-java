@@ -16,12 +16,10 @@ import org.eclipse.keyple.seproxy.message.SeRequest;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import com.google.gson.*;
 
-class GsonSelectorTypeAdapter
-        implements JsonDeserializer<SeRequest.Selector>, JsonSerializer<SeRequest.Selector> {
+class GsonSelectorTypeAdapter implements JsonDeserializer<Selector>, JsonSerializer<Selector> {
 
     @Override
-    public JsonElement serialize(SeRequest.Selector src, Type typeOfSrc,
-            JsonSerializationContext context) {
+    public JsonElement serialize(Selector src, Type typeOfSrc, JsonSerializationContext context) {
         if (src instanceof SeRequest.AidSelector) {
             return new JsonPrimitive("aidselector::"
                     + ByteArrayUtils.toHex(((SeRequest.AidSelector) src).getAidToSelect()));
@@ -31,8 +29,8 @@ class GsonSelectorTypeAdapter
     }
 
     @Override
-    public SeRequest.Selector deserialize(JsonElement json, Type typeOfT,
-            JsonDeserializationContext context) throws JsonParseException {
+    public Selector deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
+            throws JsonParseException {
         String element = json.getAsString();
         if (element.startsWith("atrselector::")) {
             String regex = element.replace("atrselector::", "");
@@ -43,7 +41,7 @@ class GsonSelectorTypeAdapter
                 return new SeRequest.AidSelector(ByteArrayUtils.fromHex(aidToSelect));
 
             } else {
-                throw new JsonParseException("SeRequest.Selector malformed");
+                throw new JsonParseException("Selector malformed");
             }
         }
     }

@@ -33,27 +33,8 @@ public class SeSelector {
     private Class<? extends SeSelector> selectorClass = SeSelector.class;
     private final ChannelState channelState;
     private final SeProtocol protocolFlag;
-    private final String atrRegex;
-    private final byte[] aid;
-    private final SelectMode selectMode;
-    private final boolean selectionByAid;
+    private final Selector selector;
     private String extraInfo;
-
-    public String getAtrRegex() {
-        return atrRegex;
-    }
-
-    public byte[] getAid() {
-        return aid;
-    }
-
-    public SelectMode getSelectMode() {
-        return selectMode;
-    }
-
-    public boolean isSelectionByAid() {
-        return selectionByAid;
-    }
 
     /**
      * SelectMode indicates how to carry out the application selection in accordance with ISO7816-4
@@ -63,20 +44,20 @@ public class SeSelector {
     }
 
     /**
-     * Instantiate a SeSelector object with the selection data (atrRegex), dedicated to select a SE
-     * that does not support the select application command, the channel management after the
-     * selection and the protocol flag to possibly target a specific protocol
+     * Instantiate a SeSelector object with the optional ATR filtering and selection data (AID),
+     * dedicated to select a SE. The channel management after the selection and the protocol flag to
+     * possibly target a specific protocol
      *
-     * @param atrRegex a regular expression to compare with the ATR of the targeted SE
+     * @param selector the selector
      * @param channelState flag to tell if the logical channel should be left open at the end of the
      *        selection
      * @param protocolFlag flag to be compared with the protocol identified when communicating the
      *        SE
      * @param extraInfo information string (to be printed in logs)
      */
-    public SeSelector(String atrRegex, ChannelState channelState, SeProtocol protocolFlag,
+    public SeSelector(Selector selector, ChannelState channelState, SeProtocol protocolFlag,
             String extraInfo) {
-        this.atrRegex = atrRegex;
+        this.selector = selector;
         this.channelState = channelState;
         this.protocolFlag = protocolFlag;
         if (extraInfo != null) {
@@ -84,46 +65,11 @@ public class SeSelector {
         } else {
             this.extraInfo = "";
         }
-        aid = null;
-        selectionByAid = false;
-        selectMode = SelectMode.FIRST;
         if (logger.isTraceEnabled()) {
             logger.trace(
-                    "ATR based selection: ATRREGEX = {}, KEEPCHANNELOPEN = {}, PROTOCOLFLAG = {}",
-                    atrRegex, channelState, protocolFlag);
-        }
-    }
-
-    /**
-     * Instantiate a SeSelector object with the selection data (AID), dedicated to select a SE that
-     * does not support the select application command, the channel management after the selection
-     * and the protocol flag to possibly target a specific protocol
-     *
-     * @param aid the target AID (end bytes can be truncated)
-     * @param selectMode a flag to indicate if the first or the next occurrence is requested (see
-     *        ISO7816-4 for a complete description of the select next mechanism)
-     * @param channelState flag to tell if the logical channel should be left open at the end of the
-     *        selection
-     * @param protocolFlag flag to be compared with the protocol identified when communicating the
-     *        SE
-     * @param extraInfo information string (to be printed in logs)
-     */
-    public SeSelector(byte[] aid, SelectMode selectMode, ChannelState channelState,
-            SeProtocol protocolFlag, String extraInfo) {
-        this.aid = aid;
-        this.selectMode = selectMode;
-        this.channelState = channelState;
-        this.protocolFlag = protocolFlag;
-        if (extraInfo != null) {
-            this.extraInfo = extraInfo;
-        } else {
-            this.extraInfo = "";
-        }
-        atrRegex = null;
-        selectionByAid = true;
-        if (logger.isTraceEnabled()) {
-            logger.trace("AID based selection: AID = {}, KEEPCHANNELOPEN = {}, PROTOCOLFLAG = {}",
-                    ByteArrayUtils.toHex(aid), channelState, protocolFlag);
+                    "Selection data: AID = {}, ATRREGEX = {}, KEEPCHANNELOPEN = {}, PROTOCOLFLAG = {}",
+                    ByteArrayUtils.toHex(selector.getAidSelector().getAidToSelect()),
+                    selector.getAtrFilter().getAtrRegex(), protocolFlag);
         }
     }
 
@@ -151,15 +97,8 @@ public class SeSelector {
      */
     protected final SeRequest getSelectorRequest() {
         SeRequest seSelectionRequest;
-        if (!isSelectionByAid()) {
-            seSelectionRequest = new SeRequest(new SeRequest.AtrSelector(getAtrRegex()),
-                    seSelectionApduRequestList, channelState, protocolFlag);
-        } else {
-            seSelectionRequest = new SeRequest(
-                    new SeRequest.AidSelector(getAid(), selectApplicationSuccessfulStatusCodes,
-                            getSelectMode()),
-                    seSelectionApduRequestList, channelState, protocolFlag);
-        }
+        seSelectionRequest =
+                new SeRequest(selector, seSelectionApduRequestList, channelState, protocolFlag);
         return seSelectionRequest;
     }
 

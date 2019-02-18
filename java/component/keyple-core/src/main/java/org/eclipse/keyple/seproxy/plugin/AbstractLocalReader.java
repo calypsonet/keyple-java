@@ -20,6 +20,7 @@ import org.eclipse.keyple.seproxy.protocol.SeProtocol;
 import org.eclipse.keyple.seproxy.protocol.SeProtocolSetting;
 import org.eclipse.keyple.transaction.SelectionRequest;
 import org.eclipse.keyple.transaction.SelectionResponse;
+import org.eclipse.keyple.transaction.Selector;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -228,33 +229,18 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
 
     /**
      * This abstract method must be implemented by the derived class in order to provide a selection
-     * mechanism based on ATR.
+     * and ATR filtering mechanism.
      * <p>
-     * The AtrSelector provided in argument holds all the needed data to handle the ATR matching
-     * process and build the resulting SelectionStatus.
+     * The Selector provided in argument holds all the needed data to handle the Application
+     * Selection and ATR matching process and build the resulting SelectionStatus.
      *
-     * @param atrSelector the ATR matching data (a regular expression used to compare the SE ATR to
-     *        the expected one)
-     * @return the SelectionStatus containing the actual ATR and the matching status flag.
+     * @param selector the selector
+     * @return the SelectionStatus containing the actual selection result (ATR and/or FCI and the
+     *         matching status flag).
      */
-    protected abstract SelectionStatus openLogicalChannelByAtr(SeRequest.AtrSelector atrSelector)
+    protected abstract SelectionStatus openLogicalChannel(Selector selector)
             throws KeypleIOReaderException, KeypleChannelStateException;
 
-
-
-    /**
-     * This abstract method must be implemented by the derived class in order to provide a selection
-     * mechanism based on AID.
-     * <p>
-     * The AidSelector provided in argument holds all the needed data to handle the select
-     * application command and build the resulting SelectionStatus.
-     * 
-     * @param aidSelector the targeted application selector
-     * @return the SelectionStatus containing the FCI data and the matching status flag.
-     */
-    protected abstract SelectionStatus openLogicalChannelByAid(SeRequest.AidSelector aidSelector)
-            throws KeypleIOReaderException, KeypleApplicationSelectionException,
-            KeypleChannelStateException;
 
     /**
      * Open (if needed) a physical channel and try to establish a logical channel.
@@ -277,7 +263,7 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
      * @throws KeypleIOReaderException if a reader error occurs
      * @throws KeypleApplicationSelectionException if the application selection fails
      */
-    protected final SelectionStatus openLogicalChannelAndSelect(SeRequest.Selector selector)
+    protected final SelectionStatus openLogicalChannelAndSelect(Selector selector)
             throws KeypleChannelStateException, KeypleIOReaderException,
             KeypleApplicationSelectionException {
 
@@ -300,11 +286,8 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
             }
         }
 
-        if (selector instanceof SeRequest.AidSelector) {
-            selectionStatus = openLogicalChannelByAid((SeRequest.AidSelector) selector);
-        } else {
-            selectionStatus = openLogicalChannelByAtr((SeRequest.AtrSelector) selector);
-        }
+        selectionStatus = openLogicalChannel(selector);
+
         return selectionStatus;
     }
 
@@ -553,8 +536,7 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
          */
         if (seRequest.getSelector() != null) {
             /* check if AID changed if the channel is already open */
-            if (isLogicalChannelOpen()
-                    && seRequest.getSelector() instanceof SeRequest.AidSelector) {
+            if (isLogicalChannelOpen() && seRequest.getSelector().getAidSelector() != null) {
                 /*
                  * AID comparison hack: we check here if the initial selection AID matches the
                  * beginning of the AID provided in the SeRequest (coming from FCI data and supposed
@@ -567,7 +549,7 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
                 if (aidCurrentlySelected == null) {
                     throw new IllegalStateException("AID currently selected shouldn't be null.");
                 }
-                if (((SeRequest.AidSelector) seRequest.getSelector()).isSelectNext()) {
+                if (seRequest.getSelector().getAidSelector().isSelectNext()) {
                     if (logger.isTraceEnabled()) {
                         logger.trace(
                                 "[{}] processSeRequest => The current selection is a next selection, close the "
@@ -576,11 +558,11 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
                     }
                     /* close the channel (will reset the current selection status) */
                     closeLogicalChannel();
-                } else if (((SeRequest.AidSelector) seRequest.getSelector())
+                } else if (seRequest.getSelector().getAidSelector()
                         .getAidToSelect().length >= aidCurrentlySelected.length
                         && aidCurrentlySelected.equals(Arrays.copyOfRange(
-                                ((SeRequest.AidSelector) seRequest.getSelector()).getAidToSelect(),
-                                0, aidCurrentlySelected.length))) {
+                                seRequest.getSelector().getAidSelector().getAidToSelect(), 0,
+                                aidCurrentlySelected.length))) {
                     // the AID changed, close the logical channel
                     if (logger.isTraceEnabled()) {
                         logger.trace(
@@ -618,7 +600,7 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
                     if (selectionStatus.getFci().isSuccessful()) {
                         /* the selection AID based was successful, keep the aid */
                         aidCurrentlySelected =
-                                ((SeRequest.AidSelector) seRequest.getSelector()).getAidToSelect();
+                                seRequest.getSelector().getAidSelector().getAidToSelect();
                     }
                     currentSelectionStatus = selectionStatus;
                 } else {

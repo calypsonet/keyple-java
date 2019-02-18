@@ -84,7 +84,8 @@ public class SeProtocolDetectionEngine extends AbstractReaderObserverEngine {
                     break;
                 default:
                     /* Add a generic selector */
-                    seSelection.prepareSelection(new SeSelector(".*", ChannelState.KEEP_OPEN,
+                    seSelection.prepareSelection(new SeSelector(
+                            new Selector(null, new AtrFilter(".*")), ChannelState.KEEP_OPEN,
                             ContactlessProtocols.PROTOCOL_ISO14443_4, "Default selector"));
                     break;
             }

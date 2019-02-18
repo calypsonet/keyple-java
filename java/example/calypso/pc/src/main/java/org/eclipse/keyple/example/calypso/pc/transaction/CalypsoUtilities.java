@@ -25,8 +25,10 @@ import org.eclipse.keyple.seproxy.SeReader;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.protocol.Protocol;
+import org.eclipse.keyple.transaction.AtrFilter;
 import org.eclipse.keyple.transaction.SeSelection;
 import org.eclipse.keyple.transaction.SeSelector;
+import org.eclipse.keyple.transaction.Selector;
 
 public class CalypsoUtilities {
     private static Properties properties;
@@ -123,7 +125,8 @@ public class CalypsoUtilities {
          */
         SeSelection samSelection = new SeSelection(samReader);
 
-        SeSelector samSelector = new SeSelector(CalypsoClassicInfo.SAM_C1_ATR_REGEX,
+        SeSelector samSelector = new SeSelector(
+                new Selector(null, new AtrFilter(CalypsoClassicInfo.SAM_C1_ATR_REGEX)),
                 ChannelState.KEEP_OPEN, Protocol.ANY, "Selection SAM C1");
 
         /* Prepare selector, ignore MatchingSe here */

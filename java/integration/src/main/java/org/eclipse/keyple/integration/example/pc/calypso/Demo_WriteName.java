@@ -26,9 +26,7 @@ import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.exception.NoStackTraceThrowable;
 import org.eclipse.keyple.seproxy.protocol.Protocol;
 import org.eclipse.keyple.seproxy.protocol.TransmissionMode;
-import org.eclipse.keyple.transaction.MatchingSe;
-import org.eclipse.keyple.transaction.SeSelection;
-import org.eclipse.keyple.transaction.SeSelector;
+import org.eclipse.keyple.transaction.*;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -66,8 +64,8 @@ public class Demo_WriteName {
 
         SeSelection samSelection = new SeSelection(samReader);
 
-        SeSelector samSelector = new SeSelector(SAM_ATR_REGEX, ChannelState.KEEP_OPEN, Protocol.ANY,
-                "SAM Selection");
+        SeSelector samSelector = new SeSelector(new Selector(null, new AtrFilter(SAM_ATR_REGEX)),
+                ChannelState.KEEP_OPEN, Protocol.ANY, "SAM Selection");
 
         /* Prepare selector, ignore MatchingSe here */
         samSelection.prepareSelection(samSelector);

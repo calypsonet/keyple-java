@@ -13,9 +13,7 @@ package org.eclipse.keyple.calypso.transaction;
 
 
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 import org.eclipse.keyple.calypso.command.PoClass;
 import org.eclipse.keyple.calypso.command.po.PoCustomModificationCommandBuilder;
 import org.eclipse.keyple.calypso.command.po.PoCustomReadCommandBuilder;
@@ -31,7 +29,10 @@ import org.eclipse.keyple.seproxy.message.ApduResponse;
 import org.eclipse.keyple.seproxy.message.SeResponse;
 import org.eclipse.keyple.seproxy.protocol.ContactsProtocols;
 import org.eclipse.keyple.seproxy.protocol.SeProtocol;
+import org.eclipse.keyple.transaction.AidSelector;
+import org.eclipse.keyple.transaction.AtrFilter;
 import org.eclipse.keyple.transaction.SeSelector;
+import org.eclipse.keyple.transaction.Selector;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,6 +45,11 @@ public final class PoSelector extends SeSelector {
 
     private final PoClass poClass;
     private final SeProtocol protocolFlag;
+    private final Set<Integer> successfulStatusCode = new HashSet<Integer>() {
+        {
+            add(0x6283);
+        }
+    };;
 
     /** The list to contain the parsers associated to the prepared commands */
     private List<AbstractApduResponseParser> poResponseParserList =
@@ -61,7 +67,7 @@ public final class PoSelector extends SeSelector {
      */
     public PoSelector(String atrRegex, ChannelState channelState, SeProtocol protocolFlag,
             String extraInfo) {
-        super(atrRegex, channelState, protocolFlag, extraInfo);
+        super(new Selector(null, new AtrFilter(atrRegex)), channelState, protocolFlag, extraInfo);
         setMatchingClass(CalypsoPo.class);
         setSelectorClass(PoSelector.class);
         poClass = PoClass.LEGACY;
@@ -84,7 +90,8 @@ public final class PoSelector extends SeSelector {
      */
     public PoSelector(byte[] aid, SelectMode selectMode, ChannelState channelState,
             SeProtocol protocolFlag, String extraInfo) {
-        super(aid, selectMode, channelState, protocolFlag, extraInfo);
+        super(new Selector(new AidSelector(aid, selectMode), null), channelState, protocolFlag,
+                extraInfo);
         setMatchingClass(CalypsoPo.class);
         setSelectorClass(PoSelector.class);
         poClass = PoClass.ISO;

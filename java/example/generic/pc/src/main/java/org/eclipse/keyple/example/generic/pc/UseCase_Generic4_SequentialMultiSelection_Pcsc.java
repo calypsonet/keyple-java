@@ -20,9 +20,7 @@ import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.exception.NoStackTraceThrowable;
 import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
-import org.eclipse.keyple.transaction.MatchingSe;
-import org.eclipse.keyple.transaction.SeSelection;
-import org.eclipse.keyple.transaction.SeSelector;
+import org.eclipse.keyple.transaction.*;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -93,30 +91,33 @@ public class UseCase_Generic4_SequentialMultiSelection_Pcsc {
             String seAidPrefix = "A000000404012509";
 
             /* AID based selection */
-            matchingSe =
-                    seSelection.prepareSelection(new SeSelector(ByteArrayUtils.fromHex(seAidPrefix),
-                            SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN,
-                            ContactlessProtocols.PROTOCOL_ISO14443_4, "Initial selection #1"));
+            matchingSe = seSelection.prepareSelection(new SeSelector(
+                    new Selector(new AidSelector(ByteArrayUtils.fromHex(seAidPrefix),
+                            SeSelector.SelectMode.FIRST), null),
+                    ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4,
+                    "Initial selection #1"));
 
             seSelection = new SeSelection(seReader);
 
             doAndAnalyseSelection(seSelection, matchingSe, 1);
 
             /* next selection */
-            matchingSe =
-                    seSelection.prepareSelection(new SeSelector(ByteArrayUtils.fromHex(seAidPrefix),
-                            SeSelector.SelectMode.NEXT, ChannelState.KEEP_OPEN,
-                            ContactlessProtocols.PROTOCOL_ISO14443_4, "Next selection #2"));
+            matchingSe = seSelection.prepareSelection(new SeSelector(
+                    new Selector(new AidSelector(ByteArrayUtils.fromHex(seAidPrefix),
+                            SeSelector.SelectMode.NEXT), null),
+                    ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4,
+                    "Next selection #2"));
 
             seSelection = new SeSelection(seReader);
 
             doAndAnalyseSelection(seSelection, matchingSe, 2);
 
             /* next selection */
-            matchingSe =
-                    seSelection.prepareSelection(new SeSelector(ByteArrayUtils.fromHex(seAidPrefix),
-                            SeSelector.SelectMode.NEXT, ChannelState.CLOSE_AFTER,
-                            ContactlessProtocols.PROTOCOL_ISO14443_4, "Next selection #3"));
+            matchingSe = seSelection.prepareSelection(new SeSelector(
+                    new Selector(new AidSelector(ByteArrayUtils.fromHex(seAidPrefix),
+                            SeSelector.SelectMode.NEXT), null),
+                    ChannelState.CLOSE_AFTER, ContactlessProtocols.PROTOCOL_ISO14443_4,
+                    "Next selection #3"));
 
             doAndAnalyseSelection(seSelection, matchingSe, 3);
 

@@ -678,7 +678,7 @@ public class StubReaderTest {
 
         poApduRequestList = Arrays.asList(poReadRecordCmd_T2Env.getApduRequest());
 
-        SeRequest.Selector selector = new SeRequest.AidSelector(ByteArrayUtils.fromHex(poAid));
+        Selector selector = new SeRequest.AidSelector(ByteArrayUtils.fromHex(poAid));
 
         SeRequest seRequest = new SeRequest(poApduRequestList, ChannelState.CLOSE_AFTER);
 
@@ -739,7 +739,7 @@ public class StubReaderTest {
         poApduRequestList3.add(poReadRecord2CmdBuild.getApduRequest());
         poApduRequestList3.add(poReadRecord1CmdBuild.getApduRequest());
 
-        SeRequest.Selector selector = new SeRequest.AidSelector(ByteArrayUtils.fromHex(poAid));
+        Selector selector = new SeRequest.AidSelector(ByteArrayUtils.fromHex(poAid));
 
         SeRequest seRequest1 = new SeRequest(poApduRequestList1, ChannelState.KEEP_OPEN);
 
@@ -825,7 +825,7 @@ public class StubReaderTest {
                 break;
         }
 
-        SeRequest.Selector selector = new SeRequest.AidSelector(ByteArrayUtils.fromHex(poAid));
+        Selector selector = new SeRequest.AidSelector(ByteArrayUtils.fromHex(poAid));
 
         return new SeRequest(poApduRequestList, ChannelState.CLOSE_AFTER);
     }
