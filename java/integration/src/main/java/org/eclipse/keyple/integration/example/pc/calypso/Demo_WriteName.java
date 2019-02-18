@@ -33,6 +33,7 @@ import org.eclipse.keyple.util.ByteArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@SuppressWarnings("PMD.VariableNamingConventions")
 public class Demo_WriteName {
 
     private static final Logger logger = LoggerFactory.getLogger(Demo_WriteName.class);

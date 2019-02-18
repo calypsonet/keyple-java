@@ -86,8 +86,8 @@ public class TestEngine {
         pluginsSet.add(PcscPlugin.getInstance());
         seProxyService.setPlugins(pluginsSet);
 
-        String PO_READER_NAME_REGEX = ".*(ASK|ACS).*";
-        String SAM_READER_NAME_REGEX = ".*(Cherry TC|SCM Microsystems|Identive|HID).*";
+        final String PO_READER_NAME_REGEX = ".*(ASK|ACS).*";
+        final String SAM_READER_NAME_REGEX = ".*(Cherry TC|SCM Microsystems|Identive|HID).*";
 
         poReader = getReader(seProxyService, PO_READER_NAME_REGEX);
         samReader = getReader(seProxyService, SAM_READER_NAME_REGEX);
@@ -120,7 +120,7 @@ public class TestEngine {
         }
 
         // operate PO multiselection
-        String SAM_ATR_REGEX = "3B3F9600805A[0-9a-fA-F]{2}80[0-9a-fA-F]{16}829000";
+        final String SAM_ATR_REGEX = "3B3F9600805A[0-9a-fA-F]{2}80[0-9a-fA-F]{16}829000";
 
         // check the availability of the SAM, open its physical and logical channels and keep it
         // open

@@ -104,4 +104,14 @@ public final class AndroidNfcPlugin extends AbstractStaticPlugin {
     protected AbstractObservableReader fetchNativeReader(String name) {
         return readers.first();
     }
+
+    @Override
+    protected void startObservation() {
+
+    }
+
+    @Override
+    protected void stopObservation() {
+
+    }
 }
