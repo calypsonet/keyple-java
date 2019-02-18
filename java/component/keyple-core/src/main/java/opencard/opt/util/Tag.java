@@ -66,7 +66,7 @@ package opencard.opt.util;
  * 
  * @author Thomas Schaeck
  * 
- * @see opencard.opt.util.TLV
+ * @see TLV
  */
 
 public class Tag {
