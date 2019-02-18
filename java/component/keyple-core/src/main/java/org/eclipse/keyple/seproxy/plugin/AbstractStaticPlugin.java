@@ -19,11 +19,28 @@ public abstract class AbstractStaticPlugin extends AbstractObservablePlugin {
         super(name);
     }
 
+    /**
+     * Empty start and stopObservation implementations to avoid implementation at the plugin level
+     * and remain in compliance with {@link AbstractObservablePlugin}.
+     */
+
+    @SuppressWarnings("PMD.EmptyMethodInAbstractClassShouldBeAbstract")
+    @Override
+    protected final void startObservation() {}
+
+    @SuppressWarnings("PMD.EmptyMethodInAbstractClassShouldBeAbstract")
+    @Override
+    protected final void stopObservation() {}
+
+    /** Prevents the use of observers that are not available in a static reader context */
+
     public final void addObserver(Observer observer) {
-        super.addObserver(observer);
+        throw new IllegalAccessError(
+                "Abstract Static Plugin does not support Observers, do not use this function");
     }
 
     public final void removeObserver(Observer observer) {
-        super.removeObserver(observer);
+        throw new IllegalAccessError(
+                "Abstract Static Plugin does not support Observers, do not use this function");
     }
 }

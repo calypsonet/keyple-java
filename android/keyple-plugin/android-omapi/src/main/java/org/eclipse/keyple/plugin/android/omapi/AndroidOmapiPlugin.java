@@ -125,18 +125,6 @@ public final class AndroidOmapiPlugin extends AbstractStaticPlugin implements SE
         return (AbstractObservableReader) this.getReader(name);
     }
 
-    @Override
-    protected void startObservation() {
-
-    }
-
-    @Override
-    protected void stopObservation() {
-
-    }
-
-    ;
-
     /**
      * Do not call this method directly. Invoked by Open Mobile {@link SEService} when connected
      * Instanciates {@link AndroidOmapiReader} for each SE Reader detected in the platform

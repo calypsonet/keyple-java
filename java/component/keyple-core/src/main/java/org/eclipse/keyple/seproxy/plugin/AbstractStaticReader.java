@@ -23,6 +23,19 @@ public abstract class AbstractStaticReader extends AbstractLocalReader {
         super(pluginName, readerName);
     }
 
+    /**
+     * Empty start and stopObservation implementations to avoid implementation at the plugin level
+     * and remain in compliance with {@link AbstractLocalReader}.
+     */
+
+    @SuppressWarnings("PMD.EmptyMethodInAbstractClassShouldBeAbstract")
+    @Override
+    protected final void startObservation() {}
+
+    @SuppressWarnings("PMD.EmptyMethodInAbstractClassShouldBeAbstract")
+    @Override
+    protected final void stopObservation() {}
+
     /** Prevents the use of observers that are not available in a static reader context */
 
     public final void addObserver(Observer observer) {
