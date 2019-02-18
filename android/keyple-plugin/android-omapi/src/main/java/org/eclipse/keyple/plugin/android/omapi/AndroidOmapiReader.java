@@ -114,7 +114,7 @@ public final class AndroidOmapiReader extends AbstractStaticReader {
      */
     @Override
     protected final SelectionStatus openLogicalChannelByAtr(SeRequest.AtrSelector atrSelector)
-            throws KeypleIOReaderException {
+            throws KeypleIOReaderException, KeypleChannelStateException {
         boolean selectionHasMatched;
         byte[] atr = getATR();
 
@@ -131,6 +131,8 @@ public final class AndroidOmapiReader extends AbstractStaticReader {
         } catch (IOException e) {
             e.printStackTrace();
             throw new KeypleIOReaderException("IOException while opening basic channel.");
+        } catch (SecurityException e) {
+            throw new KeypleChannelStateException("Error while opening basic channel, AtrSelector :" + atrSelector, e.getCause());
         }
 
         if (openChannel == null) {
@@ -159,7 +161,7 @@ public final class AndroidOmapiReader extends AbstractStaticReader {
      * @throws KeypleIOReaderException if an IOException occurs
      */
     @Override
-    protected final SelectionStatus openLogicalChannelByAid(SeRequest.AidSelector aidSelector) throws KeypleIOReaderException, KeypleApplicationSelectionException {
+    protected final SelectionStatus openLogicalChannelByAid(SeRequest.AidSelector aidSelector) throws KeypleIOReaderException, KeypleApplicationSelectionException, KeypleChannelStateException {
         ApduResponse fciResponse;
         byte[] atr;
 
@@ -175,6 +177,8 @@ public final class AndroidOmapiReader extends AbstractStaticReader {
             } catch (NoSuchElementException e) {
                 throw new KeypleApplicationSelectionException(
                         "Error while selecting application : " + ByteArrayUtils.toHex(aid), e);
+            } catch (SecurityException e) {
+                throw new KeypleChannelStateException("Error while opening logical channel, aid :" + ByteArrayUtils.toHex(aid), e.getCause());
             }
 
             if (openChannel == null) {
