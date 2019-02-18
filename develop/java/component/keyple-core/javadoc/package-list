@@ -1,3 +1,4 @@
+opencard.opt.util
 org.eclipse.keyple.command
 org.eclipse.keyple.seproxy
 org.eclipse.keyple.seproxy.event
