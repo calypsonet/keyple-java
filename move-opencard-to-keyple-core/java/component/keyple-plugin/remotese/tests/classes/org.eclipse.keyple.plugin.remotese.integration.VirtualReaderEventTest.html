@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">6.647s</div>
+<div class="counter">6.771s</div>
 <p>duration</p>
 </div>
 </td>
@@ -79,32 +79,32 @@
 </thead>
 <tr>
 <td class="success">testATR</td>
-<td>0.608s</td>
+<td>0.705s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">testInsert</td>
-<td>0.113s</td>
+<td>0.114s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">testInsertMatchingSe</td>
-<td>1.110s</td>
+<td>1.112s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">testInsertNotMatching_Always</td>
-<td>0.606s</td>
+<td>0.620s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">testInsertNotMatching_MatchedOnly</td>
-<td>3.603s</td>
+<td>3.609s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">testRemoveEvent</td>
-<td>0.607s</td>
+<td>0.611s</td>
 <td class="success">passed</td>
 </tr>
 </table>
@@ -123,105 +123,105 @@
 [Test worker] DEBUG Integration - Create a new StubReader : testStubReader
 [Test worker] INFO StubPlugin - Plugging a new reader with name testStubReader
 [Test worker] INFO NativeReaderServiceImpl - connectReader testStubReader from device testClientNodeId
-[Test worker] DEBUG RemoteMethodTxEngine - Register rm to engine : org.eclipse.keyple.plugin.remotese.nativese.method.RmConnectReaderTx@6f4f4a97
+[Test worker] DEBUG RemoteMethodTxEngine - Register rm to engine : org.eclipse.keyple.plugin.remotese.nativese.method.RmConnectReaderTx@790ee984
 [Test worker] DEBUG RemoteMethodTx - Blocking Get org.eclipse.keyple.plugin.remotese.nativese.method.RmConnectReaderTx
-[Test worker] TRACE RemoteMethodTx - Set callback on RemoteMethodTx org.eclipse.keyple.plugin.remotese.nativese.method.RmConnectReaderTx 1867467415
-[Test worker] TRACE RemoteMethodTx - Lock org.eclipse.keyple.plugin.remotese.nativese.method.RmConnectReaderTx, 1867467415
-[Thread-60] TRACE VirtualReaderService - onDTO, Remote Method called : READER_CONNECT - isRequest : true - keypleDto : {
+[Test worker] TRACE RemoteMethodTx - Set callback on RemoteMethodTx org.eclipse.keyple.plugin.remotese.nativese.method.RmConnectReaderTx 2031020420
+[Test worker] TRACE RemoteMethodTx - Lock org.eclipse.keyple.plugin.remotese.nativese.method.RmConnectReaderTx, 2031020420
+[Thread-4] TRACE VirtualReaderService - onDTO, Remote Method called : READER_CONNECT - isRequest : true - keypleDto : {
   &quot;clientNodeId&quot;: &quot;testClientNodeId&quot;,
   &quot;nativeReaderName&quot;: &quot;testStubReader&quot;,
   &quot;action&quot;: &quot;reader_connect&quot;,
   &quot;body&quot;: &quot;{}&quot;,
   &quot;isRequest&quot;: true
 }
-[Thread-60] DEBUG RemoteSePlugin - createVirtualReader for nativeReader testStubReader
-[Thread-60] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1550244538201
-[Thread-60] INFO VirtualReader - A new virtual reader was created with session sessionId:testStubReadertestClientNodeId1550244538201 - slaveNodeId:testClientNodeId
-[Thread-60] TRACE AbstractLoggedObservable - [RemoteSePlugin] AbstractObservableReader =&gt; Notifying a plugin event to 0 observers. EVENTNAME = Reader connected 
-[Thread-60] TRACE NativeReaderServiceImpl - onDto {
+[Thread-4] DEBUG RemoteSePlugin - createVirtualReader for nativeReader testStubReader
+[Thread-4] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1550465984645
+[Thread-4] INFO VirtualReader - A new virtual reader was created with session sessionId:testStubReadertestClientNodeId1550465984645 - slaveNodeId:testClientNodeId
+[Thread-4] TRACE AbstractLoggedObservable - [RemoteSePlugin] AbstractObservableReader =&gt; Notifying a plugin event to 0 observers. EVENTNAME = Reader connected 
+[Thread-4] TRACE NativeReaderServiceImpl - onDto {
   &quot;clientNodeId&quot;: &quot;testClientNodeId&quot;,
-  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1550244538201&quot;,
+  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1550465984645&quot;,
   &quot;nativeReaderName&quot;: &quot;testStubReader&quot;,
   &quot;virtualReaderName&quot;: &quot;remote-testStubReader&quot;,
   &quot;action&quot;: &quot;reader_connect&quot;,
-  &quot;body&quot;: &quot;{\&quot;statusCode\&quot;:0,\&quot;sessionId\&quot;:\&quot;testStubReadertestClientNodeId1550244538201\&quot;}&quot;,
+  &quot;body&quot;: &quot;{\&quot;statusCode\&quot;:0,\&quot;sessionId\&quot;:\&quot;testStubReadertestClientNodeId1550465984645\&quot;}&quot;,
   &quot;isRequest&quot;: false
 }
-[Thread-60] DEBUG NativeReaderServiceImpl - Remote Method called : READER_CONNECT - isRequest : false
-[Thread-60] TRACE NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
-[Thread-60] DEBUG RmConnectReaderTx - Register NativeReaderService as an observer for native reader testStubReader
-[Thread-60] DEBUG AbstractObservableReader - Start the reader monitoring.
-[Thread-60] TRACE AbstractLoggedObservable - [class org.eclipse.keyple.plugin.stub.StubReader][testStubReader] addObserver =&gt; Adding an observer.
-[Thread-60] DEBUG RemoteMethodTx - release lock
-[Test worker] TRACE RemoteMethodTx - Unlock org.eclipse.keyple.plugin.remotese.nativese.method.RmConnectReaderTx, 1867467415
-[Thread-60] TRACE NativeReaderServiceImpl - onDto response to be sent {
+[Thread-4] DEBUG NativeReaderServiceImpl - Remote Method called : READER_CONNECT - isRequest : false
+[Thread-4] TRACE NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
+[Thread-4] DEBUG RmConnectReaderTx - Register NativeReaderService as an observer for native reader testStubReader
+[Thread-4] DEBUG AbstractObservableReader - Start the reader monitoring.
+[Thread-4] TRACE AbstractLoggedObservable - [class org.eclipse.keyple.plugin.stub.StubReader][testStubReader] addObserver =&gt; Adding an observer.
+[Thread-4] DEBUG RemoteMethodTx - release lock
+[Test worker] TRACE RemoteMethodTx - Unlock org.eclipse.keyple.plugin.remotese.nativese.method.RmConnectReaderTx, 2031020420
+[Thread-4] TRACE NativeReaderServiceImpl - onDto response to be sent {
   &quot;action&quot;: &quot;&quot;,
   &quot;body&quot;: &quot;&quot;,
   &quot;isRequest&quot;: false
 }
-[Thread-60] TRACE LocalClient - Keyple DTO is empty, do not send it
+[Thread-4] TRACE LocalClient - Keyple DTO is empty, do not send it
 [Test worker] DEBUG AbstractObservableReader - Start the reader monitoring.
 [Test worker] TRACE AbstractLoggedObservable - [class org.eclipse.keyple.plugin.remotese.pluginse.VirtualReader][remote-testStubReader] addObserver =&gt; Adding an observer.
 [Test worker] DEBUG VirtualReaderEventTest - Wait 1 second before inserting SE
-[observable-reader-events-19] TRACE AbstractLoggedObservable - [testStubReader] AbstractObservableReader =&gt; Notifying a reader event to 1 observers. EVENTNAME = SE insertion
-[observable-reader-events-19] INFO NativeReaderServiceImpl - NativeReaderServiceImpl listens for event from native Reader - Received Event SE_INSERTED
-[observable-reader-events-19] TRACE VirtualReaderService - onDTO, Remote Method called : READER_EVENT - isRequest : true - keypleDto : {
+[observable-reader-events-1] TRACE AbstractLoggedObservable - [testStubReader] AbstractObservableReader =&gt; Notifying a reader event to 1 observers. EVENTNAME = SE insertion
+[observable-reader-events-1] INFO NativeReaderServiceImpl - NativeReaderServiceImpl listens for event from native Reader - Received Event SE_INSERTED
+[observable-reader-events-1] TRACE VirtualReaderService - onDTO, Remote Method called : READER_EVENT - isRequest : true - keypleDto : {
   &quot;clientNodeId&quot;: &quot;localClient1&quot;,
   &quot;nativeReaderName&quot;: &quot;testStubReader&quot;,
   &quot;action&quot;: &quot;reader_event&quot;,
   &quot;body&quot;: &quot;{\n  \&quot;pluginName\&quot;: \&quot;StubPlugin\&quot;,\n  \&quot;readerName\&quot;: \&quot;testStubReader\&quot;,\n  \&quot;eventType\&quot;: \&quot;SE_INSERTED\&quot;\n}&quot;,
   &quot;isRequest&quot;: true
 }
-[observable-reader-events-19] DEBUG RemoteSePlugin - OnReaderEvent org.eclipse.keyple.seproxy.event.ReaderEvent@6b119f27
-[observable-reader-events-19] DEBUG RemoteSePlugin - Dispatch ReaderEvent to the appropriate Reader : testStubReader sessionId : null
-[observable-reader-events-19] DEBUG VirtualReader -  EVENT SE_INSERTED 
-[observable-reader-events-19] TRACE AbstractLoggedObservable - [remote-testStubReader] AbstractObservableReader =&gt; Notifying a reader event to 1 observers. EVENTNAME = SE insertion
-[observable-reader-events-19] TRACE SeSelector - ATR based selection: ATRREGEX = 3B.*, KEEPCHANNELOPEN = KEEP_OPEN, PROTOCOLFLAG = ANY
-[observable-reader-events-19] TRACE SeSelection - SELECTORREQUEST = SeRequest:{REQUESTS = [], SELECTOR = ATR regex:3B.*, KEEPCHANNELOPEN = KEEP_OPEN}, EXTRAINFO = Test ATR
-[observable-reader-events-19] TRACE SeSelection - Transmit SELECTIONREQUEST (1 request(s))
-[observable-reader-events-19] DEBUG AbstractObservableReader - [remote-testStubReader] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 504.8 ms.
-[observable-reader-events-19] DEBUG RemoteMethodTxEngine - Register rm to engine : org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx@61e9f457
-[observable-reader-events-19] DEBUG RemoteMethodTx - Blocking Get org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx
-[observable-reader-events-19] TRACE RemoteMethodTx - Set callback on RemoteMethodTx org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx 1642722391
-[observable-reader-events-19] TRACE RemoteMethodTx - Lock org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx, 1642722391
-[Thread-61] TRACE NativeReaderServiceImpl - onDto {
+[observable-reader-events-1] DEBUG RemoteSePlugin - OnReaderEvent org.eclipse.keyple.seproxy.event.ReaderEvent@6d5043dc
+[observable-reader-events-1] DEBUG RemoteSePlugin - Dispatch ReaderEvent to the appropriate Reader : testStubReader sessionId : null
+[observable-reader-events-1] DEBUG VirtualReader -  EVENT SE_INSERTED 
+[observable-reader-events-1] TRACE AbstractLoggedObservable - [remote-testStubReader] AbstractObservableReader =&gt; Notifying a reader event to 1 observers. EVENTNAME = SE insertion
+[observable-reader-events-1] TRACE SeSelector - ATR based selection: ATRREGEX = 3B.*, KEEPCHANNELOPEN = KEEP_OPEN, PROTOCOLFLAG = ANY
+[observable-reader-events-1] TRACE SeSelection - SELECTORREQUEST = SeRequest:{REQUESTS = [], SELECTOR = ATR regex:3B.*, KEEPCHANNELOPEN = KEEP_OPEN}, EXTRAINFO = Test ATR
+[observable-reader-events-1] TRACE SeSelection - Transmit SELECTIONREQUEST (1 request(s))
+[observable-reader-events-1] DEBUG AbstractObservableReader - [remote-testStubReader] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 526.9 ms.
+[observable-reader-events-1] DEBUG RemoteMethodTxEngine - Register rm to engine : org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx@2b458b35
+[observable-reader-events-1] DEBUG RemoteMethodTx - Blocking Get org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx
+[observable-reader-events-1] TRACE RemoteMethodTx - Set callback on RemoteMethodTx org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx 725977909
+[observable-reader-events-1] TRACE RemoteMethodTx - Lock org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx, 725977909
+[Thread-5] TRACE NativeReaderServiceImpl - onDto {
   &quot;clientNodeId&quot;: &quot;testClientNodeId&quot;,
-  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1550244538201&quot;,
+  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1550465984645&quot;,
   &quot;nativeReaderName&quot;: &quot;testStubReader&quot;,
   &quot;virtualReaderName&quot;: &quot;remote-testStubReader&quot;,
   &quot;action&quot;: &quot;reader_transmit&quot;,
   &quot;body&quot;: &quot;{\n  \&quot;sortedRequests\&quot;: [\n    {\n      \&quot;selector\&quot;: \&quot;atrselector::3B.*\&quot;,\n      \&quot;apduRequests\&quot;: [],\n      \&quot;protocolFlag\&quot;: \&quot;ANY\&quot;,\n      \&quot;channelState\&quot;: \&quot;KEEP_OPEN\&quot;\n    }\n  ]\n}&quot;,
   &quot;isRequest&quot;: true
 }
-[Thread-61] DEBUG NativeReaderServiceImpl - Remote Method called : READER_TRANSMIT - isRequest : true
-[Thread-61] TRACE RmTransmitExecutor - Execute locally seRequestSet : 1 SeRequest(s)
-[Thread-61] TRACE NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
-[Thread-61] DEBUG AbstractObservableReader - [testStubReader] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 606.6 ms.
-[Thread-61] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [], SELECTOR = ATR regex:3B.*, KEEPCHANNELOPEN = KEEP_OPEN}
-[Thread-61] TRACE AbstractLocalReader - [testStubReader] processSeRequest =&gt; Logical channel open = false
-[Thread-61] TRACE AbstractSelectionLocalReader - [testStubReader] openLogicalChannelByAtr =&gt; ATR: 3B8E800180318066409089120802830190000B
-[Thread-61] TRACE AbstractLocalReader - [testStubReader] processSeRequest =&gt; Logical channel opening success.
-[Thread-61] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; receive SeResponse:{RESPONSES = [], ATR = 3B8E800180318066409089120802830190000B, FCI = , HASMATCHED = true CHANNELWASOPEN = false}
-[Thread-61] DEBUG AbstractObservableReader - [testStubReader] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 0.1 ms.
-[Thread-61] TRACE NativeReaderServiceImpl - onDto response to be sent {
+[Thread-5] DEBUG NativeReaderServiceImpl - Remote Method called : READER_TRANSMIT - isRequest : true
+[Thread-5] TRACE RmTransmitExecutor - Execute locally seRequestSet : 1 SeRequest(s)
+[Thread-5] TRACE NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
+[Thread-5] DEBUG AbstractObservableReader - [testStubReader] transmit =&gt; SEREQUESTSET = 1 SeRequest(s), elapsed 666.7 ms.
+[Thread-5] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [], SELECTOR = ATR regex:3B.*, KEEPCHANNELOPEN = KEEP_OPEN}
+[Thread-5] TRACE AbstractLocalReader - [testStubReader] processSeRequest =&gt; Logical channel open = false
+[Thread-5] TRACE AbstractSelectionLocalReader - [testStubReader] openLogicalChannelByAtr =&gt; ATR: 3B8E800180318066409089120802830190000B
+[Thread-5] TRACE AbstractLocalReader - [testStubReader] processSeRequest =&gt; Logical channel opening success.
+[Thread-5] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; receive SeResponse:{RESPONSES = [], ATR = 3B8E800180318066409089120802830190000B, FCI = , HASMATCHED = true CHANNELWASOPEN = false}
+[Thread-5] DEBUG AbstractObservableReader - [testStubReader] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 16.8 ms.
+[Thread-5] TRACE NativeReaderServiceImpl - onDto response to be sent {
   &quot;clientNodeId&quot;: &quot;testClientNodeId&quot;,
-  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1550244538201&quot;,
+  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1550465984645&quot;,
   &quot;nativeReaderName&quot;: &quot;testStubReader&quot;,
   &quot;virtualReaderName&quot;: &quot;remote-testStubReader&quot;,
   &quot;action&quot;: &quot;reader_transmit&quot;,
   &quot;body&quot;: &quot;{\n  \&quot;seResponses\&quot;: [\n    {\n      \&quot;channelPreviouslyOpen\&quot;: false,\n      \&quot;selectionStatus\&quot;: {\n        \&quot;atr\&quot;: {\n          \&quot;atrBytes\&quot;: [\n            59,\n            -114,\n            -128,\n            1,\n            -128,\n            49,\n            -128,\n            102,\n            64,\n            -112,\n            -119,\n            18,\n            8,\n            2,\n            -125,\n            1,\n            -112,\n            0,\n            11\n          ]\n        },\n        \&quot;fci\&quot;: {\n          \&quot;successful\&quot;: false\n        },\n        \&quot;isMatching\&quot;: true\n      },\n      \&quot;apduResponses\&quot;: []\n    }\n  ]\n}&quot;,
   &quot;isRequest&quot;: false
 }
-[Thread-61] TRACE VirtualReaderService - onDTO, Remote Method called : READER_TRANSMIT - isRequest : false - keypleDto : {
+[Thread-5] TRACE VirtualReaderService - onDTO, Remote Method called : READER_TRANSMIT - isRequest : false - keypleDto : {
   &quot;clientNodeId&quot;: &quot;testClientNodeId&quot;,
-  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1550244538201&quot;,
+  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1550465984645&quot;,
   &quot;nativeReaderName&quot;: &quot;testStubReader&quot;,
   &quot;virtualReaderName&quot;: &quot;remote-testStubReader&quot;,
   &quot;action&quot;: &quot;reader_transmit&quot;,
   &quot;body&quot;: &quot;{\n  \&quot;seResponses\&quot;: [\n    {\n      \&quot;channelPreviouslyOpen\&quot;: false,\n      \&quot;selectionStatus\&quot;: {\n        \&quot;atr\&quot;: {\n          \&quot;atrBytes\&quot;: [\n            59,\n            -114,\n            -128,\n            1,\n            -128,\n            49,\n            -128,\n            102,\n            64,\n            -112,\n            -119,\n            18,\n            8,\n            2,\n            -125,\n            1,\n            -112,\n            0,\n            11\n          ]\n        },\n        \&quot;fci\&quot;: {\n          \&quot;successful\&quot;: false\n        },\n        \&quot;isMatching\&quot;: true\n      },\n      \&quot;apduResponses\&quot;: []\n    }\n  ]\n}&quot;,
   &quot;isRequest&quot;: false
 }
-[Thread-61] TRACE RmTransmitTx - KeypleDto : KeypleDto : reader_transmit - isRequest : false - native : testStubReader - virtual : remote-testStubReader - clientNodeId : testClientNodeId - sessionId : testStubReadertestClientNodeId1550244538201 - body : {
+[Thread-5] TRACE RmTransmitTx - KeypleDto : KeypleDto : reader_transmit - isRequest : false - native : testStubReader - virtual : remote-testStubReader - clientNodeId : testClientNodeId - sessionId : testStubReadertestClientNodeId1550465984645 - body : {
   &quot;seResponses&quot;: [
     {
       &quot;channelPreviouslyOpen&quot;: false,
@@ -258,7 +258,7 @@
     }
   ]
 }
-[Thread-61] TRACE RmTransmitTx - KeypleDto contains a response: KeypleDto : reader_transmit - isRequest : false - native : testStubReader - virtual : remote-testStubReader - clientNodeId : testClientNodeId - sessionId : testStubReadertestClientNodeId1550244538201 - body : {
+[Thread-5] TRACE RmTransmitTx - KeypleDto contains a response: KeypleDto : reader_transmit - isRequest : false - native : testStubReader - virtual : remote-testStubReader - clientNodeId : testClientNodeId - sessionId : testStubReadertestClientNodeId1550465984645 - body : {
   &quot;seResponses&quot;: [
     {
       &quot;channelPreviouslyOpen&quot;: false,
@@ -295,11 +295,11 @@
     }
   ]
 }
-[Thread-61] DEBUG RemoteMethodTx - release lock
-[Thread-61] TRACE LocalServer - Keyple DTO is empty, do not send it
-[observable-reader-events-19] TRACE RemoteMethodTx - Unlock org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx, 1642722391
-[observable-reader-events-19] DEBUG AbstractObservableReader - [remote-testStubReader] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 2.2 ms.
-[observable-reader-events-19] TRACE LocalServer - Keyple DTO is empty, do not send it
+[Thread-5] DEBUG RemoteMethodTx - release lock
+[Thread-5] TRACE LocalServer - Keyple DTO is empty, do not send it
+[observable-reader-events-1] TRACE RemoteMethodTx - Unlock org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx, 725977909
+[observable-reader-events-1] DEBUG AbstractObservableReader - [remote-testStubReader] transmit =&gt; SERESPONSESET = 1 SeReponse(s), elapsed 27.9 ms.
+[observable-reader-events-1] TRACE LocalServer - Keyple DTO is empty, do not send it
 [Test worker] INFO VirtualReaderBaseTest - TearDown Test
 [Test worker] INFO StubPlugin - Unplugged reader with name testStubReader, connectedStubNames size 0
 [Test worker] INFO VirtualReaderBaseTest - End of TearDown Test
@@ -314,76 +314,76 @@
 [Test worker] DEBUG Integration - Create a new StubReader : testStubReader
 [Test worker] INFO StubPlugin - Plugging a new reader with name testStubReader
 [Test worker] INFO NativeReaderServiceImpl - connectReader testStubReader from device testClientNodeId
-[Test worker] DEBUG RemoteMethodTxEngine - Register rm to engine : org.eclipse.keyple.plugin.remotese.nativese.method.RmConnectReaderTx@4aac002d
+[Test worker] DEBUG RemoteMethodTxEngine - Register rm to engine : org.eclipse.keyple.plugin.remotese.nativese.method.RmConnectReaderTx@75313993
 [Test worker] DEBUG RemoteMethodTx - Blocking Get org.eclipse.keyple.plugin.remotese.nativese.method.RmConnectReaderTx
-[Test worker] TRACE RemoteMethodTx - Set callback on RemoteMethodTx org.eclipse.keyple.plugin.remotese.nativese.method.RmConnectReaderTx 1252786221
-[Test worker] TRACE RemoteMethodTx - Lock org.eclipse.keyple.plugin.remotese.nativese.method.RmConnectReaderTx, 1252786221
-[Thread-62] TRACE VirtualReaderService - onDTO, Remote Method called : READER_CONNECT - isRequest : true - keypleDto : {
+[Test worker] TRACE RemoteMethodTx - Set callback on RemoteMethodTx org.eclipse.keyple.plugin.remotese.nativese.method.RmConnectReaderTx 1966160275
+[Test worker] TRACE RemoteMethodTx - Lock org.eclipse.keyple.plugin.remotese.nativese.method.RmConnectReaderTx, 1966160275
+[Thread-6] TRACE VirtualReaderService - onDTO, Remote Method called : READER_CONNECT - isRequest : true - keypleDto : {
   &quot;clientNodeId&quot;: &quot;testClientNodeId&quot;,
   &quot;nativeReaderName&quot;: &quot;testStubReader&quot;,
   &quot;action&quot;: &quot;reader_connect&quot;,
   &quot;body&quot;: &quot;{}&quot;,
   &quot;isRequest&quot;: true
 }
-[Thread-62] DEBUG RemoteSePlugin - createVirtualReader for nativeReader testStubReader
-[Thread-62] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1550244538810
-[Thread-62] INFO VirtualReader - A new virtual reader was created with session sessionId:testStubReadertestClientNodeId1550244538810 - slaveNodeId:testClientNodeId
-[Thread-62] TRACE AbstractLoggedObservable - [RemoteSePlugin] AbstractObservableReader =&gt; Notifying a plugin event to 0 observers. EVENTNAME = Reader connected 
-[Thread-62] TRACE NativeReaderServiceImpl - onDto {
+[Thread-6] DEBUG RemoteSePlugin - createVirtualReader for nativeReader testStubReader
+[Thread-6] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1550465985305
+[Thread-6] INFO VirtualReader - A new virtual reader was created with session sessionId:testStubReadertestClientNodeId1550465985305 - slaveNodeId:testClientNodeId
+[Thread-6] TRACE AbstractLoggedObservable - [RemoteSePlugin] AbstractObservableReader =&gt; Notifying a plugin event to 0 observers. EVENTNAME = Reader connected 
+[Thread-6] TRACE NativeReaderServiceImpl - onDto {
   &quot;clientNodeId&quot;: &quot;testClientNodeId&quot;,
-  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1550244538810&quot;,
+  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1550465985305&quot;,
   &quot;nativeReaderName&quot;: &quot;testStubReader&quot;,
   &quot;virtualReaderName&quot;: &quot;remote-testStubReader&quot;,
   &quot;action&quot;: &quot;reader_connect&quot;,
-  &quot;body&quot;: &quot;{\&quot;statusCode\&quot;:0,\&quot;sessionId\&quot;:\&quot;testStubReadertestClientNodeId1550244538810\&quot;}&quot;,
+  &quot;body&quot;: &quot;{\&quot;statusCode\&quot;:0,\&quot;sessionId\&quot;:\&quot;testStubReadertestClientNodeId1550465985305\&quot;}&quot;,
   &quot;isRequest&quot;: false
 }
-[Thread-62] DEBUG NativeReaderServiceImpl - Remote Method called : READER_CONNECT - isRequest : false
-[Thread-62] TRACE NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
-[Thread-62] DEBUG RmConnectReaderTx - Register NativeReaderService as an observer for native reader testStubReader
-[Thread-62] DEBUG AbstractObservableReader - Start the reader monitoring.
-[Thread-62] TRACE AbstractLoggedObservable - [class org.eclipse.keyple.plugin.stub.StubReader][testStubReader] addObserver =&gt; Adding an observer.
-[Thread-62] DEBUG RemoteMethodTx - release lock
-[Test worker] TRACE RemoteMethodTx - Unlock org.eclipse.keyple.plugin.remotese.nativese.method.RmConnectReaderTx, 1252786221
-[Thread-62] TRACE NativeReaderServiceImpl - onDto response to be sent {
+[Thread-6] DEBUG NativeReaderServiceImpl - Remote Method called : READER_CONNECT - isRequest : false
+[Thread-6] TRACE NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
+[Thread-6] DEBUG RmConnectReaderTx - Register NativeReaderService as an observer for native reader testStubReader
+[Thread-6] DEBUG AbstractObservableReader - Start the reader monitoring.
+[Thread-6] TRACE AbstractLoggedObservable - [class org.eclipse.keyple.plugin.stub.StubReader][testStubReader] addObserver =&gt; Adding an observer.
+[Thread-6] DEBUG RemoteMethodTx - release lock
+[Test worker] TRACE RemoteMethodTx - Unlock org.eclipse.keyple.plugin.remotese.nativese.method.RmConnectReaderTx, 1966160275
+[Thread-6] TRACE NativeReaderServiceImpl - onDto response to be sent {
   &quot;action&quot;: &quot;&quot;,
   &quot;body&quot;: &quot;&quot;,
   &quot;isRequest&quot;: false
 }
-[Thread-62] TRACE LocalClient - Keyple DTO is empty, do not send it
+[Thread-6] TRACE LocalClient - Keyple DTO is empty, do not send it
 [Test worker] DEBUG AbstractObservableReader - Start the reader monitoring.
 [Test worker] TRACE AbstractLoggedObservable - [class org.eclipse.keyple.plugin.remotese.pluginse.VirtualReader][remote-testStubReader] addObserver =&gt; Adding an observer.
 [Test worker] INFO VirtualReaderEventTest - Insert and remove a Hoplink SE and wait 5 seconds for two SE events to be thrown
-[observable-reader-events-20] TRACE AbstractLoggedObservable - [testStubReader] AbstractObservableReader =&gt; Notifying a reader event to 1 observers. EVENTNAME = SE insertion
-[observable-reader-events-20] INFO NativeReaderServiceImpl - NativeReaderServiceImpl listens for event from native Reader - Received Event SE_INSERTED
-[observable-reader-events-20] TRACE VirtualReaderService - onDTO, Remote Method called : READER_EVENT - isRequest : true - keypleDto : {
+[observable-reader-events-2] TRACE AbstractLoggedObservable - [testStubReader] AbstractObservableReader =&gt; Notifying a reader event to 1 observers. EVENTNAME = SE insertion
+[observable-reader-events-2] INFO NativeReaderServiceImpl - NativeReaderServiceImpl listens for event from native Reader - Received Event SE_INSERTED
+[observable-reader-events-2] TRACE VirtualReaderService - onDTO, Remote Method called : READER_EVENT - isRequest : true - keypleDto : {
   &quot;clientNodeId&quot;: &quot;localClient1&quot;,
   &quot;nativeReaderName&quot;: &quot;testStubReader&quot;,
   &quot;action&quot;: &quot;reader_event&quot;,
   &quot;body&quot;: &quot;{\n  \&quot;pluginName\&quot;: \&quot;StubPlugin\&quot;,\n  \&quot;readerName\&quot;: \&quot;testStubReader\&quot;,\n  \&quot;eventType\&quot;: \&quot;SE_INSERTED\&quot;\n}&quot;,
   &quot;isRequest&quot;: true
 }
-[observable-reader-events-20] DEBUG RemoteSePlugin - OnReaderEvent org.eclipse.keyple.seproxy.event.ReaderEvent@1b6273fc
-[observable-reader-events-20] DEBUG RemoteSePlugin - Dispatch ReaderEvent to the appropriate Reader : testStubReader sessionId : null
-[observable-reader-events-20] DEBUG VirtualReader -  EVENT SE_INSERTED 
-[observable-reader-events-20] TRACE AbstractLoggedObservable - [remote-testStubReader] AbstractObservableReader =&gt; Notifying a reader event to 1 observers. EVENTNAME = SE insertion
-[observable-reader-events-20] TRACE LocalServer - Keyple DTO is empty, do not send it
-[observable-reader-events-20] TRACE AbstractLoggedObservable - [testStubReader] AbstractObservableReader =&gt; Notifying a reader event to 1 observers. EVENTNAME = SE removal
-[observable-reader-events-20] INFO NativeReaderServiceImpl - NativeReaderServiceImpl listens for event from native Reader - Received Event SE_REMOVAL
-[observable-reader-events-20] TRACE VirtualReaderService - onDTO, Remote Method called : READER_EVENT - isRequest : true - keypleDto : {
+[observable-reader-events-2] DEBUG RemoteSePlugin - OnReaderEvent org.eclipse.keyple.seproxy.event.ReaderEvent@16c20ee8
+[observable-reader-events-2] DEBUG RemoteSePlugin - Dispatch ReaderEvent to the appropriate Reader : testStubReader sessionId : null
+[observable-reader-events-2] DEBUG VirtualReader -  EVENT SE_INSERTED 
+[observable-reader-events-2] TRACE AbstractLoggedObservable - [remote-testStubReader] AbstractObservableReader =&gt; Notifying a reader event to 1 observers. EVENTNAME = SE insertion
+[observable-reader-events-2] TRACE LocalServer - Keyple DTO is empty, do not send it
+[observable-reader-events-2] TRACE AbstractLoggedObservable - [testStubReader] AbstractObservableReader =&gt; Notifying a reader event to 1 observers. EVENTNAME = SE removal
+[observable-reader-events-2] INFO NativeReaderServiceImpl - NativeReaderServiceImpl listens for event from native Reader - Received Event SE_REMOVAL
+[observable-reader-events-2] TRACE VirtualReaderService - onDTO, Remote Method called : READER_EVENT - isRequest : true - keypleDto : {
   &quot;clientNodeId&quot;: &quot;localClient1&quot;,
   &quot;nativeReaderName&quot;: &quot;testStubReader&quot;,
   &quot;action&quot;: &quot;reader_event&quot;,
   &quot;body&quot;: &quot;{\n  \&quot;pluginName\&quot;: \&quot;StubPlugin\&quot;,\n  \&quot;readerName\&quot;: \&quot;testStubReader\&quot;,\n  \&quot;eventType\&quot;: \&quot;SE_REMOVAL\&quot;\n}&quot;,
   &quot;isRequest&quot;: true
 }
-[observable-reader-events-20] DEBUG RemoteSePlugin - OnReaderEvent org.eclipse.keyple.seproxy.event.ReaderEvent@15a59ee0
-[observable-reader-events-20] DEBUG RemoteSePlugin - Dispatch ReaderEvent to the appropriate Reader : testStubReader sessionId : null
-[observable-reader-events-20] DEBUG VirtualReader -  EVENT SE_REMOVAL 
-[observable-reader-events-20] TRACE AbstractLoggedObservable - [remote-testStubReader] AbstractObservableReader =&gt; Notifying a reader event to 1 observers. EVENTNAME = SE removal
-[observable-reader-events-20] DEBUG VirtualReaderEventTest - Reader Event is correct, release lock
-[observable-reader-events-20] TRACE LocalServer - Keyple DTO is empty, do not send it
-[observable-reader-events-20] TRACE AbstractLocalReader - [testStubReader] closeLogicalChannel =&gt; Closing of the logical channel.
+[observable-reader-events-2] DEBUG RemoteSePlugin - OnReaderEvent org.eclipse.keyple.seproxy.event.ReaderEvent@1805e240
+[observable-reader-events-2] DEBUG RemoteSePlugin - Dispatch ReaderEvent to the appropriate Reader : testStubReader sessionId : null
+[observable-reader-events-2] DEBUG VirtualReader -  EVENT SE_REMOVAL 
+[observable-reader-events-2] TRACE AbstractLoggedObservable - [remote-testStubReader] AbstractObservableReader =&gt; Notifying a reader event to 1 observers. EVENTNAME = SE removal
+[observable-reader-events-2] DEBUG VirtualReaderEventTest - Reader Event is correct, release lock
+[observable-reader-events-2] TRACE LocalServer - Keyple DTO is empty, do not send it
+[observable-reader-events-2] TRACE AbstractLocalReader - [testStubReader] closeLogicalChannel =&gt; Closing of the logical channel.
 [Test worker] INFO VirtualReaderBaseTest - TearDown Test
 [Test worker] INFO StubPlugin - Unplugged reader with name testStubReader, connectedStubNames size 0
 [Test worker] INFO VirtualReaderBaseTest - End of TearDown Test
@@ -398,62 +398,62 @@
 [Test worker] DEBUG Integration - Create a new StubReader : testStubReader
 [Test worker] INFO StubPlugin - Plugging a new reader with name testStubReader
 [Test worker] INFO NativeReaderServiceImpl - connectReader testStubReader from device testClientNodeId
-[Test worker] DEBUG RemoteMethodTxEngine - Register rm to engine : org.eclipse.keyple.plugin.remotese.nativese.method.RmConnectReaderTx@7a956aec
+[Test worker] DEBUG RemoteMethodTxEngine - Register rm to engine : org.eclipse.keyple.plugin.remotese.nativese.method.RmConnectReaderTx@18303cbe
 [Test worker] DEBUG RemoteMethodTx - Blocking Get org.eclipse.keyple.plugin.remotese.nativese.method.RmConnectReaderTx
-[Test worker] TRACE RemoteMethodTx - Set callback on RemoteMethodTx org.eclipse.keyple.plugin.remotese.nativese.method.RmConnectReaderTx 2056612588
-[Test worker] TRACE RemoteMethodTx - Lock org.eclipse.keyple.plugin.remotese.nativese.method.RmConnectReaderTx, 2056612588
-[Thread-63] TRACE VirtualReaderService - onDTO, Remote Method called : READER_CONNECT - isRequest : true - keypleDto : {
+[Test worker] TRACE RemoteMethodTx - Set callback on RemoteMethodTx org.eclipse.keyple.plugin.remotese.nativese.method.RmConnectReaderTx 405814462
+[Test worker] TRACE RemoteMethodTx - Lock org.eclipse.keyple.plugin.remotese.nativese.method.RmConnectReaderTx, 405814462
+[Thread-7] TRACE VirtualReaderService - onDTO, Remote Method called : READER_CONNECT - isRequest : true - keypleDto : {
   &quot;clientNodeId&quot;: &quot;testClientNodeId&quot;,
   &quot;nativeReaderName&quot;: &quot;testStubReader&quot;,
   &quot;action&quot;: &quot;reader_connect&quot;,
   &quot;body&quot;: &quot;{}&quot;,
   &quot;isRequest&quot;: true
 }
-[Thread-63] DEBUG RemoteSePlugin - createVirtualReader for nativeReader testStubReader
-[Thread-63] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1550244539417
-[Thread-63] INFO VirtualReader - A new virtual reader was created with session sessionId:testStubReadertestClientNodeId1550244539417 - slaveNodeId:testClientNodeId
-[Thread-63] TRACE AbstractLoggedObservable - [RemoteSePlugin] AbstractObservableReader =&gt; Notifying a plugin event to 0 observers. EVENTNAME = Reader connected 
-[Thread-63] TRACE NativeReaderServiceImpl - onDto {
+[Thread-7] DEBUG RemoteSePlugin - createVirtualReader for nativeReader testStubReader
+[Thread-7] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1550465985916
+[Thread-7] INFO VirtualReader - A new virtual reader was created with session sessionId:testStubReadertestClientNodeId1550465985916 - slaveNodeId:testClientNodeId
+[Thread-7] TRACE AbstractLoggedObservable - [RemoteSePlugin] AbstractObservableReader =&gt; Notifying a plugin event to 0 observers. EVENTNAME = Reader connected 
+[Thread-7] TRACE NativeReaderServiceImpl - onDto {
   &quot;clientNodeId&quot;: &quot;testClientNodeId&quot;,
-  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1550244539417&quot;,
+  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1550465985916&quot;,
   &quot;nativeReaderName&quot;: &quot;testStubReader&quot;,
   &quot;virtualReaderName&quot;: &quot;remote-testStubReader&quot;,
   &quot;action&quot;: &quot;reader_connect&quot;,
-  &quot;body&quot;: &quot;{\&quot;statusCode\&quot;:0,\&quot;sessionId\&quot;:\&quot;testStubReadertestClientNodeId1550244539417\&quot;}&quot;,
+  &quot;body&quot;: &quot;{\&quot;statusCode\&quot;:0,\&quot;sessionId\&quot;:\&quot;testStubReadertestClientNodeId1550465985916\&quot;}&quot;,
   &quot;isRequest&quot;: false
 }
-[Thread-63] DEBUG NativeReaderServiceImpl - Remote Method called : READER_CONNECT - isRequest : false
-[Thread-63] TRACE NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
-[Thread-63] DEBUG RmConnectReaderTx - Register NativeReaderService as an observer for native reader testStubReader
-[Thread-63] DEBUG AbstractObservableReader - Start the reader monitoring.
-[Thread-63] TRACE AbstractLoggedObservable - [class org.eclipse.keyple.plugin.stub.StubReader][testStubReader] addObserver =&gt; Adding an observer.
-[Thread-63] DEBUG RemoteMethodTx - release lock
-[Test worker] TRACE RemoteMethodTx - Unlock org.eclipse.keyple.plugin.remotese.nativese.method.RmConnectReaderTx, 2056612588
-[Thread-63] TRACE NativeReaderServiceImpl - onDto response to be sent {
+[Thread-7] DEBUG NativeReaderServiceImpl - Remote Method called : READER_CONNECT - isRequest : false
+[Thread-7] TRACE NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
+[Thread-7] DEBUG RmConnectReaderTx - Register NativeReaderService as an observer for native reader testStubReader
+[Thread-7] DEBUG AbstractObservableReader - Start the reader monitoring.
+[Thread-7] TRACE AbstractLoggedObservable - [class org.eclipse.keyple.plugin.stub.StubReader][testStubReader] addObserver =&gt; Adding an observer.
+[Thread-7] DEBUG RemoteMethodTx - release lock
+[Test worker] TRACE RemoteMethodTx - Unlock org.eclipse.keyple.plugin.remotese.nativese.method.RmConnectReaderTx, 405814462
+[Thread-7] TRACE NativeReaderServiceImpl - onDto response to be sent {
   &quot;action&quot;: &quot;&quot;,
   &quot;body&quot;: &quot;&quot;,
   &quot;isRequest&quot;: false
 }
-[Thread-63] TRACE LocalClient - Keyple DTO is empty, do not send it
+[Thread-7] TRACE LocalClient - Keyple DTO is empty, do not send it
 [Test worker] DEBUG AbstractObservableReader - Start the reader monitoring.
 [Test worker] TRACE AbstractLoggedObservable - [class org.eclipse.keyple.plugin.remotese.pluginse.VirtualReader][remote-testStubReader] addObserver =&gt; Adding an observer.
 [Test worker] TRACE SeSelector - AID based selection: AID = A000000291A000000192, KEEPCHANNELOPEN = KEEP_OPEN, PROTOCOLFLAG = ANY
 [Test worker] TRACE SeSelection - SELECTORREQUEST = SeRequest:{REQUESTS = [], SELECTOR = AID:A000000291A000000192, KEEPCHANNELOPEN = KEEP_OPEN}, EXTRAINFO = AID: A000000291A000000192
-[Test worker] DEBUG RemoteMethodTxEngine - Register rm to engine : org.eclipse.keyple.plugin.remotese.pluginse.method.RmSetDefaultSelectionRequestTx@e931580
+[Test worker] DEBUG RemoteMethodTxEngine - Register rm to engine : org.eclipse.keyple.plugin.remotese.pluginse.method.RmSetDefaultSelectionRequestTx@197ac5e4
 [Test worker] DEBUG RemoteMethodTx - Blocking Get org.eclipse.keyple.plugin.remotese.pluginse.method.RmSetDefaultSelectionRequestTx
-[Test worker] TRACE RemoteMethodTx - Set callback on RemoteMethodTx org.eclipse.keyple.plugin.remotese.pluginse.method.RmSetDefaultSelectionRequestTx 244520320
-[Test worker] TRACE RemoteMethodTx - Lock org.eclipse.keyple.plugin.remotese.pluginse.method.RmSetDefaultSelectionRequestTx, 244520320
-[Thread-64] TRACE NativeReaderServiceImpl - onDto {
+[Test worker] TRACE RemoteMethodTx - Set callback on RemoteMethodTx org.eclipse.keyple.plugin.remotese.pluginse.method.RmSetDefaultSelectionRequestTx 427476452
+[Test worker] TRACE RemoteMethodTx - Lock org.eclipse.keyple.plugin.remotese.pluginse.method.RmSetDefaultSelectionRequestTx, 427476452
+[Thread-8] TRACE NativeReaderServiceImpl - onDto {
   &quot;clientNodeId&quot;: &quot;testClientNodeId&quot;,
-  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1550244539417&quot;,
+  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1550465985916&quot;,
   &quot;nativeReaderName&quot;: &quot;testStubReader&quot;,
   &quot;virtualReaderName&quot;: &quot;remote-testStubReader&quot;,
   &quot;action&quot;: &quot;default_selection_request&quot;,
   &quot;body&quot;: &quot;{\n  \&quot;selectionRequest\&quot;: \&quot;{\\n  \\\&quot;selectionSeRequestSet\\\&quot;: {\\n    \\\&quot;sortedRequests\\\&quot;: [\\n      {\\n        \\\&quot;selector\\\&quot;: \\\&quot;aidselector::A000000291A000000192\\\&quot;,\\n        \\\&quot;apduRequests\\\&quot;: [],\\n        \\\&quot;protocolFlag\\\&quot;: \\\&quot;ANY\\\&quot;,\\n        \\\&quot;channelState\\\&quot;: \\\&quot;KEEP_OPEN\\\&quot;\\n      }\\n    ]\\n  }\\n}\&quot;,\n  \&quot;notificationMode\&quot;: \&quot;always\&quot;\n}&quot;,
   &quot;isRequest&quot;: true
 }
-[Thread-64] DEBUG NativeReaderServiceImpl - Remote Method called : DEFAULT_SELECTION_REQUEST - isRequest : true
-[Thread-64] TRACE RmSetDefaultSelectionRequestExecutor - SelectionRequest : {
+[Thread-8] DEBUG NativeReaderServiceImpl - Remote Method called : DEFAULT_SELECTION_REQUEST - isRequest : true
+[Thread-8] TRACE RmSetDefaultSelectionRequestExecutor - SelectionRequest : {
   &quot;selectionSeRequestSet&quot;: {
     &quot;sortedRequests&quot;: [
       {
@@ -465,55 +465,55 @@
     ]
   }
 }
-[Thread-64] TRACE RmSetDefaultSelectionRequestExecutor - Notification Mode : always
-[Thread-64] TRACE RmSetDefaultSelectionRequestExecutor - Execute locally SetDefaultSelectionRequest : ALWAYS - org.eclipse.keyple.transaction.SelectionRequest@796395e0
-[Thread-64] TRACE NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
-[Thread-64] DEBUG RmSetDefaultSelectionRequestExecutor - testStubReader is an ObservableReader, invoke setDefaultSelectionRequest on it
-[Thread-64] TRACE NativeReaderServiceImpl - onDto response to be sent {
+[Thread-8] TRACE RmSetDefaultSelectionRequestExecutor - Notification Mode : always
+[Thread-8] TRACE RmSetDefaultSelectionRequestExecutor - Execute locally SetDefaultSelectionRequest : ALWAYS - org.eclipse.keyple.transaction.SelectionRequest@39418f5
+[Thread-8] TRACE NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
+[Thread-8] DEBUG RmSetDefaultSelectionRequestExecutor - testStubReader is an ObservableReader, invoke setDefaultSelectionRequest on it
+[Thread-8] TRACE NativeReaderServiceImpl - onDto response to be sent {
   &quot;clientNodeId&quot;: &quot;testClientNodeId&quot;,
-  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1550244539417&quot;,
+  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1550465985916&quot;,
   &quot;nativeReaderName&quot;: &quot;testStubReader&quot;,
   &quot;virtualReaderName&quot;: &quot;remote-testStubReader&quot;,
   &quot;action&quot;: &quot;default_selection_request&quot;,
   &quot;body&quot;: &quot;{}&quot;,
   &quot;isRequest&quot;: false
 }
-[Thread-64] TRACE VirtualReaderService - onDTO, Remote Method called : DEFAULT_SELECTION_REQUEST - isRequest : false - keypleDto : {
+[Thread-8] TRACE VirtualReaderService - onDTO, Remote Method called : DEFAULT_SELECTION_REQUEST - isRequest : false - keypleDto : {
   &quot;clientNodeId&quot;: &quot;testClientNodeId&quot;,
-  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1550244539417&quot;,
+  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1550465985916&quot;,
   &quot;nativeReaderName&quot;: &quot;testStubReader&quot;,
   &quot;virtualReaderName&quot;: &quot;remote-testStubReader&quot;,
   &quot;action&quot;: &quot;default_selection_request&quot;,
   &quot;body&quot;: &quot;{}&quot;,
   &quot;isRequest&quot;: false
 }
-[Thread-64] DEBUG RemoteMethodTx - release lock
-[Thread-64] TRACE LocalServer - Keyple DTO is empty, do not send it
-[Test worker] TRACE RemoteMethodTx - Unlock org.eclipse.keyple.plugin.remotese.pluginse.method.RmSetDefaultSelectionRequestTx, 244520320
+[Thread-8] DEBUG RemoteMethodTx - release lock
+[Thread-8] TRACE LocalServer - Keyple DTO is empty, do not send it
+[Test worker] TRACE RemoteMethodTx - Unlock org.eclipse.keyple.plugin.remotese.pluginse.method.RmSetDefaultSelectionRequestTx, 427476452
 [Test worker] DEBUG VirtualReaderEventTest - Wait 1 second before inserting SE
-[observable-reader-events-21] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [], SELECTOR = AID:A000000291A000000192, KEEPCHANNELOPEN = KEEP_OPEN}
-[observable-reader-events-21] TRACE AbstractLocalReader - [testStubReader] processSeRequest =&gt; Logical channel open = false
-[observable-reader-events-21] TRACE AbstractSelectionLocalReader - [testStubReader] openLogicalChannelByAid =&gt; Select Application with AID = A000000291A000000192
-[observable-reader-events-21] TRACE AbstractLocalReader - [testStubReader] processApduRequest =&gt; ApduRequest: NAME = &quot;Internal Select Application&quot;, RAWDATA = 00A404000AA000000291A00000019200, case4, elapsed 605.0 ms.
-[observable-reader-events-21] TRACE AbstractLocalReader - [testStubReader] processApduRequest =&gt; ApduResponse: FAILURE, RAWDATA = 6A82, elapsed 0.1 ms.
-[observable-reader-events-21] TRACE AbstractSelectionLocalReader - [testStubReader] openLogicalChannelByAid =&gt; Application Selection failed. SELECTOR = AID:A000000291A000000192
-[observable-reader-events-21] TRACE AbstractLocalReader - [testStubReader] processSeRequest =&gt; Logical channel opening success.
-[observable-reader-events-21] TRACE AbstractLocalReader - [testStubReader] closeLogicalChannel =&gt; Closing of the logical channel.
-[observable-reader-events-21] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; receive SeResponse:{RESPONSES = [], ATR = 3B8E800180318066409089120802830190000B, FCI = 6A82, HASMATCHED = false CHANNELWASOPEN = false}
-[observable-reader-events-21] TRACE AbstractLoggedObservable - [testStubReader] AbstractObservableReader =&gt; Notifying a reader event to 1 observers. EVENTNAME = SE insertion
-[observable-reader-events-21] INFO NativeReaderServiceImpl - NativeReaderServiceImpl listens for event from native Reader - Received Event SE_INSERTED
-[observable-reader-events-21] TRACE VirtualReaderService - onDTO, Remote Method called : READER_EVENT - isRequest : true - keypleDto : {
+[observable-reader-events-3] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [], SELECTOR = AID:A000000291A000000192, KEEPCHANNELOPEN = KEEP_OPEN}
+[observable-reader-events-3] TRACE AbstractLocalReader - [testStubReader] processSeRequest =&gt; Logical channel open = false
+[observable-reader-events-3] TRACE AbstractSelectionLocalReader - [testStubReader] openLogicalChannelByAid =&gt; Select Application with AID = A000000291A000000192
+[observable-reader-events-3] TRACE AbstractLocalReader - [testStubReader] processApduRequest =&gt; ApduRequest: NAME = &quot;Internal Select Application&quot;, RAWDATA = 00A404000AA000000291A00000019200, case4, elapsed 615.7 ms.
+[observable-reader-events-3] TRACE AbstractLocalReader - [testStubReader] processApduRequest =&gt; ApduResponse: FAILURE, RAWDATA = 6A82, elapsed 0.4 ms.
+[observable-reader-events-3] TRACE AbstractSelectionLocalReader - [testStubReader] openLogicalChannelByAid =&gt; Application Selection failed. SELECTOR = AID:A000000291A000000192
+[observable-reader-events-3] TRACE AbstractLocalReader - [testStubReader] processSeRequest =&gt; Logical channel opening success.
+[observable-reader-events-3] TRACE AbstractLocalReader - [testStubReader] closeLogicalChannel =&gt; Closing of the logical channel.
+[observable-reader-events-3] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; receive SeResponse:{RESPONSES = [], ATR = 3B8E800180318066409089120802830190000B, FCI = 6A82, HASMATCHED = false CHANNELWASOPEN = false}
+[observable-reader-events-3] TRACE AbstractLoggedObservable - [testStubReader] AbstractObservableReader =&gt; Notifying a reader event to 1 observers. EVENTNAME = SE insertion
+[observable-reader-events-3] INFO NativeReaderServiceImpl - NativeReaderServiceImpl listens for event from native Reader - Received Event SE_INSERTED
+[observable-reader-events-3] TRACE VirtualReaderService - onDTO, Remote Method called : READER_EVENT - isRequest : true - keypleDto : {
   &quot;clientNodeId&quot;: &quot;localClient1&quot;,
   &quot;nativeReaderName&quot;: &quot;testStubReader&quot;,
   &quot;action&quot;: &quot;reader_event&quot;,
   &quot;body&quot;: &quot;{\n  \&quot;pluginName\&quot;: \&quot;StubPlugin\&quot;,\n  \&quot;readerName\&quot;: \&quot;testStubReader\&quot;,\n  \&quot;defaultResponseSet\&quot;: {\n    \&quot;selectionSeResponseSet\&quot;: {\n      \&quot;seResponses\&quot;: [\n        {\n          \&quot;channelPreviouslyOpen\&quot;: false,\n          \&quot;selectionStatus\&quot;: {\n            \&quot;atr\&quot;: {\n              \&quot;atrBytes\&quot;: [\n                59,\n                -114,\n                -128,\n                1,\n                -128,\n                49,\n                -128,\n                102,\n                64,\n                -112,\n                -119,\n                18,\n                8,\n                2,\n                -125,\n                1,\n                -112,\n                0,\n                11\n              ]\n            },\n            \&quot;fci\&quot;: {\n              \&quot;successful\&quot;: false,\n              \&quot;bytes\&quot;: [\n                106,\n                -126\n              ]\n            },\n            \&quot;isMatching\&quot;: false\n          },\n          \&quot;apduResponses\&quot;: []\n        }\n      ]\n    }\n  },\n  \&quot;eventType\&quot;: \&quot;SE_INSERTED\&quot;\n}&quot;,
   &quot;isRequest&quot;: true
 }
-[observable-reader-events-21] DEBUG RemoteSePlugin - OnReaderEvent org.eclipse.keyple.seproxy.event.ReaderEvent@52b0381d
-[observable-reader-events-21] DEBUG RemoteSePlugin - Dispatch ReaderEvent to the appropriate Reader : testStubReader sessionId : null
-[observable-reader-events-21] DEBUG VirtualReader -  EVENT SE_INSERTED 
-[observable-reader-events-21] TRACE AbstractLoggedObservable - [remote-testStubReader] AbstractObservableReader =&gt; Notifying a reader event to 1 observers. EVENTNAME = SE insertion
-[observable-reader-events-21] TRACE LocalServer - Keyple DTO is empty, do not send it
+[observable-reader-events-3] DEBUG RemoteSePlugin - OnReaderEvent org.eclipse.keyple.seproxy.event.ReaderEvent@55ce0f59
+[observable-reader-events-3] DEBUG RemoteSePlugin - Dispatch ReaderEvent to the appropriate Reader : testStubReader sessionId : null
+[observable-reader-events-3] DEBUG VirtualReader -  EVENT SE_INSERTED 
+[observable-reader-events-3] TRACE AbstractLoggedObservable - [remote-testStubReader] AbstractObservableReader =&gt; Notifying a reader event to 1 observers. EVENTNAME = SE insertion
+[observable-reader-events-3] TRACE LocalServer - Keyple DTO is empty, do not send it
 [Test worker] INFO VirtualReaderBaseTest - TearDown Test
 [Test worker] INFO StubPlugin - Unplugged reader with name testStubReader, connectedStubNames size 0
 [Test worker] INFO VirtualReaderBaseTest - End of TearDown Test
@@ -528,62 +528,62 @@
 [Test worker] DEBUG Integration - Create a new StubReader : testStubReader
 [Test worker] INFO StubPlugin - Plugging a new reader with name testStubReader
 [Test worker] INFO NativeReaderServiceImpl - connectReader testStubReader from device testClientNodeId
-[Test worker] DEBUG RemoteMethodTxEngine - Register rm to engine : org.eclipse.keyple.plugin.remotese.nativese.method.RmConnectReaderTx@51919f79
+[Test worker] DEBUG RemoteMethodTxEngine - Register rm to engine : org.eclipse.keyple.plugin.remotese.nativese.method.RmConnectReaderTx@12819c7
 [Test worker] DEBUG RemoteMethodTx - Blocking Get org.eclipse.keyple.plugin.remotese.nativese.method.RmConnectReaderTx
-[Test worker] TRACE RemoteMethodTx - Set callback on RemoteMethodTx org.eclipse.keyple.plugin.remotese.nativese.method.RmConnectReaderTx 1368498041
-[Test worker] TRACE RemoteMethodTx - Lock org.eclipse.keyple.plugin.remotese.nativese.method.RmConnectReaderTx, 1368498041
-[Thread-65] TRACE VirtualReaderService - onDTO, Remote Method called : READER_CONNECT - isRequest : true - keypleDto : {
+[Test worker] TRACE RemoteMethodTx - Set callback on RemoteMethodTx org.eclipse.keyple.plugin.remotese.nativese.method.RmConnectReaderTx 19405255
+[Test worker] TRACE RemoteMethodTx - Lock org.eclipse.keyple.plugin.remotese.nativese.method.RmConnectReaderTx, 19405255
+[Thread-9] TRACE VirtualReaderService - onDTO, Remote Method called : READER_CONNECT - isRequest : true - keypleDto : {
   &quot;clientNodeId&quot;: &quot;testClientNodeId&quot;,
   &quot;nativeReaderName&quot;: &quot;testStubReader&quot;,
   &quot;action&quot;: &quot;reader_connect&quot;,
   &quot;body&quot;: &quot;{}&quot;,
   &quot;isRequest&quot;: true
 }
-[Thread-65] DEBUG RemoteSePlugin - createVirtualReader for nativeReader testStubReader
-[Thread-65] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1550244540024
-[Thread-65] INFO VirtualReader - A new virtual reader was created with session sessionId:testStubReadertestClientNodeId1550244540024 - slaveNodeId:testClientNodeId
-[Thread-65] TRACE AbstractLoggedObservable - [RemoteSePlugin] AbstractObservableReader =&gt; Notifying a plugin event to 0 observers. EVENTNAME = Reader connected 
-[Thread-65] TRACE NativeReaderServiceImpl - onDto {
+[Thread-9] DEBUG RemoteSePlugin - createVirtualReader for nativeReader testStubReader
+[Thread-9] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1550465986536
+[Thread-9] INFO VirtualReader - A new virtual reader was created with session sessionId:testStubReadertestClientNodeId1550465986536 - slaveNodeId:testClientNodeId
+[Thread-9] TRACE AbstractLoggedObservable - [RemoteSePlugin] AbstractObservableReader =&gt; Notifying a plugin event to 0 observers. EVENTNAME = Reader connected 
+[Thread-9] TRACE NativeReaderServiceImpl - onDto {
   &quot;clientNodeId&quot;: &quot;testClientNodeId&quot;,
-  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1550244540024&quot;,
+  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1550465986536&quot;,
   &quot;nativeReaderName&quot;: &quot;testStubReader&quot;,
   &quot;virtualReaderName&quot;: &quot;remote-testStubReader&quot;,
   &quot;action&quot;: &quot;reader_connect&quot;,
-  &quot;body&quot;: &quot;{\&quot;statusCode\&quot;:0,\&quot;sessionId\&quot;:\&quot;testStubReadertestClientNodeId1550244540024\&quot;}&quot;,
+  &quot;body&quot;: &quot;{\&quot;statusCode\&quot;:0,\&quot;sessionId\&quot;:\&quot;testStubReadertestClientNodeId1550465986536\&quot;}&quot;,
   &quot;isRequest&quot;: false
 }
-[Thread-65] DEBUG NativeReaderServiceImpl - Remote Method called : READER_CONNECT - isRequest : false
-[Thread-65] TRACE NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
-[Thread-65] DEBUG RmConnectReaderTx - Register NativeReaderService as an observer for native reader testStubReader
-[Thread-65] DEBUG AbstractObservableReader - Start the reader monitoring.
-[Thread-65] TRACE AbstractLoggedObservable - [class org.eclipse.keyple.plugin.stub.StubReader][testStubReader] addObserver =&gt; Adding an observer.
-[Thread-65] DEBUG RemoteMethodTx - release lock
-[Test worker] TRACE RemoteMethodTx - Unlock org.eclipse.keyple.plugin.remotese.nativese.method.RmConnectReaderTx, 1368498041
-[Thread-65] TRACE NativeReaderServiceImpl - onDto response to be sent {
+[Thread-9] DEBUG NativeReaderServiceImpl - Remote Method called : READER_CONNECT - isRequest : false
+[Thread-9] TRACE NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
+[Thread-9] DEBUG RmConnectReaderTx - Register NativeReaderService as an observer for native reader testStubReader
+[Thread-9] DEBUG AbstractObservableReader - Start the reader monitoring.
+[Thread-9] TRACE AbstractLoggedObservable - [class org.eclipse.keyple.plugin.stub.StubReader][testStubReader] addObserver =&gt; Adding an observer.
+[Thread-9] DEBUG RemoteMethodTx - release lock
+[Test worker] TRACE RemoteMethodTx - Unlock org.eclipse.keyple.plugin.remotese.nativese.method.RmConnectReaderTx, 19405255
+[Thread-9] TRACE NativeReaderServiceImpl - onDto response to be sent {
   &quot;action&quot;: &quot;&quot;,
   &quot;body&quot;: &quot;&quot;,
   &quot;isRequest&quot;: false
 }
-[Thread-65] TRACE LocalClient - Keyple DTO is empty, do not send it
+[Thread-9] TRACE LocalClient - Keyple DTO is empty, do not send it
 [Test worker] DEBUG AbstractObservableReader - Start the reader monitoring.
 [Test worker] TRACE AbstractLoggedObservable - [class org.eclipse.keyple.plugin.remotese.pluginse.VirtualReader][remote-testStubReader] addObserver =&gt; Adding an observer.
 [Test worker] TRACE SeSelector - AID based selection: AID = A000000291A000000192, KEEPCHANNELOPEN = KEEP_OPEN, PROTOCOLFLAG = ANY
 [Test worker] TRACE SeSelection - SELECTORREQUEST = SeRequest:{REQUESTS = [], SELECTOR = AID:A000000291A000000192, KEEPCHANNELOPEN = KEEP_OPEN}, EXTRAINFO = AID: A000000291A000000192
-[Test worker] DEBUG RemoteMethodTxEngine - Register rm to engine : org.eclipse.keyple.plugin.remotese.pluginse.method.RmSetDefaultSelectionRequestTx@4cc814b0
+[Test worker] DEBUG RemoteMethodTxEngine - Register rm to engine : org.eclipse.keyple.plugin.remotese.pluginse.method.RmSetDefaultSelectionRequestTx@2e13b93a
 [Test worker] DEBUG RemoteMethodTx - Blocking Get org.eclipse.keyple.plugin.remotese.pluginse.method.RmSetDefaultSelectionRequestTx
-[Test worker] TRACE RemoteMethodTx - Set callback on RemoteMethodTx org.eclipse.keyple.plugin.remotese.pluginse.method.RmSetDefaultSelectionRequestTx 1288180912
-[Test worker] TRACE RemoteMethodTx - Lock org.eclipse.keyple.plugin.remotese.pluginse.method.RmSetDefaultSelectionRequestTx, 1288180912
-[Thread-66] TRACE NativeReaderServiceImpl - onDto {
+[Test worker] TRACE RemoteMethodTx - Set callback on RemoteMethodTx org.eclipse.keyple.plugin.remotese.pluginse.method.RmSetDefaultSelectionRequestTx 773044538
+[Test worker] TRACE RemoteMethodTx - Lock org.eclipse.keyple.plugin.remotese.pluginse.method.RmSetDefaultSelectionRequestTx, 773044538
+[Thread-10] TRACE NativeReaderServiceImpl - onDto {
   &quot;clientNodeId&quot;: &quot;testClientNodeId&quot;,
-  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1550244540024&quot;,
+  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1550465986536&quot;,
   &quot;nativeReaderName&quot;: &quot;testStubReader&quot;,
   &quot;virtualReaderName&quot;: &quot;remote-testStubReader&quot;,
   &quot;action&quot;: &quot;default_selection_request&quot;,
   &quot;body&quot;: &quot;{\n  \&quot;selectionRequest\&quot;: \&quot;{\\n  \\\&quot;selectionSeRequestSet\\\&quot;: {\\n    \\\&quot;sortedRequests\\\&quot;: [\\n      {\\n        \\\&quot;selector\\\&quot;: \\\&quot;aidselector::A000000291A000000192\\\&quot;,\\n        \\\&quot;apduRequests\\\&quot;: [],\\n        \\\&quot;protocolFlag\\\&quot;: \\\&quot;ANY\\\&quot;,\\n        \\\&quot;channelState\\\&quot;: \\\&quot;KEEP_OPEN\\\&quot;\\n      }\\n    ]\\n  }\\n}\&quot;,\n  \&quot;notificationMode\&quot;: \&quot;matched_only\&quot;\n}&quot;,
   &quot;isRequest&quot;: true
 }
-[Thread-66] DEBUG NativeReaderServiceImpl - Remote Method called : DEFAULT_SELECTION_REQUEST - isRequest : true
-[Thread-66] TRACE RmSetDefaultSelectionRequestExecutor - SelectionRequest : {
+[Thread-10] DEBUG NativeReaderServiceImpl - Remote Method called : DEFAULT_SELECTION_REQUEST - isRequest : true
+[Thread-10] TRACE RmSetDefaultSelectionRequestExecutor - SelectionRequest : {
   &quot;selectionSeRequestSet&quot;: {
     &quot;sortedRequests&quot;: [
       {
@@ -595,42 +595,42 @@
     ]
   }
 }
-[Thread-66] TRACE RmSetDefaultSelectionRequestExecutor - Notification Mode : matched_only
-[Thread-66] TRACE RmSetDefaultSelectionRequestExecutor - Execute locally SetDefaultSelectionRequest : MATCHED_ONLY - org.eclipse.keyple.transaction.SelectionRequest@3c74e410
-[Thread-66] TRACE NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
-[Thread-66] DEBUG RmSetDefaultSelectionRequestExecutor - testStubReader is an ObservableReader, invoke setDefaultSelectionRequest on it
-[Thread-66] TRACE NativeReaderServiceImpl - onDto response to be sent {
+[Thread-10] TRACE RmSetDefaultSelectionRequestExecutor - Notification Mode : matched_only
+[Thread-10] TRACE RmSetDefaultSelectionRequestExecutor - Execute locally SetDefaultSelectionRequest : MATCHED_ONLY - org.eclipse.keyple.transaction.SelectionRequest@67acca90
+[Thread-10] TRACE NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
+[Thread-10] DEBUG RmSetDefaultSelectionRequestExecutor - testStubReader is an ObservableReader, invoke setDefaultSelectionRequest on it
+[Thread-10] TRACE NativeReaderServiceImpl - onDto response to be sent {
   &quot;clientNodeId&quot;: &quot;testClientNodeId&quot;,
-  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1550244540024&quot;,
+  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1550465986536&quot;,
   &quot;nativeReaderName&quot;: &quot;testStubReader&quot;,
   &quot;virtualReaderName&quot;: &quot;remote-testStubReader&quot;,
   &quot;action&quot;: &quot;default_selection_request&quot;,
   &quot;body&quot;: &quot;{}&quot;,
   &quot;isRequest&quot;: false
 }
-[Thread-66] TRACE VirtualReaderService - onDTO, Remote Method called : DEFAULT_SELECTION_REQUEST - isRequest : false - keypleDto : {
+[Thread-10] TRACE VirtualReaderService - onDTO, Remote Method called : DEFAULT_SELECTION_REQUEST - isRequest : false - keypleDto : {
   &quot;clientNodeId&quot;: &quot;testClientNodeId&quot;,
-  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1550244540024&quot;,
+  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1550465986536&quot;,
   &quot;nativeReaderName&quot;: &quot;testStubReader&quot;,
   &quot;virtualReaderName&quot;: &quot;remote-testStubReader&quot;,
   &quot;action&quot;: &quot;default_selection_request&quot;,
   &quot;body&quot;: &quot;{}&quot;,
   &quot;isRequest&quot;: false
 }
-[Thread-66] DEBUG RemoteMethodTx - release lock
-[Thread-66] TRACE LocalServer - Keyple DTO is empty, do not send it
-[Test worker] TRACE RemoteMethodTx - Unlock org.eclipse.keyple.plugin.remotese.pluginse.method.RmSetDefaultSelectionRequestTx, 1288180912
+[Thread-10] DEBUG RemoteMethodTx - release lock
+[Thread-10] TRACE LocalServer - Keyple DTO is empty, do not send it
+[Test worker] TRACE RemoteMethodTx - Unlock org.eclipse.keyple.plugin.remotese.pluginse.method.RmSetDefaultSelectionRequestTx, 773044538
 [Test worker] DEBUG VirtualReaderEventTest - Wait 1 second before inserting SE
-[observable-reader-events-22] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [], SELECTOR = AID:A000000291A000000192, KEEPCHANNELOPEN = KEEP_OPEN}
-[observable-reader-events-22] TRACE AbstractLocalReader - [testStubReader] processSeRequest =&gt; Logical channel open = false
-[observable-reader-events-22] TRACE AbstractSelectionLocalReader - [testStubReader] openLogicalChannelByAid =&gt; Select Application with AID = A000000291A000000192
-[observable-reader-events-22] TRACE AbstractLocalReader - [testStubReader] processApduRequest =&gt; ApduRequest: NAME = &quot;Internal Select Application&quot;, RAWDATA = 00A404000AA000000291A00000019200, case4, elapsed 604.9 ms.
-[observable-reader-events-22] TRACE AbstractLocalReader - [testStubReader] processApduRequest =&gt; ApduResponse: FAILURE, RAWDATA = 6A82, elapsed 0.1 ms.
-[observable-reader-events-22] TRACE AbstractSelectionLocalReader - [testStubReader] openLogicalChannelByAid =&gt; Application Selection failed. SELECTOR = AID:A000000291A000000192
-[observable-reader-events-22] TRACE AbstractLocalReader - [testStubReader] processSeRequest =&gt; Logical channel opening success.
-[observable-reader-events-22] TRACE AbstractLocalReader - [testStubReader] closeLogicalChannel =&gt; Closing of the logical channel.
-[observable-reader-events-22] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; receive SeResponse:{RESPONSES = [], ATR = 3B8E800180318066409089120802830190000B, FCI = 6A82, HASMATCHED = false CHANNELWASOPEN = false}
-[observable-reader-events-22] TRACE AbstractLocalReader - [testStubReader] closeLogicalChannel =&gt; Closing of the logical channel.
+[observable-reader-events-4] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [], SELECTOR = AID:A000000291A000000192, KEEPCHANNELOPEN = KEEP_OPEN}
+[observable-reader-events-4] TRACE AbstractLocalReader - [testStubReader] processSeRequest =&gt; Logical channel open = false
+[observable-reader-events-4] TRACE AbstractSelectionLocalReader - [testStubReader] openLogicalChannelByAid =&gt; Select Application with AID = A000000291A000000192
+[observable-reader-events-4] TRACE AbstractLocalReader - [testStubReader] processApduRequest =&gt; ApduRequest: NAME = &quot;Internal Select Application&quot;, RAWDATA = 00A404000AA000000291A00000019200, case4, elapsed 618.0 ms.
+[observable-reader-events-4] TRACE AbstractLocalReader - [testStubReader] processApduRequest =&gt; ApduResponse: FAILURE, RAWDATA = 6A82, elapsed 0.1 ms.
+[observable-reader-events-4] TRACE AbstractSelectionLocalReader - [testStubReader] openLogicalChannelByAid =&gt; Application Selection failed. SELECTOR = AID:A000000291A000000192
+[observable-reader-events-4] TRACE AbstractLocalReader - [testStubReader] processSeRequest =&gt; Logical channel opening success.
+[observable-reader-events-4] TRACE AbstractLocalReader - [testStubReader] closeLogicalChannel =&gt; Closing of the logical channel.
+[observable-reader-events-4] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; receive SeResponse:{RESPONSES = [], ATR = 3B8E800180318066409089120802830190000B, FCI = 6A82, HASMATCHED = false CHANNELWASOPEN = false}
+[observable-reader-events-4] TRACE AbstractLocalReader - [testStubReader] closeLogicalChannel =&gt; Closing of the logical channel.
 [Test worker] INFO VirtualReaderBaseTest - TearDown Test
 [Test worker] INFO StubPlugin - Unplugged reader with name testStubReader, connectedStubNames size 0
 [Test worker] INFO VirtualReaderBaseTest - End of TearDown Test
@@ -645,62 +645,62 @@
 [Test worker] DEBUG Integration - Create a new StubReader : testStubReader
 [Test worker] INFO StubPlugin - Plugging a new reader with name testStubReader
 [Test worker] INFO NativeReaderServiceImpl - connectReader testStubReader from device testClientNodeId
-[Test worker] DEBUG RemoteMethodTxEngine - Register rm to engine : org.eclipse.keyple.plugin.remotese.nativese.method.RmConnectReaderTx@11ff3007
+[Test worker] DEBUG RemoteMethodTxEngine - Register rm to engine : org.eclipse.keyple.plugin.remotese.nativese.method.RmConnectReaderTx@6f346b1e
 [Test worker] DEBUG RemoteMethodTx - Blocking Get org.eclipse.keyple.plugin.remotese.nativese.method.RmConnectReaderTx
-[Test worker] TRACE RemoteMethodTx - Set callback on RemoteMethodTx org.eclipse.keyple.plugin.remotese.nativese.method.RmConnectReaderTx 301936647
-[Test worker] TRACE RemoteMethodTx - Lock org.eclipse.keyple.plugin.remotese.nativese.method.RmConnectReaderTx, 301936647
-[Thread-67] TRACE VirtualReaderService - onDTO, Remote Method called : READER_CONNECT - isRequest : true - keypleDto : {
+[Test worker] TRACE RemoteMethodTx - Set callback on RemoteMethodTx org.eclipse.keyple.plugin.remotese.nativese.method.RmConnectReaderTx 1865706270
+[Test worker] TRACE RemoteMethodTx - Lock org.eclipse.keyple.plugin.remotese.nativese.method.RmConnectReaderTx, 1865706270
+[Thread-11] TRACE VirtualReaderService - onDTO, Remote Method called : READER_CONNECT - isRequest : true - keypleDto : {
   &quot;clientNodeId&quot;: &quot;testClientNodeId&quot;,
   &quot;nativeReaderName&quot;: &quot;testStubReader&quot;,
   &quot;action&quot;: &quot;reader_connect&quot;,
   &quot;body&quot;: &quot;{}&quot;,
   &quot;isRequest&quot;: true
 }
-[Thread-67] DEBUG RemoteSePlugin - createVirtualReader for nativeReader testStubReader
-[Thread-67] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1550244543627
-[Thread-67] INFO VirtualReader - A new virtual reader was created with session sessionId:testStubReadertestClientNodeId1550244543627 - slaveNodeId:testClientNodeId
-[Thread-67] TRACE AbstractLoggedObservable - [RemoteSePlugin] AbstractObservableReader =&gt; Notifying a plugin event to 0 observers. EVENTNAME = Reader connected 
-[Thread-67] TRACE NativeReaderServiceImpl - onDto {
+[Thread-11] DEBUG RemoteSePlugin - createVirtualReader for nativeReader testStubReader
+[Thread-11] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1550465990144
+[Thread-11] INFO VirtualReader - A new virtual reader was created with session sessionId:testStubReadertestClientNodeId1550465990144 - slaveNodeId:testClientNodeId
+[Thread-11] TRACE AbstractLoggedObservable - [RemoteSePlugin] AbstractObservableReader =&gt; Notifying a plugin event to 0 observers. EVENTNAME = Reader connected 
+[Thread-11] TRACE NativeReaderServiceImpl - onDto {
   &quot;clientNodeId&quot;: &quot;testClientNodeId&quot;,
-  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1550244543627&quot;,
+  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1550465990144&quot;,
   &quot;nativeReaderName&quot;: &quot;testStubReader&quot;,
   &quot;virtualReaderName&quot;: &quot;remote-testStubReader&quot;,
   &quot;action&quot;: &quot;reader_connect&quot;,
-  &quot;body&quot;: &quot;{\&quot;statusCode\&quot;:0,\&quot;sessionId\&quot;:\&quot;testStubReadertestClientNodeId1550244543627\&quot;}&quot;,
+  &quot;body&quot;: &quot;{\&quot;statusCode\&quot;:0,\&quot;sessionId\&quot;:\&quot;testStubReadertestClientNodeId1550465990144\&quot;}&quot;,
   &quot;isRequest&quot;: false
 }
-[Thread-67] DEBUG NativeReaderServiceImpl - Remote Method called : READER_CONNECT - isRequest : false
-[Thread-67] TRACE NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
-[Thread-67] DEBUG RmConnectReaderTx - Register NativeReaderService as an observer for native reader testStubReader
-[Thread-67] DEBUG AbstractObservableReader - Start the reader monitoring.
-[Thread-67] TRACE AbstractLoggedObservable - [class org.eclipse.keyple.plugin.stub.StubReader][testStubReader] addObserver =&gt; Adding an observer.
-[Thread-67] DEBUG RemoteMethodTx - release lock
-[Test worker] TRACE RemoteMethodTx - Unlock org.eclipse.keyple.plugin.remotese.nativese.method.RmConnectReaderTx, 301936647
-[Thread-67] TRACE NativeReaderServiceImpl - onDto response to be sent {
+[Thread-11] DEBUG NativeReaderServiceImpl - Remote Method called : READER_CONNECT - isRequest : false
+[Thread-11] TRACE NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
+[Thread-11] DEBUG RmConnectReaderTx - Register NativeReaderService as an observer for native reader testStubReader
+[Thread-11] DEBUG AbstractObservableReader - Start the reader monitoring.
+[Thread-11] TRACE AbstractLoggedObservable - [class org.eclipse.keyple.plugin.stub.StubReader][testStubReader] addObserver =&gt; Adding an observer.
+[Thread-11] DEBUG RemoteMethodTx - release lock
+[Test worker] TRACE RemoteMethodTx - Unlock org.eclipse.keyple.plugin.remotese.nativese.method.RmConnectReaderTx, 1865706270
+[Thread-11] TRACE NativeReaderServiceImpl - onDto response to be sent {
   &quot;action&quot;: &quot;&quot;,
   &quot;body&quot;: &quot;&quot;,
   &quot;isRequest&quot;: false
 }
-[Thread-67] TRACE LocalClient - Keyple DTO is empty, do not send it
+[Thread-11] TRACE LocalClient - Keyple DTO is empty, do not send it
 [Test worker] DEBUG AbstractObservableReader - Start the reader monitoring.
 [Test worker] TRACE AbstractLoggedObservable - [class org.eclipse.keyple.plugin.remotese.pluginse.VirtualReader][remote-testStubReader] addObserver =&gt; Adding an observer.
 [Test worker] TRACE SeSelector - AID based selection: AID = A000000291A000000191, KEEPCHANNELOPEN = KEEP_OPEN, PROTOCOLFLAG = ANY
 [Test worker] TRACE SeSelection - SELECTORREQUEST = SeRequest:{REQUESTS = [], SELECTOR = AID:A000000291A000000191, KEEPCHANNELOPEN = KEEP_OPEN}, EXTRAINFO = AID: A000000291A000000191
-[Test worker] DEBUG RemoteMethodTxEngine - Register rm to engine : org.eclipse.keyple.plugin.remotese.pluginse.method.RmSetDefaultSelectionRequestTx@25d29c17
+[Test worker] DEBUG RemoteMethodTxEngine - Register rm to engine : org.eclipse.keyple.plugin.remotese.pluginse.method.RmSetDefaultSelectionRequestTx@1815f578
 [Test worker] DEBUG RemoteMethodTx - Blocking Get org.eclipse.keyple.plugin.remotese.pluginse.method.RmSetDefaultSelectionRequestTx
-[Test worker] TRACE RemoteMethodTx - Set callback on RemoteMethodTx org.eclipse.keyple.plugin.remotese.pluginse.method.RmSetDefaultSelectionRequestTx 634559511
-[Test worker] TRACE RemoteMethodTx - Lock org.eclipse.keyple.plugin.remotese.pluginse.method.RmSetDefaultSelectionRequestTx, 634559511
-[Thread-68] TRACE NativeReaderServiceImpl - onDto {
+[Test worker] TRACE RemoteMethodTx - Set callback on RemoteMethodTx org.eclipse.keyple.plugin.remotese.pluginse.method.RmSetDefaultSelectionRequestTx 404092280
+[Test worker] TRACE RemoteMethodTx - Lock org.eclipse.keyple.plugin.remotese.pluginse.method.RmSetDefaultSelectionRequestTx, 404092280
+[Thread-12] TRACE NativeReaderServiceImpl - onDto {
   &quot;clientNodeId&quot;: &quot;testClientNodeId&quot;,
-  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1550244543627&quot;,
+  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1550465990144&quot;,
   &quot;nativeReaderName&quot;: &quot;testStubReader&quot;,
   &quot;virtualReaderName&quot;: &quot;remote-testStubReader&quot;,
   &quot;action&quot;: &quot;default_selection_request&quot;,
   &quot;body&quot;: &quot;{\n  \&quot;selectionRequest\&quot;: \&quot;{\\n  \\\&quot;selectionSeRequestSet\\\&quot;: {\\n    \\\&quot;sortedRequests\\\&quot;: [\\n      {\\n        \\\&quot;selector\\\&quot;: \\\&quot;aidselector::A000000291A000000191\\\&quot;,\\n        \\\&quot;apduRequests\\\&quot;: [],\\n        \\\&quot;protocolFlag\\\&quot;: \\\&quot;ANY\\\&quot;,\\n        \\\&quot;channelState\\\&quot;: \\\&quot;KEEP_OPEN\\\&quot;\\n      }\\n    ]\\n  }\\n}\&quot;,\n  \&quot;notificationMode\&quot;: \&quot;matched_only\&quot;\n}&quot;,
   &quot;isRequest&quot;: true
 }
-[Thread-68] DEBUG NativeReaderServiceImpl - Remote Method called : DEFAULT_SELECTION_REQUEST - isRequest : true
-[Thread-68] TRACE RmSetDefaultSelectionRequestExecutor - SelectionRequest : {
+[Thread-12] DEBUG NativeReaderServiceImpl - Remote Method called : DEFAULT_SELECTION_REQUEST - isRequest : true
+[Thread-12] TRACE RmSetDefaultSelectionRequestExecutor - SelectionRequest : {
   &quot;selectionSeRequestSet&quot;: {
     &quot;sortedRequests&quot;: [
       {
@@ -712,53 +712,53 @@
     ]
   }
 }
-[Thread-68] TRACE RmSetDefaultSelectionRequestExecutor - Notification Mode : matched_only
-[Thread-68] TRACE RmSetDefaultSelectionRequestExecutor - Execute locally SetDefaultSelectionRequest : MATCHED_ONLY - org.eclipse.keyple.transaction.SelectionRequest@1eb2ec81
-[Thread-68] TRACE NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
-[Thread-68] DEBUG RmSetDefaultSelectionRequestExecutor - testStubReader is an ObservableReader, invoke setDefaultSelectionRequest on it
-[Thread-68] TRACE NativeReaderServiceImpl - onDto response to be sent {
+[Thread-12] TRACE RmSetDefaultSelectionRequestExecutor - Notification Mode : matched_only
+[Thread-12] TRACE RmSetDefaultSelectionRequestExecutor - Execute locally SetDefaultSelectionRequest : MATCHED_ONLY - org.eclipse.keyple.transaction.SelectionRequest@67104989
+[Thread-12] TRACE NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
+[Thread-12] DEBUG RmSetDefaultSelectionRequestExecutor - testStubReader is an ObservableReader, invoke setDefaultSelectionRequest on it
+[Thread-12] TRACE NativeReaderServiceImpl - onDto response to be sent {
   &quot;clientNodeId&quot;: &quot;testClientNodeId&quot;,
-  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1550244543627&quot;,
+  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1550465990144&quot;,
   &quot;nativeReaderName&quot;: &quot;testStubReader&quot;,
   &quot;virtualReaderName&quot;: &quot;remote-testStubReader&quot;,
   &quot;action&quot;: &quot;default_selection_request&quot;,
   &quot;body&quot;: &quot;{}&quot;,
   &quot;isRequest&quot;: false
 }
-[Thread-68] TRACE VirtualReaderService - onDTO, Remote Method called : DEFAULT_SELECTION_REQUEST - isRequest : false - keypleDto : {
+[Thread-12] TRACE VirtualReaderService - onDTO, Remote Method called : DEFAULT_SELECTION_REQUEST - isRequest : false - keypleDto : {
   &quot;clientNodeId&quot;: &quot;testClientNodeId&quot;,
-  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1550244543627&quot;,
+  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1550465990144&quot;,
   &quot;nativeReaderName&quot;: &quot;testStubReader&quot;,
   &quot;virtualReaderName&quot;: &quot;remote-testStubReader&quot;,
   &quot;action&quot;: &quot;default_selection_request&quot;,
   &quot;body&quot;: &quot;{}&quot;,
   &quot;isRequest&quot;: false
 }
-[Thread-68] DEBUG RemoteMethodTx - release lock
-[Thread-68] TRACE LocalServer - Keyple DTO is empty, do not send it
-[Test worker] TRACE RemoteMethodTx - Unlock org.eclipse.keyple.plugin.remotese.pluginse.method.RmSetDefaultSelectionRequestTx, 634559511
-[observable-reader-events-23] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [], SELECTOR = AID:A000000291A000000191, KEEPCHANNELOPEN = KEEP_OPEN}
-[observable-reader-events-23] TRACE AbstractLocalReader - [testStubReader] processSeRequest =&gt; Logical channel open = false
-[observable-reader-events-23] TRACE AbstractSelectionLocalReader - [testStubReader] openLogicalChannelByAid =&gt; Select Application with AID = A000000291A000000191
-[observable-reader-events-23] TRACE AbstractLocalReader - [testStubReader] processApduRequest =&gt; ApduRequest: NAME = &quot;Internal Select Application&quot;, RAWDATA = 00A404000AA000000291A00000019100, case4, elapsed 1107.5 ms.
-[observable-reader-events-23] TRACE AbstractLocalReader - [testStubReader] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 6F25840BA000000291A00000019102A516BF0C13C70800000000C0E11FA653070A3C230C1410019000, elapsed 0.1 ms.
-[observable-reader-events-23] TRACE AbstractLocalReader - [testStubReader] processSeRequest =&gt; Logical channel opening success.
-[observable-reader-events-23] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; receive SeResponse:{RESPONSES = [], ATR = 3B8E800180318066409089120802830190000B, FCI = 6F25840BA000000291A00000019102A516BF0C13C70800000000C0E11FA653070A3C230C1410019000, HASMATCHED = true CHANNELWASOPEN = false}
-[observable-reader-events-23] TRACE AbstractLoggedObservable - [testStubReader] AbstractObservableReader =&gt; Notifying a reader event to 1 observers. EVENTNAME = SE matched
-[observable-reader-events-23] INFO NativeReaderServiceImpl - NativeReaderServiceImpl listens for event from native Reader - Received Event SE_MATCHED
-[observable-reader-events-23] TRACE VirtualReaderService - onDTO, Remote Method called : READER_EVENT - isRequest : true - keypleDto : {
+[Thread-12] DEBUG RemoteMethodTx - release lock
+[Thread-12] TRACE LocalServer - Keyple DTO is empty, do not send it
+[Test worker] TRACE RemoteMethodTx - Unlock org.eclipse.keyple.plugin.remotese.pluginse.method.RmSetDefaultSelectionRequestTx, 404092280
+[observable-reader-events-5] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; transmit SeRequest:{REQUESTS = [], SELECTOR = AID:A000000291A000000191, KEEPCHANNELOPEN = KEEP_OPEN}
+[observable-reader-events-5] TRACE AbstractLocalReader - [testStubReader] processSeRequest =&gt; Logical channel open = false
+[observable-reader-events-5] TRACE AbstractSelectionLocalReader - [testStubReader] openLogicalChannelByAid =&gt; Select Application with AID = A000000291A000000191
+[observable-reader-events-5] TRACE AbstractLocalReader - [testStubReader] processApduRequest =&gt; ApduRequest: NAME = &quot;Internal Select Application&quot;, RAWDATA = 00A404000AA000000291A00000019100, case4, elapsed 1108.3 ms.
+[observable-reader-events-5] TRACE AbstractLocalReader - [testStubReader] processApduRequest =&gt; ApduResponse: SUCCESS, RAWDATA = 6F25840BA000000291A00000019102A516BF0C13C70800000000C0E11FA653070A3C230C1410019000, elapsed 0.1 ms.
+[observable-reader-events-5] TRACE AbstractLocalReader - [testStubReader] processSeRequest =&gt; Logical channel opening success.
+[observable-reader-events-5] DEBUG AbstractLocalReader - [testStubReader] processSeRequestSet =&gt; receive SeResponse:{RESPONSES = [], ATR = 3B8E800180318066409089120802830190000B, FCI = 6F25840BA000000291A00000019102A516BF0C13C70800000000C0E11FA653070A3C230C1410019000, HASMATCHED = true CHANNELWASOPEN = false}
+[observable-reader-events-5] TRACE AbstractLoggedObservable - [testStubReader] AbstractObservableReader =&gt; Notifying a reader event to 1 observers. EVENTNAME = SE matched
+[observable-reader-events-5] INFO NativeReaderServiceImpl - NativeReaderServiceImpl listens for event from native Reader - Received Event SE_MATCHED
+[observable-reader-events-5] TRACE VirtualReaderService - onDTO, Remote Method called : READER_EVENT - isRequest : true - keypleDto : {
   &quot;clientNodeId&quot;: &quot;localClient1&quot;,
   &quot;nativeReaderName&quot;: &quot;testStubReader&quot;,
   &quot;action&quot;: &quot;reader_event&quot;,
   &quot;body&quot;: &quot;{\n  \&quot;pluginName\&quot;: \&quot;StubPlugin\&quot;,\n  \&quot;readerName\&quot;: \&quot;testStubReader\&quot;,\n  \&quot;defaultResponseSet\&quot;: {\n    \&quot;selectionSeResponseSet\&quot;: {\n      \&quot;seResponses\&quot;: [\n        {\n          \&quot;channelPreviouslyOpen\&quot;: false,\n          \&quot;selectionStatus\&quot;: {\n            \&quot;atr\&quot;: {\n              \&quot;atrBytes\&quot;: [\n                59,\n                -114,\n                -128,\n                1,\n                -128,\n                49,\n                -128,\n                102,\n                64,\n                -112,\n                -119,\n                18,\n                8,\n                2,\n                -125,\n                1,\n                -112,\n                0,\n                11\n              ]\n            },\n            \&quot;fci\&quot;: {\n              \&quot;successful\&quot;: true,\n              \&quot;bytes\&quot;: [\n                111,\n                37,\n                -124,\n                11,\n                -96,\n                0,\n                0,\n                2,\n                -111,\n                -96,\n                0,\n                0,\n                1,\n                -111,\n                2,\n                -91,\n                22,\n                -65,\n                12,\n                19,\n                -57,\n                8,\n                0,\n                0,\n                0,\n                0,\n                -64,\n                -31,\n                31,\n                -90,\n                83,\n                7,\n                10,\n                60,\n                35,\n                12,\n                20,\n                16,\n                1,\n                -112,\n                0\n              ]\n            },\n            \&quot;isMatching\&quot;: true\n          },\n          \&quot;apduResponses\&quot;: []\n        }\n      ]\n    }\n  },\n  \&quot;eventType\&quot;: \&quot;SE_MATCHED\&quot;\n}&quot;,
   &quot;isRequest&quot;: true
 }
-[observable-reader-events-23] DEBUG RemoteSePlugin - OnReaderEvent org.eclipse.keyple.seproxy.event.ReaderEvent@5dbbd7e6
-[observable-reader-events-23] DEBUG RemoteSePlugin - Dispatch ReaderEvent to the appropriate Reader : testStubReader sessionId : null
-[observable-reader-events-23] DEBUG VirtualReader -  EVENT SE_MATCHED 
-[observable-reader-events-23] TRACE AbstractLoggedObservable - [remote-testStubReader] AbstractObservableReader =&gt; Notifying a reader event to 1 observers. EVENTNAME = SE matched
-[observable-reader-events-23] DEBUG VirtualReaderEventTest - match event is correct
-[observable-reader-events-23] TRACE LocalServer - Keyple DTO is empty, do not send it
+[observable-reader-events-5] DEBUG RemoteSePlugin - OnReaderEvent org.eclipse.keyple.seproxy.event.ReaderEvent@773bdfa2
+[observable-reader-events-5] DEBUG RemoteSePlugin - Dispatch ReaderEvent to the appropriate Reader : testStubReader sessionId : null
+[observable-reader-events-5] DEBUG VirtualReader -  EVENT SE_MATCHED 
+[observable-reader-events-5] TRACE AbstractLoggedObservable - [remote-testStubReader] AbstractObservableReader =&gt; Notifying a reader event to 1 observers. EVENTNAME = SE matched
+[observable-reader-events-5] DEBUG VirtualReaderEventTest - match event is correct
+[observable-reader-events-5] TRACE LocalServer - Keyple DTO is empty, do not send it
 [Test worker] INFO VirtualReaderBaseTest - TearDown Test
 [Test worker] INFO StubPlugin - Unplugged reader with name testStubReader, connectedStubNames size 0
 [Test worker] INFO VirtualReaderBaseTest - End of TearDown Test
@@ -773,61 +773,61 @@
 [Test worker] DEBUG Integration - Create a new StubReader : testStubReader
 [Test worker] INFO StubPlugin - Plugging a new reader with name testStubReader
 [Test worker] INFO NativeReaderServiceImpl - connectReader testStubReader from device testClientNodeId
-[Test worker] DEBUG RemoteMethodTxEngine - Register rm to engine : org.eclipse.keyple.plugin.remotese.nativese.method.RmConnectReaderTx@5e272860
+[Test worker] DEBUG RemoteMethodTxEngine - Register rm to engine : org.eclipse.keyple.plugin.remotese.nativese.method.RmConnectReaderTx@54b501ff
 [Test worker] DEBUG RemoteMethodTx - Blocking Get org.eclipse.keyple.plugin.remotese.nativese.method.RmConnectReaderTx
-[Test worker] TRACE RemoteMethodTx - Set callback on RemoteMethodTx org.eclipse.keyple.plugin.remotese.nativese.method.RmConnectReaderTx 1579624544
-[Test worker] TRACE RemoteMethodTx - Lock org.eclipse.keyple.plugin.remotese.nativese.method.RmConnectReaderTx, 1579624544
-[Thread-69] TRACE VirtualReaderService - onDTO, Remote Method called : READER_CONNECT - isRequest : true - keypleDto : {
+[Test worker] TRACE RemoteMethodTx - Set callback on RemoteMethodTx org.eclipse.keyple.plugin.remotese.nativese.method.RmConnectReaderTx 1421148671
+[Test worker] TRACE RemoteMethodTx - Lock org.eclipse.keyple.plugin.remotese.nativese.method.RmConnectReaderTx, 1421148671
+[Thread-13] TRACE VirtualReaderService - onDTO, Remote Method called : READER_CONNECT - isRequest : true - keypleDto : {
   &quot;clientNodeId&quot;: &quot;testClientNodeId&quot;,
   &quot;nativeReaderName&quot;: &quot;testStubReader&quot;,
   &quot;action&quot;: &quot;reader_connect&quot;,
   &quot;body&quot;: &quot;{}&quot;,
   &quot;isRequest&quot;: true
 }
-[Thread-69] DEBUG RemoteSePlugin - createVirtualReader for nativeReader testStubReader
-[Thread-69] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1550244544738
-[Thread-69] INFO VirtualReader - A new virtual reader was created with session sessionId:testStubReadertestClientNodeId1550244544738 - slaveNodeId:testClientNodeId
-[Thread-69] TRACE AbstractLoggedObservable - [RemoteSePlugin] AbstractObservableReader =&gt; Notifying a plugin event to 0 observers. EVENTNAME = Reader connected 
-[Thread-69] TRACE NativeReaderServiceImpl - onDto {
+[Thread-13] DEBUG RemoteSePlugin - createVirtualReader for nativeReader testStubReader
+[Thread-13] INFO RemoteSePlugin - Create a new Virtual Reader with localReaderName testStubReader with session testStubReadertestClientNodeId1550465991257
+[Thread-13] INFO VirtualReader - A new virtual reader was created with session sessionId:testStubReadertestClientNodeId1550465991257 - slaveNodeId:testClientNodeId
+[Thread-13] TRACE AbstractLoggedObservable - [RemoteSePlugin] AbstractObservableReader =&gt; Notifying a plugin event to 0 observers. EVENTNAME = Reader connected 
+[Thread-13] TRACE NativeReaderServiceImpl - onDto {
   &quot;clientNodeId&quot;: &quot;testClientNodeId&quot;,
-  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1550244544738&quot;,
+  &quot;sessionId&quot;: &quot;testStubReadertestClientNodeId1550465991257&quot;,
   &quot;nativeReaderName&quot;: &quot;testStubReader&quot;,
   &quot;virtualReaderName&quot;: &quot;remote-testStubReader&quot;,
   &quot;action&quot;: &quot;reader_connect&quot;,
-  &quot;body&quot;: &quot;{\&quot;statusCode\&quot;:0,\&quot;sessionId\&quot;:\&quot;testStubReadertestClientNodeId1550244544738\&quot;}&quot;,
+  &quot;body&quot;: &quot;{\&quot;statusCode\&quot;:0,\&quot;sessionId\&quot;:\&quot;testStubReadertestClientNodeId1550465991257\&quot;}&quot;,
   &quot;isRequest&quot;: false
 }
-[Thread-69] DEBUG NativeReaderServiceImpl - Remote Method called : READER_CONNECT - isRequest : false
-[Thread-69] TRACE NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
-[Thread-69] DEBUG RmConnectReaderTx - Register NativeReaderService as an observer for native reader testStubReader
-[Thread-69] DEBUG AbstractObservableReader - Start the reader monitoring.
-[Thread-69] TRACE AbstractLoggedObservable - [class org.eclipse.keyple.plugin.stub.StubReader][testStubReader] addObserver =&gt; Adding an observer.
-[Thread-69] DEBUG RemoteMethodTx - release lock
-[Test worker] TRACE RemoteMethodTx - Unlock org.eclipse.keyple.plugin.remotese.nativese.method.RmConnectReaderTx, 1579624544
-[Thread-69] TRACE NativeReaderServiceImpl - onDto response to be sent {
+[Thread-13] DEBUG NativeReaderServiceImpl - Remote Method called : READER_CONNECT - isRequest : false
+[Thread-13] TRACE NativeReaderServiceImpl - Find local reader by name testStubReader in 2 plugin(s)
+[Thread-13] DEBUG RmConnectReaderTx - Register NativeReaderService as an observer for native reader testStubReader
+[Thread-13] DEBUG AbstractObservableReader - Start the reader monitoring.
+[Thread-13] TRACE AbstractLoggedObservable - [class org.eclipse.keyple.plugin.stub.StubReader][testStubReader] addObserver =&gt; Adding an observer.
+[Thread-13] DEBUG RemoteMethodTx - release lock
+[Test worker] TRACE RemoteMethodTx - Unlock org.eclipse.keyple.plugin.remotese.nativese.method.RmConnectReaderTx, 1421148671
+[Thread-13] TRACE NativeReaderServiceImpl - onDto response to be sent {
   &quot;action&quot;: &quot;&quot;,
   &quot;body&quot;: &quot;&quot;,
   &quot;isRequest&quot;: false
 }
-[Thread-69] TRACE LocalClient - Keyple DTO is empty, do not send it
+[Thread-13] TRACE LocalClient - Keyple DTO is empty, do not send it
 [Test worker] DEBUG AbstractObservableReader - Start the reader monitoring.
 [Test worker] TRACE AbstractLoggedObservable - [class org.eclipse.keyple.plugin.remotese.pluginse.VirtualReader][remote-testStubReader] addObserver =&gt; Adding an observer.
 [Test worker] INFO VirtualReaderEventTest - Insert a Hoplink SE and wait 5 seconds for a SE event to be thrown
-[observable-reader-events-24] TRACE AbstractLoggedObservable - [testStubReader] AbstractObservableReader =&gt; Notifying a reader event to 1 observers. EVENTNAME = SE insertion
-[observable-reader-events-24] INFO NativeReaderServiceImpl - NativeReaderServiceImpl listens for event from native Reader - Received Event SE_INSERTED
-[observable-reader-events-24] TRACE VirtualReaderService - onDTO, Remote Method called : READER_EVENT - isRequest : true - keypleDto : {
+[observable-reader-events-6] TRACE AbstractLoggedObservable - [testStubReader] AbstractObservableReader =&gt; Notifying a reader event to 1 observers. EVENTNAME = SE insertion
+[observable-reader-events-6] INFO NativeReaderServiceImpl - NativeReaderServiceImpl listens for event from native Reader - Received Event SE_INSERTED
+[observable-reader-events-6] TRACE VirtualReaderService - onDTO, Remote Method called : READER_EVENT - isRequest : true - keypleDto : {
   &quot;clientNodeId&quot;: &quot;localClient1&quot;,
   &quot;nativeReaderName&quot;: &quot;testStubReader&quot;,
   &quot;action&quot;: &quot;reader_event&quot;,
   &quot;body&quot;: &quot;{\n  \&quot;pluginName\&quot;: \&quot;StubPlugin\&quot;,\n  \&quot;readerName\&quot;: \&quot;testStubReader\&quot;,\n  \&quot;eventType\&quot;: \&quot;SE_INSERTED\&quot;\n}&quot;,
   &quot;isRequest&quot;: true
 }
-[observable-reader-events-24] DEBUG RemoteSePlugin - OnReaderEvent org.eclipse.keyple.seproxy.event.ReaderEvent@6651d30c
-[observable-reader-events-24] DEBUG RemoteSePlugin - Dispatch ReaderEvent to the appropriate Reader : testStubReader sessionId : null
-[observable-reader-events-24] DEBUG VirtualReader -  EVENT SE_INSERTED 
-[observable-reader-events-24] TRACE AbstractLoggedObservable - [remote-testStubReader] AbstractObservableReader =&gt; Notifying a reader event to 1 observers. EVENTNAME = SE insertion
-[observable-reader-events-24] DEBUG VirtualReaderEventTest - Reader Event is correct, release lock
-[observable-reader-events-24] TRACE LocalServer - Keyple DTO is empty, do not send it
+[observable-reader-events-6] DEBUG RemoteSePlugin - OnReaderEvent org.eclipse.keyple.seproxy.event.ReaderEvent@3ebe5903
+[observable-reader-events-6] DEBUG RemoteSePlugin - Dispatch ReaderEvent to the appropriate Reader : testStubReader sessionId : null
+[observable-reader-events-6] DEBUG VirtualReader -  EVENT SE_INSERTED 
+[observable-reader-events-6] TRACE AbstractLoggedObservable - [remote-testStubReader] AbstractObservableReader =&gt; Notifying a reader event to 1 observers. EVENTNAME = SE insertion
+[observable-reader-events-6] DEBUG VirtualReaderEventTest - Reader Event is correct, release lock
+[observable-reader-events-6] TRACE LocalServer - Keyple DTO is empty, do not send it
 [Test worker] INFO VirtualReaderBaseTest - TearDown Test
 [Test worker] INFO StubPlugin - Unplugged reader with name testStubReader, connectedStubNames size 0
 [Test worker] INFO VirtualReaderBaseTest - End of TearDown Test
@@ -842,7 +842,7 @@
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 4.5.1</a> at Feb 15, 2019 3:29:04 PM</p>
+<a href="http://www.gradle.org">Gradle 4.5.1</a> at Feb 18, 2019 5:00:00 AM</p>
 </div>
 </div>
 </body>
