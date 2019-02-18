@@ -13,13 +13,17 @@ package org.eclipse.keyple.seproxy.plugin;
 
 
 /**
- * Abstract Observable Reader class dedicated to static reader configurations
+ * Abstract Observable Reader class dedicated to static reader configurations.
+ * <p>
+ * A static reader doesn't offer card insertion/removal mechanism (e.g. AndroidOmapiReader)
  */
 public abstract class AbstractStaticReader extends AbstractLocalReader {
 
     protected AbstractStaticReader(String pluginName, String readerName) {
         super(pluginName, readerName);
     }
+
+    /** Prevents the use of observers that are not available in a static reader context */
 
     public final void addObserver(Observer observer) {
         throw new RuntimeException(

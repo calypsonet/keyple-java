@@ -238,7 +238,7 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
      * @return the SelectionStatus containing the actual ATR and the matching status flag.
      */
     protected abstract SelectionStatus openLogicalChannelByAtr(SeRequest.AtrSelector atrSelector)
-            throws KeypleIOReaderException;
+            throws KeypleIOReaderException, KeypleChannelStateException;
 
 
 
@@ -253,7 +253,8 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
      * @return the SelectionStatus containing the FCI data and the matching status flag.
      */
     protected abstract SelectionStatus openLogicalChannelByAid(SeRequest.AidSelector aidSelector)
-            throws KeypleIOReaderException, KeypleApplicationSelectionException;
+            throws KeypleIOReaderException, KeypleApplicationSelectionException,
+            KeypleChannelStateException;
 
     /**
      * Open (if needed) a physical channel and try to establish a logical channel.

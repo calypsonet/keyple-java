@@ -244,7 +244,6 @@ public final class AndroidNfcReader extends AbstractSelectionLocalReader
 
     @Override
     protected boolean protocolFlagMatches(SeProtocol protocolFlag) {
-        // TODO Check the need for "ANY"
         return protocolFlag.equals(Protocol.ANY) || protocolsMap.containsKey(protocolFlag)
                 && protocolsMap.get(protocolFlag).equals(tagProxy.getTech());
     }
