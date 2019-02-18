@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">2.121s</div>
+<div class="counter">2.116s</div>
 <p>duration</p>
 </div>
 </td>
@@ -79,22 +79,22 @@
 </thead>
 <tr>
 <td class="success">testA_PlugOneReaderCount</td>
-<td>0.113s</td>
+<td>0.109s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">testA_PlugOneReaderEvent</td>
-<td>0.105s</td>
+<td>0.104s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">testA_UnplugOneReaderCount</td>
-<td>0.102s</td>
+<td>0.101s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">testB_UnplugOneReaderEvent</td>
-<td>0.149s</td>
+<td>0.150s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
@@ -109,12 +109,12 @@
 </tr>
 <tr>
 <td class="success">testE_PlugMultiReadersCount</td>
-<td>0.102s</td>
+<td>0.101s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">testE_PlugMultiReadersEvent</td>
-<td>0.103s</td>
+<td>0.102s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
@@ -124,7 +124,7 @@
 </tr>
 <tr>
 <td class="success">testF_PlugUnplugMultiReadersEvent</td>
-<td>1.144s</td>
+<td>1.146s</td>
 <td class="success">passed</td>
 </tr>
 </table>
@@ -219,21 +219,21 @@
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubPlugin - Unplug 1 stub readers
 [Test worker] DEBUG org.eclipse.keyple.plugin.stub.StubPlugin - Unplug stub readers.. [testC_PlugSameReaderTwice]
 [Test worker] INFO org.eclipse.keyple.plugin.stub.BaseStubTest - ------------------------------
+[Thread-5] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Test worker] INFO org.eclipse.keyple.plugin.stub.BaseStubTest - Test testD_GetName
 [Test worker] INFO org.eclipse.keyple.plugin.stub.BaseStubTest - ------------------------------
 [Test worker] INFO org.eclipse.keyple.plugin.stub.BaseStubTest - setUp, assert stubplugin is empty
 [Test worker] INFO org.eclipse.keyple.plugin.stub.BaseStubTest - Stubplugin readers size 0
 [Test worker] INFO org.eclipse.keyple.plugin.stub.BaseStubTest - Stubplugin observers size 0
-[Thread-5] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-5] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-5] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Test worker] INFO org.eclipse.keyple.plugin.stub.BaseStubTest - ---------
 [Test worker] INFO org.eclipse.keyple.plugin.stub.BaseStubTest - TearDown 
 [Test worker] INFO org.eclipse.keyple.plugin.stub.BaseStubTest - ---------
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubPlugin - Unplug 0 stub readers
 [Test worker] DEBUG org.eclipse.keyple.plugin.stub.StubPlugin - Unplug stub readers.. []
-[Thread-5] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Test worker] INFO org.eclipse.keyple.plugin.stub.BaseStubTest - ------------------------------
 [Test worker] INFO org.eclipse.keyple.plugin.stub.BaseStubTest - Test testE_PlugMultiReadersCount
 [Test worker] INFO org.eclipse.keyple.plugin.stub.BaseStubTest - ------------------------------
@@ -314,6 +314,7 @@
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservablePlugin - Start the plugin monitoring.
 [Test worker] DEBUG org.eclipse.keyple.plugin.stub.StubPlugin - Plugging 3 readers ..
 [Test worker] DEBUG org.eclipse.keyple.plugin.stub.StubPlugin - New readers to be created #3
+[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-7] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][F_Reader1] Plugin thread =&gt; Add plugged reader to readers list.
 [Thread-7] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][F_Reader2] Plugin thread =&gt; Add plugged reader to readers list.
 [Thread-7] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][F_Reader3] Plugin thread =&gt; Add plugged reader to readers list.
@@ -346,8 +347,32 @@
 [Thread-5] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-5] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-5] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-5] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-5] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-5] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-5] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-5] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
@@ -366,8 +391,8 @@
 [Thread-5] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-5] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
@@ -378,32 +403,8 @@
 [Thread-5] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-5] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-5] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-5] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-5] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-5] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-5] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-5] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Test worker] DEBUG org.eclipse.keyple.plugin.stub.StubPluginTest - Stub Readers connected []
@@ -423,7 +424,7 @@
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 4.5.1</a> at Feb 14, 2019 4:54:12 PM</p>
+<a href="http://www.gradle.org">Gradle 4.5.1</a> at Feb 18, 2019 4:59:50 AM</p>
 </div>
 </div>
 </body>
