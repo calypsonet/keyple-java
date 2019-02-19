@@ -16,7 +16,7 @@ import java.io.IOException;
 import org.eclipse.keyple.calypso.command.po.parser.ReadDataStructure;
 import org.eclipse.keyple.calypso.command.po.parser.ReadRecordsRespPars;
 import org.eclipse.keyple.calypso.transaction.CalypsoPo;
-import org.eclipse.keyple.calypso.transaction.PoSelector;
+import org.eclipse.keyple.calypso.transaction.PoSelectionRequest;
 import org.eclipse.keyple.calypso.transaction.PoTransaction;
 import org.eclipse.keyple.example.calypso.common.postructure.CalypsoClassicInfo;
 import org.eclipse.keyple.example.calypso.pc.transaction.CalypsoUtilities;
@@ -24,11 +24,11 @@ import org.eclipse.keyple.plugin.pcsc.PcscPlugin;
 import org.eclipse.keyple.seproxy.ChannelState;
 import org.eclipse.keyple.seproxy.SeProxyService;
 import org.eclipse.keyple.seproxy.SeReader;
+import org.eclipse.keyple.seproxy.SeSelector;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 import org.eclipse.keyple.seproxy.exception.NoStackTraceThrowable;
 import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
 import org.eclipse.keyple.transaction.SeSelection;
-import org.eclipse.keyple.transaction.SeSelector;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -108,18 +108,20 @@ public class UseCase_Calypso1_ExplicitSelectionAid_Pcsc {
              */
 
             /*
-             * Calypso selection: configures a PoSelector with all the desired attributes to make
-             * the selection and read additional information afterwards
+             * Calypso selection: configures a PoSelectionRequest with all the desired attributes to
+             * make the selection and read additional information afterwards
              */
-            PoSelector poSelector = new PoSelector(ByteArrayUtils.fromHex(CalypsoClassicInfo.AID),
-                    SeSelector.AidSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN,
-                    ContactlessProtocols.PROTOCOL_ISO14443_4, "AID: " + CalypsoClassicInfo.AID);
+            PoSelectionRequest poSelectionRequest = new PoSelectionRequest(new SeSelector(
+                    new SeSelector.AidSelector(ByteArrayUtils.fromHex(CalypsoClassicInfo.AID),
+                            SeSelector.AidSelector.SelectMode.FIRST),
+                    null, ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4,
+                    "AID: " + CalypsoClassicInfo.AID));
 
             /*
              * Prepare the reading order and keep the associated parser for later use once the
              * selection has been made.
              */
-            ReadRecordsRespPars readEnvironmentParser = poSelector.prepareReadRecordsCmd(
+            ReadRecordsRespPars readEnvironmentParser = poSelectionRequest.prepareReadRecordsCmd(
                     CalypsoClassicInfo.SFI_EnvironmentAndHolder,
                     ReadDataStructure.SINGLE_RECORD_DATA, CalypsoClassicInfo.RECORD_NUMBER_1,
                     String.format("EnvironmentAndHolder (SFI=%02X))",
@@ -129,7 +131,7 @@ public class UseCase_Calypso1_ExplicitSelectionAid_Pcsc {
              * Add the selection case to the current selection (we could have added other cases
              * here)
              */
-            CalypsoPo calypsoPo = (CalypsoPo) seSelection.prepareSelection(poSelector);
+            CalypsoPo calypsoPo = (CalypsoPo) seSelection.prepareSelection(poSelectionRequest);
 
             /*
              * Actual PO communication: operate through a single request the Calypso PO selection

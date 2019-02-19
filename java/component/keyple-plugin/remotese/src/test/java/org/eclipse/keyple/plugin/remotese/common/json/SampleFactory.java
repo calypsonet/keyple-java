@@ -14,7 +14,6 @@ package org.eclipse.keyple.plugin.remotese.common.json;
 
 import java.io.IOException;
 import java.util.*;
-import org.eclipse.keyple.seproxy.*;
 import org.eclipse.keyple.seproxy.ChannelState;
 import org.eclipse.keyple.seproxy.event.ObservableReader;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
@@ -22,7 +21,7 @@ import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.message.*;
 import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
 import org.eclipse.keyple.seproxy.protocol.ContactsProtocols;
-import org.eclipse.keyple.transaction.SelectionRequest;
+import org.eclipse.keyple.transaction.DefaultSelectionRequest;
 import org.eclipse.keyple.util.ByteArrayUtils;
 
 public class SampleFactory {
@@ -36,8 +35,8 @@ public class SampleFactory {
         return new KeypleReaderException("Keyple Reader Exception");
     }
 
-    public static SelectionRequest getSelectionRequest() {
-        return new SelectionRequest(getASeRequestSet_ISO14443_4());
+    public static DefaultSelectionRequest getSelectionRequest() {
+        return new DefaultSelectionRequest(getASeRequestSet_ISO14443_4());
     }
 
     public static ObservableReader.NotificationMode getNotificationMode() {

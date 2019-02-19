@@ -16,7 +16,7 @@ import org.eclipse.keyple.seproxy.event.ObservableReader;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 import org.eclipse.keyple.seproxy.message.SeRequestSet;
 import org.eclipse.keyple.seproxy.message.SeResponseSet;
-import org.eclipse.keyple.transaction.SelectionRequest;
+import org.eclipse.keyple.transaction.DefaultSelectionRequest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
@@ -55,8 +55,8 @@ public class JsonParserTest {
 
     @Test
     public void testSelectionRequest() {
-        SelectionRequest selectionRequest = SampleFactory.getSelectionRequest();
-        testSerializeDeserializeObj(selectionRequest, SelectionRequest.class);
+        DefaultSelectionRequest defaultSelectionRequest = SampleFactory.getSelectionRequest();
+        testSerializeDeserializeObj(defaultSelectionRequest, DefaultSelectionRequest.class);
 
     }
 

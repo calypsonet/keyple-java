@@ -13,10 +13,10 @@ package org.eclipse.keyple.seproxy.plugin;
 
 
 
+import org.eclipse.keyple.seproxy.SeSelector;
 import org.eclipse.keyple.seproxy.event.ObservableReader;
 import org.eclipse.keyple.seproxy.exception.KeypleIOReaderException;
 import org.eclipse.keyple.seproxy.message.*;
-import org.eclipse.keyple.transaction.SeSelector;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -12,7 +12,7 @@
 package org.eclipse.keyple.seproxy.event;
 
 
-import org.eclipse.keyple.transaction.SelectionRequest;
+import org.eclipse.keyple.transaction.DefaultSelectionRequest;
 import org.eclipse.keyple.transaction.SelectionResponse;
 
 /**
@@ -81,7 +81,8 @@ public final class ReaderEvent {
      * @param pluginName the name of the current plugin
      * @param readerName the name of the current reader
      * @param eventType the type of event
-     * @param selectionResponse the response to the default {@link SelectionRequest} (may be null)
+     * @param selectionResponse the response to the default {@link DefaultSelectionRequest} (may be
+     *        null)
      */
     public ReaderEvent(String pluginName, String readerName, EventType eventType,
             SelectionResponse selectionResponse) {

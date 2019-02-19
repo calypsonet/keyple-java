@@ -9,14 +9,13 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  ********************************************************************************/
-package org.eclipse.keyple.transaction;
+package org.eclipse.keyple.seproxy;
 
 import java.util.*;
 import java.util.regex.Pattern;
-import org.eclipse.keyple.seproxy.ChannelState;
 import org.eclipse.keyple.seproxy.message.ApduRequest;
-import org.eclipse.keyple.seproxy.message.SeRequest;
 import org.eclipse.keyple.seproxy.protocol.SeProtocol;
+import org.eclipse.keyple.transaction.MatchingSe;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,8 +49,7 @@ public class SeSelector {
 
         public static final int AID_MIN_LENGTH = 5;
         public static final int AID_MAX_LENGTH = 16;
-        protected SeSelector.AidSelector.SelectMode selectMode =
-                SeSelector.AidSelector.SelectMode.FIRST;
+        protected SelectMode selectMode = SelectMode.FIRST;
 
         /**
          * - AID’s bytes of the SE application to select. In case the SE application is currently
@@ -90,7 +88,7 @@ public class SeSelector {
          * @param aidToSelect byte array
          * @param selectMode selection mode FIRST or NEXT
          */
-        public AidSelector(byte[] aidToSelect, SeSelector.AidSelector.SelectMode selectMode) {
+        public AidSelector(byte[] aidToSelect, SelectMode selectMode) {
             this(aidToSelect);
             this.selectMode = selectMode;
         }
@@ -111,7 +109,7 @@ public class SeSelector {
          * @return true or false
          */
         public boolean isSelectNext() {
-            return selectMode == SeSelector.AidSelector.SelectMode.NEXT;
+            return selectMode == SelectMode.NEXT;
         }
 
         /**
@@ -230,6 +228,10 @@ public class SeSelector {
         }
     }
 
+    public void addApduRequest(ApduRequest apduRequest) {
+        seSelectionApduRequestList.add(apduRequest);
+    }
+
     public AidSelector getAidSelector() {
         return aidSelector;
     }
@@ -239,36 +241,8 @@ public class SeSelector {
     }
 
     /**
-     * @return the protocolFlag defined by the constructor
-     */
-    public final SeProtocol getProtocolFlag() {
-        return protocolFlag;
-    }
-
-    /**
-     * Sets the list of ApduRequest to be executed following the selection operation at once
-     * 
-     * @param seSelectionApduRequestList the list of requests
-     */
-    public final void setSelectionApduRequestList(List<ApduRequest> seSelectionApduRequestList) {
-        this.seSelectionApduRequestList = seSelectionApduRequestList;
-    }
-
-    /**
-     * Returns a selection SeRequest built from the information provided in the constructor and
-     * possibly completed with the seSelectionApduRequestList
-     *
-     * @return the selection SeRequest
-     */
-    protected final SeRequest getSelectorRequest() {
-        SeRequest seSelectionRequest;
-        seSelectionRequest = new SeRequest(this);
-        return seSelectionRequest;
-    }
-
-    /**
      * Gets the information string
-     * 
+     *
      * @return a string to be printed in logs
      */
     public final String getExtraInfo() {
@@ -276,54 +250,14 @@ public class SeSelector {
     }
 
     /**
-     * The matchingClass is the MatchingSe class or one of its extensions
-     * <p>
-     * It is used in SeSelection to determine what kind of MatchingSe is to be instantiated.
-     *
-     * This method must be called in the classes that extend SeSelector in order to specify the
-     * expected class derived from MatchingSe in return to the selection process.
-     * 
-     * @param matchingClass the expected class for this SeSelector
+     * @return the protocolFlag defined by the constructor
      */
-    protected final void setMatchingClass(Class<? extends MatchingSe> matchingClass) {
-        this.matchingClass = matchingClass;
-    }
-
-    /**
-     * The selectorClass is the SeSelector class or one of its extensions
-     * <p>
-     * It is used in SeSelection to determine what kind of SeSelector is to be used as argument to
-     * the matchingClass constructor.
-     *
-     * This method must be called in the classes that extend SeSelector in order to specify the
-     * expected class derived from SeSelector used as an argument to derived form of MatchingSe.
-     * 
-     * @param selectorClass the argument for the constructor of the matchingClass
-     */
-    protected final void setSelectorClass(Class<? extends SeSelector> selectorClass) {
-        this.selectorClass = selectorClass;
-    }
-
-    /**
-     * The default value for the matchingClass (unless setMatchingClass is used) is MatchingSe.class
-     * 
-     * @return the current matchingClass
-     */
-    protected final Class<? extends MatchingSe> getMatchingClass() {
-        return matchingClass;
-    }
-
-    /**
-     * The default value for the selectorClass (unless setSelectorClass is used) is SeSelector.class
-     * 
-     * @return the current selectorClass
-     */
-    protected final Class<? extends SeSelector> getSelectorClass() {
-        return selectorClass;
+    public final SeProtocol getProtocolFlag() {
+        return protocolFlag;
     }
 
     @Override
     public String toString() {
-        return super.toString();
+        return "SeSelector";
     }
 }

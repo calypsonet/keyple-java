@@ -12,14 +12,14 @@
 package org.eclipse.keyple.seproxy.plugin;
 
 import java.util.*;
+import org.eclipse.keyple.seproxy.SeSelector;
 import org.eclipse.keyple.seproxy.event.ObservableReader;
 import org.eclipse.keyple.seproxy.event.ReaderEvent;
 import org.eclipse.keyple.seproxy.exception.*;
 import org.eclipse.keyple.seproxy.message.*;
 import org.eclipse.keyple.seproxy.protocol.SeProtocol;
 import org.eclipse.keyple.seproxy.protocol.SeProtocolSetting;
-import org.eclipse.keyple.transaction.SeSelector;
-import org.eclipse.keyple.transaction.SelectionRequest;
+import org.eclipse.keyple.transaction.DefaultSelectionRequest;
 import org.eclipse.keyple.transaction.SelectionResponse;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.slf4j.Logger;
@@ -758,11 +758,11 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
      * Depending on the notification mode, the observer will be notified whenever an SE is inserted,
      * regardless of the selection status, or only if the current SE matches the selection criteria.
      *
-     * @param defaultSelectionRequest the {@link SelectionRequest} to be executed when a SE is
-     *        inserted
+     * @param defaultSelectionRequest the {@link DefaultSelectionRequest} to be executed when a SE
+     *        is inserted
      * @param notificationMode the notification mode enum (ALWAYS or MATCHED_ONLY)
      */
-    public void setDefaultSelectionRequest(SelectionRequest defaultSelectionRequest,
+    public void setDefaultSelectionRequest(DefaultSelectionRequest defaultSelectionRequest,
             ObservableReader.NotificationMode notificationMode) {
         this.defaultSelectionRequest = defaultSelectionRequest;
         this.notificationMode = notificationMode;

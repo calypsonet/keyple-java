@@ -17,6 +17,7 @@ import org.eclipse.keyple.plugin.pcsc.PcscPlugin;
 import org.eclipse.keyple.seproxy.ChannelState;
 import org.eclipse.keyple.seproxy.SeProxyService;
 import org.eclipse.keyple.seproxy.SeReader;
+import org.eclipse.keyple.seproxy.SeSelector;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 import org.eclipse.keyple.seproxy.exception.NoStackTraceThrowable;
 import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
@@ -104,17 +105,17 @@ public class UseCase_Generic1_ExplicitSelectionAid_Pcsc {
              * Generic selection: configures a SeSelector with all the desired attributes to make
              * the selection and read additional information afterwards
              */
-            SeSelector seSelector = new SeSelector(
+            SeSelectionRequest seSelectionRequest = new SeSelectionRequest(new SeSelector(
                     new SeSelector.AidSelector(ByteArrayUtils.fromHex(seAid),
                             SeSelector.AidSelector.SelectMode.FIRST),
                     null, ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4,
-                    "AID: " + seAid);
+                    "AID: " + seAid));
 
             /*
              * Add the selection case to the current selection (we could have added other cases
              * here)
              */
-            MatchingSe matchingSe = seSelection.prepareSelection(seSelector);
+            MatchingSe matchingSe = seSelection.prepareSelection(seSelectionRequest);
 
             /*
              * Actual SE communication: operate through a single request the SE selection

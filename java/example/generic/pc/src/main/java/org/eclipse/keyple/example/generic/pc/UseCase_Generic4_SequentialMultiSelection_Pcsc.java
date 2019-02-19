@@ -16,6 +16,7 @@ import org.eclipse.keyple.plugin.pcsc.PcscPlugin;
 import org.eclipse.keyple.seproxy.ChannelState;
 import org.eclipse.keyple.seproxy.SeProxyService;
 import org.eclipse.keyple.seproxy.SeReader;
+import org.eclipse.keyple.seproxy.SeSelector;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.exception.NoStackTraceThrowable;
@@ -91,33 +92,33 @@ public class UseCase_Generic4_SequentialMultiSelection_Pcsc {
             String seAidPrefix = "A000000404012509";
 
             /* AID based selection */
-            matchingSe = seSelection.prepareSelection(new SeSelector(
+            matchingSe = seSelection.prepareSelection(new SeSelectionRequest(new SeSelector(
                     new SeSelector.AidSelector(ByteArrayUtils.fromHex(seAidPrefix),
                             SeSelector.AidSelector.SelectMode.FIRST),
                     null, ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4,
-                    "Initial selection #1"));
+                    "Initial selection #1")));
 
             seSelection = new SeSelection(seReader);
 
             doAndAnalyseSelection(seSelection, matchingSe, 1);
 
             /* next selection */
-            matchingSe = seSelection.prepareSelection(new SeSelector(
+            matchingSe = seSelection.prepareSelection(new SeSelectionRequest(new SeSelector(
                     new SeSelector.AidSelector(ByteArrayUtils.fromHex(seAidPrefix),
                             SeSelector.AidSelector.SelectMode.NEXT),
                     null, ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4,
-                    "Next selection #2"));
+                    "Next selection #2")));
 
             seSelection = new SeSelection(seReader);
 
             doAndAnalyseSelection(seSelection, matchingSe, 2);
 
             /* next selection */
-            matchingSe = seSelection.prepareSelection(new SeSelector(
+            matchingSe = seSelection.prepareSelection(new SeSelectionRequest(new SeSelector(
                     new SeSelector.AidSelector(ByteArrayUtils.fromHex(seAidPrefix),
                             SeSelector.AidSelector.SelectMode.NEXT),
                     null, ChannelState.CLOSE_AFTER, ContactlessProtocols.PROTOCOL_ISO14443_4,
-                    "Next selection #3"));
+                    "Next selection #3")));
 
             doAndAnalyseSelection(seSelection, matchingSe, 3);
 

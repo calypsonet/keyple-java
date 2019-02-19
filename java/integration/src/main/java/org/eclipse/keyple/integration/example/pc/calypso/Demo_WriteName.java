@@ -14,13 +14,14 @@ package org.eclipse.keyple.integration.example.pc.calypso;
 
 
 import org.eclipse.keyple.calypso.transaction.CalypsoPo;
-import org.eclipse.keyple.calypso.transaction.PoSelector;
+import org.eclipse.keyple.calypso.transaction.PoSelectionRequest;
 import org.eclipse.keyple.calypso.transaction.PoTransaction;
 import org.eclipse.keyple.integration.calypso.PoFileStructureInfo;
 import org.eclipse.keyple.plugin.pcsc.PcscPlugin;
 import org.eclipse.keyple.seproxy.ChannelState;
 import org.eclipse.keyple.seproxy.SeProxyService;
 import org.eclipse.keyple.seproxy.SeReader;
+import org.eclipse.keyple.seproxy.SeSelector;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.exception.NoStackTraceThrowable;
@@ -64,11 +65,12 @@ public class Demo_WriteName {
 
         SeSelection samSelection = new SeSelection(samReader);
 
-        SeSelector samSelector = new SeSelector(null, new SeSelector.AtrFilter(SAM_ATR_REGEX),
-                ChannelState.KEEP_OPEN, Protocol.ANY, "SAM Selection");
+        SeSelectionRequest samSelectionRequest =
+                new SeSelectionRequest(new SeSelector(null, new SeSelector.AtrFilter(SAM_ATR_REGEX),
+                        ChannelState.KEEP_OPEN, Protocol.ANY, "SAM Selection"));
 
         /* Prepare selector, ignore MatchingSe here */
-        samSelection.prepareSelection(samSelector);
+        samSelection.prepareSelection(samSelectionRequest);
 
         try {
             if (!samSelection.processExplicitSelection()) {
@@ -96,8 +98,8 @@ public class Demo_WriteName {
              */
 
             /*
-             * Calypso selection: configures a PoSelector with all the desired attributes to make
-             * the selection and read additional information afterwards
+             * Calypso selection: configures a PoSelectionRequest with all the desired attributes to
+             * make the selection and read additional information afterwards
              */
             /* Calypso AID */
             String poAuditC0Aid = "315449432E4943414C54"; // AID of the PO with Audit C0 profile
@@ -105,22 +107,39 @@ public class Demo_WriteName {
             String cdLightAid = "315449432E494341"; // AID of the Rev2.4 PO emulating CDLight
 
             // Add Audit C0 AID to the list
-            CalypsoPo auditC0Se = (CalypsoPo) seSelection.prepareSelection(
-                    new PoSelector(ByteArrayUtils.fromHex(PoFileStructureInfo.poAuditC0Aid),
-                            SeSelector.AidSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN,
-                            Protocol.ANY, "Audit C0"));
+            CalypsoPo auditC0Se =
+                    (CalypsoPo) seSelection
+                            .prepareSelection(
+                                    new PoSelectionRequest(new SeSelector(
+                                            new SeSelector.AidSelector(
+                                                    ByteArrayUtils.fromHex(
+                                                            PoFileStructureInfo.poAuditC0Aid),
+                                                    SeSelector.AidSelector.SelectMode.FIRST),
+                                            null, ChannelState.KEEP_OPEN, Protocol.ANY,
+                                            "Audit C0")));
 
             // Add CLAP AID to the list
-            CalypsoPo clapSe = (CalypsoPo) seSelection.prepareSelection(
-                    new PoSelector(ByteArrayUtils.fromHex(PoFileStructureInfo.clapAid),
-                            SeSelector.AidSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN,
-                            Protocol.ANY, "CLAP"));
+            CalypsoPo clapSe =
+                    (CalypsoPo) seSelection
+                            .prepareSelection(
+                                    new PoSelectionRequest(new SeSelector(
+                                            new SeSelector.AidSelector(
+                                                    ByteArrayUtils
+                                                            .fromHex(PoFileStructureInfo.clapAid),
+                                                    SeSelector.AidSelector.SelectMode.FIRST),
+                                            null, ChannelState.KEEP_OPEN, Protocol.ANY, "CLAP")));
 
             // Add cdLight AID to the list
-            CalypsoPo cdLightSe = (CalypsoPo) seSelection.prepareSelection(
-                    new PoSelector(ByteArrayUtils.fromHex(PoFileStructureInfo.cdLightAid),
-                            SeSelector.AidSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN,
-                            Protocol.ANY, "CDLight"));
+            CalypsoPo cdLightSe =
+                    (CalypsoPo) seSelection
+                            .prepareSelection(
+                                    new PoSelectionRequest(new SeSelector(
+                                            new SeSelector.AidSelector(
+                                                    ByteArrayUtils.fromHex(
+                                                            PoFileStructureInfo.cdLightAid),
+                                                    SeSelector.AidSelector.SelectMode.FIRST),
+                                            null, ChannelState.KEEP_OPEN, Protocol.ANY,
+                                            "CDLight")));
 
             if (!seSelection.processExplicitSelection()) {
                 throw new IllegalArgumentException("No recognizable PO detected.");

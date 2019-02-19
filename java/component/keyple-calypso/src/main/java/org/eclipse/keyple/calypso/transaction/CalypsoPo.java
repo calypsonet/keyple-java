@@ -34,7 +34,7 @@ import org.slf4j.LoggerFactory;
 public final class CalypsoPo extends MatchingSe {
     private static final Logger logger = LoggerFactory.getLogger(CalypsoPo.class);
 
-    private final PoSelector poSelector;
+    private final PoSelectionRequest poSelectionRequest;
     private byte[] applicationSerialNumber;
     private PoRevision revision;
     private byte[] dfName;
@@ -45,9 +45,9 @@ public final class CalypsoPo extends MatchingSe {
     private int modificationsCounterMax;
     private boolean modificationCounterIsInBytes = true;
 
-    public CalypsoPo(PoSelector poSelector) {
-        super(poSelector);
-        this.poSelector = poSelector;
+    public CalypsoPo(PoSelectionRequest poSelectionRequest) {
+        super(poSelectionRequest);
+        this.poSelectionRequest = poSelectionRequest;
     }
 
     /**
@@ -61,7 +61,7 @@ public final class CalypsoPo extends MatchingSe {
     public void setSelectionResponse(SeResponse selectionResponse) {
         super.setSelectionResponse(selectionResponse);
         /* Update the parser objects with the responses obtained */
-        poSelector.updateParsersWithResponses(selectionResponse);
+        poSelectionRequest.updateParsersWithResponses(selectionResponse);
 
         /* The selectionSeResponse may not include a FCI field (e.g. old PO Calypso Rev 1) */
         if (selectionResponse.getSelectionStatus().getFci().isSuccessful()) {

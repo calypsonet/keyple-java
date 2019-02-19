@@ -14,9 +14,9 @@ package org.eclipse.keyple.seproxy.message;
 import java.io.Serializable;
 import java.util.List;
 import org.eclipse.keyple.seproxy.ChannelState;
+import org.eclipse.keyple.seproxy.SeSelector;
 import org.eclipse.keyple.seproxy.protocol.Protocol;
 import org.eclipse.keyple.seproxy.protocol.SeProtocol;
-import org.eclipse.keyple.transaction.SeSelector;
 
 /**
  * List of APDU requests that will result in a {@link SeResponse}

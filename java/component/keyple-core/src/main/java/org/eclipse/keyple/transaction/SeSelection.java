@@ -32,7 +32,7 @@ public final class SeSelection {
 
     private final SeReader seReader;
     private List<MatchingSe> matchingSeList = new ArrayList<MatchingSe>();
-    private Set<SeRequest> selectionRequestSet = new LinkedHashSet<SeRequest>();
+    private SeRequestSet selectionRequestSet = new SeRequestSet(new LinkedHashSet<SeRequest>());
     private MatchingSe selectedSe;
 
     /**
@@ -51,20 +51,21 @@ public final class SeSelection {
      * Create a MatchingSe, retain it in a list and return it. The MatchingSe may be an extended
      * class
      * 
-     * @param seSelector the selector to prepare
+     * @param seSelectionRequest the selector to prepare
      * @return a MatchingSe for further information request about this selector
      */
-    public MatchingSe prepareSelection(SeSelector seSelector) {
+    public MatchingSe prepareSelection(SeSelectionRequest seSelectionRequest) {
         if (logger.isTraceEnabled()) {
-            logger.trace("SELECTORREQUEST = {}, EXTRAINFO = {}", seSelector.getSelectorRequest(),
-                    seSelector.getExtraInfo());
+            logger.trace("SELECTORREQUEST = {}, EXTRAINFO = {}",
+                    seSelectionRequest.getSelectorRequest(),
+                    seSelectionRequest.getSeSelector().getExtraInfo());
         }
-        selectionRequestSet.add(seSelector.getSelectorRequest());
+        selectionRequestSet.add(seSelectionRequest.getSelectorRequest());
         MatchingSe matchingSe = null;
         try {
-            Constructor constructor =
-                    seSelector.getMatchingClass().getConstructor(seSelector.getSelectorClass());
-            matchingSe = (MatchingSe) constructor.newInstance(seSelector);
+            Constructor constructor = seSelectionRequest.getMatchingClass()
+                    .getConstructor(seSelectionRequest.getSelectionClass());
+            matchingSe = (MatchingSe) constructor.newInstance(seSelectionRequest);
             matchingSeList.add(matchingSe);
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
@@ -143,7 +144,7 @@ public final class SeSelection {
      * <p>
      * Responses that have not matched the current SE are set to null.
      *
-     * @param selectionResponse the response from the reader to the {@link SelectionRequest}
+     * @param selectionResponse the response from the reader to the {@link DefaultSelectionRequest}
      * @return boolean true if a SE was selected
      */
     public boolean processDefaultSelection(SelectionResponse selectionResponse) {
@@ -178,12 +179,12 @@ public final class SeSelection {
      */
     public boolean processExplicitSelection() throws KeypleReaderException {
         if (logger.isTraceEnabled()) {
-            logger.trace("Transmit SELECTIONREQUEST ({} request(s))", selectionRequestSet.size());
+            logger.trace("Transmit SELECTIONREQUEST ({} request(s))",
+                    selectionRequestSet.getRequests().size());
         }
 
         /* Communicate with the SE to do the selection */
-        SeResponseSet seResponseSet =
-                ((ProxyReader) seReader).transmitSet(new SeRequestSet(selectionRequestSet));
+        SeResponseSet seResponseSet = ((ProxyReader) seReader).transmitSet(selectionRequestSet);
 
         return processSelection(new SelectionResponse(seResponseSet));
     }
@@ -208,13 +209,13 @@ public final class SeSelection {
     }
 
     /**
-     * The SelectionOperation is the SelectionRequest to process in ordered to select a SE among
-     * others through the selection process. This method is useful to build the prepared selection
-     * to be executed by a reader just after a SE insertion.
+     * The SelectionOperation is the DefaultSelectionRequest to process in ordered to select a SE
+     * among others through the selection process. This method is useful to build the prepared
+     * selection to be executed by a reader just after a SE insertion.
      * 
-     * @return the {@link SelectionRequest} previously prepared with prepareSelection
+     * @return the {@link DefaultSelectionRequest} previously prepared with prepareSelection
      */
-    public SelectionRequest getSelectionOperation() {
-        return new SelectionRequest(new SeRequestSet(selectionRequestSet));
+    public DefaultSelectionRequest getSelectionOperation() {
+        return new DefaultSelectionRequest(selectionRequestSet);
     }
 }

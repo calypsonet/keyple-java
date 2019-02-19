@@ -17,7 +17,7 @@ import org.eclipse.keyple.calypso.command.po.parser.ReadDataStructure;
 import org.eclipse.keyple.calypso.command.po.parser.ReadRecordsRespPars;
 import org.eclipse.keyple.calypso.command.po.parser.SelectFileRespPars;
 import org.eclipse.keyple.calypso.transaction.CalypsoPo;
-import org.eclipse.keyple.calypso.transaction.PoSelector;
+import org.eclipse.keyple.calypso.transaction.PoSelectionRequest;
 import org.eclipse.keyple.calypso.transaction.PoTransaction;
 import org.eclipse.keyple.example.calypso.common.postructure.CalypsoClassicInfo;
 import org.eclipse.keyple.example.calypso.pc.transaction.CalypsoUtilities;
@@ -25,6 +25,7 @@ import org.eclipse.keyple.plugin.pcsc.PcscPlugin;
 import org.eclipse.keyple.seproxy.ChannelState;
 import org.eclipse.keyple.seproxy.SeProxyService;
 import org.eclipse.keyple.seproxy.SeReader;
+import org.eclipse.keyple.seproxy.SeSelector;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 import org.eclipse.keyple.seproxy.exception.NoStackTraceThrowable;
 import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
@@ -112,23 +113,24 @@ public class UseCase_Calypso3_Rev1Selection_Pcsc {
              */
 
             /*
-             * Calypso selection: configures a PoSelector with all the desired attributes to make
-             * the selection and read additional information afterwards
+             * Calypso selection: configures a PoSelectionRequest with all the desired attributes to
+             * make the selection and read additional information afterwards
              */
-            PoSelector poSelector = new PoSelector(poAtrRegex, ChannelState.KEEP_OPEN,
-                    ContactlessProtocols.PROTOCOL_ISO14443_4, "ATR: " + poAtrRegex);
+            PoSelectionRequest poSelectionRequest = new PoSelectionRequest(new SeSelector(null,
+                    new SeSelector.AtrFilter(poAtrRegex), ChannelState.KEEP_OPEN,
+                    ContactlessProtocols.PROTOCOL_ISO14443_4, "ATR: " + poAtrRegex));
 
             /*
              * Prepare the selection of the DF RT.
              */
-            SelectFileRespPars selectFileRespPars = poSelector.prepareSelectFileDfCmd(
+            SelectFileRespPars selectFileRespPars = poSelectionRequest.prepareSelectFileDfCmd(
                     ByteArrayUtils.fromHex(poDfRtPath), "Select file: " + poDfRtPath);
 
             /*
              * Prepare the reading order and keep the associated parser for later use once the
              * selection has been made.
              */
-            ReadRecordsRespPars readEnvironmentParser = poSelector.prepareReadRecordsCmd(
+            ReadRecordsRespPars readEnvironmentParser = poSelectionRequest.prepareReadRecordsCmd(
                     CalypsoClassicInfo.SFI_EnvironmentAndHolder,
                     ReadDataStructure.SINGLE_RECORD_DATA, CalypsoClassicInfo.RECORD_NUMBER_1,
                     String.format("EnvironmentAndHolder (SFI=%02X))",
@@ -138,7 +140,7 @@ public class UseCase_Calypso3_Rev1Selection_Pcsc {
              * Add the selection case to the current selection (we could have added other cases
              * here)
              */
-            CalypsoPo calypsoPo = (CalypsoPo) seSelection.prepareSelection(poSelector);
+            CalypsoPo calypsoPo = (CalypsoPo) seSelection.prepareSelection(poSelectionRequest);
 
             /*
              * Actual PO communication: operate through a single request the Calypso PO selection

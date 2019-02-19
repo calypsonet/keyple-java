@@ -23,7 +23,7 @@ import org.eclipse.keyple.seproxy.message.*;
 import org.eclipse.keyple.seproxy.plugin.AbstractObservableReader;
 import org.eclipse.keyple.seproxy.protocol.SeProtocolSetting;
 import org.eclipse.keyple.seproxy.protocol.TransmissionMode;
-import org.eclipse.keyple.transaction.SelectionRequest;
+import org.eclipse.keyple.transaction.DefaultSelectionRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -190,11 +190,11 @@ public final class VirtualReader extends AbstractObservableReader {
     }
 
     @Override
-    public void setDefaultSelectionRequest(SelectionRequest selectionRequest,
+    public void setDefaultSelectionRequest(DefaultSelectionRequest defaultSelectionRequest,
             NotificationMode notificationMode) {
 
         RmSetDefaultSelectionRequestTx setDefaultSelectionRequest =
-                new RmSetDefaultSelectionRequestTx(selectionRequest, notificationMode,
+                new RmSetDefaultSelectionRequestTx(defaultSelectionRequest, notificationMode,
                         this.getNativeReaderName(), this.getName(),
                         this.getSession().getSessionId(), session.getSlaveNodeId());
 

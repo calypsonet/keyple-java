@@ -16,6 +16,7 @@ import org.eclipse.keyple.plugin.pcsc.PcscPlugin;
 import org.eclipse.keyple.seproxy.ChannelState;
 import org.eclipse.keyple.seproxy.SeProxyService;
 import org.eclipse.keyple.seproxy.SeReader;
+import org.eclipse.keyple.seproxy.SeSelector;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 import org.eclipse.keyple.seproxy.exception.NoStackTraceThrowable;
 import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
@@ -71,23 +72,23 @@ public class UseCase_Generic3_GroupedMultiSelection_Pcsc {
             String seAidPrefix = "A000000404012509";
 
             /* AID based selection */
-            matchingSeTable[0] = seSelection.prepareSelection(new SeSelector(
+            matchingSeTable[0] = seSelection.prepareSelection(new SeSelectionRequest(new SeSelector(
                     new SeSelector.AidSelector(ByteArrayUtils.fromHex(seAidPrefix),
                             SeSelector.AidSelector.SelectMode.FIRST),
                     null, ChannelState.CLOSE_AFTER, ContactlessProtocols.PROTOCOL_ISO14443_4,
-                    "Initial selection #1"));
+                    "Initial selection #1")));
             /* next selection */
-            matchingSeTable[1] = seSelection.prepareSelection(new SeSelector(
+            matchingSeTable[1] = seSelection.prepareSelection(new SeSelectionRequest(new SeSelector(
                     new SeSelector.AidSelector(ByteArrayUtils.fromHex(seAidPrefix),
                             SeSelector.AidSelector.SelectMode.FIRST),
                     null, ChannelState.CLOSE_AFTER, ContactlessProtocols.PROTOCOL_ISO14443_4,
-                    "Next selection #2"));
+                    "Next selection #2")));
             /* next selection */
-            matchingSeTable[2] = seSelection.prepareSelection(new SeSelector(
+            matchingSeTable[2] = seSelection.prepareSelection(new SeSelectionRequest(new SeSelector(
                     new SeSelector.AidSelector(ByteArrayUtils.fromHex(seAidPrefix),
                             SeSelector.AidSelector.SelectMode.FIRST),
                     null, ChannelState.CLOSE_AFTER, ContactlessProtocols.PROTOCOL_ISO14443_4,
-                    "Next selection #3"));
+                    "Next selection #3")));
             /*
              * Actual SE communication: operate through a single request the SE selection
              */

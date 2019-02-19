@@ -26,11 +26,11 @@ public class MatchingSe {
      * Constructor taking a SeSelector as an argument. Keeps the isKeepChannelOpen flag and the
      * extraInfo for later usage.
      * 
-     * @param seSelector the seSelector
+     * @param seSelectionRequest the seSelector
      */
-    public MatchingSe(SeSelector seSelector) {
-        this.channelIsKeptOpen = seSelector.getSelectorRequest().isKeepChannelOpen();
-        extraInfo = seSelector.getExtraInfo();
+    public MatchingSe(SeSelectionRequest seSelectionRequest) {
+        this.channelIsKeptOpen = seSelectionRequest.getSelectorRequest().isKeepChannelOpen();
+        extraInfo = seSelectionRequest.getSeSelector().getExtraInfo();
     }
 
     /**
