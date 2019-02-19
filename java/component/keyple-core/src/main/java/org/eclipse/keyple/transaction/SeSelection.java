@@ -15,6 +15,8 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import org.eclipse.keyple.seproxy.SeReader;
+import org.eclipse.keyple.seproxy.event.DefaultSelectionRequest;
+import org.eclipse.keyple.seproxy.event.SelectionResponse;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.message.ProxyReader;
 import org.eclipse.keyple.seproxy.message.SeRequest;
@@ -25,7 +27,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * The SeSelection class handles the SE selection process
+ * The SeSelection class handles the SE selection process.
+ * <p>
+ * It provides a way to do explicit SE selection or to post process a default SE selection.
  */
 public final class SeSelection {
     private static final Logger logger = LoggerFactory.getLogger(SeSelection.class);
@@ -79,6 +83,22 @@ public final class SeSelection {
         return matchingSe;
     }
 
+    /**
+     * Process the selection response either from a
+     * {@link org.eclipse.keyple.seproxy.event.ReaderEvent} (default selection) or from an explicit
+     * selection.
+     * <p>
+     * The responses from the {@link SeResponseSet} is parsed and checked.
+     * <p>
+     * If one of the responses has matched, the corresponding {@link MatchingSe} is updated with the
+     * data from the response.
+     * <p>
+     * If the updated {@link MatchingSe} is selectable (logical channel requested to be kept open)
+     * the selectedSe field is updated (making the MatchingSe available through getSelectedSe).
+     *
+     * @param selectionResponse the selection response
+     * @return true if a successful selection has been made.
+     */
     private boolean processSelection(SelectionResponse selectionResponse) {
         boolean selectionSuccessful = false;
 

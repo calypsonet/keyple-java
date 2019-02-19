@@ -93,8 +93,9 @@ public class UseCase_Generic4_SequentialMultiSelection_Pcsc {
 
             /* AID based selection */
             matchingSe = seSelection.prepareSelection(new SeSelectionRequest(new SeSelector(
-                    new SeSelector.AidSelector(ByteArrayUtils.fromHex(seAidPrefix),
-                            SeSelector.AidSelector.SelectMode.FIRST),
+                    new SeSelector.AidSelector(ByteArrayUtils.fromHex(seAidPrefix), null,
+                            SeSelector.AidSelector.FileOccurrence.FIRST,
+                            SeSelector.AidSelector.FileControlInformation.FCI),
                     null, ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4,
                     "Initial selection #1")));
 
@@ -104,8 +105,9 @@ public class UseCase_Generic4_SequentialMultiSelection_Pcsc {
 
             /* next selection */
             matchingSe = seSelection.prepareSelection(new SeSelectionRequest(new SeSelector(
-                    new SeSelector.AidSelector(ByteArrayUtils.fromHex(seAidPrefix),
-                            SeSelector.AidSelector.SelectMode.NEXT),
+                    new SeSelector.AidSelector(ByteArrayUtils.fromHex(seAidPrefix), null,
+                            SeSelector.AidSelector.FileOccurrence.NEXT,
+                            SeSelector.AidSelector.FileControlInformation.FCI),
                     null, ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4,
                     "Next selection #2")));
 
@@ -115,8 +117,9 @@ public class UseCase_Generic4_SequentialMultiSelection_Pcsc {
 
             /* next selection */
             matchingSe = seSelection.prepareSelection(new SeSelectionRequest(new SeSelector(
-                    new SeSelector.AidSelector(ByteArrayUtils.fromHex(seAidPrefix),
-                            SeSelector.AidSelector.SelectMode.NEXT),
+                    new SeSelector.AidSelector(ByteArrayUtils.fromHex(seAidPrefix), null,
+                            SeSelector.AidSelector.FileOccurrence.NEXT,
+                            SeSelector.AidSelector.FileControlInformation.FCI),
                     null, ChannelState.CLOSE_AFTER, ContactlessProtocols.PROTOCOL_ISO14443_4,
                     "Next selection #3")));
 

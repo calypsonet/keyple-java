@@ -105,11 +105,10 @@ public class UseCase_Generic1_ExplicitSelectionAid_Pcsc {
              * Generic selection: configures a SeSelector with all the desired attributes to make
              * the selection and read additional information afterwards
              */
-            SeSelectionRequest seSelectionRequest = new SeSelectionRequest(new SeSelector(
-                    new SeSelector.AidSelector(ByteArrayUtils.fromHex(seAid),
-                            SeSelector.AidSelector.SelectMode.FIRST),
-                    null, ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4,
-                    "AID: " + seAid));
+            SeSelectionRequest seSelectionRequest = new SeSelectionRequest(
+                    new SeSelector(new SeSelector.AidSelector(ByteArrayUtils.fromHex(seAid), null),
+                            null, ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4,
+                            "AID: " + seAid));
 
             /*
              * Add the selection case to the current selection (we could have added other cases

@@ -16,8 +16,8 @@ import org.eclipse.keyple.plugin.remotese.transport.KeypleRemoteException;
 import org.eclipse.keyple.plugin.remotese.transport.RemoteMethod;
 import org.eclipse.keyple.plugin.remotese.transport.RemoteMethodTx;
 import org.eclipse.keyple.plugin.remotese.transport.json.JsonParser;
+import org.eclipse.keyple.seproxy.event.DefaultSelectionRequest;
 import org.eclipse.keyple.seproxy.event.ObservableReader;
-import org.eclipse.keyple.transaction.DefaultSelectionRequest;
 import com.google.gson.JsonObject;
 
 public class RmSetDefaultSelectionRequestTx extends RemoteMethodTx {

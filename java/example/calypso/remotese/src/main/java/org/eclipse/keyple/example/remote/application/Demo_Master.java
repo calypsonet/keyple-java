@@ -28,6 +28,7 @@ import org.eclipse.keyple.plugin.remotese.transport.TransportNode;
 import org.eclipse.keyple.seproxy.ChannelState;
 import org.eclipse.keyple.seproxy.ReaderPlugin;
 import org.eclipse.keyple.seproxy.SeProxyService;
+import org.eclipse.keyple.seproxy.SeSelector;
 import org.eclipse.keyple.seproxy.event.ObservableReader;
 import org.eclipse.keyple.seproxy.event.PluginEvent;
 import org.eclipse.keyple.seproxy.event.ReaderEvent;
@@ -37,7 +38,6 @@ import org.eclipse.keyple.seproxy.exception.KeypleReaderNotFoundException;
 import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
 import org.eclipse.keyple.transaction.MatchingSe;
 import org.eclipse.keyple.transaction.SeSelection;
-import org.eclipse.keyple.transaction.SeSelector;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.eclipse.keyple.util.Observable;
 import org.slf4j.Logger;
@@ -163,11 +163,14 @@ public class Demo_Master implements org.eclipse.keyple.util.Observable.Observer 
                          * attributes to make the selection and read additional information
                          * afterwards
                          */
-                        PoSelectionRequest poSelectionRequest = new PoSelectionRequest(
-                                ByteArrayUtils.fromHex(CalypsoClassicInfo.AID),
-                                SeSelector.AidSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN,
-                                ContactlessProtocols.PROTOCOL_ISO14443_4,
-                                "AID: " + CalypsoClassicInfo.AID);
+                        PoSelectionRequest poSelectionRequest =
+                                new PoSelectionRequest(
+                                        new SeSelector(
+                                                new SeSelector.AidSelector(ByteArrayUtils
+                                                        .fromHex(CalypsoClassicInfo.AID), null),
+                                                null, ChannelState.KEEP_OPEN,
+                                                ContactlessProtocols.PROTOCOL_ISO14443_4,
+                                                "AID: " + CalypsoClassicInfo.AID));
 
                         logger.info("Create a PoSelectionRequest");
 

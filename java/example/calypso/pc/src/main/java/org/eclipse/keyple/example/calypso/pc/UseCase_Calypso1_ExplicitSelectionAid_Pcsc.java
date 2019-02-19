@@ -113,7 +113,7 @@ public class UseCase_Calypso1_ExplicitSelectionAid_Pcsc {
              */
             PoSelectionRequest poSelectionRequest = new PoSelectionRequest(new SeSelector(
                     new SeSelector.AidSelector(ByteArrayUtils.fromHex(CalypsoClassicInfo.AID),
-                            SeSelector.AidSelector.SelectMode.FIRST),
+                            null),
                     null, ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4,
                     "AID: " + CalypsoClassicInfo.AID));
 

@@ -14,9 +14,9 @@ package org.eclipse.keyple.example.generic.common;
 
 import org.eclipse.keyple.calypso.command.po.parser.ReadDataStructure;
 import org.eclipse.keyple.calypso.transaction.PoSelectionRequest;
-import org.eclipse.keyple.seproxy.ChannelState;
-import org.eclipse.keyple.seproxy.SeReader;
-import org.eclipse.keyple.seproxy.SeSelector;
+import org.eclipse.keyple.seproxy.*;
+import org.eclipse.keyple.seproxy.event.DefaultSelectionRequest;
+import org.eclipse.keyple.seproxy.event.SelectionResponse;
 import org.eclipse.keyple.seproxy.message.ApduRequest;
 import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
 import org.eclipse.keyple.transaction.*;
@@ -61,11 +61,12 @@ public class SeProtocolDetectionEngine extends AbstractReaderObserverEngine {
                     byte SFI_T2Usage = (byte) 0x1A;
                     byte SFI_T2Environment = (byte) 0x14;
 
-                    PoSelectionRequest poSelectionRequest = new PoSelectionRequest(new SeSelector(
-                            new SeSelector.AidSelector(ByteArrayUtils.fromHex(HoplinkAID),
-                                    SeSelector.AidSelector.SelectMode.FIRST),
-                            null, ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4,
-                            "Hoplink selector"));
+                    PoSelectionRequest poSelectionRequest =
+                            new PoSelectionRequest(new SeSelector(
+                                    new SeSelector.AidSelector(ByteArrayUtils.fromHex(HoplinkAID),
+                                            null),
+                                    null, ChannelState.KEEP_OPEN,
+                                    ContactlessProtocols.PROTOCOL_ISO14443_4, "Hoplink selector"));
 
                     poSelectionRequest.preparePoCustomReadCmd("Standard Get Data",
                             new ApduRequest(ByteArrayUtils.fromHex("FFCA000000"), false));

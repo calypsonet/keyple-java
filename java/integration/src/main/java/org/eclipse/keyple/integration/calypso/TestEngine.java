@@ -39,22 +39,25 @@ public class TestEngine {
         SeSelection seSelection = new SeSelection(poReader);
 
         // Add Audit C0 AID to the list
-        seSelection.prepareSelection(new PoSelectionRequest(new SeSelector(
-                new SeSelector.AidSelector(ByteArrayUtils.fromHex(PoFileStructureInfo.poAuditC0Aid),
-                        SeSelector.AidSelector.SelectMode.FIRST),
-                null, ChannelState.KEEP_OPEN, Protocol.ANY, "Audit C0")));
+        seSelection
+                .prepareSelection(new PoSelectionRequest(new SeSelector(
+                        new SeSelector.AidSelector(
+                                ByteArrayUtils.fromHex(PoFileStructureInfo.poAuditC0Aid), null),
+                        null, ChannelState.KEEP_OPEN, Protocol.ANY, "Audit C0")));
 
         // Add CLAP AID to the list
-        seSelection.prepareSelection(new PoSelectionRequest(new SeSelector(
-                new SeSelector.AidSelector(ByteArrayUtils.fromHex(PoFileStructureInfo.clapAid),
-                        SeSelector.AidSelector.SelectMode.FIRST),
-                null, ChannelState.KEEP_OPEN, Protocol.ANY, "CLAP")));
+        seSelection
+                .prepareSelection(new PoSelectionRequest(new SeSelector(
+                        new SeSelector.AidSelector(
+                                ByteArrayUtils.fromHex(PoFileStructureInfo.clapAid), null),
+                        null, ChannelState.KEEP_OPEN, Protocol.ANY, "CLAP")));
 
         // Add cdLight AID to the list
-        seSelection.prepareSelection(new PoSelectionRequest(new SeSelector(
-                new SeSelector.AidSelector(ByteArrayUtils.fromHex(PoFileStructureInfo.cdLightAid),
-                        SeSelector.AidSelector.SelectMode.FIRST),
-                null, ChannelState.KEEP_OPEN, Protocol.ANY, "CDLight")));
+        seSelection
+                .prepareSelection(new PoSelectionRequest(new SeSelector(
+                        new SeSelector.AidSelector(
+                                ByteArrayUtils.fromHex(PoFileStructureInfo.cdLightAid), null),
+                        null, ChannelState.KEEP_OPEN, Protocol.ANY, "CDLight")));
 
         if (seSelection.processExplicitSelection()) {
             return new PoFileStructureInfo(seSelection.getSelectedSe());

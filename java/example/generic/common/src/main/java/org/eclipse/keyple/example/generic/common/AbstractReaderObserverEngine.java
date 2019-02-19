@@ -14,7 +14,7 @@ package org.eclipse.keyple.example.generic.common;
 
 import org.eclipse.keyple.seproxy.event.ObservableReader;
 import org.eclipse.keyple.seproxy.event.ReaderEvent;
-import org.eclipse.keyple.transaction.SelectionResponse;
+import org.eclipse.keyple.seproxy.event.SelectionResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

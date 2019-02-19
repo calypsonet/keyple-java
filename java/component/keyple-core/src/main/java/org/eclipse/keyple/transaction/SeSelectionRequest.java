@@ -17,8 +17,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * The SeSelectionRequest class groups the information data and methods used to build and handle a
- * selection request
+ * The SeSelectionRequest class combines a SeSelector with additional helper methods useful to the
+ * selection process done in {@link SeSelection}.
+ * <p>
+ * This class may also be extended to add particular features specific to a SE family.
  */
 public class SeSelectionRequest {
     private static final Logger logger = LoggerFactory.getLogger(SeSelectionRequest.class);
@@ -51,7 +53,7 @@ public class SeSelectionRequest {
     }
 
     /**
-     * /** The matchingClass is the MatchingSe class or one of its extensions
+     * The matchingClass is the MatchingSe class or one of its extensions
      * <p>
      * It is used in SeSelection to determine what kind of MatchingSe is to be instantiated.
      *
@@ -100,6 +102,7 @@ public class SeSelectionRequest {
 
     @Override
     public String toString() {
-        return "SeSelectionRequest";
+        return "SeSelectionRequest: SELECTION_CLASS = " + selectionClass.toString()
+                + ", MATCHING_CLASS = " + matchingClass.toString();
     }
 }

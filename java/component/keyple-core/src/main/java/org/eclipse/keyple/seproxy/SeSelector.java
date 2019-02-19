@@ -15,7 +15,6 @@ import java.util.*;
 import java.util.regex.Pattern;
 import org.eclipse.keyple.seproxy.message.ApduRequest;
 import org.eclipse.keyple.seproxy.protocol.SeProtocol;
-import org.eclipse.keyple.transaction.MatchingSe;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,31 +24,45 @@ import org.slf4j.LoggerFactory;
  * element
  */
 public class SeSelector {
+    /** logger */
     private static final Logger logger = LoggerFactory.getLogger(SeSelector.class);
 
+    /** optional apdu requests list to be executed following the selection process */
     protected List<ApduRequest> seSelectionApduRequestList = new ArrayList<ApduRequest>();
-    protected Set<Integer> selectApplicationSuccessfulStatusCodes = new HashSet<Integer>();
-    private Class<? extends MatchingSe> matchingClass = MatchingSe.class;
-    private Class<? extends SeSelector> selectorClass = SeSelector.class;
+
     private final ChannelState channelState;
     private final SeProtocol protocolFlag;
     private final AidSelector aidSelector;
     private final AtrFilter atrFilter;
     private String extraInfo;
 
+    /**
+     * TODO add FCI/FCP/FMP/no parameter
+     */
+    /**
+     * Static nested class to hold the data elements used to perform an AID based selection
+     */
     public static class AidSelector {
 
         /**
-         * SelectMode indicates how to carry out the application selection in accordance with
+         * FileOccurrence indicates how to carry out the file occurrence in accordance with
          * ISO7816-4
          */
-        public enum SelectMode {
-            FIRST, NEXT
+        public enum FileOccurrence {
+            FIRST, LAST, NEXT, PREVIOUS
+        }
+
+        /**
+         * FileOccurrence indicates how to which template is expected in accordance with ISO7816-4
+         */
+        public enum FileControlInformation {
+            FCI, FCP, FMD, NO_RESPONSE
         }
 
         public static final int AID_MIN_LENGTH = 5;
         public static final int AID_MAX_LENGTH = 16;
-        protected SelectMode selectMode = SelectMode.FIRST;
+        protected FileOccurrence fileOccurrence = FileOccurrence.FIRST;
+        protected FileControlInformation fileControlInformation = FileControlInformation.FCI;
 
         /**
          * - AID’s bytes of the SE application to select. In case the SE application is currently
@@ -68,31 +81,48 @@ public class SeSelector {
         Set<Integer> successfulSelectionStatusCodes = new LinkedHashSet<Integer>();
 
         /**
-         * AID based aidSelector without successfulSelectionStatusCodes
+         * AidSelector with additional select application successful status codes, file occurrence
+         * and file control information.
+         * <p>
+         * The fileOccurrence parameter defines the selection options P2 of the SELECT command
+         * message
+         * <p>
+         * The fileControlInformation parameter defines the expected command output template.
+         * <p>
+         * Refer to ISO7816-4.2 for detailed information about these parameters
          *
          * @param aidToSelect byte array
+         * @param successfulSelectionStatusCodes list of successful status codes for the select
+         *        application response
          */
-        public AidSelector(byte[] aidToSelect) {
+        public AidSelector(byte[] aidToSelect, Set<Integer> successfulSelectionStatusCodes,
+                FileOccurrence fileOccurrence, FileControlInformation fileControlInformation) {
+            if (aidToSelect == null || aidToSelect.length < AID_MIN_LENGTH
+                    || aidToSelect.length > AID_MAX_LENGTH) {
+                throw new IllegalArgumentException("Bad AID value: must be between "
+                        + AID_MIN_LENGTH + " and " + AID_MIN_LENGTH + " bytes.");
+            }
             this.aidToSelect = aidToSelect;
+            this.successfulSelectionStatusCodes = successfulSelectionStatusCodes;
+            this.fileOccurrence = fileOccurrence;
+            this.fileControlInformation = fileControlInformation;
         }
 
         /**
-         * AID based aidSelector with selection mode
+         * AidSelector with additional select application successful status codes
          * <p>
-         * The selectMode parameter defines the selection options P2 of the SELECT command message
-         * <ul>
-         * <li>false: first or only occurrence</li>
-         * <li>true: next occurrence</li>
-         * </ul>
+         * The fileOccurrence field is set by default to FIRST
+         * <p>
+         * The fileControlInformation field is set by default to FCI
          *
          * @param aidToSelect byte array
-         * @param selectMode selection mode FIRST or NEXT
+         * @param successfulSelectionStatusCodes list of successful status codes for the select
+         *        application response
          */
-        public AidSelector(byte[] aidToSelect, SelectMode selectMode) {
-            this(aidToSelect);
-            this.selectMode = selectMode;
+        public AidSelector(byte[] aidToSelect, Set<Integer> successfulSelectionStatusCodes) {
+            this(aidToSelect, successfulSelectionStatusCodes, FileOccurrence.FIRST,
+                    FileControlInformation.FCI);
         }
-
 
         /**
          * Getter for the AID provided at construction time
@@ -109,7 +139,7 @@ public class SeSelector {
          * @return true or false
          */
         public boolean isSelectNext() {
-            return selectMode == SelectMode.NEXT;
+            return fileOccurrence == FileOccurrence.NEXT;
         }
 
         /**
@@ -142,6 +172,9 @@ public class SeSelector {
         }
     }
 
+    /**
+     * Static nested class to hold the data elements used to perform an ATR based filtering
+     */
     public static class AtrFilter {
         /**
          * Regular expression dedicated to handle SE logical channel opening based on ATR pattern
@@ -197,9 +230,19 @@ public class SeSelector {
     }
 
     /**
-     * Instantiate a SeSelector object with the optional ATR filtering and selection data (AID),
-     * dedicated to select a SE. The channel management after the selection and the protocol flag to
-     * possibly target a specific protocol
+     * Create a SeSelector to perform the SE selection
+     * <p>
+     * if aidSelector is null, no 'select application' command is generated. In this case the SE
+     * must have a default application selected. (e.g. SAM or Rev1 Calypso cards)
+     * <p>
+     * if aidSelector is not null, a 'select application' command is generated and performed.
+     * Furthermore, the status code is checked against the list of successful status codes in the
+     * {@link AidSelector} to determine if the SE matched or not the selection data.
+     * <p>
+     * if atrFilter is null, no check of the ATR is performed. All SE will match.
+     * <p>
+     * if atrFilter is not null, the ATR of the SE is compared with the regular expression provided
+     * in the {@link AtrFilter} in order to determine if the SE match or not the expected ATR.
      *
      * @param aidSelector the AID selection data
      * @param atrFilter the ATR filter

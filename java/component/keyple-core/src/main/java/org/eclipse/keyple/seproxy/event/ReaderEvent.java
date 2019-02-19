@@ -12,9 +12,6 @@
 package org.eclipse.keyple.seproxy.event;
 
 
-import org.eclipse.keyple.transaction.DefaultSelectionRequest;
-import org.eclipse.keyple.transaction.SelectionResponse;
-
 /**
  * ReaderEvent used to notify changes at reader level
  */
