@@ -126,7 +126,7 @@ public class UseCase_Calypso1_ExplicitSelectionAid_Stub {
              * the selection and read additional information afterwards
              */
             PoSelector poSelector = new PoSelector(ByteArrayUtils.fromHex(CalypsoClassicInfo.AID),
-                    SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN,
+                    SeSelector.AidSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN,
                     ContactlessProtocols.PROTOCOL_ISO14443_4, "AID: " + CalypsoClassicInfo.AID);
 
             /*

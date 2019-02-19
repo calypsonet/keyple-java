@@ -29,10 +29,7 @@ import org.eclipse.keyple.seproxy.message.ApduResponse;
 import org.eclipse.keyple.seproxy.message.SeResponse;
 import org.eclipse.keyple.seproxy.protocol.ContactsProtocols;
 import org.eclipse.keyple.seproxy.protocol.SeProtocol;
-import org.eclipse.keyple.transaction.AidSelector;
-import org.eclipse.keyple.transaction.AtrFilter;
 import org.eclipse.keyple.transaction.SeSelector;
-import org.eclipse.keyple.transaction.Selector;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -67,7 +64,7 @@ public final class PoSelector extends SeSelector {
      */
     public PoSelector(String atrRegex, ChannelState channelState, SeProtocol protocolFlag,
             String extraInfo) {
-        super(new Selector(null, new AtrFilter(atrRegex)), channelState, protocolFlag, extraInfo);
+        super(null, new SeSelector.AtrFilter(atrRegex), channelState, protocolFlag, extraInfo);
         setMatchingClass(CalypsoPo.class);
         setSelectorClass(PoSelector.class);
         poClass = PoClass.LEGACY;
@@ -88,9 +85,9 @@ public final class PoSelector extends SeSelector {
      * @param protocolFlag the protocol flag to filter POs according to their communication protocol
      * @param extraInfo information string
      */
-    public PoSelector(byte[] aid, SelectMode selectMode, ChannelState channelState,
-            SeProtocol protocolFlag, String extraInfo) {
-        super(new Selector(new AidSelector(aid, selectMode), null), channelState, protocolFlag,
+    public PoSelector(byte[] aid, SeSelector.AidSelector.SelectMode selectMode,
+            ChannelState channelState, SeProtocol protocolFlag, String extraInfo) {
+        super(new SeSelector.AidSelector(aid, selectMode), null, channelState, protocolFlag,
                 extraInfo);
         setMatchingClass(CalypsoPo.class);
         setSelectorClass(PoSelector.class);

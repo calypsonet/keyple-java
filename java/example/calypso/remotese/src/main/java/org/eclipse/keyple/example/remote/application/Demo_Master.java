@@ -163,11 +163,11 @@ public class Demo_Master implements org.eclipse.keyple.util.Observable.Observer 
                          * attributes to make the selection and read additional information
                          * afterwards
                          */
-                        PoSelector poSelector =
-                                new PoSelector(ByteArrayUtils.fromHex(CalypsoClassicInfo.AID),
-                                        SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN,
-                                        ContactlessProtocols.PROTOCOL_ISO14443_4,
-                                        "AID: " + CalypsoClassicInfo.AID);
+                        PoSelector poSelector = new PoSelector(
+                                ByteArrayUtils.fromHex(CalypsoClassicInfo.AID),
+                                SeSelector.AidSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN,
+                                ContactlessProtocols.PROTOCOL_ISO14443_4,
+                                "AID: " + CalypsoClassicInfo.AID);
 
                         logger.info("Create a PoSelector");
 

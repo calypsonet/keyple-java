@@ -19,8 +19,7 @@ import org.eclipse.keyple.seproxy.ChannelState;
 import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
 import org.eclipse.keyple.seproxy.protocol.Protocol;
 import org.eclipse.keyple.seproxy.protocol.SeProtocol;
-import org.eclipse.keyple.transaction.AidSelector;
-import org.eclipse.keyple.transaction.Selector;
+import org.eclipse.keyple.transaction.SeSelector;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -43,7 +42,7 @@ public class SeRequestTest {
     ChannelState channelState;
     SeProtocol seProtocol;
     Set<Integer> selectionStatusCode;
-    Selector selector;
+    SeSelector selector;
 
 
 
@@ -54,8 +53,8 @@ public class SeRequestTest {
         channelState = ChannelState.KEEP_OPEN;
         seProtocol = getASeProtocol();
         selectionStatusCode = ApduRequestTest.getASuccessFulStatusCode();
-        selector = getSelector(selectionStatusCode);
-        seRequest = new SeRequest(selector, apdus, channelState, seProtocol);
+        selector = getSelector(selectionStatusCode, apdus, channelState, seProtocol);
+        seRequest = new SeRequest(selector);
     }
 
     @Test
@@ -67,15 +66,15 @@ public class SeRequestTest {
     @Test
     public void getSelector() {
         // test
-        assertEquals(getSelector(selectionStatusCode).toString(),
-                seRequest.getSelector().toString());
+        assertEquals(getSelector(selectionStatusCode, apdus, channelState, seProtocol).toString(),
+                seRequest.getSeSelector().toString());
 
     }
 
     @Test
     public void getApduRequests() {
         // test
-        seRequest = new SeRequest(getSelector(null), apdus, ChannelState.CLOSE_AFTER, Protocol.ANY);
+        seRequest = new SeRequest(getSelector(null, apdus, ChannelState.CLOSE_AFTER, Protocol.ANY));
         assertArrayEquals(apdus.toArray(), seRequest.getApduRequests().toArray());
     }
 
@@ -86,22 +85,22 @@ public class SeRequestTest {
 
     @Test
     public void getProtocolFlag() {
-        seRequest = new SeRequest(getSelector(null), new ArrayList<ApduRequest>(),
-                ChannelState.KEEP_OPEN, seProtocol);
+        seRequest = new SeRequest(getSelector(null, new ArrayList<ApduRequest>(),
+                ChannelState.KEEP_OPEN, seProtocol));
         assertEquals(seProtocol, seRequest.getProtocolFlag());
     }
 
     @Test
     public void getSuccessfulSelectionStatusCodes() {
-        seRequest = new SeRequest(getSelector(selectionStatusCode), new ArrayList<ApduRequest>(),
-                ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_B_PRIME);
-        assertArrayEquals(selectionStatusCode.toArray(), seRequest.getSelector().getAidSelector()
+        seRequest = new SeRequest(getSelector(selectionStatusCode, new ArrayList<ApduRequest>(),
+                ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_B_PRIME));
+        assertArrayEquals(selectionStatusCode.toArray(), seRequest.getSeSelector().getAidSelector()
                 .getSuccessfulSelectionStatusCodes().toArray());
     }
 
     @Test
     public void toStringNull() {
-        seRequest = new SeRequest(null, null, ChannelState.KEEP_OPEN, Protocol.ANY);
+        seRequest = new SeRequest(null);
         assertNotNull(seRequest.toString());
     }
 
@@ -110,50 +109,52 @@ public class SeRequestTest {
      */
     @Test
     public void constructor1() {
-        seRequest = new SeRequest(getSelector(null), apdus, channelState, Protocol.ANY);
-        assertEquals(getSelector(null).toString(), seRequest.getSelector().toString());
+        seRequest = new SeRequest(getSelector(null, apdus, channelState, Protocol.ANY));
+        assertEquals(getSelector(null, apdus, channelState, Protocol.ANY).toString(),
+                seRequest.getSeSelector().toString());
         assertEquals(channelState == ChannelState.KEEP_OPEN, seRequest.isKeepChannelOpen());
         assertArrayEquals(apdus.toArray(), seRequest.getApduRequests().toArray());
         //
         assertEquals(Protocol.ANY, seRequest.getProtocolFlag());
-        assertNull(seRequest.getSelector().getAidSelector().getSuccessfulSelectionStatusCodes());
+        assertNull(seRequest.getSeSelector().getAidSelector().getSuccessfulSelectionStatusCodes());
     }
 
     @Test
     public void constructor2() {
-        seRequest = new SeRequest(getSelector(null), apdus, channelState, seProtocol);
-        assertEquals(getSelector(null).toString(), seRequest.getSelector().toString());
+        seRequest = new SeRequest(getSelector(null, apdus, channelState, seProtocol));
+        assertEquals(getSelector(null, apdus, channelState, seProtocol).toString(),
+                seRequest.getSeSelector().toString());
         assertEquals(channelState == ChannelState.KEEP_OPEN, seRequest.isKeepChannelOpen());
         assertArrayEquals(apdus.toArray(), seRequest.getApduRequests().toArray());
         assertEquals(seProtocol, seRequest.getProtocolFlag());
         //
-        assertNull(seRequest.getSelector().getAidSelector().getSuccessfulSelectionStatusCodes());
+        assertNull(seRequest.getSeSelector().getAidSelector().getSuccessfulSelectionStatusCodes());
     }
 
     @Test
     public void constructor2b() {
         seRequest =
-                new SeRequest(getSelector(selectionStatusCode), apdus, channelState, Protocol.ANY);
-        assertEquals(getSelector(selectionStatusCode).toString(),
-                seRequest.getSelector().toString());
+                new SeRequest(getSelector(selectionStatusCode, apdus, channelState, Protocol.ANY));
+        assertEquals(getSelector(selectionStatusCode, apdus, channelState, Protocol.ANY).toString(),
+                seRequest.getSeSelector().toString());
         assertEquals(channelState == ChannelState.KEEP_OPEN, seRequest.isKeepChannelOpen());
         assertArrayEquals(apdus.toArray(), seRequest.getApduRequests().toArray());
         assertEquals(Protocol.ANY, seRequest.getProtocolFlag());
         //
-        assertArrayEquals(selectionStatusCode.toArray(), seRequest.getSelector().getAidSelector()
+        assertArrayEquals(selectionStatusCode.toArray(), seRequest.getSeSelector().getAidSelector()
                 .getSuccessfulSelectionStatusCodes().toArray());
     }
 
     @Test
     public void constructor3() {
         seRequest =
-                new SeRequest(getSelector(selectionStatusCode), apdus, channelState, seProtocol);
-        assertEquals(getSelector(selectionStatusCode).toString(),
-                seRequest.getSelector().toString());
+                new SeRequest(getSelector(selectionStatusCode, apdus, channelState, seProtocol));
+        assertEquals(getSelector(selectionStatusCode, apdus, channelState, seProtocol).toString(),
+                seRequest.getSeSelector().toString());
         assertEquals(channelState == ChannelState.KEEP_OPEN, seRequest.isKeepChannelOpen());
         assertArrayEquals(apdus.toArray(), seRequest.getApduRequests().toArray());
         assertEquals(seProtocol, seRequest.getProtocolFlag());
-        assertArrayEquals(selectionStatusCode.toArray(), seRequest.getSelector().getAidSelector()
+        assertArrayEquals(selectionStatusCode.toArray(), seRequest.getSeSelector().getAidSelector()
                 .getSuccessfulSelectionStatusCodes().toArray());
     }
 
@@ -169,7 +170,7 @@ public class SeRequestTest {
         SeProtocol seProtocol = getASeProtocol();
         Set<Integer> selectionStatusCode = ApduRequestTest.getASuccessFulStatusCode();
 
-        return new SeRequest(getSelector(selectionStatusCode), apdus, channelState, seProtocol);
+        return new SeRequest(getSelector(selectionStatusCode, apdus, channelState, seProtocol));
 
     }
 
@@ -185,10 +186,14 @@ public class SeRequestTest {
         return ContactlessProtocols.PROTOCOL_B_PRIME;
     }
 
-    static Selector getSelector(Set<Integer> selectionStatusCode) {
-        AidSelector aidSelector = new AidSelector(ByteArrayUtils.fromHex("A000000291A000000191"));
+    static SeSelector getSelector(Set<Integer> selectionStatusCode, List<ApduRequest> apdus,
+            ChannelState channelState, SeProtocol seProtocol) {
+        SeSelector.AidSelector aidSelector =
+                new SeSelector.AidSelector(ByteArrayUtils.fromHex("A000000291A000000191"));
         aidSelector.setSuccessfulSelectionStatusCodes(selectionStatusCode);
-        return new Selector(aidSelector, null);
+        SeSelector seSelector = new SeSelector(aidSelector, null, channelState, seProtocol, null);
+        seSelector.setSelectionApduRequestList(apdus);
+        return seSelector;
     }
 
 }

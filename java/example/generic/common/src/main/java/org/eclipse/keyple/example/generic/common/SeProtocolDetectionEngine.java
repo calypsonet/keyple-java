@@ -61,7 +61,7 @@ public class SeProtocolDetectionEngine extends AbstractReaderObserverEngine {
                     byte SFI_T2Environment = (byte) 0x14;
 
                     PoSelector poSelector = new PoSelector(ByteArrayUtils.fromHex(HoplinkAID),
-                            SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN,
+                            SeSelector.AidSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN,
                             ContactlessProtocols.PROTOCOL_ISO14443_4, "Hoplink selector");
 
                     poSelector.preparePoCustomReadCmd("Standard Get Data",
@@ -84,8 +84,8 @@ public class SeProtocolDetectionEngine extends AbstractReaderObserverEngine {
                     break;
                 default:
                     /* Add a generic selector */
-                    seSelection.prepareSelection(new SeSelector(
-                            new Selector(null, new AtrFilter(".*")), ChannelState.KEEP_OPEN,
+                    seSelection.prepareSelection(new SeSelector(null,
+                            new SeSelector.AtrFilter(".*"), ChannelState.KEEP_OPEN,
                             ContactlessProtocols.PROTOCOL_ISO14443_4, "Default selector"));
                     break;
             }

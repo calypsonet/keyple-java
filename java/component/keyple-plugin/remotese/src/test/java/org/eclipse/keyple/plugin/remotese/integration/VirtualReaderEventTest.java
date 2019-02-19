@@ -205,7 +205,8 @@ public class VirtualReaderEventTest extends VirtualReaderBaseTest {
         SeSelection seSelection = new SeSelection(virtualReader);
 
         SeSelector seSelector = new SeSelector(ByteArrayUtils.fromHex(poAid),
-                SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN, Protocol.ANY, "AID: " + poAid);
+                SeSelector.AidSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN, Protocol.ANY,
+                "AID: " + poAid);
 
         seSelection.prepareSelection(seSelector);
 
@@ -247,7 +248,8 @@ public class VirtualReaderEventTest extends VirtualReaderBaseTest {
         SeSelection seSelection = new SeSelection(virtualReader);
 
         SeSelector seSelector = new SeSelector(ByteArrayUtils.fromHex(poAid),
-                SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN, Protocol.ANY, "AID: " + poAid);
+                SeSelector.AidSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN, Protocol.ANY,
+                "AID: " + poAid);
 
         seSelection.prepareSelection(seSelector);
 
@@ -296,7 +298,8 @@ public class VirtualReaderEventTest extends VirtualReaderBaseTest {
         SeSelection seSelection = new SeSelection(virtualReader);
 
         SeSelector seSelector = new SeSelector(ByteArrayUtils.fromHex(poAid),
-                SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN, Protocol.ANY, "AID: " + poAid);
+                SeSelector.AidSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN, Protocol.ANY,
+                "AID: " + poAid);
 
         seSelection.prepareSelection(seSelector);
 

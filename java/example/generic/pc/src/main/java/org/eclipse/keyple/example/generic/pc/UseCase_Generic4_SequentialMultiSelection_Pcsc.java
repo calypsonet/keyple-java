@@ -92,9 +92,9 @@ public class UseCase_Generic4_SequentialMultiSelection_Pcsc {
 
             /* AID based selection */
             matchingSe = seSelection.prepareSelection(new SeSelector(
-                    new Selector(new AidSelector(ByteArrayUtils.fromHex(seAidPrefix),
-                            SeSelector.SelectMode.FIRST), null),
-                    ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4,
+                    new SeSelector.AidSelector(ByteArrayUtils.fromHex(seAidPrefix),
+                            SeSelector.AidSelector.SelectMode.FIRST),
+                    null, ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4,
                     "Initial selection #1"));
 
             seSelection = new SeSelection(seReader);
@@ -103,9 +103,9 @@ public class UseCase_Generic4_SequentialMultiSelection_Pcsc {
 
             /* next selection */
             matchingSe = seSelection.prepareSelection(new SeSelector(
-                    new Selector(new AidSelector(ByteArrayUtils.fromHex(seAidPrefix),
-                            SeSelector.SelectMode.NEXT), null),
-                    ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4,
+                    new SeSelector.AidSelector(ByteArrayUtils.fromHex(seAidPrefix),
+                            SeSelector.AidSelector.SelectMode.NEXT),
+                    null, ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4,
                     "Next selection #2"));
 
             seSelection = new SeSelection(seReader);
@@ -114,9 +114,9 @@ public class UseCase_Generic4_SequentialMultiSelection_Pcsc {
 
             /* next selection */
             matchingSe = seSelection.prepareSelection(new SeSelector(
-                    new Selector(new AidSelector(ByteArrayUtils.fromHex(seAidPrefix),
-                            SeSelector.SelectMode.NEXT), null),
-                    ChannelState.CLOSE_AFTER, ContactlessProtocols.PROTOCOL_ISO14443_4,
+                    new SeSelector.AidSelector(ByteArrayUtils.fromHex(seAidPrefix),
+                            SeSelector.AidSelector.SelectMode.NEXT),
+                    null, ChannelState.CLOSE_AFTER, ContactlessProtocols.PROTOCOL_ISO14443_4,
                     "Next selection #3"));
 
             doAndAnalyseSelection(seSelection, matchingSe, 3);

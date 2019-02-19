@@ -28,10 +28,8 @@ import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.exception.NoStackTraceThrowable;
 import org.eclipse.keyple.seproxy.protocol.Protocol;
 import org.eclipse.keyple.seproxy.protocol.SeProtocolSetting;
-import org.eclipse.keyple.transaction.AtrFilter;
 import org.eclipse.keyple.transaction.SeSelection;
 import org.eclipse.keyple.transaction.SeSelector;
-import org.eclipse.keyple.transaction.Selector;
 import org.eclipse.keyple.util.ByteArrayUtils;
 
 public class TestEngine {
@@ -47,17 +45,20 @@ public class TestEngine {
         seSelection.prepareSelection(new PoSelector(
 
                 ByteArrayUtils.fromHex(PoFileStructureInfo.poAuditC0Aid),
-                SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN, Protocol.ANY, "Audit C0"));
+                SeSelector.AidSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN, Protocol.ANY,
+                "Audit C0"));
 
         // Add CLAP AID to the list
         seSelection.prepareSelection(
                 new PoSelector(ByteArrayUtils.fromHex(PoFileStructureInfo.clapAid),
-                        SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN, Protocol.ANY, "CLAP"));
+                        SeSelector.AidSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN,
+                        Protocol.ANY, "CLAP"));
 
         // Add cdLight AID to the list
-        seSelection.prepareSelection(new PoSelector(
-                ByteArrayUtils.fromHex(PoFileStructureInfo.cdLightAid), SeSelector.SelectMode.FIRST,
-                ChannelState.KEEP_OPEN, Protocol.ANY, "CDLight"));
+        seSelection.prepareSelection(
+                new PoSelector(ByteArrayUtils.fromHex(PoFileStructureInfo.cdLightAid),
+                        SeSelector.AidSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN,
+                        Protocol.ANY, "CDLight"));
 
         if (seSelection.processExplicitSelection()) {
             return new PoFileStructureInfo(seSelection.getSelectedSe());
@@ -128,7 +129,7 @@ public class TestEngine {
         // open
         SeSelection samSelection = new SeSelection(samReader);
 
-        SeSelector samSelector = new SeSelector(new Selector(null, new AtrFilter(SAM_ATR_REGEX)),
+        SeSelector samSelector = new SeSelector(null, new SeSelector.AtrFilter(SAM_ATR_REGEX),
                 ChannelState.KEEP_OPEN, Protocol.ANY, "SAM Selection");
 
         /* Prepare selector, ignore MatchingSe here */

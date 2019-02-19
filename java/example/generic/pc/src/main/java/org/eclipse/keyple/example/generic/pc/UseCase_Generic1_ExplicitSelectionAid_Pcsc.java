@@ -105,9 +105,9 @@ public class UseCase_Generic1_ExplicitSelectionAid_Pcsc {
              * the selection and read additional information afterwards
              */
             SeSelector seSelector = new SeSelector(
-                    new Selector(new AidSelector(ByteArrayUtils.fromHex(seAid),
-                            SeSelector.SelectMode.FIRST), null),
-                    ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4,
+                    new SeSelector.AidSelector(ByteArrayUtils.fromHex(seAid),
+                            SeSelector.AidSelector.SelectMode.FIRST),
+                    null, ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4,
                     "AID: " + seAid);
 
             /*

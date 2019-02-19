@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
 public final class SeSelection {
     private static final Logger logger = LoggerFactory.getLogger(SeSelection.class);
 
-    private final ProxyReader proxyReader;
+    private final SeReader seReader;
     private List<MatchingSe> matchingSeList = new ArrayList<MatchingSe>();
     private Set<SeRequest> selectionRequestSet = new LinkedHashSet<SeRequest>();
     private MatchingSe selectedSe;
@@ -41,7 +41,7 @@ public final class SeSelection {
      * @param seReader the reader to use to make the selection
      */
     public SeSelection(SeReader seReader) {
-        this.proxyReader = (ProxyReader) seReader;
+        this.seReader = (ProxyReader) seReader;
     }
 
     /**
@@ -183,7 +183,7 @@ public final class SeSelection {
 
         /* Communicate with the SE to do the selection */
         SeResponseSet seResponseSet =
-                proxyReader.transmitSet(new SeRequestSet(selectionRequestSet));
+                ((ProxyReader) seReader).transmitSet(new SeRequestSet(selectionRequestSet));
 
         return processSelection(new SelectionResponse(seResponseSet));
     }

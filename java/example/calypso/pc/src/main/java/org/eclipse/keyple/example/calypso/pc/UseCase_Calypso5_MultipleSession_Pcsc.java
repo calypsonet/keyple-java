@@ -132,7 +132,7 @@ public class UseCase_Calypso5_MultipleSession_Pcsc {
              * the selection and read additional information afterwards
              */
             PoSelector poSelector = new PoSelector(ByteArrayUtils.fromHex(CalypsoClassicInfo.AID),
-                    SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN,
+                    SeSelector.AidSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN,
                     ContactlessProtocols.PROTOCOL_ISO14443_4, "AID: " + CalypsoClassicInfo.AID);
 
             /*

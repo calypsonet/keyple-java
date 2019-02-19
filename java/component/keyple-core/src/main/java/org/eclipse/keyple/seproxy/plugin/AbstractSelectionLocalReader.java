@@ -16,8 +16,7 @@ package org.eclipse.keyple.seproxy.plugin;
 import org.eclipse.keyple.seproxy.event.ObservableReader;
 import org.eclipse.keyple.seproxy.exception.KeypleIOReaderException;
 import org.eclipse.keyple.seproxy.message.*;
-import org.eclipse.keyple.transaction.AidSelector;
-import org.eclipse.keyple.transaction.Selector;
+import org.eclipse.keyple.transaction.SeSelector;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,18 +42,19 @@ public abstract class AbstractSelectionLocalReader extends AbstractLocalReader
     /**
      * Build a select application command, transmit it to the SE and deduct the SelectionStatus.
      * 
-     * @param selector the targeted application selector
+     * @param seSelector the targeted application SE selector
      * @return the SelectionStatus
      * @throws KeypleIOReaderException if a reader error occurs
      */
-    protected SelectionStatus openLogicalChannel(Selector selector) throws KeypleIOReaderException {
+    protected SelectionStatus openLogicalChannel(SeSelector seSelector)
+            throws KeypleIOReaderException {
         ApduResponse fciResponse;
         byte[] atr = getATR();
         boolean selectionHasMatched = true;
         SelectionStatus selectionStatus;
 
         /** Perform ATR filtering if requested */
-        if (selector.getAtrFilter() != null) {
+        if (seSelector.getAtrFilter() != null) {
             if (atr == null) {
                 throw new KeypleIOReaderException("Didn't get an ATR from the SE.");
             }
@@ -63,9 +63,9 @@ public abstract class AbstractSelectionLocalReader extends AbstractLocalReader
                 logger.trace("[{}] openLogicalChannel => ATR: {}", this.getName(),
                         ByteArrayUtils.toHex(atr));
             }
-            if (!selector.getAtrFilter().atrMatches(atr)) {
+            if (!seSelector.getAtrFilter().atrMatches(atr)) {
                 logger.trace("[{}] openLogicalChannel => ATR didn't match. SELECTOR = {}",
-                        this.getName(), selector);
+                        this.getName(), seSelector);
                 selectionHasMatched = false;
             }
         }
@@ -74,8 +74,8 @@ public abstract class AbstractSelectionLocalReader extends AbstractLocalReader
          * Perform application selection if requested and if ATR filtering matched or was not
          * requested
          */
-        if (selectionHasMatched && selector.getAidSelector() != null) {
-            final AidSelector aidSelector = selector.getAidSelector();
+        if (selectionHasMatched && seSelector.getAidSelector() != null) {
+            final SeSelector.AidSelector aidSelector = seSelector.getAidSelector();
             final byte aid[] = aidSelector.getAidToSelect();
             if (aid == null) {
                 throw new IllegalArgumentException("AID must not be null for an AidSelector.");

@@ -16,7 +16,7 @@ import java.util.List;
 import org.eclipse.keyple.seproxy.ChannelState;
 import org.eclipse.keyple.seproxy.protocol.Protocol;
 import org.eclipse.keyple.seproxy.protocol.SeProtocol;
-import org.eclipse.keyple.transaction.Selector;
+import org.eclipse.keyple.transaction.SeSelector;
 
 /**
  * List of APDU requests that will result in a {@link SeResponse}
@@ -28,9 +28,9 @@ public final class SeRequest implements Serializable {
     static final long serialVersionUID = 6018469841127325812L;
 
     /**
-     * SE selector is either an AID or an ATR regular expression
+     * SE seSelector is either an AID or an ATR regular expression
      */
-    private final Selector selector;
+    private final SeSelector seSelector;
 
     /**
      * contains a group of APDUCommand to operate on the selected SE application by the SE reader.
@@ -64,20 +64,10 @@ public final class SeRequest implements Serializable {
      * <li>The protocolFlag parameter is optional.</li>
      * </ul>
      *
-     * @param selector the SE selector
-     * @param apduRequests the apdu requests
-     * @param channelState the keep channel open
-     * @param protocolFlag the expected protocol
+     * @param seSelector the SE Selector
      */
-    public SeRequest(Selector selector, List<ApduRequest> apduRequests, ChannelState channelState,
-            SeProtocol protocolFlag) {
-        if (protocolFlag == null) {
-            throw new IllegalArgumentException("¨protocolFlag can't be null");
-        }
-        this.selector = selector;
-        this.apduRequests = apduRequests;
-        this.channelState = channelState;
-        this.protocolFlag = protocolFlag;
+    public SeRequest(SeSelector seSelector) {
+        this.seSelector = seSelector;
     }
 
     /**
@@ -87,17 +77,20 @@ public final class SeRequest implements Serializable {
      * @param channelState a flag to tell if the channel has to be closed at the end
      */
     public SeRequest(List<ApduRequest> apduRequests, ChannelState channelState) {
-        this(null, apduRequests, channelState, Protocol.ANY);
+        this.seSelector = null;
+        this.apduRequests = apduRequests;
+        this.channelState = channelState;
+        this.protocolFlag = Protocol.ANY;
     }
 
 
     /**
-     * Gets the SE selector.
+     * Gets the SE seSelector.
      *
-     * @return the current SE selector
+     * @return the current SE seSelector
      */
-    public Selector getSelector() {
-        return selector;
+    public SeSelector getSeSelector() {
+        return seSelector;
     }
 
     /**
@@ -132,6 +125,6 @@ public final class SeRequest implements Serializable {
     @Override
     public String toString() {
         return String.format("SeRequest:{REQUESTS = %s, SELECTOR = %s, KEEPCHANNELOPEN = %s}",
-                getApduRequests(), getSelector(), channelState);
+                getApduRequests(), getSeSelector(), channelState);
     }
 }

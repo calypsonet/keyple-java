@@ -72,21 +72,21 @@ public class UseCase_Generic3_GroupedMultiSelection_Pcsc {
 
             /* AID based selection */
             matchingSeTable[0] = seSelection.prepareSelection(new SeSelector(
-                    new Selector(new AidSelector(ByteArrayUtils.fromHex(seAidPrefix),
-                            SeSelector.SelectMode.FIRST), null),
-                    ChannelState.CLOSE_AFTER, ContactlessProtocols.PROTOCOL_ISO14443_4,
+                    new SeSelector.AidSelector(ByteArrayUtils.fromHex(seAidPrefix),
+                            SeSelector.AidSelector.SelectMode.FIRST),
+                    null, ChannelState.CLOSE_AFTER, ContactlessProtocols.PROTOCOL_ISO14443_4,
                     "Initial selection #1"));
             /* next selection */
             matchingSeTable[1] = seSelection.prepareSelection(new SeSelector(
-                    new Selector(new AidSelector(ByteArrayUtils.fromHex(seAidPrefix),
-                            SeSelector.SelectMode.FIRST), null),
-                    ChannelState.CLOSE_AFTER, ContactlessProtocols.PROTOCOL_ISO14443_4,
+                    new SeSelector.AidSelector(ByteArrayUtils.fromHex(seAidPrefix),
+                            SeSelector.AidSelector.SelectMode.FIRST),
+                    null, ChannelState.CLOSE_AFTER, ContactlessProtocols.PROTOCOL_ISO14443_4,
                     "Next selection #2"));
             /* next selection */
             matchingSeTable[2] = seSelection.prepareSelection(new SeSelector(
-                    new Selector(new AidSelector(ByteArrayUtils.fromHex(seAidPrefix),
-                            SeSelector.SelectMode.FIRST), null),
-                    ChannelState.CLOSE_AFTER, ContactlessProtocols.PROTOCOL_ISO14443_4,
+                    new SeSelector.AidSelector(ByteArrayUtils.fromHex(seAidPrefix),
+                            SeSelector.AidSelector.SelectMode.FIRST),
+                    null, ChannelState.CLOSE_AFTER, ContactlessProtocols.PROTOCOL_ISO14443_4,
                     "Next selection #3"));
             /*
              * Actual SE communication: operate through a single request the SE selection
