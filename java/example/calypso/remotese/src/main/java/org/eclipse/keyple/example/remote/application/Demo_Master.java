@@ -168,9 +168,9 @@ public class Demo_Master implements org.eclipse.keyple.util.Observable.Observer 
                                         new SeSelector(
                                                 new SeSelector.AidSelector(ByteArrayUtils
                                                         .fromHex(CalypsoClassicInfo.AID), null),
-                                                null, ChannelState.KEEP_OPEN,
-                                                ContactlessProtocols.PROTOCOL_ISO14443_4,
-                                                "AID: " + CalypsoClassicInfo.AID));
+                                                null, "AID: " + CalypsoClassicInfo.AID),
+                                        ChannelState.KEEP_OPEN,
+                                        ContactlessProtocols.PROTOCOL_ISO14443_4);
 
                         logger.info("Create a PoSelectionRequest");
 
