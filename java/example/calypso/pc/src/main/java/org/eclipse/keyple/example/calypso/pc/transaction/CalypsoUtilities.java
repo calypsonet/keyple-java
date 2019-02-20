@@ -16,13 +16,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.EnumMap;
 import java.util.Properties;
+import org.eclipse.keyple.calypso.transaction.PoSelector;
 import org.eclipse.keyple.calypso.transaction.PoTransaction;
 import org.eclipse.keyple.example.calypso.common.postructure.CalypsoClassicInfo;
 import org.eclipse.keyple.example.generic.pc.ReaderUtilities;
 import org.eclipse.keyple.seproxy.ChannelState;
 import org.eclipse.keyple.seproxy.SeProxyService;
 import org.eclipse.keyple.seproxy.SeReader;
-import org.eclipse.keyple.seproxy.SeSelector;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.protocol.Protocol;
@@ -124,8 +124,8 @@ public class CalypsoUtilities {
          */
         SeSelection samSelection = new SeSelection(samReader);
 
-        SeSelector samSelector = new SeSelector(null,
-                new SeSelector.AtrFilter(CalypsoClassicInfo.SAM_C1_ATR_REGEX), "Selection SAM C1");
+        PoSelector samSelector = new PoSelector(null,
+                new PoSelector.AtrFilter(CalypsoClassicInfo.SAM_C1_ATR_REGEX), "Selection SAM C1");
 
         /* Prepare selector, ignore MatchingSe here */
         samSelection.prepareSelection(

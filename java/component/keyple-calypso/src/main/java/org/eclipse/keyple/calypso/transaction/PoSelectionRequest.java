@@ -42,11 +42,6 @@ public final class PoSelectionRequest extends SeSelectionRequest {
     private static final Logger logger = LoggerFactory.getLogger(PoSelectionRequest.class);
 
     private final PoClass poClass;
-    private final Set<Integer> successfulStatusCode = new HashSet<Integer>() {
-        {
-            add(0x6283);
-        }
-    };;
 
     /** The list to contain the parsers associated to the prepared commands */
     private List<AbstractApduResponseParser> poResponseParserList =

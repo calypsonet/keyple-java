@@ -18,6 +18,7 @@ import org.eclipse.keyple.calypso.command.po.parser.ReadRecordsRespPars;
 import org.eclipse.keyple.calypso.command.po.parser.SelectFileRespPars;
 import org.eclipse.keyple.calypso.transaction.CalypsoPo;
 import org.eclipse.keyple.calypso.transaction.PoSelectionRequest;
+import org.eclipse.keyple.calypso.transaction.PoSelector;
 import org.eclipse.keyple.calypso.transaction.PoTransaction;
 import org.eclipse.keyple.example.calypso.common.postructure.CalypsoClassicInfo;
 import org.eclipse.keyple.example.calypso.pc.transaction.CalypsoUtilities;
@@ -25,7 +26,6 @@ import org.eclipse.keyple.plugin.pcsc.PcscPlugin;
 import org.eclipse.keyple.seproxy.ChannelState;
 import org.eclipse.keyple.seproxy.SeProxyService;
 import org.eclipse.keyple.seproxy.SeReader;
-import org.eclipse.keyple.seproxy.SeSelector;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 import org.eclipse.keyple.seproxy.exception.NoStackTraceThrowable;
 import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
@@ -117,7 +117,7 @@ public class UseCase_Calypso3_Rev1Selection_Pcsc {
              * make the selection and read additional information afterwards
              */
             PoSelectionRequest poSelectionRequest = new PoSelectionRequest(
-                    new SeSelector(null, new SeSelector.AtrFilter(poAtrRegex),
+                    new PoSelector(null, new PoSelector.AtrFilter(poAtrRegex),
                             "ATR: " + poAtrRegex),
                     ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4);
 

@@ -17,6 +17,7 @@ import org.eclipse.keyple.calypso.command.po.parser.ReadDataStructure;
 import org.eclipse.keyple.calypso.command.po.parser.ReadRecordsRespPars;
 import org.eclipse.keyple.calypso.transaction.CalypsoPo;
 import org.eclipse.keyple.calypso.transaction.PoSelectionRequest;
+import org.eclipse.keyple.calypso.transaction.PoSelector;
 import org.eclipse.keyple.calypso.transaction.PoTransaction;
 import org.eclipse.keyple.example.calypso.common.postructure.CalypsoClassicInfo;
 import org.eclipse.keyple.example.calypso.common.stub.se.StubCalypsoClassic;
@@ -26,7 +27,6 @@ import org.eclipse.keyple.plugin.stub.StubReader;
 import org.eclipse.keyple.plugin.stub.StubSecureElement;
 import org.eclipse.keyple.seproxy.ChannelState;
 import org.eclipse.keyple.seproxy.SeProxyService;
-import org.eclipse.keyple.seproxy.SeSelector;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 import org.eclipse.keyple.seproxy.exception.NoStackTraceThrowable;
 import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
@@ -125,12 +125,11 @@ public class UseCase_Calypso1_ExplicitSelectionAid_Stub {
              * Calypso selection: configures a PoSelectionRequest with all the desired attributes to
              * make the selection and read additional information afterwards
              */
-            PoSelectionRequest poSelectionRequest = new PoSelectionRequest(
-                    new SeSelector(
-                            new SeSelector.AidSelector(
-                                    ByteArrayUtils.fromHex(CalypsoClassicInfo.AID), null),
-                            null, "AID: " + CalypsoClassicInfo.AID),
-                    ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4);
+            PoSelectionRequest poSelectionRequest = new PoSelectionRequest(new PoSelector(
+                    new PoSelector.AidSelector(ByteArrayUtils.fromHex(CalypsoClassicInfo.AID),
+                            PoSelector.InvalidatedPoAcceptance.REJECT_INVALIDATED),
+                    null, "AID: " + CalypsoClassicInfo.AID), ChannelState.KEEP_OPEN,
+                    ContactlessProtocols.PROTOCOL_ISO14443_4);
 
             /*
              * Prepare the reading order and keep the associated parser for later use once the
