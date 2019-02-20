@@ -110,12 +110,11 @@ public final class AndroidOmapiReader extends AbstractStaticReader {
     }
 
     /**
-     * Operate a ATR based logical channel opening.
+     * Operate a logical channel opening.
      * <p>
-     * An OMAPI basic channel is open and the ATR is checked with the regular expression available
-     * in the AtrSelector.
-     * @param seSelector the ATR matching data (a regular expression used to compare the SE ATR to
-     *        the expected one)
+     * The channel opening is done according to the AidSelector and AtrFilter combination.
+     *
+     * @param seSelector the selection data
      * @return the SelectionStatus
      * @throws KeypleIOReaderException if an IOException occurs
      */

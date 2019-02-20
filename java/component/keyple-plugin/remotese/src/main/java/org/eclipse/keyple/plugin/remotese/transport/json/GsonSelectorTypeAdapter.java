@@ -24,7 +24,7 @@ class GsonSelectorTypeAdapter implements JsonDeserializer<SeSelector>, JsonSeria
             return new JsonPrimitive("aidselector::"
                     + ByteArrayUtils.toHex((src.getAidSelector().getAidToSelect())));
         } else {
-            return new JsonPrimitive("atrselector::" + (src.getAtrFilter().getAtrRegex()));
+            return new JsonPrimitive("atrfilter::" + (src.getAtrFilter().getAtrRegex()));
         }
     }
 
@@ -32,8 +32,8 @@ class GsonSelectorTypeAdapter implements JsonDeserializer<SeSelector>, JsonSeria
     public SeSelector deserialize(JsonElement json, Type typeOfT,
             JsonDeserializationContext context) throws JsonParseException {
         String element = json.getAsString();
-        if (element.startsWith("atrselector::")) {
-            String regex = element.replace("atrselector::", "");
+        if (element.startsWith("atrfilter::")) {
+            String regex = element.replace("atrfilter::", "");
             return new SeSelector(null, new SeSelector.AtrFilter(regex), null);
         } else {
             if (element.startsWith("aidselector::")) {
