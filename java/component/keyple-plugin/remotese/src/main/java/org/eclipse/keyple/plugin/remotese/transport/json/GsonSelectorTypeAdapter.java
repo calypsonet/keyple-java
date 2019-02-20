@@ -12,34 +12,35 @@
 package org.eclipse.keyple.plugin.remotese.transport.json;
 
 import java.lang.reflect.Type;
-import org.eclipse.keyple.seproxy.message.SeRequest;
+import org.eclipse.keyple.seproxy.SeSelector;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import com.google.gson.*;
 
-class GsonSelectorTypeAdapter implements JsonDeserializer<Selector>, JsonSerializer<Selector> {
+class GsonSelectorTypeAdapter implements JsonDeserializer<SeSelector>, JsonSerializer<SeSelector> {
 
     @Override
-    public JsonElement serialize(Selector src, Type typeOfSrc, JsonSerializationContext context) {
-        if (src instanceof SeRequest.AidSelector) {
+    public JsonElement serialize(SeSelector src, Type typeOfSrc, JsonSerializationContext context) {
+        if (src.getAtrFilter() == null) {
             return new JsonPrimitive("aidselector::"
-                    + ByteArrayUtils.toHex(((SeRequest.AidSelector) src).getAidToSelect()));
+                    + ByteArrayUtils.toHex((src.getAidSelector().getAidToSelect())));
         } else {
-            return new JsonPrimitive("atrselector::" + ((SeRequest.AtrSelector) src).getAtrRegex());
+            return new JsonPrimitive("atrselector::" + (src.getAtrFilter().getAtrRegex()));
         }
     }
 
     @Override
-    public Selector deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
-            throws JsonParseException {
+    public SeSelector deserialize(JsonElement json, Type typeOfT,
+            JsonDeserializationContext context) throws JsonParseException {
         String element = json.getAsString();
         if (element.startsWith("atrselector::")) {
             String regex = element.replace("atrselector::", "");
-            return new SeRequest.AtrSelector(regex);
+            return new SeSelector(null, new SeSelector.AtrFilter(regex), null);
         } else {
             if (element.startsWith("aidselector::")) {
                 String aidToSelect = element.replace("aidselector::", "");
-                return new SeRequest.AidSelector(ByteArrayUtils.fromHex(aidToSelect));
-
+                return new SeSelector(
+                        new SeSelector.AidSelector(ByteArrayUtils.fromHex(aidToSelect), null), null,
+                        null);
             } else {
                 throw new JsonParseException("Selector malformed");
             }

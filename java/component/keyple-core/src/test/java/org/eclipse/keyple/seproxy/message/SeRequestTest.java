@@ -132,7 +132,7 @@ public class SeRequestTest {
     @Test
     public void constructor2b() {
         seRequest =
-                new SeRequest(getSelector(selectionStatusCode), apdus, channelState, seProtocol);
+                new SeRequest(getSelector(selectionStatusCode), apdus, channelState, Protocol.ANY);
         assertEquals(getSelector(selectionStatusCode).toString(),
                 seRequest.getSeSelector().toString());
         assertEquals(channelState == ChannelState.KEEP_OPEN, seRequest.isKeepChannelOpen());
