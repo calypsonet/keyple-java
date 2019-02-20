@@ -55,8 +55,8 @@ public class SeSelector {
 
         public static final int AID_MIN_LENGTH = 5;
         public static final int AID_MAX_LENGTH = 16;
-        protected FileOccurrence fileOccurrence = FileOccurrence.FIRST;
-        protected FileControlInformation fileControlInformation = FileControlInformation.FCI;
+        private FileOccurrence fileOccurrence = FileOccurrence.FIRST;
+        private FileControlInformation fileControlInformation = FileControlInformation.FCI;
 
         /**
          * - AID’s bytes of the SE application to select. In case the SE application is currently
@@ -72,7 +72,7 @@ public class SeSelector {
          * List of status codes in response to the select application command that should be
          * considered successful although they are different from 9000
          */
-        Set<Integer> successfulSelectionStatusCodes = new LinkedHashSet<Integer>();
+        private Set<Integer> successfulSelectionStatusCodes = new LinkedHashSet<Integer>();
 
         /**
          * AidSelector with additional select application successful status codes, file occurrence
@@ -134,15 +134,6 @@ public class SeSelector {
          */
         public boolean isSelectNext() {
             return fileOccurrence == FileOccurrence.NEXT;
-        }
-
-        /**
-         * Sets the list of successful selection status codes
-         *
-         * @param successfulSelectionStatusCodes
-         */
-        public void setSuccessfulSelectionStatusCodes(Set<Integer> successfulSelectionStatusCodes) {
-            this.successfulSelectionStatusCodes = successfulSelectionStatusCodes;
         }
 
         /**
@@ -287,6 +278,8 @@ public class SeSelector {
 
     @Override
     public String toString() {
-        return "SeSelector";
-    } // TODO complete
+        return "SeSelector: AID_SELECTOR = "
+                + (aidSelector == null ? "null" : aidSelector.toString()) + ", ATR_FILTER " + "= "
+                + (atrFilter == null ? "null" : atrFilter.toString());
+    }
 }

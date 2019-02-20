@@ -239,7 +239,8 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
      *         matching status flag).
      */
     protected abstract SelectionStatus openLogicalChannel(SeSelector seSelector)
-            throws KeypleIOReaderException, KeypleChannelStateException;
+            throws KeypleIOReaderException, KeypleChannelStateException,
+            KeypleApplicationSelectionException;
 
 
     /**

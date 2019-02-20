@@ -185,9 +185,8 @@ public class SeRequestTest {
     }
 
     static SeSelector getSelector(Set<Integer> selectionStatusCode) {
-        SeSelector.AidSelector aidSelector =
-                new SeSelector.AidSelector(ByteArrayUtils.fromHex("A000000291A000000191"), null);
-        aidSelector.setSuccessfulSelectionStatusCodes(selectionStatusCode);
+        SeSelector.AidSelector aidSelector = new SeSelector.AidSelector(
+                ByteArrayUtils.fromHex("A000000291A000000191"), selectionStatusCode);
         SeSelector seSelector = new SeSelector(aidSelector, null, null);
         return seSelector;
     }

@@ -294,12 +294,13 @@ public class CalypsoClassicTransactionEngine extends AbstractReaderObserverEngin
         /*
          * Add selection case 1: Fake AID1, protocol ISO, target rev 3
          */
-        seSelection.prepareSelection(new PoSelectionRequest(
-                new PoSelector(
-                        new PoSelector.AidSelector(ByteArrayUtils.fromHex(poFakeAid1),
-                                PoSelector.InvalidatedPoAcceptance.REJECT_INVALIDATED),
-                        null, "Selector with fake AID1"),
-                ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4));
+        seSelection
+                .prepareSelection(new PoSelectionRequest(
+                        new PoSelector(
+                                new PoSelector.PoAidSelector(ByteArrayUtils.fromHex(poFakeAid1),
+                                        PoSelector.InvalidatedPo.REJECT),
+                                null, "Selector with fake AID1"),
+                        ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4));
 
         /*
          * Add selection case 2: Calypso application, protocol ISO, target rev 2 or 3
@@ -308,8 +309,8 @@ public class CalypsoClassicTransactionEngine extends AbstractReaderObserverEngin
          */
         PoSelectionRequest poSelectionRequestCalypsoAid = new PoSelectionRequest(
                 new PoSelector(
-                        new PoSelector.AidSelector(ByteArrayUtils.fromHex(CalypsoClassicInfo.AID),
-                                PoSelector.InvalidatedPoAcceptance.ACCEPT_INVALIDATED),
+                        new PoSelector.PoAidSelector(ByteArrayUtils.fromHex(CalypsoClassicInfo.AID),
+                                PoSelector.InvalidatedPo.ACCEPT),
                         null, "Calypso selector"),
                 ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4);
 
@@ -322,20 +323,25 @@ public class CalypsoClassicTransactionEngine extends AbstractReaderObserverEngin
         /*
          * Add selection case 3: Fake AID2, unspecified protocol, target rev 2 or 3
          */
-        seSelection.prepareSelection(new PoSelectionRequest(
-                new PoSelector(
-                        new PoSelector.AidSelector(ByteArrayUtils.fromHex(poFakeAid2),
-                                PoSelector.InvalidatedPoAcceptance.REJECT_INVALIDATED),
-                        null, "Selector with fake AID2"),
-                ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_B_PRIME));
+        seSelection
+                .prepareSelection(new PoSelectionRequest(
+                        new PoSelector(
+                                new PoSelector.PoAidSelector(ByteArrayUtils.fromHex(poFakeAid2),
+                                        PoSelector.InvalidatedPo.REJECT),
+                                null, "Selector with fake AID2"),
+                        ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_B_PRIME));
 
         /*
          * Add selection case 4: ATR selection, rev 1 atrregex
          */
-        seSelection.prepareSelection(new PoSelectionRequest(
-                new PoSelector(null, new PoSelector.AtrFilter(CalypsoClassicInfo.ATR_REV1_REGEX),
-                        "Selector with fake AID2"),
-                ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_B_PRIME));
+        seSelection
+                .prepareSelection(
+                        new PoSelectionRequest(
+                                new PoSelector(null,
+                                        new PoSelector.PoAtrFilter(
+                                                CalypsoClassicInfo.ATR_REV1_REGEX),
+                                        "Selector with fake AID2"),
+                                ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_B_PRIME));
 
         return seSelection.getSelectionOperation();
     }

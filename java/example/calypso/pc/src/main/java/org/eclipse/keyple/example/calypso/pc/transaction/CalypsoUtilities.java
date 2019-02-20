@@ -125,7 +125,8 @@ public class CalypsoUtilities {
         SeSelection samSelection = new SeSelection(samReader);
 
         PoSelector samSelector = new PoSelector(null,
-                new PoSelector.AtrFilter(CalypsoClassicInfo.SAM_C1_ATR_REGEX), "Selection SAM C1");
+                new PoSelector.PoAtrFilter(CalypsoClassicInfo.SAM_C1_ATR_REGEX),
+                "Selection SAM C1");
 
         /* Prepare selector, ignore MatchingSe here */
         samSelection.prepareSelection(

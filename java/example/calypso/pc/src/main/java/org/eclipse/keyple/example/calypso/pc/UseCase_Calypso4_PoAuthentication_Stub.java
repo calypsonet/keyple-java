@@ -156,8 +156,8 @@ public class UseCase_Calypso4_PoAuthentication_Stub {
              * make the selection and read additional information afterwards
              */
             PoSelectionRequest poSelectionRequest = new PoSelectionRequest(new PoSelector(
-                    new PoSelector.AidSelector(ByteArrayUtils.fromHex(CalypsoClassicInfo.AID),
-                            PoSelector.InvalidatedPoAcceptance.REJECT_INVALIDATED),
+                    new PoSelector.PoAidSelector(ByteArrayUtils.fromHex(CalypsoClassicInfo.AID),
+                            PoSelector.InvalidatedPo.REJECT),
                     null, "AID: " + CalypsoClassicInfo.AID), ChannelState.KEEP_OPEN,
                     ContactlessProtocols.PROTOCOL_ISO14443_4);
 

@@ -20,25 +20,31 @@ import org.eclipse.keyple.seproxy.SeSelector;
  * the additional successful status codes list (in response to a select application command)
  */
 public final class PoSelector extends SeSelector {
-    public enum InvalidatedPoAcceptance {
-        REJECT_INVALIDATED, ACCEPT_INVALIDATED
+    /**
+     * Indicates if an invalidated PO should be selected or not.
+     * <p>
+     * The acceptance of an invalid PO is determined with the additional successful status codes
+     * specified in the {@link org.eclipse.keyple.seproxy.SeSelector.AidSelector}
+     */
+    public enum InvalidatedPo {
+        REJECT, ACCEPT
     }
 
     /**
      * Create a PoSelector to perform the PO selection. See {@link SeSelector}
      * 
-     * @param aidSelector the AID selection data
-     * @param atrFilter the ATR filter
+     * @param poAidSelector the AID selection data
+     * @param poAtrFilter the ATR filter
      * @param extraInfo information string (to be printed in logs)
      */
-    public PoSelector(AidSelector aidSelector, AtrFilter atrFilter, String extraInfo) {
-        super(aidSelector, atrFilter, extraInfo);
+    public PoSelector(PoAidSelector poAidSelector, PoAtrFilter poAtrFilter, String extraInfo) {
+        super(poAidSelector, poAtrFilter, extraInfo);
     }
 
     /**
-     * AidSelector embedding the Calypo PO additional successful codes list
+     * PoAidSelector embedding the Calypo PO additional successful codes list
      */
-    public static class AidSelector extends SeSelector.AidSelector {
+    public static class PoAidSelector extends SeSelector.AidSelector {
 
         private final static Set<Integer> successfulSelectionStatusCodes = new HashSet<Integer>() {
             {
@@ -46,36 +52,52 @@ public final class PoSelector extends SeSelector {
             }
         };;
 
-        public AidSelector(byte[] aidToSelect, InvalidatedPoAcceptance invalidatedPoAcceptance,
+        /**
+         * Create a {@link PoAidSelector} to select a Calypso PO with an AID through a select
+         * application command.
+         * 
+         * @param aidToSelect the application identifier
+         * @param invalidatedPo an enum value to indicate if an invalidated PO should be accepted or
+         *        not
+         * @param fileOccurrence the ISO7816-4 file occurrence parameter (see
+         *        {@link org.eclipse.keyple.seproxy.SeSelector.AidSelector.FileOccurrence})
+         * @param fileControlInformation the ISO7816-4 file control information parameter (see
+         *        {@link org.eclipse.keyple.seproxy.SeSelector.AidSelector.FileControlInformation})
+         */
+        public PoAidSelector(byte[] aidToSelect, InvalidatedPo invalidatedPo,
                 FileOccurrence fileOccurrence, FileControlInformation fileControlInformation) {
             super(aidToSelect,
-                    invalidatedPoAcceptance == InvalidatedPoAcceptance.ACCEPT_INVALIDATED
-                            ? successfulSelectionStatusCodes
-                            : null,
+                    invalidatedPo == InvalidatedPo.ACCEPT ? successfulSelectionStatusCodes : null,
                     fileOccurrence, fileControlInformation);
         }
 
-        public AidSelector(byte[] aidToSelect, InvalidatedPoAcceptance invalidatedPoAcceptance) {
+        /**
+         * Simplified constructor with default values for the FileOccurrence and
+         * FileControlInformation (see {@link org.eclipse.keyple.seproxy.SeSelector.AidSelector})
+         * 
+         * @param aidToSelect the application identifier
+         * @param invalidatedPo an enum value to indicate if an invalidated PO should be accepted or
+         *        not
+         */
+        public PoAidSelector(byte[] aidToSelect, InvalidatedPo invalidatedPo) {
             super(aidToSelect,
-                    invalidatedPoAcceptance == InvalidatedPoAcceptance.ACCEPT_INVALIDATED
-                            ? successfulSelectionStatusCodes
-                            : null);
+                    invalidatedPo == InvalidatedPo.ACCEPT ? successfulSelectionStatusCodes : null);
         }
     }
 
     /**
-     * AtrFilter
+     * PoAtrFilter to perform a PO selection based on its ATR
      * <p>
      * Could be completed to handle Calypso specific ATR filtering process.
      */
-    public static class AtrFilter extends SeSelector.AtrFilter {
+    public static class PoAtrFilter extends SeSelector.AtrFilter {
 
         /**
          * Regular expression based filter
          *
          * @param atrRegex String hex regular expression
          */
-        public AtrFilter(String atrRegex) {
+        public PoAtrFilter(String atrRegex) {
             super(atrRegex);
         }
     }

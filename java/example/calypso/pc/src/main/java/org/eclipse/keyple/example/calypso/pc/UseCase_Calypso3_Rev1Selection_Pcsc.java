@@ -117,7 +117,7 @@ public class UseCase_Calypso3_Rev1Selection_Pcsc {
              * make the selection and read additional information afterwards
              */
             PoSelectionRequest poSelectionRequest = new PoSelectionRequest(
-                    new PoSelector(null, new PoSelector.AtrFilter(poAtrRegex),
+                    new PoSelector(null, new PoSelector.PoAtrFilter(poAtrRegex),
                             "ATR: " + poAtrRegex),
                     ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4);
 
