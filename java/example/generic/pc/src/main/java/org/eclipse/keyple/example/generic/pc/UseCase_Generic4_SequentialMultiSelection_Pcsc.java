@@ -92,36 +92,39 @@ public class UseCase_Generic4_SequentialMultiSelection_Pcsc {
             String seAidPrefix = "A000000404012509";
 
             /* AID based selection */
-            matchingSe = seSelection.prepareSelection(new SeSelectionRequest(new SeSelector(
-                    new SeSelector.AidSelector(ByteArrayUtils.fromHex(seAidPrefix), null,
-                            SeSelector.AidSelector.FileOccurrence.FIRST,
-                            SeSelector.AidSelector.FileControlInformation.FCI),
-                    null, ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4,
-                    "Initial selection #1")));
+            matchingSe = seSelection.prepareSelection(new SeSelectionRequest(
+                    new SeSelector(
+                            new SeSelector.AidSelector(ByteArrayUtils.fromHex(seAidPrefix), null,
+                                    SeSelector.AidSelector.FileOccurrence.FIRST,
+                                    SeSelector.AidSelector.FileControlInformation.FCI),
+                            null, "Initial selection #1"),
+                    ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4));
 
             seSelection = new SeSelection(seReader);
 
             doAndAnalyseSelection(seSelection, matchingSe, 1);
 
             /* next selection */
-            matchingSe = seSelection.prepareSelection(new SeSelectionRequest(new SeSelector(
-                    new SeSelector.AidSelector(ByteArrayUtils.fromHex(seAidPrefix), null,
-                            SeSelector.AidSelector.FileOccurrence.NEXT,
-                            SeSelector.AidSelector.FileControlInformation.FCI),
-                    null, ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4,
-                    "Next selection #2")));
+            matchingSe = seSelection.prepareSelection(new SeSelectionRequest(
+                    new SeSelector(
+                            new SeSelector.AidSelector(ByteArrayUtils.fromHex(seAidPrefix), null,
+                                    SeSelector.AidSelector.FileOccurrence.NEXT,
+                                    SeSelector.AidSelector.FileControlInformation.FCI),
+                            null, "Next selection #2"),
+                    ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4));
 
             seSelection = new SeSelection(seReader);
 
             doAndAnalyseSelection(seSelection, matchingSe, 2);
 
             /* next selection */
-            matchingSe = seSelection.prepareSelection(new SeSelectionRequest(new SeSelector(
-                    new SeSelector.AidSelector(ByteArrayUtils.fromHex(seAidPrefix), null,
-                            SeSelector.AidSelector.FileOccurrence.NEXT,
-                            SeSelector.AidSelector.FileControlInformation.FCI),
-                    null, ChannelState.CLOSE_AFTER, ContactlessProtocols.PROTOCOL_ISO14443_4,
-                    "Next selection #3")));
+            matchingSe = seSelection.prepareSelection(new SeSelectionRequest(
+                    new SeSelector(
+                            new SeSelector.AidSelector(ByteArrayUtils.fromHex(seAidPrefix), null,
+                                    SeSelector.AidSelector.FileOccurrence.NEXT,
+                                    SeSelector.AidSelector.FileControlInformation.FCI),
+                            null, "Next selection #3"),
+                    ChannelState.CLOSE_AFTER, ContactlessProtocols.PROTOCOL_ISO14443_4));
 
             doAndAnalyseSelection(seSelection, matchingSe, 3);
 

@@ -124,12 +124,12 @@ public class CalypsoUtilities {
          */
         SeSelection samSelection = new SeSelection(samReader);
 
-        SeSelector samSelector =
-                new SeSelector(null, new SeSelector.AtrFilter(CalypsoClassicInfo.SAM_C1_ATR_REGEX),
-                        ChannelState.KEEP_OPEN, Protocol.ANY, "Selection SAM C1");
+        SeSelector samSelector = new SeSelector(null,
+                new SeSelector.AtrFilter(CalypsoClassicInfo.SAM_C1_ATR_REGEX), "Selection SAM C1");
 
         /* Prepare selector, ignore MatchingSe here */
-        samSelection.prepareSelection(new SeSelectionRequest(samSelector));
+        samSelection.prepareSelection(
+                new SeSelectionRequest(samSelector, ChannelState.KEEP_OPEN, Protocol.ANY));
 
         try {
             if (!samSelection.processExplicitSelection()) {

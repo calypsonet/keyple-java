@@ -29,7 +29,7 @@ public class MatchingSe {
      * @param seSelectionRequest the seSelector
      */
     public MatchingSe(SeSelectionRequest seSelectionRequest) {
-        this.channelIsKeptOpen = seSelectionRequest.getSelectorRequest().isKeepChannelOpen();
+        this.channelIsKeptOpen = seSelectionRequest.getSelectionRequest().isKeepChannelOpen();
         extraInfo = seSelectionRequest.getSeSelector().getExtraInfo();
     }
 

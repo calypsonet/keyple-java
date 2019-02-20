@@ -72,20 +72,35 @@ public class UseCase_Generic3_GroupedMultiSelection_Pcsc {
             String seAidPrefix = "A000000404012509";
 
             /* AID based selection */
-            matchingSeTable[0] = seSelection.prepareSelection(new SeSelectionRequest(new SeSelector(
-                    new SeSelector.AidSelector(ByteArrayUtils.fromHex(seAidPrefix), null), null,
-                    ChannelState.CLOSE_AFTER, ContactlessProtocols.PROTOCOL_ISO14443_4,
-                    "Initial selection #1")));
+            matchingSeTable[0] =
+                    seSelection
+                            .prepareSelection(new SeSelectionRequest(
+                                    new SeSelector(
+                                            new SeSelector.AidSelector(
+                                                    ByteArrayUtils.fromHex(seAidPrefix), null),
+                                            null, "Initial selection #1"),
+                                    ChannelState.CLOSE_AFTER,
+                                    ContactlessProtocols.PROTOCOL_ISO14443_4));
             /* next selection */
-            matchingSeTable[1] = seSelection.prepareSelection(new SeSelectionRequest(new SeSelector(
-                    new SeSelector.AidSelector(ByteArrayUtils.fromHex(seAidPrefix), null), null,
-                    ChannelState.CLOSE_AFTER, ContactlessProtocols.PROTOCOL_ISO14443_4,
-                    "Next selection #2")));
+            matchingSeTable[1] =
+                    seSelection
+                            .prepareSelection(new SeSelectionRequest(
+                                    new SeSelector(
+                                            new SeSelector.AidSelector(
+                                                    ByteArrayUtils.fromHex(seAidPrefix), null),
+                                            null, "Next selection #2"),
+                                    ChannelState.CLOSE_AFTER,
+                                    ContactlessProtocols.PROTOCOL_ISO14443_4));
             /* next selection */
-            matchingSeTable[2] = seSelection.prepareSelection(new SeSelectionRequest(new SeSelector(
-                    new SeSelector.AidSelector(ByteArrayUtils.fromHex(seAidPrefix), null), null,
-                    ChannelState.CLOSE_AFTER, ContactlessProtocols.PROTOCOL_ISO14443_4,
-                    "Next selection #3")));
+            matchingSeTable[2] =
+                    seSelection
+                            .prepareSelection(new SeSelectionRequest(
+                                    new SeSelector(
+                                            new SeSelector.AidSelector(
+                                                    ByteArrayUtils.fromHex(seAidPrefix), null),
+                                            null, "Next selection #3"),
+                                    ChannelState.CLOSE_AFTER,
+                                    ContactlessProtocols.PROTOCOL_ISO14443_4));
             /*
              * Actual SE communication: operate through a single request the SE selection
              */

@@ -23,6 +23,7 @@ import org.eclipse.keyple.calypso.command.po.parser.ReadDataStructure;
 import org.eclipse.keyple.calypso.command.po.parser.ReadRecordsRespPars;
 import org.eclipse.keyple.calypso.command.po.parser.SelectFileRespPars;
 import org.eclipse.keyple.command.AbstractApduResponseParser;
+import org.eclipse.keyple.seproxy.ChannelState;
 import org.eclipse.keyple.seproxy.SeSelector;
 import org.eclipse.keyple.seproxy.message.ApduRequest;
 import org.eclipse.keyple.seproxy.message.ApduResponse;
@@ -41,7 +42,6 @@ public final class PoSelectionRequest extends SeSelectionRequest {
     private static final Logger logger = LoggerFactory.getLogger(PoSelectionRequest.class);
 
     private final PoClass poClass;
-    private final SeProtocol protocolFlag;
     private final Set<Integer> successfulStatusCode = new HashSet<Integer>() {
         {
             add(0x6283);
@@ -56,8 +56,9 @@ public final class PoSelectionRequest extends SeSelectionRequest {
      *
      * @param seSelector
      */
-    public PoSelectionRequest(SeSelector seSelector) {
-        super(seSelector);
+    public PoSelectionRequest(SeSelector seSelector, ChannelState channelState,
+            SeProtocol protocolFlag) {
+        super(seSelector, channelState, protocolFlag);
 
         setMatchingClass(CalypsoPo.class);
         setSelectionClass(PoSelectionRequest.class);
@@ -69,7 +70,6 @@ public final class PoSelectionRequest extends SeSelectionRequest {
             poClass = PoClass.ISO;
         }
 
-        this.protocolFlag = seSelector.getProtocolFlag();
         if (logger.isTraceEnabled()) {
             logger.trace("Calypso {} selector", poClass);
         }
@@ -100,9 +100,8 @@ public final class PoSelectionRequest extends SeSelectionRequest {
         boolean readJustOneRecord =
                 !(readDataStructureEnum == ReadDataStructure.MULTIPLE_RECORD_DATA);
 
-        super.getSeSelector()
-                .addApduRequest(new ReadRecordsCmdBuild(poClass, sfi, firstRecordNumber,
-                        readJustOneRecord, (byte) expectedLength, extraInfo).getApduRequest());
+        addApduRequest(new ReadRecordsCmdBuild(poClass, sfi, firstRecordNumber, readJustOneRecord,
+                (byte) expectedLength, extraInfo).getApduRequest());
 
         if (logger.isTraceEnabled()) {
             logger.trace("ReadRecords: SFI = {}, RECNUMBER = {}, JUSTONE = {}, EXPECTEDLENGTH = {}",
@@ -179,7 +178,7 @@ public final class PoSelectionRequest extends SeSelectionRequest {
      * @param extraInfo extra information included in the logs (can be null or empty)
      */
     public SelectFileRespPars prepareSelectFileDfCmd(byte[] path, String extraInfo) {
-        super.getSeSelector().addApduRequest(
+        addApduRequest(
                 new SelectFileCmdBuild(poClass, SelectFileCmdBuild.SelectControl.PATH_FROM_MF,
                         SelectFileCmdBuild.SelectOptions.FCI, path).getApduRequest());
         if (logger.isTraceEnabled()) {
@@ -204,8 +203,7 @@ public final class PoSelectionRequest extends SeSelectionRequest {
      * @param apduRequest the ApduRequest (the correct instruction byte must be provided)
      */
     public void preparePoCustomReadCmd(String name, ApduRequest apduRequest) {
-        super.getSeSelector()
-                .addApduRequest(new PoCustomReadCommandBuilder(name, apduRequest).getApduRequest());
+        addApduRequest(new PoCustomReadCommandBuilder(name, apduRequest).getApduRequest());
         if (logger.isTraceEnabled()) {
             logger.trace("CustomReadCommand: APDUREQUEST = {}", apduRequest);
         }
@@ -218,8 +216,7 @@ public final class PoSelectionRequest extends SeSelectionRequest {
      * @param apduRequest the ApduRequest (the correct instruction byte must be provided)
      */
     public void preparePoCustomModificationCmd(String name, ApduRequest apduRequest) {
-        super.getSeSelector().addApduRequest(
-                new PoCustomModificationCommandBuilder(name, apduRequest).getApduRequest());
+        addApduRequest(new PoCustomModificationCommandBuilder(name, apduRequest).getApduRequest());
         if (logger.isTraceEnabled()) {
             logger.trace("CustomModificationCommand: APDUREQUEST = {}", apduRequest);
         }

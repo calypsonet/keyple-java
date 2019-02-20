@@ -62,11 +62,13 @@ public class SeProtocolDetectionEngine extends AbstractReaderObserverEngine {
                     byte SFI_T2Environment = (byte) 0x14;
 
                     PoSelectionRequest poSelectionRequest =
-                            new PoSelectionRequest(new SeSelector(
-                                    new SeSelector.AidSelector(ByteArrayUtils.fromHex(HoplinkAID),
-                                            null),
-                                    null, ChannelState.KEEP_OPEN,
-                                    ContactlessProtocols.PROTOCOL_ISO14443_4, "Hoplink selector"));
+                            new PoSelectionRequest(
+                                    new SeSelector(
+                                            new SeSelector.AidSelector(
+                                                    ByteArrayUtils.fromHex(HoplinkAID), null),
+                                            null, "Hoplink selector"),
+                                    ChannelState.KEEP_OPEN,
+                                    ContactlessProtocols.PROTOCOL_ISO14443_4);
 
                     poSelectionRequest.preparePoCustomReadCmd("Standard Get Data",
                             new ApduRequest(ByteArrayUtils.fromHex("FFCA000000"), false));
@@ -88,9 +90,10 @@ public class SeProtocolDetectionEngine extends AbstractReaderObserverEngine {
                     break;
                 default:
                     /* Add a generic selector */
-                    seSelection.prepareSelection(new SeSelectionRequest(new SeSelector(null,
-                            new SeSelector.AtrFilter(".*"), ChannelState.KEEP_OPEN,
-                            ContactlessProtocols.PROTOCOL_ISO14443_4, "Default selector")));
+                    seSelection.prepareSelection(new SeSelectionRequest(
+                            new SeSelector(null, new SeSelector.AtrFilter(".*"),
+                                    "Default selector"),
+                            ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4));
                     break;
             }
         }

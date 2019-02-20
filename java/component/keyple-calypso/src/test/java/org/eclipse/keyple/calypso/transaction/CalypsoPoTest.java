@@ -35,9 +35,13 @@ public class CalypsoPoTest {
                         applicationByte)), null);
         SeResponse selectionData =
                 new SeResponse(false, new SelectionStatus(null, fciData, true), null);
-        PoSelectionRequest poSelectionRequest = new PoSelectionRequest(new SeSelector(
-                new SeSelector.AidSelector(ByteArrayUtils.fromHex("315449432E494341"), null), null,
-                ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4, null));
+        PoSelectionRequest poSelectionRequest =
+                new PoSelectionRequest(
+                        new SeSelector(
+                                new SeSelector.AidSelector(
+                                        ByteArrayUtils.fromHex("315449432E494341"), null),
+                                null, null),
+                        ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4);
         CalypsoPo calypsoPo = new CalypsoPo(poSelectionRequest);
         calypsoPo.setSelectionResponse(selectionData);
         return calypsoPo;

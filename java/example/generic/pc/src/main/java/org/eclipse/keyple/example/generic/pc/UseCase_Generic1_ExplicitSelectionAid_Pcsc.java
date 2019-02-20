@@ -107,8 +107,8 @@ public class UseCase_Generic1_ExplicitSelectionAid_Pcsc {
              */
             SeSelectionRequest seSelectionRequest = new SeSelectionRequest(
                     new SeSelector(new SeSelector.AidSelector(ByteArrayUtils.fromHex(seAid), null),
-                            null, ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4,
-                            "AID: " + seAid));
+                            null, "AID: " + seAid),
+                    ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4);
 
             /*
              * Add the selection case to the current selection (we could have added other cases

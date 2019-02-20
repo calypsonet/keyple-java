@@ -131,11 +131,12 @@ public class UseCase_Calypso5_MultipleSession_Pcsc {
              * Calypso selection: configures a PoSelectionRequest with all the desired attributes to
              * make the selection and read additional information afterwards
              */
-            PoSelectionRequest poSelectionRequest = new PoSelectionRequest(new SeSelector(
-                    new SeSelector.AidSelector(ByteArrayUtils.fromHex(CalypsoClassicInfo.AID),
-                            null),
-                    null, ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4,
-                    "AID: " + CalypsoClassicInfo.AID));
+            PoSelectionRequest poSelectionRequest = new PoSelectionRequest(
+                    new SeSelector(
+                            new SeSelector.AidSelector(
+                                    ByteArrayUtils.fromHex(CalypsoClassicInfo.AID), null),
+                            null, "AID: " + CalypsoClassicInfo.AID),
+                    ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4);
 
             /*
              * Add the selection case to the current selection (we could have added other cases

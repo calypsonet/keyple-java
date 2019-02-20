@@ -11,8 +11,13 @@
  ********************************************************************************/
 package org.eclipse.keyple.transaction;
 
+import java.util.ArrayList;
+import java.util.List;
+import org.eclipse.keyple.seproxy.ChannelState;
 import org.eclipse.keyple.seproxy.SeSelector;
+import org.eclipse.keyple.seproxy.message.ApduRequest;
 import org.eclipse.keyple.seproxy.message.SeRequest;
+import org.eclipse.keyple.seproxy.protocol.SeProtocol;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,9 +33,20 @@ public class SeSelectionRequest {
     private SeSelector seSelector;
     private Class<? extends MatchingSe> matchingClass = MatchingSe.class;
     private Class<? extends SeSelectionRequest> selectionClass = SeSelectionRequest.class;
+    /** optional apdu requests list to be executed following the selection process */
+    private final List<ApduRequest> seSelectionApduRequestList = new ArrayList<ApduRequest>();
+    /**
+     * the channelState and protocolFlag may be accessed from derived classes. Let them with the
+     * protected access level.
+     */
+    protected final ChannelState channelState;
+    protected final SeProtocol protocolFlag;
 
-    public SeSelectionRequest(SeSelector seSelector) {
+    public SeSelectionRequest(SeSelector seSelector, ChannelState channelState,
+            SeProtocol protocolFlag) {
         this.seSelector = seSelector;
+        this.channelState = channelState;
+        this.protocolFlag = protocolFlag;
         if (logger.isTraceEnabled()) {
             logger.trace("SeSelection");
         }
@@ -42,9 +58,10 @@ public class SeSelectionRequest {
      *
      * @return the selection SeRequest
      */
-    protected final SeRequest getSelectorRequest() {
+    protected final SeRequest getSelectionRequest() {
         SeRequest seSelectionRequest = null;
-        // seSelectionRequest = new SeRequest(this);
+        seSelectionRequest =
+                new SeRequest(seSelector, seSelectionApduRequestList, channelState, protocolFlag);
         return seSelectionRequest;
     }
 
@@ -98,6 +115,19 @@ public class SeSelectionRequest {
      */
     protected final Class<? extends MatchingSe> getMatchingClass() {
         return matchingClass;
+    }
+
+    /**
+     * Add an additional {@link ApduRequest} to be executed after the selection process if it
+     * succeeds.
+     * <p>
+     * If more than one {@link ApduRequest} is added, all will be executed in the order in which
+     * they were added.
+     * 
+     * @param apduRequest an {@link ApduRequest}
+     */
+    protected final void addApduRequest(ApduRequest apduRequest) {
+        seSelectionApduRequestList.add(apduRequest);
     }
 
     @Override

@@ -61,10 +61,10 @@ public final class SeSelection {
     public MatchingSe prepareSelection(SeSelectionRequest seSelectionRequest) {
         if (logger.isTraceEnabled()) {
             logger.trace("SELECTORREQUEST = {}, EXTRAINFO = {}",
-                    seSelectionRequest.getSelectorRequest(),
+                    seSelectionRequest.getSelectionRequest(),
                     seSelectionRequest.getSeSelector().getExtraInfo());
         }
-        selectionRequestSet.add(seSelectionRequest.getSelectorRequest());
+        selectionRequestSet.add(seSelectionRequest.getSelectionRequest());
         MatchingSe matchingSe = null;
         try {
             Constructor constructor = seSelectionRequest.getMatchingClass()

@@ -125,11 +125,12 @@ public class UseCase_Calypso1_ExplicitSelectionAid_Stub {
              * Calypso selection: configures a PoSelectionRequest with all the desired attributes to
              * make the selection and read additional information afterwards
              */
-            PoSelectionRequest poSelectionRequest = new PoSelectionRequest(new SeSelector(
-                    new SeSelector.AidSelector(ByteArrayUtils.fromHex(CalypsoClassicInfo.AID),
-                            null),
-                    null, ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4,
-                    "AID: " + CalypsoClassicInfo.AID));
+            PoSelectionRequest poSelectionRequest = new PoSelectionRequest(
+                    new SeSelector(
+                            new SeSelector.AidSelector(
+                                    ByteArrayUtils.fromHex(CalypsoClassicInfo.AID), null),
+                            null, "AID: " + CalypsoClassicInfo.AID),
+                    ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4);
 
             /*
              * Prepare the reading order and keep the associated parser for later use once the

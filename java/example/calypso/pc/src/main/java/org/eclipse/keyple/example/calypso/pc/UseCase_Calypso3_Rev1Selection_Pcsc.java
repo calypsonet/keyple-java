@@ -116,9 +116,10 @@ public class UseCase_Calypso3_Rev1Selection_Pcsc {
              * Calypso selection: configures a PoSelectionRequest with all the desired attributes to
              * make the selection and read additional information afterwards
              */
-            PoSelectionRequest poSelectionRequest = new PoSelectionRequest(new SeSelector(null,
-                    new SeSelector.AtrFilter(poAtrRegex), ChannelState.KEEP_OPEN,
-                    ContactlessProtocols.PROTOCOL_ISO14443_4, "ATR: " + poAtrRegex));
+            PoSelectionRequest poSelectionRequest = new PoSelectionRequest(
+                    new SeSelector(null, new SeSelector.AtrFilter(poAtrRegex),
+                            "ATR: " + poAtrRegex),
+                    ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4);
 
             /*
              * Prepare the selection of the DF RT.

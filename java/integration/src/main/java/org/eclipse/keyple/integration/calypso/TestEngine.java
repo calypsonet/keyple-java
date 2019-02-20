@@ -43,21 +43,21 @@ public class TestEngine {
                 .prepareSelection(new PoSelectionRequest(new SeSelector(
                         new SeSelector.AidSelector(
                                 ByteArrayUtils.fromHex(PoFileStructureInfo.poAuditC0Aid), null),
-                        null, ChannelState.KEEP_OPEN, Protocol.ANY, "Audit C0")));
+                        null, "Audit C0"), ChannelState.KEEP_OPEN, Protocol.ANY));
 
         // Add CLAP AID to the list
         seSelection
                 .prepareSelection(new PoSelectionRequest(new SeSelector(
                         new SeSelector.AidSelector(
                                 ByteArrayUtils.fromHex(PoFileStructureInfo.clapAid), null),
-                        null, ChannelState.KEEP_OPEN, Protocol.ANY, "CLAP")));
+                        null, "CLAP"), ChannelState.KEEP_OPEN, Protocol.ANY));
 
         // Add cdLight AID to the list
         seSelection
                 .prepareSelection(new PoSelectionRequest(new SeSelector(
                         new SeSelector.AidSelector(
                                 ByteArrayUtils.fromHex(PoFileStructureInfo.cdLightAid), null),
-                        null, ChannelState.KEEP_OPEN, Protocol.ANY, "CDLight")));
+                        null, "CDLight"), ChannelState.KEEP_OPEN, Protocol.ANY));
 
         if (seSelection.processExplicitSelection()) {
             return new PoFileStructureInfo(seSelection.getSelectedSe());
@@ -128,9 +128,9 @@ public class TestEngine {
         // open
         SeSelection samSelection = new SeSelection(samReader);
 
-        SeSelectionRequest samSelectionRequest =
-                new SeSelectionRequest(new SeSelector(null, new SeSelector.AtrFilter(SAM_ATR_REGEX),
-                        ChannelState.KEEP_OPEN, Protocol.ANY, "SAM Selection"));
+        SeSelectionRequest samSelectionRequest = new SeSelectionRequest(
+                new SeSelector(null, new SeSelector.AtrFilter(SAM_ATR_REGEX), "SAM Selection"),
+                ChannelState.KEEP_OPEN, Protocol.ANY);
 
         /* Prepare selector, ignore MatchingSe here */
         samSelection.prepareSelection(samSelectionRequest);

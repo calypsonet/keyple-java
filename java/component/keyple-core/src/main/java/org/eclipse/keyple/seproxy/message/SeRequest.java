@@ -51,27 +51,30 @@ public final class SeRequest implements Serializable {
      */
     private ChannelState channelState;
 
+
     /**
      * The constructor called by a ProxyReader in order to open a logical channel, to send a set of
      * APDU commands to a SE application, or both of them.
-     * <ul>
-     * <li>For SE requiring an AID based selection, the Selector should be defined with a non null
-     * byte array.</li>
-     * <li>For SE requiring an ATR based selection, the Selector should be defined with a non null
-     * String regular expression.</li>
-     * <li>For SE supporting neither AID selection nor ATR selection, the Selector should be defined
-     * as null.</li>
-     * <li>The protocolFlag parameter is optional.</li>
-     * </ul>
      *
-     * @param seSelector the SE Selector
+     * @param seSelector the SeSelector containing the selection information to process the SE
+     *        selection
+     * @param apduRequests a optional list of {@link ApduRequest} to execute after a successful
+     *        selection process
+     * @param channelState the channel management parameter allowing to close or keep the channel
+     *        open after the request execution
+     * @param protocolFlag the expected protocol for the SE (may be set to Protocol.ANY if no check
+     *        is needed)
      */
-    public SeRequest(SeSelector seSelector) {
+    public SeRequest(SeSelector seSelector, List<ApduRequest> apduRequests,
+            ChannelState channelState, SeProtocol protocolFlag) {
         this.seSelector = seSelector;
+        this.apduRequests = apduRequests;
+        this.channelState = channelState;
+        this.protocolFlag = protocolFlag;
     }
 
     /**
-     * Constructor to be used when the SE is already selected
+     * Constructor to be used when the SE is already selected (without {@link SeSelector})
      * 
      * @param apduRequests a list of ApudRequest
      * @param channelState a flag to tell if the channel has to be closed at the end

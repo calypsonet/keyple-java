@@ -13,8 +13,6 @@ package org.eclipse.keyple.seproxy;
 
 import java.util.*;
 import java.util.regex.Pattern;
-import org.eclipse.keyple.seproxy.message.ApduRequest;
-import org.eclipse.keyple.seproxy.protocol.SeProtocol;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,18 +25,10 @@ public class SeSelector {
     /** logger */
     private static final Logger logger = LoggerFactory.getLogger(SeSelector.class);
 
-    /** optional apdu requests list to be executed following the selection process */
-    protected List<ApduRequest> seSelectionApduRequestList = new ArrayList<ApduRequest>();
-
-    private final ChannelState channelState;
-    private final SeProtocol protocolFlag;
     private final AidSelector aidSelector;
     private final AtrFilter atrFilter;
-    private String extraInfo;
+    private final String extraInfo;
 
-    /**
-     * TODO add FCI/FCP/FMP/no parameter
-     */
     /**
      * Static nested class to hold the data elements used to perform an AID based selection
      */
@@ -47,6 +37,8 @@ public class SeSelector {
         /**
          * FileOccurrence indicates how to carry out the file occurrence in accordance with
          * ISO7816-4
+         * <p>
+         * For now only FIRST and NEXT options are supported
          */
         public enum FileOccurrence {
             FIRST, LAST, NEXT, PREVIOUS
@@ -54,6 +46,8 @@ public class SeSelector {
 
         /**
          * FileOccurrence indicates how to which template is expected in accordance with ISO7816-4
+         * <p>
+         * For now only FCI option is supported
          */
         public enum FileControlInformation {
             FCI, FCP, FMD, NO_RESPONSE
@@ -246,39 +240,38 @@ public class SeSelector {
      *
      * @param aidSelector the AID selection data
      * @param atrFilter the ATR filter
-     * @param channelState flag to tell if the logical channel should be left open at the end of the
-     *        selection
-     * @param protocolFlag flag to be compared with the protocol identified when communicating the
-     *        SE
      * @param extraInfo information string (to be printed in logs)
      */
-    public SeSelector(AidSelector aidSelector, AtrFilter atrFilter, ChannelState channelState,
-            SeProtocol protocolFlag, String extraInfo) {
+    public SeSelector(AidSelector aidSelector, AtrFilter atrFilter, String extraInfo) {
         this.aidSelector = aidSelector;
         this.atrFilter = atrFilter;
-        this.channelState = channelState;
-        this.protocolFlag = protocolFlag;
         if (extraInfo != null) {
             this.extraInfo = extraInfo;
         } else {
             this.extraInfo = "";
         }
         if (logger.isTraceEnabled()) {
-            logger.trace(
-                    "Selection data: AID = {}, ATRREGEX = {}, KEEPCHANNELOPEN = {}, PROTOCOLFLAG = {}",
-                    ByteArrayUtils.toHex(this.aidSelector.getAidToSelect()),
-                    this.atrFilter.getAtrRegex(), protocolFlag);
+            logger.trace("Selection data: AID = {}, ATRREGEX = {}, EXTRAINFO = {}",
+                    this.aidSelector == null ? "null"
+                            : ByteArrayUtils.toHex(this.aidSelector.getAidToSelect()),
+                    this.atrFilter == null ? "null" : this.atrFilter.getAtrRegex(), extraInfo);
         }
     }
 
-    public void addApduRequest(ApduRequest apduRequest) {
-        seSelectionApduRequestList.add(apduRequest);
-    }
-
+    /**
+     * Getter
+     * 
+     * @return the {@link AidSelector} provided at construction time
+     */
     public AidSelector getAidSelector() {
         return aidSelector;
     }
 
+    /**
+     * Getter
+     * 
+     * @return the {@link AtrFilter} provided at construction time
+     */
     public AtrFilter getAtrFilter() {
         return atrFilter;
     }
@@ -292,15 +285,8 @@ public class SeSelector {
         return extraInfo;
     }
 
-    /**
-     * @return the protocolFlag defined by the constructor
-     */
-    public final SeProtocol getProtocolFlag() {
-        return protocolFlag;
-    }
-
     @Override
     public String toString() {
         return "SeSelector";
-    }
+    } // TODO complete
 }

@@ -103,9 +103,10 @@ public class UseCase_Generic2_DefaultSelectionNotification_Pcsc implements Reade
          * Generic selection: configures a SeSelector with all the desired attributes to make the
          * selection
          */
-        SeSelectionRequest seSelector = new SeSelectionRequest(new SeSelector(
-                new SeSelector.AidSelector(ByteArrayUtils.fromHex(seAid), null), null,
-                ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4, "AID: " + seAid));
+        SeSelectionRequest seSelector = new SeSelectionRequest(
+                new SeSelector(new SeSelector.AidSelector(ByteArrayUtils.fromHex(seAid), null),
+                        null, "AID: " + seAid),
+                ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4);
 
         /*
          * Add the selection case to the current selection (we could have added other cases here)
