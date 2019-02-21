@@ -12,7 +12,7 @@
 package org.eclipse.keyple.example.remote.application;
 
 import org.eclipse.keyple.example.remote.transport.wspolling.client_retrofit.WsPollingRetrofitFactory;
-import org.eclipse.keyple.plugin.remotese.transport.TransportFactory;
+import org.eclipse.keyple.plugin.remotese.transport.factory.TransportFactory;
 
 /**
  * Demo Web Service with Retrofit http client library (Android friendly) The master device uses the
@@ -23,12 +23,14 @@ public class Demo_WebserviceWithRetrofit_MasterClient {
     public static void main(String[] args) throws Exception {
 
         // Create the procotol factory
-        TransportFactory factory = new WsPollingRetrofitFactory(); // HTTP Web Polling
+        TransportFactory factory =
+                new WsPollingRetrofitFactory("Demo_WebserviceWithRetrofit_MasterClient1"); // HTTP
+                                                                                           // Web
+                                                                                           // Polling
 
         // Launch the server thread
         Demo_Threads.startServer(false, factory);
 
-        Thread.sleep(1000);
 
         // Launch the client thread
         Demo_Threads.startClient(true, factory);

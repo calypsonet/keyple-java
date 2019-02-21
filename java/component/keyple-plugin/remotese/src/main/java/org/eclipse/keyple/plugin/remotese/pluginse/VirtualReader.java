@@ -12,11 +12,12 @@
 package org.eclipse.keyple.plugin.remotese.pluginse;
 
 import java.util.Map;
+import org.eclipse.keyple.plugin.remotese.exception.KeypleRemoteException;
+import org.eclipse.keyple.plugin.remotese.exception.KeypleRemoteReaderException;
 import org.eclipse.keyple.plugin.remotese.pluginse.method.RmSetDefaultSelectionRequestTx;
 import org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx;
-import org.eclipse.keyple.plugin.remotese.transport.KeypleRemoteException;
-import org.eclipse.keyple.plugin.remotese.transport.KeypleRemoteReaderException;
-import org.eclipse.keyple.plugin.remotese.transport.RemoteMethodTxEngine;
+import org.eclipse.keyple.plugin.remotese.rm.RemoteMethodTxEngine;
+import org.eclipse.keyple.plugin.remotese.transport.factory.TransportNode;
 import org.eclipse.keyple.seproxy.event.ReaderEvent;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.message.*;
@@ -41,8 +42,7 @@ public final class VirtualReader extends AbstractObservableReader {
     /**
      * Called by {@link RemoteSePlugin} Creates a new virtual reader
      * 
-     * @param session Reader Session that helps communicate with
-     *        {@link org.eclipse.keyple.plugin.remotese.transport.TransportNode}
+     * @param session Reader Session that helps communicate with {@link TransportNode}
      * @param nativeReaderName local name of the native reader on slave side
      */
     VirtualReader(VirtualReaderSession session, String nativeReaderName,

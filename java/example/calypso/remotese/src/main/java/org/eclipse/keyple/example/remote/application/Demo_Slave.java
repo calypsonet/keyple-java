@@ -12,9 +12,13 @@
 package org.eclipse.keyple.example.remote.application;
 
 import java.io.IOException;
-import org.eclipse.keyple.example.remote.application.calypso.StubCalypsoClassic;
+import org.eclipse.keyple.example.calypso.common.stub.se.StubCalypsoClassic;
+import org.eclipse.keyple.plugin.remotese.exception.KeypleRemoteException;
 import org.eclipse.keyple.plugin.remotese.nativese.NativeReaderServiceImpl;
-import org.eclipse.keyple.plugin.remotese.transport.*;
+import org.eclipse.keyple.plugin.remotese.transport.factory.ClientNode;
+import org.eclipse.keyple.plugin.remotese.transport.factory.ServerNode;
+import org.eclipse.keyple.plugin.remotese.transport.factory.TransportFactory;
+import org.eclipse.keyple.plugin.remotese.transport.factory.TransportNode;
 import org.eclipse.keyple.plugin.stub.StubPlugin;
 import org.eclipse.keyple.plugin.stub.StubProtocolSetting;
 import org.eclipse.keyple.plugin.stub.StubReader;
@@ -41,6 +45,8 @@ class Demo_Slave {
     // TransportNode used as to send and receive KeypleDto to Master
     private TransportNode node;
 
+    private String clientNodeId;
+
     // NativeReaderServiceImpl, used to connectAReader and disconnect readers
     private NativeReaderServiceImpl nativeReaderService;
 
@@ -58,9 +64,13 @@ class Demo_Slave {
         logger.info("*******************");
 
         if (isServer) {
-            // Slave is server, start Server and wait for Master clients
+            // Slave is a server, start Server and wait for Master clients
             try {
                 node = transportFactory.getServer();
+
+                // slave server needs to know to which master client it should connects
+                clientNodeId = transportFactory.getClient().getNodeId();
+
                 // start server in a new thread
                 new Thread() {
                     @Override
@@ -76,6 +86,10 @@ class Demo_Slave {
         } else {
             // Slave is client, connectAReader to Master Server
             node = transportFactory.getClient();
+
+            // slave client uses its clientid to connect to server
+            clientNodeId = node.getNodeId();
+
             ((ClientNode) node).connect(new ClientNode.ConnectCallback() {
                 @Override
                 public void onConnectSuccess() {
@@ -138,7 +152,7 @@ class Demo_Slave {
 
         // connect a reader to Remote Plugin
         logger.info("Connect remotely the StubPlugin ");
-        return nativeReaderService.connectReader(localReader, node.getNodeId());
+        return nativeReaderService.connectReader(localReader, clientNodeId);
 
     }
 
@@ -167,14 +181,14 @@ class Demo_Slave {
 
     }
 
-    public void disconnect(String sessionId, String nativeReaderName, String slaveNodeId)
+    public void disconnect(String sessionId, String nativeReaderName)
             throws KeypleReaderException, KeypleRemoteException {
 
         logger.info("*************************");
         logger.info("Disconnect native reader ");
         logger.info("*************************");
 
-        nativeReaderService.disconnectReader(sessionId, localReader.getName(), slaveNodeId);
+        nativeReaderService.disconnectReader(sessionId, localReader.getName(), clientNodeId);
     }
 
 
