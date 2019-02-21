@@ -23,7 +23,10 @@ public class Demo_WebserviceWithRetrofit_MasterClient {
     public static void main(String[] args) throws Exception {
 
         // Create the procotol factory
-        TransportFactory factory = new WsPollingRetrofitFactory("Demo_WebserviceWithRetrofit_MasterClient1"); // HTTP Web Polling
+        TransportFactory factory =
+                new WsPollingRetrofitFactory("Demo_WebserviceWithRetrofit_MasterClient1"); // HTTP
+                                                                                           // Web
+                                                                                           // Polling
 
         // Launch the server thread
         Demo_Threads.startServer(false, factory);

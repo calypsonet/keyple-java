@@ -23,7 +23,8 @@ public class Demo_Websocket_MasterServer {
     public static void main(String[] args) throws Exception {
 
         // Create the procotol factory
-        TransportFactory factory = new WskFactory(true,"Demo_Websocket_MasterServer1"); // Web socket
+        TransportFactory factory = new WskFactory(true, "Demo_Websocket_MasterServer1"); // Web
+                                                                                         // socket
 
         // Launch the server thread
         Demo_Threads.startServer(true, factory);

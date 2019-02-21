@@ -12,8 +12,8 @@
 package org.eclipse.keyple.plugin.remotese.rm;
 
 
-import org.eclipse.keyple.plugin.remotese.transport.model.KeypleDto;
 import org.eclipse.keyple.plugin.remotese.exception.KeypleRemoteReaderException;
+import org.eclipse.keyple.plugin.remotese.transport.model.KeypleDto;
 
 public interface RemoteMethodParser<T> {
 

@@ -63,10 +63,8 @@ public class WsPClient implements ClientNode {
                 while (true) {
                     try {
                         logger.debug("Polling clientNodeId {}", clientNodeId);
-                        JsonObject httpResponse = httpPoll(
-                                getConnection(
-                                        baseUrl + pollingEndpoint + "?clientNodeId=" + clientNodeId),
-                                "{}");
+                        JsonObject httpResponse = httpPoll(getConnection(
+                                baseUrl + pollingEndpoint + "?clientNodeId=" + clientNodeId), "{}");
                         logger.debug("Polling for clientNodeId {} receive a httpResponse {}",
                                 clientNodeId, httpResponse);
                         processHttpResponseDTO(httpResponse);
@@ -134,11 +132,8 @@ public class WsPClient implements ClientNode {
     }
 
     /*
-    @Override
-    public void update(KeypleDto event) {
-        this.sendDTO(event);
-    }
-*/
+     * @Override public void update(KeypleDto event) { this.sendDTO(event); }
+     */
 
     /*
      * TransportNode

@@ -14,7 +14,6 @@ package org.eclipse.keyple.plugin.remotese.rm.json;
 
 import java.io.IOException;
 import java.util.*;
-
 import org.eclipse.keyple.seproxy.ChannelState;
 import org.eclipse.keyple.seproxy.event.ObservableReader;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;

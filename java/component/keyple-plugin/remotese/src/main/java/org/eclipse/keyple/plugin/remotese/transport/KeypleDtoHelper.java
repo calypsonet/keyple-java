@@ -11,7 +11,7 @@
  ********************************************************************************/
 package org.eclipse.keyple.plugin.remotese.transport;
 
-import org.eclipse.keyple.plugin.remotese.transport.json.JsonParser;import com.google.gson.JsonObject;
+import org.eclipse.keyple.plugin.remotese.transport.json.JsonParser;
 import org.eclipse.keyple.plugin.remotese.transport.model.KeypleDto;
 
 /**

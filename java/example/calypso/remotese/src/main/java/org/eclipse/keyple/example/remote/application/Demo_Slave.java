@@ -12,7 +12,6 @@
 package org.eclipse.keyple.example.remote.application;
 
 import java.io.IOException;
-
 import org.eclipse.keyple.example.calypso.common.stub.se.StubCalypsoClassic;
 import org.eclipse.keyple.plugin.remotese.exception.KeypleRemoteException;
 import org.eclipse.keyple.plugin.remotese.nativese.NativeReaderServiceImpl;
@@ -69,7 +68,7 @@ class Demo_Slave {
             try {
                 node = transportFactory.getServer();
 
-                //slave server needs to know to which master client it should connects
+                // slave server needs to know to which master client it should connects
                 clientNodeId = transportFactory.getClient().getNodeId();
 
                 // start server in a new thread
@@ -88,7 +87,7 @@ class Demo_Slave {
             // Slave is client, connectAReader to Master Server
             node = transportFactory.getClient();
 
-            //slave client uses its clientid to connect to server
+            // slave client uses its clientid to connect to server
             clientNodeId = node.getNodeId();
 
             ((ClientNode) node).connect(new ClientNode.ConnectCallback() {

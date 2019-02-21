@@ -12,10 +12,9 @@
 package org.eclipse.keyple.plugin.remotese.rm;
 
 import java.util.concurrent.CountDownLatch;
-
+import org.eclipse.keyple.plugin.remotese.exception.KeypleRemoteException;
 import org.eclipse.keyple.plugin.remotese.transport.DtoSender;
 import org.eclipse.keyple.plugin.remotese.transport.model.KeypleDto;
-import org.eclipse.keyple.plugin.remotese.exception.KeypleRemoteException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

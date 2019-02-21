@@ -22,7 +22,8 @@ public class Demo_Webservice_MasterClient {
 
     public static void main(String[] args) throws Exception {
 
-        TransportFactory factory = new WsPollingFactory("Demo_Webservice_MasterClient"); // HTTP Web Polling
+        TransportFactory factory = new WsPollingFactory("Demo_Webservice_MasterClient"); // HTTP Web
+                                                                                         // Polling
 
         // Launch the server thread
         Demo_Threads.startServer(false, factory);

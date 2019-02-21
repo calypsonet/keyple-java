@@ -78,11 +78,9 @@ public class LocalServer implements ServerNode {
     public String getNodeId() {
         return "localServer1";
     }
-/*
-    @Override
-    public void update(KeypleDto event) {
-
-        sendDTO(event);
-    }
-    */
+    /*
+     * @Override public void update(KeypleDto event) {
+     * 
+     * sendDTO(event); }
+     */
 }

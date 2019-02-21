@@ -13,7 +13,6 @@ package org.eclipse.keyple.example.remote.transport.wspolling.client;
 
 import java.io.IOException;
 import java.util.Random;
-
 import org.eclipse.keyple.example.remote.transport.wspolling.server.WsPServer;
 import org.eclipse.keyple.plugin.remotese.transport.factory.ClientNode;
 import org.eclipse.keyple.plugin.remotese.transport.factory.ServerNode;

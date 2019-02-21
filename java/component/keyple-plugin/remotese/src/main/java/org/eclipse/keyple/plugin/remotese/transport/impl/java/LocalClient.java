@@ -79,15 +79,10 @@ public class LocalClient implements ClientNode {
     }
 
     /*
-    @Override
-    public void update(KeypleDto event) {
-        try {
-            sendDTO(event);
-        } catch (KeypleRemoteException e) {
-            // Error is not propagated
-            logger.error("Exception while sending event throw KeypleRemoteInterface", e);
-        }
-    }*/
+     * @Override public void update(KeypleDto event) { try { sendDTO(event); } catch
+     * (KeypleRemoteException e) { // Error is not propagated
+     * logger.error("Exception while sending event throw KeypleRemoteInterface", e); } }
+     */
 
 
     @Override
