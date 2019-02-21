@@ -13,6 +13,7 @@ package org.eclipse.keyple.plugin.remotese.transport;
 
 import org.eclipse.keyple.plugin.remotese.transport.json.JsonParser;
 import org.eclipse.keyple.plugin.remotese.transport.model.KeypleDto;
+import com.google.gson.JsonObject;
 
 /**
  * Utility class to manipulate KeypleDto
