@@ -15,6 +15,9 @@ import java.net.InetSocketAddress;
 import java.util.HashMap;
 import java.util.Map;
 import org.eclipse.keyple.plugin.remotese.transport.*;
+import org.eclipse.keyple.plugin.remotese.transport.factory.ServerNode;
+import org.eclipse.keyple.plugin.remotese.transport.model.KeypleDto;
+import org.eclipse.keyple.plugin.remotese.transport.model.TransportDto;
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
@@ -203,8 +206,4 @@ class WskServer extends WebSocketServer implements ServerNode {
     }
 
 
-    @Override
-    public void update(KeypleDto event) {
-        sendDTO(event);
-    }
 }

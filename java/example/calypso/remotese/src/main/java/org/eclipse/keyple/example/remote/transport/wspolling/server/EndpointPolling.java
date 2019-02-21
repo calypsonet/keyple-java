@@ -16,6 +16,9 @@ import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
 import org.eclipse.keyple.plugin.remotese.transport.*;
+import org.eclipse.keyple.plugin.remotese.transport.factory.TransportNode;
+import org.eclipse.keyple.plugin.remotese.transport.model.KeypleDto;
+import org.eclipse.keyple.plugin.remotese.transport.model.TransportDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.sun.net.httpserver.HttpExchange;
@@ -114,14 +117,6 @@ class EndpointPolling implements HttpHandler, TransportNode {
         }
         keypleDtoQueue.publish(message);
 
-    }
-
-
-
-    @Override
-    public void update(KeypleDto event) {
-        logger.info("Send DTO from update {}", event.getAction());
-        this.sendDTO(event);
     }
 
 

@@ -17,6 +17,9 @@ import java.io.OutputStream;
 import java.util.Scanner;
 import org.eclipse.keyple.example.remote.transport.wspolling.WsPTransportDTO;
 import org.eclipse.keyple.plugin.remotese.transport.*;
+import org.eclipse.keyple.plugin.remotese.transport.factory.TransportNode;
+import org.eclipse.keyple.plugin.remotese.transport.model.KeypleDto;
+import org.eclipse.keyple.plugin.remotese.transport.model.TransportDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.sun.net.httpserver.HttpExchange;
@@ -114,8 +117,4 @@ class EndpointKeypleDTO implements HttpHandler, TransportNode {
         return s.hasNext() ? s.next() : "";
     }
 
-    @Override
-    public void update(KeypleDto event) {
-        // not in used in ws
-    }
 }

@@ -12,7 +12,7 @@
 package org.eclipse.keyple.example.remote.application;
 
 import org.eclipse.keyple.example.remote.transport.websocket.WskFactory;
-import org.eclipse.keyple.plugin.remotese.transport.TransportFactory;
+import org.eclipse.keyple.plugin.remotese.transport.factory.TransportFactory;
 
 /**
  * Demo websocket The master device uses the websocket server whereas the slave device uses the
@@ -23,7 +23,8 @@ public class Demo_Websocket_MasterServer {
     public static void main(String[] args) throws Exception {
 
         // Create the procotol factory
-        TransportFactory factory = new WskFactory(true); // Web socket
+        TransportFactory factory = new WskFactory(true, "Demo_Websocket_MasterServer1"); // Web
+                                                                                         // socket
 
         // Launch the server thread
         Demo_Threads.startServer(true, factory);

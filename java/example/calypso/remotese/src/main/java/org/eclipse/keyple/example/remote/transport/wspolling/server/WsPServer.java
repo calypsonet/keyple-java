@@ -14,8 +14,10 @@ package org.eclipse.keyple.example.remote.transport.wspolling.server;
 import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.InetSocketAddress;
-import java.util.concurrent.*;
 import org.eclipse.keyple.plugin.remotese.transport.*;
+import org.eclipse.keyple.plugin.remotese.transport.factory.ServerNode;
+import org.eclipse.keyple.plugin.remotese.transport.model.KeypleDto;
+import org.eclipse.keyple.plugin.remotese.transport.model.TransportDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.sun.net.httpserver.HttpHandler;
@@ -103,20 +105,13 @@ public class WsPServer implements ServerNode {
 
     @Override
     public void sendDTO(TransportDto message) {
-        ((EndpointPolling) this.pollingEndpoint).update(message.getKeypleDTO());
+        ((EndpointPolling) this.pollingEndpoint).sendDTO(message.getKeypleDTO());
     }
 
     @Override
     public void sendDTO(KeypleDto message) {
-        ((EndpointPolling) this.pollingEndpoint).update(message);
+        ((EndpointPolling) this.pollingEndpoint).sendDTO(message);
     }
-
-    @Override
-    public void update(KeypleDto event) {
-        ((EndpointPolling) this.pollingEndpoint).update(event);
-
-    }
-
 
     public HttpServer getHttpServer() {
         return server;

@@ -1,6 +1,7 @@
 # Remote SE Plugin
 
 This project aims at implementing the concept of an interaction between a Terminal and a remote Secure Element. 
+
 The Secure Element is inserted into a Reader connected to a Slave terminal, which exposes the SE to a Master Terminal that will pilot the interaction. The Slave terminal connects one or multiple Native Reader to the Master Terminal. The Master Terminal interacts with those readers as if they were local, in a sense they are virtual.  
 
 The Remote SE plugin is deployed on the Master side to pilot interactions with Slave Terminals. Independent from the transport layer, the remote SE plugin is being prototyped with various transports layers (WebSocket, web service REST). 

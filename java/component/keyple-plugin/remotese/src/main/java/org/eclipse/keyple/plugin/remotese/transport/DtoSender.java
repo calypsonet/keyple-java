@@ -11,13 +11,15 @@
  ********************************************************************************/
 package org.eclipse.keyple.plugin.remotese.transport;
 
-import org.eclipse.keyple.util.Observable;
+import org.eclipse.keyple.plugin.remotese.exception.KeypleRemoteException;
+import org.eclipse.keyple.plugin.remotese.transport.model.KeypleDto;
+import org.eclipse.keyple.plugin.remotese.transport.model.TransportDto;
 
 /**
  * Components that sends a DTO over the network to the other end. (slave or master) It can be an
  * observer for KeypleDto to propagate them through the network
  */
-public interface DtoSender extends Observable.Observer<KeypleDto> {
+public interface DtoSender {
 
     /**
      * Send DTO with common information
