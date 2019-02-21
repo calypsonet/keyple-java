@@ -9,11 +9,18 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  ********************************************************************************/
-package org.eclipse.keyple.plugin.remotese.transport;
+package org.eclipse.keyple.plugin.remotese.exception;
 
+import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 
-public interface RemoteMethodExecutor {
+public class KeypleRemoteReaderException extends KeypleReaderException {
 
-    TransportDto execute(TransportDto transportDto);
+    public KeypleRemoteReaderException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    public KeypleRemoteReaderException(String message) {
+        super(message);
+    }
 
 }

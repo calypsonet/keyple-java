@@ -14,7 +14,7 @@ package org.eclipse.keyple.example.remote.transport.wspolling;
 import org.eclipse.keyple.example.remote.transport.wspolling.client.WsPClient;
 import org.eclipse.keyple.plugin.remotese.transport.DtoHandler;
 import org.eclipse.keyple.plugin.remotese.transport.KeypleDtoHelper;
-import org.eclipse.keyple.plugin.remotese.transport.TransportDto;
+import org.eclipse.keyple.plugin.remotese.transport.model.TransportDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

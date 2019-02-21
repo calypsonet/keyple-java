@@ -12,7 +12,7 @@
 package org.eclipse.keyple.example.remote.application;
 
 import org.eclipse.keyple.example.remote.transport.websocket.WskFactory;
-import org.eclipse.keyple.plugin.remotese.transport.TransportFactory;
+import org.eclipse.keyple.plugin.remotese.transport.factory.TransportFactory;
 
 /**
  * Demo websocket The master device uses the websocket client whereas the slave device uses the

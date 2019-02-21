@@ -12,8 +12,8 @@
 package org.eclipse.keyple.example.remote.transport.websocket;
 
 import org.eclipse.keyple.plugin.remotese.transport.DtoSender;
-import org.eclipse.keyple.plugin.remotese.transport.KeypleDto;
-import org.eclipse.keyple.plugin.remotese.transport.TransportDto;
+import org.eclipse.keyple.plugin.remotese.transport.model.KeypleDto;
+import org.eclipse.keyple.plugin.remotese.transport.model.TransportDto;
 import org.java_websocket.WebSocket;
 
 /**

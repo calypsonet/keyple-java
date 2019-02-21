@@ -14,8 +14,8 @@ package org.eclipse.keyple.example.remote.transport.wspolling.client_retrofit;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import java.io.IOException;
-import org.eclipse.keyple.plugin.remotese.transport.KeypleDto;
-import org.eclipse.keyple.plugin.remotese.transport.RemoteMethod;
+import org.eclipse.keyple.plugin.remotese.transport.model.KeypleDto;
+import org.eclipse.keyple.plugin.remotese.rm.RemoteMethod;
 import org.junit.Before;
 import retrofit2.Response;
 

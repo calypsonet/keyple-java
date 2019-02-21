@@ -9,8 +9,10 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  ********************************************************************************/
-package org.eclipse.keyple.plugin.remotese.transport;
+package org.eclipse.keyple.plugin.remotese.rm;
 
+
+import org.eclipse.keyple.plugin.remotese.transport.model.KeypleDto;
 
 public interface RemoteMethodInvoker {
 

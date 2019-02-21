@@ -12,7 +12,7 @@
 package org.eclipse.keyple.example.remote.application;
 
 import org.eclipse.keyple.example.remote.transport.wspolling.WsPollingFactory;
-import org.eclipse.keyple.plugin.remotese.transport.TransportFactory;
+import org.eclipse.keyple.plugin.remotese.transport.factory.TransportFactory;
 
 /**
  * Demo Web Service with jdk http client library The master device uses the webservice server

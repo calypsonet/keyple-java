@@ -11,6 +11,8 @@
  ********************************************************************************/
 package org.eclipse.keyple.plugin.remotese.transport;
 
+import org.eclipse.keyple.plugin.remotese.transport.model.TransportDto;
+
 /**
  * Component that process locally DTO
  */

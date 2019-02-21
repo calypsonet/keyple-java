@@ -11,9 +11,9 @@
  ********************************************************************************/
 package org.eclipse.keyple.plugin.remotese.nativese.method;
 
-import org.eclipse.keyple.plugin.remotese.transport.KeypleDto;
-import org.eclipse.keyple.plugin.remotese.transport.RemoteMethod;
-import org.eclipse.keyple.plugin.remotese.transport.RemoteMethodInvoker;
+import org.eclipse.keyple.plugin.remotese.transport.model.KeypleDto;
+import org.eclipse.keyple.plugin.remotese.rm.RemoteMethod;
+import org.eclipse.keyple.plugin.remotese.rm.RemoteMethodInvoker;
 import org.eclipse.keyple.seproxy.message.ProxyReader;
 
 @Deprecated

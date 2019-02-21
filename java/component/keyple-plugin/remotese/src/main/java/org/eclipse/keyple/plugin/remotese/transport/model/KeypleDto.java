@@ -9,7 +9,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  ********************************************************************************/
-package org.eclipse.keyple.plugin.remotese.transport;
+package org.eclipse.keyple.plugin.remotese.transport.model;
 
 /**
  * Data Transfer Object used to common an API call from a Master Reader to a Slave Reader (and vice

@@ -13,7 +13,7 @@ package org.eclipse.keyple.example.remote.transport.wspolling.server;
 
 import java.util.HashMap;
 import java.util.Map;
-import org.eclipse.keyple.plugin.remotese.transport.KeypleDto;
+import org.eclipse.keyple.plugin.remotese.transport.model.KeypleDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

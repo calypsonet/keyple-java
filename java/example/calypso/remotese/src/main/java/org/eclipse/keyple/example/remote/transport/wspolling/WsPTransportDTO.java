@@ -12,8 +12,8 @@
 package org.eclipse.keyple.example.remote.transport.wspolling;
 
 import org.eclipse.keyple.plugin.remotese.transport.DtoSender;
-import org.eclipse.keyple.plugin.remotese.transport.KeypleDto;
-import org.eclipse.keyple.plugin.remotese.transport.TransportDto;
+import org.eclipse.keyple.plugin.remotese.transport.model.KeypleDto;
+import org.eclipse.keyple.plugin.remotese.transport.model.TransportDto;
 
 public class WsPTransportDTO implements TransportDto {
 

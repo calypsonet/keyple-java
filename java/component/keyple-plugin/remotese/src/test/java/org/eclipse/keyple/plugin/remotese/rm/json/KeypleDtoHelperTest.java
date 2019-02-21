@@ -9,11 +9,11 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  ********************************************************************************/
-package org.eclipse.keyple.plugin.remotese.common.json;
+package org.eclipse.keyple.plugin.remotese.rm.json;
 
 
 import java.io.IOException;
-import org.eclipse.keyple.plugin.remotese.transport.KeypleDto;
+import org.eclipse.keyple.plugin.remotese.transport.model.KeypleDto;
 import org.eclipse.keyple.plugin.remotese.transport.KeypleDtoHelper;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.junit.Test;

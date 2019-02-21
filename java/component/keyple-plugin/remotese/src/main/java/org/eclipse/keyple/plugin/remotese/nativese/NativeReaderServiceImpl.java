@@ -12,9 +12,16 @@
 package org.eclipse.keyple.plugin.remotese.nativese;
 
 
+import org.eclipse.keyple.plugin.remotese.exception.KeypleRemoteException;
+import org.eclipse.keyple.plugin.remotese.rm.RemoteMethod;
+import org.eclipse.keyple.plugin.remotese.rm.RemoteMethodExecutor;
+import org.eclipse.keyple.plugin.remotese.rm.RemoteMethodTxEngine;
 import org.eclipse.keyple.plugin.remotese.nativese.method.*;
 import org.eclipse.keyple.plugin.remotese.transport.*;
+import org.eclipse.keyple.plugin.remotese.transport.factory.TransportNode;
 import org.eclipse.keyple.plugin.remotese.transport.json.JsonParser;
+import org.eclipse.keyple.plugin.remotese.transport.model.KeypleDto;
+import org.eclipse.keyple.plugin.remotese.transport.model.TransportDto;
 import org.eclipse.keyple.seproxy.ReaderPlugin;
 import org.eclipse.keyple.seproxy.SeProxyService;
 import org.eclipse.keyple.seproxy.event.ObservableReader;

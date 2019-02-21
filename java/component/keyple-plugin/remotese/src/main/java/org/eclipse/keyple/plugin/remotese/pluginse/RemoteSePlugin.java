@@ -16,7 +16,7 @@ import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import org.eclipse.keyple.plugin.remotese.transport.DtoSender;
-import org.eclipse.keyple.plugin.remotese.transport.RemoteMethodTxEngine;
+import org.eclipse.keyple.plugin.remotese.rm.RemoteMethodTxEngine;
 import org.eclipse.keyple.seproxy.event.PluginEvent;
 import org.eclipse.keyple.seproxy.event.ReaderEvent;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;

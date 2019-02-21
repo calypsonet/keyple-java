@@ -17,9 +17,9 @@ import java.net.InetSocketAddress;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Random;
-import org.eclipse.keyple.plugin.remotese.transport.ClientNode;
-import org.eclipse.keyple.plugin.remotese.transport.ServerNode;
-import org.eclipse.keyple.plugin.remotese.transport.TransportFactory;
+import org.eclipse.keyple.plugin.remotese.transport.factory.ClientNode;
+import org.eclipse.keyple.plugin.remotese.transport.factory.ServerNode;
+import org.eclipse.keyple.plugin.remotese.transport.factory.TransportFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

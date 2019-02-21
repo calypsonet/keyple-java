@@ -9,12 +9,12 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  ********************************************************************************/
-package org.eclipse.keyple.plugin.remotese.common.json;
+package org.eclipse.keyple.plugin.remotese.rm.json;
 
 
 import java.io.IOException;
 import java.util.*;
-import org.eclipse.keyple.seproxy.*;
+
 import org.eclipse.keyple.seproxy.ChannelState;
 import org.eclipse.keyple.seproxy.event.ObservableReader;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;

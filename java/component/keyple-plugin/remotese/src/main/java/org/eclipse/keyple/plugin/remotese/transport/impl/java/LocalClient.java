@@ -9,9 +9,13 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  ********************************************************************************/
-package org.eclipse.keyple.plugin.remotese.transport.java;
+package org.eclipse.keyple.plugin.remotese.transport.impl.java;
 
+import org.eclipse.keyple.plugin.remotese.exception.KeypleRemoteException;
 import org.eclipse.keyple.plugin.remotese.transport.*;
+import org.eclipse.keyple.plugin.remotese.transport.factory.ClientNode;
+import org.eclipse.keyple.plugin.remotese.transport.model.KeypleDto;
+import org.eclipse.keyple.plugin.remotese.transport.model.TransportDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -9,18 +9,13 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  ********************************************************************************/
-package org.eclipse.keyple.plugin.remotese.transport;
+package org.eclipse.keyple.plugin.remotese.rm;
 
-import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 
-public class KeypleRemoteException extends KeypleBaseException {
+import org.eclipse.keyple.plugin.remotese.transport.model.TransportDto;
 
-    public KeypleRemoteException(String message, Throwable cause) {
-        super(message, cause);
-    }
+public interface RemoteMethodExecutor {
 
-    public KeypleRemoteException(String message) {
-        super(message);
-    }
+    TransportDto execute(TransportDto transportDto);
 
 }

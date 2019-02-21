@@ -12,7 +12,7 @@
 package org.eclipse.keyple.example.remote.transport.wspolling.client_retrofit;
 
 
-import org.eclipse.keyple.plugin.remotese.transport.KeypleDto;
+import org.eclipse.keyple.plugin.remotese.transport.model.KeypleDto;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;

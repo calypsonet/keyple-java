@@ -9,10 +9,10 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  ********************************************************************************/
-package org.eclipse.keyple.plugin.remotese.transport.java;
+package org.eclipse.keyple.plugin.remotese.transport.impl.java;
 
-import org.eclipse.keyple.plugin.remotese.transport.KeypleDto;
-import org.eclipse.keyple.plugin.remotese.transport.TransportDto;
+import org.eclipse.keyple.plugin.remotese.transport.model.KeypleDto;
+import org.eclipse.keyple.plugin.remotese.transport.model.TransportDto;
 
 public class LocalTransportDto implements TransportDto {
 

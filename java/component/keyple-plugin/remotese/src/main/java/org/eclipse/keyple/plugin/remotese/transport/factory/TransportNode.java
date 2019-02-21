@@ -9,8 +9,11 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  ********************************************************************************/
-package org.eclipse.keyple.plugin.remotese.transport;
+package org.eclipse.keyple.plugin.remotese.transport.factory;
 
+
+import org.eclipse.keyple.plugin.remotese.transport.DtoHandler;
+import org.eclipse.keyple.plugin.remotese.transport.DtoSender;
 
 /**
  * TransportNode is a one-point gateway for incoming and outgoing TransportDto. It extend DtoSender

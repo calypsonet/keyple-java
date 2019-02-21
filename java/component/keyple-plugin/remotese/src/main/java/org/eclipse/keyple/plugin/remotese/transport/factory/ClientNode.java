@@ -9,8 +9,22 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  ********************************************************************************/
-package org.eclipse.keyple.plugin.remotese.transport;
+package org.eclipse.keyple.plugin.remotese.transport.factory;
 
-public interface RemoteMethodTxCallback<T> {
-    void get(T response, KeypleRemoteException exception);
+
+/**
+ * Client type of TransportNode, connects to a ServerNode
+ */
+public interface ClientNode extends TransportNode {
+
+    void connect(ConnectCallback connectCallback);
+
+    void disconnect();
+
+    interface ConnectCallback {
+        void onConnectSuccess();
+
+        void onConnectFailure();
+    }
+
 }

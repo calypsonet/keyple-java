@@ -12,8 +12,8 @@
 package org.eclipse.keyple.example.remote.application;
 
 
-import org.eclipse.keyple.plugin.remotese.transport.KeypleRemoteException;
-import org.eclipse.keyple.plugin.remotese.transport.TransportFactory;
+import org.eclipse.keyple.plugin.remotese.exception.KeypleRemoteException;
+import org.eclipse.keyple.plugin.remotese.transport.factory.TransportFactory;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderNotFoundException;
 import org.slf4j.Logger;
