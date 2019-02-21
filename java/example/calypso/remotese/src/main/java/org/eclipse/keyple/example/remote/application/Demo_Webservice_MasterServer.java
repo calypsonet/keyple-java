@@ -11,7 +11,7 @@
  ********************************************************************************/
 package org.eclipse.keyple.example.remote.application;
 
-import org.eclipse.keyple.example.remote.transport.wspolling.WsPollingFactory;
+import org.eclipse.keyple.example.remote.transport.wspolling.client.WsPollingFactory;
 import org.eclipse.keyple.plugin.remotese.transport.factory.TransportFactory;
 
 /**
@@ -22,7 +22,7 @@ public class Demo_Webservice_MasterServer {
 
     public static void main(String[] args) throws Exception {
 
-        TransportFactory factory = new WsPollingFactory(); // HTTP Web Polling
+        TransportFactory factory = new WsPollingFactory("Demo_Webservice_MasterServer"); // HTTP Web Polling
 
         // Launch the server thread
         Demo_Threads.startServer(true, factory);

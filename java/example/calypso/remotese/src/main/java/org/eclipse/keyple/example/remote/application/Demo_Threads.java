@@ -95,6 +95,7 @@ public class Demo_Threads {
         logger.info("Connect Reader to Master");
         logger.info("------------------------");
 
+        Thread.sleep(2000);
         String sessionId = slave.connectAReader();
         logger.info("--------------------------------------------------");
         logger.info("Session created on server {}", sessionId);
@@ -110,7 +111,7 @@ public class Demo_Threads {
         slave.removeSe();
         logger.info("Wait 2 seconds, then disconnect reader");
         Thread.sleep(2000);
-        slave.disconnect(sessionId, null, null);
+        slave.disconnect(sessionId, null);
 
         logger.info("Wait 2 seconds, then shutdown jvm");
         Thread.sleep(2000);

@@ -117,8 +117,4 @@ class EndpointKeypleDTO implements HttpHandler, TransportNode {
         return s.hasNext() ? s.next() : "";
     }
 
-    @Override
-    public void update(KeypleDto event) {
-        // not in used in ws
-    }
 }

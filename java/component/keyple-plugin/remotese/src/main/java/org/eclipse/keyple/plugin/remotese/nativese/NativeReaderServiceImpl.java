@@ -247,7 +247,6 @@ public class NativeReaderServiceImpl
             logger.error("Event " + event.toString()
                     + " could not be sent though Remote Service Interface", e);
         }
-
     }
 
 

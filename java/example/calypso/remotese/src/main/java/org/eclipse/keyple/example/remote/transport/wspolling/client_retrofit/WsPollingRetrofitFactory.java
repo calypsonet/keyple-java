@@ -32,13 +32,15 @@ public class WsPollingRetrofitFactory extends TransportFactory {
     final private String pollingUrl = "/polling";
     final private String keypleUrl = "/keypleDTO";
     private Integer port = 8000 + new Random().nextInt((100) + 1);
-    private String clientNodeId = "local1";
+    private String clientNodeId;
     private String hostname = "0.0.0.0";
     private String protocol = "http://";
 
     private static final Logger logger = LoggerFactory.getLogger(WsPollingRetrofitFactory.class);
 
-    public WsPollingRetrofitFactory() {}
+    public WsPollingRetrofitFactory(String clientNodeId) {
+        this.clientNodeId = clientNodeId;
+    }
 
     public WsPollingRetrofitFactory(Integer port, String clientNodeId, String hostname,
             String protocol) {
@@ -76,7 +78,7 @@ public class WsPollingRetrofitFactory extends TransportFactory {
     public ServerNode getServer() throws IOException {
 
         logger.info("*** Create Ws Polling Server ***");
-        return new WsPServer(hostname, port, keypleUrl, pollingUrl, clientNodeId + "server");
+        return new WsPServer(hostname, port, keypleUrl, pollingUrl, clientNodeId);
 
     }
 

@@ -33,7 +33,7 @@ public class WsPTransportDTO implements TransportDto {
 
     @Override
     public TransportDto nextTransportDTO(KeypleDto keypleDto) {
-        return new WsPTransportDTO(keypleDto, null);
+        return new WsPTransportDTO(keypleDto, node);
     }
 
 }

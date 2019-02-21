@@ -9,11 +9,11 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  ********************************************************************************/
-package org.eclipse.keyple.example.remote.transport.wspolling;
+package org.eclipse.keyple.example.remote.transport.wspolling.client;
 
 import java.io.IOException;
 import java.util.Random;
-import org.eclipse.keyple.example.remote.transport.wspolling.client.WsPClient;
+
 import org.eclipse.keyple.example.remote.transport.wspolling.server.WsPServer;
 import org.eclipse.keyple.plugin.remotese.transport.factory.ClientNode;
 import org.eclipse.keyple.plugin.remotese.transport.factory.ServerNode;
@@ -31,13 +31,15 @@ public class WsPollingFactory extends TransportFactory {
     private Integer port = 8000 + new Random().nextInt((100) + 1);
     private String pollingUrl = "/polling";
     private String keypleUrl = "/keypleDTO";
-    private String clientNodeId = "local1";
+    private String clientNodeId;
     private String bindUrl = "0.0.0.0";
     private String protocol = "http://";
 
     private static final Logger logger = LoggerFactory.getLogger(WsPollingFactory.class);
 
-    public WsPollingFactory() {}
+    public WsPollingFactory(String clientNodeId) {
+        this.clientNodeId = clientNodeId;
+    }
 
     private WsPollingFactory(Integer port, String pollingUrl, String keypleUrl, String clientNodeId,
             String bindUrl, String protocol) {
@@ -73,7 +75,7 @@ public class WsPollingFactory extends TransportFactory {
 
         logger.info("*** Create Ws Polling Server ***");
         try {
-            return new WsPServer(bindUrl, port, keypleUrl, pollingUrl, clientNodeId + "server");
+            return new WsPServer(bindUrl, port, keypleUrl, pollingUrl, clientNodeId);
         } catch (IOException e) {
             return null;
         }

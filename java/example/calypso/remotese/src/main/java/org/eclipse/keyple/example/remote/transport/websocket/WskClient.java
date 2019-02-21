@@ -106,13 +106,6 @@ public class WskClient extends WebSocketClient implements ClientNode {
         this.dtoHandler = receiver;
     }
 
-
-    // observer of keypleDTOSenders
-    @Override
-    public void update(KeypleDto event) {
-        this.sendDTO(event);
-    }
-
     @Override
     public void connect(ConnectCallback connectCallback) {
         if (connectCallback != null) {

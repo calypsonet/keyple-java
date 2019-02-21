@@ -189,12 +189,6 @@ public class WsPRetrofitClientImpl implements ClientNode {
         return this.nodeId;
     }
 
-    @Override
-    public void update(KeypleDto event) {
-        this.sendDTO(event);
-    }
-
-
     /*
      * TransportNode
      */

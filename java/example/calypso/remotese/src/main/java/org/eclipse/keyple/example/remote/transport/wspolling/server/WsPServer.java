@@ -106,20 +106,13 @@ public class WsPServer implements ServerNode {
 
     @Override
     public void sendDTO(TransportDto message) {
-        ((EndpointPolling) this.pollingEndpoint).update(message.getKeypleDTO());
+        ((EndpointPolling) this.pollingEndpoint).sendDTO(message.getKeypleDTO());
     }
 
     @Override
     public void sendDTO(KeypleDto message) {
-        ((EndpointPolling) this.pollingEndpoint).update(message);
+        ((EndpointPolling) this.pollingEndpoint).sendDTO(message);
     }
-
-    @Override
-    public void update(KeypleDto event) {
-        ((EndpointPolling) this.pollingEndpoint).update(event);
-
-    }
-
 
     public HttpServer getHttpServer() {
         return server;

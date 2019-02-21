@@ -20,7 +20,7 @@ import java.util.Scanner;
 import org.eclipse.keyple.example.remote.transport.wspolling.WsPTransportDTO;
 import org.eclipse.keyple.plugin.remotese.transport.*;
 import org.eclipse.keyple.plugin.remotese.transport.factory.ClientNode;
-import org.eclipse.keyple.plugin.remotese.json.JsonParser;
+import org.eclipse.keyple.plugin.remotese.transport.json.JsonParser;
 import org.eclipse.keyple.plugin.remotese.transport.model.KeypleDto;
 import org.eclipse.keyple.plugin.remotese.transport.model.TransportDto;
 import org.slf4j.Logger;
@@ -38,37 +38,37 @@ public class WsPClient implements ClientNode {
 
     final private String keypleDtoEndpoint;
     final private String pollingEndpoint;
-    final private String nodeId;
+    final private String clientNodeId;
     final private String baseUrl;
 
     private DtoHandler dtoHandler;
 
     public WsPClient(String baseUrl, String keypleDtoEndpoint, String pollingEndpoint,
-            String nodeId) {
+            String clientNodeId) {
         this.baseUrl = baseUrl;
         this.keypleDtoEndpoint = keypleDtoEndpoint;
         this.pollingEndpoint = pollingEndpoint;
-        this.nodeId = nodeId;
+        this.clientNodeId = clientNodeId;
     }
 
 
 
-    public void startPollingWorker(final String nodeId) {
+    public void startPollingWorker() {
 
-        logger.info("Start Polling Worker {}", nodeId);
+        logger.info("Start Polling Worker {}", clientNodeId);
 
         Thread pollThread = new Thread() {
             public void run() {
                 // Boolean exit = false;
                 while (true) {
                     try {
-                        logger.debug("Polling clientNodeId {}", nodeId);
+                        logger.debug("Polling clientNodeId {}", clientNodeId);
                         JsonObject httpResponse = httpPoll(
                                 getConnection(
-                                        baseUrl + pollingEndpoint + "?clientNodeId=" + nodeId),
+                                        baseUrl + pollingEndpoint + "?clientNodeId=" + clientNodeId),
                                 "{}");
                         logger.debug("Polling for clientNodeId {} receive a httpResponse {}",
-                                nodeId, httpResponse);
+                                clientNodeId, httpResponse);
                         processHttpResponseDTO(httpResponse);
                     } catch (IOException e) {
                         logger.debug(
@@ -133,11 +133,12 @@ public class WsPClient implements ClientNode {
         sendDTO(new WsPTransportDTO(message, null));
     }
 
+    /*
     @Override
     public void update(KeypleDto event) {
         this.sendDTO(event);
     }
-
+*/
 
     /*
      * TransportNode
@@ -149,7 +150,7 @@ public class WsPClient implements ClientNode {
 
     @Override
     public String getNodeId() {
-        return nodeId;
+        return clientNodeId;
     }
 
 
@@ -158,7 +159,7 @@ public class WsPClient implements ClientNode {
         if (connectCallback != null) {
             logger.warn("Connection callback is not implemented for this client");
         }
-        this.startPollingWorker(nodeId);
+        this.startPollingWorker();
     }
 
     @Override

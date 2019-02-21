@@ -21,10 +21,18 @@ Examples of implementation can be found in example/calypso/remotese/transport
 
 ###KeypleDto
 
-###DtoHandler
+``KeypleDto`` is the object that contains the information about the remote invocation, they are built and processed by the plugin, there is no need to modify them.
+
+Users needs to implement (and personalize if needed) ``TransportDto`` which is an envelop for a KeypleDto. It allows to enrich a KeypleDto with information on the transport implementation to allow back and forth communication. (for instance a callback url)
 
 ###DtoSender
 
+``DtoSender`` is the component responsible for sending the TransportDto to the other terminal.
+ 
+###DtoHandler
+
+``DtoHandler`` interface is implemented by both ``NativeReaderService`` (Slave side) and ``VirtualReaderService`` (Master side). Both services waits for a KeypleDto, process it, and will return a KeypleDto as a response (if any). You should link your ``DtoSender`` to both ``NativeReaderService`` and ``VirtualReaderService`` to make them communicate.
+ 
 ###TransportNode
 
-
+``TransportNode`` is a convenient and optional interface, it links a ``DtoSender`` with a ``DtoHandler`` to create a unique point of contact.

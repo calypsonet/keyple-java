@@ -120,14 +120,6 @@ class EndpointPolling implements HttpHandler, TransportNode {
     }
 
 
-
-    @Override
-    public void update(KeypleDto event) {
-        logger.info("Send DTO from update {}", event.getAction());
-        this.sendDTO(event);
-    }
-
-
     private Map<String, String> queryToMap(String query) {
         Map<String, String> result = new HashMap<String, String>();
         for (String param : query.split("&")) {

@@ -78,6 +78,7 @@ public class LocalClient implements ClientNode {
         return "localClient1";
     }
 
+    /*
     @Override
     public void update(KeypleDto event) {
         try {
@@ -86,7 +87,7 @@ public class LocalClient implements ClientNode {
             // Error is not propagated
             logger.error("Exception while sending event throw KeypleRemoteInterface", e);
         }
-    }
+    }*/
 
 
     @Override

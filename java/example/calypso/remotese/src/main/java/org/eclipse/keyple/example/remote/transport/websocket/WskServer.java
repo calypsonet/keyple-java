@@ -206,8 +206,4 @@ class WskServer extends WebSocketServer implements ServerNode {
     }
 
 
-    @Override
-    public void update(KeypleDto event) {
-        sendDTO(event);
-    }
 }
