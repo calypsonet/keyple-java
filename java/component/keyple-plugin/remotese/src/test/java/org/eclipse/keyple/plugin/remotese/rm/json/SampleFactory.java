@@ -108,6 +108,8 @@ public class SampleFactory {
 
         SeSelector aidSelector = new SeSelector(
                 new SeSelector.AidSelector(ByteArrayUtils.fromHex(poAid), null), null, null);
+
+
         SeSelector atrSelector = new SeSelector(null, new SeSelector.AtrFilter("/regex/"), null);
 
         SeRequest seRequest = new SeRequest(aidSelector, poApduRequestList,

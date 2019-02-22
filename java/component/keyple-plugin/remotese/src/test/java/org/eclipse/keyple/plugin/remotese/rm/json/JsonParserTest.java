@@ -54,10 +54,15 @@ public class JsonParserTest {
     }
 
     @Test
-    public void testSelectionRequest() {
+    public void testSelectionByAidRequest() {
         DefaultSelectionRequest defaultSelectionRequest = SampleFactory.getSelectionRequest();
         testSerializeDeserializeObj(defaultSelectionRequest, DefaultSelectionRequest.class);
+    }
 
+    @Test
+    public void testSelectionByAtrRequest() {
+        DefaultSelectionRequest defaultSelectionRequest = SampleFactory.getSelectionRequest();
+        testSerializeDeserializeObj(defaultSelectionRequest, DefaultSelectionRequest.class);
     }
 
     @Test
@@ -82,8 +87,6 @@ public class JsonParserTest {
         testSerializeDeserializeObj(exception, KeypleBaseException.class);
 
     }
-
-
 
     /*
      * Utility Method
