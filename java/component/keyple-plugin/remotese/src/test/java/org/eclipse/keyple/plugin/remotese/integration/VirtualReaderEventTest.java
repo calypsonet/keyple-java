@@ -17,6 +17,7 @@ import java.util.concurrent.TimeUnit;
 import org.eclipse.keyple.plugin.stub.StubPlugin;
 import org.eclipse.keyple.plugin.stub.StubReaderTest;
 import org.eclipse.keyple.seproxy.ChannelState;
+import org.eclipse.keyple.seproxy.SeSelector;
 import org.eclipse.keyple.seproxy.event.ObservableReader;
 import org.eclipse.keyple.seproxy.event.ReaderEvent;
 import org.eclipse.keyple.seproxy.exception.KeypleIOReaderException;
@@ -24,7 +25,7 @@ import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.protocol.Protocol;
 import org.eclipse.keyple.transaction.MatchingSe;
 import org.eclipse.keyple.transaction.SeSelection;
-import org.eclipse.keyple.transaction.SeSelector;
+import org.eclipse.keyple.transaction.SeSelectionRequest;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.junit.*;
 import org.slf4j.Logger;
@@ -204,10 +205,12 @@ public class VirtualReaderEventTest extends VirtualReaderBaseTest {
 
         SeSelection seSelection = new SeSelection(virtualReader);
 
-        SeSelector seSelector = new SeSelector(ByteArrayUtils.fromHex(poAid),
-                SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN, Protocol.ANY, "AID: " + poAid);
+        SeSelectionRequest seSelectionRequest = new SeSelectionRequest(
+                new SeSelector(new SeSelector.AidSelector(ByteArrayUtils.fromHex(poAid), null),
+                        null, "AID: " + poAid),
+                ChannelState.KEEP_OPEN, Protocol.ANY);
 
-        seSelection.prepareSelection(seSelector);
+        seSelection.prepareSelection(seSelectionRequest);
 
         ((ObservableReader) virtualReader).setDefaultSelectionRequest(
                 seSelection.getSelectionOperation(),
@@ -246,10 +249,12 @@ public class VirtualReaderEventTest extends VirtualReaderBaseTest {
 
         SeSelection seSelection = new SeSelection(virtualReader);
 
-        SeSelector seSelector = new SeSelector(ByteArrayUtils.fromHex(poAid),
-                SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN, Protocol.ANY, "AID: " + poAid);
+        SeSelectionRequest seSelectionRequest = new SeSelectionRequest(
+                new SeSelector(new SeSelector.AidSelector(ByteArrayUtils.fromHex(poAid), null),
+                        null, "AID: " + poAid),
+                ChannelState.KEEP_OPEN, Protocol.ANY);
 
-        seSelection.prepareSelection(seSelector);
+        seSelection.prepareSelection(seSelectionRequest);
 
         ((ObservableReader) virtualReader).setDefaultSelectionRequest(
                 seSelection.getSelectionOperation(),
@@ -295,10 +300,12 @@ public class VirtualReaderEventTest extends VirtualReaderBaseTest {
 
         SeSelection seSelection = new SeSelection(virtualReader);
 
-        SeSelector seSelector = new SeSelector(ByteArrayUtils.fromHex(poAid),
-                SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN, Protocol.ANY, "AID: " + poAid);
+        SeSelectionRequest seSelectionRequest = new SeSelectionRequest(
+                new SeSelector(new SeSelector.AidSelector(ByteArrayUtils.fromHex(poAid), null),
+                        null, "AID: " + poAid),
+                ChannelState.KEEP_OPEN, Protocol.ANY);
 
-        seSelection.prepareSelection(seSelector);
+        seSelection.prepareSelection(seSelectionRequest);
 
         ((ObservableReader) virtualReader).setDefaultSelectionRequest(
                 seSelection.getSelectionOperation(), ObservableReader.NotificationMode.ALWAYS);
@@ -330,11 +337,12 @@ public class VirtualReaderEventTest extends VirtualReaderBaseTest {
                 Assert.assertEquals(ReaderEvent.EventType.SE_INSERTED, event.getEventType());
 
                 SeSelection seSelection = new SeSelection(virtualReader);
-                SeSelector seSelector =
-                        new SeSelector("3B.*", ChannelState.KEEP_OPEN, Protocol.ANY, "Test ATR");
+                SeSelectionRequest seSelectionRequest = new SeSelectionRequest(
+                        new SeSelector(null, new SeSelector.AtrFilter("3B.*"), "Test ATR"),
+                        ChannelState.KEEP_OPEN, Protocol.ANY);
 
                 /* Prepare selector, ignore MatchingSe here */
-                seSelection.prepareSelection(seSelector);
+                seSelection.prepareSelection(seSelectionRequest);
 
                 try {
                     seSelection.processExplicitSelection();

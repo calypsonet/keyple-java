@@ -16,10 +16,10 @@ import static org.mockito.Mockito.doAnswer;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import org.eclipse.keyple.CoreBaseTest;
+import org.eclipse.keyple.seproxy.SeSelector;
 import org.eclipse.keyple.seproxy.event.ObservableReader;
 import org.eclipse.keyple.seproxy.event.ReaderEvent;
 import org.eclipse.keyple.seproxy.exception.*;
-import org.eclipse.keyple.seproxy.message.SeRequest;
 import org.eclipse.keyple.seproxy.message.SelectionStatus;
 import org.eclipse.keyple.seproxy.protocol.SeProtocol;
 import org.eclipse.keyple.seproxy.protocol.TransmissionMode;
@@ -158,13 +158,7 @@ public class AbstractObservableReaderTest extends CoreBaseTest {
             }
 
             @Override
-            protected SelectionStatus openLogicalChannelByAtr(SeRequest.AtrSelector atrSelector) {
-                return null;
-            }
-
-            @Override
-            protected SelectionStatus openLogicalChannelByAid(SeRequest.AidSelector aidSelector)
-                    throws KeypleIOReaderException {
+            protected SelectionStatus openLogicalChannel(SeSelector selector) {
                 return null;
             }
 

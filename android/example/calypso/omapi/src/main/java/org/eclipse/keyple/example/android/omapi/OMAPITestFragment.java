@@ -23,6 +23,7 @@ import org.eclipse.keyple.seproxy.ChannelState;
 import org.eclipse.keyple.seproxy.ReaderPlugin;
 import org.eclipse.keyple.seproxy.SeProxyService;
 import org.eclipse.keyple.seproxy.SeReader;
+import org.eclipse.keyple.seproxy.SeSelector;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.message.ApduRequest;
 import org.eclipse.keyple.seproxy.message.ApduResponse;
@@ -185,9 +186,14 @@ public class OMAPITestFragment extends Fragment {
 
 
                     SeRequest seRequest =
-                            new SeRequest(new SeRequest.AidSelector(ByteArrayUtils.fromHex(poAid)),
+                            new SeRequest(new SeSelector(new SeSelector.AidSelector(ByteArrayUtils.fromHex(poAid), null), null, "AID = " + poAid),
                                     poApduRequestList, ChannelState.CLOSE_AFTER,
                                     ContactsProtocols.PROTOCOL_ISO7816_3);
+
+//                    SeRequest seRequest =
+//                            new SeRequest(new SeSelector(null, new SeSelector.AtrFilter(".*"), "Select any ATR"),
+//                                    poApduRequestList, ChannelState.CLOSE_AFTER,
+//                                    ContactsProtocols.PROTOCOL_ISO7816_3);
 
 
                     SeResponseSet seResponseSet =

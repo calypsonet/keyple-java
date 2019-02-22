@@ -13,9 +13,10 @@ package org.eclipse.keyple.example.generic.common;
 
 
 import org.eclipse.keyple.calypso.command.po.parser.ReadDataStructure;
-import org.eclipse.keyple.calypso.transaction.PoSelector;
-import org.eclipse.keyple.seproxy.ChannelState;
-import org.eclipse.keyple.seproxy.SeReader;
+import org.eclipse.keyple.calypso.transaction.PoSelectionRequest;
+import org.eclipse.keyple.seproxy.*;
+import org.eclipse.keyple.seproxy.event.DefaultSelectionRequest;
+import org.eclipse.keyple.seproxy.event.SelectionResponse;
 import org.eclipse.keyple.seproxy.message.ApduRequest;
 import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
 import org.eclipse.keyple.transaction.*;
@@ -47,7 +48,7 @@ public class SeProtocolDetectionEngine extends AbstractReaderObserverEngine {
         this.poReader = poReader;
     }
 
-    public SelectionRequest prepareSeSelection() {
+    public DefaultSelectionRequest prepareSeSelection() {
 
         seSelection = new SeSelection(poReader);
 
@@ -60,18 +61,23 @@ public class SeProtocolDetectionEngine extends AbstractReaderObserverEngine {
                     byte SFI_T2Usage = (byte) 0x1A;
                     byte SFI_T2Environment = (byte) 0x14;
 
-                    PoSelector poSelector = new PoSelector(ByteArrayUtils.fromHex(HoplinkAID),
-                            SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN,
-                            ContactlessProtocols.PROTOCOL_ISO14443_4, "Hoplink selector");
+                    PoSelectionRequest poSelectionRequest =
+                            new PoSelectionRequest(
+                                    new SeSelector(
+                                            new SeSelector.AidSelector(
+                                                    ByteArrayUtils.fromHex(HoplinkAID), null),
+                                            null, "Hoplink selector"),
+                                    ChannelState.KEEP_OPEN,
+                                    ContactlessProtocols.PROTOCOL_ISO14443_4);
 
-                    poSelector.preparePoCustomReadCmd("Standard Get Data",
+                    poSelectionRequest.preparePoCustomReadCmd("Standard Get Data",
                             new ApduRequest(ByteArrayUtils.fromHex("FFCA000000"), false));
 
-                    poSelector.prepareReadRecordsCmd(SFI_T2Environment,
+                    poSelectionRequest.prepareReadRecordsCmd(SFI_T2Environment,
                             ReadDataStructure.SINGLE_RECORD_DATA, (byte) 0x01,
                             "Hoplink T2 Environment");
 
-                    seSelection.prepareSelection(poSelector);
+                    seSelection.prepareSelection(poSelectionRequest);
 
                     break;
                 case PROTOCOL_ISO14443_3A:
@@ -84,8 +90,10 @@ public class SeProtocolDetectionEngine extends AbstractReaderObserverEngine {
                     break;
                 default:
                     /* Add a generic selector */
-                    seSelection.prepareSelection(new SeSelector(".*", ChannelState.KEEP_OPEN,
-                            ContactlessProtocols.PROTOCOL_ISO14443_4, "Default selector"));
+                    seSelection.prepareSelection(new SeSelectionRequest(
+                            new SeSelector(null, new SeSelector.AtrFilter(".*"),
+                                    "Default selector"),
+                            ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4));
                     break;
             }
         }
@@ -94,8 +102,8 @@ public class SeProtocolDetectionEngine extends AbstractReaderObserverEngine {
 
     /**
      * This method is called when a SE is inserted (or presented to the reader's antenna). It
-     * executes a {@link SelectionRequest} and processes the {@link SelectionResponse} showing the
-     * APDUs exchanges
+     * executes a {@link DefaultSelectionRequest} and processes the {@link SelectionResponse}
+     * showing the APDUs exchanges
      */
     @Override
     public void processSeMatch(SelectionResponse selectionResponse) {

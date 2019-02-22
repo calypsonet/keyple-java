@@ -15,7 +15,7 @@ import java.io.IOException;
 import org.eclipse.keyple.calypso.command.po.parser.ReadDataStructure;
 import org.eclipse.keyple.calypso.command.po.parser.ReadRecordsRespPars;
 import org.eclipse.keyple.calypso.transaction.CalypsoPo;
-import org.eclipse.keyple.calypso.transaction.PoSelector;
+import org.eclipse.keyple.calypso.transaction.PoSelectionRequest;
 import org.eclipse.keyple.calypso.transaction.PoTransaction;
 import org.eclipse.keyple.example.calypso.common.postructure.CalypsoClassicInfo;
 import org.eclipse.keyple.plugin.remotese.pluginse.RemoteSePlugin;
@@ -28,6 +28,7 @@ import org.eclipse.keyple.plugin.remotese.transport.factory.TransportNode;
 import org.eclipse.keyple.seproxy.ChannelState;
 import org.eclipse.keyple.seproxy.ReaderPlugin;
 import org.eclipse.keyple.seproxy.SeProxyService;
+import org.eclipse.keyple.seproxy.SeSelector;
 import org.eclipse.keyple.seproxy.event.ObservableReader;
 import org.eclipse.keyple.seproxy.event.PluginEvent;
 import org.eclipse.keyple.seproxy.event.ReaderEvent;
@@ -37,7 +38,6 @@ import org.eclipse.keyple.seproxy.exception.KeypleReaderNotFoundException;
 import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
 import org.eclipse.keyple.transaction.MatchingSe;
 import org.eclipse.keyple.transaction.SeSelection;
-import org.eclipse.keyple.transaction.SeSelector;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.eclipse.keyple.util.Observable;
 import org.slf4j.Logger;
@@ -159,23 +159,26 @@ public class Demo_Master implements org.eclipse.keyple.util.Observable.Observer 
                          */
 
                         /*
-                         * Calypso selection: configures a PoSelector with all the desired
+                         * Calypso selection: configures a PoSelectionRequest with all the desired
                          * attributes to make the selection and read additional information
                          * afterwards
                          */
-                        PoSelector poSelector =
-                                new PoSelector(ByteArrayUtils.fromHex(CalypsoClassicInfo.AID),
-                                        SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN,
-                                        ContactlessProtocols.PROTOCOL_ISO14443_4,
-                                        "AID: " + CalypsoClassicInfo.AID);
+                        PoSelectionRequest poSelectionRequest =
+                                new PoSelectionRequest(
+                                        new SeSelector(
+                                                new SeSelector.AidSelector(ByteArrayUtils
+                                                        .fromHex(CalypsoClassicInfo.AID), null),
+                                                null, "AID: " + CalypsoClassicInfo.AID),
+                                        ChannelState.KEEP_OPEN,
+                                        ContactlessProtocols.PROTOCOL_ISO14443_4);
 
-                        logger.info("Create a PoSelector");
+                        logger.info("Create a PoSelectionRequest");
 
                         /*
                          * Prepare the reading order and keep the associated parser for later use
                          * once the selection has been made.
                          */
-                        readEnvironmentParser = poSelector.prepareReadRecordsCmd(
+                        readEnvironmentParser = poSelectionRequest.prepareReadRecordsCmd(
                                 CalypsoClassicInfo.SFI_EnvironmentAndHolder,
                                 ReadDataStructure.SINGLE_RECORD_DATA,
                                 CalypsoClassicInfo.RECORD_NUMBER_1,
@@ -186,7 +189,7 @@ public class Demo_Master implements org.eclipse.keyple.util.Observable.Observer 
                          * Add the selection case to the current selection (we could have added
                          * other cases here)
                          */
-                        seSelection.prepareSelection(poSelector);
+                        seSelection.prepareSelection(poSelectionRequest);
 
                         logger.info("setDefaultSelectionRequest for PoReader {}",
                                 poReader.getName());

@@ -22,6 +22,7 @@ import java.util.NoSuchElementException;
 import org.eclipse.keyple.calypso.command.PoClass;
 import org.eclipse.keyple.calypso.command.po.builder.ReadRecordsCmdBuild;
 import org.eclipse.keyple.seproxy.ChannelState;
+import org.eclipse.keyple.seproxy.SeSelector;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.exception.NoStackTraceThrowable;
@@ -146,8 +147,8 @@ public class AndroidOmapiReaderTest {
         List<ApduRequest> poApduRequestList = Arrays.asList(poReadRecordCmd_T2Env.getApduRequest());
 
         // wrong protocol
-        SeRequest seRequest = new SeRequest(
-                new SeRequest.AidSelector(ByteArrayUtils.fromHex(poAid)), poApduRequestList,
+        SeRequest seRequest = new SeRequest(new SeSelector(
+                new SeSelector.AidSelector(ByteArrayUtils.fromHex(poAid),null), null,null), poApduRequestList,
                 ChannelState.CLOSE_AFTER, ContactlessProtocols.PROTOCOL_MIFARE_UL);
 
         // test
@@ -228,8 +229,8 @@ public class AndroidOmapiReaderTest {
 
         poApduRequestList = Arrays.asList(poReadRecordCmd_T2Env.getApduRequest());
 
-        SeRequest seRequest = new SeRequest(
-                new SeRequest.AidSelector(ByteArrayUtils.fromHex(poAid)), poApduRequestList,
+        SeRequest seRequest = new SeRequest(new SeSelector(
+                new SeSelector.AidSelector(ByteArrayUtils.fromHex(poAid), null), null, null), poApduRequestList,
                 ChannelState.CLOSE_AFTER, ContactsProtocols.PROTOCOL_ISO7816_3);
 
         return new SeRequestSet(seRequest);

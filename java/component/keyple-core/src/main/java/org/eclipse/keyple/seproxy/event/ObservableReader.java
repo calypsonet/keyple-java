@@ -14,7 +14,6 @@ package org.eclipse.keyple.seproxy.event;
 import java.util.HashMap;
 import java.util.Map;
 import org.eclipse.keyple.seproxy.SeReader;
-import org.eclipse.keyple.transaction.SelectionRequest;
 import org.eclipse.keyple.util.Observable;
 
 public interface ObservableReader extends SeReader {
@@ -70,6 +69,6 @@ public interface ObservableReader extends SeReader {
 
     void notifyObservers(ReaderEvent event);
 
-    void setDefaultSelectionRequest(SelectionRequest defaultSelectionRequest,
+    void setDefaultSelectionRequest(DefaultSelectionRequest defaultSelectionRequest,
             NotificationMode notificationMode);
 }

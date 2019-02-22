@@ -12,14 +12,15 @@
 package org.eclipse.keyple.seproxy.plugin;
 
 import java.util.*;
+import org.eclipse.keyple.seproxy.SeSelector;
+import org.eclipse.keyple.seproxy.event.DefaultSelectionRequest;
 import org.eclipse.keyple.seproxy.event.ObservableReader;
 import org.eclipse.keyple.seproxy.event.ReaderEvent;
+import org.eclipse.keyple.seproxy.event.SelectionResponse;
 import org.eclipse.keyple.seproxy.exception.*;
 import org.eclipse.keyple.seproxy.message.*;
 import org.eclipse.keyple.seproxy.protocol.SeProtocol;
 import org.eclipse.keyple.seproxy.protocol.SeProtocolSetting;
-import org.eclipse.keyple.transaction.SelectionRequest;
-import org.eclipse.keyple.transaction.SelectionResponse;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -228,33 +229,19 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
 
     /**
      * This abstract method must be implemented by the derived class in order to provide a selection
-     * mechanism based on ATR.
+     * and ATR filtering mechanism.
      * <p>
-     * The AtrSelector provided in argument holds all the needed data to handle the ATR matching
-     * process and build the resulting SelectionStatus.
+     * The Selector provided in argument holds all the needed data to handle the Application
+     * Selection and ATR matching process and build the resulting SelectionStatus.
      *
-     * @param atrSelector the ATR matching data (a regular expression used to compare the SE ATR to
-     *        the expected one)
-     * @return the SelectionStatus containing the actual ATR and the matching status flag.
+     * @param seSelector the SE selector
+     * @return the SelectionStatus containing the actual selection result (ATR and/or FCI and the
+     *         matching status flag).
      */
-    protected abstract SelectionStatus openLogicalChannelByAtr(SeRequest.AtrSelector atrSelector)
-            throws KeypleIOReaderException, KeypleChannelStateException;
+    protected abstract SelectionStatus openLogicalChannel(SeSelector seSelector)
+            throws KeypleIOReaderException, KeypleChannelStateException,
+            KeypleApplicationSelectionException;
 
-
-
-    /**
-     * This abstract method must be implemented by the derived class in order to provide a selection
-     * mechanism based on AID.
-     * <p>
-     * The AidSelector provided in argument holds all the needed data to handle the select
-     * application command and build the resulting SelectionStatus.
-     * 
-     * @param aidSelector the targeted application selector
-     * @return the SelectionStatus containing the FCI data and the matching status flag.
-     */
-    protected abstract SelectionStatus openLogicalChannelByAid(SeRequest.AidSelector aidSelector)
-            throws KeypleIOReaderException, KeypleApplicationSelectionException,
-            KeypleChannelStateException;
 
     /**
      * Open (if needed) a physical channel and try to establish a logical channel.
@@ -269,7 +256,7 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
      * openLogicalChannelByAid implemented either by {@link AbstractSelectionLocalReader} or by any
      * other derived class that provides a SE selection mechanism (e.g. OmapiReader).
      * 
-     * @param selector the SE Selector: either the AID of the application to select or an ATR
+     * @param seSelector the SE Selector: either the AID of the application to select or an ATR
      *        selection regular expression
      * @return a {@link SelectionStatus} object containing the SE ATR, the SE FCI and a flag giving
      *         the selection process result. When ATR or FCI are not available, they are set to null
@@ -277,13 +264,13 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
      * @throws KeypleIOReaderException if a reader error occurs
      * @throws KeypleApplicationSelectionException if the application selection fails
      */
-    protected final SelectionStatus openLogicalChannelAndSelect(SeRequest.Selector selector)
+    protected final SelectionStatus openLogicalChannelAndSelect(SeSelector seSelector)
             throws KeypleChannelStateException, KeypleIOReaderException,
             KeypleApplicationSelectionException {
 
         SelectionStatus selectionStatus;
 
-        if (selector == null) {
+        if (seSelector == null) {
             throw new KeypleChannelStateException("Try to open logical channel without selector.");
         }
 
@@ -300,11 +287,8 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
             }
         }
 
-        if (selector instanceof SeRequest.AidSelector) {
-            selectionStatus = openLogicalChannelByAid((SeRequest.AidSelector) selector);
-        } else {
-            selectionStatus = openLogicalChannelByAtr((SeRequest.AtrSelector) selector);
-        }
+        selectionStatus = openLogicalChannel(seSelector);
+
         return selectionStatus;
     }
 
@@ -551,10 +535,9 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
          * and the PO is still matching we won't redo the selection and just use the current
          * selection status
          */
-        if (seRequest.getSelector() != null) {
+        if (seRequest.getSeSelector() != null) {
             /* check if AID changed if the channel is already open */
-            if (isLogicalChannelOpen()
-                    && seRequest.getSelector() instanceof SeRequest.AidSelector) {
+            if (isLogicalChannelOpen() && seRequest.getSeSelector().getAidSelector() != null) {
                 /*
                  * AID comparison hack: we check here if the initial selection AID matches the
                  * beginning of the AID provided in the SeRequest (coming from FCI data and supposed
@@ -567,7 +550,7 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
                 if (aidCurrentlySelected == null) {
                     throw new IllegalStateException("AID currently selected shouldn't be null.");
                 }
-                if (((SeRequest.AidSelector) seRequest.getSelector()).isSelectNext()) {
+                if (seRequest.getSeSelector().getAidSelector().isSelectNext()) {
                     if (logger.isTraceEnabled()) {
                         logger.trace(
                                 "[{}] processSeRequest => The current selection is a next selection, close the "
@@ -576,17 +559,17 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
                     }
                     /* close the channel (will reset the current selection status) */
                     closeLogicalChannel();
-                } else if (((SeRequest.AidSelector) seRequest.getSelector())
+                } else if (seRequest.getSeSelector().getAidSelector()
                         .getAidToSelect().length >= aidCurrentlySelected.length
                         && aidCurrentlySelected.equals(Arrays.copyOfRange(
-                                ((SeRequest.AidSelector) seRequest.getSelector()).getAidToSelect(),
-                                0, aidCurrentlySelected.length))) {
+                                seRequest.getSeSelector().getAidSelector().getAidToSelect(), 0,
+                                aidCurrentlySelected.length))) {
                     // the AID changed, close the logical channel
                     if (logger.isTraceEnabled()) {
                         logger.trace(
                                 "[{}] processSeRequest => The AID changed, close the logical channel. AID = {}, EXPECTEDAID = {}",
                                 this.getName(), ByteArrayUtils.toHex(aidCurrentlySelected),
-                                seRequest.getSelector());
+                                seRequest.getSeSelector());
                     }
                     /* close the channel (will reset the current selection status) */
                     closeLogicalChannel();
@@ -600,7 +583,7 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
                 previouslyOpen = false;
 
                 try {
-                    selectionStatus = openLogicalChannelAndSelect(seRequest.getSelector());
+                    selectionStatus = openLogicalChannelAndSelect(seRequest.getSeSelector());
                     logger.trace("[{}] processSeRequest => Logical channel opening success.",
                             this.getName());
                 } catch (KeypleApplicationSelectionException e) {
@@ -618,7 +601,7 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
                     if (selectionStatus.getFci().isSuccessful()) {
                         /* the selection AID based was successful, keep the aid */
                         aidCurrentlySelected =
-                                ((SeRequest.AidSelector) seRequest.getSelector()).getAidToSelect();
+                                seRequest.getSeSelector().getAidSelector().getAidToSelect();
                     }
                     currentSelectionStatus = selectionStatus;
                 } else {
@@ -776,11 +759,11 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
      * Depending on the notification mode, the observer will be notified whenever an SE is inserted,
      * regardless of the selection status, or only if the current SE matches the selection criteria.
      *
-     * @param defaultSelectionRequest the {@link SelectionRequest} to be executed when a SE is
-     *        inserted
+     * @param defaultSelectionRequest the {@link DefaultSelectionRequest} to be executed when a SE
+     *        is inserted
      * @param notificationMode the notification mode enum (ALWAYS or MATCHED_ONLY)
      */
-    public void setDefaultSelectionRequest(SelectionRequest defaultSelectionRequest,
+    public void setDefaultSelectionRequest(DefaultSelectionRequest defaultSelectionRequest,
             ObservableReader.NotificationMode notificationMode) {
         this.defaultSelectionRequest = defaultSelectionRequest;
         this.notificationMode = notificationMode;

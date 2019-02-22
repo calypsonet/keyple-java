@@ -21,6 +21,7 @@ import org.eclipse.keyple.calypso.command.po.builder.IncreaseCmdBuild;
 import org.eclipse.keyple.calypso.command.po.builder.ReadRecordsCmdBuild;
 import org.eclipse.keyple.seproxy.ChannelState;
 import org.eclipse.keyple.seproxy.SeReader;
+import org.eclipse.keyple.seproxy.SeSelector;
 import org.eclipse.keyple.seproxy.event.ObservablePlugin;
 import org.eclipse.keyple.seproxy.event.ObservableReader;
 import org.eclipse.keyple.seproxy.event.PluginEvent;
@@ -33,7 +34,7 @@ import org.eclipse.keyple.seproxy.protocol.Protocol;
 import org.eclipse.keyple.seproxy.protocol.SeProtocolSetting;
 import org.eclipse.keyple.transaction.MatchingSe;
 import org.eclipse.keyple.transaction.SeSelection;
-import org.eclipse.keyple.transaction.SeSelector;
+import org.eclipse.keyple.transaction.SeSelectionRequest;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.junit.*;
 import org.junit.runner.RunWith;
@@ -89,11 +90,12 @@ public class StubReaderTest {
 
     static public void selectSe(SeReader reader) throws KeypleReaderException {
         SeSelection seSelection = new SeSelection(reader);
-        SeSelector seSelector =
-                new SeSelector("3B.*", ChannelState.KEEP_OPEN, Protocol.ANY, "ATR selection");
+        SeSelectionRequest seSelectionRequest = new SeSelectionRequest(
+                new SeSelector(null, new SeSelector.AtrFilter("3B.*"), "ATR selection"),
+                ChannelState.KEEP_OPEN, Protocol.ANY);
 
         /* Prepare selector, ignore MatchingSe here */
-        seSelection.prepareSelection(seSelector);
+        seSelection.prepareSelection(seSelectionRequest);
 
         seSelection.processExplicitSelection();
     }
@@ -184,10 +186,12 @@ public class StubReaderTest {
 
         SeSelection seSelection = new SeSelection(reader);
 
-        SeSelector seSelector = new SeSelector(ByteArrayUtils.fromHex(poAid),
-                SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN, Protocol.ANY, "AID: " + poAid);
+        SeSelectionRequest seSelectionRequest = new SeSelectionRequest(
+                new SeSelector(new SeSelector.AidSelector(ByteArrayUtils.fromHex(poAid), null),
+                        null, "AID: " + poAid),
+                ChannelState.KEEP_OPEN, Protocol.ANY);
 
-        seSelection.prepareSelection(seSelector);
+        seSelection.prepareSelection(seSelectionRequest);
 
         ((ObservableReader) reader).setDefaultSelectionRequest(seSelection.getSelectionOperation(),
                 ObservableReader.NotificationMode.MATCHED_ONLY);
@@ -221,10 +225,12 @@ public class StubReaderTest {
 
         SeSelection seSelection = new SeSelection(reader);
 
-        SeSelector seSelector = new SeSelector(ByteArrayUtils.fromHex(poAid),
-                SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN, Protocol.ANY, "AID: " + poAid);
+        SeSelectionRequest seSelectionRequest = new SeSelectionRequest(
+                new SeSelector(new SeSelector.AidSelector(ByteArrayUtils.fromHex(poAid), null),
+                        null, "AID: " + poAid),
+                ChannelState.KEEP_OPEN, Protocol.ANY);
 
-        seSelection.prepareSelection(seSelector);
+        seSelection.prepareSelection(seSelectionRequest);
 
         ((ObservableReader) reader).setDefaultSelectionRequest(seSelection.getSelectionOperation(),
                 ObservableReader.NotificationMode.MATCHED_ONLY);
@@ -265,10 +271,12 @@ public class StubReaderTest {
 
         SeSelection seSelection = new SeSelection(reader);
 
-        SeSelector seSelector = new SeSelector(ByteArrayUtils.fromHex(poAid),
-                SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN, Protocol.ANY, "AID: " + poAid);
+        SeSelectionRequest seSelectionRequest = new SeSelectionRequest(
+                new SeSelector(new SeSelector.AidSelector(ByteArrayUtils.fromHex(poAid), null),
+                        null, "AID: " + poAid),
+                ChannelState.KEEP_OPEN, Protocol.ANY);
 
-        seSelection.prepareSelection(seSelector);
+        seSelection.prepareSelection(seSelectionRequest);
 
         ((ObservableReader) reader).setDefaultSelectionRequest(seSelection.getSelectionOperation(),
                 ObservableReader.NotificationMode.ALWAYS);
@@ -296,11 +304,12 @@ public class StubReaderTest {
                 Assert.assertEquals(ReaderEvent.EventType.SE_INSERTED, event.getEventType());
 
                 SeSelection seSelection = new SeSelection(reader);
-                SeSelector seSelector =
-                        new SeSelector("3B.*", ChannelState.KEEP_OPEN, Protocol.ANY, "Test ATR");
+                SeSelectionRequest seSelectionRequest = new SeSelectionRequest(
+                        new SeSelector(null, new SeSelector.AtrFilter("3B.*"), "Test ATR"),
+                        ChannelState.KEEP_OPEN, Protocol.ANY);
 
                 /* Prepare selector, ignore MatchingSe here */
-                seSelection.prepareSelection(seSelector);
+                seSelection.prepareSelection(seSelectionRequest);
 
                 try {
                     seSelection.processExplicitSelection();
@@ -678,8 +687,6 @@ public class StubReaderTest {
 
         poApduRequestList = Arrays.asList(poReadRecordCmd_T2Env.getApduRequest());
 
-        SeRequest.Selector selector = new SeRequest.AidSelector(ByteArrayUtils.fromHex(poAid));
-
         SeRequest seRequest = new SeRequest(poApduRequestList, ChannelState.CLOSE_AFTER);
 
         return new SeRequestSet(seRequest);
@@ -738,8 +745,6 @@ public class StubReaderTest {
         poApduRequestList3.add(poReadRecord1CmdBuild.getApduRequest());
         poApduRequestList3.add(poReadRecord2CmdBuild.getApduRequest());
         poApduRequestList3.add(poReadRecord1CmdBuild.getApduRequest());
-
-        SeRequest.Selector selector = new SeRequest.AidSelector(ByteArrayUtils.fromHex(poAid));
 
         SeRequest seRequest1 = new SeRequest(poApduRequestList1, ChannelState.KEEP_OPEN);
 
@@ -825,7 +830,8 @@ public class StubReaderTest {
                 break;
         }
 
-        SeRequest.Selector selector = new SeRequest.AidSelector(ByteArrayUtils.fromHex(poAid));
+        SeSelector selector = new SeSelector(
+                new SeSelector.AidSelector(ByteArrayUtils.fromHex(poAid), null), null, null);
 
         return new SeRequest(poApduRequestList, ChannelState.CLOSE_AFTER);
     }

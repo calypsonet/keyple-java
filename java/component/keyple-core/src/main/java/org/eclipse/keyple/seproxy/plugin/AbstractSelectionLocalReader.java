@@ -13,6 +13,7 @@ package org.eclipse.keyple.seproxy.plugin;
 
 
 
+import org.eclipse.keyple.seproxy.SeSelector;
 import org.eclipse.keyple.seproxy.event.ObservableReader;
 import org.eclipse.keyple.seproxy.exception.KeypleIOReaderException;
 import org.eclipse.keyple.seproxy.message.*;
@@ -36,62 +37,51 @@ public abstract class AbstractSelectionLocalReader extends AbstractLocalReader
         super(pluginName, readerName);
     }
 
-    /** ==== ATR and AID based generic methods ============================= */
-
-    /**
-     * The AtrSelector provided in argument holds all the needed data to handle the ATR matching
-     * process and build the resulting SelectionStatus.
-     *
-     * @param atrSelector the ATR matching data (a regular expression used to compare the SE ATR to
-     *        the expected one)
-     * @return the SelectionStatus containing the actual ATR and the matching status flag.
-     */
-    /**
-     * Retrieve the SE ATR and compare it with the regular expression provided in the AtrSelector.
-     *
-     * @param atrSelector the ATR matching data (a regular expression used to compare the SE ATR to
-     *        the expected one)
-     * @return the SelectionStatus
-     */
-    protected final SelectionStatus openLogicalChannelByAtr(SeRequest.AtrSelector atrSelector)
-            throws KeypleIOReaderException {
-        boolean selectionHasMatched;
-        byte[] atr = getATR();
-
-        if (atr == null) {
-            throw new KeypleIOReaderException("Didn't get an ATR from the SE.");
-        }
-
-        if (logger.isTraceEnabled()) {
-            logger.trace("[{}] openLogicalChannelByAtr => ATR: {}", this.getName(),
-                    ByteArrayUtils.toHex(atr));
-        }
-        if (atrSelector.atrMatches(atr)) {
-            selectionHasMatched = true;
-        } else {
-            logger.trace("[{}] openLogicalChannelByAtr => ATR Selection failed. SELECTOR = {}",
-                    this.getName(), atrSelector);
-            selectionHasMatched = false;
-        }
-        return new SelectionStatus(new AnswerToReset(atr), new ApduResponse(null, null),
-                selectionHasMatched);
-    }
+    /** ==== ATR filtering and application selection by AID ================ */
 
     /**
      * Build a select application command, transmit it to the SE and deduct the SelectionStatus.
      * 
-     * @param aidSelector the targeted application selector
+     * @param seSelector the targeted application SE selector
      * @return the SelectionStatus
      * @throws KeypleIOReaderException if a reader error occurs
      */
-    protected SelectionStatus openLogicalChannelByAid(SeRequest.AidSelector aidSelector)
+    protected SelectionStatus openLogicalChannel(SeSelector seSelector)
             throws KeypleIOReaderException {
         ApduResponse fciResponse;
-        byte[] atr;
-        byte[] aid = aidSelector.getAidToSelect();
-        if (aid != null) {
+        byte[] atr = getATR();
+        boolean selectionHasMatched = true;
+        SelectionStatus selectionStatus;
+
+        /** Perform ATR filtering if requested */
+        if (seSelector.getAtrFilter() != null) {
+            if (atr == null) {
+                throw new KeypleIOReaderException("Didn't get an ATR from the SE.");
+            }
+
             if (logger.isTraceEnabled()) {
-                logger.trace("[{}] openLogicalChannelByAid => Select Application with AID = {}",
+                logger.trace("[{}] openLogicalChannel => ATR: {}", this.getName(),
+                        ByteArrayUtils.toHex(atr));
+            }
+            if (!seSelector.getAtrFilter().atrMatches(atr)) {
+                logger.trace("[{}] openLogicalChannel => ATR didn't match. SELECTOR = {}",
+                        this.getName(), seSelector);
+                selectionHasMatched = false;
+            }
+        }
+
+        /**
+         * Perform application selection if requested and if ATR filtering matched or was not
+         * requested
+         */
+        if (selectionHasMatched && seSelector.getAidSelector() != null) {
+            final SeSelector.AidSelector aidSelector = seSelector.getAidSelector();
+            final byte aid[] = aidSelector.getAidToSelect();
+            if (aid == null) {
+                throw new IllegalArgumentException("AID must not be null for an AidSelector.");
+            }
+            if (logger.isTraceEnabled()) {
+                logger.trace("[{}] openLogicalChannel => Select Application with AID = {}",
                         this.getName(), ByteArrayUtils.toHex(aid));
             }
             /*
@@ -121,15 +111,23 @@ public abstract class AbstractSelectionLocalReader extends AbstractLocalReader
 
             if (!fciResponse.isSuccessful()) {
                 logger.trace(
-                        "[{}] openLogicalChannelByAid => Application Selection failed. SELECTOR = {}",
+                        "[{}] openLogicalChannel => Application Selection failed. SELECTOR = {}",
                         this.getName(), aidSelector);
             }
-
-            /* get the ATR bytes */
-            atr = getATR();
+            /*
+             * The ATR filtering matched or was not requested. The selection status is determined by
+             * the answer to the select application command.
+             */
+            selectionStatus = new SelectionStatus(new AnswerToReset(atr), fciResponse,
+                    fciResponse.isSuccessful());
         } else {
-            throw new IllegalArgumentException("AID must not be null for an AidSelector.");
+            /*
+             * The ATR filtering didn't match or no AidSelector was provided. The selection status
+             * is determined by the ATR filtering.
+             */
+            selectionStatus = new SelectionStatus(new AnswerToReset(atr),
+                    new ApduResponse(null, null), selectionHasMatched);
         }
-        return new SelectionStatus(new AnswerToReset(atr), fciResponse, fciResponse.isSuccessful());
+        return selectionStatus;
     }
 }

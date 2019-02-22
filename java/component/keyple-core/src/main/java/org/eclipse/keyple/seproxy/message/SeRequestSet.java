@@ -31,7 +31,7 @@ public final class SeRequestSet implements Serializable {
      * List of requests. Each {@link SeRequest} will result in a {@link SeResponse} wrapped in a
      * {@link SeResponseSet}.
      */
-    private final Set<SeRequest> sortedRequests;
+    private final Set<SeRequest> sortedRequests = new LinkedHashSet<SeRequest>();
 
 
     /**
@@ -46,18 +46,25 @@ public final class SeRequestSet implements Serializable {
      * @param seRequests List of {@link SeRequest}s
      */
     public SeRequestSet(Set<SeRequest> seRequests) {
-        this.sortedRequests = seRequests;
+        this.sortedRequests.addAll(seRequests);
     }
 
     /**
      * Create an {@link SeRequestSet} from a single {@link SeRequest}.
      *
-     * @param request single {@link SeRequest}
+     * @param seRequest single {@link SeRequest}
      */
-    public SeRequestSet(SeRequest request) {
-        Set<SeRequest> seRequests = new LinkedHashSet<SeRequest>();
-        seRequests.add(request);
-        this.sortedRequests = seRequests;
+    public SeRequestSet(SeRequest seRequest) {
+        this.sortedRequests.add(seRequest);
+    }
+
+    /**
+     * Add an SeRequest to the current {@link SeRequestSet}
+     * 
+     * @param seRequest the {@link SeRequest} to add
+     */
+    public void add(SeRequest seRequest) {
+        this.sortedRequests.add(seRequest);
     }
 
     /**

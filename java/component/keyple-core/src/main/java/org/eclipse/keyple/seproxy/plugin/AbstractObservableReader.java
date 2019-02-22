@@ -13,6 +13,7 @@ package org.eclipse.keyple.seproxy.plugin;
 
 
 import org.eclipse.keyple.seproxy.SeReader;
+import org.eclipse.keyple.seproxy.event.DefaultSelectionRequest;
 import org.eclipse.keyple.seproxy.event.ObservableReader;
 import org.eclipse.keyple.seproxy.event.ReaderEvent;
 import org.eclipse.keyple.seproxy.exception.KeypleChannelStateException;
@@ -23,7 +24,6 @@ import org.eclipse.keyple.seproxy.message.SeRequest;
 import org.eclipse.keyple.seproxy.message.SeRequestSet;
 import org.eclipse.keyple.seproxy.message.SeResponse;
 import org.eclipse.keyple.seproxy.message.SeResponseSet;
-import org.eclipse.keyple.transaction.SelectionRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -50,8 +50,8 @@ public abstract class AbstractObservableReader extends AbstractLoggedObservable<
     /** Contains the name of the plugin */
     protected final String pluginName;
 
-    /** The default SelectionRequest to be executed upon SE insertion */
-    protected SelectionRequest defaultSelectionRequest;
+    /** The default DefaultSelectionRequest to be executed upon SE insertion */
+    protected DefaultSelectionRequest defaultSelectionRequest;
 
     /** Indicate if all SE detected should be notified or only matching SE */
     protected ObservableReader.NotificationMode notificationMode;

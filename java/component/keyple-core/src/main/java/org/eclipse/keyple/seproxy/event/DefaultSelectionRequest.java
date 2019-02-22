@@ -9,7 +9,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  ********************************************************************************/
-package org.eclipse.keyple.transaction;
+package org.eclipse.keyple.seproxy.event;
 
 import org.eclipse.keyple.seproxy.message.SeRequestSet;
 
@@ -17,11 +17,11 @@ import org.eclipse.keyple.seproxy.message.SeRequestSet;
  * Class containing the {@link SeRequestSet} used to make a default selection at the
  * {@link org.eclipse.keyple.seproxy.event.ObservableReader} level.
  */
-public class SelectionRequest {
+public class DefaultSelectionRequest {
     /** The {@link SeRequestSet} */
     private final SeRequestSet selectionSeRequestSet;
 
-    public SelectionRequest(SeRequestSet selectionSeRequestSet) {
+    public DefaultSelectionRequest(SeRequestSet selectionSeRequestSet) {
         this.selectionSeRequestSet = selectionSeRequestSet;
     }
 

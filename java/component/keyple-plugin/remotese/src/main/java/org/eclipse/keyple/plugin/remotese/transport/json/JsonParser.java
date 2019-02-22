@@ -13,7 +13,6 @@ package org.eclipse.keyple.plugin.remotese.transport.json;
 
 
 
-import org.eclipse.keyple.seproxy.message.SeRequest;
 import org.eclipse.keyple.seproxy.protocol.SeProtocol;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -25,9 +24,6 @@ public class JsonParser {
 
     static public Gson getGson() {
         final GsonBuilder gsonBuilder = new GsonBuilder();
-        // gsonBuilder.registerTypeAdapter(ByteBuffer.class, new GsonByteBufferTypeAdapter()); not
-        // in used anymore
-        gsonBuilder.registerTypeAdapter(SeRequest.Selector.class, new GsonSelectorTypeAdapter());
         gsonBuilder.registerTypeAdapter(SeProtocol.class, new GsonSeProtocolTypeAdapter());
         gsonBuilder.setPrettyPrinting();
         return gsonBuilder.create();

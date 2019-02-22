@@ -18,13 +18,16 @@ import org.eclipse.keyple.plugin.remotese.pluginse.method.RmSetDefaultSelectionR
 import org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx;
 import org.eclipse.keyple.plugin.remotese.rm.RemoteMethodTxEngine;
 import org.eclipse.keyple.plugin.remotese.transport.factory.TransportNode;
+import org.eclipse.keyple.seproxy.event.DefaultSelectionRequest;
 import org.eclipse.keyple.seproxy.event.ReaderEvent;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
-import org.eclipse.keyple.seproxy.message.*;
+import org.eclipse.keyple.seproxy.message.SeRequest;
+import org.eclipse.keyple.seproxy.message.SeRequestSet;
+import org.eclipse.keyple.seproxy.message.SeResponse;
+import org.eclipse.keyple.seproxy.message.SeResponseSet;
 import org.eclipse.keyple.seproxy.plugin.AbstractObservableReader;
 import org.eclipse.keyple.seproxy.protocol.SeProtocolSetting;
 import org.eclipse.keyple.seproxy.protocol.TransmissionMode;
-import org.eclipse.keyple.transaction.SelectionRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -190,11 +193,11 @@ public final class VirtualReader extends AbstractObservableReader {
     }
 
     @Override
-    public void setDefaultSelectionRequest(SelectionRequest selectionRequest,
+    public void setDefaultSelectionRequest(DefaultSelectionRequest defaultSelectionRequest,
             NotificationMode notificationMode) {
 
         RmSetDefaultSelectionRequestTx setDefaultSelectionRequest =
-                new RmSetDefaultSelectionRequestTx(selectionRequest, notificationMode,
+                new RmSetDefaultSelectionRequestTx(defaultSelectionRequest, notificationMode,
                         this.getNativeReaderName(), this.getName(),
                         this.getSession().getSessionId(), session.getSlaveNodeId());
 

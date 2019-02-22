@@ -12,11 +12,11 @@
 package org.eclipse.keyple.plugin.remotese.rm.json;
 
 import org.eclipse.keyple.plugin.remotese.transport.json.JsonParser;
+import org.eclipse.keyple.seproxy.event.DefaultSelectionRequest;
 import org.eclipse.keyple.seproxy.event.ObservableReader;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 import org.eclipse.keyple.seproxy.message.SeRequestSet;
 import org.eclipse.keyple.seproxy.message.SeResponseSet;
-import org.eclipse.keyple.transaction.SelectionRequest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
@@ -54,10 +54,15 @@ public class JsonParserTest {
     }
 
     @Test
-    public void testSelectionRequest() {
-        SelectionRequest selectionRequest = SampleFactory.getSelectionRequest();
-        testSerializeDeserializeObj(selectionRequest, SelectionRequest.class);
+    public void testSelectionByAidRequest() {
+        DefaultSelectionRequest defaultSelectionRequest = SampleFactory.getSelectionRequest();
+        testSerializeDeserializeObj(defaultSelectionRequest, DefaultSelectionRequest.class);
+    }
 
+    @Test
+    public void testSelectionByAtrRequest() {
+        DefaultSelectionRequest defaultSelectionRequest = SampleFactory.getSelectionRequest();
+        testSerializeDeserializeObj(defaultSelectionRequest, DefaultSelectionRequest.class);
     }
 
     @Test
@@ -82,8 +87,6 @@ public class JsonParserTest {
         testSerializeDeserializeObj(exception, KeypleBaseException.class);
 
     }
-
-
 
     /*
      * Utility Method

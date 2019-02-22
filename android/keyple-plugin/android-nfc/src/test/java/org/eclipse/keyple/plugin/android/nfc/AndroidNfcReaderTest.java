@@ -21,6 +21,7 @@ import java.util.List;
 import org.eclipse.keyple.calypso.command.PoClass;
 import org.eclipse.keyple.calypso.command.po.builder.ReadRecordsCmdBuild;
 import org.eclipse.keyple.seproxy.ChannelState;
+import org.eclipse.keyple.seproxy.SeSelector;
 import org.eclipse.keyple.seproxy.event.ObservableReader;
 import org.eclipse.keyple.seproxy.event.ReaderEvent;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
@@ -512,8 +513,8 @@ public class AndroidNfcReaderTest {
         poApduRequestList = Arrays.asList(poReadRecordCmd_T2Env.getApduRequest());
 
         // TODO change this with the use of the selection API
-        SeRequest seRequest = new SeRequest(
-                new SeRequest.AidSelector(ByteArrayUtils.fromHex(poAid)), poApduRequestList,
+        SeRequest seRequest = new SeRequest(new SeSelector(
+                new SeSelector.AidSelector(ByteArrayUtils.fromHex(poAid), null), null, null), poApduRequestList,
                 ChannelState.CLOSE_AFTER, ContactlessProtocols.PROTOCOL_ISO14443_4);
 
         return new SeRequestSet(seRequest);

@@ -17,12 +17,11 @@ import org.eclipse.keyple.plugin.pcsc.PcscPlugin;
 import org.eclipse.keyple.seproxy.ChannelState;
 import org.eclipse.keyple.seproxy.SeProxyService;
 import org.eclipse.keyple.seproxy.SeReader;
+import org.eclipse.keyple.seproxy.SeSelector;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 import org.eclipse.keyple.seproxy.exception.NoStackTraceThrowable;
 import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
-import org.eclipse.keyple.transaction.MatchingSe;
-import org.eclipse.keyple.transaction.SeSelection;
-import org.eclipse.keyple.transaction.SeSelector;
+import org.eclipse.keyple.transaction.*;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -106,15 +105,16 @@ public class UseCase_Generic1_ExplicitSelectionAid_Pcsc {
              * Generic selection: configures a SeSelector with all the desired attributes to make
              * the selection and read additional information afterwards
              */
-            SeSelector seSelector = new SeSelector(ByteArrayUtils.fromHex(seAid),
-                    SeSelector.SelectMode.FIRST, ChannelState.KEEP_OPEN,
-                    ContactlessProtocols.PROTOCOL_ISO14443_4, "AID: " + seAid);
+            SeSelectionRequest seSelectionRequest = new SeSelectionRequest(
+                    new SeSelector(new SeSelector.AidSelector(ByteArrayUtils.fromHex(seAid), null),
+                            null, "AID: " + seAid),
+                    ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4);
 
             /*
              * Add the selection case to the current selection (we could have added other cases
              * here)
              */
-            MatchingSe matchingSe = seSelection.prepareSelection(seSelector);
+            MatchingSe matchingSe = seSelection.prepareSelection(seSelectionRequest);
 
             /*
              * Actual SE communication: operate through a single request the SE selection
