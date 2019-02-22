@@ -23,7 +23,7 @@
 <tr>
 <td>
 <div class="infoBox" id="tests">
-<div class="counter">7</div>
+<div class="counter">8</div>
 <p>tests</p>
 </div>
 </td>
@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">0.055s</div>
+<div class="counter">0.005s</div>
 <p>duration</p>
 </div>
 </td>
@@ -79,12 +79,12 @@
 </thead>
 <tr>
 <td class="success">testCompleteSeRequestSet</td>
-<td>0.003s</td>
+<td>0s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">testHoplinkSeRequestSet</td>
-<td>0.002s</td>
+<td>0.001s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
@@ -94,22 +94,27 @@
 </tr>
 <tr>
 <td class="success">testSeResponseSet</td>
-<td>0.003s</td>
+<td>0s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
-<td class="success">testSelectionRequest</td>
-<td>0.006s</td>
+<td class="success">testSelectionByAidRequest</td>
+<td>0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">testSelectionByAtrRequest</td>
+<td>0.001s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">testSimpleKeypleException</td>
-<td>0.038s</td>
+<td>0.001s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">testStackedKeypleException</td>
-<td>0.003s</td>
+<td>0.001s</td>
 <td class="success">passed</td>
 </tr>
 </table>
@@ -117,7 +122,85 @@
 <div id="tab1" class="tab">
 <h2>Standard error</h2>
 <span class="code">
-<pre>[Test worker] DEBUG JsonParserTest - json 1 : {
+<pre>[Test worker] TRACE SeSelector - Selection data: AID = A000000291A000000191, ATRREGEX = null, EXTRAINFO = null
+[Test worker] DEBUG JsonParserTest - json 1 : {
+  &quot;selectionSeRequestSet&quot;: {
+    &quot;sortedRequests&quot;: [
+      {
+        &quot;seSelector&quot;: {
+          &quot;aidSelector&quot;: {
+            &quot;fileOccurrence&quot;: &quot;FIRST&quot;,
+            &quot;fileControlInformation&quot;: &quot;FCI&quot;,
+            &quot;aidToSelect&quot;: [
+              -96,
+              0,
+              0,
+              2,
+              -111,
+              -96,
+              0,
+              0,
+              1,
+              -111
+            ]
+          },
+          &quot;extraInfo&quot;: &quot;&quot;
+        },
+        &quot;apduRequests&quot;: [
+          {
+            &quot;bytes&quot;: [
+              -112,
+              0
+            ],
+            &quot;case4&quot;: true
+          }
+        ],
+        &quot;protocolFlag&quot;: &quot;PROTOCOL_ISO14443_4&quot;,
+        &quot;channelState&quot;: &quot;CLOSE_AFTER&quot;
+      }
+    ]
+  }
+}
+[Test worker] DEBUG JsonParserTest - deserializeObj : org.eclipse.keyple.seproxy.event.DefaultSelectionRequest@5fbd1995
+[Test worker] DEBUG JsonParserTest - json 2 : {
+  &quot;selectionSeRequestSet&quot;: {
+    &quot;sortedRequests&quot;: [
+      {
+        &quot;seSelector&quot;: {
+          &quot;aidSelector&quot;: {
+            &quot;fileOccurrence&quot;: &quot;FIRST&quot;,
+            &quot;fileControlInformation&quot;: &quot;FCI&quot;,
+            &quot;aidToSelect&quot;: [
+              -96,
+              0,
+              0,
+              2,
+              -111,
+              -96,
+              0,
+              0,
+              1,
+              -111
+            ]
+          },
+          &quot;extraInfo&quot;: &quot;&quot;
+        },
+        &quot;apduRequests&quot;: [
+          {
+            &quot;bytes&quot;: [
+              -112,
+              0
+            ],
+            &quot;case4&quot;: true
+          }
+        ],
+        &quot;protocolFlag&quot;: &quot;PROTOCOL_ISO14443_4&quot;,
+        &quot;channelState&quot;: &quot;CLOSE_AFTER&quot;
+      }
+    ]
+  }
+}
+[Test worker] DEBUG JsonParserTest - json 1 : {
   &quot;detailMessage&quot;: &quot;Keyple Reader Exception&quot;,
   &quot;stackTrace&quot;: [],
   &quot;suppressedExceptions&quot;: []
@@ -168,55 +251,33 @@
   },
   &quot;stackTrace&quot;: [],
   &quot;suppressedExceptions&quot;: []
-}
-[Test worker] DEBUG JsonParserTest - json 1 : {
-  &quot;selectionSeRequestSet&quot;: {
-    &quot;sortedRequests&quot;: [
-      {
-        &quot;selector&quot;: &quot;aidselector::A000000291A000000191&quot;,
-        &quot;apduRequests&quot;: [
-          {
-            &quot;bytes&quot;: [
-              -112,
-              0
-            ],
-            &quot;case4&quot;: true
-          }
-        ],
-        &quot;protocolFlag&quot;: &quot;PROTOCOL_ISO14443_4&quot;,
-        &quot;channelState&quot;: &quot;CLOSE_AFTER&quot;
-      }
-    ]
-  }
-}
-[Test worker] DEBUG JsonParserTest - deserializeObj : org.eclipse.keyple.transaction.SelectionRequest@6924d661
-[Test worker] DEBUG JsonParserTest - json 2 : {
-  &quot;selectionSeRequestSet&quot;: {
-    &quot;sortedRequests&quot;: [
-      {
-        &quot;selector&quot;: &quot;aidselector::A000000291A000000191&quot;,
-        &quot;apduRequests&quot;: [
-          {
-            &quot;bytes&quot;: [
-              -112,
-              0
-            ],
-            &quot;case4&quot;: true
-          }
-        ],
-        &quot;protocolFlag&quot;: &quot;PROTOCOL_ISO14443_4&quot;,
-        &quot;channelState&quot;: &quot;CLOSE_AFTER&quot;
-      }
-    ]
-  }
 }
 [Test worker] DEBUG JsonParserTest - json 1 : &quot;ALWAYS&quot;
 [Test worker] DEBUG JsonParserTest - deserializeObj : ALWAYS
 [Test worker] DEBUG JsonParserTest - json 2 : &quot;ALWAYS&quot;
+[Test worker] TRACE SeSelector - Selection data: AID = A000000291A000000191, ATRREGEX = null, EXTRAINFO = null
 [Test worker] DEBUG JsonParserTest - json 1 : {
   &quot;sortedRequests&quot;: [
     {
-      &quot;selector&quot;: &quot;aidselector::A000000291A000000191&quot;,
+      &quot;seSelector&quot;: {
+        &quot;aidSelector&quot;: {
+          &quot;fileOccurrence&quot;: &quot;FIRST&quot;,
+          &quot;fileControlInformation&quot;: &quot;FCI&quot;,
+          &quot;aidToSelect&quot;: [
+            -96,
+            0,
+            0,
+            2,
+            -111,
+            -96,
+            0,
+            0,
+            1,
+            -111
+          ]
+        },
+        &quot;extraInfo&quot;: &quot;&quot;
+      },
       &quot;apduRequests&quot;: [
         {
           &quot;bytes&quot;: [
@@ -235,7 +296,25 @@
 [Test worker] DEBUG JsonParserTest - json 2 : {
   &quot;sortedRequests&quot;: [
     {
-      &quot;selector&quot;: &quot;aidselector::A000000291A000000191&quot;,
+      &quot;seSelector&quot;: {
+        &quot;aidSelector&quot;: {
+          &quot;fileOccurrence&quot;: &quot;FIRST&quot;,
+          &quot;fileControlInformation&quot;: &quot;FCI&quot;,
+          &quot;aidToSelect&quot;: [
+            -96,
+            0,
+            0,
+            2,
+            -111,
+            -96,
+            0,
+            0,
+            1,
+            -111
+          ]
+        },
+        &quot;extraInfo&quot;: &quot;&quot;
+      },
       &quot;apduRequests&quot;: [
         {
           &quot;bytes&quot;: [
@@ -250,10 +329,17 @@
     }
   ]
 }
+[Test worker] TRACE SeSelector - Selection data: AID = A000000291A000000191, ATRREGEX = null, EXTRAINFO = null
+[Test worker] TRACE SeSelector - Selection data: AID = null, ATRREGEX = /regex/, EXTRAINFO = null
 [Test worker] DEBUG JsonParserTest - json 1 : {
   &quot;sortedRequests&quot;: [
     {
-      &quot;selector&quot;: &quot;atrselector::/regex/&quot;,
+      &quot;seSelector&quot;: {
+        &quot;atrFilter&quot;: {
+          &quot;atrRegex&quot;: &quot;/regex/&quot;
+        },
+        &quot;extraInfo&quot;: &quot;&quot;
+      },
       &quot;apduRequests&quot;: [
         {
           &quot;bytes&quot;: [
@@ -267,7 +353,25 @@
       &quot;channelState&quot;: &quot;KEEP_OPEN&quot;
     },
     {
-      &quot;selector&quot;: &quot;aidselector::A000000291A000000191&quot;,
+      &quot;seSelector&quot;: {
+        &quot;aidSelector&quot;: {
+          &quot;fileOccurrence&quot;: &quot;FIRST&quot;,
+          &quot;fileControlInformation&quot;: &quot;FCI&quot;,
+          &quot;aidToSelect&quot;: [
+            -96,
+            0,
+            0,
+            2,
+            -111,
+            -96,
+            0,
+            0,
+            1,
+            -111
+          ]
+        },
+        &quot;extraInfo&quot;: &quot;&quot;
+      },
       &quot;apduRequests&quot;: [
         {
           &quot;bytes&quot;: [
@@ -286,7 +390,12 @@
 [Test worker] DEBUG JsonParserTest - json 2 : {
   &quot;sortedRequests&quot;: [
     {
-      &quot;selector&quot;: &quot;atrselector::/regex/&quot;,
+      &quot;seSelector&quot;: {
+        &quot;atrFilter&quot;: {
+          &quot;atrRegex&quot;: &quot;/regex/&quot;
+        },
+        &quot;extraInfo&quot;: &quot;&quot;
+      },
       &quot;apduRequests&quot;: [
         {
           &quot;bytes&quot;: [
@@ -300,7 +409,25 @@
       &quot;channelState&quot;: &quot;KEEP_OPEN&quot;
     },
     {
-      &quot;selector&quot;: &quot;aidselector::A000000291A000000191&quot;,
+      &quot;seSelector&quot;: {
+        &quot;aidSelector&quot;: {
+          &quot;fileOccurrence&quot;: &quot;FIRST&quot;,
+          &quot;fileControlInformation&quot;: &quot;FCI&quot;,
+          &quot;aidToSelect&quot;: [
+            -96,
+            0,
+            0,
+            2,
+            -111,
+            -96,
+            0,
+            0,
+            1,
+            -111
+          ]
+        },
+        &quot;extraInfo&quot;: &quot;&quot;
+      },
       &quot;apduRequests&quot;: [
         {
           &quot;bytes&quot;: [
@@ -440,6 +567,84 @@
     }
   ]
 }
+[Test worker] TRACE SeSelector - Selection data: AID = A000000291A000000191, ATRREGEX = null, EXTRAINFO = null
+[Test worker] DEBUG JsonParserTest - json 1 : {
+  &quot;selectionSeRequestSet&quot;: {
+    &quot;sortedRequests&quot;: [
+      {
+        &quot;seSelector&quot;: {
+          &quot;aidSelector&quot;: {
+            &quot;fileOccurrence&quot;: &quot;FIRST&quot;,
+            &quot;fileControlInformation&quot;: &quot;FCI&quot;,
+            &quot;aidToSelect&quot;: [
+              -96,
+              0,
+              0,
+              2,
+              -111,
+              -96,
+              0,
+              0,
+              1,
+              -111
+            ]
+          },
+          &quot;extraInfo&quot;: &quot;&quot;
+        },
+        &quot;apduRequests&quot;: [
+          {
+            &quot;bytes&quot;: [
+              -112,
+              0
+            ],
+            &quot;case4&quot;: true
+          }
+        ],
+        &quot;protocolFlag&quot;: &quot;PROTOCOL_ISO14443_4&quot;,
+        &quot;channelState&quot;: &quot;CLOSE_AFTER&quot;
+      }
+    ]
+  }
+}
+[Test worker] DEBUG JsonParserTest - deserializeObj : org.eclipse.keyple.seproxy.event.DefaultSelectionRequest@29a16377
+[Test worker] DEBUG JsonParserTest - json 2 : {
+  &quot;selectionSeRequestSet&quot;: {
+    &quot;sortedRequests&quot;: [
+      {
+        &quot;seSelector&quot;: {
+          &quot;aidSelector&quot;: {
+            &quot;fileOccurrence&quot;: &quot;FIRST&quot;,
+            &quot;fileControlInformation&quot;: &quot;FCI&quot;,
+            &quot;aidToSelect&quot;: [
+              -96,
+              0,
+              0,
+              2,
+              -111,
+              -96,
+              0,
+              0,
+              1,
+              -111
+            ]
+          },
+          &quot;extraInfo&quot;: &quot;&quot;
+        },
+        &quot;apduRequests&quot;: [
+          {
+            &quot;bytes&quot;: [
+              -112,
+              0
+            ],
+            &quot;case4&quot;: true
+          }
+        ],
+        &quot;protocolFlag&quot;: &quot;PROTOCOL_ISO14443_4&quot;,
+        &quot;channelState&quot;: &quot;CLOSE_AFTER&quot;
+      }
+    ]
+  }
+}
 </pre>
 </span>
 </div>
@@ -451,7 +656,7 @@
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 4.5.1</a> at Feb 21, 2019 6:36:01 PM</p>
+<a href="http://www.gradle.org">Gradle 4.5.1</a> at Feb 22, 2019 3:56:50 PM</p>
 </div>
 </div>
 </body>
