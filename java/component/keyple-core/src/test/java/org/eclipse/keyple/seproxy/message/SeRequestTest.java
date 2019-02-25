@@ -185,8 +185,12 @@ public class SeRequestTest {
     }
 
     static SeSelector getSelector(Set<Integer> selectionStatusCode) {
+        /*
+         * We can use a fake AID here because it is not fully interpreted, the purpose of this unit
+         * test is to verify the proper format of the request.
+         */
         SeSelector.AidSelector aidSelector = new SeSelector.AidSelector(
-                ByteArrayUtils.fromHex("A000000291A000000191"), selectionStatusCode);
+                ByteArrayUtils.fromHex("AABBCCDDEEFF"), selectionStatusCode);
         SeSelector seSelector = new SeSelector(aidSelector, null, null);
         return seSelector;
     }
