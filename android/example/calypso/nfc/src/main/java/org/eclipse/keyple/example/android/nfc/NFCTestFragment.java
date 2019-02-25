@@ -12,6 +12,7 @@
 package org.eclipse.keyple.example.android.nfc;
 
 
+
 import java.util.SortedSet;
 import java.util.concurrent.ConcurrentSkipListSet;
 import org.eclipse.keyple.calypso.command.po.parser.ReadDataStructure;
@@ -52,8 +53,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import static org.eclipse.keyple.seproxy.ChannelState.KEEP_OPEN;
 
 
 /**
@@ -136,7 +135,10 @@ public class NFCTestFragment extends Fragment implements ObservableReader.Reader
              * Calypso selection: configures a PoSelector with all the desired attributes to make
              * the selection and read additional information afterwards
              */
-            PoSelectionRequest poSelectionRequest = new PoSelectionRequest(new PoSelector(new PoSelector.PoAidSelector(ByteArrayUtils.fromHex(CalypsoClassicInfo.AID), PoSelector.InvalidatedPo.REJECT), null, "AID: " + CalypsoClassicInfo.AID), ChannelState.KEEP_OPEN,
+            PoSelectionRequest poSelectionRequest = new PoSelectionRequest(new PoSelector(
+                    new PoSelector.PoAidSelector(ByteArrayUtils.fromHex(CalypsoClassicInfo.AID),
+                            PoSelector.InvalidatedPo.REJECT),
+                    null, "AID: " + CalypsoClassicInfo.AID), ChannelState.KEEP_OPEN,
                     ContactlessProtocols.PROTOCOL_ISO14443_4);
 
             /*
