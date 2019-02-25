@@ -12,6 +12,7 @@
 package org.eclipse.keyple.plugin.android.nfc;
 
 import org.eclipse.keyple.seproxy.SeProxyService;
+import org.eclipse.keyple.seproxy.exception.KeyplePluginNotFoundException;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -127,14 +128,16 @@ public class AndroidNfcFragment extends Fragment {
 
             }
 
-            ((AndroidNfcReader) SeProxyService.getInstance().getPlugins().first().getReaders()
+            ((AndroidNfcReader) SeProxyService.getInstance().getPlugin(AndroidNfcPlugin.PLUGIN_NAME).getReaders()
                     .first()).enableNFCReaderMode(getActivity());
 
         } catch (KeypleReaderException e) {
             e.printStackTrace();
             LOG.error("KeypleReaders are not ready");
+        } catch (KeyplePluginNotFoundException e) {
+            e.printStackTrace();
+            LOG.error("NFC Plugin not found");
         }
-
 
 
     }
