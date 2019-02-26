@@ -82,4 +82,24 @@ public class ByteArrayUtils {
         }
         return hexStringBuilder.toString();
     }
+
+    /**
+     * Convert three bytes from a byte array into an integer.
+     * <p>
+     * The three bytes are expected to be in the MSB first order (aka network order).
+     * <p>
+     * Throw an exception if the buffer is null or not long enough to contain all 3 bytes.
+     * 
+     * @param bytes byte array
+     * @param offset offset from which the 3 bytes are
+     * @return the resulting int
+     * @throws IllegalArgumentException if the buffer has a bad length
+     */
+    public static int threeBytesToInt(byte[] bytes, int offset) {
+        if (bytes == null || bytes.length < offset + 3 || offset < 0) {
+            throw new IllegalArgumentException("Bad data for converting 3-byte integers.");
+        }
+        return (((int) bytes[offset]) << 16) + (((int) bytes[offset + 1]) << 8)
+                + ((int) bytes[offset + 2]);
+    }
 }

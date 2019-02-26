@@ -11,8 +11,6 @@
  ********************************************************************************/
 package org.eclipse.keyple.calypso.transaction;
 
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
 import java.util.*;
 import org.eclipse.keyple.calypso.command.SendableInSession;
 import org.eclipse.keyple.calypso.command.po.*;
@@ -1366,13 +1364,12 @@ public final class PoTransaction {
                              * number. Convert the 3-byte block indexed by the counter number to an
                              * int.
                              */
-                            int currentCounterValue =
-                                    ByteBuffer.wrap(commandResponse.getApduResponse().getBytes())
-                                            .order(ByteOrder.BIG_ENDIAN)
-                                            .getInt((counterNumber - 1) * 3) >> 8;
+                            int currentCounterValue = ByteArrayUtils.threeBytesToInt(
+                                    commandResponse.getApduResponse().getBytes(),
+                                    (counterNumber - 1) * 3);
                             /* Extract the add or subtract value from the modification request */
-                            int addSubtractValue = ByteBuffer.wrap(modCounterApduRequest)
-                                    .order(ByteOrder.BIG_ENDIAN).getInt(OFFSET_DATA) >> 8;
+                            int addSubtractValue = ByteArrayUtils
+                                    .threeBytesToInt(modCounterApduRequest, OFFSET_DATA);
                             /* Build the response */
                             byte[] response = new byte[5];
                             int newCounterValue;

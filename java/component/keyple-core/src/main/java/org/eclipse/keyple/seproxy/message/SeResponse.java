@@ -45,10 +45,9 @@ public final class SeResponse implements Serializable {
      * @param channelPreviouslyOpen the channel previously open
      * @param selectionStatus the SE selection status
      * @param apduResponses the apdu responses
-     * @throws IllegalArgumentException if both atr and fci are null
      */
     public SeResponse(boolean channelPreviouslyOpen, SelectionStatus selectionStatus,
-            List<ApduResponse> apduResponses) throws IllegalArgumentException {
+            List<ApduResponse> apduResponses) {
         this.channelPreviouslyOpen = channelPreviouslyOpen;
         this.selectionStatus = selectionStatus;
         this.apduResponses = apduResponses;

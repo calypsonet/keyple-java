@@ -24,6 +24,7 @@ import org.eclipse.keyple.seproxy.ReaderPlugin;
 import org.eclipse.keyple.seproxy.SeProxyService;
 import org.eclipse.keyple.seproxy.SeReader;
 import org.eclipse.keyple.seproxy.SeSelector;
+import org.eclipse.keyple.seproxy.exception.KeyplePluginNotFoundException;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.message.ApduRequest;
 import org.eclipse.keyple.seproxy.message.ApduResponse;
@@ -103,7 +104,7 @@ public class OMAPITestFragment extends Fragment {
 
         try {
             SortedSet<? extends SeReader> readers =
-                    SeProxyService.getInstance().getPlugins().first().getReaders();
+                    SeProxyService.getInstance().getPlugin(AndroidOmapiPlugin.PLUGIN_NAME).getReaders();
 
             if (readers == null || readers.size() < 1) {
                 mText.append("\nNo readers found in OMAPI Keyple Plugin");
@@ -116,7 +117,7 @@ public class OMAPITestFragment extends Fragment {
 
             }
 
-        } catch (KeypleReaderException e) {
+        } catch (KeypleReaderException | KeyplePluginNotFoundException e) {
             e.printStackTrace();
         }
 
