@@ -56,4 +56,19 @@ public final class CloseSessionCmdBuild extends PoCommandBuilder {
         request = setApduRequest(poClass.getValue(), command, p1, (byte) 0x00,
                 terminalSessionSignature, le);
     }
+
+    /**
+     * Instantiates a new CloseSessionCmdBuild based on the revision of the PO to generate an abort
+     * session command (Close Secure Session with p1 = p2 = lc = 0).
+     *
+     * @param poClass indicates which CLA byte should be used for the Apdu
+     */
+    public CloseSessionCmdBuild(PoClass poClass) {
+        super(command, null);
+        request = setApduRequest(poClass.getValue(), command, (byte) 0x00, (byte) 0x00, null,
+                (byte) 0);
+        /* Add "Abort session" to command name for logging purposes */
+        this.addSubName("Abort session");
+    }
+
 }
