@@ -1527,12 +1527,10 @@ public final class PoTransaction {
     }
 
     /**
-     * Process all prepared PO commands in a Secure Session.
+     * Process all prepared PO commands (outside a Secure Session).
      * <ul>
-     * <li>On the PO reader, generates a SeRequest for the current selected AID, with channelState
-     * set to KEEP_OPEN, and ApduRequests with the PO commands.</li>
-     * <li>In case the secure session is active, the "cache" of SAM commands is completed with the
-     * corresponding Digest Update commands.</li>
+     * <li>On the PO reader, generates a SeRequest with channelState set to the provided value and
+     * ApduRequests containing the PO commands.</li>
      * <li>All parsers returned by the prepare command methods are updated with the Apdu responses
      * from the PO.</li>
      * </ul>
@@ -1544,93 +1542,124 @@ public final class PoTransaction {
      * @throws KeypleReaderException IO Reader exception
      */
     public boolean processPoCommands(ChannelState channelState) throws KeypleReaderException {
+
+        /** This method should be called only if no session was previously open */
+        if (currentState == SessionState.SESSION_OPEN) {
+            throw new IllegalStateException("A session is open");
+        }
+
         boolean poProcessSuccess = true;
         /*
          * Iterator to keep the progress in updating the parsers from the list of prepared commands
          */
         Iterator<AbstractApduResponseParser> abstractApduResponseParserIterator =
                 poResponseParserList.iterator();
-        if (currentState == SessionState.SESSION_CLOSED) {
-            /* PO commands sent outside a Secure Session. No modifications buffer limitation. */
-            SeResponse seResponsePoCommands =
-                    processAtomicPoCommands(poCommandBuilderList, channelState);
+        /* PO commands sent outside a Secure Session. No modifications buffer limitation. */
+        SeResponse seResponsePoCommands =
+                processAtomicPoCommands(poCommandBuilderList, channelState);
 
+        if (!updateParsersWithResponses(seResponsePoCommands, abstractApduResponseParserIterator)) {
+            poProcessSuccess = false;
+        }
+
+        /* clean up global lists */
+        poCommandBuilderList.clear();
+        poResponseParserList.clear();
+        return poProcessSuccess;
+    }
+
+    /**
+     * Process all prepared PO commands in a Secure Session.
+     * <ul>
+     * <li>On the PO reader, generates a SeRequest with channelState set to KEEP_OPEN, and
+     * ApduRequests containing the PO commands.</li>
+     * <li>In case the secure session is active, the "cache" of SAM commands is completed with the
+     * corresponding Digest Update commands.</li>
+     * <li>All parsers returned by the prepare command methods are updated with the Apdu responses
+     * from the PO.</li>
+     * </ul>
+     *
+     * @return true if all commands are successful
+     *
+     * @throws KeypleReaderException IO Reader exception
+     */
+    public boolean processPoCommandsInSession() throws KeypleReaderException {
+
+        /** This method should be called only if a session was previously open */
+        if (currentState == SessionState.SESSION_CLOSED) {
+            throw new IllegalStateException("No open session");
+        }
+
+        boolean poProcessSuccess = true;
+        /*
+         * Iterator to keep the progress in updating the parsers from the list of prepared commands
+         */
+        Iterator<AbstractApduResponseParser> abstractApduResponseParserIterator =
+                poResponseParserList.iterator();
+
+        /* A session is open, we have to care about the PO modifications buffer */
+        List<PoSendableInSession> poAtomicCommandBuilderList = new ArrayList<PoSendableInSession>();
+
+        for (PoSendableInSession poCommandBuilderElement : poCommandBuilderList) {
+            if (!(poCommandBuilderElement instanceof PoModificationCommand)) {
+                /* This command does not affect the PO modifications buffer */
+                poAtomicCommandBuilderList.add(poCommandBuilderElement);
+            } else {
+                /* This command affects the PO modifications buffer */
+                if (willOverflowBuffer(((PoModificationCommand) poCommandBuilderElement))) {
+                    if (currentModificationMode == ModificationMode.ATOMIC) {
+                        throw new IllegalStateException(
+                                "ATOMIC mode error! This command would overflow the PO modifications buffer: "
+                                        + poCommandBuilderElement.toString());
+                    }
+                    /*
+                     * The current command would overflow the modifications buffer in the PO. We
+                     * send the current commands and update the parsers. The parsers Iterator is
+                     * kept all along the process.
+                     */
+                    SeResponse seResponsePoCommands = processAtomicPoCommands(
+                            poAtomicCommandBuilderList, ChannelState.KEEP_OPEN);
+                    if (!updateParsersWithResponses(seResponsePoCommands,
+                            abstractApduResponseParserIterator)) {
+                        poProcessSuccess = false;
+                    }
+                    /*
+                     * Close the session and reset the modifications buffer counters for the next
+                     * round (set the contact mode to avoid the transmission of the ratification)
+                     */
+                    processAtomicClosing(null, TransmissionMode.CONTACTS, ChannelState.KEEP_OPEN);
+                    resetModificationsBufferCounter();
+                    /* We reopen a new session for the remaining commands to be sent */
+                    SeResponse seResponseOpening = processAtomicOpening(currentAccessLevel,
+                            (byte) 0x00, (byte) 0x00, null);
+                    /*
+                     * Clear the list and add the command that did not fit in the PO modifications
+                     * buffer. We also update the usage counter without checking the result.
+                     */
+                    poAtomicCommandBuilderList.clear();
+                    poAtomicCommandBuilderList.add(poCommandBuilderElement);
+                    /*
+                     * just update modifications buffer usage counter, ignore result (always false)
+                     */
+                    willOverflowBuffer((PoModificationCommand) poCommandBuilderElement);
+                } else {
+                    /*
+                     * The command fits in the PO modifications buffer, just add it to the list
+                     */
+                    poAtomicCommandBuilderList.add(poCommandBuilderElement);
+                }
+            }
+        }
+
+        if (!poAtomicCommandBuilderList.isEmpty()) {
+            SeResponse seResponsePoCommands =
+                    processAtomicPoCommands(poAtomicCommandBuilderList, ChannelState.KEEP_OPEN);
             if (!updateParsersWithResponses(seResponsePoCommands,
                     abstractApduResponseParserIterator)) {
                 poProcessSuccess = false;
             }
-        } else {
-            /* A session is open, we have to care about the PO modifications buffer */
-            List<PoSendableInSession> poAtomicCommandBuilderList =
-                    new ArrayList<PoSendableInSession>();
-
-            for (PoSendableInSession poCommandBuilderElement : poCommandBuilderList) {
-                if (!(poCommandBuilderElement instanceof PoModificationCommand)) {
-                    /* This command does not affect the PO modifications buffer */
-                    poAtomicCommandBuilderList.add(poCommandBuilderElement);
-                } else {
-                    /* This command affects the PO modifications buffer */
-                    if (willOverflowBuffer(((PoModificationCommand) poCommandBuilderElement))) {
-                        if (currentModificationMode == ModificationMode.ATOMIC) {
-                            throw new IllegalStateException(
-                                    "ATOMIC mode error! This command would overflow the PO modifications buffer: "
-                                            + poCommandBuilderElement.toString());
-                        }
-                        /*
-                         * The current command would overflow the modifications buffer in the PO. We
-                         * send the current commands and update the parsers. The parsers Iterator is
-                         * kept all along the process.
-                         */
-                        SeResponse seResponsePoCommands = processAtomicPoCommands(
-                                poAtomicCommandBuilderList, ChannelState.KEEP_OPEN);
-                        if (!updateParsersWithResponses(seResponsePoCommands,
-                                abstractApduResponseParserIterator)) {
-                            poProcessSuccess = false;
-                        }
-                        /*
-                         * Close the session and reset the modifications buffer counters for the
-                         * next round (set the contact mode to avoid the transmission of the
-                         * ratification)
-                         */
-                        processAtomicClosing(null, TransmissionMode.CONTACTS,
-                                ChannelState.KEEP_OPEN);
-                        resetModificationsBufferCounter();
-                        /* We reopen a new session for the remaining commands to be sent */
-                        SeResponse seResponseOpening = processAtomicOpening(currentAccessLevel,
-                                (byte) 0x00, (byte) 0x00, null);
-                        /*
-                         * Clear the list and add the command that did not fit in the PO
-                         * modifications buffer. We also update the usage counter without checking
-                         * the result.
-                         */
-                        poAtomicCommandBuilderList.clear();
-                        poAtomicCommandBuilderList.add(poCommandBuilderElement);
-                        /*
-                         * just update modifications buffer usage counter, ignore result (always
-                         * false)
-                         */
-                        willOverflowBuffer((PoModificationCommand) poCommandBuilderElement);
-                    } else {
-                        /*
-                         * The command fits in the PO modifications buffer, just add it to the list
-                         */
-                        poAtomicCommandBuilderList.add(poCommandBuilderElement);
-                    }
-                }
-            }
-            if (!poAtomicCommandBuilderList.isEmpty()) {
-                SeResponse seResponsePoCommands =
-                        processAtomicPoCommands(poAtomicCommandBuilderList, ChannelState.KEEP_OPEN);
-                if (!updateParsersWithResponses(seResponsePoCommands,
-                        abstractApduResponseParserIterator)) {
-                    poProcessSuccess = false;
-                }
-            }
-            // TODO add session abort command if channel closing is requested
-            // if(channelState) {
-            // /* abort the PO session session */
-            // }
         }
+
         /* clean up global lists */
         poCommandBuilderList.clear();
         poResponseParserList.clear();
@@ -1645,7 +1674,7 @@ public final class PoTransaction {
      * <li>All parsers returned by the prepare command methods are updated with the Apdu responses
      * from the PO.</li>
      * </ul>
-     * 
+     *
      * @param transmissionMode the communication mode. If the communication mode is CONTACTLESS, a
      *        ratification command will be generated and sent to the PO after the Close Session
      *        command; the ratification will not be requested in the Close Session command. On the

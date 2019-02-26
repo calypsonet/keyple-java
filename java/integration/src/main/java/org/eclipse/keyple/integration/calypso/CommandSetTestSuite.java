@@ -96,7 +96,7 @@ public class CommandSetTestSuite {
 
         poTransaction.prepareUpdateRecordCmd(sfi, recordNumber, dataToWrite,
                 String.format("SFI=%02X, recnbr=%d", sfi, recordNumber));
-        poTransaction.processPoCommands(ChannelState.KEEP_OPEN);
+        poTransaction.processPoCommandsInSession();
 
         poTransaction.processClosing(TransmissionMode.CONTACTLESS, ChannelState.KEEP_OPEN);
     }
@@ -114,7 +114,7 @@ public class CommandSetTestSuite {
         poTransaction.prepareDecreaseCmd(countersSfi, counterIndex, valueToDecrement, String.format(
                 "SFI=%02X, index=%d, decvalue=%d", countersSfi, counterIndex, valueToDecrement));
 
-        poTransaction.processPoCommands(ChannelState.KEEP_OPEN);
+        poTransaction.processPoCommandsInSession();
 
         poTransaction.processClosing(TransmissionMode.CONTACTLESS, ChannelState.KEEP_OPEN);
     }
@@ -132,7 +132,7 @@ public class CommandSetTestSuite {
         poTransaction.prepareIncreaseCmd(countersSfi, counterIndex, valueToIncrement, String.format(
                 "SFI=%02X, index=%d, decvalue=%d", countersSfi, counterIndex, valueToIncrement));
 
-        poTransaction.processPoCommands(ChannelState.KEEP_OPEN);
+        poTransaction.processPoCommandsInSession();
 
         poTransaction.processClosing(TransmissionMode.CONTACTLESS, ChannelState.KEEP_OPEN);
     }
@@ -149,7 +149,7 @@ public class CommandSetTestSuite {
 
         poTransaction.prepareAppendRecordCmd(sfi, dataToWrite, String.format("SFI=%02X", sfi));
 
-        poTransaction.processPoCommands(ChannelState.KEEP_OPEN);
+        poTransaction.processPoCommandsInSession();
 
         poTransaction.processClosing(TransmissionMode.CONTACTLESS, ChannelState.KEEP_OPEN);
     }
@@ -589,7 +589,7 @@ public class CommandSetTestSuite {
                     String.format("SFI=%02X, recnbr=%02X", poData.getContractFileData().getSfi(),
                             poData.getContractFileData().getRecNumb()));
 
-            poTransaction.processPoCommands(ChannelState.KEEP_OPEN);
+            poTransaction.processPoCommandsInSession();
 
             poTransaction.processClosing(TransmissionMode.CONTACTLESS, ChannelState.KEEP_OPEN);
 

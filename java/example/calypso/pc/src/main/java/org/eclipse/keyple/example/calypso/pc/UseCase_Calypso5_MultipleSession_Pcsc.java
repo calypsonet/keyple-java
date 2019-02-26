@@ -202,7 +202,7 @@ public class UseCase_Calypso5_MultipleSession_Pcsc {
                 }
 
                 /* proceed with the sending of commands, don't close the channel */
-                poProcessStatus = poTransaction.processPoCommands(ChannelState.KEEP_OPEN);
+                poProcessStatus = poTransaction.processPoCommandsInSession();
 
                 if (!poProcessStatus) {
                     for (int i = 0; i < nbCommands; i++) {

@@ -225,7 +225,7 @@ public class UseCase_Calypso4_PoAuthentication_Stub {
                                 CalypsoClassicInfo.SFI_EventLog,
                                 CalypsoClassicInfo.RECORD_NUMBER_1));
 
-                poProcessStatus = poTransaction.processPoCommands(ChannelState.KEEP_OPEN);
+                poProcessStatus = poTransaction.processPoCommandsInSession();
 
                 /*
                  * Retrieve the data read from the parser updated during the transaction process
@@ -237,7 +237,7 @@ public class UseCase_Calypso4_PoAuthentication_Stub {
                 logger.info("EventLog file data: {}", ByteArrayUtils.toHex(eventLog));
 
                 if (!poProcessStatus) {
-                    throw new IllegalStateException("processPoCommands failure.");
+                    throw new IllegalStateException("processPoCommandsInSession failure.");
                 }
 
                 /*
