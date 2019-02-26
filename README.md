@@ -1,9 +1,21 @@
-# Keyple Java
+# 'Eclipse Keyple' Java implementation
 
 This is the temporary repository for the Java implementation of the 'Eclipse [Keyple](https://keyple.org/)' API.
 - The Eclipse Foundation is currently checking the IP of these elements.
-- Soon the Java source of Keyple will be transfered to the repository https://github.com/eclipse/keyple-java.
+- In March 2019, the Java source code of Keyple will be transfered to the repository manage by the Eclipse foundation https://github.com/eclipse/keyple-java.
+
+## Global Architecture of Keyple
+
 ![global architecture](doc/20181123-Keyple-components.svg "keyple SDK global architecture")
+
+The API is currently divided in two major layers:
+- The ‘Keyple Core' : a Secure Element Proxy API which allows managing SE readers in a generic way, whaterver the reader driver or environment, and for standalone or distributed solution.
+- A ‘Calypso Keyple extension' : a high level Calypso Processing API allowing to operate commands with a Calypso Portable Object, and to manage a secure Calypso transaction.
+Dedicated reader’s plugins have to be implemented in order to interface the SE Proxy API with the specific reader’s drivers.
+
+## Supported platforms
+- Java SE 1.6 compact2
+- Android 4.4 KitKat API level 19
 
 ## keyple-java repositories structure
 
@@ -15,9 +27,37 @@ This is the temporary repository for the Java implementation of the 'Eclipse [Ke
   - example: source for Keyple implementation examples, generic or Calypso specific.
   - integration: source for the integration code (SDK).
 
-## Supported platforms
-- Java SE 1.6 compact2
-- Android 4.4 KitKat API level 19
+## Keyple features and corresponding packages
+
+Keyple features global for any Secure Element solution:
+| Features                                     | Packages  |
+| -------------------------------------------- |-------------|
+| Selections of Secure Elements (high level API) | org.eclipse.keyple.**transaction** |
+| Management of SE readers | org.eclipse.keyple.**seproxy** |
+| Notifications of reader plug/unplug, of SE insertion/remove<ul><li>definition of automatic selection request in case of SE insertion on an Observable Reader.</li></ul> | org.eclipse.keyple.seproxy.**event** |
+| Communication protocols filters (setting for contactless/contacts SE Reader) | org.eclipse.keyple.seproxy.**protocol** |
+| Reader plugins implementation support <ul><li>Utility classes providing generic processing for SE Reader Plugins</li></ul> | org.eclipse.keyple.seproxy.**plugin** |
+| Transmition of grouped APDU commands to a SE Reader (low level API) | org.eclipse.keyple.seproxy.**message** |
+| SE specific library implementation support <ul><li>generic API to build a SE specific commands library</li></ul> | org.eclipse.keyple.**command** |
+
+Keyple features defined to support the Calypso solution:
+| Features                                     | Packages  |
+| -------------------------------------------- |-------------|
+| Calypso Portable Object commands and secure transaction management <ul><li>high level API, commands’ settings limited to functional parameters</li><li>Calypso SAM (Secure Module) operations automatically processed</li></ul> | org.eclipse.keyple.calypso.**transaction** |
+| Calypso PO responses data parsing | org.eclipse.keyple.calypso.command.**po.parser** |
+| Calypso SAM responses data parsing | org.eclipse.keyple.calypso.command.**sam.parser** |
+| Calypso PO & SAM commands' sets<ul><li>high level API, low level API, commands’ settings include technical parameters specific to Calypso PO revisions or Calypso SAM revisions</li></ul> | <ul><li>org.eclipse.keyple.calypso.**command**</li><li>org.eclipse.keyple.calypso.command.**po**</li><li>org.eclipse.keyple.calypso.command.**po.builder**</li><li>org.eclipse.keyple.calypso.command.**po.parser.session**</li><li>org.eclipse.keyple.calypso.command.**sam.parser.session**</li><li>org.eclipse.keyple.calypso.command.**sam.builder**</li><li>org.eclipse.keyple.calypso.command.**sam**</li></ul> |
+
+## Keyple packages and corresponding usages
+The packages to import in order to implement a ticketing **application**, a reader **plugin**, or a **SE library** to manage a specific solution.
+
+- generic to any SE solution
+
+![generic packages](doc/SeProxyPackage.svg "Keyple generic packages")
+
+- specific to Calypso
+
+![Calypso packages](doc/CalypsoPackage.svg "Calypso packages")
 
 ## JARs
 When moved to the Eclipse repository, the Eclipse Keyple artifacts will be published on Maven. Pending temporary artifacts could be downloaded here:
@@ -35,20 +75,8 @@ When moved to the Eclipse repository, the Eclipse Keyple artifacts will be publi
     - the native reader service [https://calypsonet.github.io/keyple-java/develop/jars/keyple-plugin-remotese-native-reader-0.1.0-SNAPSHOT.jar](https://calypsonet.github.io/keyple-java/develop/jars/keyple-plugin-remotese-native-reader-0.1.0-SNAPSHOT.jar)
     - the transport [https://calypsonet.github.io/keyple-java/develop/jars/keyple-plugin-remotese-transport-api-0.1.0-SNAPSHOT.jar](https://calypsonet.github.io/keyple-java/develop/jars/keyple-plugin-remotese-transport-api-0.1.0-SNAPSHOT.jar)
 
-## Keyple packages' usages
-The packages to import in order to implement a ticketing **application**, a reader **plugin**, or a **SE library** to manage a specific solution.
-
-- generic to any SE solution
-
-![generic packages](doc/SeProxyPackage.svg "Keyple generic packages")
-
-- specific to Calypso
-
-![Calypso packages](doc/CalypsoPackage.svg "Calypso packages")
-
 ## Documentation
-The current function specification [keyple-doc](https://calypsonet.github.io/keyple-doc/) is obsolete. We're rewriting it in to include the lastest evolutions of the Keyple API.
-
+The current function specification [keyple-doc](https://calypsonet.github.io/keyple-doc/) is obsolete. We're rewriting it for March 2019 in to include the lastest evolutions of the Keyple API.
 
 ## Building the examples and the Keyple components
 
@@ -75,7 +103,6 @@ Following commands will build all the artifacts at once. The first command is re
 gradle wrapper --gradle-version 4.5.1
 .\gradlew.bat build  --info
 ```
-
 
 ### Android components
 
