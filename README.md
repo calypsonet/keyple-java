@@ -30,6 +30,7 @@ Dedicated reader’s plugins have to be implemented in order to interface the SE
 ## Keyple features and corresponding packages
 
 Keyple features global for any Secure Element solution:
+
 | Features                                     | Packages  |
 | -------------------------------------------- |-------------|
 | Selections of Secure Elements (high level API) | org.eclipse.keyple.**transaction** |
@@ -41,6 +42,7 @@ Keyple features global for any Secure Element solution:
 | SE specific library implementation support <ul><li>generic API to build a SE specific commands library</li></ul> | org.eclipse.keyple.**command** |
 
 Keyple features defined to support the Calypso solution:
+
 | Features                                     | Packages  |
 | -------------------------------------------- |-------------|
 | Calypso Portable Object commands and secure transaction management <ul><li>high level API, commands’ settings limited to functional parameters</li><li>Calypso SAM (Secure Module) operations automatically processed</li></ul> | org.eclipse.keyple.calypso.**transaction** |
