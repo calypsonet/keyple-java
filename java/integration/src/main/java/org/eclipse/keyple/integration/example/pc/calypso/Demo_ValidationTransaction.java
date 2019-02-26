@@ -150,7 +150,7 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
                 ReadDataStructure.SINGLE_RECORD_DATA, (byte) (contractIndex + 1), (byte) 0x1D,
                 "Contract");
 
-        poTransaction.processPoCommands(ChannelState.KEEP_OPEN);
+        poTransaction.processPoCommandsInSession();
 
         System.out
                 .println("Reading contract #" + (contractIndex + 1) + " for current validation...");
@@ -183,7 +183,7 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
         AppendRecordRespPars appendEventPars =
                 poTransaction.prepareAppendRecordCmd(eventSfi, newEventData, "Event");
 
-        poTransaction.processPoCommands(ChannelState.KEEP_OPEN);
+        poTransaction.processPoCommandsInSession();
 
         poTransaction.processClosing(TransmissionMode.CONTACTLESS, ChannelState.KEEP_OPEN);
 
@@ -280,7 +280,7 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
 
         poTransaction.prepareDecreaseCmd(countersSfi, (byte) 0x01, 1, "Counter decval=1");
 
-        poTransaction.processPoCommands(ChannelState.KEEP_OPEN);
+        poTransaction.processPoCommandsInSession();
 
         poTransaction.processClosing(TransmissionMode.CONTACTLESS, ChannelState.KEEP_OPEN);
 
