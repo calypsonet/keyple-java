@@ -1794,6 +1794,56 @@ public final class PoTransaction {
     }
 
     /**
+     * Abort a Secure Session.
+     * <p>
+     * Send the appropriate command to the PO
+     * <p>
+     * Clean up internal data and status.
+     * 
+     * @param channelState indicates if the SE channel of the PO reader must be closed after the
+     *        abort session command
+     * @return true if the abort command received a successful response from the PO
+     */
+    public boolean processCancel(ChannelState channelState) {
+        /* PO ApduRequest List to hold Close Secure Session command */
+        List<ApduRequest> poApduRequestList = new ArrayList<ApduRequest>();
+
+        /* Build the PO Close Session command (in "abort" mode since no signature is provided). */
+        CloseSessionCmdBuild closeCommand = new CloseSessionCmdBuild(calypsoPo.getPoClass());
+
+        poApduRequestList.add(closeCommand.getApduRequest());
+
+        /*
+         * Transfer PO commands
+         */
+        SeRequest poSeRequest = new SeRequest(poApduRequestList, channelState);
+
+        logger.debug("processCancel => POSEREQUEST = {}", poSeRequest);
+
+        SeResponse poSeResponse;
+        try {
+            poSeResponse = poReader.transmit(poSeRequest);
+        } catch (KeypleReaderException ex) {
+            poSeResponse = ex.getSeResponse();
+        }
+
+        logger.debug("processCancel => POSERESPONSE = {}", poSeResponse);
+
+        /* clean up global lists */
+        poCommandBuilderList.clear();
+        poResponseParserList.clear();
+
+        /*
+         * session is now considered closed regardless the previous state or the result of the abort
+         * session command sent to the PO.
+         */
+        currentState = SessionState.SESSION_CLOSED;
+
+        /* return the successful status of the abort session command */
+        return poSeResponse.getApduResponses().get(0).isSuccessful();
+    }
+
+    /**
      * Loops on the SeResponse and updates the list of parsers pointed out by the provided iterator
      * 
      * @param seResponse the seResponse from the PO
