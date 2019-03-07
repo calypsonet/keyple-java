@@ -36,7 +36,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Specialized selector to manage the specific characteristics of Calypso POs
+ * Specialized selection request to manage the specific characteristics of Calypso POs
  */
 public final class PoSelectionRequest extends SeSelectionRequest {
     private static final Logger logger = LoggerFactory.getLogger(PoSelectionRequest.class);

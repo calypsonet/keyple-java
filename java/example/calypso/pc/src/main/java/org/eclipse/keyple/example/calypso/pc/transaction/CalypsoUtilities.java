@@ -16,9 +16,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.EnumMap;
 import java.util.Properties;
-import org.eclipse.keyple.calypso.transaction.PoSelector;
+import org.eclipse.keyple.calypso.transaction.CalypsoSam;
 import org.eclipse.keyple.calypso.transaction.PoTransaction;
-import org.eclipse.keyple.example.calypso.common.postructure.CalypsoClassicInfo;
+import org.eclipse.keyple.calypso.transaction.SamSelectionRequest;
+import org.eclipse.keyple.calypso.transaction.SamSelector;
 import org.eclipse.keyple.example.generic.pc.ReaderUtilities;
 import org.eclipse.keyple.seproxy.ChannelState;
 import org.eclipse.keyple.seproxy.SeProxyService;
@@ -27,7 +28,6 @@ import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.protocol.Protocol;
 import org.eclipse.keyple.transaction.SeSelection;
-import org.eclipse.keyple.transaction.SeSelectionRequest;
 
 public class CalypsoUtilities {
     private static Properties properties;
@@ -124,13 +124,11 @@ public class CalypsoUtilities {
          */
         SeSelection samSelection = new SeSelection(samReader);
 
-        PoSelector samSelector = new PoSelector(null,
-                new PoSelector.PoAtrFilter(CalypsoClassicInfo.SAM_C1_ATR_REGEX),
-                "Selection SAM C1");
+        SamSelector samSelector = new SamSelector(CalypsoSam.C1, null, "Selection SAM C1");
 
         /* Prepare selector, ignore MatchingSe here */
-        samSelection.prepareSelection(
-                new SeSelectionRequest(samSelector, ChannelState.KEEP_OPEN, Protocol.ANY));
+        CalypsoSam calypsoSam = (CalypsoSam) samSelection.prepareSelection(
+                new SamSelectionRequest(samSelector, ChannelState.KEEP_OPEN, Protocol.ANY));
 
         try {
             if (!samSelection.processExplicitSelection()) {
@@ -139,7 +137,6 @@ public class CalypsoUtilities {
             }
         } catch (KeypleReaderException e) {
             throw new IllegalStateException("Reader exception: " + e.getMessage());
-
         }
     }
 }
