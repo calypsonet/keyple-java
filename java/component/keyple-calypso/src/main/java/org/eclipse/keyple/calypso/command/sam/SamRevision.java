@@ -12,14 +12,36 @@
 package org.eclipse.keyple.calypso.command.sam;
 
 /**
- * This enumeration registers all revisions of SAM.
+ * This enumeration registers all supported revisions of SAM.
  *
  */
 public enum SamRevision {
 
-    /** The revision of C1 and S1E SAM. 0x00, 0x80 */
-    C1,
+    /** The revision of C1 and S1E SAM. CLA 0x00, 0x80 */
+    C1("C1", "C1"),
 
-    /** The revision of S1D SAM SAM. 0x94 */
-    S1D
+    /** The revision of S1E SAM. CLA 0x00, 0x80 */
+    S1E("S1E", "E1"),
+
+    /** The revision of S1D SAM SAM. CLA 0x94 */
+    S1D("S1D", "D?"),
+
+    /** Joker value matching any application type */
+    ANY("Any", "??");
+
+    private final String name;
+    private final String applicationTypeMask;
+
+    SamRevision(String name, String applicationTypeMask) {
+        this.name = name;
+        this.applicationTypeMask = applicationTypeMask;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getApplicationTypeMask() {
+        return applicationTypeMask;
+    }
 }

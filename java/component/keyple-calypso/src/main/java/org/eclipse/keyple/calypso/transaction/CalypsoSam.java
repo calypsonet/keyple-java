@@ -22,11 +22,6 @@ import org.slf4j.LoggerFactory;
 public class CalypsoSam extends MatchingSe {
     private static final Logger logger = LoggerFactory.getLogger(CalypsoSam.class);
 
-    /** SAM subtypes */
-    public final static byte C1 = (byte) 0xC1;
-    public final static byte E1 = (byte) 0xE1;
-    public final static byte ANY = (byte) 0xFF;
-
     private byte applicationSubType;
     private byte[] serialNumber = new byte[4];
     private byte platform;

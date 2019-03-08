@@ -11,6 +11,7 @@
  ********************************************************************************/
 package org.eclipse.keyple.calypso.transaction;
 
+import org.eclipse.keyple.calypso.command.sam.SamRevision;
 import org.eclipse.keyple.seproxy.SeSelector;
 
 /**
@@ -23,13 +24,13 @@ public class SamSelector extends SeSelector {
      * <p>
      * Two optional parameters
      *
-     * @param subtype the expected SAM subtype
+     * @param samRevision the expected SAM revision (subtype)
      * @param serialNumber the expected serial number as an hex string (padded with 0 on the left).
-     *        May be a sub regex (e.g. "AEC0....")
+     *        Can be a sub regex (e.g. "AEC0....")
      * @param extraInfo information string (to be printed in logs)
      */
-    public SamSelector(byte subtype, String serialNumber, String extraInfo) {
-        super(null, new AtrFilter(null), null);
+    public SamSelector(SamRevision samRevision, String serialNumber, String extraInfo) {
+        super(null, new AtrFilter(null), extraInfo);
         String atrRegex;
         String snRegex;
         /* check if serialNumber is defined */
@@ -45,14 +46,14 @@ public class SamSelector extends SeSelector {
          *
          * The header is starting with 3B, its total length is 4 or 6 bytes (8 or 10 hex digits)
          */
-        switch (subtype) {
-            case CalypsoSam.C1:
-                atrRegex = "3B(.{6}|.{10})805A..80C120.{4}" + snRegex + "829000";
+        switch (samRevision) {
+            case C1:
+            case S1D:
+            case S1E:
+                atrRegex = "3B(.{6}|.{10})805A..80" + samRevision.getApplicationTypeMask()
+                        + "20.{4}" + snRegex + "829000";
                 break;
-            case CalypsoSam.E1:
-                atrRegex = "3B(.{6}|.{10})805A..80E120.{4}" + snRegex + "829000";
-                break;
-            case CalypsoSam.ANY:
+            case ANY:
                 /* match any ATR */
                 atrRegex = ".*";
                 break;

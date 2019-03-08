@@ -11,6 +11,7 @@
  ********************************************************************************/
 package org.eclipse.keyple.example.calypso.pc.transaction;
 
+import static org.eclipse.keyple.calypso.command.sam.SamRevision.C1;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -124,7 +125,7 @@ public class CalypsoUtilities {
          */
         SeSelection samSelection = new SeSelection(samReader);
 
-        SamSelector samSelector = new SamSelector(CalypsoSam.C1, null, "Selection SAM C1");
+        SamSelector samSelector = new SamSelector(C1, null, "Selection SAM C1");
 
         /* Prepare selector, ignore MatchingSe here */
         CalypsoSam calypsoSam = (CalypsoSam) samSelection.prepareSelection(

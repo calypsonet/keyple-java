@@ -30,8 +30,8 @@ public class SamGetChallengeCmdBuild extends SamCommandBuilder {
      * @param expectedResponseLength the expected response length
      * @throws java.lang.IllegalArgumentException - if the expected response length has wrong value.
      */
-    public SamGetChallengeCmdBuild(org.eclipse.keyple.calypso.command.sam.SamRevision revision,
-            byte expectedResponseLength) throws IllegalArgumentException {
+    public SamGetChallengeCmdBuild(SamRevision revision, byte expectedResponseLength)
+            throws IllegalArgumentException {
         super(command, null);
         if (revision != null) {
             this.defaultRevision = revision;
