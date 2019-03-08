@@ -9,7 +9,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  ********************************************************************************/
-package org.eclipse.keyple.calypso.transaction;
+package org.eclipse.keyple.calypso.transaction.sam;
 
 import org.eclipse.keyple.calypso.command.sam.SamRevision;
 import org.eclipse.keyple.seproxy.SeSelector;
@@ -53,13 +53,13 @@ public class SamSelector extends SeSelector {
                 atrRegex = "3B(.{6}|.{10})805A..80" + samRevision.getApplicationTypeMask()
                         + "20.{4}" + snRegex + "829000";
                 break;
-            case ANY:
+            case AUTO:
                 /* match any ATR */
                 atrRegex = ".*";
                 break;
             default:
                 throw new IllegalArgumentException("Unknown SAM subtype.");
         }
-        this.getAtrFilter().setAtrRegex(atrRegex);
+        this.getAtrFilter();
     }
 }

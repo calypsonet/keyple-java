@@ -13,6 +13,7 @@ package org.eclipse.keyple.calypso.transaction;
 
 import static org.junit.Assert.*;
 import org.eclipse.keyple.calypso.command.sam.SamRevision;
+import org.eclipse.keyple.calypso.transaction.sam.SamSelector;
 import org.junit.Test;
 
 public class SamSelectorTest {
@@ -46,7 +47,7 @@ public class SamSelectorTest {
 
     @Test
     public void test_SamRevision_ANY() {
-        SamSelector samSelector = new SamSelector(SamRevision.ANY, null, "Any");
+        SamSelector samSelector = new SamSelector(SamRevision.AUTO, null, "Any");
         assertEquals(".*", samSelector.getAtrFilter().getAtrRegex());
     }
 
@@ -59,7 +60,7 @@ public class SamSelectorTest {
 
     @Test
     public void test_ExtraInfo() {
-        SamSelector samSelector = new SamSelector(SamRevision.ANY, null, "Any");
+        SamSelector samSelector = new SamSelector(SamRevision.AUTO, null, "Any");
         assertEquals("Any", samSelector.getExtraInfo());
     }
 }

@@ -9,7 +9,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  ********************************************************************************/
-package org.eclipse.keyple.calypso.transaction;
+package org.eclipse.keyple.calypso.transaction.sam;
 
 import static org.eclipse.keyple.calypso.command.sam.SamRevision.*;
 import java.util.regex.Matcher;
