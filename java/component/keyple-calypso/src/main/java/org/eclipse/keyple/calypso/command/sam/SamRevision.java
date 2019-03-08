@@ -33,7 +33,7 @@ public enum SamRevision {
      * <p>
      * The actual revision will be retrieved from the ATR historical bytes.
      */
-    ANY("AUTO", "??", (byte) 0x00);
+    AUTO("AUTO", "??", (byte) 0x00);
 
     private final String name;
     private final String applicationTypeMask;
