@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">2.023s</div>
+<div class="counter">2.022s</div>
 <p>duration</p>
 </div>
 </td>
@@ -89,17 +89,17 @@
 </tr>
 <tr>
 <td class="success">testA_UnplugOneReaderCount</td>
-<td>0.101s</td>
+<td>0.100s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">testB_UnplugOneReaderEvent</td>
-<td>0.111s</td>
+<td>0.112s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">testC_PlugSameReaderTwice</td>
-<td>0.101s</td>
+<td>0.100s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
@@ -109,7 +109,7 @@
 </tr>
 <tr>
 <td class="success">testE_PlugMultiReadersCount</td>
-<td>0.100s</td>
+<td>0.101s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
@@ -119,7 +119,7 @@
 </tr>
 <tr>
 <td class="success">testF_PlugUnplugMultiReadersCount</td>
-<td>0.101s</td>
+<td>0.100s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
@@ -179,12 +179,9 @@
 [Thread-22] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-23] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubPlugin - Plugging a new reader with name testA_PlugOneReaderCount
-[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-8] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][testA_PlugOneReaderCount] Plugin thread =&gt; Add plugged reader to readers list.
 [Test worker] INFO org.eclipse.keyple.plugin.stub.BaseStubTest - ---------
 [Test worker] INFO org.eclipse.keyple.plugin.stub.BaseStubTest - TearDown 
 [Test worker] INFO org.eclipse.keyple.plugin.stub.BaseStubTest - ---------
-[Thread-8] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event to 0 observers. EVENTNAME = Reader connected 
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubPlugin - Unplug 1 stub readers
 [Test worker] DEBUG org.eclipse.keyple.plugin.stub.StubPlugin - Unplug stub readers.. [testA_PlugOneReaderCount]
 [Test worker] INFO org.eclipse.keyple.plugin.stub.BaseStubTest - ------------------------------
@@ -193,25 +190,6 @@
 [Test worker] INFO org.eclipse.keyple.plugin.stub.BaseStubTest - setUp, assert stubplugin is empty
 [Test worker] INFO org.eclipse.keyple.plugin.stub.BaseStubTest - Stubplugin readers size 0
 [Test worker] INFO org.eclipse.keyple.plugin.stub.BaseStubTest - Stubplugin observers size 0
-[Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-5] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-17] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-18] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-19] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-20] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-22] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-23] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
@@ -233,9 +211,29 @@
 [Thread-22] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-23] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-5] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-17] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-18] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-19] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-20] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-22] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-23] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [class org.eclipse.keyple.plugin.stub.StubPlugin][StubPlugin] addObserver =&gt; Adding an observer.
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservablePlugin - Start the plugin monitoring.
-[Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubPlugin - Plugging a new reader with name testA_PlugReaders
 [Thread-24] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][testA_PlugReaders] Plugin thread =&gt; Add plugged reader to readers list.
 [Thread-24] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [StubPlugin] AbstractObservableReader =&gt; Notifying a plugin event to 1 observers. EVENTNAME = Reader connected 
@@ -268,8 +266,8 @@
 [Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-22] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-23] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-24] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
@@ -289,8 +287,8 @@
 [Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-22] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-23] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-24] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubPlugin - Plugging a new reader with name testA_UnplugOneReaderCount
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubPlugin - Unplugged reader with name testA_UnplugOneReaderCount, connectedStubNames size 0
@@ -323,8 +321,8 @@
 [Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-22] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-23] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-24] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
@@ -344,8 +342,8 @@
 [Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-22] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-23] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-24] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [class org.eclipse.keyple.plugin.stub.StubPlugin][StubPlugin] addObserver =&gt; Adding an observer.
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservablePlugin - Start the plugin monitoring.
@@ -386,8 +384,8 @@
 [Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-22] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-23] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-24] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-25] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
@@ -408,8 +406,8 @@
 [Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-22] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-23] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-24] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-25] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
@@ -445,8 +443,8 @@
 [Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-22] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-23] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-24] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-25] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
@@ -467,8 +465,8 @@
 [Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-22] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-23] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-24] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-25] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
@@ -477,13 +475,13 @@
 [Test worker] INFO org.eclipse.keyple.plugin.stub.BaseStubTest - ---------
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubPlugin - Unplug 0 stub readers
 [Test worker] DEBUG org.eclipse.keyple.plugin.stub.StubPlugin - Unplug stub readers.. []
-[Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Test worker] INFO org.eclipse.keyple.plugin.stub.BaseStubTest - ------------------------------
 [Test worker] INFO org.eclipse.keyple.plugin.stub.BaseStubTest - Test testE_PlugMultiReadersCount
 [Test worker] INFO org.eclipse.keyple.plugin.stub.BaseStubTest - ------------------------------
 [Test worker] INFO org.eclipse.keyple.plugin.stub.BaseStubTest - setUp, assert stubplugin is empty
 [Test worker] INFO org.eclipse.keyple.plugin.stub.BaseStubTest - Stubplugin readers size 0
 [Test worker] INFO org.eclipse.keyple.plugin.stub.BaseStubTest - Stubplugin observers size 0
+[Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
@@ -500,8 +498,8 @@
 [Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-22] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-23] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-24] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-25] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
@@ -522,12 +520,11 @@
 [Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-22] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-23] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-24] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-25] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Test worker] DEBUG org.eclipse.keyple.plugin.stub.StubPlugin - Plugging 3 readers ..
 [Test worker] DEBUG org.eclipse.keyple.plugin.stub.StubPlugin - New readers to be created #3
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubPluginTest - Stub Readers connected [EC_reader1, EC_reader2, EC_reader3]
@@ -536,12 +533,18 @@
 [Test worker] INFO org.eclipse.keyple.plugin.stub.BaseStubTest - ---------
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubPlugin - Unplug 3 stub readers
 [Test worker] DEBUG org.eclipse.keyple.plugin.stub.StubPlugin - Unplug stub readers.. [EC_reader1, EC_reader2, EC_reader3]
+[Thread-10] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][EC_reader1] Plugin thread =&gt; Add plugged reader to readers list.
+Exception in thread &quot;Thread-10&quot; java.lang.NullPointerException
 [Test worker] INFO org.eclipse.keyple.plugin.stub.BaseStubTest - ------------------------------
 [Test worker] INFO org.eclipse.keyple.plugin.stub.BaseStubTest - Test testE_PlugMultiReadersEvent
 [Test worker] INFO org.eclipse.keyple.plugin.stub.BaseStubTest - ------------------------------
 [Test worker] INFO org.eclipse.keyple.plugin.stub.BaseStubTest - setUp, assert stubplugin is empty
 [Test worker] INFO org.eclipse.keyple.plugin.stub.BaseStubTest - Stubplugin readers size 0
 [Test worker] INFO org.eclipse.keyple.plugin.stub.BaseStubTest - Stubplugin observers size 0
+	at java.util.concurrent.ConcurrentSkipListMap.doPut(ConcurrentSkipListMap.java:820)
+	at java.util.concurrent.ConcurrentSkipListMap.putIfAbsent(ConcurrentSkipListMap.java:1979)
+	at java.util.concurrent.ConcurrentSkipListSet.add(ConcurrentSkipListSet.java:241)
+	at org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin$EventThread.run(AbstractThreadedObservablePlugin.java:155)
 [Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
@@ -558,12 +561,11 @@
 [Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-22] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-23] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-24] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-25] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
@@ -580,15 +582,14 @@
 [Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-22] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-23] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-24] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-25] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [class org.eclipse.keyple.plugin.stub.StubPlugin][StubPlugin] addObserver =&gt; Adding an observer.
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservablePlugin - Start the plugin monitoring.
+[Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Test worker] DEBUG org.eclipse.keyple.plugin.stub.StubPlugin - Plugging 3 readers ..
 [Test worker] DEBUG org.eclipse.keyple.plugin.stub.StubPlugin - New readers to be created #3
 [Thread-26] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][E_Reader1] Plugin thread =&gt; Add plugged reader to readers list.
@@ -601,35 +602,13 @@
 [Test worker] INFO org.eclipse.keyple.plugin.stub.BaseStubTest - ---------
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubPlugin - Unplug 3 stub readers
 [Test worker] DEBUG org.eclipse.keyple.plugin.stub.StubPlugin - Unplug stub readers.. [E_Reader1, E_Reader2, E_Reader3]
-[Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Test worker] INFO org.eclipse.keyple.plugin.stub.BaseStubTest - ------------------------------
 [Test worker] INFO org.eclipse.keyple.plugin.stub.BaseStubTest - Test testF_PlugUnplugMultiReadersCount
 [Test worker] INFO org.eclipse.keyple.plugin.stub.BaseStubTest - ------------------------------
 [Test worker] INFO org.eclipse.keyple.plugin.stub.BaseStubTest - setUp, assert stubplugin is empty
 [Test worker] INFO org.eclipse.keyple.plugin.stub.BaseStubTest - Stubplugin readers size 0
 [Test worker] INFO org.eclipse.keyple.plugin.stub.BaseStubTest - Stubplugin observers size 0
-[Thread-5] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-17] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-18] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-19] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-20] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-22] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-23] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-24] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-25] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-26] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-5] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
@@ -644,16 +623,36 @@
 [Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-22] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-23] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-24] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-25] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-26] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-5] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-17] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-18] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-19] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-20] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-22] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-23] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-24] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-25] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-26] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Test worker] DEBUG org.eclipse.keyple.plugin.stub.StubPlugin - Plugging 3 readers ..
 [Test worker] DEBUG org.eclipse.keyple.plugin.stub.StubPlugin - New readers to be created #3
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubPlugin - Unplug 3 stub readers
@@ -663,6 +662,7 @@
 [Test worker] INFO org.eclipse.keyple.plugin.stub.BaseStubTest - ---------
 [Test worker] INFO org.eclipse.keyple.plugin.stub.StubPlugin - Unplug 0 stub readers
 [Test worker] DEBUG org.eclipse.keyple.plugin.stub.StubPlugin - Unplug stub readers.. []
+[Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Test worker] INFO org.eclipse.keyple.plugin.stub.BaseStubTest - ------------------------------
 [Test worker] INFO org.eclipse.keyple.plugin.stub.BaseStubTest - Test testF_PlugUnplugMultiReadersEvent
 [Test worker] INFO org.eclipse.keyple.plugin.stub.BaseStubTest - ------------------------------
@@ -682,15 +682,14 @@
 [Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-22] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-23] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-24] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-25] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-26] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-5] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
@@ -705,20 +704,20 @@
 [Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-22] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-23] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-24] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-25] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-26] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Test worker] TRACE org.eclipse.keyple.seproxy.plugin.AbstractLoggedObservable - [class org.eclipse.keyple.plugin.stub.StubPlugin][StubPlugin] addObserver =&gt; Adding an observer.
 [Test worker] DEBUG org.eclipse.keyple.seproxy.plugin.AbstractObservablePlugin - Start the plugin monitoring.
 [Test worker] DEBUG org.eclipse.keyple.plugin.stub.StubPlugin - Plugging 3 readers ..
 [Test worker] DEBUG org.eclipse.keyple.plugin.stub.StubPlugin - New readers to be created #3
+[Thread-27] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-27] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][F_Reader1] Plugin thread =&gt; Add plugged reader to readers list.
 [Thread-27] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][F_Reader2] Plugin thread =&gt; Add plugged reader to readers list.
 [Thread-27] TRACE org.eclipse.keyple.seproxy.plugin.AbstractThreadedObservablePlugin - [StubPlugin][F_Reader3] Plugin thread =&gt; Add plugged reader to readers list.
@@ -744,204 +743,11 @@
 [Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-22] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-23] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-24] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-25] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-26] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-27] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-5] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-17] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-18] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-19] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-20] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-22] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-23] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-24] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-25] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-26] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-27] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-5] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-17] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-18] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-19] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-20] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-22] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-23] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-24] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-25] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-26] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-27] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-5] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-17] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-18] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-19] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-20] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-22] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-23] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-24] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-25] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-26] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-27] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-5] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-17] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-18] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-19] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-20] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-22] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-23] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-24] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-25] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-26] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-27] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-5] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-17] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-18] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-19] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-20] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-22] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-23] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-24] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-25] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-26] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-27] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-5] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-17] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-18] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-19] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-20] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-22] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-23] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-24] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-25] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-26] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-27] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-5] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-17] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-18] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-19] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-20] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-22] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-23] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-24] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-25] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-26] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-27] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-5] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-17] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-18] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-19] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-20] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-22] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-23] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-24] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-25] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-26] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
@@ -960,12 +766,11 @@
 [Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-22] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-23] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-24] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-25] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-26] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
@@ -984,12 +789,11 @@
 [Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-22] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-23] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-24] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-25] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-26] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
@@ -1008,84 +812,11 @@
 [Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-22] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-23] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-24] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-25] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-26] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-27] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-5] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-17] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-18] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-19] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-20] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-22] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-23] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-24] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-25] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-26] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-27] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-5] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-17] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-18] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-19] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-20] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-22] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-23] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-24] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-25] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-26] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-27] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-5] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-17] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-18] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-19] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-20] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-22] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-23] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-24] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-25] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-26] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
@@ -1104,12 +835,11 @@
 [Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-22] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-23] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-24] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-25] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-26] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
@@ -1128,12 +858,11 @@
 [Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-22] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-23] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-24] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-25] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-26] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
@@ -1152,12 +881,11 @@
 [Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-22] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-23] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-24] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-25] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-26] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
@@ -1176,12 +904,11 @@
 [Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-22] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-23] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-24] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-25] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-26] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
@@ -1189,8 +916,8 @@
 [Thread-27] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-5] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-17] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-18] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
@@ -1200,12 +927,264 @@
 [Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-22] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-23] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-24] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-25] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
-[Thread-10] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-26] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-27] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-5] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-17] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-18] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-19] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-20] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-22] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-23] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-24] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-25] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-26] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-27] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-5] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-17] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-18] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-19] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-20] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-22] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-23] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-24] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-25] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-26] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-27] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-5] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-17] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-18] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-19] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-20] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-22] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-23] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-24] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-25] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-26] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-27] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-5] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-17] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-18] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-19] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-20] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-22] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-23] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-24] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-25] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-26] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-27] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-5] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-17] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-18] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-19] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-20] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-22] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-23] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-24] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-25] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-26] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-27] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-5] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-17] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-18] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-19] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-20] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-22] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-23] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-24] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-25] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-26] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-27] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-5] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-17] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-18] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-19] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-20] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-22] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-23] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-24] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-25] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-26] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-27] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-5] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-17] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-18] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-19] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-20] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-22] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-23] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-24] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-25] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-26] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-27] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-5] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-17] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-18] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-19] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-20] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-22] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-23] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-24] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-25] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-26] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-27] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-5] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-17] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-18] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-19] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-20] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-22] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-23] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-24] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-25] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-26] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-13] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-27] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-5] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-6] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-14] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-15] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-16] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-17] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-18] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-7] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-19] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-20] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-21] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-22] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-23] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-4] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-8] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-24] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-25] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
+[Thread-9] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-11] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-26] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
 [Thread-12] TRACE org.eclipse.keyple.plugin.stub.StubPlugin - No reader available.
@@ -1228,7 +1207,7 @@
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 4.5.1</a> at Mar 7, 2019 9:25:54 PM</p>
+<a href="http://www.gradle.org">Gradle 4.5.1</a> at Mar 8, 2019 12:37:09 PM</p>
 </div>
 </div>
 </body>
