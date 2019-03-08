@@ -60,6 +60,6 @@ public class SamSelector extends SeSelector {
             default:
                 throw new IllegalArgumentException("Unknown SAM subtype.");
         }
-        this.getAtrFilter();
+        this.getAtrFilter().setAtrRegex(atrRegex);
     }
 }
