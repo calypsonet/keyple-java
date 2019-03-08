@@ -17,24 +17,32 @@ package org.eclipse.keyple.calypso.command.sam;
  */
 public enum SamRevision {
 
-    /** The revision of C1 and S1E SAM. CLA 0x00, 0x80 */
-    C1("C1", "C1"),
+    /** The revision of C1 and S1E SAM. CLA 0x00 or 0x80 */
+    C1("C1", "C1", (byte) 0x80),
 
-    /** The revision of S1E SAM. CLA 0x00, 0x80 */
-    S1E("S1E", "E1"),
+    /** The revision of S1E SAM. CLA 0x00 or 0x80 */
+    S1E("S1E", "E1", (byte) 0x80),
 
     /** The revision of S1D SAM SAM. CLA 0x94 */
-    S1D("S1D", "D?"),
+    S1D("S1D", "D?", (byte) 0x94),
 
-    /** Joker value matching any application type */
-    ANY("Any", "??");
+    /**
+     * Joker value matching any application type.
+     * <p>
+     * Used as an argument in SamSelector.
+     * <p>
+     * The actual revision will be retrieved from the ATR historical bytes.
+     */
+    ANY("AUTO", "??", (byte) 0x00);
 
     private final String name;
     private final String applicationTypeMask;
+    private final byte classByte;
 
-    SamRevision(String name, String applicationTypeMask) {
+    SamRevision(String name, String applicationTypeMask, byte classByte) {
         this.name = name;
         this.applicationTypeMask = applicationTypeMask;
+        this.classByte = classByte;
     }
 
     public String getName() {
@@ -43,5 +51,9 @@ public enum SamRevision {
 
     public String getApplicationTypeMask() {
         return applicationTypeMask;
+    }
+
+    public byte getClassByte() {
+        return classByte;
     }
 }

@@ -43,7 +43,7 @@ public class DigestUpdateCmdBuild extends SamCommandBuilder {
         if (revision != null) {
             this.defaultRevision = revision;
         }
-        byte cla = SamRevision.S1D.equals(this.defaultRevision) ? (byte) 0x94 : (byte) 0x80;
+        byte cla = this.defaultRevision.getClassByte();
         byte p1 = (byte) 0x00;
         byte p2 = (byte) 0x00;
         if (encryptedSession) {

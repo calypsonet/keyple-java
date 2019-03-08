@@ -43,7 +43,7 @@ public class SelectDiversifierCmdBuild extends SamCommandBuilder {
         if (diversifier == null || (diversifier.length != 4 && diversifier.length != 8)) {
             throw new IllegalArgumentException("Bad diversifier value!");
         }
-        byte cla = SamRevision.S1D.equals(this.defaultRevision) ? (byte) 0x94 : (byte) 0x80;
+        byte cla = this.defaultRevision.getClassByte();
         byte p1 = 0x00;
         byte p2 = 0x00;
 

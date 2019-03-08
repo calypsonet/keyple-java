@@ -41,7 +41,7 @@ public class DigestCloseCmdBuild extends SamCommandBuilder {
                     .format("Bad digest length! Expected 4 or 8, got %s", expectedResponseLength));
         }
 
-        byte cla = SamRevision.S1D.equals(this.defaultRevision) ? (byte) 0x94 : (byte) 0x80;
+        byte cla = this.defaultRevision.getClassByte();
         byte p1 = 0x00;
         byte p2 = (byte) 0x00;
 
