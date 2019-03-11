@@ -100,9 +100,9 @@ public class UseCase_Generic4_SequentialMultiSelection_Pcsc {
                             null, "Initial selection #1"),
                     ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4));
 
-            seSelection = new SeSelection(seReader);
-
             doAndAnalyseSelection(seSelection, matchingSe, 1);
+
+            seSelection = new SeSelection(seReader);
 
             /* next selection */
             matchingSe = seSelection.prepareSelection(new SeSelectionRequest(
@@ -113,9 +113,9 @@ public class UseCase_Generic4_SequentialMultiSelection_Pcsc {
                             null, "Next selection #2"),
                     ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4));
 
-            seSelection = new SeSelection(seReader);
-
             doAndAnalyseSelection(seSelection, matchingSe, 2);
+
+            seSelection = new SeSelection(seReader);
 
             /* next selection */
             matchingSe = seSelection.prepareSelection(new SeSelectionRequest(
