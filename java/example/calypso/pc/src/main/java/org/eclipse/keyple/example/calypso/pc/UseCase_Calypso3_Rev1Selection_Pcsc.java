@@ -124,7 +124,7 @@ public class UseCase_Calypso3_Rev1Selection_Pcsc {
             /*
              * Prepare the selection of the DF RT.
              */
-            SelectFileRespPars selectFileRespPars = poSelectionRequest.prepareSelectFileDfCmd(
+            SelectFileRespPars selectFileRespPars = poSelectionRequest.prepareSelectFileCmd(
                     ByteArrayUtils.fromHex(poDfRtPath), "Select file: " + poDfRtPath);
 
             /*
