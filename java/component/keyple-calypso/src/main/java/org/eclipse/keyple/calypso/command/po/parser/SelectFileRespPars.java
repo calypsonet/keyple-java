@@ -14,13 +14,18 @@ package org.eclipse.keyple.calypso.command.po.parser;
 import java.util.HashMap;
 import java.util.Map;
 import org.eclipse.keyple.command.AbstractApduResponseParser;
+import org.eclipse.keyple.util.ByteArrayUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This class provides status code properties and the getters to access to the structured fields of
- * data from response of a Select File response.
+ * data from response to a Select File command (available from the parent class).
+ * <p>
+ * The FCI structure is analyzed and all subfields are made available through as many getters.
  */
 public final class SelectFileRespPars extends AbstractApduResponseParser {
-
+    private static final Logger logger = LoggerFactory.getLogger(SelectFileRespPars.class);
     private static final Map<Integer, StatusProperties> STATUS_TABLE;
 
     static {
@@ -33,12 +38,283 @@ public final class SelectFileRespPars extends AbstractApduResponseParser {
         STATUS_TABLE = m;
     }
 
+    // File Type Values
+    public final static int FILE_TYPE_MF = 1;
+    public final static int FILE_TYPE_DF = 2;
+    public final static int FILE_TYPE_EF = 4;
+
+    // EF Type Values
+    public final static int EF_TYPE_DF = 0;
+    public final static int EF_TYPE_BINARY = 1;
+    public final static int EF_TYPE_LINEAR = 2;
+    public final static int EF_TYPE_CYCLIC = 4;
+    public final static int EF_TYPE_SIMULATED_COUNTERS = 8;
+    public final static int EF_TYPE_COUNTERS = 9;
+
+    private byte[] fileBinaryData;
+
+    private int lid;
+
+    private byte sfi;
+
+    private byte fileType;
+
+    private byte efType;
+
+    private int recSize;
+
+    private byte numRec;
+
+    private byte[] accessConditions;
+
+    private byte[] keyIndexes;
+
+    private byte simulatedCounterFileSfi;
+
+    private byte simulatedCounterNumber;
+
+    private int sharedEf;
+
+    private byte dfStatus;
+
+    private byte[] rfu;
+
+    private byte[] kvcInfo;
+
+    private byte[] kifInfo;
+
+    private boolean selectionSuccessful;
+
+    private boolean parsingDone;
+
+    /**
+     * Method extracting the various fields from the FCI structure returned by the PO.
+     * <p>
+     * The successful flag (see isSelectionSuccessful) is based on the response status word.
+     * <p>
+     * The parsingDone flag is set to avoid multiple call to this method while getting several
+     * attributes. TODO Handle Rev1/Rev2 PO
+     */
+    private void parseResponse() {
+        byte[] inFileParameters = response.getDataOut();
+        int iter = 0;
+
+        // flag saying that we've already been here
+        parsingDone = true;
+
+        if (!response.isSuccessful()) {
+            // the command was not successful, we stop here
+            return;
+        }
+
+        if (logger.isTraceEnabled()) {
+            logger.trace("Parsing FCI: {}", ByteArrayUtils.toHex(inFileParameters));
+        }
+
+        // Check File TLV Tag and length
+        if (inFileParameters[iter++] != (byte) 0x85 || inFileParameters[iter++] != (byte) 0x17) {
+            throw new IllegalStateException(
+                    "Unexpected FCI format: " + ByteArrayUtils.toHex(inFileParameters));
+        }
+
+        fileBinaryData = new byte[inFileParameters.length];
+        System.arraycopy(inFileParameters, 0, fileBinaryData, 0, inFileParameters.length);
+
+        sfi = inFileParameters[iter++];
+        fileType = inFileParameters[iter++];
+        efType = inFileParameters[iter++];
+
+        if (fileType == FILE_TYPE_EF && efType == EF_TYPE_BINARY) {
+
+            recSize = ((inFileParameters[iter + 1] << 8) & 0x0000ff00)
+                    | (inFileParameters[iter] & 0x000000ff);
+            numRec = 1;
+            iter += 2;
+
+        } else if (fileType == FILE_TYPE_EF) {
+
+            recSize = inFileParameters[iter++];
+            numRec = inFileParameters[iter++];
+        } else {
+            // no record for non EF types
+            recSize = 0;
+            numRec = 0;
+        }
+
+        accessConditions = new byte[4];
+        System.arraycopy(inFileParameters, iter, accessConditions, 0, 4);
+        iter += 4;
+
+        keyIndexes = new byte[4];
+        System.arraycopy(inFileParameters, iter, keyIndexes, 0, 4);
+        iter += 4;
+
+        dfStatus = inFileParameters[iter++];
+
+        if (fileType == FILE_TYPE_EF) {
+
+            if (efType == EF_TYPE_SIMULATED_COUNTERS) {
+
+                simulatedCounterFileSfi = inFileParameters[iter++];
+                simulatedCounterNumber = inFileParameters[iter++];
+
+            } else {
+
+                sharedEf = ((inFileParameters[iter + 1] << 8) & 0x0000ff00)
+                        | (inFileParameters[iter] & 0x000000ff);
+                iter += 2;
+            }
+
+            rfu = new byte[5];
+            System.arraycopy(inFileParameters, iter, rfu, 0, 5);
+            iter += 5; // RFU fields;
+
+        } else {
+
+            kvcInfo = new byte[3];
+            System.arraycopy(inFileParameters, iter, kvcInfo, 0, 4);
+            iter += 3;
+
+            kifInfo = new byte[3];
+            System.arraycopy(inFileParameters, iter, kifInfo, 0, 4);
+            iter += 3;
+
+
+            rfu = new byte[1];
+            rfu[0] = inFileParameters[iter++];
+        }
+
+        lid = ((inFileParameters[iter] << 8) & 0x0000ff00)
+                | (inFileParameters[iter + 1] & 0x000000ff);
+
+        selectionSuccessful = true;
+    }
+
     /**
      * Instantiates a new SelectFileRespPars.
-     *
+     * <p>
      */
     public SelectFileRespPars() {
+        parsingDone = false;
+    }
 
+    public boolean isSelectionSuccessful() {
+        if (!parsingDone) {
+            parseResponse();
+        }
+        return selectionSuccessful;
+    }
+
+    public int getLid() {
+        if (!parsingDone) {
+            parseResponse();
+        }
+        return lid;
+    }
+
+    public byte getSfi() {
+        if (!parsingDone) {
+            parseResponse();
+        }
+        return sfi;
+    }
+
+    public byte getFileType() {
+        if (!parsingDone) {
+            parseResponse();
+        }
+        return fileType;
+    }
+
+    public byte getEfType() {
+        if (!parsingDone) {
+            parseResponse();
+        }
+        return efType;
+    }
+
+    public int getRecSize() {
+        if (!parsingDone) {
+            parseResponse();
+        }
+        return recSize;
+    }
+
+    public byte getNumRec() {
+        if (!parsingDone) {
+            parseResponse();
+        }
+        return numRec;
+    }
+
+    public byte[] getAccessConditions() {
+        if (!parsingDone) {
+            parseResponse();
+        }
+        return accessConditions;
+    }
+
+    public byte[] getKeyIndexes() {
+        if (!parsingDone) {
+            parseResponse();
+        }
+        return keyIndexes;
+    }
+
+    public byte getSimulatedCounterFileSfi() {
+        if (!parsingDone) {
+            parseResponse();
+        }
+        return simulatedCounterFileSfi;
+    }
+
+    public byte getSimulatedCounterNumber() {
+        if (!parsingDone) {
+            parseResponse();
+        }
+        return simulatedCounterNumber;
+    }
+
+    public int getSharedEf() {
+        if (!parsingDone) {
+            parseResponse();
+        }
+        return sharedEf;
+    }
+
+    public byte getDfStatus() {
+        if (!parsingDone) {
+            parseResponse();
+        }
+        return dfStatus;
+    }
+
+    public byte[] getFileBinaryData() {
+        if (!parsingDone) {
+            parseResponse();
+        }
+        return fileBinaryData;
+    }
+
+    public byte[] getRfu() {
+        if (!parsingDone) {
+            parseResponse();
+        }
+        return rfu;
+    }
+
+    public byte[] getKvcInfo() {
+        if (!parsingDone) {
+            parseResponse();
+        }
+        return kvcInfo;
+    }
+
+    public byte[] getKifInfo() {
+        if (!parsingDone) {
+            parseResponse();
+        }
+        return kifInfo;
     }
 
     public byte[] getSelectionData() {

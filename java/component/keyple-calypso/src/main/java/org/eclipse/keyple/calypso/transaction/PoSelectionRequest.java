@@ -169,15 +169,40 @@ public final class PoSelectionRequest extends SeSelectionRequest {
      * Prepare a select file ApduRequest to be executed following the selection.
      * <p>
      * 
-     * @param path path from the MF (MF identifier excluded)
+     * @param path path from the CURRENT_DF (CURRENT_DF identifier excluded)
      * @param extraInfo extra information included in the logs (can be null or empty)
+     * @return SelectFileRespPars select file response parser
      */
-    public SelectFileRespPars prepareSelectFileDfCmd(byte[] path, String extraInfo) {
-        addApduRequest(
-                new SelectFileCmdBuild(poClass, SelectFileCmdBuild.SelectControl.PATH_FROM_MF,
-                        SelectFileCmdBuild.SelectOptions.FCI, path).getApduRequest());
+    public SelectFileRespPars prepareSelectFileCmd(byte[] path, String extraInfo) {
+        addApduRequest(new SelectFileCmdBuild(poClass, path).getApduRequest());
         if (logger.isTraceEnabled()) {
             logger.trace("Select File: PATH = {}", ByteArrayUtils.toHex(path));
+        }
+
+        /* create a parser to be returned to the caller */
+        SelectFileRespPars poResponseParser = new SelectFileRespPars();
+
+        /*
+         * keep the parser in a CommandParser list with the number of apduRequest associated with it
+         */
+        poResponseParserList.add(poResponseParser);
+
+        return poResponseParser;
+    }
+
+    /**
+     * Prepare a select file ApduRequest to be executed following the selection.
+     * <p>
+     *
+     * @param selectControl provides the navigation case: FIRST, NEXT or CURRENT
+     * @param extraInfo extra information included in the logs (can be null or empty)
+     * @return SelectFileRespPars select file response parser
+     */
+    public SelectFileRespPars prepareNavigateCmd(SelectFileCmdBuild.SelectControl selectControl,
+            String extraInfo) {
+        addApduRequest(new SelectFileCmdBuild(poClass, selectControl).getApduRequest());
+        if (logger.isTraceEnabled()) {
+            logger.trace("Navigate: CONTROL = {}", selectControl);
         }
 
         /* create a parser to be returned to the caller */
