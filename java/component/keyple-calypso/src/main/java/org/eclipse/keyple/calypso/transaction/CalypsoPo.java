@@ -54,8 +54,7 @@ public final class CalypsoPo extends MatchingSe {
      * Retains the selection response and analyses its relevant information to determine the
      * characteristics of the PO required to process it correctly.
      * 
-     * @param selectionResponse the received response to the selection request TODO the parsing of
-     *        the FCI should be done using a true BER-TLV library
+     * @param selectionResponse the received response to the selection request
      */
     @Override
     public void setSelectionResponse(SeResponse selectionResponse) {
