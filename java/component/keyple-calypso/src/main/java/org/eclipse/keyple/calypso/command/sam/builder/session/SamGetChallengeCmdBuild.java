@@ -30,8 +30,8 @@ public class SamGetChallengeCmdBuild extends SamCommandBuilder {
      * @param expectedResponseLength the expected response length
      * @throws java.lang.IllegalArgumentException - if the expected response length has wrong value.
      */
-    public SamGetChallengeCmdBuild(org.eclipse.keyple.calypso.command.sam.SamRevision revision,
-            byte expectedResponseLength) throws IllegalArgumentException {
+    public SamGetChallengeCmdBuild(SamRevision revision, byte expectedResponseLength)
+            throws IllegalArgumentException {
         super(command, null);
         if (revision != null) {
             this.defaultRevision = revision;
@@ -40,7 +40,7 @@ public class SamGetChallengeCmdBuild extends SamCommandBuilder {
             throw new IllegalArgumentException(String.format(
                     "Bad challenge length! Expected 4 or 8, got %s", expectedResponseLength));
         }
-        byte cla = SamRevision.S1D.equals(this.defaultRevision) ? (byte) 0x94 : (byte) 0x00;
+        byte cla = this.defaultRevision.getClassByte();
         byte p1 = 0x00;
         byte p2 = 0x00;
 

@@ -37,13 +37,13 @@ public class DigestUpdateCmdBuild extends SamCommandBuilder {
      *         255
      * @throws java.lang.IllegalArgumentException - if the request is inconsistent
      */
-    public DigestUpdateCmdBuild(org.eclipse.keyple.calypso.command.sam.SamRevision revision,
-            boolean encryptedSession, byte[] digestData) throws IllegalArgumentException {
+    public DigestUpdateCmdBuild(SamRevision revision, boolean encryptedSession, byte[] digestData)
+            throws IllegalArgumentException {
         super(command, null);
         if (revision != null) {
             this.defaultRevision = revision;
         }
-        byte cla = SamRevision.S1D.equals(this.defaultRevision) ? (byte) 0x94 : (byte) 0x80;
+        byte cla = this.defaultRevision.getClassByte();
         byte p1 = (byte) 0x00;
         byte p2 = (byte) 0x00;
         if (encryptedSession) {
