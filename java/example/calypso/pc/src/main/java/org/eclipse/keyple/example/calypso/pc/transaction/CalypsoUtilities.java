@@ -19,6 +19,7 @@ import java.util.EnumMap;
 import java.util.Properties;
 import org.eclipse.keyple.calypso.transaction.PoTransaction;
 import org.eclipse.keyple.calypso.transaction.sam.CalypsoSam;
+import org.eclipse.keyple.calypso.transaction.sam.SamIdentifier;
 import org.eclipse.keyple.calypso.transaction.sam.SamSelectionRequest;
 import org.eclipse.keyple.calypso.transaction.sam.SamSelector;
 import org.eclipse.keyple.example.generic.pc.ReaderUtilities;
@@ -125,7 +126,8 @@ public class CalypsoUtilities {
          */
         SeSelection samSelection = new SeSelection(samReader);
 
-        SamSelector samSelector = new SamSelector(C1, null, "Selection SAM C1");
+        SamSelector samSelector =
+                new SamSelector(new SamIdentifier(C1, null, null), "Selection SAM C1");
 
         /* Prepare selector, ignore MatchingSe here */
         CalypsoSam calypsoSam = (CalypsoSam) samSelection.prepareSelection(

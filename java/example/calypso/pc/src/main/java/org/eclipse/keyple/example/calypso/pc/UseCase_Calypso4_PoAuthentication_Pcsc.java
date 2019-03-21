@@ -15,10 +15,9 @@ package org.eclipse.keyple.example.calypso.pc;
 
 import org.eclipse.keyple.calypso.command.po.parser.ReadDataStructure;
 import org.eclipse.keyple.calypso.command.po.parser.ReadRecordsRespPars;
-import org.eclipse.keyple.calypso.transaction.CalypsoPo;
-import org.eclipse.keyple.calypso.transaction.PoSelectionRequest;
-import org.eclipse.keyple.calypso.transaction.PoSelector;
-import org.eclipse.keyple.calypso.transaction.PoTransaction;
+import org.eclipse.keyple.calypso.command.sam.SamRevision;
+import org.eclipse.keyple.calypso.transaction.*;
+import org.eclipse.keyple.calypso.transaction.sam.SamIdentifier;
 import org.eclipse.keyple.example.calypso.common.postructure.CalypsoClassicInfo;
 import org.eclipse.keyple.example.calypso.pc.transaction.CalypsoUtilities;
 import org.eclipse.keyple.plugin.pcsc.PcscPlugin;
@@ -80,21 +79,30 @@ public class UseCase_Calypso4_PoAuthentication_Pcsc {
          */
         SeReader poReader = CalypsoUtilities.getDefaultPoReader(seProxyService);
 
-
         /*
          * Get a SAM reader ready to work with Calypso PO. Use the getReader helper method from the
          * CalypsoUtilities class.
          */
-        SeReader samReader = CalypsoUtilities.getDefaultSamReader(seProxyService);
+        // SeReader samReader = CalypsoUtilities.getDefaultSamReader(seProxyService);
+        SamResourceManager samResourceManager = new SamResourceManager(pcscPlugin,
+                ".*(Cherry TC|SCM Microsystems|Identive|HID|Generic).*");
+        SamResource samResource = null;
+        try {
+            samResource = samResourceManager.allocateSamResource(
+                    SamResourceManager.AllocationMode.BLOCKING,
+                    new SamIdentifier(SamRevision.C1, "", null));
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         /* Check if the readers exists */
-        if (poReader == null || samReader == null) {
+        if (poReader == null || samResource == null) {
             throw new IllegalStateException("Bad PO or SAM reader setup");
         }
 
         logger.info("=============== UseCase Calypso #4: Po Authentication ==================");
         logger.info("= PO Reader  NAME = {}", poReader.getName());
-        logger.info("= SAM Reader  NAME = {}", samReader.getName());
+        logger.info("= SAM Reader  NAME = {}", samResource.getSeReader().getName());
 
         /* Check if a PO is present in the reader */
         if (poReader.isSePresent()) {
@@ -152,7 +160,7 @@ public class UseCase_Calypso4_PoAuthentication_Pcsc {
                         "==================================================================================");
 
                 PoTransaction poTransaction = new PoTransaction(poReader, (CalypsoPo) selectedSe,
-                        samReader, CalypsoUtilities.getSamSettings());
+                        samResource, CalypsoUtilities.getSamSettings());
 
                 /*
                  * Prepare the reading order and keep the associated parser for later use once the

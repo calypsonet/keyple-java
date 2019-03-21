@@ -158,6 +158,13 @@ public final class PoTransaction {
         setSamSettings(samReader, samSetting);
     }
 
+    public PoTransaction(SeReader poReader, CalypsoPo calypsoPO, SamResource samResource,
+            EnumMap<SamSettings, Byte> samSetting) {
+        this(poReader, calypsoPO);
+
+        setSamSettings(samResource.getSeReader(), samSetting);
+    }
+
     /**
      * PoTransaction with PO reader and without SAM reader.
      * <ul>
