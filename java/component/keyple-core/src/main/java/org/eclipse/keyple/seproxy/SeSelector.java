@@ -176,6 +176,15 @@ public class SeSelector {
         }
 
         /**
+         * Setter for the regular expression provided at construction time
+         *
+         * @param atrRegex expression string
+         */
+        public void setAtrRegex(String atrRegex) {
+            this.atrRegex = atrRegex;
+        }
+
+        /**
          * Getter for the regular expression provided at construction time
          *
          * @return Regular expression string

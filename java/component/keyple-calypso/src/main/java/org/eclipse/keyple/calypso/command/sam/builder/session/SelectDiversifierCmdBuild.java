@@ -34,8 +34,8 @@ public class SelectDiversifierCmdBuild extends SamCommandBuilder {
      * @throws java.lang.IllegalArgumentException - if the diversifier is null or has a wrong length
      * @throws java.lang.IllegalArgumentException - if the request is inconsistent
      */
-    public SelectDiversifierCmdBuild(org.eclipse.keyple.calypso.command.sam.SamRevision revision,
-            byte[] diversifier) throws IllegalArgumentException {
+    public SelectDiversifierCmdBuild(SamRevision revision, byte[] diversifier)
+            throws IllegalArgumentException {
         super(command, null);
         if (revision != null) {
             this.defaultRevision = revision;
@@ -43,7 +43,7 @@ public class SelectDiversifierCmdBuild extends SamCommandBuilder {
         if (diversifier == null || (diversifier.length != 4 && diversifier.length != 8)) {
             throw new IllegalArgumentException("Bad diversifier value!");
         }
-        byte cla = SamRevision.S1D.equals(this.defaultRevision) ? (byte) 0x94 : (byte) 0x80;
+        byte cla = this.defaultRevision.getClassByte();
         byte p1 = 0x00;
         byte p2 = 0x00;
 

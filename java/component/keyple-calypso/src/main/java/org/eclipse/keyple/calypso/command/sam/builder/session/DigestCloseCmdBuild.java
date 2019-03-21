@@ -30,8 +30,8 @@ public class DigestCloseCmdBuild extends SamCommandBuilder {
      * @param expectedResponseLength the expected response length
      * @throws java.lang.IllegalArgumentException - if the expected response length is wrong.
      */
-    public DigestCloseCmdBuild(org.eclipse.keyple.calypso.command.sam.SamRevision revision,
-            byte expectedResponseLength) throws IllegalArgumentException {
+    public DigestCloseCmdBuild(SamRevision revision, byte expectedResponseLength)
+            throws IllegalArgumentException {
         super(command, null);
         if (revision != null) {
             this.defaultRevision = revision;
@@ -41,7 +41,7 @@ public class DigestCloseCmdBuild extends SamCommandBuilder {
                     .format("Bad digest length! Expected 4 or 8, got %s", expectedResponseLength));
         }
 
-        byte cla = SamRevision.S1D.equals(this.defaultRevision) ? (byte) 0x94 : (byte) 0x80;
+        byte cla = this.defaultRevision.getClassByte();
         byte p1 = 0x00;
         byte p2 = (byte) 0x00;
 
