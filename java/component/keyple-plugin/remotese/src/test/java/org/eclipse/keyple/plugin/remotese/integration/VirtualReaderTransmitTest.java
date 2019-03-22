@@ -37,6 +37,8 @@ public class VirtualReaderTransmitTest extends VirtualReaderBaseTest {
 
     @Before
     public void setUp() throws Exception {
+        // clear plugin if needed
+        clearStubpluginReaders();
 
         initKeypleServices();
 
