@@ -122,12 +122,14 @@ public class Tool_AnalyzePoFileStructure {
                 return;
             }
             logger.info(
-                "===================================================================================");
-            logger.info("| AID                             | LID  | KVC1 | KVC2 | KVC3 | G0 | G1 | G2 | G3 |");
+                    "===================================================================================");
+            logger.info(
+                    "| AID                             | LID  | KVC1 | KVC2 | KVC3 | G0 | G1 | G2 | G3 |");
             logger.info("{}",
                     String.format("|%32s | %04X | %02X | %02X| %02X",
-                            ByteArrayUtils.toHex(curApp.getDfName()),
-                            selectCurrentDf.getLid(), selectCurrentDf.getKvcInfo()[0], selectCurrentDf.getKvcInfo()[1], selectCurrentDf.getKvcInfo()[2]));
+                            ByteArrayUtils.toHex(curApp.getDfName()), selectCurrentDf.getLid(),
+                            selectCurrentDf.getKvcInfo()[0], selectCurrentDf.getKvcInfo()[1],
+                            selectCurrentDf.getKvcInfo()[2]));
 
 
             logger.info(
