@@ -11,6 +11,7 @@
  ********************************************************************************/
 package org.eclipse.keyple.integration.tools.calypso;
 
+import static org.eclipse.keyple.calypso.command.po.builder.SelectFileCmdBuild.SelectControl.CURRENT_DF;
 import static org.eclipse.keyple.calypso.command.po.builder.SelectFileCmdBuild.SelectControl.FIRST;
 import static org.eclipse.keyple.calypso.command.po.builder.SelectFileCmdBuild.SelectControl.NEXT;
 import org.eclipse.keyple.calypso.command.po.parser.SelectFileRespPars;
@@ -107,6 +108,38 @@ public class Tool_AnalyzePoFileStructure {
                                 inFileInformation.getKeyIndexes()[3])));
     }
 
+    private static void printApplicationInformation(SeReader poReader, CalypsoPo curApp) {
+
+        try {
+            PoTransaction poTransaction = new PoTransaction(poReader, curApp);
+
+            SelectFileRespPars selectCurrentDf =
+                    poTransaction.prepareNavigateCmd(CURRENT_DF, "CurrentDF");
+
+            poTransaction.processPoCommands(ChannelState.KEEP_OPEN);
+
+            if (!selectCurrentDf.isSelectionSuccessful()) {
+                return;
+            }
+            logger.info(
+                "===================================================================================");
+            logger.info("| AID                             | LID  | KVC1 | KVC2 | KVC3 | G0 | G1 | G2 | G3 |");
+            logger.info("{}",
+                    String.format("|%32s | %04X | %02X | %02X| %02X",
+                            ByteArrayUtils.toHex(curApp.getDfName()),
+                            selectCurrentDf.getLid(), selectCurrentDf.getKvcInfo()[0], selectCurrentDf.getKvcInfo()[1], selectCurrentDf.getKvcInfo()[2]));
+
+
+            logger.info(
+                    "===================================================================================");
+        } catch (KeypleCalypsoSecureSessionException e) {
+            // SW1SW2 is in:: e.getResponses().get(0).getStatusCode();
+        } catch (Exception e) {
+            logger.error("Exception: " + e.getCause());
+        }
+    }
+
+
     protected static void getApplicationFileData(SeReader poReader, CalypsoPo curApp) {
 
         try {
@@ -182,10 +215,7 @@ public class Tool_AnalyzePoFileStructure {
                 return;
             }
 
-            logger.info(
-                    "==================================================================================");
-            logger.info("Selected application with AID:: "
-                    + ByteArrayUtils.toHex(firstApplication.getDfName()));
+            printApplicationInformation(poReader, firstApplication);
 
             // additional selection
             getApplicationFileData(poReader, firstApplication);
