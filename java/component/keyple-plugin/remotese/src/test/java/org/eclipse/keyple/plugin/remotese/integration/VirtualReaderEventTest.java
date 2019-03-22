@@ -47,6 +47,8 @@ public class VirtualReaderEventTest extends VirtualReaderBaseTest {
     public void setUp() throws Exception {
 
         initKeypleServices();
+        // restore plugin state
+        clearStubpluginReaders();
 
         // configure and connect a Stub Native reader
         nativeReader = this.connectStubReader(NATIVE_READER_NAME, CLIENT_NODE_ID);
