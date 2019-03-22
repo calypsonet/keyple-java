@@ -9,3 +9,4 @@ org.eclipse.keyple.calypso.command.sam.builder.session
 org.eclipse.keyple.calypso.command.sam.parser.session
 org.eclipse.keyple.calypso.transaction
 org.eclipse.keyple.calypso.transaction.exception
+org.eclipse.keyple.calypso.transaction.sam
