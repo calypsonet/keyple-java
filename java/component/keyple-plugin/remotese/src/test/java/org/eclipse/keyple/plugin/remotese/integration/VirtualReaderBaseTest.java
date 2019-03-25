@@ -75,7 +75,7 @@ public class VirtualReaderBaseTest {
 
     protected void clearStubpluginReaders() throws Exception {
 
-        logger.info("TearDown Test");
+        logger.info("Cleaning of the stub plugin");
 
         StubPlugin stubPlugin = StubPlugin.getInstance();
 
@@ -91,7 +91,7 @@ public class VirtualReaderBaseTest {
 
         // Thread.sleep(500);
 
-        logger.info("End of TearDown Test");
+        logger.info("End of cleaning of the stub plugin");
     }
 
 
