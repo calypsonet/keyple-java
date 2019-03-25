@@ -50,7 +50,7 @@ public class SeProtocolDetectionEngine extends AbstractReaderObserverEngine {
 
     public DefaultSelectionRequest prepareSeSelection() {
 
-        seSelection = new SeSelection(poReader);
+        seSelection = new SeSelection();
 
         // process SDK defined protocols
         for (ContactlessProtocols protocol : ContactlessProtocols.values()) {

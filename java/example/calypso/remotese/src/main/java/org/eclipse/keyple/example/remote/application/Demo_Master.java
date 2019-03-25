@@ -149,7 +149,7 @@ public class Demo_Master implements org.eclipse.keyple.util.Observable.Observer 
                         logger.info("Configure SeSelection");
 
                         /* set default selection request */
-                        seSelection = new SeSelection(poReader);
+                        seSelection = new SeSelection();
 
                         /*
                          * Setting of an AID based selection of a Calypso REV3 PO

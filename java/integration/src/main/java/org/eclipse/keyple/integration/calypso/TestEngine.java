@@ -36,7 +36,7 @@ public class TestEngine {
     public static PoFileStructureInfo selectPO()
             throws IllegalArgumentException, KeypleReaderException {
 
-        SeSelection seSelection = new SeSelection(poReader);
+        SeSelection seSelection = new SeSelection();
 
         // Add Audit C0 AID to the list
         seSelection
@@ -59,7 +59,7 @@ public class TestEngine {
                                 ByteArrayUtils.fromHex(PoFileStructureInfo.cdLightAid), null),
                         null, "CDLight"), ChannelState.KEEP_OPEN, Protocol.ANY));
 
-        if (seSelection.processExplicitSelection()) {
+        if (seSelection.processExplicitSelection(poReader)) {
             return new PoFileStructureInfo(seSelection.getSelectedSe());
         }
 
@@ -126,7 +126,7 @@ public class TestEngine {
 
         // check the availability of the SAM, open its physical and logical channels and keep it
         // open
-        SeSelection samSelection = new SeSelection(samReader);
+        SeSelection samSelection = new SeSelection();
 
         SeSelectionRequest samSelectionRequest = new SeSelectionRequest(
                 new SeSelector(null, new SeSelector.AtrFilter(SAM_ATR_REGEX), "SAM Selection"),
@@ -136,7 +136,7 @@ public class TestEngine {
         samSelection.prepareSelection(samSelectionRequest);
 
         try {
-            if (!samSelection.processExplicitSelection()) {
+            if (!samSelection.processExplicitSelection(samReader)) {
                 System.out.println("Unable to open a logical channel for SAM!");
                 throw new IllegalStateException("SAM channel opening failure");
             } else {
