@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">0.005s</div>
+<div class="counter">0.032s</div>
 <p>duration</p>
 </div>
 </td>
@@ -79,42 +79,42 @@
 </thead>
 <tr>
 <td class="success">testCompleteSeRequestSet</td>
-<td>0s</td>
+<td>0.004s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">testHoplinkSeRequestSet</td>
-<td>0.001s</td>
+<td>0.002s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">testNotificationMode</td>
-<td>0s</td>
+<td>0.001s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">testSeResponseSet</td>
-<td>0s</td>
+<td>0.004s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">testSelectionByAidRequest</td>
-<td>0.001s</td>
+<td>0.003s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">testSelectionByAtrRequest</td>
-<td>0.001s</td>
+<td>0.012s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">testSimpleKeypleException</td>
-<td>0.001s</td>
+<td>0.002s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">testStackedKeypleException</td>
-<td>0.001s</td>
+<td>0.004s</td>
 <td class="success">passed</td>
 </tr>
 </table>
@@ -161,7 +161,7 @@
     ]
   }
 }
-[Test worker] DEBUG JsonParserTest - deserializeObj : org.eclipse.keyple.seproxy.event.DefaultSelectionRequest@795ef901
+[Test worker] DEBUG JsonParserTest - deserializeObj : org.eclipse.keyple.seproxy.event.DefaultSelectionRequest@37a9a13d
 [Test worker] DEBUG JsonParserTest - json 2 : {
   &quot;selectionSeRequestSet&quot;: {
     &quot;sortedRequests&quot;: [
@@ -335,25 +335,6 @@
   &quot;sortedRequests&quot;: [
     {
       &quot;seSelector&quot;: {
-        &quot;atrFilter&quot;: {
-          &quot;atrRegex&quot;: &quot;/regex/&quot;
-        },
-        &quot;extraInfo&quot;: &quot;&quot;
-      },
-      &quot;apduRequests&quot;: [
-        {
-          &quot;bytes&quot;: [
-            -112,
-            0
-          ],
-          &quot;case4&quot;: true
-        }
-      ],
-      &quot;protocolFlag&quot;: &quot;PROTOCOL_ISO7816_3&quot;,
-      &quot;channelState&quot;: &quot;KEEP_OPEN&quot;
-    },
-    {
-      &quot;seSelector&quot;: {
         &quot;aidSelector&quot;: {
           &quot;fileOccurrence&quot;: &quot;FIRST&quot;,
           &quot;fileControlInformation&quot;: &quot;FCI&quot;,
@@ -383,6 +364,25 @@
       ],
       &quot;protocolFlag&quot;: &quot;PROTOCOL_ISO14443_4&quot;,
       &quot;channelState&quot;: &quot;CLOSE_AFTER&quot;
+    },
+    {
+      &quot;seSelector&quot;: {
+        &quot;atrFilter&quot;: {
+          &quot;atrRegex&quot;: &quot;/regex/&quot;
+        },
+        &quot;extraInfo&quot;: &quot;&quot;
+      },
+      &quot;apduRequests&quot;: [
+        {
+          &quot;bytes&quot;: [
+            -112,
+            0
+          ],
+          &quot;case4&quot;: true
+        }
+      ],
+      &quot;protocolFlag&quot;: &quot;PROTOCOL_ISO7816_3&quot;,
+      &quot;channelState&quot;: &quot;KEEP_OPEN&quot;
     }
   ]
 }
@@ -391,25 +391,6 @@
   &quot;sortedRequests&quot;: [
     {
       &quot;seSelector&quot;: {
-        &quot;atrFilter&quot;: {
-          &quot;atrRegex&quot;: &quot;/regex/&quot;
-        },
-        &quot;extraInfo&quot;: &quot;&quot;
-      },
-      &quot;apduRequests&quot;: [
-        {
-          &quot;bytes&quot;: [
-            -112,
-            0
-          ],
-          &quot;case4&quot;: true
-        }
-      ],
-      &quot;protocolFlag&quot;: &quot;PROTOCOL_ISO7816_3&quot;,
-      &quot;channelState&quot;: &quot;KEEP_OPEN&quot;
-    },
-    {
-      &quot;seSelector&quot;: {
         &quot;aidSelector&quot;: {
           &quot;fileOccurrence&quot;: &quot;FIRST&quot;,
           &quot;fileControlInformation&quot;: &quot;FCI&quot;,
@@ -439,6 +420,25 @@
       ],
       &quot;protocolFlag&quot;: &quot;PROTOCOL_ISO14443_4&quot;,
       &quot;channelState&quot;: &quot;CLOSE_AFTER&quot;
+    },
+    {
+      &quot;seSelector&quot;: {
+        &quot;atrFilter&quot;: {
+          &quot;atrRegex&quot;: &quot;/regex/&quot;
+        },
+        &quot;extraInfo&quot;: &quot;&quot;
+      },
+      &quot;apduRequests&quot;: [
+        {
+          &quot;bytes&quot;: [
+            -112,
+            0
+          ],
+          &quot;case4&quot;: true
+        }
+      ],
+      &quot;protocolFlag&quot;: &quot;PROTOCOL_ISO7816_3&quot;,
+      &quot;channelState&quot;: &quot;KEEP_OPEN&quot;
     }
   ]
 }
@@ -606,7 +606,7 @@
     ]
   }
 }
-[Test worker] DEBUG JsonParserTest - deserializeObj : org.eclipse.keyple.seproxy.event.DefaultSelectionRequest@25a144c0
+[Test worker] DEBUG JsonParserTest - deserializeObj : org.eclipse.keyple.seproxy.event.DefaultSelectionRequest@5e61fd2
 [Test worker] DEBUG JsonParserTest - json 2 : {
   &quot;selectionSeRequestSet&quot;: {
     &quot;sortedRequests&quot;: [
@@ -656,7 +656,7 @@
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 4.5.1</a> at Mar 26, 2019 2:38:03 PM</p>
+<a href="http://www.gradle.org">Gradle 4.5.1</a> at Mar 26, 2019 2:40:15 PM</p>
 </div>
 </div>
 </body>
