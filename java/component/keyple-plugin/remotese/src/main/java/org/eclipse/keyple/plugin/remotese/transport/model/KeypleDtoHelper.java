@@ -9,10 +9,9 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  ********************************************************************************/
-package org.eclipse.keyple.plugin.remotese.transport;
+package org.eclipse.keyple.plugin.remotese.transport.model;
 
 import org.eclipse.keyple.plugin.remotese.transport.json.JsonParser;
-import org.eclipse.keyple.plugin.remotese.transport.model.KeypleDto;
 import com.google.gson.JsonObject;
 
 /**
