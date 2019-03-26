@@ -109,7 +109,7 @@ public class UseCase_Calypso2_DefaultSelectionNotification_Stub implements Reade
         /*
          * Prepare a Calypso PO selection
          */
-        seSelection = new SeSelection(poReader);
+        seSelection = new SeSelection();
 
         /*
          * Setting of an AID based selection of a Calypso REV3 PO

@@ -45,6 +45,8 @@ public class VirtualReaderEventTest extends VirtualReaderBaseTest {
 
     @Before
     public void setUp() throws Exception {
+        // restore plugin state
+        clearStubpluginReaders();
 
         initKeypleServices();
 
@@ -203,7 +205,7 @@ public class VirtualReaderEventTest extends VirtualReaderBaseTest {
             }
         });
 
-        SeSelection seSelection = new SeSelection(virtualReader);
+        SeSelection seSelection = new SeSelection();
 
         SeSelectionRequest seSelectionRequest = new SeSelectionRequest(
                 new SeSelector(new SeSelector.AidSelector(ByteArrayUtils.fromHex(poAid), null),
@@ -247,7 +249,7 @@ public class VirtualReaderEventTest extends VirtualReaderBaseTest {
         });
         String poAid = "A000000291A000000192";// not matching poAid
 
-        SeSelection seSelection = new SeSelection(virtualReader);
+        SeSelection seSelection = new SeSelection();
 
         SeSelectionRequest seSelectionRequest = new SeSelectionRequest(
                 new SeSelector(new SeSelector.AidSelector(ByteArrayUtils.fromHex(poAid), null),
@@ -298,7 +300,7 @@ public class VirtualReaderEventTest extends VirtualReaderBaseTest {
         });
         String poAid = "A000000291A000000192";// not matching poAid
 
-        SeSelection seSelection = new SeSelection(virtualReader);
+        SeSelection seSelection = new SeSelection();
 
         SeSelectionRequest seSelectionRequest = new SeSelectionRequest(
                 new SeSelector(new SeSelector.AidSelector(ByteArrayUtils.fromHex(poAid), null),
@@ -336,7 +338,7 @@ public class VirtualReaderEventTest extends VirtualReaderBaseTest {
 
                 Assert.assertEquals(ReaderEvent.EventType.SE_INSERTED, event.getEventType());
 
-                SeSelection seSelection = new SeSelection(virtualReader);
+                SeSelection seSelection = new SeSelection();
                 SeSelectionRequest seSelectionRequest = new SeSelectionRequest(
                         new SeSelector(null, new SeSelector.AtrFilter("3B.*"), "Test ATR"),
                         ChannelState.KEEP_OPEN, Protocol.ANY);
@@ -345,7 +347,7 @@ public class VirtualReaderEventTest extends VirtualReaderBaseTest {
                 seSelection.prepareSelection(seSelectionRequest);
 
                 try {
-                    seSelection.processExplicitSelection();
+                    seSelection.processExplicitSelection(virtualReader);
 
                     MatchingSe matchingSe = seSelection.getSelectedSe();
 

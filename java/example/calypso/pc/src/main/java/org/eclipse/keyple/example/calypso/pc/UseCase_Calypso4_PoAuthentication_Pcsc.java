@@ -117,7 +117,7 @@ public class UseCase_Calypso4_PoAuthentication_Pcsc {
             /*
              * Prepare a Calypso PO selection
              */
-            SeSelection seSelection = new SeSelection(poReader);
+            SeSelection seSelection = new SeSelection();
 
             /*
              * Setting of an AID based selection of a Calypso REV3 PO
@@ -146,7 +146,7 @@ public class UseCase_Calypso4_PoAuthentication_Pcsc {
              * Actual PO communication: operate through a single request the Calypso PO selection
              * and the file read
              */
-            if (seSelection.processExplicitSelection()) {
+            if (seSelection.processExplicitSelection(poReader)) {
                 logger.info("The selection of the PO has succeeded.");
 
                 MatchingSe selectedSe = seSelection.getSelectedSe();

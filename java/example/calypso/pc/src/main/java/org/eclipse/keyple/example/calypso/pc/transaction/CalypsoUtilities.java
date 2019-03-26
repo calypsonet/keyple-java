@@ -124,7 +124,7 @@ public class CalypsoUtilities {
          * check the availability of the SAM doing a ATR based selection, open its physical and
          * logical channels and keep it open
          */
-        SeSelection samSelection = new SeSelection(samReader);
+        SeSelection samSelection = new SeSelection();
 
         SamSelector samSelector =
                 new SamSelector(new SamIdentifier(C1, null, null), "Selection SAM C1");
@@ -134,7 +134,7 @@ public class CalypsoUtilities {
                 new SamSelectionRequest(samSelector, ChannelState.KEEP_OPEN, Protocol.ANY));
 
         try {
-            if (!samSelection.processExplicitSelection()) {
+            if (!samSelection.processExplicitSelection(samReader)) {
                 throw new IllegalStateException("Unable to open a logical channel for SAM!");
             } else {
             }

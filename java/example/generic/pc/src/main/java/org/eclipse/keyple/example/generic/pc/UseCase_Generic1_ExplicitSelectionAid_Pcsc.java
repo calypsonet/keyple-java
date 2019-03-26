@@ -92,7 +92,7 @@ public class UseCase_Generic1_ExplicitSelectionAid_Pcsc {
             /*
              * Prepare the SE selection
              */
-            SeSelection seSelection = new SeSelection(seReader);
+            SeSelection seSelection = new SeSelection();
 
             /*
              * Setting of an AID based selection (in this example a Calypso REV3 PO)
@@ -119,7 +119,7 @@ public class UseCase_Generic1_ExplicitSelectionAid_Pcsc {
             /*
              * Actual SE communication: operate through a single request the SE selection
              */
-            if (seSelection.processExplicitSelection()) {
+            if (seSelection.processExplicitSelection(seReader)) {
                 logger.info("The selection of the SE has succeeded.");
                 logger.info("Application FCI = {}",
                         matchingSe.getSelectionSeResponse().getSelectionStatus().getFci());
