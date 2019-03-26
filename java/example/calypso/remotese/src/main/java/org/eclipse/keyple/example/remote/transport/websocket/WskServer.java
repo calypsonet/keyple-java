@@ -17,6 +17,7 @@ import java.util.Map;
 import org.eclipse.keyple.plugin.remotese.transport.*;
 import org.eclipse.keyple.plugin.remotese.transport.factory.ServerNode;
 import org.eclipse.keyple.plugin.remotese.transport.model.KeypleDto;
+import org.eclipse.keyple.plugin.remotese.transport.model.KeypleDtoHelper;
 import org.eclipse.keyple.plugin.remotese.transport.model.TransportDto;
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
@@ -140,8 +141,8 @@ class WskServer extends WebSocketServer implements ServerNode {
         return nativeReaderName_session.put(nativeReaderName + clientNodeId, connection);
     }
 
-    public void setDtoHandler(DtoHandler stubplugin) {
-        this.dtoHandler = stubplugin;
+    public void setDtoHandler(DtoHandler dtoHandler) {
+        this.dtoHandler = dtoHandler;
     }
 
 

@@ -12,12 +12,12 @@
 package org.eclipse.keyple.plugin.remotese.nativese.method;
 
 import org.eclipse.keyple.plugin.remotese.exception.KeypleRemoteException;
-import org.eclipse.keyple.plugin.remotese.nativese.NativeReaderService;
+import org.eclipse.keyple.plugin.remotese.nativese.INativeReaderService;
 import org.eclipse.keyple.plugin.remotese.rm.RemoteMethod;
 import org.eclipse.keyple.plugin.remotese.rm.RemoteMethodTx;
-import org.eclipse.keyple.plugin.remotese.transport.*;
 import org.eclipse.keyple.plugin.remotese.transport.json.JsonParser;
 import org.eclipse.keyple.plugin.remotese.transport.model.KeypleDto;
+import org.eclipse.keyple.plugin.remotese.transport.model.KeypleDtoHelper;
 import org.eclipse.keyple.seproxy.event.ObservableReader;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderNotFoundException;
@@ -32,12 +32,12 @@ public class RmConnectReaderTx extends RemoteMethodTx<String> {
 
     private final ProxyReader localReader;
     private final String clientNodeId;
-    private final NativeReaderService nativeReaderService;
+    private final INativeReaderService nativeReaderService;
 
 
     public RmConnectReaderTx(String sessionId, String nativeReaderName, String virtualReaderName,
             String clientNodeId, ProxyReader localReader, String clientNodeId1,
-            NativeReaderService nativeReaderService) {
+            INativeReaderService nativeReaderService) {
         super(sessionId, nativeReaderName, virtualReaderName, clientNodeId);
         this.localReader = localReader;
         this.clientNodeId = clientNodeId1;

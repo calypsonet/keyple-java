@@ -17,7 +17,7 @@ import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderNotFoundException;
 import org.eclipse.keyple.seproxy.message.ProxyReader;
 
-public interface NativeReaderService {
+public interface INativeReaderService {
 
 
     /**

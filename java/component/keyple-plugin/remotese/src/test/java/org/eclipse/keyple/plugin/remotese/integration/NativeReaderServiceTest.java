@@ -12,9 +12,9 @@
 package org.eclipse.keyple.plugin.remotese.integration;
 
 
-import org.eclipse.keyple.plugin.remotese.nativese.NativeReaderServiceImpl;
+import org.eclipse.keyple.plugin.remotese.nativese.SlaveAPI;
+import org.eclipse.keyple.plugin.remotese.pluginse.MasterAPI;
 import org.eclipse.keyple.plugin.remotese.pluginse.VirtualReader;
-import org.eclipse.keyple.plugin.remotese.pluginse.VirtualReaderService;
 import org.eclipse.keyple.plugin.remotese.transport.factory.TransportFactory;
 import org.eclipse.keyple.plugin.remotese.transport.impl.java.LocalClient;
 import org.eclipse.keyple.plugin.remotese.transport.impl.java.LocalTransportFactory;
@@ -41,7 +41,7 @@ public class NativeReaderServiceTest {
 
     // Real objects
     TransportFactory factory;
-    VirtualReaderService virtualReaderService;
+    MasterAPI virtualReaderService;
 
     StubReader nativeReader;
     VirtualReader virtualReader;
@@ -51,7 +51,7 @@ public class NativeReaderServiceTest {
 
 
     // Spy Object
-    NativeReaderServiceImpl nativeReaderSpy;
+    SlaveAPI nativeReaderSpy;
 
 
 

@@ -11,12 +11,12 @@
  ********************************************************************************/
 package org.eclipse.keyple.plugin.remotese.nativese.method;
 
-import org.eclipse.keyple.plugin.remotese.nativese.NativeReaderServiceImpl;
+import org.eclipse.keyple.plugin.remotese.nativese.SlaveAPI;
 import org.eclipse.keyple.plugin.remotese.rm.RemoteMethod;
 import org.eclipse.keyple.plugin.remotese.rm.RemoteMethodExecutor;
-import org.eclipse.keyple.plugin.remotese.transport.*;
 import org.eclipse.keyple.plugin.remotese.transport.json.JsonParser;
 import org.eclipse.keyple.plugin.remotese.transport.model.KeypleDto;
+import org.eclipse.keyple.plugin.remotese.transport.model.KeypleDtoHelper;
 import org.eclipse.keyple.plugin.remotese.transport.model.TransportDto;
 import org.eclipse.keyple.seproxy.event.DefaultSelectionRequest;
 import org.eclipse.keyple.seproxy.event.ObservableReader;
@@ -32,9 +32,9 @@ public class RmSetDefaultSelectionRequestExecutor implements RemoteMethodExecuto
     private static final Logger logger =
             LoggerFactory.getLogger(RmSetDefaultSelectionRequestExecutor.class);
 
-    private final NativeReaderServiceImpl nativeReaderService;
+    private final SlaveAPI nativeReaderService;
 
-    public RmSetDefaultSelectionRequestExecutor(NativeReaderServiceImpl nativeReaderService) {
+    public RmSetDefaultSelectionRequestExecutor(SlaveAPI nativeReaderService) {
         this.nativeReaderService = nativeReaderService;
     }
 

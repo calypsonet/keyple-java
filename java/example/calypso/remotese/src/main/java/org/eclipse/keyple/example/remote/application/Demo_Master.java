@@ -18,13 +18,13 @@ import org.eclipse.keyple.calypso.transaction.CalypsoPo;
 import org.eclipse.keyple.calypso.transaction.PoSelectionRequest;
 import org.eclipse.keyple.calypso.transaction.PoTransaction;
 import org.eclipse.keyple.example.calypso.common.postructure.CalypsoClassicInfo;
+import org.eclipse.keyple.plugin.remotese.pluginse.MasterAPI;
 import org.eclipse.keyple.plugin.remotese.pluginse.RemoteSePlugin;
 import org.eclipse.keyple.plugin.remotese.pluginse.VirtualReader;
-import org.eclipse.keyple.plugin.remotese.pluginse.VirtualReaderService;
+import org.eclipse.keyple.plugin.remotese.transport.DtoNode;
 import org.eclipse.keyple.plugin.remotese.transport.factory.ClientNode;
 import org.eclipse.keyple.plugin.remotese.transport.factory.ServerNode;
 import org.eclipse.keyple.plugin.remotese.transport.factory.TransportFactory;
-import org.eclipse.keyple.plugin.remotese.transport.factory.TransportNode;
 import org.eclipse.keyple.seproxy.ChannelState;
 import org.eclipse.keyple.seproxy.ReaderPlugin;
 import org.eclipse.keyple.seproxy.SeProxyService;
@@ -44,9 +44,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * DemoMaster is the Master Device that controls remotely native readers. A Slave Terminal delegates
- * control of one of its native reader to the Master. In response a {@link VirtualReader} is created
- * and accessible via {@link RemoteSePlugin} like any local reader
+ * Demo_Master is the Master Device that controls remotely native readers. A Slave Terminal
+ * delegates control of one of its native reader to the Master. In response a {@link VirtualReader}
+ * is created and accessible via {@link RemoteSePlugin} like any local reader
  */
 public class Demo_Master implements org.eclipse.keyple.util.Observable.Observer {
 
@@ -57,7 +57,7 @@ public class Demo_Master implements org.eclipse.keyple.util.Observable.Observer 
 
 
     // TransportNode used as to send and receive KeypleDto to Slaves
-    private TransportNode node;
+    private DtoNode node;
 
     /**
      * Constructor of the DemoMaster thread Starts a common node, can be server or client
@@ -96,7 +96,7 @@ public class Demo_Master implements org.eclipse.keyple.util.Observable.Observer 
     }
 
     /**
-     * Initiate {@link VirtualReaderService} with both ingoing and outcoming {@link TransportNode}
+     * Initiate {@link MasterAPI} with both ingoing and outcoming {@link DtoNode}
      */
     public void boot() {
 
@@ -105,8 +105,7 @@ public class Demo_Master implements org.eclipse.keyple.util.Observable.Observer 
         // Create virtualReaderService with a DtoSender
         // Dto Sender is required so virtualReaderService can send KeypleDTO to Slave
         // In this case, node is used as the dtosender (can be client or server)
-        VirtualReaderService virtualReaderService =
-                new VirtualReaderService(SeProxyService.getInstance(), node);
+        MasterAPI virtualReaderService = new MasterAPI(SeProxyService.getInstance(), node);
 
         // observe remote se plugin for events
         logger.info("Observe SeRemotePlugin for Plugin Events and Reader Events");
@@ -116,7 +115,7 @@ public class Demo_Master implements org.eclipse.keyple.util.Observable.Observer 
         // Binds virtualReaderService to a TransportNode so virtualReaderService receives incoming
         // KeypleDto from Slaves
         // in this case we binds it to node (can be client or server)
-        virtualReaderService.bindDtoEndpoint(node);
+        // virtualReaderService.bindDtoEndpoint(node);
 
 
     }

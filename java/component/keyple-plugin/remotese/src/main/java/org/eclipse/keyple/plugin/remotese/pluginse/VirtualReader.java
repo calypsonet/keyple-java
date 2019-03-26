@@ -17,7 +17,7 @@ import org.eclipse.keyple.plugin.remotese.exception.KeypleRemoteReaderException;
 import org.eclipse.keyple.plugin.remotese.pluginse.method.RmSetDefaultSelectionRequestTx;
 import org.eclipse.keyple.plugin.remotese.pluginse.method.RmTransmitTx;
 import org.eclipse.keyple.plugin.remotese.rm.RemoteMethodTxEngine;
-import org.eclipse.keyple.plugin.remotese.transport.factory.TransportNode;
+import org.eclipse.keyple.plugin.remotese.transport.DtoNode;
 import org.eclipse.keyple.seproxy.event.DefaultSelectionRequest;
 import org.eclipse.keyple.seproxy.event.ReaderEvent;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
@@ -45,7 +45,7 @@ public final class VirtualReader extends AbstractObservableReader {
     /**
      * Called by {@link RemoteSePlugin} Creates a new virtual reader
      * 
-     * @param session Reader Session that helps communicate with {@link TransportNode}
+     * @param session Reader Session that helps communicate with {@link DtoNode}
      * @param nativeReaderName local name of the native reader on slave side
      */
     VirtualReader(VirtualReaderSession session, String nativeReaderName,

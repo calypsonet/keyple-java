@@ -14,11 +14,12 @@ package org.eclipse.keyple.example.remote.application;
 import java.io.IOException;
 import org.eclipse.keyple.example.calypso.common.stub.se.StubCalypsoClassic;
 import org.eclipse.keyple.plugin.remotese.exception.KeypleRemoteException;
-import org.eclipse.keyple.plugin.remotese.nativese.NativeReaderServiceImpl;
+import org.eclipse.keyple.plugin.remotese.nativese.INativeReaderService;
+import org.eclipse.keyple.plugin.remotese.nativese.SlaveAPI;
+import org.eclipse.keyple.plugin.remotese.transport.DtoNode;
 import org.eclipse.keyple.plugin.remotese.transport.factory.ClientNode;
 import org.eclipse.keyple.plugin.remotese.transport.factory.ServerNode;
 import org.eclipse.keyple.plugin.remotese.transport.factory.TransportFactory;
-import org.eclipse.keyple.plugin.remotese.transport.factory.TransportNode;
 import org.eclipse.keyple.plugin.stub.StubPlugin;
 import org.eclipse.keyple.plugin.stub.StubProtocolSetting;
 import org.eclipse.keyple.plugin.stub.StubReader;
@@ -32,7 +33,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * DemoSlave is where slave readers are physically located It connects one native reader to the
+ * Demo_Slave is where slave readers are physically located, it connects one native reader to the
  * master to delegate control of it
  */
 class Demo_Slave {
@@ -43,15 +44,15 @@ class Demo_Slave {
     private StubReader localReader;
 
     // TransportNode used as to send and receive KeypleDto to Master
-    private TransportNode node;
+    private DtoNode node;
 
     private String clientNodeId;
 
     // NativeReaderServiceImpl, used to connectAReader and disconnect readers
-    private NativeReaderServiceImpl nativeReaderService;
+    private SlaveAPI nativeReaderService;
 
     /**
-     * At startup, create the {@link TransportNode} object, either a {@link ClientNode} or a
+     * At startup, create the {@link DtoNode} object, either a {@link ClientNode} or a
      * {@link ServerNode}
      * 
      * @param transportFactory : factory to get the type of transport needed (websocket,
@@ -106,7 +107,7 @@ class Demo_Slave {
 
     /**
      * Creates a {@link StubReader} and connects it to the Master terminal via the
-     * {@link org.eclipse.keyple.plugin.remotese.nativese.NativeReaderService}
+     * {@link INativeReaderService}
      * 
      * @throws KeypleReaderException
      * @throws InterruptedException
@@ -145,10 +146,10 @@ class Demo_Slave {
                 new SeProtocolSetting(StubProtocolSetting.SETTING_PROTOCOL_ISO14443_4));
 
         // Binds node for outgoing KeypleDto
-        nativeReaderService = new NativeReaderServiceImpl(node);
+        nativeReaderService = new SlaveAPI(SeProxyService.getInstance(), node);
 
         // Binds node for incoming KeypleDTo
-        nativeReaderService.bindDtoEndpoint(node);
+        // nativeReaderService.bindDtoEndpoint(node);
 
         // connect a reader to Remote Plugin
         logger.info("Connect remotely the StubPlugin ");

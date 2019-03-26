@@ -18,9 +18,10 @@ import org.eclipse.keyple.plugin.remotese.rm.RemoteMethod;
 import org.eclipse.keyple.plugin.remotese.rm.RemoteMethodExecutor;
 import org.eclipse.keyple.plugin.remotese.rm.RemoteMethodTxEngine;
 import org.eclipse.keyple.plugin.remotese.transport.*;
-import org.eclipse.keyple.plugin.remotese.transport.factory.TransportNode;
+import org.eclipse.keyple.plugin.remotese.transport.DtoNode;
 import org.eclipse.keyple.plugin.remotese.transport.json.JsonParser;
 import org.eclipse.keyple.plugin.remotese.transport.model.KeypleDto;
+import org.eclipse.keyple.plugin.remotese.transport.model.KeypleDtoHelper;
 import org.eclipse.keyple.plugin.remotese.transport.model.TransportDto;
 import org.eclipse.keyple.seproxy.ReaderPlugin;
 import org.eclipse.keyple.seproxy.SeProxyService;
@@ -38,12 +39,11 @@ import org.slf4j.LoggerFactory;
  * Native Service to manage local reader and connect them to Remote Service
  *
  */
-public class NativeReaderServiceImpl
-        implements NativeReaderService, DtoHandler, ObservableReader.ReaderObserver {
+public class SlaveAPI implements INativeReaderService, DtoHandler, ObservableReader.ReaderObserver {
 
-    private static final Logger logger = LoggerFactory.getLogger(NativeReaderServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(SlaveAPI.class);
 
-    private final DtoSender dtoSender;
+    private final DtoNode dtoTransportNode;
     private final SeProxyService seProxyService;
     private final RemoteMethodTxEngine rmTxEngine;
 
@@ -52,13 +52,15 @@ public class NativeReaderServiceImpl
     /**
      * Constructor
      * 
-     * @param dtoSender : Define which DTO sender will be called when a DTO needs to be sent.
+     * @param dtoTransportNode : Define which DTO sender will be called when a DTO needs to be sent.
      */
-    public NativeReaderServiceImpl(DtoSender dtoSender) {
-        this.seProxyService = SeProxyService.getInstance();
-        this.dtoSender = dtoSender;
-        this.rmTxEngine = new RemoteMethodTxEngine(dtoSender);
+    public SlaveAPI(SeProxyService seProxyService, DtoNode dtoTransportNode) {
+        this.seProxyService = seProxyService;
+        this.dtoTransportNode = dtoTransportNode;
+        this.rmTxEngine = new RemoteMethodTxEngine(dtoTransportNode);
         // this.nseSessionManager = new NseSessionManager();
+
+        this.bindDtoEndpoint(dtoTransportNode);
     }
 
 
@@ -67,7 +69,7 @@ public class NativeReaderServiceImpl
      * 
      * @param node : network entry point that receives DTO
      */
-    public void bindDtoEndpoint(TransportNode node) {
+    private void bindDtoEndpoint(DtoNode node) {
         node.setDtoHandler(this);// incoming traffic
     }
 
@@ -152,7 +154,7 @@ public class NativeReaderServiceImpl
 
 
     /**
-     * Connect a local reader to Remote SE Plugin {@link NativeReaderService}
+     * Connect a local reader to Remote SE Plugin {@link INativeReaderService}
      * 
      * @param clientNodeId : a chosen but unique terminal id (i.e AndroidDevice2)
      * @param localReader : native reader to be connected
@@ -241,8 +243,8 @@ public class NativeReaderServiceImpl
         String data = JsonParser.getGson().toJson(event);
 
         try {
-            dtoSender.sendDTO(new KeypleDto(RemoteMethod.READER_EVENT.getName(), data, true, null,
-                    event.getReaderName(), null, this.dtoSender.getNodeId()));
+            dtoTransportNode.sendDTO(new KeypleDto(RemoteMethod.READER_EVENT.getName(), data, true,
+                    null, event.getReaderName(), null, this.dtoTransportNode.getNodeId()));
         } catch (KeypleRemoteException e) {
             logger.error("Event " + event.toString()
                     + " could not be sent though Remote Service Interface", e);

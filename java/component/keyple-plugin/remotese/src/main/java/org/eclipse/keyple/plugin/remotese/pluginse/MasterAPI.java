@@ -13,8 +13,9 @@ package org.eclipse.keyple.plugin.remotese.pluginse;
 
 import org.eclipse.keyple.plugin.remotese.rm.RemoteMethod;
 import org.eclipse.keyple.plugin.remotese.transport.*;
-import org.eclipse.keyple.plugin.remotese.transport.factory.TransportNode;
+import org.eclipse.keyple.plugin.remotese.transport.DtoNode;
 import org.eclipse.keyple.plugin.remotese.transport.model.KeypleDto;
+import org.eclipse.keyple.plugin.remotese.transport.model.KeypleDtoHelper;
 import org.eclipse.keyple.plugin.remotese.transport.model.TransportDto;
 import org.eclipse.keyple.seproxy.SeProxyService;
 import org.eclipse.keyple.seproxy.SeReader;
@@ -25,13 +26,18 @@ import org.slf4j.LoggerFactory;
 
 
 /**
- * Service to setDtoSender a RSE Plugin to a Transport Node
+ * Master API Create/Delete virtual reader based on Commands received from Slave API Propagates
+ * Commands to SlaveAPI from virtual reader API
+ *
+ * Init this API with a {@link DtoSender} of your implementation. Link this API to one your
+ * {@link DtoHandler}.
+ *
  */
-public class VirtualReaderService implements DtoHandler {
+public class MasterAPI implements DtoHandler {
 
-    private static final Logger logger = LoggerFactory.getLogger(VirtualReaderService.class);
+    private static final Logger logger = LoggerFactory.getLogger(MasterAPI.class);
 
-    private final DtoSender dtoSender;
+    private final DtoNode dtoTransportNode;
     private final RemoteSePlugin plugin;
 
     /**
@@ -39,25 +45,28 @@ public class VirtualReaderService implements DtoHandler {
      * RemoteSePlugin lifecycle Manages Master Session Dispatch KeypleDTO
      *
      * @param seProxyService : SeProxyService
-     * @param dtoSender : outgoing node to send Dto to Slave
+     * @param dtoTransportNode : outgoing node to send Dto to Slave
      */
-    public VirtualReaderService(SeProxyService seProxyService, DtoSender dtoSender) {
-        this.dtoSender = dtoSender;
+    public MasterAPI(SeProxyService seProxyService, DtoNode dtoTransportNode) {
+        this.dtoTransportNode = dtoTransportNode;
 
         // Instantiate Session Manager
         VirtualReaderSessionFactory sessionManager = new VirtualReaderSessionFactory();
 
         // Instantiate Plugin
-        this.plugin = new RemoteSePlugin(sessionManager, dtoSender);
+        this.plugin = new RemoteSePlugin(sessionManager, dtoTransportNode);
         seProxyService.addPlugin(this.plugin);
+
+        // Set this service as the Dto Handler for the node
+        this.bindDtoEndpoint(dtoTransportNode);
     }
 
     /**
-     * Set this service as the Dto Dispatcher in your {@link TransportNode}
+     * Set this service as the Dto Handler in your {@link DtoNode}
      * 
      * @param node : incoming Dto point
      */
-    public void bindDtoEndpoint(TransportNode node) {
+    private void bindDtoEndpoint(DtoNode node) {
         node.setDtoHandler(this);
     }
 
@@ -88,7 +97,7 @@ public class VirtualReaderService implements DtoHandler {
         switch (method) {
             case READER_CONNECT:
                 if (keypleDTO.isRequest()) {
-                    return new RmConnectReaderExecutor(this.plugin, this.dtoSender)
+                    return new RmConnectReaderExecutor(this.plugin, this.dtoTransportNode)
                             .execute(transportDto);
                 } else {
                     throw new IllegalStateException(

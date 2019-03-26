@@ -12,13 +12,13 @@
 package org.eclipse.keyple.plugin.remotese.pluginse;
 
 import org.eclipse.keyple.plugin.remotese.rm.RemoteMethodExecutor;
-import org.eclipse.keyple.plugin.remotese.transport.*;
 import org.eclipse.keyple.plugin.remotese.transport.json.JsonParser;
 import org.eclipse.keyple.plugin.remotese.transport.model.KeypleDto;
+import org.eclipse.keyple.plugin.remotese.transport.model.KeypleDtoHelper;
 import org.eclipse.keyple.plugin.remotese.transport.model.TransportDto;
 import org.eclipse.keyple.seproxy.event.ReaderEvent;
 
-public class RmEventExecutor implements RemoteMethodExecutor {
+class RmEventExecutor implements RemoteMethodExecutor {
 
     private final RemoteSePlugin plugin;
 
