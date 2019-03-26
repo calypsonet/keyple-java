@@ -12,9 +12,9 @@
 package org.eclipse.keyple.plugin.remotese.integration;
 
 
-import org.eclipse.keyple.plugin.remotese.nativese.NativeReaderServiceImpl;
+import org.eclipse.keyple.plugin.remotese.nativese.SlaveAPI;
+import org.eclipse.keyple.plugin.remotese.pluginse.MasterAPI;
 import org.eclipse.keyple.plugin.remotese.pluginse.VirtualReader;
-import org.eclipse.keyple.plugin.remotese.pluginse.VirtualReaderService;
 import org.eclipse.keyple.plugin.remotese.transport.factory.TransportFactory;
 import org.eclipse.keyple.plugin.remotese.transport.impl.java.LocalTransportFactory;
 import org.eclipse.keyple.plugin.stub.StubPlugin;
@@ -38,7 +38,7 @@ public class VirtualReaderBaseTest {
 
     // Real objects
     private TransportFactory factory;
-    private NativeReaderServiceImpl nativeReaderService;
+    private SlaveAPI slaveAPI;
     StubReader nativeReader;
     VirtualReader virtualReader;
 
@@ -46,7 +46,7 @@ public class VirtualReaderBaseTest {
     final String CLIENT_NODE_ID = "testClientNodeId";
 
     // Spy Object
-    VirtualReaderService virtualReaderService;
+    MasterAPI masterAPI;
 
     protected void initKeypleServices() throws Exception {
         logger.info("------------------------------");
@@ -63,11 +63,11 @@ public class VirtualReaderBaseTest {
 
         logger.info("*** Bind Master Services");
         // bind Master services to server
-        virtualReaderService = Integration.bindMaster(factory.getServer());
+        masterAPI = Integration.bindMaster(factory.getServer());
 
         logger.info("*** Bind Slave Services");
         // bind Slave services to client
-        nativeReaderService = Integration.bindSlave(factory.getClient());
+        slaveAPI = Integration.bindSlave(factory.getClient());
 
 
 
@@ -101,18 +101,18 @@ public class VirtualReaderBaseTest {
         StubReader nativeReader = (StubReader) Integration.createStubReader(readerName);
         nativeReader.addSeProtocolSetting(
                 new SeProtocolSetting(StubProtocolSetting.SETTING_PROTOCOL_ISO14443_4));
-        this.nativeReaderService.connectReader(nativeReader, nodeId);
+        this.slaveAPI.connectReader(nativeReader, nodeId);
         return nativeReader;
     }
 
     protected void disconnectStubReader(String sessionId, String nativeReaderName, String nodeId)
             throws Exception {
-        this.nativeReaderService.disconnectReader(sessionId, nativeReaderName, nodeId);
+        this.slaveAPI.disconnectReader(sessionId, nativeReaderName, nodeId);
     }
 
     protected VirtualReader getVirtualReader() throws Exception {
-        Assert.assertEquals(1, this.virtualReaderService.getPlugin().getReaders().size());
-        return (VirtualReader) this.virtualReaderService.getPlugin().getReaders().first();
+        Assert.assertEquals(1, this.masterAPI.getPlugin().getReaders().size());
+        return (VirtualReader) this.masterAPI.getPlugin().getReaders().first();
     }
 
 }

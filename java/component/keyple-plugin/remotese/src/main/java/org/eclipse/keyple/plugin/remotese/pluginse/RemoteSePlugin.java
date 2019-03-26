@@ -44,7 +44,7 @@ public final class RemoteSePlugin extends AbstractObservablePlugin {
     private final Map<String, String> parameters;
 
     /**
-     * Only {@link VirtualReaderService} can instanciate a RemoteSePlugin
+     * Only {@link MasterAPI} can instanciate a RemoteSePlugin
      */
     RemoteSePlugin(VirtualReaderSessionFactory sessionManager, DtoSender sender) {
         super(PLUGIN_NAME);

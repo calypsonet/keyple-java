@@ -9,18 +9,21 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  ********************************************************************************/
-package org.eclipse.keyple.plugin.remotese.transport.factory;
+package org.eclipse.keyple.plugin.remotese.transport;
 
 
-import org.eclipse.keyple.plugin.remotese.transport.DtoHandler;
-import org.eclipse.keyple.plugin.remotese.transport.DtoSender;
 
 /**
- * TransportNode is a one-point gateway for incoming and outgoing TransportDto. It extend DtoSender
- * thus sends KeypleDto and contains a DtoHandler for incoming KeypleDto
+ * DtoNode is a one-point gateway for incoming and outgoing TransportDto. It extend DtoSender thus
+ * sends KeypleDto and contains a DtoHandler for incoming KeypleDto
  */
-public interface TransportNode extends DtoSender {
+public interface DtoNode extends DtoSender {
 
+    /**
+     * Binds a DtoHandler that will process incoming KeypleDto
+     * 
+     * @param handler
+     */
     void setDtoHandler(DtoHandler handler);
 
 }

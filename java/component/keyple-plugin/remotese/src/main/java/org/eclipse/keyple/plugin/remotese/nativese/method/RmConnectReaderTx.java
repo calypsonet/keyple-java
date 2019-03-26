@@ -12,12 +12,12 @@
 package org.eclipse.keyple.plugin.remotese.nativese.method;
 
 import org.eclipse.keyple.plugin.remotese.exception.KeypleRemoteException;
-import org.eclipse.keyple.plugin.remotese.nativese.NativeReaderService;
+import org.eclipse.keyple.plugin.remotese.nativese.INativeReaderService;
 import org.eclipse.keyple.plugin.remotese.rm.RemoteMethod;
 import org.eclipse.keyple.plugin.remotese.rm.RemoteMethodTx;
-import org.eclipse.keyple.plugin.remotese.transport.*;
 import org.eclipse.keyple.plugin.remotese.transport.json.JsonParser;
 import org.eclipse.keyple.plugin.remotese.transport.model.KeypleDto;
+import org.eclipse.keyple.plugin.remotese.transport.model.KeypleDtoHelper;
 import org.eclipse.keyple.seproxy.event.ObservableReader;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderNotFoundException;
@@ -32,16 +32,16 @@ public class RmConnectReaderTx extends RemoteMethodTx<String> {
 
     private final ProxyReader localReader;
     private final String clientNodeId;
-    private final NativeReaderService nativeReaderService;
+    private final INativeReaderService slaveAPI;
 
 
     public RmConnectReaderTx(String sessionId, String nativeReaderName, String virtualReaderName,
             String clientNodeId, ProxyReader localReader, String clientNodeId1,
-            NativeReaderService nativeReaderService) {
+            INativeReaderService slaveAPI) {
         super(sessionId, nativeReaderName, virtualReaderName, clientNodeId);
         this.localReader = localReader;
         this.clientNodeId = clientNodeId1;
-        this.nativeReaderService = nativeReaderService;
+        this.slaveAPI = slaveAPI;
     }
 
     private static final Logger logger = LoggerFactory.getLogger(RmConnectReaderTx.class);
@@ -60,18 +60,17 @@ public class RmConnectReaderTx extends RemoteMethodTx<String> {
         } else {
             // if dto does not contain an exception
             try {
-                // configure nativeReaderService to propagate reader events if the reader is
+                // configure slaveAPI to propagate reader events if the reader is
                 // observable
 
                 // find the local reader by name
-                ProxyReader localReader =
-                        (ProxyReader) nativeReaderService.findLocalReader(nativeReaderName);
+                ProxyReader localReader = (ProxyReader) slaveAPI.findLocalReader(nativeReaderName);
 
                 if (localReader instanceof AbstractSelectionLocalReader) {
-                    logger.debug("Register NativeReaderService as an observer for native reader {}",
+                    logger.debug("Register SlaveAPI as an observer for native reader {}",
                             localReader.getName());
                     ((AbstractSelectionLocalReader) localReader)
-                            .addObserver((ObservableReader.ReaderObserver) nativeReaderService);
+                            .addObserver((ObservableReader.ReaderObserver) slaveAPI);
                 }
 
                 // retrieve sessionId from keypleDto

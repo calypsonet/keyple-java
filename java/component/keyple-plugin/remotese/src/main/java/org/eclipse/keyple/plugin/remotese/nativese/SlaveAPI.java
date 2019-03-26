@@ -18,9 +18,10 @@ import org.eclipse.keyple.plugin.remotese.rm.RemoteMethod;
 import org.eclipse.keyple.plugin.remotese.rm.RemoteMethodExecutor;
 import org.eclipse.keyple.plugin.remotese.rm.RemoteMethodTxEngine;
 import org.eclipse.keyple.plugin.remotese.transport.*;
-import org.eclipse.keyple.plugin.remotese.transport.factory.TransportNode;
+import org.eclipse.keyple.plugin.remotese.transport.DtoNode;
 import org.eclipse.keyple.plugin.remotese.transport.json.JsonParser;
 import org.eclipse.keyple.plugin.remotese.transport.model.KeypleDto;
+import org.eclipse.keyple.plugin.remotese.transport.model.KeypleDtoHelper;
 import org.eclipse.keyple.plugin.remotese.transport.model.TransportDto;
 import org.eclipse.keyple.seproxy.ReaderPlugin;
 import org.eclipse.keyple.seproxy.SeProxyService;
@@ -35,15 +36,14 @@ import org.slf4j.LoggerFactory;
 
 
 /**
- * Native Service to manage local reader and connect them to Remote Service
+ * SlaveAPI to manage local reader and connect them to Remote Service
  *
  */
-public class NativeReaderServiceImpl
-        implements NativeReaderService, DtoHandler, ObservableReader.ReaderObserver {
+public class SlaveAPI implements INativeReaderService, DtoHandler, ObservableReader.ReaderObserver {
 
-    private static final Logger logger = LoggerFactory.getLogger(NativeReaderServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(SlaveAPI.class);
 
-    private final DtoSender dtoSender;
+    private final DtoNode dtoTransportNode;
     private final SeProxyService seProxyService;
     private final RemoteMethodTxEngine rmTxEngine;
 
@@ -52,22 +52,24 @@ public class NativeReaderServiceImpl
     /**
      * Constructor
      * 
-     * @param dtoSender : Define which DTO sender will be called when a DTO needs to be sent.
+     * @param dtoTransportNode : Define which DTO sender will be called when a DTO needs to be sent.
      */
-    public NativeReaderServiceImpl(DtoSender dtoSender) {
-        this.seProxyService = SeProxyService.getInstance();
-        this.dtoSender = dtoSender;
-        this.rmTxEngine = new RemoteMethodTxEngine(dtoSender);
+    public SlaveAPI(SeProxyService seProxyService, DtoNode dtoTransportNode) {
+        this.seProxyService = seProxyService;
+        this.dtoTransportNode = dtoTransportNode;
+        this.rmTxEngine = new RemoteMethodTxEngine(dtoTransportNode);
         // this.nseSessionManager = new NseSessionManager();
+
+        this.bindDtoEndpoint(dtoTransportNode);
     }
 
 
     /**
-     * HandleDTO from a TransportNode onDto() method will be called by the transportNode
+     * HandleDTO from a DtoNode onDto() method will be called by the DtoNode
      * 
      * @param node : network entry point that receives DTO
      */
-    public void bindDtoEndpoint(TransportNode node) {
+    private void bindDtoEndpoint(DtoNode node) {
         node.setDtoHandler(this);// incoming traffic
     }
 
@@ -93,7 +95,7 @@ public class NativeReaderServiceImpl
                 // process READER_CONNECT response
                 if (keypleDTO.isRequest()) {
                     throw new IllegalStateException(
-                            "a READER_CONNECT request has been received by NativeReaderService");
+                            "a READER_CONNECT request has been received by SlaveAPI");
                 } else {
                     // send DTO to TxEngine
                     out = this.rmTxEngine.onDTO(transportDto);
@@ -104,7 +106,7 @@ public class NativeReaderServiceImpl
                 // process READER_DISCONNECT response
                 if (keypleDTO.isRequest()) {
                     throw new IllegalStateException(
-                            "a READER_DISCONNECT request has been received by NativeReaderService");
+                            "a READER_DISCONNECT request has been received by SlaveAPI");
                 } else {
                     // send DTO to TxEngine
                     out = this.rmTxEngine.onDTO(transportDto);
@@ -119,7 +121,7 @@ public class NativeReaderServiceImpl
                     out = rmTransmit.execute(transportDto);
                 } else {
                     throw new IllegalStateException(
-                            "a READER_TRANSMIT response has been received by NativeReaderService");
+                            "a READER_TRANSMIT response has been received by SlaveAPI");
                 }
                 break;
 
@@ -131,7 +133,7 @@ public class NativeReaderServiceImpl
                     out = rmSetDefaultSelectionRequest.execute(transportDto);
                 } else {
                     throw new IllegalStateException(
-                            "a READER_TRANSMIT response has been received by NativeReaderService");
+                            "a READER_TRANSMIT response has been received by SlaveAPI");
                 }
                 break;
 
@@ -141,7 +143,7 @@ public class NativeReaderServiceImpl
                         keypleDTO.getAction(), keypleDTO.getSessionId(), keypleDTO.getBody(),
                         keypleDTO.isRequest());
                 throw new IllegalStateException(
-                        "a  ERROR - UNRECOGNIZED request has been received by NativeReaderService");
+                        "a  ERROR - UNRECOGNIZED request has been received by SlaveAPI");
         }
 
         logger.trace("onDto response to be sent {}", KeypleDtoHelper.toJson(out.getKeypleDTO()));
@@ -152,7 +154,7 @@ public class NativeReaderServiceImpl
 
 
     /**
-     * Connect a local reader to Remote SE Plugin {@link NativeReaderService}
+     * Connect a local reader to Remote SE Plugin {@link INativeReaderService}
      * 
      * @param clientNodeId : a chosen but unique terminal id (i.e AndroidDevice2)
      * @param localReader : native reader to be connected
@@ -220,7 +222,7 @@ public class NativeReaderServiceImpl
         throw new KeypleReaderNotFoundException(nativeReaderName);
     }
 
-    // NativeReaderService
+    // INativeReaderService
 
     /**
      * Do not call this method directly This method is called by a
@@ -230,8 +232,7 @@ public class NativeReaderServiceImpl
      */
     @Override
     public void update(ReaderEvent event) {
-        logger.info(
-                "NativeReaderServiceImpl listens for event from native Reader - Received Event {}",
+        logger.info("SlaveAPI listens for event from native Reader - Received Event {}",
                 event.getEventType());
 
         // retrieve last sessionId known for this reader
@@ -241,8 +242,8 @@ public class NativeReaderServiceImpl
         String data = JsonParser.getGson().toJson(event);
 
         try {
-            dtoSender.sendDTO(new KeypleDto(RemoteMethod.READER_EVENT.getName(), data, true, null,
-                    event.getReaderName(), null, this.dtoSender.getNodeId()));
+            dtoTransportNode.sendDTO(new KeypleDto(RemoteMethod.READER_EVENT.getName(), data, true,
+                    null, event.getReaderName(), null, this.dtoTransportNode.getNodeId()));
         } catch (KeypleRemoteException e) {
             logger.error("Event " + event.toString()
                     + " could not be sent though Remote Service Interface", e);

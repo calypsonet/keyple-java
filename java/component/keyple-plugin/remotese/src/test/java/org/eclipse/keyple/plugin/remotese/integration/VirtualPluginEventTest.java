@@ -55,7 +55,7 @@ public class VirtualPluginEventTest extends VirtualReaderBaseTest {
         // lock test until message is received
         final CountDownLatch lock = new CountDownLatch(1);
 
-        final RemoteSePlugin remoteSePlugin = virtualReaderService.getPlugin();
+        final RemoteSePlugin remoteSePlugin = masterAPI.getPlugin();
 
         remoteSePlugin.addObserver(new Observable.Observer<PluginEvent>() {
             @Override
@@ -88,7 +88,7 @@ public class VirtualPluginEventTest extends VirtualReaderBaseTest {
         // lock test until two messages are received
         final CountDownLatch lock = new CountDownLatch(2);
 
-        final RemoteSePlugin remoteSePlugin = virtualReaderService.getPlugin();
+        final RemoteSePlugin remoteSePlugin = masterAPI.getPlugin();
 
         remoteSePlugin.addObserver(new Observable.Observer<PluginEvent>() {
             @Override
@@ -134,7 +134,7 @@ public class VirtualPluginEventTest extends VirtualReaderBaseTest {
         // lock test until message is received
         final CountDownLatch lock = new CountDownLatch(1);
 
-        final RemoteSePlugin remoteSePlugin = virtualReaderService.getPlugin();
+        final RemoteSePlugin remoteSePlugin = masterAPI.getPlugin();
 
         remoteSePlugin.addObserver(new Observable.Observer<PluginEvent>() {
             @Override
@@ -171,7 +171,7 @@ public class VirtualPluginEventTest extends VirtualReaderBaseTest {
      */
     @Test(expected = KeypleReaderException.class)
     public void testDisconnectUnknownReader() throws Exception {
-        final RemoteSePlugin remoteSePlugin = virtualReaderService.getPlugin();
+        final RemoteSePlugin remoteSePlugin = masterAPI.getPlugin();
 
         remoteSePlugin.addObserver(new Observable.Observer<PluginEvent>() {
             @Override

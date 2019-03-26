@@ -19,11 +19,25 @@ import org.eclipse.keyple.seproxy.exception.KeypleReaderNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Start Client or Server Threads that will act either as Master or Slave. Client and Server will be
+ * created based on a {@link TransportFactory} Two modes are supported : - the server is Master and
+ * the client is Slave - the server is Slave and the client is Master
+ *
+ * Slave behaviour is defined by {@link Demo_Slave} Master behaviour is defined by
+ * {@link Demo_Master}
+ */
 public class Demo_Threads {
 
     private static final Logger logger = LoggerFactory.getLogger(Demo_Threads.class);
 
 
+    /**
+     * Start a server Thread based on the given {@link TransportFactory}
+     * 
+     * @param isMaster : true if the server should act like a Master, false if Slave
+     * @param factory : transport factory that creates the server object
+     */
     static public void startServer(final Boolean isMaster, final TransportFactory factory) {
         Thread server = new Thread() {
             @Override
@@ -58,6 +72,12 @@ public class Demo_Threads {
         server.start();
     }
 
+    /**
+     * Start a client Thread based on the given {@link TransportFactory}
+     * 
+     * @param isMaster : true if the client should act like a Master, false if Slave
+     * @param factory : transport factory that creates the client object
+     */
     static public void startClient(final Boolean isMaster, final TransportFactory factory) {
         Thread client = new Thread() {
             @Override
@@ -89,7 +109,7 @@ public class Demo_Threads {
         client.start();
     }
 
-    static public void executeSlaveScenario(Demo_Slave slave) throws KeypleReaderNotFoundException,
+    static private void executeSlaveScenario(Demo_Slave slave) throws KeypleReaderNotFoundException,
             InterruptedException, KeypleReaderException, KeypleRemoteException {
         logger.info("------------------------");
         logger.info("Connect Reader to Master");

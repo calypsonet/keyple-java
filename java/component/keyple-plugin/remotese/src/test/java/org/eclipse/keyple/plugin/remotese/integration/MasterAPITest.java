@@ -12,9 +12,9 @@
 package org.eclipse.keyple.plugin.remotese.integration;
 
 
-import org.eclipse.keyple.plugin.remotese.nativese.NativeReaderServiceImpl;
+import org.eclipse.keyple.plugin.remotese.nativese.SlaveAPI;
+import org.eclipse.keyple.plugin.remotese.pluginse.MasterAPI;
 import org.eclipse.keyple.plugin.remotese.pluginse.VirtualReader;
-import org.eclipse.keyple.plugin.remotese.pluginse.VirtualReaderService;
 import org.eclipse.keyple.plugin.remotese.transport.factory.TransportFactory;
 import org.eclipse.keyple.plugin.remotese.transport.impl.java.LocalClient;
 import org.eclipse.keyple.plugin.remotese.transport.impl.java.LocalTransportFactory;
@@ -29,19 +29,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Test NativeReaderService API methods : connectReader and DisconnectReader
+ * Test Master API methods : connectReader and DisconnectReader
  */
 @RunWith(MockitoJUnitRunner.class)
-public class NativeReaderServiceTest {
+public class MasterAPITest {
 
-    private static final Logger logger = LoggerFactory.getLogger(NativeReaderServiceTest.class);
+    private static final Logger logger = LoggerFactory.getLogger(MasterAPITest.class);
 
     @Rule
     public TestName name = new TestName();
 
     // Real objects
     TransportFactory factory;
-    VirtualReaderService virtualReaderService;
+    MasterAPI masterAPI;
 
     StubReader nativeReader;
     VirtualReader virtualReader;
@@ -51,7 +51,7 @@ public class NativeReaderServiceTest {
 
 
     // Spy Object
-    NativeReaderServiceImpl nativeReaderSpy;
+    SlaveAPI nativeReaderSpy;
 
 
 
@@ -69,7 +69,7 @@ public class NativeReaderServiceTest {
 
         logger.info("*** Bind Master Services");
         // bind Master services to server
-        virtualReaderService = Integration.bindMaster(factory.getServer());
+        masterAPI = Integration.bindMaster(factory.getServer());
 
         logger.info("*** Bind Slave Services");
         // bind Slave services to client
@@ -118,8 +118,8 @@ public class NativeReaderServiceTest {
         String sessionId = nativeReaderSpy.connectReader(nativeReader, CLIENT_NODE_ID);
 
         // assert that a virtual reader has been created
-        VirtualReader virtualReader = (VirtualReader) virtualReaderService.getPlugin()
-                .getReaderByRemoteName(NATIVE_READER_NAME);
+        VirtualReader virtualReader =
+                (VirtualReader) masterAPI.getPlugin().getReaderByRemoteName(NATIVE_READER_NAME);
 
         Assert.assertEquals(NATIVE_READER_NAME, virtualReader.getNativeReaderName());
         Assert.assertEquals(1, nativeReader.countObservers());
@@ -180,8 +180,8 @@ public class NativeReaderServiceTest {
         // connect
         String sessionId = nativeReaderSpy.connectReader(nativeReader, CLIENT_NODE_ID);
 
-        VirtualReader virtualReader = (VirtualReader) virtualReaderService.getPlugin()
-                .getReaderByRemoteName(NATIVE_READER_NAME);
+        VirtualReader virtualReader =
+                (VirtualReader) masterAPI.getPlugin().getReaderByRemoteName(NATIVE_READER_NAME);
 
         Assert.assertEquals(NATIVE_READER_NAME, virtualReader.getNativeReaderName());
 
@@ -189,7 +189,7 @@ public class NativeReaderServiceTest {
         nativeReaderSpy.disconnectReader(sessionId, nativeReader.getName(), CLIENT_NODE_ID);
 
         // assert that the virtual reader has been destroyed
-        Assert.assertEquals(0, virtualReaderService.getPlugin().getReaders().size());
+        Assert.assertEquals(0, masterAPI.getPlugin().getReaders().size());
     }
 
 
