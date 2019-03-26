@@ -63,7 +63,7 @@ public class Demo_WriteName {
 
         String SAM_ATR_REGEX = "3B3F9600805A[0-9a-fA-F]{2}80[0-9a-fA-F]{16}829000";
 
-        SeSelection samSelection = new SeSelection(samReader);
+        SeSelection samSelection = new SeSelection();
 
         SeSelectionRequest samSelectionRequest = new SeSelectionRequest(
                 new SeSelector(null, new SeSelector.AtrFilter(SAM_ATR_REGEX), "SAM Selection"),
@@ -73,7 +73,7 @@ public class Demo_WriteName {
         samSelection.prepareSelection(samSelectionRequest);
 
         try {
-            if (!samSelection.processExplicitSelection()) {
+            if (!samSelection.processExplicitSelection(samReader)) {
                 System.out.println("Unable to open a logical channel for SAM!");
                 throw new IllegalStateException("SAM channel opening failure");
             }
@@ -88,7 +88,7 @@ public class Demo_WriteName {
             /*
              * Prepare a Calypso PO selection
              */
-            SeSelection seSelection = new SeSelection(poReader);
+            SeSelection seSelection = new SeSelection();
 
             /*
              * Setting of an AID based selection of a Calypso REV3 PO
@@ -140,7 +140,7 @@ public class Demo_WriteName {
                                             null, "CDLight"),
                                     ChannelState.KEEP_OPEN, Protocol.ANY));
 
-            if (!seSelection.processExplicitSelection()) {
+            if (!seSelection.processExplicitSelection(poReader)) {
                 throw new IllegalArgumentException("No recognizable PO detected.");
             }
 

@@ -89,7 +89,7 @@ public class StubReaderTest {
 
 
     static public void selectSe(SeReader reader) throws KeypleReaderException {
-        SeSelection seSelection = new SeSelection(reader);
+        SeSelection seSelection = new SeSelection();
         SeSelectionRequest seSelectionRequest = new SeSelectionRequest(
                 new SeSelector(null, new SeSelector.AtrFilter("3B.*"), "ATR selection"),
                 ChannelState.KEEP_OPEN, Protocol.ANY);
@@ -97,7 +97,7 @@ public class StubReaderTest {
         /* Prepare selector, ignore MatchingSe here */
         seSelection.prepareSelection(seSelectionRequest);
 
-        seSelection.processExplicitSelection();
+        seSelection.processExplicitSelection(reader);
     }
 
     /*
@@ -184,7 +184,7 @@ public class StubReaderTest {
             }
         });
 
-        SeSelection seSelection = new SeSelection(reader);
+        SeSelection seSelection = new SeSelection();
 
         SeSelectionRequest seSelectionRequest = new SeSelectionRequest(
                 new SeSelector(new SeSelector.AidSelector(ByteArrayUtils.fromHex(poAid), null),
@@ -223,7 +223,7 @@ public class StubReaderTest {
         });
         String poAid = "A000000291A000000192";// not matching poAid
 
-        SeSelection seSelection = new SeSelection(reader);
+        SeSelection seSelection = new SeSelection();
 
         SeSelectionRequest seSelectionRequest = new SeSelectionRequest(
                 new SeSelector(new SeSelector.AidSelector(ByteArrayUtils.fromHex(poAid), null),
@@ -269,7 +269,7 @@ public class StubReaderTest {
         });
         String poAid = "A000000291A000000192";// not matching poAid
 
-        SeSelection seSelection = new SeSelection(reader);
+        SeSelection seSelection = new SeSelection();
 
         SeSelectionRequest seSelectionRequest = new SeSelectionRequest(
                 new SeSelector(new SeSelector.AidSelector(ByteArrayUtils.fromHex(poAid), null),
@@ -303,7 +303,7 @@ public class StubReaderTest {
 
                 Assert.assertEquals(ReaderEvent.EventType.SE_INSERTED, event.getEventType());
 
-                SeSelection seSelection = new SeSelection(reader);
+                SeSelection seSelection = new SeSelection();
                 SeSelectionRequest seSelectionRequest = new SeSelectionRequest(
                         new SeSelector(null, new SeSelector.AtrFilter("3B.*"), "Test ATR"),
                         ChannelState.KEEP_OPEN, Protocol.ANY);
@@ -312,7 +312,7 @@ public class StubReaderTest {
                 seSelection.prepareSelection(seSelectionRequest);
 
                 try {
-                    seSelection.processExplicitSelection();
+                    seSelection.processExplicitSelection(reader);
 
                     MatchingSe matchingSe = seSelection.getSelectedSe();
 
