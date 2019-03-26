@@ -14,6 +14,10 @@ package org.eclipse.keyple.seproxy.event;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import org.eclipse.keyple.seproxy.SeProxyService;
+import org.eclipse.keyple.seproxy.SeReader;
+import org.eclipse.keyple.seproxy.exception.KeyplePluginNotFoundException;
+import org.eclipse.keyple.seproxy.exception.KeypleReaderNotFoundException;
 
 /**
  * A {@link PluginEvent} is used to propagate a change of reader state in reader plugin.
@@ -106,5 +110,10 @@ public final class PluginEvent {
 
     public EventType getEventType() {
         return eventType;
+    }
+
+    public SeReader getReader(String readerName)
+            throws KeyplePluginNotFoundException, KeypleReaderNotFoundException {
+        return SeProxyService.getInstance().getPlugin(pluginName).getReader(readerName);
     }
 }

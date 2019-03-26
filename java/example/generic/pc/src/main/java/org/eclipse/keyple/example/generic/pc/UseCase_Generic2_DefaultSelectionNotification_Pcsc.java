@@ -51,7 +51,6 @@ import org.slf4j.LoggerFactory;
 public class UseCase_Generic2_DefaultSelectionNotification_Pcsc implements ReaderObserver {
     protected static final Logger logger =
             LoggerFactory.getLogger(UseCase_Generic2_DefaultSelectionNotification_Pcsc.class);
-    private SeReader seReader;
     private String seAid = "A0000004040125090101";
     private SeSelection seSelection;
     /**
@@ -76,7 +75,7 @@ public class UseCase_Generic2_DefaultSelectionNotification_Pcsc implements Reade
          * Get a SE reader ready to work with contactless SE. Use the getReader helper method from
          * the ReaderUtilities class.
          */
-        seReader = ReaderUtilities.getDefaultContactLessSeReader(seProxyService);
+        SeReader seReader = ReaderUtilities.getDefaultContactLessSeReader(seProxyService);
 
         /* Check if the reader exists */
         if (seReader == null) {

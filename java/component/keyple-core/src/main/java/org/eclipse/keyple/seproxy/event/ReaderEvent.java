@@ -12,6 +12,11 @@
 package org.eclipse.keyple.seproxy.event;
 
 
+import org.eclipse.keyple.seproxy.SeProxyService;
+import org.eclipse.keyple.seproxy.SeReader;
+import org.eclipse.keyple.seproxy.exception.KeyplePluginNotFoundException;
+import org.eclipse.keyple.seproxy.exception.KeypleReaderNotFoundException;
+
 /**
  * ReaderEvent used to notify changes at reader level
  */
@@ -104,5 +109,10 @@ public final class ReaderEvent {
 
     public SelectionResponse getDefaultSelectionResponse() {
         return defaultResponseSet;
+    }
+
+    public SeReader getReader()
+            throws KeyplePluginNotFoundException, KeypleReaderNotFoundException {
+        return SeProxyService.getInstance().getPlugin(pluginName).getReader(readerName);
     }
 }
