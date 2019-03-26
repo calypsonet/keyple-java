@@ -66,7 +66,7 @@ public class UseCase_Generic3_GroupedMultiSelection_Pcsc {
         if (seReader.isSePresent()) {
 
             /* CLOSE_AFTER pour assurer la sélection de toutes les applications */
-            SeSelection seSelection = new SeSelection(seReader);
+            SeSelection seSelection = new SeSelection();
 
             /* operate SE selection (change the AID here to adapt it to the SE used for the test) */
             String seAidPrefix = "A000000404012509";
@@ -104,7 +104,7 @@ public class UseCase_Generic3_GroupedMultiSelection_Pcsc {
             /*
              * Actual SE communication: operate through a single request the SE selection
              */
-            if (seSelection.processExplicitSelection()) {
+            if (seSelection.processExplicitSelection(seReader)) {
 
                 int matchedSelection = 0;
                 /* Count the number of SE that matched the selection */
