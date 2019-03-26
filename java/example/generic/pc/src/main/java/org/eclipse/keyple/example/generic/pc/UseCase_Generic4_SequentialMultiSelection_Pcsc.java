@@ -34,9 +34,9 @@ public class UseCase_Generic4_SequentialMultiSelection_Pcsc {
     protected static final Logger logger =
             LoggerFactory.getLogger(UseCase_Generic1_ExplicitSelectionAid_Pcsc.class);
 
-    private static void doAndAnalyseSelection(SeSelection seSelection, MatchingSe matchingSe,
-            int index) throws KeypleReaderException {
-        if (seSelection.processExplicitSelection()) {
+    private static void doAndAnalyseSelection(SeReader poReader, SeSelection seSelection,
+            MatchingSe matchingSe, int index) throws KeypleReaderException {
+        if (seSelection.processExplicitSelection(poReader)) {
             logger.info("The SE matched the selection {}.", index);
 
             if (matchingSe.getSelectionSeResponse() != null) {
@@ -86,7 +86,7 @@ public class UseCase_Generic4_SequentialMultiSelection_Pcsc {
 
             SeSelection seSelection;
 
-            seSelection = new SeSelection(seReader);
+            seSelection = new SeSelection();
 
             /* operate SE selection (change the AID here to adapt it to the SE used for the test) */
             String seAidPrefix = "A000000404012509";
@@ -100,9 +100,9 @@ public class UseCase_Generic4_SequentialMultiSelection_Pcsc {
                             null, "Initial selection #1"),
                     ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4));
 
-            seSelection = new SeSelection(seReader);
+            seSelection = new SeSelection();
 
-            doAndAnalyseSelection(seSelection, matchingSe, 1);
+            doAndAnalyseSelection(seReader, seSelection, matchingSe, 1);
 
             /* next selection */
             matchingSe = seSelection.prepareSelection(new SeSelectionRequest(
@@ -113,9 +113,9 @@ public class UseCase_Generic4_SequentialMultiSelection_Pcsc {
                             null, "Next selection #2"),
                     ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4));
 
-            seSelection = new SeSelection(seReader);
+            seSelection = new SeSelection();
 
-            doAndAnalyseSelection(seSelection, matchingSe, 2);
+            doAndAnalyseSelection(seReader, seSelection, matchingSe, 2);
 
             /* next selection */
             matchingSe = seSelection.prepareSelection(new SeSelectionRequest(
@@ -126,7 +126,7 @@ public class UseCase_Generic4_SequentialMultiSelection_Pcsc {
                             null, "Next selection #3"),
                     ChannelState.CLOSE_AFTER, ContactlessProtocols.PROTOCOL_ISO14443_4));
 
-            doAndAnalyseSelection(seSelection, matchingSe, 3);
+            doAndAnalyseSelection(seReader, seSelection, matchingSe, 3);
 
         } else {
             logger.error("No SE were detected.");

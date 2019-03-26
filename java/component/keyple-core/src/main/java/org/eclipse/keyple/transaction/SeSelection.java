@@ -34,19 +34,14 @@ import org.slf4j.LoggerFactory;
 public final class SeSelection {
     private static final Logger logger = LoggerFactory.getLogger(SeSelection.class);
 
-    private final SeReader seReader;
     private List<MatchingSe> matchingSeList = new ArrayList<MatchingSe>();
     private SeRequestSet selectionRequestSet = new SeRequestSet(new LinkedHashSet<SeRequest>());
     private MatchingSe selectedSe;
 
     /**
      * Initializes the SeSelection
-     * 
-     * @param seReader the reader to use to make the selection
      */
-    public SeSelection(SeReader seReader) {
-        this.seReader = (ProxyReader) seReader;
-    }
+    public SeSelection() {}
 
     /**
      * Prepare a selection: add the selection request from the provided selector to the selection
@@ -179,7 +174,7 @@ public final class SeSelection {
     /**
      * Execute the selection process.
      * <p>
-     * The selection requests are transmitted to the SE.
+     * Selection requests are transmitted to the SE through the supplied SeReader.
      * <p>
      * The process stops in the following cases:
      * <ul>
@@ -193,11 +188,12 @@ public final class SeSelection {
      * be kept open, then it is retained as a selection answer.
      * <p>
      * Responses that have not matched the current PO are set to null.
-     * 
+     *
+     * @param seReader the SeReader on which the selection is made
      * @return boolean true if a SE was selected
      * @throws KeypleReaderException if the requests transmission failed
      */
-    public boolean processExplicitSelection() throws KeypleReaderException {
+    public boolean processExplicitSelection(SeReader seReader) throws KeypleReaderException {
         if (logger.isTraceEnabled()) {
             logger.trace("Transmit SELECTIONREQUEST ({} request(s))",
                     selectionRequestSet.getRequests().size());
