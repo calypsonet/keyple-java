@@ -86,7 +86,7 @@ public class SamResource {
         this.seReader = seReader;
         this.groupReference = groupReference;
         samResourceStatus = SamResourceStatus.FREE;
-        SeSelection samSelection = new SeSelection(seReader);
+        SeSelection samSelection = new SeSelection();
 
         SamSelector samSelector = new SamSelector(new SamIdentifier(AUTO, null, null), "SAM");
 
@@ -94,7 +94,7 @@ public class SamResource {
         calypsoSam = (CalypsoSam) samSelection.prepareSelection(
                 new SamSelectionRequest(samSelector, ChannelState.KEEP_OPEN, Protocol.ANY));
 
-        if (!samSelection.processExplicitSelection()) {
+        if (!samSelection.processExplicitSelection(seReader)) {
             throw new IllegalStateException("Unable to open a logical channel for SAM!");
         }
     }

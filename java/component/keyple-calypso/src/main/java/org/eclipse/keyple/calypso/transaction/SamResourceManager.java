@@ -25,10 +25,7 @@ import org.eclipse.keyple.seproxy.event.ObservablePlugin;
 import org.eclipse.keyple.seproxy.event.ObservableReader;
 import org.eclipse.keyple.seproxy.event.PluginEvent;
 import org.eclipse.keyple.seproxy.event.ReaderEvent;
-import org.eclipse.keyple.seproxy.exception.KeyplePluginNotFoundException;
-import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
-import org.eclipse.keyple.seproxy.exception.KeypleReaderNotFoundException;
-import org.eclipse.keyple.seproxy.exception.NoStackTraceThrowable;
+import org.eclipse.keyple.seproxy.exception.*;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -127,6 +124,8 @@ public class SamResourceManager {
                     for (SamResource samResource : samResources) {
                         if (samResource.isSamResourceFree()) {
                             if (samResource.isSamMatching(samIdentifier)) {
+                                samResource
+                                        .setSamResourceStatus(SamResource.SamResourceStatus.BUSY);
                                 return samResource;
                             }
                         }
@@ -137,7 +136,7 @@ public class SamResourceManager {
                     break;
                 } else {
                     // don't hog CPU resources (TODO add exit timeout)
-                    logger.trace("No SAM resources available at the moment.");
+                    logger.trace("No SAM resources " + "available at the moment.");
                     Thread.sleep(10);
                 }
             }
@@ -147,7 +146,7 @@ public class SamResourceManager {
 
     /**
      * Free a previously allocated SAM resource.
-     * 
+     *
      * @param samResource the SAM resource reference to free
      */
     public void freeSamResource(SamResource samResource) {
@@ -162,7 +161,7 @@ public class SamResourceManager {
 
     /**
      * Remove a {@link SamResource}from the current SamResource list
-     * 
+     *
      * @param samReader the SAM reader of the resource to remove from the list.
      */
     private void removeResource(SeReader samReader) {
@@ -225,6 +224,20 @@ public class SamResourceManager {
                          */
                         Pattern p = Pattern.compile(samReaderFilter);
                         if (p.matcher(readerName).matches()) {
+                            /* Enable logging */
+                            try {
+                                /* enable low level logging */
+                                samReader.setParameter("logging", "true");
+
+                                /* contactless SE works with T0 protocol */
+                                samReader.setParameter("protocol", "T0");
+
+                                /* Shared mode */
+                                samReader.setParameter("mode", "shared");
+                            } catch (KeypleBaseException e) {
+                                e.printStackTrace();
+                            }
+
                             if (samReader instanceof ObservableReader && readerObserver != null) {
                                 logger.info("Add observer READERNAME = {}", samReader.getName());
                                 ((ObservableReader) samReader).addObserver(readerObserver);

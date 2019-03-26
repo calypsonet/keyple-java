@@ -23,6 +23,10 @@ import org.eclipse.keyple.seproxy.exception.KeypleReaderNotFoundException;
 import org.eclipse.keyple.seproxy.protocol.SeProtocolSetting;
 
 public class ReaderUtilities {
+    public enum ReaderType {
+        UNKNOWN_READER, CONTACT_READER, CONTACTLESS_READER
+    };
+
     /**
      * Get the terminal which names match the expected pattern
      *
@@ -119,5 +123,26 @@ public class ReaderUtilities {
          * These two points will be addressed in a coming release of the Keyple PcSc reader plugin.
          */
         reader.setParameter(PcscReader.SETTING_KEY_MODE, PcscReader.SETTING_MODE_SHARED);
+    }
+
+    /**
+     * Return the type of reader identified by its name using a regex
+     * 
+     * @param readerName the name of the reader
+     * @return the reader type
+     */
+    public static ReaderType getReaderType(String readerName) {
+        Pattern p;
+        p = Pattern.compile(PcscReadersSettings.PO_READER_NAME_REGEX);
+        if (p.matcher(readerName).matches()) {
+            return ReaderType.CONTACTLESS_READER;
+        } else {
+            p = Pattern.compile(PcscReadersSettings.SAM_READER_NAME_REGEX);
+            if (p.matcher(readerName).matches()) {
+                return ReaderType.CONTACT_READER;
+            } else {
+                return ReaderType.UNKNOWN_READER;
+            }
+        }
     }
 }
