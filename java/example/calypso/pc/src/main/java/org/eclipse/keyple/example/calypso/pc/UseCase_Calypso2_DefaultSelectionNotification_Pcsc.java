@@ -28,7 +28,9 @@ import org.eclipse.keyple.seproxy.event.ObservableReader;
 import org.eclipse.keyple.seproxy.event.ObservableReader.ReaderObserver;
 import org.eclipse.keyple.seproxy.event.ReaderEvent;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
+import org.eclipse.keyple.seproxy.exception.KeyplePluginNotFoundException;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
+import org.eclipse.keyple.seproxy.exception.KeypleReaderNotFoundException;
 import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
 import org.eclipse.keyple.transaction.MatchingSe;
 import org.eclipse.keyple.transaction.SeSelection;
@@ -61,7 +63,6 @@ import org.slf4j.LoggerFactory;
 public class UseCase_Calypso2_DefaultSelectionNotification_Pcsc implements ReaderObserver {
     protected static final Logger logger =
             LoggerFactory.getLogger(UseCase_Calypso2_DefaultSelectionNotification_Pcsc.class);
-    private SeReader poReader;
     private SeSelection seSelection;
     private ReadRecordsRespPars readEnvironmentParser;
     /**
@@ -86,7 +87,7 @@ public class UseCase_Calypso2_DefaultSelectionNotification_Pcsc implements Reade
          * Get a PO reader ready to work with Calypso PO. Use the getReader helper method from the
          * CalypsoUtilities class.
          */
-        poReader = CalypsoUtilities.getDefaultPoReader(seProxyService);
+        SeReader poReader = CalypsoUtilities.getDefaultPoReader(seProxyService);
 
         /* Check if the reader exists */
         if (poReader == null) {
@@ -170,6 +171,16 @@ public class UseCase_Calypso2_DefaultSelectionNotification_Pcsc implements Reade
         switch (event.getEventType()) {
             case SE_MATCHED:
                 if (seSelection.processDefaultSelection(event.getDefaultSelectionResponse())) {
+
+                    SeReader poReader = null;
+                    try {
+                        poReader = event.getReader();
+                    } catch (KeyplePluginNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (KeypleReaderNotFoundException e) {
+                        e.printStackTrace();
+                    }
+
                     MatchingSe selectedSe = seSelection.getSelectedSe();
 
                     logger.info("Observer notification: the selection of the PO has succeeded.");
