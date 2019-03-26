@@ -93,7 +93,7 @@ class EndpointPolling implements HttpHandler, DtoNode {
     }
 
     /*
-     * TransportNode
+     * DtoNode
      */
     @Override
     public void setDtoHandler(DtoHandler receiver) {

@@ -191,7 +191,7 @@ public class WsPRetrofitClientImpl implements ClientNode {
     }
 
     /*
-     * TransportNode
+     * DtoNode
      */
     @Override
     public void setDtoHandler(DtoHandler dtoHandler) {

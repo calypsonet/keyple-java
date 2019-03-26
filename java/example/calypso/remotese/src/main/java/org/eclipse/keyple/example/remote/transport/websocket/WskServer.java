@@ -126,7 +126,7 @@ class WskServer extends WebSocketServer implements ServerNode {
 
 
     /*
-     * TransportNode
+     * DtoNode
      */
 
     final private Map<String, WebSocket> nativeReaderName_session =

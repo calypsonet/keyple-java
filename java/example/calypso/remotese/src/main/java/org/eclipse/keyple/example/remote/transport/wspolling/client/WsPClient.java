@@ -137,7 +137,7 @@ public class WsPClient implements ClientNode {
      */
 
     /*
-     * TransportNode
+     * DtoNode
      */
     @Override
     public void setDtoHandler(DtoHandler dtoHandler) {

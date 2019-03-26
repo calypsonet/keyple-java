@@ -32,10 +32,10 @@ public class RmSetDefaultSelectionRequestExecutor implements RemoteMethodExecuto
     private static final Logger logger =
             LoggerFactory.getLogger(RmSetDefaultSelectionRequestExecutor.class);
 
-    private final SlaveAPI nativeReaderService;
+    private final SlaveAPI slaveAPI;
 
-    public RmSetDefaultSelectionRequestExecutor(SlaveAPI nativeReaderService) {
-        this.nativeReaderService = nativeReaderService;
+    public RmSetDefaultSelectionRequestExecutor(SlaveAPI slaveAPI) {
+        this.slaveAPI = slaveAPI;
     }
 
 
@@ -65,7 +65,7 @@ public class RmSetDefaultSelectionRequestExecutor implements RemoteMethodExecuto
 
         try {
             // find native reader by name
-            ProxyReader reader = nativeReaderService.findLocalReader(nativeReaderName);
+            ProxyReader reader = slaveAPI.findLocalReader(nativeReaderName);
 
             if (reader instanceof ObservableReader) {
                 logger.debug(reader.getName()

@@ -32,16 +32,16 @@ public class RmConnectReaderTx extends RemoteMethodTx<String> {
 
     private final ProxyReader localReader;
     private final String clientNodeId;
-    private final INativeReaderService nativeReaderService;
+    private final INativeReaderService slaveAPI;
 
 
     public RmConnectReaderTx(String sessionId, String nativeReaderName, String virtualReaderName,
             String clientNodeId, ProxyReader localReader, String clientNodeId1,
-            INativeReaderService nativeReaderService) {
+            INativeReaderService slaveAPI) {
         super(sessionId, nativeReaderName, virtualReaderName, clientNodeId);
         this.localReader = localReader;
         this.clientNodeId = clientNodeId1;
-        this.nativeReaderService = nativeReaderService;
+        this.slaveAPI = slaveAPI;
     }
 
     private static final Logger logger = LoggerFactory.getLogger(RmConnectReaderTx.class);
@@ -60,18 +60,17 @@ public class RmConnectReaderTx extends RemoteMethodTx<String> {
         } else {
             // if dto does not contain an exception
             try {
-                // configure nativeReaderService to propagate reader events if the reader is
+                // configure slaveAPI to propagate reader events if the reader is
                 // observable
 
                 // find the local reader by name
-                ProxyReader localReader =
-                        (ProxyReader) nativeReaderService.findLocalReader(nativeReaderName);
+                ProxyReader localReader = (ProxyReader) slaveAPI.findLocalReader(nativeReaderName);
 
                 if (localReader instanceof AbstractSelectionLocalReader) {
-                    logger.debug("Register NativeReaderService as an observer for native reader {}",
+                    logger.debug("Register SlaveAPI as an observer for native reader {}",
                             localReader.getName());
                     ((AbstractSelectionLocalReader) localReader)
-                            .addObserver((ObservableReader.ReaderObserver) nativeReaderService);
+                            .addObserver((ObservableReader.ReaderObserver) slaveAPI);
                 }
 
                 // retrieve sessionId from keypleDto

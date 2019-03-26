@@ -41,8 +41,8 @@ public class MasterAPI implements DtoHandler {
     private final RemoteSePlugin plugin;
 
     /**
-     * Build a new VirtualReaderService, Entry point for incoming DTO in Master Manages
-     * RemoteSePlugin lifecycle Manages Master Session Dispatch KeypleDTO
+     * Build a new MasterAPI, Entry point for incoming DTO in Master Manages RemoteSePlugin
+     * lifecycle Manages Master Session Dispatch KeypleDTO
      *
      * @param seProxyService : SeProxyService
      * @param dtoTransportNode : outgoing node to send Dto to Slave
@@ -101,14 +101,14 @@ public class MasterAPI implements DtoHandler {
                             .execute(transportDto);
                 } else {
                     throw new IllegalStateException(
-                            "a READER_CONNECT response has been received by VirtualReaderService");
+                            "a READER_CONNECT response has been received by MasterAPI");
                 }
             case READER_DISCONNECT:
                 if (keypleDTO.isRequest()) {
                     return new RmDisconnectReaderExecutor(this.plugin).execute(transportDto);
                 } else {
                     throw new IllegalStateException(
-                            "a READER_DISCONNECT response has been received by VirtualReaderService");
+                            "a READER_DISCONNECT response has been received by MasterAPI");
                 }
             case READER_EVENT:
                 return new RmEventExecutor(plugin).execute(transportDto);
@@ -116,7 +116,7 @@ public class MasterAPI implements DtoHandler {
                 // can be more general
                 if (keypleDTO.isRequest()) {
                     throw new IllegalStateException(
-                            "a READER_TRANSMIT request has been received by VirtualReaderService");
+                            "a READER_TRANSMIT request has been received by MasterAPI");
                 } else {
                     // dispatch dto to the appropriate reader
                     try {
@@ -141,7 +141,7 @@ public class MasterAPI implements DtoHandler {
             case DEFAULT_SELECTION_REQUEST:
                 if (keypleDTO.isRequest()) {
                     throw new IllegalStateException(
-                            "a READER_TRANSMIT request has been received by VirtualReaderService");
+                            "a READER_TRANSMIT request has been received by MasterAPI");
                 } else {
                     // dispatch dto to the appropriate reader
                     try {

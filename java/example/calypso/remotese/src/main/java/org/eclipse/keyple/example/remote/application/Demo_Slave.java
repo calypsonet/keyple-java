@@ -43,13 +43,13 @@ class Demo_Slave {
     // physical reader, in this case a StubReader
     private StubReader localReader;
 
-    // TransportNode used as to send and receive KeypleDto to Master
+    // DtoNode used as to send and receive KeypleDto to Master
     private DtoNode node;
 
     private String clientNodeId;
 
     // NativeReaderServiceImpl, used to connectAReader and disconnect readers
-    private SlaveAPI nativeReaderService;
+    private SlaveAPI slaveAPI;
 
     /**
      * At startup, create the {@link DtoNode} object, either a {@link ClientNode} or a
@@ -146,14 +146,14 @@ class Demo_Slave {
                 new SeProtocolSetting(StubProtocolSetting.SETTING_PROTOCOL_ISO14443_4));
 
         // Binds node for outgoing KeypleDto
-        nativeReaderService = new SlaveAPI(SeProxyService.getInstance(), node);
+        slaveAPI = new SlaveAPI(SeProxyService.getInstance(), node);
 
         // Binds node for incoming KeypleDTo
-        // nativeReaderService.bindDtoEndpoint(node);
+        // slaveAPI.bindDtoEndpoint(node);
 
         // connect a reader to Remote Plugin
         logger.info("Connect remotely the StubPlugin ");
-        return nativeReaderService.connectReader(localReader, clientNodeId);
+        return slaveAPI.connectReader(localReader, clientNodeId);
 
     }
 
@@ -189,7 +189,7 @@ class Demo_Slave {
         logger.info("Disconnect native reader ");
         logger.info("*************************");
 
-        nativeReaderService.disconnectReader(sessionId, localReader.getName(), clientNodeId);
+        slaveAPI.disconnectReader(sessionId, localReader.getName(), clientNodeId);
     }
 
 

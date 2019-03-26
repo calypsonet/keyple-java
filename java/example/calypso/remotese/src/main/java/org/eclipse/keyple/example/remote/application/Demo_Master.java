@@ -56,7 +56,7 @@ public class Demo_Master implements org.eclipse.keyple.util.Observable.Observer 
     private ReadRecordsRespPars readEnvironmentParser;
 
 
-    // TransportNode used as to send and receive KeypleDto to Slaves
+    // DtoNode used as to send and receive KeypleDto to Slaves
     private DtoNode node;
 
     /**
@@ -102,20 +102,20 @@ public class Demo_Master implements org.eclipse.keyple.util.Observable.Observer 
 
 
         logger.info("Create VirtualReaderService, start plugin");
-        // Create virtualReaderService with a DtoSender
-        // Dto Sender is required so virtualReaderService can send KeypleDTO to Slave
+        // Create masterAPI with a DtoSender
+        // Dto Sender is required so masterAPI can send KeypleDTO to Slave
         // In this case, node is used as the dtosender (can be client or server)
-        MasterAPI virtualReaderService = new MasterAPI(SeProxyService.getInstance(), node);
+        MasterAPI masterAPI = new MasterAPI(SeProxyService.getInstance(), node);
 
         // observe remote se plugin for events
         logger.info("Observe SeRemotePlugin for Plugin Events and Reader Events");
-        ReaderPlugin rsePlugin = virtualReaderService.getPlugin();
+        ReaderPlugin rsePlugin = masterAPI.getPlugin();
         ((Observable) rsePlugin).addObserver(this);
 
-        // Binds virtualReaderService to a TransportNode so virtualReaderService receives incoming
+        // Binds masterAPI to a DtoNode so masterAPI receives incoming
         // KeypleDto from Slaves
         // in this case we binds it to node (can be client or server)
-        // virtualReaderService.bindDtoEndpoint(node);
+        // masterAPI.bindDtoEndpoint(node);
 
 
     }

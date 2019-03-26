@@ -36,7 +36,7 @@ import org.slf4j.LoggerFactory;
 
 
 /**
- * Native Service to manage local reader and connect them to Remote Service
+ * SlaveAPI to manage local reader and connect them to Remote Service
  *
  */
 public class SlaveAPI implements INativeReaderService, DtoHandler, ObservableReader.ReaderObserver {
@@ -65,7 +65,7 @@ public class SlaveAPI implements INativeReaderService, DtoHandler, ObservableRea
 
 
     /**
-     * HandleDTO from a TransportNode onDto() method will be called by the transportNode
+     * HandleDTO from a DtoNode onDto() method will be called by the DtoNode
      * 
      * @param node : network entry point that receives DTO
      */
@@ -95,7 +95,7 @@ public class SlaveAPI implements INativeReaderService, DtoHandler, ObservableRea
                 // process READER_CONNECT response
                 if (keypleDTO.isRequest()) {
                     throw new IllegalStateException(
-                            "a READER_CONNECT request has been received by NativeReaderService");
+                            "a READER_CONNECT request has been received by SlaveAPI");
                 } else {
                     // send DTO to TxEngine
                     out = this.rmTxEngine.onDTO(transportDto);
@@ -106,7 +106,7 @@ public class SlaveAPI implements INativeReaderService, DtoHandler, ObservableRea
                 // process READER_DISCONNECT response
                 if (keypleDTO.isRequest()) {
                     throw new IllegalStateException(
-                            "a READER_DISCONNECT request has been received by NativeReaderService");
+                            "a READER_DISCONNECT request has been received by SlaveAPI");
                 } else {
                     // send DTO to TxEngine
                     out = this.rmTxEngine.onDTO(transportDto);
@@ -121,7 +121,7 @@ public class SlaveAPI implements INativeReaderService, DtoHandler, ObservableRea
                     out = rmTransmit.execute(transportDto);
                 } else {
                     throw new IllegalStateException(
-                            "a READER_TRANSMIT response has been received by NativeReaderService");
+                            "a READER_TRANSMIT response has been received by SlaveAPI");
                 }
                 break;
 
@@ -133,7 +133,7 @@ public class SlaveAPI implements INativeReaderService, DtoHandler, ObservableRea
                     out = rmSetDefaultSelectionRequest.execute(transportDto);
                 } else {
                     throw new IllegalStateException(
-                            "a READER_TRANSMIT response has been received by NativeReaderService");
+                            "a READER_TRANSMIT response has been received by SlaveAPI");
                 }
                 break;
 
@@ -143,7 +143,7 @@ public class SlaveAPI implements INativeReaderService, DtoHandler, ObservableRea
                         keypleDTO.getAction(), keypleDTO.getSessionId(), keypleDTO.getBody(),
                         keypleDTO.isRequest());
                 throw new IllegalStateException(
-                        "a  ERROR - UNRECOGNIZED request has been received by NativeReaderService");
+                        "a  ERROR - UNRECOGNIZED request has been received by SlaveAPI");
         }
 
         logger.trace("onDto response to be sent {}", KeypleDtoHelper.toJson(out.getKeypleDTO()));
@@ -222,7 +222,7 @@ public class SlaveAPI implements INativeReaderService, DtoHandler, ObservableRea
         throw new KeypleReaderNotFoundException(nativeReaderName);
     }
 
-    // NativeReaderService
+    // INativeReaderService
 
     /**
      * Do not call this method directly This method is called by a
@@ -232,8 +232,7 @@ public class SlaveAPI implements INativeReaderService, DtoHandler, ObservableRea
      */
     @Override
     public void update(ReaderEvent event) {
-        logger.info(
-                "NativeReaderServiceImpl listens for event from native Reader - Received Event {}",
+        logger.info("SlaveAPI listens for event from native Reader - Received Event {}",
                 event.getEventType());
 
         // retrieve last sessionId known for this reader

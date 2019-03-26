@@ -29,10 +29,10 @@ public class RmTransmitExecutor implements RemoteMethodExecutor {
 
     private static final Logger logger = LoggerFactory.getLogger(RmTransmitExecutor.class);
 
-    private final SlaveAPI nativeReaderService;
+    private final SlaveAPI slaveAPI;
 
-    public RmTransmitExecutor(SlaveAPI nativeReaderService) {
-        this.nativeReaderService = nativeReaderService;
+    public RmTransmitExecutor(SlaveAPI slaveAPI) {
+        this.slaveAPI = slaveAPI;
     }
 
     @Override
@@ -49,7 +49,7 @@ public class RmTransmitExecutor implements RemoteMethodExecutor {
 
         try {
             // find native reader by name
-            ProxyReader reader = nativeReaderService.findLocalReader(nativeReaderName);
+            ProxyReader reader = slaveAPI.findLocalReader(nativeReaderName);
 
             // execute transmitSet
             seResponseSet = reader.transmitSet(seRequestSet);

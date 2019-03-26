@@ -91,7 +91,7 @@ public class WsPServer implements ServerNode {
     }
 
     /*
-     * TransportNode
+     * DtoNode
      */
     @Override
     public void setDtoHandler(DtoHandler receiver) {

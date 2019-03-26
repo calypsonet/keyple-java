@@ -66,7 +66,7 @@ class EndpointKeypleDTO implements HttpHandler, DtoNode {
     }
 
     /*
-     * TransportNode
+     * DtoNode
      */
     @Override
     public void setDtoHandler(DtoHandler receiver) {

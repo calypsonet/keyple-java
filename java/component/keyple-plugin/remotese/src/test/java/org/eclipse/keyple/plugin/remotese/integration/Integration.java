@@ -42,16 +42,16 @@ class Integration {
      * @return
      */
     public static MasterAPI bindMaster(DtoNode node) {
-        // Create Master services : virtualReaderService
-        MasterAPI virtualReaderService = new MasterAPI(SeProxyService.getInstance(), node);
+        // Create Master services : masterAPI
+        MasterAPI masterAPI = new MasterAPI(SeProxyService.getInstance(), node);
 
         // observe remote se plugin for events
-        ReaderPlugin rsePlugin = virtualReaderService.getPlugin();
+        ReaderPlugin rsePlugin = masterAPI.getPlugin();
 
-        // Binds virtualReaderService to a
-        // virtualReaderService.bindDtoEndpoint(node);
+        // Binds masterAPI to a
+        // masterAPI.bindDtoEndpoint(node);
 
-        return virtualReaderService;
+        return masterAPI;
     }
 
     /**
@@ -62,12 +62,12 @@ class Integration {
      */
     public static SlaveAPI bindSlave(DtoNode node) {
         // Binds node for outgoing KeypleDto
-        SlaveAPI nativeReaderService = new SlaveAPI(SeProxyService.getInstance(), node);
+        SlaveAPI slaveAPI = new SlaveAPI(SeProxyService.getInstance(), node);
 
         // Binds node for incoming KeypleDTo
-        // nativeReaderService.bindDtoEndpoint(node);
+        // slaveAPI.bindDtoEndpoint(node);
 
-        return nativeReaderService;
+        return slaveAPI;
     }
 
     /**
@@ -78,9 +78,9 @@ class Integration {
      */
     public static SlaveAPI bindSlaveSpy(DtoNode node) {
         // Binds node for outgoing KeypleDto
-        SlaveAPI nativeReaderService = new SlaveAPI(SeProxyService.getInstance(), node);
+        SlaveAPI slaveAPI = new SlaveAPI(SeProxyService.getInstance(), node);
 
-        SlaveAPI spy = Mockito.spy(nativeReaderService);
+        SlaveAPI spy = Mockito.spy(slaveAPI);
 
         // Binds node for incoming KeypleDTo
         // spy.bindDtoEndpoint(node);
