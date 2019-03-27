@@ -10,7 +10,7 @@ A terminal (let's identify it terminal1) wants to communicate with another termi
 
 When terminal2 (slave) opens sucessfully a session to terminal1 (master), a ``VirtualReader`` is created on terminal1' side. This ``VirtualReader`` is viewed as a local reader for the master, in fact it acts as a proxy to the ``SeReader`` on terminal2.
 
-![remotese architecture](doc/Connect_a_Native_Reader_to_Master_with_a_Custom_protocol.svg "Remote SE Connect a Native Reader")
+![remotese architecture](../../../../../doc/Connect_a_Native_Reader_to_Master_with_a_Custom_protocol.svg "Remote SE Connect a Native Reader")
 
 ## Network configuration
 
@@ -18,7 +18,7 @@ Usually distributed architecture will rely on a TCP/IP network to communicate. I
 
 Examples of implementation can be found in example/calypso/remotese/transport
 
-![polling architecture architecture](doc/Master_transmits_Apdu_to_Slave.svg "Transmit with a http polling transport")
+![polling architecture architecture](../../../../../doc/Master_transmits_Apdu_to_Slave.svg "Transmit with a http polling transport")
 
 
 ## Transport implementation
