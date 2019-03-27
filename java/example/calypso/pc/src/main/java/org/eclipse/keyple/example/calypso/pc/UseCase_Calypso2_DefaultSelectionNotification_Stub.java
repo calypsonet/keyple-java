@@ -26,11 +26,14 @@ import org.eclipse.keyple.plugin.stub.StubReader;
 import org.eclipse.keyple.plugin.stub.StubSecureElement;
 import org.eclipse.keyple.seproxy.ChannelState;
 import org.eclipse.keyple.seproxy.SeProxyService;
+import org.eclipse.keyple.seproxy.SeReader;
 import org.eclipse.keyple.seproxy.event.ObservableReader;
 import org.eclipse.keyple.seproxy.event.ObservableReader.ReaderObserver;
 import org.eclipse.keyple.seproxy.event.ReaderEvent;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
+import org.eclipse.keyple.seproxy.exception.KeyplePluginNotFoundException;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
+import org.eclipse.keyple.seproxy.exception.KeypleReaderNotFoundException;
 import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
 import org.eclipse.keyple.seproxy.protocol.SeProtocolSetting;
 import org.eclipse.keyple.transaction.MatchingSe;
@@ -64,7 +67,6 @@ import org.slf4j.LoggerFactory;
 public class UseCase_Calypso2_DefaultSelectionNotification_Stub implements ReaderObserver {
     protected static final Logger logger =
             LoggerFactory.getLogger(UseCase_Calypso2_DefaultSelectionNotification_Stub.class);
-    private StubReader poReader;
     private SeSelection seSelection;
     private ReadRecordsRespPars readEnvironmentParser;
     /**
@@ -92,7 +94,7 @@ public class UseCase_Calypso2_DefaultSelectionNotification_Stub implements Reade
         /*
          * Get a PO reader ready to work with Calypso PO.
          */
-        poReader = (StubReader) (stubPlugin.getReader("poReader"));
+        StubReader poReader = (StubReader) (stubPlugin.getReader("poReader"));
 
         /* Check if the reader exists */
         if (poReader == null) {
@@ -191,6 +193,16 @@ public class UseCase_Calypso2_DefaultSelectionNotification_Stub implements Reade
         switch (event.getEventType()) {
             case SE_MATCHED:
                 if (seSelection.processDefaultSelection(event.getDefaultSelectionResponse())) {
+                    SeReader poReader = null;
+                    try {
+                        poReader = SeProxyService.getInstance().getPlugin(event.getPluginName())
+                                .getReader(event.getReaderName());
+                    } catch (KeyplePluginNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (KeypleReaderNotFoundException e) {
+                        e.printStackTrace();
+                    }
+
                     MatchingSe selectedSe = seSelection.getSelectedSe();
 
                     logger.info("Observer notification: the selection of the PO has succeeded.");
