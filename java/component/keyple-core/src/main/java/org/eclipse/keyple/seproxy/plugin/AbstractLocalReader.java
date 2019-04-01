@@ -561,10 +561,10 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
                     closeLogicalChannel();
                 } else if (seRequest.getSeSelector().getAidSelector()
                         .getAidToSelect().length >= aidCurrentlySelected.length
-                        && aidCurrentlySelected.equals(Arrays.copyOfRange(
+                        || !aidCurrentlySelected.equals(Arrays.copyOfRange(
                                 seRequest.getSeSelector().getAidSelector().getAidToSelect(), 0,
                                 aidCurrentlySelected.length))) {
-                    // the AID changed, close the logical channel
+                    // the AID changed (longer or different), close the logical channel
                     if (logger.isTraceEnabled()) {
                         logger.trace(
                                 "[{}] processSeRequest => The AID changed, close the logical channel. AID = {}, EXPECTEDAID = {}",
