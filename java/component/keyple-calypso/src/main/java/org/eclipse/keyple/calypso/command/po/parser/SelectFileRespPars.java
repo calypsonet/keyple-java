@@ -139,6 +139,7 @@ public final class SelectFileRespPars extends AbstractApduResponseParser {
             // no record for non EF types
             recSize = 0;
             numRec = 0;
+            iter += 2;
         }
 
         accessConditions = new byte[4];
@@ -172,11 +173,11 @@ public final class SelectFileRespPars extends AbstractApduResponseParser {
         } else {
 
             kvcInfo = new byte[3];
-            System.arraycopy(inFileParameters, iter, kvcInfo, 0, 4);
+            System.arraycopy(inFileParameters, iter, kvcInfo, 0, 3);
             iter += 3;
 
             kifInfo = new byte[3];
-            System.arraycopy(inFileParameters, iter, kifInfo, 0, 4);
+            System.arraycopy(inFileParameters, iter, kifInfo, 0, 3);
             iter += 3;
 
 
