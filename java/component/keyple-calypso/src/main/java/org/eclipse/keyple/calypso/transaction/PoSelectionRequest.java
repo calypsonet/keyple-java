@@ -198,7 +198,7 @@ public final class PoSelectionRequest extends SeSelectionRequest {
      * @param extraInfo extra information included in the logs (can be null or empty)
      * @return SelectFileRespPars select file response parser
      */
-    public SelectFileRespPars prepareNavigateCmd(SelectFileCmdBuild.SelectControl selectControl,
+    public SelectFileRespPars prepareSelectFileCmd(SelectFileCmdBuild.SelectControl selectControl,
             String extraInfo) {
         addApduRequest(new SelectFileCmdBuild(poClass, selectControl).getApduRequest());
         if (logger.isTraceEnabled()) {

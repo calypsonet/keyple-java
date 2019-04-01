@@ -114,7 +114,7 @@ public class Tool_AnalyzePoFileStructure {
             PoTransaction poTransaction = new PoTransaction(poReader, curApp);
 
             SelectFileRespPars selectCurrentDf =
-                    poTransaction.prepareNavigateCmd(CURRENT_DF, "CurrentDF");
+                    poTransaction.prepareSelectFileCmd(CURRENT_DF, "CurrentDF");
 
             poTransaction.processPoCommands(ChannelState.KEEP_OPEN);
 
@@ -149,7 +149,7 @@ public class Tool_AnalyzePoFileStructure {
             int currentFile;
 
             SelectFileRespPars selectFileParserFirst =
-                    poTransaction.prepareNavigateCmd(FIRST, "First EF");
+                    poTransaction.prepareSelectFileCmd(FIRST, "First EF");
 
             poTransaction.processPoCommands(ChannelState.KEEP_OPEN);
 
@@ -164,7 +164,7 @@ public class Tool_AnalyzePoFileStructure {
             currentFile = selectFileParserFirst.getLid();
 
             SelectFileRespPars selectFileParserNext =
-                    poTransaction.prepareNavigateCmd(NEXT, "Next EF");
+                    poTransaction.prepareSelectFileCmd(NEXT, "Next EF");
             poTransaction.processPoCommands(ChannelState.KEEP_OPEN);
 
             if (!selectFileParserNext.isSelectionSuccessful()) {
@@ -178,7 +178,7 @@ public class Tool_AnalyzePoFileStructure {
 
                 currentFile = selectFileParserNext.getLid();
 
-                selectFileParserNext = poTransaction.prepareNavigateCmd(NEXT, "Next EF");
+                selectFileParserNext = poTransaction.prepareSelectFileCmd(NEXT, "Next EF");
                 poTransaction.processPoCommands(ChannelState.KEEP_OPEN);
 
                 if (!selectFileParserNext.isSelectionSuccessful()) {
