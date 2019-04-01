@@ -25,7 +25,7 @@ public class MatchingSe {
     /**
      * Constructor taking a SeSelector as an argument. Keeps the isKeepChannelOpen flag and the
      * extraInfo for later usage.
-     * 
+     *
      * @param seSelectionRequest the SE selection request
      */
     public MatchingSe(SeSelectionRequest seSelectionRequest) {

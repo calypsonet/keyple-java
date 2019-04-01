@@ -12,6 +12,7 @@
 package org.eclipse.keyple.example.generic.common;
 
 
+import java.util.List;
 import org.eclipse.keyple.calypso.command.po.parser.ReadDataStructure;
 import org.eclipse.keyple.calypso.transaction.PoSelectionRequest;
 import org.eclipse.keyple.seproxy.*;
@@ -77,7 +78,7 @@ public class SeProtocolDetectionEngine extends AbstractReaderObserverEngine {
                             ReadDataStructure.SINGLE_RECORD_DATA, (byte) 0x01,
                             "Hoplink T2 Environment");
 
-                    seSelection.prepareSelection(poSelectionRequest);
+                    seSelection.prepareSelection(poSelectionRequest, MatchingSe.class);
 
                     break;
                 case PROTOCOL_ISO14443_3A:
@@ -90,10 +91,14 @@ public class SeProtocolDetectionEngine extends AbstractReaderObserverEngine {
                     break;
                 default:
                     /* Add a generic selector */
-                    seSelection.prepareSelection(new SeSelectionRequest(
-                            new SeSelector(null, new SeSelector.AtrFilter(".*"),
-                                    "Default selector"),
-                            ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4));
+                    seSelection
+                            .prepareSelection(
+                                    new SeSelectionRequest(
+                                            new SeSelector(null, new SeSelector.AtrFilter(".*"),
+                                                    "Default selector"),
+                                            ChannelState.KEEP_OPEN,
+                                            ContactlessProtocols.PROTOCOL_ISO14443_4),
+                                    MatchingSe.class);
                     break;
             }
         }
@@ -107,8 +112,15 @@ public class SeProtocolDetectionEngine extends AbstractReaderObserverEngine {
      */
     @Override
     public void processSeMatch(SelectionResponse selectionResponse) {
-        if (seSelection.processDefaultSelection(selectionResponse)) {
-            MatchingSe selectedSe = seSelection.getSelectedSe();
+        List<MatchingSe> matchingSeList = seSelection.processDefaultSelection(selectionResponse);
+        MatchingSe selectedSe = null;
+        /* find the SE that matches one of the two selection targets */
+        for (MatchingSe matchingSe : matchingSeList) {
+            if (matchingSe.getSelectionSeResponse().getSelectionStatus().hasMatched()) {
+                selectedSe = matchingSe;
+            }
+        }
+        if (selectedSe != null) {
             System.out.println("Selector: " + selectedSe.getExtraInfo() + ", selection status = "
                     + selectedSe.isSelected());
         } else {
