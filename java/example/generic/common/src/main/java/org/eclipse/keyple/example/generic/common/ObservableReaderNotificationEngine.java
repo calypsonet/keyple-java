@@ -90,7 +90,8 @@ public class ObservableReaderNotificationEngine {
 
                 /* We retrieve the reader object from its name. */
                 try {
-                    reader = event.getReader(readerName);
+                    reader = SeProxyService.getInstance().getPlugin(event.getPluginName())
+                            .getReader(readerName);
                 } catch (KeyplePluginNotFoundException e) {
                     e.printStackTrace();
                 } catch (KeypleReaderNotFoundException e) {

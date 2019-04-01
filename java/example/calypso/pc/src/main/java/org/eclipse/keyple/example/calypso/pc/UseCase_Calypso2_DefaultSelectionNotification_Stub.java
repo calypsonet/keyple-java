@@ -195,7 +195,8 @@ public class UseCase_Calypso2_DefaultSelectionNotification_Stub implements Reade
                 if (seSelection.processDefaultSelection(event.getDefaultSelectionResponse())) {
                     SeReader poReader = null;
                     try {
-                        poReader = event.getReader();
+                        poReader = SeProxyService.getInstance().getPlugin(event.getPluginName())
+                                .getReader(event.getReaderName());
                     } catch (KeyplePluginNotFoundException e) {
                         e.printStackTrace();
                     } catch (KeypleReaderNotFoundException e) {

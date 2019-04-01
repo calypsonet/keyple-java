@@ -174,7 +174,8 @@ public class UseCase_Calypso2_DefaultSelectionNotification_Pcsc implements Reade
 
                     SeReader poReader = null;
                     try {
-                        poReader = event.getReader();
+                        poReader = SeProxyService.getInstance().getPlugin(event.getPluginName())
+                                .getReader(event.getReaderName());;
                     } catch (KeyplePluginNotFoundException e) {
                         e.printStackTrace();
                     } catch (KeypleReaderNotFoundException e) {

@@ -140,7 +140,10 @@ public class Demo_Master implements org.eclipse.keyple.util.Observable.Observer 
                 case READER_CONNECTED:
                     // a new virtual reader is connected, let's configure it
                     try {
-                        poReader = (VirtualReader) event.getReader(event.getReaderNames().first());
+                        RemoteSePlugin remoteSEPlugin = (RemoteSePlugin) SeProxyService
+                                .getInstance().getPlugin("RemoteSePlugin");
+                        poReader = (VirtualReader) remoteSEPlugin
+                                .getReader(event.getReaderNames().first());
 
                         logger.info("Configure SeSelection");
 
