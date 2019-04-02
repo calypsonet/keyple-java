@@ -22,17 +22,24 @@ public class Demo_WebserviceWithRetrofit_MasterClient {
 
     public static void main(String[] args) throws Exception {
 
+
+        final String CLIENT_NODE_ID =  "Demo_WebserviceWithRetrofit_MasterClient1";
+        final String SERVER_NODE_ID =  "Demo_WebserviceWithRetrofit_MasterClientServer1";
+
+
         // Create the procotol factory
         TransportFactory factory =
-                new WsPollingRetrofitFactory("Demo_WebserviceWithRetrofit_MasterClient1"); // HTTP
-                                                                                           // Web
-                                                                                           // Polling
+                new WsPollingRetrofitFactory(SERVER_NODE_ID);
 
-        // Launch the server thread
-        Demo_Threads.startServer(false, factory);
 
+        // Launch the Server thread
+        // Server is slave
+        Demo_Threads.startServer(false, factory,CLIENT_NODE_ID);
+
+        Thread.sleep(1000);
 
         // Launch the client thread
-        Demo_Threads.startClient(true, factory);
+        // Client is Master
+        Demo_Threads.startClient(true, factory,CLIENT_NODE_ID);
     }
 }

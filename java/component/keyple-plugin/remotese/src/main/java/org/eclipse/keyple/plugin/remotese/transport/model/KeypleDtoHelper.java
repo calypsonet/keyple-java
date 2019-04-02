@@ -33,7 +33,7 @@ public class KeypleDtoHelper {
     }
 
     static public KeypleDto NoResponse() {
-        return new KeypleDto("", "", false);
+        return new KeypleDto("", "", false,"","","","");
     }
 
     static public KeypleDto ExceptionDTO(String action, Throwable exception, String sessionId,
@@ -51,7 +51,7 @@ public class KeypleDtoHelper {
     }
 
     static public KeypleDto ACK() {
-        return new KeypleDto("ACK", "ACK", false);
+        return new KeypleDto("ACK", "ACK", false,"","","","");
     }
 
     static public Boolean isKeypleDTO(JsonObject json) {

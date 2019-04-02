@@ -44,6 +44,7 @@ public class VirtualReaderBaseTest {
 
     final String NATIVE_READER_NAME = "testStubReader";
     final String CLIENT_NODE_ID = "testClientNodeId";
+    final String SERVER_NODE_ID = "testServerNodeId";
 
     // Spy Object
     MasterAPI masterAPI;
@@ -59,7 +60,7 @@ public class VirtualReaderBaseTest {
         logger.info("*** Init LocalTransportFactory");
         // use a local transport factory for testing purposes (only java calls between client and
         // server). Only one client and one server bound together.
-        factory = new LocalTransportFactory();
+        factory = new LocalTransportFactory(SERVER_NODE_ID);
 
         logger.info("*** Bind Master Services");
         // bind Master services to server
@@ -67,7 +68,7 @@ public class VirtualReaderBaseTest {
 
         logger.info("*** Bind Slave Services");
         // bind Slave services to client
-        slaveAPI = Integration.bindSlave(factory.getClient());
+        slaveAPI = Integration.bindSlave(factory.getClient(CLIENT_NODE_ID), SERVER_NODE_ID);
 
 
 
@@ -101,13 +102,13 @@ public class VirtualReaderBaseTest {
         StubReader nativeReader = (StubReader) Integration.createStubReader(readerName);
         nativeReader.addSeProtocolSetting(
                 new SeProtocolSetting(StubProtocolSetting.SETTING_PROTOCOL_ISO14443_4));
-        this.slaveAPI.connectReader(nativeReader, nodeId);
+        this.slaveAPI.connectReader(nativeReader);
         return nativeReader;
     }
 
     protected void disconnectStubReader(String sessionId, String nativeReaderName, String nodeId)
             throws Exception {
-        this.slaveAPI.disconnectReader(sessionId, nativeReaderName, nodeId);
+        this.slaveAPI.disconnectReader(sessionId, nativeReaderName);
     }
 
     protected VirtualReader getVirtualReader() throws Exception {

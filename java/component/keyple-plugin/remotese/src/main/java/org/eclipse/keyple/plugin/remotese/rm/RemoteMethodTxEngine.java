@@ -77,7 +77,7 @@ public class RemoteMethodTxEngine implements DtoHandler {
         logger.debug("Register rm to engine : {}", rm);
         remoteMethodTx = rm;
 
-        rm.setDto(sender);
+        rm.setDtoSender(sender);
     }
 
 }

@@ -36,13 +36,13 @@ class WskServer extends WebSocketServer implements ServerNode {
     // only for when server is master
     private Boolean isMaster;
     private WebSocket masterWebSocket;
-    final private String nodeId;
+    final private String serverNodeId;
 
-    public WskServer(InetSocketAddress address, Boolean isMaster, String nodeId) {
+    public WskServer(InetSocketAddress address, Boolean isMaster, String serverNodeId) {
         super(address);
 
         logger.info("Create websocket server on address {}", address.toString());
-        this.nodeId = nodeId;
+        this.serverNodeId = serverNodeId;
         this.isMaster = isMaster;
     }
 
@@ -89,7 +89,7 @@ class WskServer extends WebSocketServer implements ServerNode {
                                     keypleDto.getNativeReaderName(), conn);
 
                             addConnection(conn, keypleDto.getNativeReaderName(),
-                                    keypleDto.getNodeId());
+                                    keypleDto.getRequesterNodeId());
                         } else {
                             logger.debug(
                                     "No session defined in message, can not map websocket connection {} - {}",
@@ -175,11 +175,14 @@ class WskServer extends WebSocketServer implements ServerNode {
                         logger.trace(
                                 "Retrieve socketweb from nativeReaderName and clientNodeId {} {}",
                                 transportDto.getKeypleDTO().getNativeReaderName(),
-                                transportDto.getKeypleDTO().getNodeId());
+                                transportDto.getKeypleDTO().getTargetNodeId());
                         WebSocket conn =
                                 getConnection(transportDto.getKeypleDTO().getNativeReaderName(),
-                                        transportDto.getKeypleDTO().getNodeId());
+                                        transportDto.getKeypleDTO().getTargetNodeId());
 
+                        if(conn ==null){
+                            throw new RuntimeException("Conn was not found for " + transportDto.getKeypleDTO().getNativeReaderName() + " " + transportDto.getKeypleDTO().getTargetNodeId());
+                        }
                         logger.trace("send DTO with websocket {} {}",
                                 KeypleDtoHelper.toJson(transportDto.getKeypleDTO()), conn);
 
@@ -203,7 +206,7 @@ class WskServer extends WebSocketServer implements ServerNode {
 
     @Override
     public String getNodeId() {
-        return nodeId;
+        return serverNodeId;
     }
 
 

@@ -65,7 +65,7 @@ public class Demo_Master implements org.eclipse.keyple.util.Observable.Observer 
      * @param transportFactory : type of transport used (websocket, webservice...)
      * @param isServer : is Master the server?
      */
-    public Demo_Master(TransportFactory transportFactory, Boolean isServer) {
+    public Demo_Master(TransportFactory transportFactory, Boolean isServer, String clientNodeId) {
 
         logger.info("*******************");
         logger.info("Create DemoMaster  ");
@@ -90,7 +90,7 @@ public class Demo_Master implements org.eclipse.keyple.util.Observable.Observer 
             }
         } else {
             // Master is client, connectAReader to Slave Server
-            node = transportFactory.getClient();
+            node = transportFactory.getClient(clientNodeId);
             ((ClientNode) node).connect(null);
         }
     }

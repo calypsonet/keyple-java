@@ -75,12 +75,12 @@ public final class RemoteSePlugin extends AbstractObservablePlugin {
      * Create a virtual reader
      *
      */
-    ProxyReader createVirtualReader(String clientNodeId, String nativeReaderName,
+    ProxyReader createVirtualReader(String slaveNodeId, String nativeReaderName,
             DtoSender dtoSender) throws KeypleReaderException {
-        logger.debug("createVirtualReader for nativeReader {}", nativeReaderName);
+        logger.debug("createVirtualReader for slaveNodeId {} and reader {}", slaveNodeId, nativeReaderName);
 
         // create a new session for the new reader
-        VirtualReaderSession session = sessionManager.createSession(nativeReaderName, clientNodeId);
+        VirtualReaderSession session = sessionManager.createSession(nativeReaderName, slaveNodeId, dtoSender.getNodeId());
 
         try {
             if (getReaderByRemoteName(nativeReaderName) != null) {

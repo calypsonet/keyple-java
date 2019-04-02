@@ -38,7 +38,7 @@ public class Demo_Threads {
      * @param isMaster : true if the server should act like a Master, false if Slave
      * @param factory : transport factory that creates the server object
      */
-    static public void startServer(final Boolean isMaster, final TransportFactory factory) {
+    static public void startServer(final Boolean isMaster, final TransportFactory factory, final String masterNodeId) {
         Thread server = new Thread() {
             @Override
             public void run() {
@@ -47,12 +47,13 @@ public class Demo_Threads {
                     logger.info("**** Starting Server Thread ****");
 
                     if (isMaster) {
-                        Demo_Master master = new Demo_Master(factory, true);
+                        //server is master
+                        Demo_Master master = new Demo_Master(factory, true, null);
                         master.boot();
-
                     } else {
-                        Demo_Slave slave = new Demo_Slave(factory, true);
-                        executeSlaveScenario(slave);
+                        //server is slave
+                        Demo_Slave slave = new Demo_Slave(factory, true, null);
+                        executeSlaveScenario(slave,true, masterNodeId);
 
                     }
 
@@ -78,19 +79,21 @@ public class Demo_Threads {
      * @param isMaster : true if the client should act like a Master, false if Slave
      * @param factory : transport factory that creates the client object
      */
-    static public void startClient(final Boolean isMaster, final TransportFactory factory) {
-        Thread client = new Thread() {
+    static public void startClient(final Boolean isMaster, final TransportFactory factory, final String clientNodeId) {
+        Thread threadClient = new Thread() {
             @Override
             public void run() {
                 logger.info("**** Starting Client Thread ****");
 
                 try {
                     if (isMaster) {
-                        Demo_Master master = new Demo_Master(factory, false);
+                        //client is master
+                        Demo_Master master = new Demo_Master(factory, false,clientNodeId);
                         master.boot();
                     } else {
-                        Demo_Slave slave = new Demo_Slave(factory, false);
-                        executeSlaveScenario(slave);
+                        //client is slave
+                        Demo_Slave slave = new Demo_Slave(factory, false,clientNodeId);
+                        executeSlaveScenario(slave,false,null);
 
                     }
 
@@ -106,17 +109,17 @@ public class Demo_Threads {
 
             }
         };
-        client.start();
+        threadClient.start();
     }
 
-    static private void executeSlaveScenario(Demo_Slave slave) throws KeypleReaderNotFoundException,
+    static private void executeSlaveScenario(Demo_Slave slave, Boolean isServer, final String masterNodeId) throws KeypleReaderNotFoundException,
             InterruptedException, KeypleReaderException, KeypleRemoteException {
         logger.info("------------------------");
         logger.info("Connect Reader to Master");
         logger.info("------------------------");
 
         Thread.sleep(2000);
-        String sessionId = slave.connectAReader();
+        String sessionId = slave.connectAReader(isServer,masterNodeId);
         logger.info("--------------------------------------------------");
         logger.info("Session created on server {}", sessionId);
         // logger.info("Wait 2 seconds, then insert SE");

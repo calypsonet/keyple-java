@@ -31,16 +31,14 @@ public class RmConnectReaderTx extends RemoteMethodTx<String> {
 
 
     private final ProxyReader localReader;
-    private final String clientNodeId;
     private final INativeReaderService slaveAPI;
 
 
     public RmConnectReaderTx(String sessionId, String nativeReaderName, String virtualReaderName,
-            String clientNodeId, ProxyReader localReader, String clientNodeId1,
+            String masterNodeId, ProxyReader localReader, String slaveNodeId,
             INativeReaderService slaveAPI) {
-        super(sessionId, nativeReaderName, virtualReaderName, clientNodeId);
+        super(sessionId, nativeReaderName, virtualReaderName, masterNodeId, slaveNodeId);
         this.localReader = localReader;
-        this.clientNodeId = clientNodeId1;
         this.slaveAPI = slaveAPI;
     }
 
@@ -94,6 +92,6 @@ public class RmConnectReaderTx extends RemoteMethodTx<String> {
     @Override
     public KeypleDto dto() {
         return new KeypleDto(RemoteMethod.READER_CONNECT.getName(), "{}", true, null,
-                localReader.getName(), null, clientNodeId);
+                localReader.getName(), null,  requesterNodeId, targetNodeId);
     }
 }

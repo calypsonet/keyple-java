@@ -60,9 +60,9 @@ class Integration {
      * @param node
      * @return
      */
-    public static SlaveAPI bindSlave(DtoNode node) {
+    public static SlaveAPI bindSlave(DtoNode node, String masterNodeId) {
         // Binds node for outgoing KeypleDto
-        SlaveAPI slaveAPI = new SlaveAPI(SeProxyService.getInstance(), node);
+        SlaveAPI slaveAPI = new SlaveAPI(SeProxyService.getInstance(), node,masterNodeId);
 
         // Binds node for incoming KeypleDTo
         // slaveAPI.bindDtoEndpoint(node);
@@ -76,9 +76,9 @@ class Integration {
      * @param node
      * @return
      */
-    public static SlaveAPI bindSlaveSpy(DtoNode node) {
+    public static SlaveAPI bindSlaveSpy(DtoNode node, String masterNodeId) {
         // Binds node for outgoing KeypleDto
-        SlaveAPI slaveAPI = new SlaveAPI(SeProxyService.getInstance(), node);
+        SlaveAPI slaveAPI = new SlaveAPI(SeProxyService.getInstance(), node, masterNodeId);
 
         SlaveAPI spy = Mockito.spy(slaveAPI);
 

@@ -48,6 +48,7 @@ public class MasterAPITest {
 
     final String NATIVE_READER_NAME = "testStubReader";
     final String CLIENT_NODE_ID = "testClientNodeId";
+    final String SERVER_NODE_ID = "testServerNodeId";
 
 
     // Spy Object
@@ -65,7 +66,7 @@ public class MasterAPITest {
         // use a local transport factory for testing purposes (only java calls between client and
         // server)
         // only one client and one server
-        factory = new LocalTransportFactory();
+        factory = new LocalTransportFactory(SERVER_NODE_ID);
 
         logger.info("*** Bind Master Services");
         // bind Master services to server
@@ -73,7 +74,7 @@ public class MasterAPITest {
 
         logger.info("*** Bind Slave Services");
         // bind Slave services to client
-        nativeReaderSpy = Integration.bindSlaveSpy(factory.getClient());
+        nativeReaderSpy = Integration.bindSlaveSpy(factory.getClient(CLIENT_NODE_ID), SERVER_NODE_ID);
 
         nativeReader = Integration.createStubReader(NATIVE_READER_NAME);
 
@@ -115,7 +116,7 @@ public class MasterAPITest {
     @Test
     public void testOKConnect() throws Exception {
 
-        String sessionId = nativeReaderSpy.connectReader(nativeReader, CLIENT_NODE_ID);
+        String sessionId = nativeReaderSpy.connectReader(nativeReader);
 
         // assert that a virtual reader has been created
         VirtualReader virtualReader =
@@ -138,14 +139,14 @@ public class MasterAPITest {
     public void testKOConnectError() throws Exception {
 
         // first connectReader is successful
-        String sessionId = nativeReaderSpy.connectReader(nativeReader, CLIENT_NODE_ID);
+        String sessionId = nativeReaderSpy.connectReader(nativeReader);
 
         // assert an exception will be contained into keypleDto response
         // doAnswer(Integration.assertContainsException()).when(nativeReaderSpy)
         // .onDTO(ArgumentMatchers.<TransportDto>any());
 
         // should throw a DTO with an exception in master side KeypleReaderException
-        nativeReaderSpy.connectReader(nativeReader, CLIENT_NODE_ID);
+        nativeReaderSpy.connectReader(nativeReader);
 
 
     }
@@ -159,9 +160,9 @@ public class MasterAPITest {
     public void testKOConnectServerError() throws Exception {
 
         // bind Slave to faulty client
-        nativeReaderSpy = Integration.bindSlaveSpy(new LocalClient(null));
+        nativeReaderSpy = Integration.bindSlaveSpy(new LocalClient(CLIENT_NODE_ID, null), SERVER_NODE_ID);
 
-        nativeReaderSpy.connectReader(nativeReader, CLIENT_NODE_ID);
+        nativeReaderSpy.connectReader(nativeReader);
         // should throw a KeypleRemoteException in slave side
     }
 
@@ -178,7 +179,7 @@ public class MasterAPITest {
     public void testOKConnectDisconnect() throws Exception {
 
         // connect
-        String sessionId = nativeReaderSpy.connectReader(nativeReader, CLIENT_NODE_ID);
+        String sessionId = nativeReaderSpy.connectReader(nativeReader);
 
         VirtualReader virtualReader =
                 (VirtualReader) masterAPI.getPlugin().getReaderByRemoteName(NATIVE_READER_NAME);
@@ -186,7 +187,7 @@ public class MasterAPITest {
         Assert.assertEquals(NATIVE_READER_NAME, virtualReader.getNativeReaderName());
 
         // disconnect
-        nativeReaderSpy.disconnectReader(sessionId, nativeReader.getName(), CLIENT_NODE_ID);
+        nativeReaderSpy.disconnectReader(sessionId, nativeReader.getName());
 
         // assert that the virtual reader has been destroyed
         Assert.assertEquals(0, masterAPI.getPlugin().getReaders().size());
@@ -221,9 +222,9 @@ public class MasterAPITest {
     public void testKODisconnectServerError() throws Exception {
 
         // bind Slave to faulty client
-        nativeReaderSpy = Integration.bindSlaveSpy(new LocalClient(null));
+        nativeReaderSpy = Integration.bindSlaveSpy(new LocalClient(CLIENT_NODE_ID, null), SERVER_NODE_ID);
 
-        nativeReaderSpy.disconnectReader("null", nativeReader.getName(), CLIENT_NODE_ID);
+        nativeReaderSpy.disconnectReader("null", nativeReader.getName());
         // should throw a KeypleRemoteException in slave side
     }
 

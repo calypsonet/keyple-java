@@ -43,24 +43,26 @@ public class SlaveAPI implements INativeReaderService, DtoHandler, ObservableRea
 
     private static final Logger logger = LoggerFactory.getLogger(SlaveAPI.class);
 
-    private final DtoNode dtoTransportNode;
+    private final DtoNode dtoNode;
     private final SeProxyService seProxyService;
     private final RemoteMethodTxEngine rmTxEngine;
+    private final String masterNodeId;
 
     // private final NseSessionManager nseSessionManager;
 
     /**
      * Constructor
      * 
-     * @param dtoTransportNode : Define which DTO sender will be called when a DTO needs to be sent.
+     * @param dtoNode : Define which DTO sender will be called when a DTO needs to be sent.
      */
-    public SlaveAPI(SeProxyService seProxyService, DtoNode dtoTransportNode) {
+    public SlaveAPI(SeProxyService seProxyService, DtoNode dtoNode, String masterNodeId) {
         this.seProxyService = seProxyService;
-        this.dtoTransportNode = dtoTransportNode;
-        this.rmTxEngine = new RemoteMethodTxEngine(dtoTransportNode);
-        // this.nseSessionManager = new NseSessionManager();
+        this.dtoNode = dtoNode;
+        this.rmTxEngine = new RemoteMethodTxEngine(dtoNode);
+        this.masterNodeId = masterNodeId;
 
-        this.bindDtoEndpoint(dtoTransportNode);
+
+        this.bindDtoEndpoint(dtoNode);
     }
 
 
@@ -156,17 +158,16 @@ public class SlaveAPI implements INativeReaderService, DtoHandler, ObservableRea
     /**
      * Connect a local reader to Remote SE Plugin {@link INativeReaderService}
      * 
-     * @param clientNodeId : a chosen but unique terminal id (i.e AndroidDevice2)
      * @param localReader : native reader to be connected
      */
     @Override
-    public String connectReader(ProxyReader localReader, String clientNodeId)
+    public String connectReader(ProxyReader localReader)
             throws KeypleReaderException {
 
-        logger.info("connectReader {} from device {}", localReader.getName(), clientNodeId);
+        logger.info("connectReader {} from device {}", localReader.getName(), dtoNode.getNodeId());
 
         RmConnectReaderTx connect = new RmConnectReaderTx(null, localReader.getName(), null,
-                clientNodeId, localReader, clientNodeId, this);
+                masterNodeId, localReader, dtoNode.getNodeId(), this);
         try {
             rmTxEngine.register(connect);
             return connect.get();
@@ -177,12 +178,12 @@ public class SlaveAPI implements INativeReaderService, DtoHandler, ObservableRea
     }
 
     @Override
-    public void disconnectReader(String sessionId, String nativeReaderName, String clientNodeId)
+    public void disconnectReader(String sessionId, String nativeReaderName)
             throws KeypleReaderException {
-        logger.info("disconnectReader {} from device {}", nativeReaderName, clientNodeId);
+        logger.info("disconnectReader {} from device {}", nativeReaderName, dtoNode.getNodeId());
 
         RmDisconnectReaderTx disconnect =
-                new RmDisconnectReaderTx(sessionId, nativeReaderName, clientNodeId);
+                new RmDisconnectReaderTx(sessionId, nativeReaderName, dtoNode.getNodeId(), masterNodeId);
 
         try {
             rmTxEngine.register(disconnect);
@@ -197,8 +198,6 @@ public class SlaveAPI implements INativeReaderService, DtoHandler, ObservableRea
         } catch (KeypleReaderNotFoundException e) {
             e.printStackTrace();
         }
-
-
     }
 
     /**
@@ -242,8 +241,8 @@ public class SlaveAPI implements INativeReaderService, DtoHandler, ObservableRea
         String data = JsonParser.getGson().toJson(event);
 
         try {
-            dtoTransportNode.sendDTO(new KeypleDto(RemoteMethod.READER_EVENT.getName(), data, true,
-                    null, event.getReaderName(), null, this.dtoTransportNode.getNodeId()));
+            dtoNode.sendDTO(new KeypleDto(RemoteMethod.READER_EVENT.getName(), data, true,
+                    null, event.getReaderName(), null, this.dtoNode.getNodeId(), masterNodeId));
         } catch (KeypleRemoteException e) {
             logger.error("Event " + event.toString()
                     + " could not be sent though Remote Service Interface", e);

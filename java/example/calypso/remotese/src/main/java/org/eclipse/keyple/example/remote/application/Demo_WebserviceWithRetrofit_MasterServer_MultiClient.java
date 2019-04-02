@@ -11,34 +11,41 @@
  ********************************************************************************/
 package org.eclipse.keyple.example.remote.application;
 
-import org.eclipse.keyple.example.remote.transport.websocket.WskFactory;
+import org.eclipse.keyple.example.remote.transport.wspolling.client_retrofit.WsPollingRetrofitFactory;
 import org.eclipse.keyple.plugin.remotese.transport.factory.TransportFactory;
 
 /**
- * Demo websocket The master device uses the websocket server whereas the slave device uses the
- * websocket client
+ * Demo Web Service with Retrofit http client library (Android friendly) The master device uses the
+ * websocket master whereas the slave device uses the websocket client
  */
-public class Demo_Websocket_MasterServer {
+public class Demo_WebserviceWithRetrofit_MasterServer_MultiClient {
+
 
     public static void main(String[] args) throws Exception {
 
 
-        final String CLIENT_NODE_ID =  "Demo_Websocket_MasterServerClient1";
-        final String SERVER_NODE_ID =  "Demo_Websocket_MasterClientServer1";
+        final String CLIENT_NODE_ID =  "Demo_WebserviceWithRetrofit_MasterServer_MultiClient1";
+        final String CLIENT_NODE_ID2 =  "Demo_WebserviceWithRetrofit_MasterServer_MultiClient2";
 
+        final String SERVER_NODE_ID =  "Demo_WebserviceWithRetrofit_MasterServer_MultiClientServer1";
 
         // Create the procotol factory
-        TransportFactory factory = new WskFactory(true, SERVER_NODE_ID); // Web
-                                                                                         // socket
+        TransportFactory factory =
+                new WsPollingRetrofitFactory(SERVER_NODE_ID);
+
 
         // Launch the server thread
         // Server is Master
-        Demo_Threads.startServer(true, factory,SERVER_NODE_ID);
+        Demo_Threads.startServer(true, factory, SERVER_NODE_ID);
 
         Thread.sleep(1000);
 
-        // Launch the client thread
+        // Launch the client1 thread
         // Client is Slave
         Demo_Threads.startClient(false, factory,CLIENT_NODE_ID);
+
+        // Launch the client2 thread
+        // Client is Slave
+        Demo_Threads.startClient(false, factory,CLIENT_NODE_ID2);
     }
 }

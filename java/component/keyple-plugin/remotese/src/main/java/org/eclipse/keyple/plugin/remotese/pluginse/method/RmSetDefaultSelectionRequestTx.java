@@ -28,8 +28,8 @@ public class RmSetDefaultSelectionRequestTx extends RemoteMethodTx {
 
     public RmSetDefaultSelectionRequestTx(DefaultSelectionRequest defaultSelectionRequest,
             ObservableReader.NotificationMode notificationMode, String nativeReaderName,
-            String virtualReaderName, String sessionId, String clientNodeId) {
-        super(sessionId, nativeReaderName, virtualReaderName, clientNodeId);
+            String virtualReaderName, String sessionId, String slaveNodeId, String requesterNodeId) {
+        super(sessionId, nativeReaderName, virtualReaderName, slaveNodeId,requesterNodeId);
         this.defaultSelectionRequest = defaultSelectionRequest;
         this.notificationMode = notificationMode;
 
@@ -51,7 +51,7 @@ public class RmSetDefaultSelectionRequestTx extends RemoteMethodTx {
 
         return new KeypleDto(RemoteMethod.DEFAULT_SELECTION_REQUEST.getName(),
                 JsonParser.getGson().toJson(body, JsonObject.class), true, sessionId,
-                nativeReaderName, virtualReaderName, clientNodeId);
+                nativeReaderName, virtualReaderName, requesterNodeId, targetNodeId);
 
     }
 }

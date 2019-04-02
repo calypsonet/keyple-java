@@ -40,7 +40,7 @@ class RmDisconnectReaderExecutor implements RemoteMethodExecutor {
         KeypleDto keypleDto = transportDto.getKeypleDTO();
 
         String nativeReaderName = keypleDto.getNativeReaderName();
-        String clientNodeId = keypleDto.getNodeId();
+        String clientNodeId = keypleDto.getRequesterNodeId();
         String sessionId = keypleDto.getSessionId();
 
         try {
@@ -57,7 +57,7 @@ class RmDisconnectReaderExecutor implements RemoteMethodExecutor {
             return transportDto.nextTransportDTO(
                     KeypleDtoHelper.ExceptionDTO(RemoteMethod.READER_DISCONNECT.getName(), e,
                             keypleDto.getSessionId(), keypleDto.getNativeReaderName(),
-                            keypleDto.getVirtualReaderName(), keypleDto.getNodeId()));
+                            keypleDto.getVirtualReaderName(), keypleDto.getRequesterNodeId()));
         }
 
     }

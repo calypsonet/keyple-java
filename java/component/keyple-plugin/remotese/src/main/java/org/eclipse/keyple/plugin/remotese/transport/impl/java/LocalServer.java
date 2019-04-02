@@ -19,6 +19,9 @@ import org.eclipse.keyple.plugin.remotese.transport.model.TransportDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Server side of the 1 to 1 local transport for unit testing purposes only one server, only one
  * client initied by the {@link LocalTransportFactory}
@@ -27,13 +30,18 @@ public class LocalServer implements ServerNode {
 
     private static final Logger logger = LoggerFactory.getLogger(LocalServer.class);
 
-    private LocalClient theClient;
     private DtoHandler dtoHandler;
+    private String serverNodeId;
+    private Map<String, LocalClient> client_ids;
 
-    public LocalServer() {}
+    public LocalServer(String serverNodeId) {
+        this.client_ids = new HashMap<String, LocalClient>();
+        this.serverNodeId = serverNodeId;
+    }
 
     public void onLocalMessage(TransportDto transportDto) {
-        theClient = ((LocalTransportDto) transportDto).getTheClient();
+        LocalClient theClient = ((LocalTransportDto) transportDto).getTheClient();
+        client_ids.put(transportDto.getKeypleDTO().getRequesterNodeId(), theClient);
 
         if (dtoHandler != null) {
             TransportDto response =
@@ -57,6 +65,8 @@ public class LocalServer implements ServerNode {
 
     @Override
     public void sendDTO(TransportDto transportDto) {
+        LocalClient theClient = ((LocalTransportDto) transportDto).getTheClient();
+
         if (KeypleDtoHelper.isNoResponse(transportDto.getKeypleDTO())) {
             logger.trace("Keyple DTO is empty, do not send it");
         } else {
@@ -67,17 +77,23 @@ public class LocalServer implements ServerNode {
 
     @Override
     public void sendDTO(KeypleDto keypleDto) {
-        if (KeypleDtoHelper.isNoResponse(keypleDto)) {
-            logger.trace("Keyple DTO is empty, do not send it");
-        } else {
-            // send keypleDto to the unique client
-            theClient.onLocalMessage(keypleDto);
+        LocalClient theClient = client_ids.get(keypleDto.getTargetNodeId());
+        if(theClient!=null){
+            if (KeypleDtoHelper.isNoResponse(keypleDto)) {
+                logger.trace("Keyple DTO is empty, do not send it");
+            } else {
+                logger.trace("LocalClient was found for {}", keypleDto.getTargetNodeId());
+                // send keypleDto to the unique client
+                theClient.onLocalMessage(keypleDto);
+            }
+        }else {
+            throw new RuntimeException("LocalServer#sendDTO could be invoked, localClient was not found by "+  keypleDto.getTargetNodeId() + " - " + keypleDto.getRequesterNodeId());
         }
     }
 
     @Override
     public String getNodeId() {
-        return "localServer1";
+        return serverNodeId;
     }
     /*
      * @Override public void update(KeypleDto event) {

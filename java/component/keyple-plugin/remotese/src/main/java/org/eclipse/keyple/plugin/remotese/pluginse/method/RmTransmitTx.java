@@ -30,10 +30,9 @@ public class RmTransmitTx extends RemoteMethodTx<SeResponseSet> {
     private final SeRequestSet seRequestSet;
 
 
-
     public RmTransmitTx(SeRequestSet seRequestSet, String sessionId, String nativeReaderName,
-            String virtualReaderName, String clientNodeId) {
-        super(sessionId, nativeReaderName, virtualReaderName, clientNodeId);
+            String virtualReaderName, String requesterNodeId, String slaveNodeId) {
+        super(sessionId, nativeReaderName, virtualReaderName, slaveNodeId, requesterNodeId );
         this.seRequestSet = seRequestSet;
     }
 
@@ -41,7 +40,7 @@ public class RmTransmitTx extends RemoteMethodTx<SeResponseSet> {
     public KeypleDto dto() {
         return new KeypleDto(RemoteMethod.READER_TRANSMIT.getName(),
                 JsonParser.getGson().toJson(seRequestSet, SeRequestSet.class), true, this.sessionId,
-                this.nativeReaderName, this.virtualReaderName, this.clientNodeId);
+                this.nativeReaderName, this.virtualReaderName, requesterNodeId, targetNodeId);
     }
 
 

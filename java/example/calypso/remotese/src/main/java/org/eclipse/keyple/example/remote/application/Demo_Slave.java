@@ -46,7 +46,7 @@ class Demo_Slave {
     // DtoNode used as to send and receive KeypleDto to Master
     private DtoNode node;
 
-    private String clientNodeId;
+    private String slaveNodeId;
 
     // NativeReaderServiceImpl, used to connectAReader and disconnect readers
     private SlaveAPI slaveAPI;
@@ -59,7 +59,7 @@ class Demo_Slave {
      *        webservice...)
      * @param isServer : true if a Server is wanted
      */
-    public Demo_Slave(TransportFactory transportFactory, Boolean isServer) {
+    public Demo_Slave(TransportFactory transportFactory, Boolean isServer, String nodeId) {
         logger.info("*******************");
         logger.info("Create DemoSlave    ");
         logger.info("*******************");
@@ -70,7 +70,7 @@ class Demo_Slave {
                 node = transportFactory.getServer();
 
                 // slave server needs to know to which master client it should connects
-                clientNodeId = transportFactory.getClient().getNodeId();
+                slaveNodeId = transportFactory.getClient(nodeId).getNodeId();
 
                 // start server in a new thread
                 new Thread() {
@@ -86,10 +86,10 @@ class Demo_Slave {
             }
         } else {
             // Slave is client, connectAReader to Master Server
-            node = transportFactory.getClient();
+            node = transportFactory.getClient(nodeId);
 
             // slave client uses its clientid to connect to server
-            clientNodeId = node.getNodeId();
+            slaveNodeId = node.getNodeId();
 
             ((ClientNode) node).connect(new ClientNode.ConnectCallback() {
                 @Override
@@ -112,7 +112,7 @@ class Demo_Slave {
      * @throws KeypleReaderException
      * @throws InterruptedException
      */
-    public String connectAReader()
+    public String connectAReader(Boolean isServer,String masterNodeId)
             throws KeypleReaderException, InterruptedException, KeypleRemoteException {
 
 
@@ -146,14 +146,20 @@ class Demo_Slave {
                 new SeProtocolSetting(StubProtocolSetting.SETTING_PROTOCOL_ISO14443_4));
 
         // Binds node for outgoing KeypleDto
-        slaveAPI = new SlaveAPI(SeProxyService.getInstance(), node);
+        if(isServer){
+            //if slave is server, must specify which master to connect to
+            slaveAPI = new SlaveAPI(SeProxyService.getInstance(), node, masterNodeId);
+        }else{
+            //if slave is client, master is the configured server
+            slaveAPI = new SlaveAPI(SeProxyService.getInstance(), node, ((ClientNode)node).getServerNodeId());
+        }
 
         // Binds node for incoming KeypleDTo
         // slaveAPI.bindDtoEndpoint(node);
 
         // connect a reader to Remote Plugin
         logger.info("Connect remotely the StubPlugin ");
-        return slaveAPI.connectReader(localReader, clientNodeId);
+        return slaveAPI.connectReader(localReader);
 
     }
 
@@ -189,7 +195,7 @@ class Demo_Slave {
         logger.info("Disconnect native reader ");
         logger.info("*************************");
 
-        slaveAPI.disconnectReader(sessionId, localReader.getName(), clientNodeId);
+        slaveAPI.disconnectReader(sessionId, localReader.getName());
     }
 
 
