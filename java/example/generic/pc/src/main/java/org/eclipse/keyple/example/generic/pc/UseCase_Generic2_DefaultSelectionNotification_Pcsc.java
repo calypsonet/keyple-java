@@ -110,7 +110,7 @@ public class UseCase_Generic2_DefaultSelectionNotification_Pcsc implements Reade
         /*
          * Add the selection case to the current selection (we could have added other cases here)
          */
-        seSelection.prepareSelection(seSelector, MatchingSe.class);
+        seSelection.prepareSelection(seSelector);
 
         /*
          * Provide the SeReader with the selection operation to be processed when a SE is inserted.
@@ -147,8 +147,9 @@ public class UseCase_Generic2_DefaultSelectionNotification_Pcsc implements Reade
         switch (event.getEventType()) {
             case SE_MATCHED:
                 /* the selection has one target, get the result at index 0 */
-                MatchingSe selectedSe = seSelection
-                        .processDefaultSelection(event.getDefaultSelectionResponse()).get(0);
+                MatchingSe selectedSe =
+                        seSelection.processDefaultSelection(event.getDefaultSelectionResponse())
+                                .getActiveSelection().getMatchingSe();
 
                 if (selectedSe != null) {
                     logger.info("Observer notification: the selection of the SE has succeeded.");

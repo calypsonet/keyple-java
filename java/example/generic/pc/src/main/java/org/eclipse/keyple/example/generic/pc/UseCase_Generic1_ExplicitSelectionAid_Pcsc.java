@@ -114,19 +114,19 @@ public class UseCase_Generic1_ExplicitSelectionAid_Pcsc {
              * Add the selection case to the current selection (we could have added other cases
              * here)
              */
-            seSelection.prepareSelection(seSelectionRequest, MatchingSe.class);
+            seSelection.prepareSelection(seSelectionRequest);
 
             /*
              * Actual SE communication: operate through a single request the SE selection
              */
 
             /* the selection has one target, get the result at index 0 */
-            MatchingSe matchedSe = seSelection.processExplicitSelection(seReader).get(0);
+            MatchingSe matchedSe = seSelection.processExplicitSelection(seReader)
+                    .getActiveSelection().getMatchingSe();
 
             if (matchedSe != null) {
                 logger.info("The selection of the SE has succeeded.");
-                logger.info("Application FCI = {}",
-                        matchedSe.getSelectionSeResponse().getSelectionStatus().getFci());
+                logger.info("Application FCI = {}", matchedSe.getSelectionStatus().getFci());
 
                 logger.info(
                         "==================================================================================");

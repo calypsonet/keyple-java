@@ -29,6 +29,7 @@ import org.eclipse.keyple.seproxy.SeReader;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 import org.eclipse.keyple.seproxy.exception.NoStackTraceThrowable;
 import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
+import org.eclipse.keyple.transaction.ProcessedSelection;
 import org.eclipse.keyple.transaction.SeSelection;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.slf4j.Logger;
@@ -124,14 +125,14 @@ public class UseCase_Calypso3_Rev1Selection_Pcsc {
             /*
              * Prepare the selection of the DF RT.
              */
-            SelectFileRespPars selectFileRespPars = poSelectionRequest.prepareSelectFileCmd(
+            int selectFileParserIndex = poSelectionRequest.prepareSelectFileCmd(
                     ByteArrayUtils.fromHex(poDfRtPath), "Select file: " + poDfRtPath);
 
             /*
              * Prepare the reading order and keep the associated parser for later use once the
              * selection has been made.
              */
-            ReadRecordsRespPars readEnvironmentParser = poSelectionRequest.prepareReadRecordsCmd(
+            int readEnvironmentParserIndex = poSelectionRequest.prepareReadRecordsCmd(
                     CalypsoClassicInfo.SFI_EnvironmentAndHolder,
                     ReadDataStructure.SINGLE_RECORD_DATA, CalypsoClassicInfo.RECORD_NUMBER_1,
                     String.format("EnvironmentAndHolder (SFI=%02X))",
@@ -141,14 +142,24 @@ public class UseCase_Calypso3_Rev1Selection_Pcsc {
              * Add the selection case to the current selection (we could have added other cases
              * here)
              */
-            CalypsoPo calypsoPo = (CalypsoPo) seSelection.prepareSelection(poSelectionRequest);
+            seSelection.prepareSelection(poSelectionRequest);
 
             /*
              * Actual PO communication: operate through a single request the Calypso PO selection
              * and the file read
              */
-            if (seSelection.processExplicitSelection(poReader)) {
+            ProcessedSelection processedSelection =
+                    seSelection.processExplicitSelection(poReader).getActiveSelection();
+
+            CalypsoPo calypsoPo = (CalypsoPo) processedSelection.getMatchingSe();
+
+            if (calypsoPo.isSelected()) {
                 logger.info("The selection of the PO has succeeded.");
+
+                SelectFileRespPars selectFileRespPars = (SelectFileRespPars) processedSelection
+                        .getResponseParser(selectFileParserIndex);
+                ReadRecordsRespPars readEnvironmentParser = (ReadRecordsRespPars) processedSelection
+                        .getResponseParser(readEnvironmentParserIndex);
 
                 logger.info("DF RT FCI: {}",
                         ByteArrayUtils.toHex(selectFileRespPars.getSelectionData()));

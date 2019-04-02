@@ -12,7 +12,6 @@
 package org.eclipse.keyple.example.generic.pc;
 
 import java.io.IOException;
-import java.util.List;
 import org.eclipse.keyple.plugin.pcsc.PcscPlugin;
 import org.eclipse.keyple.seproxy.ChannelState;
 import org.eclipse.keyple.seproxy.SeProxyService;
@@ -61,6 +60,8 @@ public class UseCase_Generic3_GroupedMultiSelection_Pcsc {
                 "=============== UseCase Generic #3: AID based grouped explicit multiple selection ==================");
         logger.info("= SE Reader  NAME = {}", seReader.getName());
 
+        int[] selectionIndex = new int[3];
+
         /* Check if a SE is present in the reader */
         if (seReader.isSePresent()) {
 
@@ -71,54 +72,49 @@ public class UseCase_Generic3_GroupedMultiSelection_Pcsc {
             String seAidPrefix = "A000000404012509";
 
             /* AID based selection */
-            seSelection
-                    .prepareSelection(
-                            new SeSelectionRequest(
-                                    new SeSelector(
-                                            new SeSelector.AidSelector(
-                                                    ByteArrayUtils.fromHex(seAidPrefix), null),
-                                            null, "Initial selection #1"),
-                                    ChannelState.CLOSE_AFTER,
-                                    ContactlessProtocols.PROTOCOL_ISO14443_4),
-                            MatchingSe.class);
+            selectionIndex[0] = seSelection.prepareSelection(new SeSelectionRequest(
+                    new SeSelector(
+                            new SeSelector.AidSelector(ByteArrayUtils.fromHex(seAidPrefix), null,
+                                    SeSelector.AidSelector.FileOccurrence.FIRST,
+                                    SeSelector.AidSelector.FileControlInformation.FCI),
+                            null, "Initial selection #1"),
+                    ChannelState.CLOSE_AFTER, ContactlessProtocols.PROTOCOL_ISO14443_4));
             /* next selection */
-            seSelection
-                    .prepareSelection(
-                            new SeSelectionRequest(
-                                    new SeSelector(
-                                            new SeSelector.AidSelector(
-                                                    ByteArrayUtils.fromHex(seAidPrefix), null),
-                                            null, "Next selection #2"),
-                                    ChannelState.CLOSE_AFTER,
-                                    ContactlessProtocols.PROTOCOL_ISO14443_4),
-                            MatchingSe.class);
+            selectionIndex[1] = seSelection.prepareSelection(new SeSelectionRequest(
+                    new SeSelector(
+                            new SeSelector.AidSelector(ByteArrayUtils.fromHex(seAidPrefix), null,
+                                    SeSelector.AidSelector.FileOccurrence.NEXT,
+                                    SeSelector.AidSelector.FileControlInformation.FCI),
+                            null, "Next selection #2"),
+                    ChannelState.CLOSE_AFTER, ContactlessProtocols.PROTOCOL_ISO14443_4));
             /* next selection */
-            seSelection
-                    .prepareSelection(
-                            new SeSelectionRequest(
-                                    new SeSelector(
-                                            new SeSelector.AidSelector(
-                                                    ByteArrayUtils.fromHex(seAidPrefix), null),
-                                            null, "Next selection #3"),
-                                    ChannelState.CLOSE_AFTER,
-                                    ContactlessProtocols.PROTOCOL_ISO14443_4),
-                            MatchingSe.class);
+            selectionIndex[2] = seSelection.prepareSelection(new SeSelectionRequest(
+                    new SeSelector(
+                            new SeSelector.AidSelector(ByteArrayUtils.fromHex(seAidPrefix), null,
+                                    SeSelector.AidSelector.FileOccurrence.NEXT,
+                                    SeSelector.AidSelector.FileControlInformation.FCI),
+                            null, "Next selection #3"),
+                    ChannelState.CLOSE_AFTER, ContactlessProtocols.PROTOCOL_ISO14443_4));
             /*
              * Actual SE communication: operate through a single request the SE selection
              */
 
-            List<MatchingSe> matchingSeList = seSelection.processExplicitSelection(seReader);
-            int i = 0;
-            for (MatchingSe matchingSe : matchingSeList) {
-                if (matchingSe != null
-                        && matchingSe.getSelectionSeResponse().getSelectionStatus() != null) {
-                    logger.info("Selection status for case {}: \n\t\tATR: {}\n\t\tFCI: {}", i + 1,
-                            ByteArrayUtils.toHex(matchingSe.getSelectionSeResponse()
-                                    .getSelectionStatus().getAtr().getBytes()),
-                            ByteArrayUtils.toHex(matchingSe.getSelectionSeResponse()
-                                    .getSelectionStatus().getFci().getDataOut()));
+            ProcessedSelections processedSelections =
+                    seSelection.processExplicitSelection(seReader);
+
+            for (int idx = 0; idx < 3; idx++) {
+                if (processedSelections.getProcessedSelection(selectionIndex[idx]) != null) {
+                    MatchingSe matchingSe = processedSelections
+                            .getProcessedSelection(selectionIndex[idx]).getMatchingSe();
+                    if (matchingSe != null) {
+                        logger.info("Selection status for case {}: \n\t\tATR: {}\n\t\tFCI: {}",
+                                idx + 1,
+                                ByteArrayUtils
+                                        .toHex(matchingSe.getSelectionStatus().getAtr().getBytes()),
+                                ByteArrayUtils.toHex(
+                                        matchingSe.getSelectionStatus().getFci().getDataOut()));
+                    }
                 }
-                i++;
             }
         } else {
             logger.error("No SE were detected.");

@@ -33,7 +33,7 @@ import org.eclipse.keyple.seproxy.exception.NoStackTraceThrowable;
 import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
 import org.eclipse.keyple.seproxy.protocol.SeProtocolSetting;
 import org.eclipse.keyple.seproxy.protocol.TransmissionMode;
-import org.eclipse.keyple.transaction.MatchingSe;
+import org.eclipse.keyple.transaction.ProcessedSelection;
 import org.eclipse.keyple.transaction.SeSelection;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.slf4j.Logger;
@@ -165,16 +165,19 @@ public class UseCase_Calypso4_PoAuthentication_Stub {
              * Add the selection case to the current selection (we could have added other cases
              * here)
              */
-            CalypsoPo calypsoPo = (CalypsoPo) seSelection.prepareSelection(poSelectionRequest);
+            seSelection.prepareSelection(poSelectionRequest);
 
             /*
              * Actual PO communication: operate through a single request the Calypso PO selection
              * and the file read
              */
-            if (seSelection.processExplicitSelection(poReader)) {
-                logger.info("The selection of the PO has succeeded.");
+            ProcessedSelection processedSelection =
+                    seSelection.processExplicitSelection(poReader).getActiveSelection();
 
-                MatchingSe selectedSe = seSelection.getSelectedSe();
+            CalypsoPo calypsoPo = (CalypsoPo) processedSelection.getMatchingSe();
+
+            if (calypsoPo.isSelected()) {
+                logger.info("The selection of the PO has succeeded.");
 
                 /* Go on with the reading of the first record of the EventLog file */
                 logger.info(
@@ -184,8 +187,8 @@ public class UseCase_Calypso4_PoAuthentication_Stub {
                 logger.info(
                         "==================================================================================");
 
-                PoTransaction poTransaction = new PoTransaction(poReader, (CalypsoPo) selectedSe,
-                        samReader, CalypsoUtilities.getSamSettings());
+                PoTransaction poTransaction = new PoTransaction(poReader, calypsoPo, samReader,
+                        CalypsoUtilities.getSamSettings());
 
                 /*
                  * Prepare the reading order and keep the associated parser for later use once the

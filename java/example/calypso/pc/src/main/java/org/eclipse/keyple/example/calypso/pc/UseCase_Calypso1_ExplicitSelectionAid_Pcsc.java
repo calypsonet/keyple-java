@@ -28,6 +28,7 @@ import org.eclipse.keyple.seproxy.SeReader;
 import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 import org.eclipse.keyple.seproxy.exception.NoStackTraceThrowable;
 import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
+import org.eclipse.keyple.transaction.ProcessedSelection;
 import org.eclipse.keyple.transaction.SeSelection;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.slf4j.Logger;
@@ -121,24 +122,56 @@ public class UseCase_Calypso1_ExplicitSelectionAid_Pcsc {
              * Prepare the reading order and keep the associated parser for later use once the
              * selection has been made.
              */
-            ReadRecordsRespPars readEnvironmentParser = poSelectionRequest.prepareReadRecordsCmd(
+            int readEnvironmentParserIndex = poSelectionRequest.prepareReadRecordsCmd(
                     CalypsoClassicInfo.SFI_EnvironmentAndHolder,
                     ReadDataStructure.SINGLE_RECORD_DATA, CalypsoClassicInfo.RECORD_NUMBER_1,
                     String.format("EnvironmentAndHolder (SFI=%02X))",
                             CalypsoClassicInfo.SFI_EnvironmentAndHolder));
 
             /*
+             * int readRecordParserIndex1 = poSelectionRequest.prepareReadRecordsCmd(...); int
+             * readRecordParserIndex2 = poSelectionRequest.prepareReadRecordsCmd(...);
+             * 
+             * ProcessedSelections processedSelections =
+             * seSelection.processExplicitSelection(seReader); [...]
+             * 
+             * ProcessedSelection processedSelection = processedSelections.getActiveSelection();
+             * 
+             * ProcessedSelection processedSelection =
+             * processedSelections.getProcessedSelection(selectionIndex);
+             * 
+             * 
+             * processedSelection.getMatchingSe();
+             * processedSelection.getResponseParser(commandIndex);
+             * 
+             * 
+             * int indexSelectedSe = processedSelections.getSelectedSeIndex(); ReadRecordsRespPars
+             * readEnvironmentParser = (ReadRecordsRespPars) .getCommandParser(seResponse,
+             * readRecordParserIndex1);
+             */
+
+            /*
              * Add the selection case to the current selection (we could have added other cases
              * here)
+             *
+             * Ignore the returned index since we have only one selection here.
              */
-            CalypsoPo calypsoPo = (CalypsoPo) seSelection.prepareSelection(poSelectionRequest);
+            seSelection.prepareSelection(poSelectionRequest);
 
             /*
              * Actual PO communication: operate through a single request the Calypso PO selection
              * and the file read
              */
-            if (seSelection.processExplicitSelection(poReader)) {
+            ProcessedSelection processedSelection =
+                    seSelection.processExplicitSelection(poReader).getActiveSelection();
+
+            CalypsoPo calypsoPo = (CalypsoPo) processedSelection.getMatchingSe();
+
+            if (calypsoPo.isSelected()) {
                 logger.info("The selection of the PO has succeeded.");
+
+                ReadRecordsRespPars readEnvironmentParser = (ReadRecordsRespPars) processedSelection
+                        .getResponseParser(readEnvironmentParserIndex);
 
                 /* Retrieve the data read from the parser updated during the selection process */
                 byte environmentAndHolder[] = (readEnvironmentParser.getRecords())
