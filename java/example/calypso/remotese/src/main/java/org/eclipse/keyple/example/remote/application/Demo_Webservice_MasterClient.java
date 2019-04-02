@@ -23,20 +23,20 @@ public class Demo_Webservice_MasterClient {
     public static void main(String[] args) throws Exception {
 
 
-        final String CLIENT_NODE_ID =  "Demo_Webservice_MasterClient1";
-        final String SERVER_NODE_ID =  "Demo_Webservice_MasterClientServer1";
+        final String CLIENT_NODE_ID = "Demo_Webservice_MasterClient1";
+        final String SERVER_NODE_ID = "Demo_Webservice_MasterClientServer1";
 
-        // Create a HTTP Web Polling factory
+        // Create a HTTP Web Polling f
         TransportFactory factory = new WsPollingFactory(SERVER_NODE_ID);
 
         // Launch the Server thread
         // Server is slave
-        Demo_Threads.startServer(false, factory,CLIENT_NODE_ID);
+        Demo_Threads.startServer(false, factory, CLIENT_NODE_ID, false);
 
         Thread.sleep(1000);
 
         // Launch the client thread
         // Client is Master
-        Demo_Threads.startClient(true, factory,CLIENT_NODE_ID);
+        Demo_Threads.startClient(true, factory, CLIENT_NODE_ID, true);
     }
 }

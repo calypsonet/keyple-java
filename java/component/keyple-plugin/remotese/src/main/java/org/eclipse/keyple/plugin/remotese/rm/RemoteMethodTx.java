@@ -46,7 +46,7 @@ public abstract class RemoteMethodTx<T> {
     private DtoSender sender;
 
     protected RemoteMethodTx(String sessionId, String nativeReaderName, String virtualReaderName,
-                             String targetNodeId, String requesterNodeId) {
+            String targetNodeId, String requesterNodeId) {
         this.sessionId = sessionId;
         this.nativeReaderName = nativeReaderName;
         this.virtualReaderName = virtualReaderName;

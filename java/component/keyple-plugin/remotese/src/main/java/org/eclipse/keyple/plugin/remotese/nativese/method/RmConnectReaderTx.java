@@ -92,6 +92,6 @@ public class RmConnectReaderTx extends RemoteMethodTx<String> {
     @Override
     public KeypleDto dto() {
         return new KeypleDto(RemoteMethod.READER_CONNECT.getName(), "{}", true, null,
-                localReader.getName(), null,  requesterNodeId, targetNodeId);
+                localReader.getName(), null, requesterNodeId, targetNodeId);
     }
 }

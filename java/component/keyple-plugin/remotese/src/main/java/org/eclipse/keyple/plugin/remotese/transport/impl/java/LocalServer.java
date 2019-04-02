@@ -11,6 +11,8 @@
  ********************************************************************************/
 package org.eclipse.keyple.plugin.remotese.transport.impl.java;
 
+import java.util.HashMap;
+import java.util.Map;
 import org.eclipse.keyple.plugin.remotese.transport.*;
 import org.eclipse.keyple.plugin.remotese.transport.factory.ServerNode;
 import org.eclipse.keyple.plugin.remotese.transport.model.KeypleDto;
@@ -18,9 +20,6 @@ import org.eclipse.keyple.plugin.remotese.transport.model.KeypleDtoHelper;
 import org.eclipse.keyple.plugin.remotese.transport.model.TransportDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Server side of the 1 to 1 local transport for unit testing purposes only one server, only one
@@ -78,7 +77,7 @@ public class LocalServer implements ServerNode {
     @Override
     public void sendDTO(KeypleDto keypleDto) {
         LocalClient theClient = client_ids.get(keypleDto.getTargetNodeId());
-        if(theClient!=null){
+        if (theClient != null) {
             if (KeypleDtoHelper.isNoResponse(keypleDto)) {
                 logger.trace("Keyple DTO is empty, do not send it");
             } else {
@@ -86,8 +85,10 @@ public class LocalServer implements ServerNode {
                 // send keypleDto to the unique client
                 theClient.onLocalMessage(keypleDto);
             }
-        }else {
-            throw new RuntimeException("LocalServer#sendDTO could be invoked, localClient was not found by "+  keypleDto.getTargetNodeId() + " - " + keypleDto.getRequesterNodeId());
+        } else {
+            throw new RuntimeException(
+                    "LocalServer#sendDTO could be invoked, localClient was not found by "
+                            + keypleDto.getTargetNodeId() + " - " + keypleDto.getRequesterNodeId());
         }
     }
 

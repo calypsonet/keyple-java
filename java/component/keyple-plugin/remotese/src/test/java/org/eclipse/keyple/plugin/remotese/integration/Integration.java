@@ -62,7 +62,7 @@ class Integration {
      */
     public static SlaveAPI bindSlave(DtoNode node, String masterNodeId) {
         // Binds node for outgoing KeypleDto
-        SlaveAPI slaveAPI = new SlaveAPI(SeProxyService.getInstance(), node,masterNodeId);
+        SlaveAPI slaveAPI = new SlaveAPI(SeProxyService.getInstance(), node, masterNodeId);
 
         // Binds node for incoming KeypleDTo
         // slaveAPI.bindDtoEndpoint(node);

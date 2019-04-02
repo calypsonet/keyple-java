@@ -63,9 +63,10 @@ public class RmTransmitExecutor implements RemoteMethodExecutor {
 
         } catch (KeypleReaderException e) {
             // if an exception occurs, send it into a keypleDto to the Master
-            out = transportDto.nextTransportDTO(KeypleDtoHelper.ExceptionDTO(
-                    RemoteMethod.READER_TRANSMIT.getName(), e, keypleDto.getSessionId(),
-                    nativeReaderName, keypleDto.getVirtualReaderName(), keypleDto.getRequesterNodeId()));
+            out = transportDto.nextTransportDTO(
+                    KeypleDtoHelper.ExceptionDTO(RemoteMethod.READER_TRANSMIT.getName(), e,
+                            keypleDto.getSessionId(), nativeReaderName,
+                            keypleDto.getVirtualReaderName(), keypleDto.getRequesterNodeId()));
         }
 
         return out;

@@ -180,8 +180,10 @@ class WskServer extends WebSocketServer implements ServerNode {
                                 getConnection(transportDto.getKeypleDTO().getNativeReaderName(),
                                         transportDto.getKeypleDTO().getTargetNodeId());
 
-                        if(conn ==null){
-                            throw new RuntimeException("Conn was not found for " + transportDto.getKeypleDTO().getNativeReaderName() + " " + transportDto.getKeypleDTO().getTargetNodeId());
+                        if (conn == null) {
+                            throw new RuntimeException("Conn was not found for "
+                                    + transportDto.getKeypleDTO().getNativeReaderName() + " "
+                                    + transportDto.getKeypleDTO().getTargetNodeId());
                         }
                         logger.trace("send DTO with websocket {} {}",
                                 KeypleDtoHelper.toJson(transportDto.getKeypleDTO()), conn);

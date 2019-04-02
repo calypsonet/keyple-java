@@ -25,8 +25,10 @@ class VirtualReaderSessionFactory {
      * @param slaveNodeId slave device slaveNodeId
      * @return Session for this reader
      */
-    public VirtualReaderSession createSession(String nativeReaderName, String slaveNodeId, String masterNodeId) {
-        return new VirtualReaderSessionImpl(generateSessionId(nativeReaderName, slaveNodeId), slaveNodeId, masterNodeId);
+    public VirtualReaderSession createSession(String nativeReaderName, String slaveNodeId,
+            String masterNodeId) {
+        return new VirtualReaderSessionImpl(generateSessionId(nativeReaderName, slaveNodeId),
+                slaveNodeId, masterNodeId);
     }
 
 

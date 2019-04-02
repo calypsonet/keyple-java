@@ -24,28 +24,29 @@ public class Demo_WebserviceWithRetrofit_MasterServer_MultiClient {
     public static void main(String[] args) throws Exception {
 
 
-        final String CLIENT_NODE_ID =  "Demo_WebserviceWithRetrofit_MasterServer_MultiClient1";
-        final String CLIENT_NODE_ID2 =  "Demo_WebserviceWithRetrofit_MasterServer_MultiClient2";
+        final String CLIENT_NODE_ID = "Demo_WebserviceWithRetrofit_MasterServer_MultiClient1";
+        final String CLIENT_NODE_ID2 = "Demo_WebserviceWithRetrofit_MasterServer_MultiClient2";
 
-        final String SERVER_NODE_ID =  "Demo_WebserviceWithRetrofit_MasterServer_MultiClientServer1";
+        final String SERVER_NODE_ID = "Demo_WebserviceWithRetrofit_MasterServer_MultiClientServer1";
 
         // Create the procotol factory
-        TransportFactory factory =
-                new WsPollingRetrofitFactory(SERVER_NODE_ID);
+        TransportFactory factory = new WsPollingRetrofitFactory(SERVER_NODE_ID);
 
 
         // Launch the server thread
         // Server is Master
-        Demo_Threads.startServer(true, factory, SERVER_NODE_ID);
+        Demo_Threads.startServer(true, factory, SERVER_NODE_ID, false);
 
         Thread.sleep(1000);
 
         // Launch the client1 thread
         // Client is Slave
-        Demo_Threads.startClient(false, factory,CLIENT_NODE_ID);
+        Demo_Threads.startClient(false, factory, CLIENT_NODE_ID, false);
+
+        Thread.sleep(10000);
 
         // Launch the client2 thread
         // Client is Slave
-        Demo_Threads.startClient(false, factory,CLIENT_NODE_ID2);
+        Demo_Threads.startClient(false, factory, CLIENT_NODE_ID2, true);
     }
 }

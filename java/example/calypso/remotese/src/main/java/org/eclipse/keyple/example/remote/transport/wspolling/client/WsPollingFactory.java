@@ -35,12 +35,12 @@ public class WsPollingFactory extends TransportFactory {
     private String serverNodeId;
     private static final Logger logger = LoggerFactory.getLogger(WsPollingFactory.class);
 
-    public WsPollingFactory(String serverNodeId){
+    public WsPollingFactory(String serverNodeId) {
         this.serverNodeId = serverNodeId;
     }
 
-    private WsPollingFactory(Integer port, String pollingUrl, String keypleUrl,
-            String bindUrl, String protocol,String serverNodeId) {
+    private WsPollingFactory(Integer port, String pollingUrl, String keypleUrl, String bindUrl,
+            String protocol, String serverNodeId) {
         if (port != null) {
             this.port = port;
         }
@@ -62,7 +62,8 @@ public class WsPollingFactory extends TransportFactory {
     @Override
     public ClientNode getClient(String clientNodeId) {
         logger.info("*** Create Ws Polling Client ***");
-        return new WsPClient(protocol + bindUrl + ":" + port, keypleUrl, pollingUrl, clientNodeId, serverNodeId);
+        return new WsPClient(protocol + bindUrl + ":" + port, keypleUrl, pollingUrl, clientNodeId,
+                serverNodeId);
     }
 
 

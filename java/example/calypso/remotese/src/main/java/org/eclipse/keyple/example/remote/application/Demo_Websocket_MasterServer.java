@@ -23,22 +23,22 @@ public class Demo_Websocket_MasterServer {
     public static void main(String[] args) throws Exception {
 
 
-        final String CLIENT_NODE_ID =  "Demo_Websocket_MasterServerClient1";
-        final String SERVER_NODE_ID =  "Demo_Websocket_MasterClientServer1";
+        final String CLIENT_NODE_ID = "Demo_Websocket_MasterServerClient1";
+        final String SERVER_NODE_ID = "Demo_Websocket_MasterClientServer1";
 
 
         // Create the procotol factory
         TransportFactory factory = new WskFactory(true, SERVER_NODE_ID); // Web
-                                                                                         // socket
+                                                                         // socket
 
         // Launch the server thread
         // Server is Master
-        Demo_Threads.startServer(true, factory,SERVER_NODE_ID);
+        Demo_Threads.startServer(true, factory, SERVER_NODE_ID, false);
 
         Thread.sleep(1000);
 
         // Launch the client thread
         // Client is Slave
-        Demo_Threads.startClient(false, factory,CLIENT_NODE_ID);
+        Demo_Threads.startClient(false, factory, CLIENT_NODE_ID, true);
     }
 }

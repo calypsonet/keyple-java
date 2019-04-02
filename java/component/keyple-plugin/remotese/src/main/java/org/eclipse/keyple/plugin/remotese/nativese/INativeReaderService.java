@@ -29,8 +29,7 @@ public interface INativeReaderService {
     /**
      * Disconnect Physical Local Reader from Remote Se Master Server
      */
-    void disconnectReader(String sessionId, String nativeReaderName)
-            throws KeypleReaderException;
+    void disconnectReader(String sessionId, String nativeReaderName) throws KeypleReaderException;
 
     /**
      * Find a local reader accross plugins

@@ -69,7 +69,8 @@ public class WsPollingRetrofitFactory extends TransportFactory {
     public ClientNode getClient(String clientNodeId) {
 
         logger.info("*** Create RETROFIT Ws Polling Client ***");
-        return new WsPRetrofitClientImpl(protocol + hostname + ":" + port, clientNodeId, serverNodeId);
+        return new WsPRetrofitClientImpl(protocol + hostname + ":" + port, clientNodeId,
+                serverNodeId);
     }
 
 

@@ -39,7 +39,7 @@ public class WskFactory extends TransportFactory {
     private static final Logger logger = LoggerFactory.getLogger(WskFactory.class);
 
 
-    public WskFactory(Boolean isMasterServer,String serverNodeId) {
+    public WskFactory(Boolean isMasterServer, String serverNodeId) {
         this.serverNodeId = serverNodeId;
         this.isMasterServer = isMasterServer;
     }

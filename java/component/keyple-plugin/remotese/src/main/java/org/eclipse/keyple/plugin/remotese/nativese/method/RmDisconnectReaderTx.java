@@ -27,8 +27,9 @@ public class RmDisconnectReaderTx extends RemoteMethodTx<Boolean> {
     private static final Logger logger = LoggerFactory.getLogger(RmDisconnectReaderTx.class);
 
 
-    public RmDisconnectReaderTx(String sessionId, String nativeReaderName, String slaveNodeId,String targetNodeId) {
-        super(sessionId, nativeReaderName, null, targetNodeId,slaveNodeId);
+    public RmDisconnectReaderTx(String sessionId, String nativeReaderName, String slaveNodeId,
+            String targetNodeId) {
+        super(sessionId, nativeReaderName, null, targetNodeId, slaveNodeId);
     }
 
     @Override
@@ -54,6 +55,6 @@ public class RmDisconnectReaderTx extends RemoteMethodTx<Boolean> {
 
         return new KeypleDto(RemoteMethod.READER_DISCONNECT.getName(),
                 JsonParser.getGson().toJson(body, JsonObject.class), true, null, nativeReaderName,
-                null,"" , targetNodeId);
+                null, "", targetNodeId);
     }
 }

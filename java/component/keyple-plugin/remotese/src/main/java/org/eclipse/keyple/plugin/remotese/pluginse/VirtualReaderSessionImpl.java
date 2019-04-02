@@ -62,6 +62,7 @@ public class VirtualReaderSessionImpl implements VirtualReaderSession {
 
     @Override
     public String toString() {
-        return "sessionId:" + sessionId + " - slaveNodeId:" + slaveNodeId + " - masterNodeId:" + masterNodeId;
+        return "sessionId:" + sessionId + " - slaveNodeId:" + slaveNodeId + " - masterNodeId:"
+                + masterNodeId;
     }
 }

@@ -88,9 +88,10 @@ public class RmSetDefaultSelectionRequestExecutor implements RemoteMethodExecuto
 
         } catch (KeypleReaderException e) {
             // if an exception occurs, send it into a keypleDto to the Master
-            return transportDto.nextTransportDTO(KeypleDtoHelper.ExceptionDTO(
-                    RemoteMethod.DEFAULT_SELECTION_REQUEST.getName(), e, keypleDto.getSessionId(),
-                    nativeReaderName, keypleDto.getVirtualReaderName(), keypleDto.getRequesterNodeId()));
+            return transportDto.nextTransportDTO(
+                    KeypleDtoHelper.ExceptionDTO(RemoteMethod.DEFAULT_SELECTION_REQUEST.getName(),
+                            e, keypleDto.getSessionId(), nativeReaderName,
+                            keypleDto.getVirtualReaderName(), keypleDto.getRequesterNodeId()));
         }
     }
 }

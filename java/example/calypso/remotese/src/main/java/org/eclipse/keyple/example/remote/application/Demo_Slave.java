@@ -112,7 +112,7 @@ class Demo_Slave {
      * @throws KeypleReaderException
      * @throws InterruptedException
      */
-    public String connectAReader(Boolean isServer,String masterNodeId)
+    public String connectAReader(Boolean isServer, String masterNodeId)
             throws KeypleReaderException, InterruptedException, KeypleRemoteException {
 
 
@@ -146,12 +146,13 @@ class Demo_Slave {
                 new SeProtocolSetting(StubProtocolSetting.SETTING_PROTOCOL_ISO14443_4));
 
         // Binds node for outgoing KeypleDto
-        if(isServer){
-            //if slave is server, must specify which master to connect to
+        if (isServer) {
+            // if slave is server, must specify which master to connect to
             slaveAPI = new SlaveAPI(SeProxyService.getInstance(), node, masterNodeId);
-        }else{
-            //if slave is client, master is the configured server
-            slaveAPI = new SlaveAPI(SeProxyService.getInstance(), node, ((ClientNode)node).getServerNodeId());
+        } else {
+            // if slave is client, master is the configured server
+            slaveAPI = new SlaveAPI(SeProxyService.getInstance(), node,
+                    ((ClientNode) node).getServerNodeId());
         }
 
         // Binds node for incoming KeypleDTo

@@ -161,8 +161,7 @@ public class SlaveAPI implements INativeReaderService, DtoHandler, ObservableRea
      * @param localReader : native reader to be connected
      */
     @Override
-    public String connectReader(ProxyReader localReader)
-            throws KeypleReaderException {
+    public String connectReader(ProxyReader localReader) throws KeypleReaderException {
 
         logger.info("connectReader {} from device {}", localReader.getName(), dtoNode.getNodeId());
 
@@ -182,8 +181,8 @@ public class SlaveAPI implements INativeReaderService, DtoHandler, ObservableRea
             throws KeypleReaderException {
         logger.info("disconnectReader {} from device {}", nativeReaderName, dtoNode.getNodeId());
 
-        RmDisconnectReaderTx disconnect =
-                new RmDisconnectReaderTx(sessionId, nativeReaderName, dtoNode.getNodeId(), masterNodeId);
+        RmDisconnectReaderTx disconnect = new RmDisconnectReaderTx(sessionId, nativeReaderName,
+                dtoNode.getNodeId(), masterNodeId);
 
         try {
             rmTxEngine.register(disconnect);
@@ -241,8 +240,8 @@ public class SlaveAPI implements INativeReaderService, DtoHandler, ObservableRea
         String data = JsonParser.getGson().toJson(event);
 
         try {
-            dtoNode.sendDTO(new KeypleDto(RemoteMethod.READER_EVENT.getName(), data, true,
-                    null, event.getReaderName(), null, this.dtoNode.getNodeId(), masterNodeId));
+            dtoNode.sendDTO(new KeypleDto(RemoteMethod.READER_EVENT.getName(), data, true, null,
+                    event.getReaderName(), null, this.dtoNode.getNodeId(), masterNodeId));
         } catch (KeypleRemoteException e) {
             logger.error("Event " + event.toString()
                     + " could not be sent though Remote Service Interface", e);

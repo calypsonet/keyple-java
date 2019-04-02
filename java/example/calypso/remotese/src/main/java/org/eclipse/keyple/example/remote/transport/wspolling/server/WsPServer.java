@@ -54,8 +54,8 @@ public class WsPServer implements ServerNode {
      * @param pollingUrl : polling URL to deploy polling listener endpoint
      * @throws IOException : if server can not bind given parameters
      */
-    public WsPServer(String url, Integer port, String apiUrl, String pollingUrl, String serverNodeId)
-            throws IOException {
+    public WsPServer(String url, Integer port, String apiUrl, String pollingUrl,
+            String serverNodeId) throws IOException {
         logger.info("Init Web Service DemoMaster on url : {}:{}", url, port);
 
         this.serverNodeId = serverNodeId;
@@ -110,7 +110,8 @@ public class WsPServer implements ServerNode {
 
     @Override
     public void sendDTO(KeypleDto message) {
-        ((EndpointPolling) this.pollingEndpoint).sendDTO(message); //TODO to which poller should we send the message?!
+        ((EndpointPolling) this.pollingEndpoint).sendDTO(message); // TODO to which poller should we
+                                                                   // send the message?!
     }
 
     public HttpServer getHttpServer() {

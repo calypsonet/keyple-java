@@ -24,22 +24,21 @@ public class Demo_WebserviceWithRetrofit_MasterServer {
     public static void main(String[] args) throws Exception {
 
 
-        final String CLIENT_NODE_ID =  "Demo_WebserviceWithRetrofit_MasterServerClient1";
-        final String SERVER_NODE_ID =  "Demo_WebserviceWithRetrofit_MasterServer1";
+        final String CLIENT_NODE_ID = "Demo_WebserviceWithRetrofit_MasterServerClient1";
+        final String SERVER_NODE_ID = "Demo_WebserviceWithRetrofit_MasterServer1";
 
 
         // Create a HTTP Web Polling with retrofit Client factory
-        TransportFactory factory =
-                new WsPollingRetrofitFactory(SERVER_NODE_ID);
+        TransportFactory factory = new WsPollingRetrofitFactory(SERVER_NODE_ID);
 
         // Launch the server thread
         // Server is Master
-        Demo_Threads.startServer(true, factory,SERVER_NODE_ID);
+        Demo_Threads.startServer(true, factory, SERVER_NODE_ID, false);
 
         Thread.sleep(1000);
 
         // Launch the client thread
         // Client is Slave
-        Demo_Threads.startClient(false, factory,CLIENT_NODE_ID);
+        Demo_Threads.startClient(false, factory, CLIENT_NODE_ID, true);
     }
 }

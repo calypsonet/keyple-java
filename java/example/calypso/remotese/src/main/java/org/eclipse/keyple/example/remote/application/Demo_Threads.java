@@ -38,7 +38,8 @@ public class Demo_Threads {
      * @param isMaster : true if the server should act like a Master, false if Slave
      * @param factory : transport factory that creates the server object
      */
-    static public void startServer(final Boolean isMaster, final TransportFactory factory, final String masterNodeId) {
+    static public void startServer(final Boolean isMaster, final TransportFactory factory,
+            final String masterNodeId, final Boolean killAtEnd) {
         Thread server = new Thread() {
             @Override
             public void run() {
@@ -47,13 +48,13 @@ public class Demo_Threads {
                     logger.info("**** Starting Server Thread ****");
 
                     if (isMaster) {
-                        //server is master
+                        // server is master
                         Demo_Master master = new Demo_Master(factory, true, null);
                         master.boot();
                     } else {
-                        //server is slave
+                        // server is slave
                         Demo_Slave slave = new Demo_Slave(factory, true, null);
-                        executeSlaveScenario(slave,true, masterNodeId);
+                        executeSlaveScenario(slave, true, masterNodeId, killAtEnd);
 
                     }
 
@@ -79,7 +80,8 @@ public class Demo_Threads {
      * @param isMaster : true if the client should act like a Master, false if Slave
      * @param factory : transport factory that creates the client object
      */
-    static public void startClient(final Boolean isMaster, final TransportFactory factory, final String clientNodeId) {
+    static public void startClient(final Boolean isMaster, final TransportFactory factory,
+            final String clientNodeId, final Boolean killAtEnd) {
         Thread threadClient = new Thread() {
             @Override
             public void run() {
@@ -87,13 +89,13 @@ public class Demo_Threads {
 
                 try {
                     if (isMaster) {
-                        //client is master
-                        Demo_Master master = new Demo_Master(factory, false,clientNodeId);
+                        // client is master
+                        Demo_Master master = new Demo_Master(factory, false, clientNodeId);
                         master.boot();
                     } else {
-                        //client is slave
-                        Demo_Slave slave = new Demo_Slave(factory, false,clientNodeId);
-                        executeSlaveScenario(slave,false,null);
+                        // client is slave
+                        Demo_Slave slave = new Demo_Slave(factory, false, clientNodeId);
+                        executeSlaveScenario(slave, false, null, killAtEnd);
 
                     }
 
@@ -112,14 +114,16 @@ public class Demo_Threads {
         threadClient.start();
     }
 
-    static private void executeSlaveScenario(Demo_Slave slave, Boolean isServer, final String masterNodeId) throws KeypleReaderNotFoundException,
-            InterruptedException, KeypleReaderException, KeypleRemoteException {
+    static private void executeSlaveScenario(Demo_Slave slave, Boolean isServer,
+            final String masterNodeId, final Boolean killAtEnd)
+            throws KeypleReaderNotFoundException, InterruptedException, KeypleReaderException,
+            KeypleRemoteException {
         logger.info("------------------------");
         logger.info("Connect Reader to Master");
         logger.info("------------------------");
 
         Thread.sleep(2000);
-        String sessionId = slave.connectAReader(isServer,masterNodeId);
+        String sessionId = slave.connectAReader(isServer, masterNodeId);
         logger.info("--------------------------------------------------");
         logger.info("Session created on server {}", sessionId);
         // logger.info("Wait 2 seconds, then insert SE");
@@ -136,10 +140,13 @@ public class Demo_Threads {
         Thread.sleep(2000);
         slave.disconnect(sessionId, null);
 
-        logger.info("Wait 2 seconds, then shutdown jvm");
-        Thread.sleep(2000);
+        if (killAtEnd) {
+            logger.info("Wait 2 seconds, then shutdown jvm");
+            Thread.sleep(2000);
 
-        Runtime.getRuntime().exit(0);
+            Runtime.getRuntime().exit(0);
+
+        }
 
     }
 
