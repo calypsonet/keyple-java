@@ -11,6 +11,8 @@
  ********************************************************************************/
 package org.eclipse.keyple.transaction;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import org.eclipse.keyple.seproxy.SeReader;
 import org.eclipse.keyple.seproxy.event.DefaultSelectionRequest;
@@ -36,38 +38,41 @@ public final class SeSelection {
      * list of target classes and selection requests used to build the MatchingSe list in return of
      * processSelection methods
      */
-    private List<Class> seTargetClassList = new ArrayList<Class>();
-    private List<SeSelectionRequest> seSelectionRequestSet = new ArrayList<SeSelectionRequest>();
+    private List<Class<? extends MatchingSe>> matchingSeClassList =
+            new ArrayList<Class<? extends MatchingSe>>();
+    private List<SeSelectionRequest> seSelectionRequestList = new ArrayList<SeSelectionRequest>();
     private SeRequestSet selectionRequestSet = new SeRequestSet(new LinkedHashSet<SeRequest>());
+    private int selectionIndex;
 
     /**
      * Initializes the SeSelection
      */
-    public SeSelection() {}
+    public SeSelection() {
+        selectionIndex = 0;
+    }
 
     /**
      * Prepare a selection: add the selection request from the provided selector to the selection
      * request set.
      * <p>
-     * Create a MatchingSe, retain it in a list and return it. The MatchingSe may be an extended
-     * class
-     * 
+     *
      * @param seSelectionRequest the selector to prepare
-     * @param seTargetClass the target SE class (MatchingSe or one of its derived classes)
-     * @return true or false according to the execution status. true if success.
+     * @return the selection index giving the current selection position in the selection request.
      */
-    public boolean prepareSelection(SeSelectionRequest seSelectionRequest, Class seTargetClass) {
+    public int prepareSelection(SeSelectionRequest seSelectionRequest) {
         if (logger.isTraceEnabled()) {
             logger.trace("SELECTORREQUEST = {}, EXTRAINFO = {}",
                     seSelectionRequest.getSelectionRequest(),
                     seSelectionRequest.getSeSelector().getExtraInfo());
         }
         /* keep request data for further use when building MatchingSe */
-        seSelectionRequestSet.add(seSelectionRequest);
-        seTargetClassList.add(seTargetClass);
+        matchingSeClassList.add(seSelectionRequest.getMatchingClass());
         /* build the SeRequest set transmitted to the SE */
         selectionRequestSet.add(seSelectionRequest.getSelectionRequest());
-        return true;
+        /* keep the selection request */
+        seSelectionRequestList.add(seSelectionRequest);
+        /* return and post increment the selection index */
+        return selectionIndex++;
     }
 
     /**
@@ -81,45 +86,59 @@ public final class SeSelection {
      * element in the list
      * 
      * @param selectionResponse the selection response
-     * @return the MatchingSe list, some may be null and void.
+     * @return the {@link ProcessedSelections} containing the result of all prepared selection
+     *         cases, including {@link MatchingSe} and {@link SeResponse}.
      */
-    private List<MatchingSe> processSelection(SelectionResponse selectionResponse) {
-        List<MatchingSe> matchingSeList = new ArrayList<MatchingSe>();
+    private ProcessedSelections processSelection(SelectionResponse selectionResponse) {
+        ProcessedSelections processedSelections = new ProcessedSelections();
 
         /* null pointer exception protection */
         if (selectionResponse == null) {
             logger.error("selectionResponse shouldn't be null in processSelection.");
             return null;
         }
-        int index = 0;
-        Iterator<SeSelectionRequest> requestIterator = seSelectionRequestSet.iterator();
+        int selectionIndex = 0;
 
         /* Check SeResponses */
         for (SeResponse seResponse : selectionResponse.getSelectionSeResponseSet().getResponses()) {
             if (seResponse != null) {
                 /* test if the selection is successful: we should have either a FCI or an ATR */
                 if (seResponse.getSelectionStatus() != null) {
-                    SeSelectionRequest seSelectionRequest = requestIterator.next();
-                    MatchingSe matchingSe = new MatchingSe(seSelectionRequest);
-                    matchingSeList.add((MatchingSe) seTargetClassList.get(index).cast(matchingSe));
-                    matchingSe.setSelectionResponse(seResponse);
-                } else {
-                    matchingSeList.add(null);
-                    /* skip request */
-                    if (requestIterator.hasNext()) {
-                        requestIterator.next();
+                    /*
+                     * create a MatchingSe with the class deduced from the selection request during
+                     * the selection preparation
+                     */
+                    Constructor ctor = null;
+                    MatchingSe matchingSe = null;
+                    try {
+                        ctor = matchingSeClassList.get(selectionIndex)
+                                .getDeclaredConstructor(String.class);
+                        ctor.setAccessible(true);
+                        matchingSe = (MatchingSe) ctor.newInstance(seSelectionRequestList
+                                .get(selectionIndex).getSeSelector().getExtraInfo());
+                    } catch (NoSuchMethodException e) {
+                        e.printStackTrace();
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    } catch (InstantiationException e) {
+                        e.printStackTrace();
+                    } catch (InvocationTargetException e) {
+                        e.printStackTrace();
                     }
+                    matchingSe.setSelectionResponse(seResponse);
+                    processedSelections.addProcessedSelection(new ProcessedSelection(
+                            seSelectionRequestList.get(selectionIndex), matchingSe, seResponse));
+                } else {
+                    /* not matching, add a null element to keep consistent the selection index */
+                    processedSelections.addProcessedSelection(null);
                 }
             } else {
-                matchingSeList.add(null);
-                /* skip request */
-                if (requestIterator.hasNext()) {
-                    requestIterator.next();
-                }
+                /* not matching, add a null element to keep consistent the selection index */
+                processedSelections.addProcessedSelection(null);
             }
-            index++;
+            selectionIndex++;
         }
-        return matchingSeList;
+        return processedSelections;
     }
 
     /**
@@ -129,9 +148,10 @@ public final class SeSelection {
      * Selection cases that have not matched the current SE are set to null.
      *
      * @param selectionResponse the response from the reader to the {@link DefaultSelectionRequest}
-     * @return the MatchingSe list, some may be null and void.
+     * @return the {@link ProcessedSelections} containing the result of all prepared selection
+     *         cases, including {@link MatchingSe} and {@link SeResponse}.
      */
-    public List<MatchingSe> processDefaultSelection(SelectionResponse selectionResponse) {
+    public ProcessedSelections processDefaultSelection(SelectionResponse selectionResponse) {
         if (logger.isTraceEnabled()) {
             logger.trace("Process default SELECTIONRESPONSE ({} response(s))",
                     selectionResponse.getSelectionSeResponseSet().getResponses().size());
@@ -153,10 +173,11 @@ public final class SeSelection {
      * <p>
      *
      * @param seReader the SeReader on which the selection is made
-     * @return the MatchingSe list, some may be null and void.
+     * @return the {@link ProcessedSelections} containing the result of all prepared selection
+     *         cases, including {@link MatchingSe} and {@link SeResponse}.
      * @throws KeypleReaderException if the requests transmission failed
      */
-    public List<MatchingSe> processExplicitSelection(SeReader seReader)
+    public ProcessedSelections processExplicitSelection(SeReader seReader)
             throws KeypleReaderException {
         if (logger.isTraceEnabled()) {
             logger.trace("Transmit SELECTIONREQUEST ({} request(s))",

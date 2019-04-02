@@ -25,6 +25,5 @@ public class SamSelectionRequest extends SeSelectionRequest {
         super(seSelector, channelState, protocolFlag);
 
         setMatchingClass(CalypsoSam.class);
-        setSelectionClass(SamSelectionRequest.class);
     }
 }

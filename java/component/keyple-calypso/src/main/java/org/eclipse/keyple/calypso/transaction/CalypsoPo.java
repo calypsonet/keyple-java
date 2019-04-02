@@ -34,7 +34,6 @@ import org.slf4j.LoggerFactory;
 public final class CalypsoPo extends MatchingSe {
     private static final Logger logger = LoggerFactory.getLogger(CalypsoPo.class);
 
-    private final PoSelectionRequest poSelectionRequest;
     private byte[] applicationSerialNumber;
     private PoRevision revision;
     private byte[] dfName;
@@ -45,9 +44,13 @@ public final class CalypsoPo extends MatchingSe {
     private int modificationsCounterMax;
     private boolean modificationCounterIsInBytes = true;
 
-    public CalypsoPo(PoSelectionRequest poSelectionRequest) {
-        super(poSelectionRequest);
-        this.poSelectionRequest = poSelectionRequest;
+    /**
+     * Constructor.
+     *
+     * @param extraInfo
+     */
+    public CalypsoPo(String extraInfo) {
+        super(extraInfo);
     }
 
     /**
@@ -59,8 +62,8 @@ public final class CalypsoPo extends MatchingSe {
     @Override
     public void setSelectionResponse(SeResponse selectionResponse) {
         super.setSelectionResponse(selectionResponse);
-        /* Update the parser objects with the responses obtained */
-        poSelectionRequest.updateParsersWithResponses(selectionResponse);
+
+        poAtr = selectionResponse.getSelectionStatus().getAtr().getBytes();
 
         /* The selectionSeResponse may not include a FCI field (e.g. old PO Calypso Rev 1) */
         if (selectionResponse.getSelectionStatus().getFci().isSuccessful()) {
@@ -109,7 +112,6 @@ public final class CalypsoPo extends MatchingSe {
              * FCI is not provided: we consider it is Calypso PO rev 1, it's serial number is
              * provided in the ATR
              */
-            poAtr = selectionResponse.getSelectionStatus().getAtr().getBytes();
 
             /* basic check: we expect to be here following a selection based on the ATR */
             if (poAtr.length != PO_REV1_ATR_LENGTH) {
@@ -176,13 +178,5 @@ public final class CalypsoPo extends MatchingSe {
             }
             return PoClass.ISO;
         }
-    }
-
-    @Override
-    protected final void reset() {
-        super.reset();
-        applicationSerialNumber = null;
-        poAtr = null;
-        dfName = null;
     }
 }

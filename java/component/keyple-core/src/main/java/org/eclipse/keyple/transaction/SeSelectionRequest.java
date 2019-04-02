@@ -13,10 +13,12 @@ package org.eclipse.keyple.transaction;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.eclipse.keyple.command.AbstractApduResponseParser;
 import org.eclipse.keyple.seproxy.ChannelState;
 import org.eclipse.keyple.seproxy.SeSelector;
 import org.eclipse.keyple.seproxy.message.ApduRequest;
 import org.eclipse.keyple.seproxy.message.SeRequest;
+import org.eclipse.keyple.seproxy.message.SeResponse;
 import org.eclipse.keyple.seproxy.protocol.SeProtocol;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,7 +34,6 @@ public class SeSelectionRequest {
 
     private SeSelector seSelector;
     private Class<? extends MatchingSe> matchingClass = MatchingSe.class;
-    private Class<? extends SeSelectionRequest> selectionClass = SeSelectionRequest.class;
     /** optional apdu requests list to be executed following the selection process */
     private final List<ApduRequest> seSelectionApduRequestList = new ArrayList<ApduRequest>();
     /**
@@ -84,31 +85,6 @@ public class SeSelectionRequest {
     }
 
     /**
-     * The selectionClass is the SeSelector class or one of its extensions
-     * <p>
-     * It is used in SeSelection to determine what kind of SeSelector is to be used as argument to
-     * the matchingClass constructor.
-     *
-     * This method must be called in the classes that extend SeSelector in order to specify the
-     * expected class derived from SeSelector used as an argument to derived form of MatchingSe.
-     *
-     * @param selectionClass the argument for the constructor of the matchingClass
-     */
-    protected final void setSelectionClass(Class<? extends SeSelectionRequest> selectionClass) {
-        this.selectionClass = selectionClass;
-    }
-
-    /**
-     * The default value for the selectionClass (unless setSelectionClass is used) is
-     * SeSelector.class
-     * 
-     * @return the current selectionClass
-     */
-    protected final Class<? extends SeSelectionRequest> getSelectionClass() {
-        return selectionClass;
-    }
-
-    /**
      * The default value for the matchingClass (unless setMatchingClass is used) is MatchingSe.class
      *
      * @return the current matchingClass
@@ -130,9 +106,20 @@ public class SeSelectionRequest {
         seSelectionApduRequestList.add(apduRequest);
     }
 
+    /**
+     * Return the parser corresponding to the command whose index is provided.
+     *
+     * @param seResponse the received SeResponse containing the commands raw responses
+     * @param commandIndex the command index
+     * @return a parser of the type matching the command
+     */
+    public AbstractApduResponseParser getCommandParser(SeResponse seResponse, int commandIndex) {
+        /* not implemented in keyple-core */
+        throw new IllegalStateException("No parsers available for this request.");
+    }
+
     @Override
     public String toString() {
-        return "SeSelectionRequest: SELECTION_CLASS = " + selectionClass.toString()
-                + ", MATCHING_CLASS = " + matchingClass.toString();
+        return "SeSelectionRequest: MATCHING_CLASS = " + matchingClass.toString();
     }
 }

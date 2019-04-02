@@ -34,12 +34,12 @@ public class CalypsoSam extends MatchingSe {
     private byte softwareRevision;
 
     /**
-     * Constructor
-     * 
-     * @param samSelectionRequest the SAM selection request
+     * Constructor.
+     *
+     * @param extraInfo
      */
-    public CalypsoSam(SamSelectionRequest samSelectionRequest) {
-        super(samSelectionRequest);
+    public CalypsoSam(String extraInfo) {
+        super(extraInfo);
     }
 
     /**
