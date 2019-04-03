@@ -37,6 +37,7 @@ import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
 import org.eclipse.keyple.seproxy.protocol.SeProtocolSetting;
 import org.eclipse.keyple.transaction.SeSelection;
+import org.eclipse.keyple.transaction.SelectionResults;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -72,7 +73,7 @@ public class NFCTestFragment extends Fragment implements ObservableReader.Reader
 
     private SeReader reader;
     private SeSelection seSelection;
-    private ReadRecordsRespPars readEnvironmentParser;
+    private int readEnvironmentParserIndex;
 
 
     public static NFCTestFragment newInstance() {
@@ -145,7 +146,7 @@ public class NFCTestFragment extends Fragment implements ObservableReader.Reader
              * Prepare the reading order and keep the associated parser for later use once the
              * selection has been made.
              */
-            readEnvironmentParser = poSelectionRequest.prepareReadRecordsCmd(
+            readEnvironmentParserIndex = poSelectionRequest.prepareReadRecordsCmd(
                     CalypsoClassicInfo.SFI_EnvironmentAndHolder,
                     ReadDataStructure.SINGLE_RECORD_DATA, CalypsoClassicInfo.RECORD_NUMBER_1,
                     String.format("EnvironmentAndHolder (SFI=%02X))",
@@ -270,8 +271,11 @@ public class NFCTestFragment extends Fragment implements ObservableReader.Reader
                     mText.append("\n ---- \n");
                     mText.append(((AndroidNfcReader) reader).printTagId());
                     mText.append("\n ---- \n");
-                    if (seSelection.processDefaultSelection(defaultSelectionResponse)) {
-                        CalypsoPo calypsoPo = (CalypsoPo) seSelection.getSelectedSe();
+                    SelectionResults selectionResults =
+                            seSelection.processDefaultSelection(defaultSelectionResponse);
+                    if (selectionResults.hasActiveSelection()) {
+                        CalypsoPo calypsoPo =
+                                (CalypsoPo) selectionResults.getActiveSelection().getMatchingSe();
 
                         mText.append("\nCalypso PO selection: ");
                         appendColoredText(mText, "SUCCESS\n", Color.GREEN);
@@ -282,6 +286,10 @@ public class NFCTestFragment extends Fragment implements ObservableReader.Reader
                          * Retrieve the data read from the parser updated during the selection
                          * process
                          */
+                        ReadRecordsRespPars readEnvironmentParser =
+                                (ReadRecordsRespPars) selectionResults.getActiveSelection()
+                                        .getResponseParser(readEnvironmentParserIndex);
+
                         byte environmentAndHolder[] = (readEnvironmentParser.getRecords())
                                 .get((int) CalypsoClassicInfo.RECORD_NUMBER_1);
 
