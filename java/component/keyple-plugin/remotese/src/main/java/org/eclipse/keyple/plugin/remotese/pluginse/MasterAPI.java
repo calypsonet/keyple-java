@@ -45,20 +45,20 @@ public class MasterAPI implements DtoHandler {
      * lifecycle Manages Master Session Dispatch KeypleDTO
      *
      * @param seProxyService : SeProxyService
-     * @param dtoTransportNode : outgoing node to send Dto to Slave
+     * @param dtoNode : outgoing node to send Dto to Slave
      */
-    public MasterAPI(SeProxyService seProxyService, DtoNode dtoTransportNode) {
-        this.dtoTransportNode = dtoTransportNode;
+    public MasterAPI(SeProxyService seProxyService, DtoNode dtoNode) {
+        this.dtoTransportNode = dtoNode;
 
         // Instantiate Session Manager
         VirtualReaderSessionFactory sessionManager = new VirtualReaderSessionFactory();
 
         // Instantiate Plugin
-        this.plugin = new RemoteSePlugin(sessionManager, dtoTransportNode);
+        this.plugin = new RemoteSePlugin(sessionManager, dtoNode);
         seProxyService.addPlugin(this.plugin);
 
         // Set this service as the Dto Handler for the node
-        this.bindDtoEndpoint(dtoTransportNode);
+        this.bindDtoEndpoint(dtoNode);
     }
 
     /**

@@ -43,8 +43,8 @@ public final class VirtualReader extends AbstractObservableReader {
     private static final Logger logger = LoggerFactory.getLogger(VirtualReader.class);
 
     /**
-     * Called by {@link RemoteSePlugin} Creates a new virtual reader
-     * 
+     * Creates a new virtual reader
+     * Called by {@link RemoteSePlugin}
      * @param session Reader Session that helps communicate with {@link DtoNode}
      * @param nativeReaderName local name of the native reader on slave side
      */
@@ -105,14 +105,7 @@ public final class VirtualReader extends AbstractObservableReader {
 
         RmTransmitTx transmit =
                 new RmTransmitTx(seRequestSet, session.getSessionId(), this.getNativeReaderName(),
-                        this.getName(), session.getMasterNodeId(), session.getSlaveNodeId());// todo
-                                                                                             // should
-                                                                                             // set
-                                                                                             // master
-                                                                                             // node
-                                                                                             // Id
-                                                                                             // as
-                                                                                             // requesterNodeId
+                        this.getName(), session.getMasterNodeId(), session.getSlaveNodeId());
         try {
             rmTxEngine.register(transmit);
             return transmit.get();
@@ -143,12 +136,12 @@ public final class VirtualReader extends AbstractObservableReader {
 
     @Override
     protected void startObservation() {
-
+        logger.trace("startObservation is not used in this plugin");
     }
 
     @Override
     protected void stopObservation() {
-
+        logger.trace("stopObservation is not used in this plugin");
     }
 
 
