@@ -43,8 +43,8 @@ public final class VirtualReader extends AbstractObservableReader {
     private static final Logger logger = LoggerFactory.getLogger(VirtualReader.class);
 
     /**
-     * Creates a new virtual reader
-     * Called by {@link RemoteSePlugin}
+     * Creates a new virtual reader Called by {@link RemoteSePlugin}
+     * 
      * @param session Reader Session that helps communicate with {@link DtoNode}
      * @param nativeReaderName local name of the native reader on slave side
      */
