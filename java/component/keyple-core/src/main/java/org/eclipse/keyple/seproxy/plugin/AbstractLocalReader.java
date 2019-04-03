@@ -632,8 +632,8 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
                     logger.debug(
                             "The process has been interrupted, collect Apdu responses collected so far");
                     closeLogicalChannel();
-                    ex.setSeResponse(
-                            new SeResponse(previouslyOpen, selectionStatus, apduResponseList));
+                    ex.setSeResponse(new SeResponse(false, previouslyOpen, selectionStatus,
+                            apduResponseList));
                     throw ex;
                 }
             }
@@ -644,7 +644,8 @@ public abstract class AbstractLocalReader extends AbstractObservableReader {
             closeLogicalChannel();
         }
 
-        return new SeResponse(previouslyOpen, selectionStatus, apduResponseList);
+        return new SeResponse(isLogicalChannelOpen(), previouslyOpen, selectionStatus,
+                apduResponseList);
     }
 
     /** ==== APDU transmission management ================================== */

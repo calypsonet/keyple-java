@@ -23,6 +23,7 @@ import java.util.List;
  * selection specified by its index.
  */
 public class SelectionResults {
+    private boolean hasActiveSelection = false;
     private List<MatchingSelection> matchingSelectionList = new ArrayList<MatchingSelection>();
 
     /**
@@ -32,6 +33,10 @@ public class SelectionResults {
      */
     public void addMatchingSelection(MatchingSelection matchingSelection) {
         matchingSelectionList.add(matchingSelection);
+        /* test if the current selection is active */
+        if (matchingSelection.getMatchingSe().isSelected()) {
+            hasActiveSelection = true;
+        }
     }
 
     /**
@@ -56,16 +61,26 @@ public class SelectionResults {
     }
 
     /**
-     * Gets a selection result
+     * Gets the {@link MatchingSelection} for the specified index.
+     * <p>
+     * Returns null if no {@link MatchingSelection} was found.
      * 
      * @param selectionIndex the selection index
-     * @return the {@link MatchingSelection}
+     * @return the {@link MatchingSelection} or null
      */
     public MatchingSelection getMatchingSelection(int selectionIndex) {
-        if (matchingSelectionList.size() == 0
-                || selectionIndex > (matchingSelectionList.size() - 1)) {
-            throw new IllegalStateException("Bad selection index.");
+        for (MatchingSelection matchingSelection : matchingSelectionList) {
+            if (matchingSelection.getSelectionIndex() == selectionIndex) {
+                return matchingSelection;
+            }
         }
-        return matchingSelectionList.get(selectionIndex);
+        return null;
+    }
+
+    /**
+     * @return true if an active selection is present
+     */
+    public boolean hasActiveSelection() {
+        return hasActiveSelection;
     }
 }

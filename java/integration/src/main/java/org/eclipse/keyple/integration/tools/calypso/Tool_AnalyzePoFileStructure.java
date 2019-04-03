@@ -29,6 +29,7 @@ import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 import org.eclipse.keyple.seproxy.exception.NoStackTraceThrowable;
 import org.eclipse.keyple.seproxy.protocol.Protocol;
 import org.eclipse.keyple.transaction.SeSelection;
+import org.eclipse.keyple.transaction.SelectionResults;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -209,14 +210,17 @@ public class Tool_AnalyzePoFileStructure {
                             null, "firstApplication"),
                     ChannelState.KEEP_OPEN, Protocol.ANY);
 
-            CalypsoPo firstApplication =
-                    (CalypsoPo) seSelection.prepareSelection(poSelectionRequest1);
+            int firstApplicationIndex = seSelection.prepareSelection(poSelectionRequest1);
 
-            if (!seSelection.processExplicitSelection(poReader) || !firstApplication.isSelected()) {
+            SelectionResults selectionResults = seSelection.processExplicitSelection(poReader);
+
+            if (!selectionResults.hasActiveSelection()) {
                 // logger.info("1st application not found.");
                 return;
             }
 
+            CalypsoPo firstApplication =
+                    (CalypsoPo) selectionResults.getActiveSelection().getMatchingSe();
             printApplicationInformation(poReader, firstApplication);
 
             // additional selection
@@ -235,14 +239,17 @@ public class Tool_AnalyzePoFileStructure {
                                     null, "secondApplication"),
                             ChannelState.KEEP_OPEN, Protocol.ANY);
 
-            CalypsoPo secondApplication =
-                    (CalypsoPo) seSelection.prepareSelection(poSelectionRequest2);
+            int secondApplicationIndex = seSelection.prepareSelection(poSelectionRequest2);
 
-            if (!seSelection.processExplicitSelection(poReader)
-                    || !secondApplication.isSelected()) {
+            selectionResults = seSelection.processExplicitSelection(poReader);
+
+            if (!selectionResults.hasActiveSelection()) {
                 // logger.info("2nd application not found.");
                 return;
             }
+
+            CalypsoPo secondApplication =
+                    (CalypsoPo) selectionResults.getActiveSelection().getMatchingSe();
 
             logger.info(
                     "==================================================================================");

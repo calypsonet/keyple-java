@@ -30,6 +30,7 @@ import org.eclipse.keyple.seproxy.exception.NoStackTraceThrowable;
 import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
 import org.eclipse.keyple.transaction.MatchingSelection;
 import org.eclipse.keyple.transaction.SeSelection;
+import org.eclipse.keyple.transaction.SelectionResults;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -129,6 +130,27 @@ public class UseCase_Calypso1_ExplicitSelectionAid_Pcsc {
                             CalypsoClassicInfo.SFI_EnvironmentAndHolder));
 
             /*
+             * int readRecordParserIndex1 = poSelectionRequest.prepareReadRecordsCmd(...); int
+             * readRecordParserIndex2 = poSelectionRequest.prepareReadRecordsCmd(...);
+             *
+             * SelectionResults processedSelections =
+             * seSelection.processExplicitSelection(seReader); [...]
+             *
+             * MatchingSelection matchingSelection = processedSelections.getActiveSelection();
+             *
+             * MatchingSelection matchingSelection =
+             * processedSelections.getProcessedSelection(selectionIndex);
+             *
+             *
+             * matchingSelection.getMatchingSe(); matchingSelection.getResponseParser(commandIndex);
+             *
+             *
+             * int indexSelectedSe = processedSelections.getSelectedSeIndex(); ReadRecordsRespPars
+             * readEnvironmentParser = (ReadRecordsRespPars) .getCommandParser(seResponse,
+             * readRecordParserIndex1);
+             */
+
+            /*
              * Add the selection case to the current selection (we could have added other cases
              * here)
              *
@@ -140,12 +162,13 @@ public class UseCase_Calypso1_ExplicitSelectionAid_Pcsc {
              * Actual PO communication: operate through a single request the Calypso PO selection
              * and the file read
              */
-            MatchingSelection matchingSelection =
-                    seSelection.processExplicitSelection(poReader).getActiveSelection();
 
-            CalypsoPo calypsoPo = (CalypsoPo) matchingSelection.getMatchingSe();
+            SelectionResults selectionResults = seSelection.processExplicitSelection(poReader);
 
-            if (calypsoPo.isSelected()) {
+            if (selectionResults.hasActiveSelection()) {
+                MatchingSelection matchingSelection = selectionResults.getActiveSelection();
+
+                CalypsoPo calypsoPo = (CalypsoPo) matchingSelection.getMatchingSe();
                 logger.info("The selection of the PO has succeeded.");
 
                 ReadRecordsRespPars readEnvironmentParser = (ReadRecordsRespPars) matchingSelection

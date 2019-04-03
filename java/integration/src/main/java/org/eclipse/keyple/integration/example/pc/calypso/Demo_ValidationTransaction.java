@@ -423,13 +423,12 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
         samSelection.prepareSelection(samSelectionRequest);
 
         try {
-            if (!samSelection.processExplicitSelection(samReader)) {
+            if (!samSelection.processExplicitSelection(samReader).hasActiveSelection()) {
                 System.out.println("Unable to open a logical channel for SAM!");
                 throw new IllegalStateException("SAM channel opening failure");
             }
         } catch (KeypleReaderException e) {
             throw new IllegalStateException("Reader exception: " + e.getMessage());
-
         }
 
         // Setting up ourselves as an observer

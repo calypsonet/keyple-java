@@ -45,7 +45,7 @@ public class MatchingSe {
     public final boolean isSelected() {
         boolean isSelected;
         if (selectionStatus != null) {
-            isSelected = selectionStatus.hasMatched();
+            isSelected = selectionStatus.hasMatched() && selectionResponse.isLogicalChannelOpen();
         } else {
             isSelected = false;
         }
