@@ -36,8 +36,6 @@ public final class SeSelection {
      * list of target classes and selection requests used to build the MatchingSe list in return of
      * processSelection methods
      */
-    private List<Class<? extends MatchingSe>> matchingSeClassList =
-            new ArrayList<Class<? extends MatchingSe>>();
     private List<AbstractSeSelectionRequest> seSelectionRequestList =
             new ArrayList<AbstractSeSelectionRequest>();
     private SeRequestSet selectionRequestSet = new SeRequestSet(new LinkedHashSet<SeRequest>());
@@ -60,13 +58,10 @@ public final class SeSelection {
      */
     public int prepareSelection(AbstractSeSelectionRequest seSelectionRequest) {
         if (logger.isTraceEnabled()) {
-            // TODO add toString
-            // logger.trace("SELECTORREQUEST = {}, EXTRAINFO = {}",
-            // seSelectionRequest.getSelectionRequest(),
-            // seSelectionRequest.getSeSelector().getExtraInfo());
+            logger.trace("SELECTORREQUEST = {}, EXTRAINFO = {}",
+                    seSelectionRequest.getSelectionRequest(),
+                    seSelectionRequest.getSeSelector().getExtraInfo());
         }
-        // /* keep request data for further use when building MatchingSe */
-        // matchingSeClassList.add(seSelectionRequest.getMatchingClass());
         /* build the SeRequest set transmitted to the SE */
         selectionRequestSet.add(seSelectionRequest.getSelectionRequest());
         /* keep the selection request */
