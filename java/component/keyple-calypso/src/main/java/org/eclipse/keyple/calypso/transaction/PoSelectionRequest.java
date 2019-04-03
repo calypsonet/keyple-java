@@ -29,7 +29,7 @@ import org.eclipse.keyple.seproxy.message.ApduRequest;
 import org.eclipse.keyple.seproxy.message.SeResponse;
 import org.eclipse.keyple.seproxy.protocol.ContactsProtocols;
 import org.eclipse.keyple.seproxy.protocol.SeProtocol;
-import org.eclipse.keyple.transaction.SeSelectionRequest;
+import org.eclipse.keyple.transaction.AbstractSeSelectionRequest;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,7 +37,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Specialized selection request to manage the specific characteristics of Calypso POs
  */
-public final class PoSelectionRequest extends SeSelectionRequest {
+public final class PoSelectionRequest extends AbstractSeSelectionRequest<CalypsoPo> {
     private static final Logger logger = LoggerFactory.getLogger(PoSelectionRequest.class);
 
     private int commandIndex;
@@ -58,11 +58,10 @@ public final class PoSelectionRequest extends SeSelectionRequest {
      */
     public PoSelectionRequest(SeSelector seSelector, ChannelState channelState,
             SeProtocol protocolFlag) {
+
         super(seSelector, channelState, protocolFlag);
 
         commandIndex = 0;
-
-        setMatchingClass(CalypsoPo.class);
 
         /* No AID selector for a legacy Calypso PO */
         if (seSelector.getAidSelector() == null) {
@@ -277,5 +276,10 @@ public final class PoSelectionRequest extends SeSelectionRequest {
             throw new IllegalArgumentException("No parser available for this command.");
         }
         return parser;
+    }
+
+    @Override
+    protected CalypsoPo parse(SeResponse seResponse) {
+        return new CalypsoPo(seResponse, seSelector.getExtraInfo());
     }
 }

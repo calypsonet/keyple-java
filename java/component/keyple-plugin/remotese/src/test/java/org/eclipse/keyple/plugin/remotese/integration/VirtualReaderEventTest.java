@@ -26,6 +26,7 @@ import org.eclipse.keyple.seproxy.protocol.Protocol;
 import org.eclipse.keyple.transaction.MatchingSe;
 import org.eclipse.keyple.transaction.SeSelection;
 import org.eclipse.keyple.transaction.SeSelectionRequest;
+import org.eclipse.keyple.transaction.SelectionResults;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.junit.*;
 import org.slf4j.Logger;
@@ -347,9 +348,10 @@ public class VirtualReaderEventTest extends VirtualReaderBaseTest {
                 seSelection.prepareSelection(seSelectionRequest);
 
                 try {
-                    seSelection.processExplicitSelection(virtualReader);
+                    SelectionResults selectionResults =
+                            seSelection.processExplicitSelection(virtualReader);
 
-                    MatchingSe matchingSe = seSelection.getSelectedSe();
+                    MatchingSe matchingSe = selectionResults.getActiveSelection().getMatchingSe();
 
                     Assert.assertNotNull(matchingSe);
 

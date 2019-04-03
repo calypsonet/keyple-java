@@ -34,7 +34,7 @@ public class DigestInitRespParsTest {
         ApduResponse apduResponse = new ApduResponse(new byte[] {(byte) 0x90, 0x00}, null);
         responses.add(apduResponse);
         SeResponseSet seResponse =
-                new SeResponseSet(new SeResponse(true,
+                new SeResponseSet(new SeResponse(true, true,
                         new SelectionStatus(null,
                                 new ApduResponse(ByteArrayUtils.fromHex("9000"), null), true),
                         responses));

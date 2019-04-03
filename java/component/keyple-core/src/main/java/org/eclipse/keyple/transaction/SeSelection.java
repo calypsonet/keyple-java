@@ -11,8 +11,6 @@
  ********************************************************************************/
 package org.eclipse.keyple.transaction;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import org.eclipse.keyple.seproxy.SeReader;
 import org.eclipse.keyple.seproxy.event.DefaultSelectionRequest;
@@ -40,7 +38,8 @@ public final class SeSelection {
      */
     private List<Class<? extends MatchingSe>> matchingSeClassList =
             new ArrayList<Class<? extends MatchingSe>>();
-    private List<SeSelectionRequest> seSelectionRequestList = new ArrayList<SeSelectionRequest>();
+    private List<AbstractSeSelectionRequest> seSelectionRequestList =
+            new ArrayList<AbstractSeSelectionRequest>();
     private SeRequestSet selectionRequestSet = new SeRequestSet(new LinkedHashSet<SeRequest>());
     private int selectionIndex;
 
@@ -59,14 +58,15 @@ public final class SeSelection {
      * @param seSelectionRequest the selector to prepare
      * @return the selection index giving the current selection position in the selection request.
      */
-    public int prepareSelection(SeSelectionRequest seSelectionRequest) {
+    public int prepareSelection(AbstractSeSelectionRequest seSelectionRequest) {
         if (logger.isTraceEnabled()) {
-            logger.trace("SELECTORREQUEST = {}, EXTRAINFO = {}",
-                    seSelectionRequest.getSelectionRequest(),
-                    seSelectionRequest.getSeSelector().getExtraInfo());
+            // TODO add toString
+            // logger.trace("SELECTORREQUEST = {}, EXTRAINFO = {}",
+            // seSelectionRequest.getSelectionRequest(),
+            // seSelectionRequest.getSeSelector().getExtraInfo());
         }
-        /* keep request data for further use when building MatchingSe */
-        matchingSeClassList.add(seSelectionRequest.getMatchingClass());
+        // /* keep request data for further use when building MatchingSe */
+        // matchingSeClassList.add(seSelectionRequest.getMatchingClass());
         /* build the SeRequest set transmitted to the SE */
         selectionRequestSet.add(seSelectionRequest.getSelectionRequest());
         /* keep the selection request */
@@ -103,41 +103,18 @@ public final class SeSelection {
         for (SeResponse seResponse : selectionResponse.getSelectionSeResponseSet().getResponses()) {
             if (seResponse != null) {
                 /* test if the selection is successful: we should have either a FCI or an ATR */
-                if (seResponse.getSelectionStatus() != null) {
+                if (seResponse.getSelectionStatus() != null
+                        && seResponse.getSelectionStatus().hasMatched()) {
                     /*
                      * create a MatchingSe with the class deduced from the selection request during
                      * the selection preparation
                      */
-                    Constructor ctor = null;
-                    MatchingSe matchingSe = null;
-                    try {
-                        ctor = matchingSeClassList.get(selectionIndex)
-                                .getDeclaredConstructor(SeResponse.class, String.class);
-                        ctor.setAccessible(true);
-                        matchingSe =
-                                (MatchingSe) ctor.newInstance(seResponse, seSelectionRequestList
-                                        .get(selectionIndex).getSeSelector().getExtraInfo());
-                    } catch (NoSuchMethodException e) {
-                        e.printStackTrace();
-                    } catch (IllegalAccessException e) {
-                        e.printStackTrace();
-                    } catch (InstantiationException e) {
-                        e.printStackTrace();
-                    } catch (InvocationTargetException e) {
-                        e.printStackTrace();
-                    }
-                    if (seResponse.getSelectionStatus().hasMatched()) {
-                        selectionResults.addMatchingSelection(new MatchingSelection(selectionIndex,
-                                seSelectionRequestList.get(selectionIndex), matchingSe,
-                                seResponse));
-                    }
-                } else {
-                    /* not matching, add a null element to keep consistent the selection index */
-                    selectionResults.addMatchingSelection(null);
+                    MatchingSe matchingSe =
+                            seSelectionRequestList.get(selectionIndex).parse(seResponse);
+
+                    selectionResults.addMatchingSelection(new MatchingSelection(selectionIndex,
+                            seSelectionRequestList.get(selectionIndex), matchingSe, seResponse));
                 }
-            } else {
-                /* not matching, add a null element to keep consistent the selection index */
-                selectionResults.addMatchingSelection(null);
             }
             selectionIndex++;
         }

@@ -19,7 +19,7 @@ import org.eclipse.keyple.seproxy.message.SeResponse;
  */
 public class MatchingSelection {
     private final MatchingSe matchingSe;
-    private final SeSelectionRequest seSelectionRequest;
+    private final AbstractSeSelectionRequest seSelectionRequest;
     private final SeResponse selectionSeResponse;
     private final int selectionIndex;
 
@@ -31,7 +31,7 @@ public class MatchingSelection {
      * @param matchingSe
      * @param selectionSeResponse
      */
-    public MatchingSelection(int selectionIndex, SeSelectionRequest seSelectionRequest,
+    public MatchingSelection(int selectionIndex, AbstractSeSelectionRequest seSelectionRequest,
             MatchingSe matchingSe, SeResponse selectionSeResponse) {
         this.selectionIndex = selectionIndex;
         this.seSelectionRequest = seSelectionRequest;

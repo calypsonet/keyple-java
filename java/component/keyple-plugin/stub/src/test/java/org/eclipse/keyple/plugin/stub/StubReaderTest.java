@@ -22,10 +22,7 @@ import org.eclipse.keyple.calypso.command.po.builder.ReadRecordsCmdBuild;
 import org.eclipse.keyple.seproxy.ChannelState;
 import org.eclipse.keyple.seproxy.SeReader;
 import org.eclipse.keyple.seproxy.SeSelector;
-import org.eclipse.keyple.seproxy.event.ObservablePlugin;
-import org.eclipse.keyple.seproxy.event.ObservableReader;
-import org.eclipse.keyple.seproxy.event.PluginEvent;
-import org.eclipse.keyple.seproxy.event.ReaderEvent;
+import org.eclipse.keyple.seproxy.event.*;
 import org.eclipse.keyple.seproxy.exception.KeypleChannelStateException;
 import org.eclipse.keyple.seproxy.exception.KeypleIOReaderException;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
@@ -35,6 +32,7 @@ import org.eclipse.keyple.seproxy.protocol.SeProtocolSetting;
 import org.eclipse.keyple.transaction.MatchingSe;
 import org.eclipse.keyple.transaction.SeSelection;
 import org.eclipse.keyple.transaction.SeSelectionRequest;
+import org.eclipse.keyple.transaction.SelectionResults;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.junit.*;
 import org.junit.runner.RunWith;
@@ -312,9 +310,10 @@ public class StubReaderTest {
                 seSelection.prepareSelection(seSelectionRequest);
 
                 try {
-                    seSelection.processExplicitSelection(reader);
+                    SelectionResults selectionResults =
+                            seSelection.processExplicitSelection(reader);
 
-                    MatchingSe matchingSe = seSelection.getSelectedSe();
+                    MatchingSe matchingSe = selectionResults.getActiveSelection().getMatchingSe();
 
                     Assert.assertNotNull(matchingSe);
 
