@@ -15,22 +15,25 @@ import org.eclipse.keyple.command.AbstractApduResponseParser;
 import org.eclipse.keyple.seproxy.message.SeResponse;
 
 /**
- * The ProcessedSelection class holds the result of a single selection case.
+ * The MatchingSelection class holds the result of a single selection case.
  */
-public class ProcessedSelection {
+public class MatchingSelection {
     private final MatchingSe matchingSe;
     private final SeSelectionRequest seSelectionRequest;
     private final SeResponse selectionSeResponse;
+    private final int selectionIndex;
 
     /**
      * Constructor
-     * 
+     *
+     * @param selectionIndex
      * @param seSelectionRequest
      * @param matchingSe
      * @param selectionSeResponse
      */
-    public ProcessedSelection(SeSelectionRequest seSelectionRequest, MatchingSe matchingSe,
-            SeResponse selectionSeResponse) {
+    public MatchingSelection(int selectionIndex, SeSelectionRequest seSelectionRequest,
+            MatchingSe matchingSe, SeResponse selectionSeResponse) {
+        this.selectionIndex = selectionIndex;
         this.seSelectionRequest = seSelectionRequest;
         this.matchingSe = matchingSe;
         this.selectionSeResponse = selectionSeResponse;
@@ -51,5 +54,20 @@ public class ProcessedSelection {
      */
     public AbstractApduResponseParser getResponseParser(int commandIndex) {
         return seSelectionRequest.getCommandParser(selectionSeResponse, commandIndex);
+    }
+
+    /**
+     * @return the info string provided with the Selector
+     */
+    public String getExtraInfo() {
+        return seSelectionRequest.getSeSelector().getExtraInfo();
+    }
+
+    /**
+     * @return the index of the selection (order in the prepareSelection command). 0 is the first
+     *         selection.
+     */
+    public int getSelectionIndex() {
+        return selectionIndex;
     }
 }

@@ -39,6 +39,7 @@ import org.eclipse.keyple.seproxy.protocol.SeProtocolSetting;
 import org.eclipse.keyple.seproxy.protocol.TransmissionMode;
 import org.eclipse.keyple.transaction.SeSelection;
 import org.eclipse.keyple.transaction.SeSelectionRequest;
+import org.eclipse.keyple.transaction.SelectionResults;
 import org.eclipse.keyple.util.ByteArrayUtils;
 
 @SuppressWarnings("PMD.VariableNamingConventions")
@@ -301,8 +302,8 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
             SeSelection seSelection = new SeSelection();
 
             // Add Audit C0 AID to the list
-            CalypsoPo auditC0Se =
-                    (CalypsoPo) seSelection
+            int auditC0SeIndex =
+                    seSelection
                             .prepareSelection(
                                     new PoSelectionRequest(
                                             new SeSelector(new SeSelector.AidSelector(
@@ -312,8 +313,8 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
                                             ChannelState.KEEP_OPEN, Protocol.ANY));
 
             // Add CLAP AID to the list
-            CalypsoPo clapSe =
-                    (CalypsoPo) seSelection
+            int clapSeIndex =
+                    seSelection
                             .prepareSelection(
                                     new PoSelectionRequest(
                                             new SeSelector(
@@ -325,8 +326,8 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
                                             ChannelState.KEEP_OPEN, Protocol.ANY));
 
             // Add cdLight AID to the list
-            CalypsoPo cdLightSe =
-                    (CalypsoPo) seSelection
+            int cdLightSeIndex =
+                    seSelection
                             .prepareSelection(new PoSelectionRequest(
                                     new SeSelector(
                                             new SeSelector.AidSelector(ByteArrayUtils
@@ -334,14 +335,22 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
                                             null, "CDLight"),
                                     ChannelState.KEEP_OPEN, Protocol.ANY));
 
-            if (!seSelection.processExplicitSelection(poReader)) {
+            SelectionResults selectionResults = seSelection.processExplicitSelection(poReader);
+
+            if (selectionResults == null) {
                 throw new IllegalArgumentException("No recognizable PO detected.");
             }
 
 
             // Depending on the PO detected perform either a Season Pass validation or a MultiTrip
             // validation
-            if (auditC0Se.isSelected()) {
+            CalypsoPo auditC0Se = (CalypsoPo) selectionResults.getMatchingSelection(auditC0SeIndex)
+                    .getMatchingSe();
+            CalypsoPo clapSe =
+                    (CalypsoPo) selectionResults.getMatchingSelection(clapSeIndex).getMatchingSe();
+            CalypsoPo cdLightSe = (CalypsoPo) selectionResults.getMatchingSelection(cdLightSeIndex)
+                    .getMatchingSe();
+            if (auditC0Se != null && auditC0Se.isSelected()) {
 
                 PoTransaction poTransaction =
                         new PoTransaction(poReader, auditC0Se, samReader, null);

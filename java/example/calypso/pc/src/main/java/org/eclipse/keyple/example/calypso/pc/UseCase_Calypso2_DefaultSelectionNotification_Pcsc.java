@@ -33,7 +33,7 @@ import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.exception.KeypleReaderNotFoundException;
 import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
 import org.eclipse.keyple.transaction.MatchingSe;
-import org.eclipse.keyple.transaction.ProcessedSelection;
+import org.eclipse.keyple.transaction.MatchingSelection;
 import org.eclipse.keyple.transaction.SeSelection;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.slf4j.Logger;
@@ -171,7 +171,7 @@ public class UseCase_Calypso2_DefaultSelectionNotification_Pcsc implements Reade
     public void update(ReaderEvent event) {
         switch (event.getEventType()) {
             case SE_MATCHED:
-                ProcessedSelection processedSelection =
+                MatchingSelection matchingSelection =
                         seSelection.processDefaultSelection(event.getDefaultSelectionResponse())
                                 .getActiveSelection();
 
@@ -185,14 +185,14 @@ public class UseCase_Calypso2_DefaultSelectionNotification_Pcsc implements Reade
                     e.printStackTrace();
                 }
 
-                MatchingSe selectedSe = processedSelection.getMatchingSe();
+                MatchingSe selectedSe = matchingSelection.getMatchingSe();
 
                 logger.info("Observer notification: the selection of the PO has succeeded.");
 
                 /*
                  * Retrieve the data read from the parser updated during the selection process
                  */
-                ReadRecordsRespPars readEnvironmentParser = (ReadRecordsRespPars) processedSelection
+                ReadRecordsRespPars readEnvironmentParser = (ReadRecordsRespPars) matchingSelection
                         .getResponseParser(readEnvironmentParserIndex);
 
                 byte environmentAndHolder[] = (readEnvironmentParser.getRecords())

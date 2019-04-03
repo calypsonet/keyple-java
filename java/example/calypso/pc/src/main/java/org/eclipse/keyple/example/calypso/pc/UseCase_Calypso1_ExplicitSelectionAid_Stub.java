@@ -31,7 +31,7 @@ import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 import org.eclipse.keyple.seproxy.exception.NoStackTraceThrowable;
 import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
 import org.eclipse.keyple.seproxy.protocol.SeProtocolSetting;
-import org.eclipse.keyple.transaction.ProcessedSelection;
+import org.eclipse.keyple.transaction.MatchingSelection;
 import org.eclipse.keyple.transaction.SeSelection;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.slf4j.Logger;
@@ -152,15 +152,15 @@ public class UseCase_Calypso1_ExplicitSelectionAid_Stub {
              * Actual PO communication: operate through a single request the Calypso PO selection
              * and the file read
              */
-            ProcessedSelection processedSelection =
+            MatchingSelection matchingSelection =
                     seSelection.processExplicitSelection(poReader).getActiveSelection();
-            CalypsoPo calypsoPo = (CalypsoPo) processedSelection.getMatchingSe();
+            CalypsoPo calypsoPo = (CalypsoPo) matchingSelection.getMatchingSe();
 
             if (calypsoPo.isSelected()) {
                 logger.info("The selection of the PO has succeeded.");
 
                 /* Retrieve the parser and the data read from the selection processed */
-                ReadRecordsRespPars readEnvironmentParser = (ReadRecordsRespPars) processedSelection
+                ReadRecordsRespPars readEnvironmentParser = (ReadRecordsRespPars) matchingSelection
                         .getResponseParser(readEnvironmentParserIndex);
 
                 byte environmentAndHolder[] = (readEnvironmentParser.getRecords())

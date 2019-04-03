@@ -37,7 +37,7 @@ public class UseCase_Generic4_SequentialMultiSelection_Pcsc {
     private static void doAndAnalyseSelection(SeReader seReader, SeSelection seSelection, int index)
             throws KeypleReaderException {
         MatchingSe matchingSe = seSelection.processExplicitSelection(seReader)
-                .getProcessedSelection(index).getMatchingSe();
+                .getMatchingSelection(index).getMatchingSe();
         if (matchingSe != null && matchingSe.getSelectionStatus().hasMatched()) {
             logger.info("The SE matched the selection {}.", index);
 

@@ -49,19 +49,8 @@ public final class CalypsoPo extends MatchingSe {
      *
      * @param extraInfo
      */
-    public CalypsoPo(String extraInfo) {
-        super(extraInfo);
-    }
-
-    /**
-     * Retains the selection response and analyses its relevant information to determine the
-     * characteristics of the PO required to process it correctly.
-     * 
-     * @param selectionResponse the received response to the selection request
-     */
-    @Override
-    public void setSelectionResponse(SeResponse selectionResponse) {
-        super.setSelectionResponse(selectionResponse);
+    public CalypsoPo(SeResponse selectionResponse, String extraInfo) {
+        super(selectionResponse, extraInfo);
 
         poAtr = selectionResponse.getSelectionStatus().getAtr().getBytes();
 

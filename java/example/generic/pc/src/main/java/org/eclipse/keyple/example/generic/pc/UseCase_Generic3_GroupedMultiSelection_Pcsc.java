@@ -60,8 +60,6 @@ public class UseCase_Generic3_GroupedMultiSelection_Pcsc {
                 "=============== UseCase Generic #3: AID based grouped explicit multiple selection ==================");
         logger.info("= SE Reader  NAME = {}", seReader.getName());
 
-        int[] selectionIndex = new int[3];
-
         /* Check if a SE is present in the reader */
         if (seReader.isSePresent()) {
 
@@ -72,7 +70,7 @@ public class UseCase_Generic3_GroupedMultiSelection_Pcsc {
             String seAidPrefix = "A000000404012509";
 
             /* AID based selection */
-            selectionIndex[0] = seSelection.prepareSelection(new SeSelectionRequest(
+            seSelection.prepareSelection(new SeSelectionRequest(
                     new SeSelector(
                             new SeSelector.AidSelector(ByteArrayUtils.fromHex(seAidPrefix), null,
                                     SeSelector.AidSelector.FileOccurrence.FIRST,
@@ -80,7 +78,7 @@ public class UseCase_Generic3_GroupedMultiSelection_Pcsc {
                             null, "Initial selection #1"),
                     ChannelState.CLOSE_AFTER, ContactlessProtocols.PROTOCOL_ISO14443_4));
             /* next selection */
-            selectionIndex[1] = seSelection.prepareSelection(new SeSelectionRequest(
+            seSelection.prepareSelection(new SeSelectionRequest(
                     new SeSelector(
                             new SeSelector.AidSelector(ByteArrayUtils.fromHex(seAidPrefix), null,
                                     SeSelector.AidSelector.FileOccurrence.NEXT,
@@ -88,7 +86,7 @@ public class UseCase_Generic3_GroupedMultiSelection_Pcsc {
                             null, "Next selection #2"),
                     ChannelState.CLOSE_AFTER, ContactlessProtocols.PROTOCOL_ISO14443_4));
             /* next selection */
-            selectionIndex[2] = seSelection.prepareSelection(new SeSelectionRequest(
+            seSelection.prepareSelection(new SeSelectionRequest(
                     new SeSelector(
                             new SeSelector.AidSelector(ByteArrayUtils.fromHex(seAidPrefix), null,
                                     SeSelector.AidSelector.FileOccurrence.NEXT,
@@ -99,22 +97,20 @@ public class UseCase_Generic3_GroupedMultiSelection_Pcsc {
              * Actual SE communication: operate through a single request the SE selection
              */
 
-            ProcessedSelections processedSelections =
-                    seSelection.processExplicitSelection(seReader);
+            SelectionResults selectionResults = seSelection.processExplicitSelection(seReader);
 
-            for (int idx = 0; idx < 3; idx++) {
-                if (processedSelections.getProcessedSelection(selectionIndex[idx]) != null) {
-                    MatchingSe matchingSe = processedSelections
-                            .getProcessedSelection(selectionIndex[idx]).getMatchingSe();
-                    if (matchingSe != null) {
-                        logger.info("Selection status for case {}: \n\t\tATR: {}\n\t\tFCI: {}",
-                                idx + 1,
-                                ByteArrayUtils
-                                        .toHex(matchingSe.getSelectionStatus().getAtr().getBytes()),
-                                ByteArrayUtils.toHex(
-                                        matchingSe.getSelectionStatus().getFci().getDataOut()));
-                    }
+            if(selectionResults.getMatchingSelections().size() > 0) {
+                for (MatchingSelection matchingSelection : selectionResults.getMatchingSelections()) {
+                    MatchingSe matchingSe = matchingSelection.getMatchingSe();
+                    logger.info(
+                            "Selection status for selection \"{}\" (indexed {}): \n\t\tATR: {}\n\t\tFCI: {}",
+                            matchingSelection.getExtraInfo(), matchingSelection.getSelectionIndex(),
+                            ByteArrayUtils.toHex(matchingSe.getSelectionStatus().getAtr().getBytes()),
+                            ByteArrayUtils
+                                    .toHex(matchingSe.getSelectionStatus().getFci().getDataOut()));
                 }
+            } else {
+                logger.error("No SE matched the selection.");
             }
         } else {
             logger.error("No SE were detected.");

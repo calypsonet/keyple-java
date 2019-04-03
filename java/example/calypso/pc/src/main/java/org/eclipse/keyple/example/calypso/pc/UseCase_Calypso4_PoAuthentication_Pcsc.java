@@ -138,10 +138,10 @@ public class UseCase_Calypso4_PoAuthentication_Pcsc {
              * Actual PO communication: operate through a single request the Calypso PO selection
              * and the file read
              */
-            ProcessedSelection processedSelection =
+            MatchingSelection matchingSelection =
                     seSelection.processExplicitSelection(poReader).getActiveSelection();
 
-            CalypsoPo calypsoPo = (CalypsoPo) processedSelection.getMatchingSe();
+            CalypsoPo calypsoPo = (CalypsoPo) matchingSelection.getMatchingSe();
 
             if (calypsoPo.isSelected()) {
                 logger.info("The selection of the PO has succeeded.");

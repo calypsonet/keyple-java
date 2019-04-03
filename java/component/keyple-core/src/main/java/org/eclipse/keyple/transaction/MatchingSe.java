@@ -19,26 +19,21 @@ import org.eclipse.keyple.seproxy.message.SelectionStatus;
  *
  */
 public class MatchingSe {
-    private SelectionStatus selectionStatus;
+    private final SeResponse selectionResponse;
+    private final SelectionStatus selectionStatus;
     private final String selectionExtraInfo;
 
     /**
      * Constructor.
      */
-    public MatchingSe(String extraInfo) {
-        selectionStatus = null;
-        this.selectionExtraInfo = extraInfo;
-    }
-
-    /**
-     * Sets the SeResponse obtained in return from the selection process
-     * 
-     * @param selectionResponse the selection SeResponse
-     */
-    public void setSelectionResponse(SeResponse selectionResponse) {
+    public MatchingSe(SeResponse selectionResponse, String extraInfo) {
+        this.selectionResponse = selectionResponse;
         if (selectionResponse != null) {
-            selectionStatus = selectionResponse.getSelectionStatus();
+            this.selectionStatus = selectionResponse.getSelectionStatus();
+        } else {
+            this.selectionStatus = null;
         }
+        this.selectionExtraInfo = extraInfo;
     }
 
     /**
