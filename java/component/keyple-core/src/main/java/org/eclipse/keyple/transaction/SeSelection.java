@@ -36,8 +36,7 @@ public final class SeSelection {
      * list of target classes and selection requests used to build the MatchingSe list in return of
      * processSelection methods
      */
-    private List<AbstractSeSelectionRequest> seSelectionRequestList =
-            new ArrayList<AbstractSeSelectionRequest>();
+    private List<SeSelectionRequest> seSelectionRequestList = new ArrayList<SeSelectionRequest>();
     private SeRequestSet selectionRequestSet = new SeRequestSet(new LinkedHashSet<SeRequest>());
     private int selectionIndex;
 
@@ -56,7 +55,7 @@ public final class SeSelection {
      * @param seSelectionRequest the selector to prepare
      * @return the selection index giving the current selection position in the selection request.
      */
-    public int prepareSelection(AbstractSeSelectionRequest seSelectionRequest) {
+    public int prepareSelection(SeSelectionRequest seSelectionRequest) {
         if (logger.isTraceEnabled()) {
             logger.trace("SELECTORREQUEST = {}, EXTRAINFO = {}",
                     seSelectionRequest.getSelectionRequest(),
