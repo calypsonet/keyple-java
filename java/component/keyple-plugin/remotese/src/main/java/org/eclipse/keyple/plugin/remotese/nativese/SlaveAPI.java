@@ -18,7 +18,6 @@ import org.eclipse.keyple.plugin.remotese.rm.RemoteMethod;
 import org.eclipse.keyple.plugin.remotese.rm.RemoteMethodExecutor;
 import org.eclipse.keyple.plugin.remotese.rm.RemoteMethodTxEngine;
 import org.eclipse.keyple.plugin.remotese.transport.*;
-import org.eclipse.keyple.plugin.remotese.transport.DtoNode;
 import org.eclipse.keyple.plugin.remotese.transport.json.JsonParser;
 import org.eclipse.keyple.plugin.remotese.transport.model.KeypleDto;
 import org.eclipse.keyple.plugin.remotese.transport.model.KeypleDtoHelper;
@@ -43,12 +42,10 @@ public class SlaveAPI implements INativeReaderService, DtoHandler, ObservableRea
 
     private static final Logger logger = LoggerFactory.getLogger(SlaveAPI.class);
 
-    private final DtoNode dtoNode;
+    private final DtoNode dtoNode;// bind node
     private final SeProxyService seProxyService;
-    private final RemoteMethodTxEngine rmTxEngine;
-    private final String masterNodeId;
-
-    // private final NseSessionManager nseSessionManager;
+    private final RemoteMethodTxEngine rmTxEngine;// rm command processor
+    private final String masterNodeId;// master node id to connect to
 
     /**
      * Constructor
@@ -171,7 +168,7 @@ public class SlaveAPI implements INativeReaderService, DtoHandler, ObservableRea
             rmTxEngine.register(connect);
             return connect.get();
         } catch (KeypleRemoteException e) {
-            throw new KeypleReaderException("An error occured while calling connectReader", e);
+            throw new KeypleReaderException("An error occurred while calling connectReader", e);
         }
 
     }
@@ -186,14 +183,14 @@ public class SlaveAPI implements INativeReaderService, DtoHandler, ObservableRea
 
         try {
             rmTxEngine.register(disconnect);
-            Boolean status = disconnect.get();
+            disconnect.get();
             ProxyReader nativeReader = findLocalReader(nativeReaderName);
             if (nativeReader instanceof AbstractObservableReader) {
                 // stop propagating the local reader events
                 ((AbstractObservableReader) nativeReader).removeObserver(this);
             }
         } catch (KeypleRemoteException e) {
-            throw new KeypleReaderException("An error occured while calling connectReader", e);
+            throw new KeypleReaderException("An error occurred while calling connectReader", e);
         } catch (KeypleReaderNotFoundException e) {
             e.printStackTrace();
         }
@@ -219,8 +216,6 @@ public class SlaveAPI implements INativeReaderService, DtoHandler, ObservableRea
         }
         throw new KeypleReaderNotFoundException(nativeReaderName);
     }
-
-    // INativeReaderService
 
     /**
      * Do not call this method directly This method is called by a

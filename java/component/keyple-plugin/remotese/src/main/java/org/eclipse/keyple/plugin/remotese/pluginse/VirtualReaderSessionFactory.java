@@ -19,7 +19,7 @@ class VirtualReaderSessionFactory {
 
 
     /**
-     * Create a new session
+     * Create a new session (internal method used by VirtualReader)
      * 
      * @param nativeReaderName
      * @param slaveNodeId slave device slaveNodeId

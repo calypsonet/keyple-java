@@ -22,16 +22,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Server side of the 1 to 1 local transport for unit testing purposes only one server, only one
- * client initied by the {@link LocalTransportFactory}
+ * Server side of the 1 to many local transport for unit testing purposes only one server
  */
 public class LocalServer implements ServerNode {
 
     private static final Logger logger = LoggerFactory.getLogger(LocalServer.class);
 
     private DtoHandler dtoHandler;
-    private String serverNodeId;
-    private Map<String, LocalClient> client_ids;
+    private final String serverNodeId;
+    private final Map<String, LocalClient> client_ids;
 
     public LocalServer(String serverNodeId) {
         this.client_ids = new HashMap<String, LocalClient>();

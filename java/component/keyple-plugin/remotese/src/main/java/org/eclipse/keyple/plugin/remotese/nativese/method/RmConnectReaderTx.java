@@ -58,8 +58,9 @@ public class RmConnectReaderTx extends RemoteMethodTx<String> {
         } else {
             // if dto does not contain an exception
             try {
-                // configure slaveAPI to propagate reader events if the reader is
-                // observable
+                /*
+                 * configure slaveAPI to propagate reader events if the reader is observable
+                 */
 
                 // find the local reader by name
                 ProxyReader localReader = (ProxyReader) slaveAPI.findLocalReader(nativeReaderName);
@@ -74,11 +75,9 @@ public class RmConnectReaderTx extends RemoteMethodTx<String> {
                 // retrieve sessionId from keypleDto
                 JsonObject body =
                         JsonParser.getGson().fromJson(keypleDto.getBody(), JsonObject.class);
-                // Integer statusCode = body.get("statusCode").getAsInt();
-                String sessionId = body.get("sessionId").getAsString();
 
                 // sessionId is returned here
-                return sessionId;
+                return body.get("sessionId").getAsString();
 
             } catch (KeypleReaderNotFoundException e) {
                 logger.warn(

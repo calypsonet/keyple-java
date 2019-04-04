@@ -11,6 +11,7 @@
  ********************************************************************************/
 package org.eclipse.keyple.example.remote.application;
 
+import org.eclipse.keyple.example.calypso.common.stub.se.StubCalypsoClassic;
 import org.eclipse.keyple.example.remote.transport.wspolling.client_retrofit.WsPollingRetrofitFactory;
 import org.eclipse.keyple.plugin.remotese.transport.factory.TransportFactory;
 
@@ -33,20 +34,27 @@ public class Demo_WebserviceWithRetrofit_MasterServer_MultiClient {
         TransportFactory factory = new WsPollingRetrofitFactory(SERVER_NODE_ID);
 
 
-        // Launch the server thread
+        // Launch the Server thread
         // Server is Master
-        Demo_Threads.startServer(true, factory, SERVER_NODE_ID, false);
+        Demo_Master master = new Demo_Master(factory, true, null);
+        master.boot();
 
         Thread.sleep(1000);
 
-        // Launch the client1 thread
+        // Launch the client thread
         // Client is Slave
-        Demo_Threads.startClient(false, factory, CLIENT_NODE_ID, false);
+        Demo_Slave slave = new Demo_Slave(factory, false, CLIENT_NODE_ID, SERVER_NODE_ID);
 
-        Thread.sleep(10000);
+        // execute slave scenario
+        slave.insertSE(new StubCalypsoClassic(), false);
 
-        // Launch the client2 thread
+
+        // Launch the client thread
         // Client is Slave
-        Demo_Threads.startClient(false, factory, CLIENT_NODE_ID2, true);
+        Demo_Slave slave2 = new Demo_Slave(factory, false, CLIENT_NODE_ID2, SERVER_NODE_ID);
+
+        // execute slave scenario
+        slave2.insertSE(new StubCalypsoClassic(), false);
+
     }
 }

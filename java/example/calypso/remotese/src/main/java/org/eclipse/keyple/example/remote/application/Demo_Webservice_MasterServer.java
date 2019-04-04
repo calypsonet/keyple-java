@@ -11,6 +11,7 @@
  ********************************************************************************/
 package org.eclipse.keyple.example.remote.application;
 
+import org.eclipse.keyple.example.calypso.common.stub.se.StubCalypsoClassic;
 import org.eclipse.keyple.example.remote.transport.wspolling.client.WsPollingFactory;
 import org.eclipse.keyple.plugin.remotese.transport.factory.TransportFactory;
 
@@ -31,12 +32,16 @@ public class Demo_Webservice_MasterServer {
 
         // Launch the Server thread
         // Server is Master
-        Demo_Threads.startServer(true, factory, SERVER_NODE_ID, false);
+        Demo_Master master = new Demo_Master(factory, true, null);
+        master.boot();
 
         Thread.sleep(1000);
 
         // Launch the client thread
         // Client is Slave
-        Demo_Threads.startClient(false, factory, CLIENT_NODE_ID, true);
+        Demo_Slave slave = new Demo_Slave(factory, false, CLIENT_NODE_ID, SERVER_NODE_ID);
+
+        // execute slave scenario
+        slave.insertSE(new StubCalypsoClassic(), true);
     }
 }

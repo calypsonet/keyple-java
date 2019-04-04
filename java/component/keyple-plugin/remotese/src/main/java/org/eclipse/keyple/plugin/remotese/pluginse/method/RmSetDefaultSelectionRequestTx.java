@@ -11,7 +11,6 @@
  ********************************************************************************/
 package org.eclipse.keyple.plugin.remotese.pluginse.method;
 
-import org.eclipse.keyple.plugin.remotese.exception.KeypleRemoteException;
 import org.eclipse.keyple.plugin.remotese.rm.RemoteMethod;
 import org.eclipse.keyple.plugin.remotese.rm.RemoteMethodTx;
 import org.eclipse.keyple.plugin.remotese.transport.json.JsonParser;
@@ -22,8 +21,8 @@ import com.google.gson.JsonObject;
 
 public class RmSetDefaultSelectionRequestTx extends RemoteMethodTx {
 
-    private DefaultSelectionRequest defaultSelectionRequest;
-    private ObservableReader.NotificationMode notificationMode;
+    private final DefaultSelectionRequest defaultSelectionRequest;
+    private final ObservableReader.NotificationMode notificationMode;
 
 
     public RmSetDefaultSelectionRequestTx(DefaultSelectionRequest defaultSelectionRequest,
@@ -38,7 +37,7 @@ public class RmSetDefaultSelectionRequestTx extends RemoteMethodTx {
 
 
     @Override
-    public Object parseResponse(KeypleDto keypleDto) throws KeypleRemoteException {
+    public Object parseResponse(KeypleDto keypleDto) {
         return new Object();
 
     }

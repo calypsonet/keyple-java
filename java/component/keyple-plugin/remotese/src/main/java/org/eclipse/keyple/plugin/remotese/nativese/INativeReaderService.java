@@ -32,11 +32,11 @@ public interface INativeReaderService {
     void disconnectReader(String sessionId, String nativeReaderName) throws KeypleReaderException;
 
     /**
-     * Find a local reader accross plugins
+     * Find a local reader across plugins
      * 
-     * @param nativeReaderName
-     * @return
-     * @throws KeypleReaderNotFoundException
+     * @param nativeReaderName : native name of the reader to find
+     * @return SeReader : Se Reader found
+     * @throws KeypleReaderNotFoundException : if none reader was found
      */
     SeReader findLocalReader(String nativeReaderName) throws KeypleReaderNotFoundException;
 

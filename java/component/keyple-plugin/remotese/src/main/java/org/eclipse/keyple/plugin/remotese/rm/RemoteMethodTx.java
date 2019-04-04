@@ -27,11 +27,11 @@ import org.slf4j.LoggerFactory;
 public abstract class RemoteMethodTx<T> {
 
     private static final Logger logger = LoggerFactory.getLogger(RemoteMethodTx.class);
-    protected String sessionId;
-    protected String nativeReaderName;
-    protected String virtualReaderName;
-    protected String targetNodeId;
-    protected String requesterNodeId;
+    protected final String sessionId;
+    protected final String nativeReaderName;
+    protected final String virtualReaderName;
+    protected final String targetNodeId;
+    protected final String requesterNodeId;
 
     // response
     private T response;
@@ -39,7 +39,7 @@ public abstract class RemoteMethodTx<T> {
     // exception thrown if any
     private KeypleRemoteException remoteException;
 
-    // blocking mecanism
+    // blocking mechanism
     private CountDownLatch lock;
     private RemoteMethodTxCallback<T> callback;
 
@@ -62,7 +62,7 @@ public abstract class RemoteMethodTx<T> {
     /**
      * Internal method to set manually the keypleDto response To be called by the tx manager
      */
-    public abstract T parseResponse(KeypleDto keypleDto) throws KeypleRemoteException;
+    protected abstract T parseResponse(KeypleDto keypleDto) throws KeypleRemoteException;
 
 
     /**
@@ -70,17 +70,18 @@ public abstract class RemoteMethodTx<T> {
      * 
      * @param callback
      */
-    final public void asyncGet(RemoteMethodTxCallback<T> callback) throws KeypleRemoteException {
+    private void asyncGet(RemoteMethodTxCallback<T> callback) throws KeypleRemoteException {
         this.callback = callback;
         sender.sendDTO(this.dto());
     }
 
 
     /**
-     * Blocking method to get results from the remote method call. To be called by the client
+     * Blocking method to get results from the remote method call. To be called by the client (used
+     * internally by rmCommands, do not use)
      * 
-     * @return T :
-     * @throws KeypleRemoteException
+     * @return T : result of the command
+     * @throws KeypleRemoteException : if an
      */
     final public T get() throws KeypleRemoteException {
         logger.debug("Blocking Get {}", this.getClass().getCanonicalName());
@@ -126,7 +127,7 @@ public abstract class RemoteMethodTx<T> {
     }
 
     /**
-     * Process the response contains in the keypleDto Response
+     * Set the response contained in the keypleDto Response Call the callback of the RmMethod
      * 
      * @param keypleDto
      */
@@ -141,11 +142,11 @@ public abstract class RemoteMethodTx<T> {
     }
 
     /**
-     * Generates a Request Dto for this Remote Method call
+     * Generates a Request Dto for this Rm Method call
      * 
-     * @return
+     * @return keypleDto
      */
-    public abstract KeypleDto dto();
+    protected abstract KeypleDto dto();
 
 
 }

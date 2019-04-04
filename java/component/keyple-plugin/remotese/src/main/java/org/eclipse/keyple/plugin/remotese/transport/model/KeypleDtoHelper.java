@@ -46,13 +46,7 @@ public class KeypleDtoHelper {
         return dto == null || dto.getAction() == null || dto.getAction().isEmpty();
     }
 
-    private static Boolean isKeypleDTO(String json) {
-        return isKeypleDTO(JsonParser.getGson().fromJson(json, JsonObject.class));
-    }
 
-    static public KeypleDto ACK() {
-        return new KeypleDto("ACK", "ACK", false, "", "", "", "");
-    }
 
     static public Boolean isKeypleDTO(JsonObject json) {
         return json.has("action");

@@ -18,20 +18,20 @@ package org.eclipse.keyple.plugin.remotese.transport.model;
 public class KeypleDto {
 
     // Requester Node Id (can be slave or master)
-    private String requesterNodeId;
+    private final String requesterNodeId;
 
 
     // Requester Node Id (can be slave or master)
     private String targetNodeId;
 
     // Master reader session
-    private String sessionId;
+    private final String sessionId;
 
     // Slave reader name
-    private String nativeReaderName;
+    private final String nativeReaderName;
 
     // Master reader name
-    private String virtualReaderName;
+    private final String virtualReaderName;
 
     // API method to be called
     private final String action;
@@ -134,10 +134,6 @@ public class KeypleDto {
 
     public String getTargetNodeId() {
         return targetNodeId;
-    }
-
-    public void setTargetNodeId(String targetNodeId) {
-        this.targetNodeId = targetNodeId;
     }
 
 

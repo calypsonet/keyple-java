@@ -29,6 +29,8 @@ public class VirtualReaderSessionImpl implements VirtualReaderSession {
 
     // constructor
     public VirtualReaderSessionImpl(String sessionId, String slaveNodeId, String masterNodeId) {
+        logger.debug("Creating VirtualReader sessionId:{} slaveNodeId:{} slaveNodeId:{}", sessionId,
+                slaveNodeId, slaveNodeId);
         if (sessionId == null) {
             throw new IllegalArgumentException("SessionId must not be null");
         }
