@@ -228,9 +228,6 @@ public class SlaveAPI implements INativeReaderService, DtoHandler, ObservableRea
         logger.info("SlaveAPI listens for event from native Reader - Received Event {}",
                 event.getEventType());
 
-        // retrieve last sessionId known for this reader
-        // String sessionId = nseSessionManager.getLastSession(event.getReaderName());
-
         // construct json data
         String data = JsonParser.getGson().toJson(event);
 

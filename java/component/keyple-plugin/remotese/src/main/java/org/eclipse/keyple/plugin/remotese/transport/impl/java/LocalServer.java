@@ -18,6 +18,7 @@ import org.eclipse.keyple.plugin.remotese.transport.factory.ServerNode;
 import org.eclipse.keyple.plugin.remotese.transport.model.KeypleDto;
 import org.eclipse.keyple.plugin.remotese.transport.model.KeypleDtoHelper;
 import org.eclipse.keyple.plugin.remotese.transport.model.TransportDto;
+import org.eclipse.keyple.seproxy.exception.KeypleRuntimeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -85,7 +86,7 @@ public class LocalServer implements ServerNode {
                 theClient.onLocalMessage(keypleDto);
             }
         } else {
-            throw new RuntimeException(
+            throw new KeypleRuntimeException(
                     "LocalServer#sendDTO could be invoked, localClient was not found by "
                             + keypleDto.getTargetNodeId() + " - " + keypleDto.getRequesterNodeId());
         }
@@ -95,9 +96,5 @@ public class LocalServer implements ServerNode {
     public String getNodeId() {
         return serverNodeId;
     }
-    /*
-     * @Override public void update(KeypleDto event) {
-     * 
-     * sendDTO(event); }
-     */
+
 }
