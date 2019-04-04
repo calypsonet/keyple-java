@@ -271,7 +271,7 @@ public class Demo_Master implements org.eclipse.keyple.util.Observable.Observer 
                          * Prepare the reading order and keep the associated parser for later use
                          * once the transaction has been processed.
                          */
-                        ReadRecordsRespPars readEventLogParser =
+                        int readEventLogParserIndex =
                                 poTransaction.prepareReadRecordsCmd(CalypsoClassicInfo.SFI_EventLog,
                                         ReadDataStructure.SINGLE_RECORD_DATA,
                                         CalypsoClassicInfo.RECORD_NUMBER_1,
@@ -291,6 +291,9 @@ public class Demo_Master implements org.eclipse.keyple.util.Observable.Observer 
                                  * Retrieve the data read from the parser updated during the
                                  * transaction process
                                  */
+                                ReadRecordsRespPars readEventLogParser =
+                                        (ReadRecordsRespPars) poTransaction
+                                                .getResponseParser(readEventLogParserIndex);
                                 byte eventLog[] = (readEventLogParser.getRecords())
                                         .get((int) CalypsoClassicInfo.RECORD_NUMBER_1);
 
