@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2018 Calypso Networks Association https://www.calypsonet-asso.org/
+ * Copyright (c) 2019 Calypso Networks Association https://www.calypsonet-asso.org/
  *
  * See the NOTICE file(s) distributed with this work for additional information regarding copyright
  * ownership.
@@ -9,27 +9,24 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  ********************************************************************************/
-package org.eclipse.keyple.calypso.command.po.parser.session;
+package org.eclipse.keyple.calypso.command.sam.parser.session;
 
 
 import org.eclipse.keyple.command.AbstractApduResponseParser;
 import org.eclipse.keyple.seproxy.message.ApduResponse;
 
 /**
- * PO Get challenge response parser. See specs: Calypso / page 108 / 9.54 - Get challenge
+ * PO Give Random response parser.
+ * <p>
+ * No output data except status word
  */
-public final class PoGetChallengeRespPars extends AbstractApduResponseParser {
-
+public class GiveRandomRespPars extends AbstractApduResponseParser {
     /**
-     * Instantiates a new PoGetChallengeRespPars.
+     * Instantiates a new GiveRandomRespPars.
      *
-     * @param response the response from PO Get Challenge APDU Command
+     * @param response the response
      */
-    public PoGetChallengeRespPars(ApduResponse response) {
+    public GiveRandomRespPars(ApduResponse response) {
         super(response);
-    }
-
-    public byte[] getPoChallenge() {
-        return getApduResponse().getDataOut();
     }
 }

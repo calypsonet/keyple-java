@@ -9,10 +9,11 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  ********************************************************************************/
-package org.eclipse.keyple.calypso.command.po.parser.session;
+package org.eclipse.keyple.calypso.command.po.parser.keys;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.eclipse.keyple.calypso.command.po.parser.session.GetChallengeRespPars;
 import org.eclipse.keyple.command.AbstractApduResponseParser;
 import org.eclipse.keyple.seproxy.message.ApduResponse;
 import org.eclipse.keyple.seproxy.message.SeResponse;
@@ -25,7 +26,7 @@ import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
-public class PoGetChallengeRespParsTest {
+public class GetChallengeRespParsTest {
 
     @Test
     public void POGetChallengetRespPars() {
@@ -40,8 +41,8 @@ public class PoGetChallengeRespParsTest {
                                 new ApduResponse(ByteArrayUtils.fromHex("9000"), null), true),
                         responses));
 
-        AbstractApduResponseParser apduResponseParser = new PoGetChallengeRespPars(
-                seResponse.getSingleResponse().getApduResponses().get(0));
+        AbstractApduResponseParser apduResponseParser =
+                new GetChallengeRespPars(seResponse.getSingleResponse().getApduResponses().get(0));
         Assert.assertArrayEquals(response, apduResponseParser.getApduResponse().getBytes());
         Assert.assertEquals("Success", apduResponseParser.getStatusInformation());
     }

@@ -11,6 +11,10 @@
  ********************************************************************************/
 package org.eclipse.keyple.calypso.command.po;
 
+import org.eclipse.keyple.calypso.command.po.builder.session.ChangeKeyCmdBuild;
+import org.eclipse.keyple.calypso.command.po.builder.session.GetChallengeCmdBuild;
+import org.eclipse.keyple.calypso.command.po.parser.session.ChangeKeyRespPars;
+import org.eclipse.keyple.calypso.command.po.parser.session.GetChallengeRespPars;
 import org.eclipse.keyple.command.AbstractApduCommandBuilder;
 import org.eclipse.keyple.command.AbstractApduResponseParser;
 import org.eclipse.keyple.command.CommandsTable;
@@ -63,9 +67,8 @@ public enum CalypsoPoCommands implements CommandsTable {
             org.eclipse.keyple.calypso.command.po.parser.AppendRecordRespPars.class),
 
     /** The po get challenge. */
-    GET_CHALLENGE("Get Challenge", (byte) 0x84,
-            org.eclipse.keyple.calypso.command.po.builder.session.PoGetChallengeCmdBuild.class,
-            org.eclipse.keyple.calypso.command.po.parser.session.PoGetChallengeRespPars.class),
+    GET_CHALLENGE("Get Challenge", (byte) 0x84, GetChallengeCmdBuild.class,
+            GetChallengeRespPars.class),
 
     /** The po increase counter. */
     INCREASE("Increase", (byte) 0x32,
@@ -80,7 +83,10 @@ public enum CalypsoPoCommands implements CommandsTable {
     /** The po decrease counter. */
     SELECT_FILE("Select File", (byte) 0xA4,
             org.eclipse.keyple.calypso.command.po.builder.SelectFileCmdBuild.class,
-            org.eclipse.keyple.calypso.command.po.parser.SelectFileRespPars.class);
+            org.eclipse.keyple.calypso.command.po.parser.SelectFileRespPars.class),
+
+    /* The po change key */
+    CHANGE_KEY("Change Key", (byte) 0xD8, ChangeKeyCmdBuild.class, ChangeKeyRespPars.class);
 
     /** The name. */
     private final String name;

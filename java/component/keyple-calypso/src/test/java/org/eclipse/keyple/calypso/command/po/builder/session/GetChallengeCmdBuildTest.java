@@ -20,14 +20,14 @@ import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
-public class PoGetChallengeCmdBuildTest {
+public class GetChallengeCmdBuildTest {
 
     @Test
     public void POGetChallenge_Rev2_4() {
 
-        byte[] request = {(byte) 0x94, (byte) 0x84, 0x01, 0x10, 0x08};
+        byte[] request = {(byte) 0x94, (byte) 0x84, 0x00, 0x00, 0x08};
 
-        AbstractApduCommandBuilder apduCommandBuilder = new PoGetChallengeCmdBuild(PoClass.LEGACY);
+        AbstractApduCommandBuilder apduCommandBuilder = new GetChallengeCmdBuild(PoClass.LEGACY);
         ApduRequest apduRequest = apduCommandBuilder.getApduRequest();
 
         Assert.assertArrayEquals(request, apduRequest.getBytes());
@@ -37,9 +37,9 @@ public class PoGetChallengeCmdBuildTest {
     @Test
     public void POGetChallenge_Rev3_1() {
 
-        byte[] request = {(byte) 0x00, (byte) 0x84, 0x01, 0x10, 0x08};
+        byte[] request = {(byte) 0x00, (byte) 0x84, 0x00, 0x00, 0x08};
 
-        AbstractApduCommandBuilder apduCommandBuilder = new PoGetChallengeCmdBuild(PoClass.ISO);
+        AbstractApduCommandBuilder apduCommandBuilder = new GetChallengeCmdBuild(PoClass.ISO);
         ApduRequest apduRequest = apduCommandBuilder.getApduRequest();
 
         Assert.assertArrayEquals(request, apduRequest.getBytes());
@@ -49,9 +49,9 @@ public class PoGetChallengeCmdBuildTest {
     @Test
     public void POGetChallenge_Rev3_2() {
 
-        byte[] request = {(byte) 0x00, (byte) 0x84, 0x01, 0x10, 0x08};
+        byte[] request = {(byte) 0x00, (byte) 0x84, 0x00, 0x00, 0x08};
 
-        AbstractApduCommandBuilder apduCommandBuilder = new PoGetChallengeCmdBuild(PoClass.ISO);
+        AbstractApduCommandBuilder apduCommandBuilder = new GetChallengeCmdBuild(PoClass.ISO);
         ApduRequest apduRequest = apduCommandBuilder.getApduRequest();
 
         Assert.assertArrayEquals(request, apduRequest.getBytes());
