@@ -239,7 +239,7 @@ public class UseCase_Calypso2_DefaultSelectionNotification_Stub implements Reade
                      * Prepare the reading order and keep the associated parser for later use once
                      * the transaction has been processed.
                      */
-                    ReadRecordsRespPars readEventLogParser = poTransaction.prepareReadRecordsCmd(
+                    int readEventLogParserIndex = poTransaction.prepareReadRecordsCmd(
                             CalypsoClassicInfo.SFI_EventLog, ReadDataStructure.SINGLE_RECORD_DATA,
                             CalypsoClassicInfo.RECORD_NUMBER_1,
                             String.format("EventLog (SFI=%02X, recnbr=%d))",
@@ -258,8 +258,9 @@ public class UseCase_Calypso2_DefaultSelectionNotification_Stub implements Reade
                              * Retrieve the data read from the parser updated during the transaction
                              * process
                              */
-                            byte eventLog[] = (readEventLogParser.getRecords())
-                                    .get((int) CalypsoClassicInfo.RECORD_NUMBER_1);
+                            byte eventLog[] = (((ReadRecordsRespPars) poTransaction
+                                    .getResponseParser(readEventLogParserIndex)).getRecords())
+                                            .get((int) CalypsoClassicInfo.RECORD_NUMBER_1);
 
                             /* Log the result */
                             logger.info("EventLog file data: {}", ByteArrayUtils.toHex(eventLog));

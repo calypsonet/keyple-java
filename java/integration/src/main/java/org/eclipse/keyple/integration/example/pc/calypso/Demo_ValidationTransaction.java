@@ -17,10 +17,8 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.SortedSet;
 import java.util.concurrent.ConcurrentSkipListSet;
-import org.eclipse.keyple.calypso.command.po.parser.AppendRecordRespPars;
 import org.eclipse.keyple.calypso.command.po.parser.ReadDataStructure;
 import org.eclipse.keyple.calypso.command.po.parser.ReadRecordsRespPars;
-import org.eclipse.keyple.calypso.command.po.parser.UpdateRecordRespPars;
 import org.eclipse.keyple.calypso.transaction.CalypsoPo;
 import org.eclipse.keyple.calypso.transaction.PoSelectionRequest;
 import org.eclipse.keyple.calypso.transaction.PoTransaction;
@@ -115,10 +113,10 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
         byte environmentSfi = 0x07;
 
 
-        ReadRecordsRespPars readEventParser = poTransaction.prepareReadRecordsCmd(eventSfi,
+        int readEventParserIndex = poTransaction.prepareReadRecordsCmd(eventSfi,
                 ReadDataStructure.SINGLE_RECORD_DATA, (byte) 0x01, "Event");
-        ReadRecordsRespPars readContractListParser = poTransaction.prepareReadRecordsCmd(
-                contractListSfi, ReadDataStructure.SINGLE_RECORD_DATA, (byte) 0x01, "ContractList");
+        int readContractListParserIndex = poTransaction.prepareReadRecordsCmd(contractListSfi,
+                ReadDataStructure.SINGLE_RECORD_DATA, (byte) 0x01, "ContractList");
 
         // Open Session with debit key #3 and reading the Environment at SFI 07h
         // Files to read during the beginning of the session: Event (SFI 0x08) and ContractList (SFI
@@ -126,9 +124,13 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
         poTransaction.processOpening(PoTransaction.ModificationMode.ATOMIC,
                 PoTransaction.SessionAccessLevel.SESSION_LVL_DEBIT, environmentSfi, (byte) 0x01);
 
-        byte contractIndex = readContractListParser.getRecords().get(1)[0];
-        byte[] eventTimestampData = Arrays.copyOfRange(readEventParser.getRecords().get(1), 1,
-                (Long.SIZE / Byte.SIZE) + 1);
+        byte contractIndex =
+                ((ReadRecordsRespPars) poTransaction.getResponseParser(readContractListParserIndex))
+                        .getRecords().get(1)[0];
+        byte[] eventTimestampData = Arrays.copyOfRange(
+                ((ReadRecordsRespPars) poTransaction.getResponseParser(readEventParserIndex))
+                        .getRecords().get(1),
+                1, (Long.SIZE / Byte.SIZE) + 1);
 
         String timeStampString = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss")
                 .format(new Date(bytesToLong(eventTimestampData)));
@@ -147,7 +149,7 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
         System.out.println(
                 "\t------------------------------------------------------------------------------\n");
 
-        ReadRecordsRespPars readContractParser = poTransaction.prepareReadRecordsCmd((byte) 0x29,
+        int readContractParserIndex = poTransaction.prepareReadRecordsCmd((byte) 0x29,
                 ReadDataStructure.SINGLE_RECORD_DATA, (byte) (contractIndex + 1), (byte) 0x1D,
                 "Contract");
 
@@ -179,9 +181,9 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
         byte[] dateToInsert = longToBytes(new Date().getTime());
         System.arraycopy(dateToInsert, 0, newEventData, 1, (Long.SIZE / Byte.SIZE));
 
-        UpdateRecordRespPars updateContractListParser = poTransaction.prepareUpdateRecordCmd(
-                contractListSfi, (byte) 0x01, newContractListData, "ContractList");
-        AppendRecordRespPars appendEventPars =
+        int updateContractListParserIndex = poTransaction.prepareUpdateRecordCmd(contractListSfi,
+                (byte) 0x01, newContractListData, "ContractList");
+        int appendEventParsIndex =
                 poTransaction.prepareAppendRecordCmd(eventSfi, newEventData, "Event");
 
         poTransaction.processPoCommandsInSession();
@@ -205,9 +207,9 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
         SeResponse dataReadInSession;
         PoTransaction poTransaction = new PoTransaction(poReader, detectedPO, samReader, null);
 
-        ReadRecordsRespPars readEventParser = poTransaction.prepareReadRecordsCmd(eventSfi,
+        int readEventParserIndex = poTransaction.prepareReadRecordsCmd(eventSfi,
                 ReadDataStructure.SINGLE_RECORD_DATA, (byte) 0x01, "Event");
-        ReadRecordsRespPars readCountersParser = poTransaction.prepareReadRecordsCmd(countersSfi,
+        int readCountersParserIndex = poTransaction.prepareReadRecordsCmd(countersSfi,
                 ReadDataStructure.SINGLE_COUNTER, (byte) 0x01, "Counters");
         poTransaction.prepareReadRecordsCmd(contractsSfi, ReadDataStructure.MULTIPLE_RECORD_DATA,
                 (byte) 0x01, "Contracts");
@@ -218,13 +220,17 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
         poTransaction.processOpening(PoTransaction.ModificationMode.ATOMIC,
                 PoTransaction.SessionAccessLevel.SESSION_LVL_DEBIT, environmentSfi, (byte) 0x01);
 
-        byte[] eventTimestampData = Arrays.copyOfRange(readEventParser.getRecords().get(1), 1,
-                (Long.SIZE / Byte.SIZE) + 1);
+        byte[] eventTimestampData = Arrays.copyOfRange(
+                ((ReadRecordsRespPars) poTransaction.getResponseParser(readEventParserIndex))
+                        .getRecords().get(1),
+                1, (Long.SIZE / Byte.SIZE) + 1);
 
         String timeStampString = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss")
                 .format(new Date(bytesToLong(eventTimestampData)));
 
-        int counterValue = readCountersParser.getCounters().get(0);
+        int counterValue =
+                ((ReadRecordsRespPars) poTransaction.getResponseParser(readEventParserIndex))
+                        .getCounters().get(0);
 
         System.out.println(
                 "\t------------------------------------------------------------------------------");
@@ -444,5 +450,4 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
             waitForEnd.wait();
         }
     }
-
 }

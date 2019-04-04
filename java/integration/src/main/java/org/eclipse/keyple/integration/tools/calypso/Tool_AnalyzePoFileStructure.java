@@ -114,10 +114,12 @@ public class Tool_AnalyzePoFileStructure {
         try {
             PoTransaction poTransaction = new PoTransaction(poReader, curApp);
 
-            SelectFileRespPars selectCurrentDf =
-                    poTransaction.prepareSelectFileCmd(CURRENT_DF, "CurrentDF");
+            int selectCurrentDfIndex = poTransaction.prepareSelectFileCmd(CURRENT_DF, "CurrentDF");
 
             poTransaction.processPoCommands(ChannelState.KEEP_OPEN);
+
+            SelectFileRespPars selectCurrentDf =
+                    (SelectFileRespPars) poTransaction.getResponseParser(selectCurrentDfIndex);
 
             if (!selectCurrentDf.isSelectionSuccessful()) {
                 return;
@@ -149,11 +151,12 @@ public class Tool_AnalyzePoFileStructure {
             PoTransaction poTransaction = new PoTransaction(poReader, curApp);
             int currentFile;
 
-            SelectFileRespPars selectFileParserFirst =
-                    poTransaction.prepareSelectFileCmd(FIRST, "First EF");
+            int selectFileParserFirstIndex = poTransaction.prepareSelectFileCmd(FIRST, "First EF");
 
             poTransaction.processPoCommands(ChannelState.KEEP_OPEN);
 
+            SelectFileRespPars selectFileParserFirst = (SelectFileRespPars) poTransaction
+                    .getResponseParser(selectFileParserFirstIndex);
             if (!selectFileParserFirst.isSelectionSuccessful()) {
                 return;
             }
@@ -164,10 +167,11 @@ public class Tool_AnalyzePoFileStructure {
             printFileInformation(selectFileParserFirst);
             currentFile = selectFileParserFirst.getLid();
 
-            SelectFileRespPars selectFileParserNext =
-                    poTransaction.prepareSelectFileCmd(NEXT, "Next EF");
+            int selectFileParserNextIndex = poTransaction.prepareSelectFileCmd(NEXT, "Next EF");
             poTransaction.processPoCommands(ChannelState.KEEP_OPEN);
 
+            SelectFileRespPars selectFileParserNext =
+                    (SelectFileRespPars) poTransaction.getResponseParser(selectFileParserNextIndex);
             if (!selectFileParserNext.isSelectionSuccessful()) {
                 return;
             }
@@ -179,8 +183,11 @@ public class Tool_AnalyzePoFileStructure {
 
                 currentFile = selectFileParserNext.getLid();
 
-                selectFileParserNext = poTransaction.prepareSelectFileCmd(NEXT, "Next EF");
+                selectFileParserNextIndex = poTransaction.prepareSelectFileCmd(NEXT, "Next EF");
                 poTransaction.processPoCommands(ChannelState.KEEP_OPEN);
+
+                selectFileParserNext = (SelectFileRespPars) poTransaction
+                        .getResponseParser(selectFileParserNextIndex);
 
                 if (!selectFileParserNext.isSelectionSuccessful()) {
                     return;

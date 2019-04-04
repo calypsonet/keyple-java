@@ -273,9 +273,9 @@ public class NFCTestFragment extends Fragment implements ObservableReader.Reader
                     mText.append("\n ---- \n");
                     SelectionsResult selectionsResult =
                             seSelection.processDefaultSelection(defaultSelectionResponse);
-                    if (selectionResults.hasActiveSelection()) {
+                    if (selectionsResult.hasActiveSelection()) {
                         CalypsoPo calypsoPo =
-                                (CalypsoPo) selectionResults.getActiveSelection().getMatchingSe();
+                                (CalypsoPo) selectionsResult.getActiveSelection().getMatchingSe();
 
                         mText.append("\nCalypso PO selection: ");
                         appendColoredText(mText, "SUCCESS\n", Color.GREEN);
@@ -287,7 +287,7 @@ public class NFCTestFragment extends Fragment implements ObservableReader.Reader
                          * process
                          */
                         ReadRecordsRespPars readEnvironmentParser =
-                                (ReadRecordsRespPars) selectionResults.getActiveSelection()
+                                (ReadRecordsRespPars) selectionsResult.getActiveSelection()
                                         .getResponseParser(readEnvironmentParserIndex);
 
                         byte environmentAndHolder[] = (readEnvironmentParser.getRecords())
@@ -304,7 +304,7 @@ public class NFCTestFragment extends Fragment implements ObservableReader.Reader
                          * Prepare the reading order and keep the associated parser for later use
                          * once the transaction has been processed.
                          */
-                        ReadRecordsRespPars readEventLogParser =
+                        int readEventLogParserIndex =
                                 poTransaction.prepareReadRecordsCmd(CalypsoClassicInfo.SFI_EventLog,
                                         ReadDataStructure.SINGLE_RECORD_DATA,
                                         CalypsoClassicInfo.RECORD_NUMBER_1,
@@ -324,6 +324,10 @@ public class NFCTestFragment extends Fragment implements ObservableReader.Reader
                              * Retrieve the data read from the parser updated during the transaction
                              * process
                              */
+
+                            ReadRecordsRespPars readEventLogParser =
+                                    (ReadRecordsRespPars) poTransaction
+                                            .getResponseParser(readEventLogParserIndex);
                             byte eventLog[] = (readEventLogParser.getRecords())
                                     .get((int) CalypsoClassicInfo.RECORD_NUMBER_1);
 

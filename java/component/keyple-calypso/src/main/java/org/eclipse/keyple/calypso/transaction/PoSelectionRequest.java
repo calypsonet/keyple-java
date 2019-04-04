@@ -29,7 +29,7 @@ import org.eclipse.keyple.seproxy.message.ApduRequest;
 import org.eclipse.keyple.seproxy.message.SeResponse;
 import org.eclipse.keyple.seproxy.protocol.ContactsProtocols;
 import org.eclipse.keyple.seproxy.protocol.SeProtocol;
-import org.eclipse.keyple.transaction.AbstractSeSelectionRequest;
+import org.eclipse.keyple.transaction.SeSelectionRequest;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,7 +37,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Specialized selection request to manage the specific characteristics of Calypso POs
  */
-public final class PoSelectionRequest extends AbstractSeSelectionRequest<CalypsoPo> {
+public final class PoSelectionRequest extends SeSelectionRequest {
     private static final Logger logger = LoggerFactory.getLogger(PoSelectionRequest.class);
 
     private int commandIndex;
@@ -278,6 +278,12 @@ public final class PoSelectionRequest extends AbstractSeSelectionRequest<Calypso
         return parser;
     }
 
+    /**
+     * Create a CalypsoPo object containing the selection data received from the plugin
+     * 
+     * @param seResponse the SE response received
+     * @return a {@link CalypsoPo}
+     */
     @Override
     protected CalypsoPo parse(SeResponse seResponse) {
         return new CalypsoPo(seResponse, seSelector.getExtraInfo());

@@ -12,7 +12,6 @@
 package org.eclipse.keyple.example.calypso.pc;
 
 
-import org.eclipse.keyple.calypso.command.po.parser.AppendRecordRespPars;
 import org.eclipse.keyple.calypso.transaction.CalypsoPo;
 import org.eclipse.keyple.calypso.transaction.PoSelectionRequest;
 import org.eclipse.keyple.calypso.transaction.PoSelector;
@@ -194,7 +193,7 @@ public class UseCase_Calypso5_MultipleSession_Pcsc {
 
                 int nbCommands = (modificationsBufferSize / 35) + 1;
 
-                AppendRecordRespPars appendRecordParsers[] = new AppendRecordRespPars[nbCommands];
+                int appendRecordParsers[] = new int[nbCommands];
 
                 logger.info(
                         "==== Send {} Append Record commands. Modifications buffer capacity = {} bytes i.e. {} 29-byte commands ====",
@@ -213,9 +212,11 @@ public class UseCase_Calypso5_MultipleSession_Pcsc {
 
                 if (!poProcessStatus) {
                     for (int i = 0; i < nbCommands; i++) {
-                        if (!appendRecordParsers[i].isSuccessful()) {
+                        if (!poTransaction.getResponseParser(appendRecordParsers[i])
+                                .isSuccessful()) {
                             logger.error("Append record #%d failed with errror %s.", i,
-                                    appendRecordParsers[i].getStatusInformation());
+                                    poTransaction.getResponseParser(appendRecordParsers[i])
+                                            .getStatusInformation());
                         }
                     }
                 }
