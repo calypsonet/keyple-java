@@ -37,7 +37,7 @@ import org.eclipse.keyple.seproxy.exception.KeypleReaderException;
 import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
 import org.eclipse.keyple.seproxy.protocol.SeProtocolSetting;
 import org.eclipse.keyple.transaction.SeSelection;
-import org.eclipse.keyple.transaction.SelectionResults;
+import org.eclipse.keyple.transaction.SelectionsResult;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -271,7 +271,7 @@ public class NFCTestFragment extends Fragment implements ObservableReader.Reader
                     mText.append("\n ---- \n");
                     mText.append(((AndroidNfcReader) reader).printTagId());
                     mText.append("\n ---- \n");
-                    SelectionResults selectionResults =
+                    SelectionsResult selectionsResult =
                             seSelection.processDefaultSelection(defaultSelectionResponse);
                     if (selectionResults.hasActiveSelection()) {
                         CalypsoPo calypsoPo =
