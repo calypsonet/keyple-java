@@ -19,6 +19,7 @@ import org.eclipse.keyple.plugin.remotese.transport.factory.ServerNode;
 import org.eclipse.keyple.plugin.remotese.transport.model.KeypleDto;
 import org.eclipse.keyple.plugin.remotese.transport.model.KeypleDtoHelper;
 import org.eclipse.keyple.plugin.remotese.transport.model.TransportDto;
+import org.eclipse.keyple.seproxy.exception.KeypleRuntimeException;
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
@@ -181,7 +182,7 @@ class WskServer extends WebSocketServer implements ServerNode {
                                         transportDto.getKeypleDTO().getTargetNodeId());
 
                         if (conn == null) {
-                            throw new RuntimeException("Conn was not found for "
+                            throw new KeypleRuntimeException("Conn was not found for "
                                     + transportDto.getKeypleDTO().getNativeReaderName() + " "
                                     + transportDto.getKeypleDTO().getTargetNodeId());
                         }
