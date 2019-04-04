@@ -38,7 +38,7 @@ import org.eclipse.keyple.seproxy.exception.KeypleReaderNotFoundException;
 import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
 import org.eclipse.keyple.transaction.MatchingSe;
 import org.eclipse.keyple.transaction.SeSelection;
-import org.eclipse.keyple.transaction.SelectionResults;
+import org.eclipse.keyple.transaction.SelectionsResult;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.eclipse.keyple.util.Observable;
 import org.slf4j.Logger;
@@ -232,11 +232,11 @@ public class Demo_Master implements org.eclipse.keyple.util.Observable.Observer 
             switch (event.getEventType()) {
 
                 case SE_MATCHED:
-                    SelectionResults selectionResults = seSelection
+                    SelectionsResult selectionsResult = seSelection
                             .processDefaultSelection(event.getDefaultSelectionResponse());
-                    if (selectionResults.hasActiveSelection()) {
+                    if (selectionsResult.hasActiveSelection()) {
                         MatchingSe selectedSe =
-                                selectionResults.getActiveSelection().getMatchingSe();
+                                selectionsResult.getActiveSelection().getMatchingSe();
 
                         logger.info(
                                 "Observer notification: the selection of the PO has succeeded.");
@@ -246,7 +246,7 @@ public class Demo_Master implements org.eclipse.keyple.util.Observable.Observer 
                          * process
                          */
                         ReadRecordsRespPars readEnvironmentParser =
-                                (ReadRecordsRespPars) selectionResults.getActiveSelection()
+                                (ReadRecordsRespPars) selectionsResult.getActiveSelection()
                                         .getResponseParser(readEnvironmentParserIndex);
 
                         byte environmentAndHolder[] = (readEnvironmentParser.getRecords())

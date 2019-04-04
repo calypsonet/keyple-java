@@ -15,14 +15,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The SelectionResults class holds the result of a selection process.
+ * The SelectionsResult class holds the result of a selection process.
  * <p>
  * embeds a list of {@link MatchingSelection}
  * <p>
  * provides a set of methods to retrieve the active selection (getActiveSelection) or a particular
  * selection specified by its index.
  */
-public class SelectionResults {
+public class SelectionsResult {
     private boolean hasActiveSelection = false;
     private List<MatchingSelection> matchingSelectionList = new ArrayList<MatchingSelection>();
 

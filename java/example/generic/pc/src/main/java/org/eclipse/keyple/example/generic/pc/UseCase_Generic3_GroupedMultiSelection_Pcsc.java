@@ -99,10 +99,10 @@ public class UseCase_Generic3_GroupedMultiSelection_Pcsc {
              * Actual SE communication: operate through a single request the SE selection
              */
 
-            SelectionResults selectionResults = seSelection.processExplicitSelection(seReader);
+            SelectionsResult selectionsResult = seSelection.processExplicitSelection(seReader);
 
-            if (selectionResults.getMatchingSelections().size() > 0) {
-                for (MatchingSelection matchingSelection : selectionResults
+            if (selectionsResult.getMatchingSelections().size() > 0) {
+                for (MatchingSelection matchingSelection : selectionsResult
                         .getMatchingSelections()) {
                     MatchingSe matchingSe = matchingSelection.getMatchingSe();
                     logger.info(

@@ -119,9 +119,9 @@ public class UseCase_Generic1_ExplicitSelectionAid_Pcsc {
             /*
              * Actual SE communication: operate through a single request the SE selection
              */
-            SelectionResults selectionResults = seSelection.processExplicitSelection(seReader);
-            if (selectionResults.hasActiveSelection()) {
-                MatchingSe matchedSe = selectionResults.getActiveSelection().getMatchingSe();
+            SelectionsResult selectionsResult = seSelection.processExplicitSelection(seReader);
+            if (selectionsResult.hasActiveSelection()) {
+                MatchingSe matchedSe = selectionsResult.getActiveSelection().getMatchingSe();
                 logger.info("The selection of the SE has succeeded.");
                 logger.info("Application FCI = {}", matchedSe.getSelectionStatus().getFci());
 

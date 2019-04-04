@@ -32,7 +32,7 @@ import org.eclipse.keyple.seproxy.protocol.SeProtocolSetting;
 import org.eclipse.keyple.transaction.MatchingSe;
 import org.eclipse.keyple.transaction.SeSelection;
 import org.eclipse.keyple.transaction.SeSelectionRequest;
-import org.eclipse.keyple.transaction.SelectionResults;
+import org.eclipse.keyple.transaction.SelectionsResult;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.junit.*;
 import org.junit.runner.RunWith;
@@ -310,10 +310,10 @@ public class StubReaderTest {
                 seSelection.prepareSelection(seSelectionRequest);
 
                 try {
-                    SelectionResults selectionResults =
+                    SelectionsResult selectionsResult =
                             seSelection.processExplicitSelection(reader);
 
-                    MatchingSe matchingSe = selectionResults.getActiveSelection().getMatchingSe();
+                    MatchingSe matchingSe = selectionsResult.getActiveSelection().getMatchingSe();
 
                     Assert.assertNotNull(matchingSe);
 

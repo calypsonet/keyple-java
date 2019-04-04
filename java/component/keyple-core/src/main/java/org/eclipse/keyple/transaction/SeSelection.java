@@ -81,11 +81,11 @@ public final class SeSelection {
      * element in the list
      * 
      * @param selectionResponse the selection response
-     * @return the {@link SelectionResults} containing the result of all prepared selection cases,
+     * @return the {@link SelectionsResult} containing the result of all prepared selection cases,
      *         including {@link MatchingSe} and {@link SeResponse}.
      */
-    private SelectionResults processSelection(SelectionResponse selectionResponse) {
-        SelectionResults selectionResults = new SelectionResults();
+    private SelectionsResult processSelection(SelectionResponse selectionResponse) {
+        SelectionsResult selectionsResult = new SelectionsResult();
 
         /* null pointer exception protection */
         if (selectionResponse == null) {
@@ -107,13 +107,13 @@ public final class SeSelection {
                     MatchingSe matchingSe =
                             seSelectionRequestList.get(selectionIndex).parse(seResponse);
 
-                    selectionResults.addMatchingSelection(new MatchingSelection(selectionIndex,
+                    selectionsResult.addMatchingSelection(new MatchingSelection(selectionIndex,
                             seSelectionRequestList.get(selectionIndex), matchingSe, seResponse));
                 }
             }
             selectionIndex++;
         }
-        return selectionResults;
+        return selectionsResult;
     }
 
     /**
@@ -123,10 +123,10 @@ public final class SeSelection {
      * Selection cases that have not matched the current SE are set to null.
      *
      * @param selectionResponse the response from the reader to the {@link DefaultSelectionRequest}
-     * @return the {@link SelectionResults} containing the result of all prepared selection cases,
+     * @return the {@link SelectionsResult} containing the result of all prepared selection cases,
      *         including {@link MatchingSe} and {@link SeResponse}.
      */
-    public SelectionResults processDefaultSelection(SelectionResponse selectionResponse) {
+    public SelectionsResult processDefaultSelection(SelectionResponse selectionResponse) {
         if (logger.isTraceEnabled()) {
             logger.trace("Process default SELECTIONRESPONSE ({} response(s))",
                     selectionResponse.getSelectionSeResponseSet().getResponses().size());
@@ -148,11 +148,11 @@ public final class SeSelection {
      * <p>
      *
      * @param seReader the SeReader on which the selection is made
-     * @return the {@link SelectionResults} containing the result of all prepared selection cases,
+     * @return the {@link SelectionsResult} containing the result of all prepared selection cases,
      *         including {@link MatchingSe} and {@link SeResponse}.
      * @throws KeypleReaderException if the requests transmission failed
      */
-    public SelectionResults processExplicitSelection(SeReader seReader)
+    public SelectionsResult processExplicitSelection(SeReader seReader)
             throws KeypleReaderException {
         if (logger.isTraceEnabled()) {
             logger.trace("Transmit SELECTIONREQUEST ({} request(s))",

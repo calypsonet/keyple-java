@@ -140,13 +140,13 @@ public class Demo_WriteName {
                                             null, "CDLight"),
                                     ChannelState.KEEP_OPEN, Protocol.ANY));
 
-            SelectionResults selectionResults = seSelection.processExplicitSelection(poReader);
-            if (!selectionResults.hasActiveSelection()) {
+            SelectionsResult selectionsResult = seSelection.processExplicitSelection(poReader);
+            if (!selectionsResult.hasActiveSelection()) {
                 throw new IllegalArgumentException("No recognizable PO detected.");
             }
 
             byte environmentSid = (byte) 0x00;
-            int activeSelectionIndex = selectionResults.getActiveSelection().getSelectionIndex();
+            int activeSelectionIndex = selectionsResult.getActiveSelection().getSelectionIndex();
             if (auditC0SeIndex == auditC0SeIndex) {
                 environmentSid = (byte) 0x07;
             } else if (auditC0SeIndex == clapSe) {
@@ -164,7 +164,7 @@ public class Demo_WriteName {
              */
             logger.info("The selection of the PO has succeeded.");
 
-            MatchingSe selectedSe = selectionResults.getActiveSelection().getMatchingSe();
+            MatchingSe selectedSe = selectionsResult.getActiveSelection().getMatchingSe();
 
             PoTransaction poTransaction =
                     new PoTransaction(poReader, (CalypsoPo) selectedSe, samReader, null);

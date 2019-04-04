@@ -30,7 +30,7 @@ import org.eclipse.keyple.seproxy.exception.NoStackTraceThrowable;
 import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
 import org.eclipse.keyple.transaction.MatchingSelection;
 import org.eclipse.keyple.transaction.SeSelection;
-import org.eclipse.keyple.transaction.SelectionResults;
+import org.eclipse.keyple.transaction.SelectionsResult;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -133,7 +133,7 @@ public class UseCase_Calypso1_ExplicitSelectionAid_Pcsc {
              * int readRecordParserIndex1 = poSelectionRequest.prepareReadRecordsCmd(...); int
              * readRecordParserIndex2 = poSelectionRequest.prepareReadRecordsCmd(...);
              *
-             * SelectionResults processedSelections =
+             * SelectionsResult processedSelections =
              * seSelection.processExplicitSelection(seReader); [...]
              *
              * MatchingSelection matchingSelection = processedSelections.getActiveSelection();
@@ -163,10 +163,10 @@ public class UseCase_Calypso1_ExplicitSelectionAid_Pcsc {
              * and the file read
              */
 
-            SelectionResults selectionResults = seSelection.processExplicitSelection(poReader);
+            SelectionsResult selectionsResult = seSelection.processExplicitSelection(poReader);
 
-            if (selectionResults.hasActiveSelection()) {
-                MatchingSelection matchingSelection = selectionResults.getActiveSelection();
+            if (selectionsResult.hasActiveSelection()) {
+                MatchingSelection matchingSelection = selectionsResult.getActiveSelection();
 
                 CalypsoPo calypsoPo = (CalypsoPo) matchingSelection.getMatchingSe();
                 logger.info("The selection of the PO has succeeded.");

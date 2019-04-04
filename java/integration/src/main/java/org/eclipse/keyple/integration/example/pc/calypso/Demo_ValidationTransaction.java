@@ -39,7 +39,7 @@ import org.eclipse.keyple.seproxy.protocol.SeProtocolSetting;
 import org.eclipse.keyple.seproxy.protocol.TransmissionMode;
 import org.eclipse.keyple.transaction.SeSelection;
 import org.eclipse.keyple.transaction.SeSelectionRequest;
-import org.eclipse.keyple.transaction.SelectionResults;
+import org.eclipse.keyple.transaction.SelectionsResult;
 import org.eclipse.keyple.util.ByteArrayUtils;
 
 @SuppressWarnings("PMD.VariableNamingConventions")
@@ -335,20 +335,20 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
                                             null, "CDLight"),
                                     ChannelState.KEEP_OPEN, Protocol.ANY));
 
-            SelectionResults selectionResults = seSelection.processExplicitSelection(poReader);
+            SelectionsResult selectionsResult = seSelection.processExplicitSelection(poReader);
 
-            if (selectionResults == null) {
+            if (selectionsResult == null) {
                 throw new IllegalArgumentException("No recognizable PO detected.");
             }
 
 
             // Depending on the PO detected perform either a Season Pass validation or a MultiTrip
             // validation
-            CalypsoPo auditC0Se = (CalypsoPo) selectionResults.getMatchingSelection(auditC0SeIndex)
+            CalypsoPo auditC0Se = (CalypsoPo) selectionsResult.getMatchingSelection(auditC0SeIndex)
                     .getMatchingSe();
             CalypsoPo clapSe =
-                    (CalypsoPo) selectionResults.getMatchingSelection(clapSeIndex).getMatchingSe();
-            CalypsoPo cdLightSe = (CalypsoPo) selectionResults.getMatchingSelection(cdLightSeIndex)
+                    (CalypsoPo) selectionsResult.getMatchingSelection(clapSeIndex).getMatchingSe();
+            CalypsoPo cdLightSe = (CalypsoPo) selectionsResult.getMatchingSelection(cdLightSeIndex)
                     .getMatchingSe();
             if (auditC0Se != null && auditC0Se.isSelected()) {
 

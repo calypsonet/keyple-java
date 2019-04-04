@@ -29,7 +29,7 @@ import org.eclipse.keyple.seproxy.exception.KeypleBaseException;
 import org.eclipse.keyple.seproxy.exception.NoStackTraceThrowable;
 import org.eclipse.keyple.seproxy.protocol.Protocol;
 import org.eclipse.keyple.transaction.SeSelection;
-import org.eclipse.keyple.transaction.SelectionResults;
+import org.eclipse.keyple.transaction.SelectionsResult;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -212,15 +212,15 @@ public class Tool_AnalyzePoFileStructure {
 
             int firstApplicationIndex = seSelection.prepareSelection(poSelectionRequest1);
 
-            SelectionResults selectionResults = seSelection.processExplicitSelection(poReader);
+            SelectionsResult selectionsResult = seSelection.processExplicitSelection(poReader);
 
-            if (!selectionResults.hasActiveSelection()) {
+            if (!selectionsResult.hasActiveSelection()) {
                 // logger.info("1st application not found.");
                 return;
             }
 
             CalypsoPo firstApplication =
-                    (CalypsoPo) selectionResults.getActiveSelection().getMatchingSe();
+                    (CalypsoPo) selectionsResult.getActiveSelection().getMatchingSe();
             printApplicationInformation(poReader, firstApplication);
 
             // additional selection
@@ -241,15 +241,15 @@ public class Tool_AnalyzePoFileStructure {
 
             int secondApplicationIndex = seSelection.prepareSelection(poSelectionRequest2);
 
-            selectionResults = seSelection.processExplicitSelection(poReader);
+            selectionsResult = seSelection.processExplicitSelection(poReader);
 
-            if (!selectionResults.hasActiveSelection()) {
+            if (!selectionsResult.hasActiveSelection()) {
                 // logger.info("2nd application not found.");
                 return;
             }
 
             CalypsoPo secondApplication =
-                    (CalypsoPo) selectionResults.getActiveSelection().getMatchingSe();
+                    (CalypsoPo) selectionsResult.getActiveSelection().getMatchingSe();
 
             logger.info(
                     "==================================================================================");

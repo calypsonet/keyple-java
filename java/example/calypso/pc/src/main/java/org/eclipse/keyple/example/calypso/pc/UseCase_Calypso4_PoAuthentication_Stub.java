@@ -35,7 +35,7 @@ import org.eclipse.keyple.seproxy.protocol.SeProtocolSetting;
 import org.eclipse.keyple.seproxy.protocol.TransmissionMode;
 import org.eclipse.keyple.transaction.MatchingSelection;
 import org.eclipse.keyple.transaction.SeSelection;
-import org.eclipse.keyple.transaction.SelectionResults;
+import org.eclipse.keyple.transaction.SelectionsResult;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -172,10 +172,10 @@ public class UseCase_Calypso4_PoAuthentication_Stub {
              * Actual PO communication: operate through a single request the Calypso PO selection
              * and the file read
              */
-            SelectionResults selectionResults = seSelection.processExplicitSelection(poReader);
+            SelectionsResult selectionsResult = seSelection.processExplicitSelection(poReader);
 
-            if (selectionResults.hasActiveSelection()) {
-                MatchingSelection matchingSelection = selectionResults.getActiveSelection();
+            if (selectionsResult.hasActiveSelection()) {
+                MatchingSelection matchingSelection = selectionsResult.getActiveSelection();
 
                 CalypsoPo calypsoPo = (CalypsoPo) matchingSelection.getMatchingSe();
                 logger.info("The selection of the PO has succeeded.");
