@@ -16,19 +16,19 @@ import org.eclipse.keyple.calypso.command.po.CalypsoPoCommands;
 import org.eclipse.keyple.calypso.command.po.PoCommandBuilder;
 
 /**
- * The Class GetChallengeCmdBuild. This class provides the dedicated constructor to build the PO Get
- * Challenge.
+ * The Class PoGetChallengeCmdBuild. This class provides the dedicated constructor to build the PO
+ * Get Challenge.
  */
-public final class GetChallengeCmdBuild extends PoCommandBuilder {
+public final class PoGetChallengeCmdBuild extends PoCommandBuilder {
 
     private static final CalypsoPoCommands command = CalypsoPoCommands.GET_CHALLENGE;
 
     /**
-     * Instantiates a new GetChallengeCmdBuild.
+     * Instantiates a new PoGetChallengeCmdBuild.
      *
      * @param poClass indicates which CLA byte should be used for the Apdu
      */
-    public GetChallengeCmdBuild(PoClass poClass) {
+    public PoGetChallengeCmdBuild(PoClass poClass) {
         super(command, null);
 
         byte p1 = (byte) 0x00;

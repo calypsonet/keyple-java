@@ -15,8 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 import org.eclipse.keyple.calypso.KeyReference;
 import org.eclipse.keyple.calypso.command.po.builder.session.ChangeKeyCmdBuild;
-import org.eclipse.keyple.calypso.command.po.builder.session.GetChallengeCmdBuild;
-import org.eclipse.keyple.calypso.command.po.parser.session.GetChallengeRespPars;
+import org.eclipse.keyple.calypso.command.po.builder.session.PoGetChallengeCmdBuild;
+import org.eclipse.keyple.calypso.command.po.parser.session.PoGetChallengeRespPars;
 import org.eclipse.keyple.calypso.command.sam.SamRevision;
 import org.eclipse.keyple.calypso.command.sam.builder.session.CardGenerateKeyCmdBuild;
 import org.eclipse.keyple.calypso.command.sam.builder.session.GiveRandomCmdBuild;
@@ -68,8 +68,8 @@ public class Tool_LoadKeys {
         List<ApduRequest> apduRequests = new ArrayList<ApduRequest>();
 
         // get the challenge from the PO
-        apduRequests.add(
-                new GetChallengeCmdBuild(poResource.getMatchingSe().getPoClass()).getApduRequest());
+        apduRequests.add(new PoGetChallengeCmdBuild(poResource.getMatchingSe().getPoClass())
+                .getApduRequest());
 
         SeRequest seRequest = new SeRequest(apduRequests, ChannelState.KEEP_OPEN);
 
@@ -79,9 +79,9 @@ public class Tool_LoadKeys {
             throw new IllegalStateException("PO get challenge command failed.");
         }
 
-        GetChallengeRespPars getChallengeRespPars =
-                new GetChallengeRespPars(seResponse.getApduResponses().get(0));
-        byte[] poChallenge = getChallengeRespPars.getPoChallenge();
+        PoGetChallengeRespPars poGetChallengeRespPars =
+                new PoGetChallengeRespPars(seResponse.getApduResponses().get(0));
+        byte[] poChallenge = poGetChallengeRespPars.getPoChallenge();
 
         // send diversifier, PO challenge and Card Generate key commands to the SAM (default
         // revision), get the ciphered data

@@ -18,14 +18,14 @@ import org.eclipse.keyple.seproxy.message.ApduResponse;
 /**
  * PO Get challenge response parser. See specs: Calypso / page 108 / 9.54 - Get challenge
  */
-public final class GetChallengeRespPars extends AbstractApduResponseParser {
+public final class PoGetChallengeRespPars extends AbstractApduResponseParser {
 
     /**
-     * Instantiates a new GetChallengeRespPars.
+     * Instantiates a new PoGetChallengeRespPars.
      *
      * @param response the response from PO Get Challenge APDU Command
      */
-    public GetChallengeRespPars(ApduResponse response) {
+    public PoGetChallengeRespPars(ApduResponse response) {
         super(response);
     }
 

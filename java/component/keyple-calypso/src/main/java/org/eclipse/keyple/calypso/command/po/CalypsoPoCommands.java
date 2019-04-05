@@ -12,9 +12,9 @@
 package org.eclipse.keyple.calypso.command.po;
 
 import org.eclipse.keyple.calypso.command.po.builder.session.ChangeKeyCmdBuild;
-import org.eclipse.keyple.calypso.command.po.builder.session.GetChallengeCmdBuild;
+import org.eclipse.keyple.calypso.command.po.builder.session.PoGetChallengeCmdBuild;
 import org.eclipse.keyple.calypso.command.po.parser.session.ChangeKeyRespPars;
-import org.eclipse.keyple.calypso.command.po.parser.session.GetChallengeRespPars;
+import org.eclipse.keyple.calypso.command.po.parser.session.PoGetChallengeRespPars;
 import org.eclipse.keyple.command.AbstractApduCommandBuilder;
 import org.eclipse.keyple.command.AbstractApduResponseParser;
 import org.eclipse.keyple.command.CommandsTable;
@@ -67,8 +67,8 @@ public enum CalypsoPoCommands implements CommandsTable {
             org.eclipse.keyple.calypso.command.po.parser.AppendRecordRespPars.class),
 
     /** The po get challenge. */
-    GET_CHALLENGE("Get Challenge", (byte) 0x84, GetChallengeCmdBuild.class,
-            GetChallengeRespPars.class),
+    GET_CHALLENGE("Get Challenge", (byte) 0x84, PoGetChallengeCmdBuild.class,
+            PoGetChallengeRespPars.class),
 
     /** The po increase counter. */
     INCREASE("Increase", (byte) 0x32,
