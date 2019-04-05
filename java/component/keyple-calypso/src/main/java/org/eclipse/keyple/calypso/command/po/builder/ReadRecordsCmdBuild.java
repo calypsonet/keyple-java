@@ -15,6 +15,10 @@ import org.eclipse.keyple.calypso.command.PoClass;
 import org.eclipse.keyple.calypso.command.po.CalypsoPoCommands;
 import org.eclipse.keyple.calypso.command.po.PoCommandBuilder;
 import org.eclipse.keyple.calypso.command.po.PoSendableInSession;
+import org.eclipse.keyple.calypso.command.po.parser.ReadRecordsRespPars;
+import org.eclipse.keyple.command.AbstractApduResponseParser;
+import org.eclipse.keyple.seproxy.message.ApduResponse;
+import org.eclipse.keyple.seproxy.message.SeResponse;
 
 /**
  * The Class ReadRecordsCmdBuild. This class provides the dedicated constructor to build the Read
@@ -24,6 +28,8 @@ public final class ReadRecordsCmdBuild extends PoCommandBuilder implements PoSen
 
     /** The command. */
     private static final CalypsoPoCommands command = CalypsoPoCommands.READ_RECORDS;
+
+    private final byte firstRecordNumber;
 
     /**
      * Instantiates a new read records cmd build.
@@ -46,6 +52,8 @@ public final class ReadRecordsCmdBuild extends PoCommandBuilder implements PoSen
         if (firstRecordNumber < 1) {
             throw new IllegalArgumentException("Bad record number (< 1)");
         }
+
+        this.firstRecordNumber = firstRecordNumber;
 
         byte p2 = (sfi == (byte) 0x00) ? (byte) 0x05 : (byte) ((byte) (sfi * 8) + 5);
         if (readJustOneRecord) {
@@ -74,5 +82,11 @@ public final class ReadRecordsCmdBuild extends PoCommandBuilder implements PoSen
     public ReadRecordsCmdBuild(PoClass poClass, byte sfi, byte firstRecordNumber,
             boolean readJustOneRecord, String extraInfo) throws IllegalArgumentException {
         this(poClass, sfi, firstRecordNumber, readJustOneRecord, (byte) 0x00, extraInfo);
+    }
+
+
+    @Override
+    public ReadRecordsRespPars createResponseParser(ApduResponse apduResponse) {
+        return new ReadRecordsRespPars(re);
     }
 }

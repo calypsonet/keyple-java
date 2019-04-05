@@ -13,6 +13,8 @@ package org.eclipse.keyple.calypso.command.po.parser;
 
 import java.util.*;
 import org.eclipse.keyple.command.AbstractApduResponseParser;
+import org.eclipse.keyple.seproxy.message.ApduResponse;
+import org.eclipse.keyple.seproxy.message.SeResponse;
 import org.eclipse.keyple.util.ByteArrayUtils;
 
 /**
@@ -59,7 +61,8 @@ public final class ReadRecordsRespPars extends AbstractApduResponseParser {
      * @param recordNumber the record number
      * @param readDataStructure the type of content in the response to parse
      */
-    public ReadRecordsRespPars(byte recordNumber, ReadDataStructure readDataStructure) {
+    public ReadRecordsRespPars(ApduResponse apduResponse, byte recordNumber, ReadDataStructure readDataStructure) {
+        super(apduResponse);
         this.recordNumber = recordNumber;
         this.readDataStructure = readDataStructure;
     }
