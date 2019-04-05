@@ -136,6 +136,9 @@ public final class PoTransaction {
     private int modificationsCounterMax;
     private int modificationsCounter;
 
+    private boolean preparedCommandsProcessed;
+    private int preparedCommandIndex;
+
     /**
      * PoTransaction with PO and SAM readers.
      * <ul>
@@ -184,6 +187,8 @@ public final class PoTransaction {
         poCalypsoInstanceSerial = calypsoPO.getApplicationSerialNumber();
 
         currentState = SessionState.SESSION_CLOSED;
+
+        preparedCommandsProcessed = true;
     }
 
     /**
@@ -498,7 +503,7 @@ public final class PoTransaction {
         /* Remove Open Secure Session response and create a new SeResponse */
         poApduResponseList.remove(0);
 
-        return new SeResponse(true, poSeResponse.getSelectionStatus(), poApduResponseList);
+        return new SeResponse(true, true, poSeResponse.getSelectionStatus(), poApduResponseList);
     }
 
     /**
@@ -945,7 +950,7 @@ public final class PoTransaction {
         /* Remove Close Secure Session response and create a new SeResponse */
         poApduResponseList.remove(poApduResponseList.size() - 1);
 
-        return new SeResponse(true, poSeResponse.getSelectionStatus(), poApduResponseList);
+        return new SeResponse(true, true, poSeResponse.getSelectionStatus(), poApduResponseList);
     }
 
     /**
@@ -1441,8 +1446,8 @@ public final class PoTransaction {
      * <li>According to the PO responses of Open Session and the PO commands sent inside the
      * session, a "cache" of SAM commands is filled with the corresponding Digest Init &amp; Digest
      * Update commands.</li>
-     * <li>All parsers returned by the prepare command methods are updated with the Apdu responses
-     * from the PO.</li>
+     * <li>All parsers keept by the prepare command methods are updated with the Apdu responses from
+     * the PO and made available with the getCommandParser method.</li>
      * </ul>
      *
      * @param modificationMode the modification mode: ATOMIC or MULTIPLE (see
@@ -1521,8 +1526,10 @@ public final class PoTransaction {
             poProcessSuccess = false;
         }
 
+        /* clear command list and set processed flag to handle next commands if any */
         poCommandBuilderList.clear();
-        poResponseParserList.clear();
+        preparedCommandsProcessed = true;
+
         return poProcessSuccess;
     }
 
@@ -1531,8 +1538,8 @@ public final class PoTransaction {
      * <ul>
      * <li>On the PO reader, generates a SeRequest with channelState set to the provided value and
      * ApduRequests containing the PO commands.</li>
-     * <li>All parsers returned by the prepare command methods are updated with the Apdu responses
-     * from the PO.</li>
+     * <li>All parsers keept by the prepare command methods are updated with the Apdu responses from
+     * the PO and made available with the getCommandParser method.</li>
      * </ul>
      *
      * @param channelState indicates if the SE channel of the PO reader must be closed after the
@@ -1562,9 +1569,10 @@ public final class PoTransaction {
             poProcessSuccess = false;
         }
 
-        /* clean up global lists */
+        /* clear command list and set processed flag to handle next commands if any */
         poCommandBuilderList.clear();
-        poResponseParserList.clear();
+        preparedCommandsProcessed = true;
+
         return poProcessSuccess;
     }
 
@@ -1575,8 +1583,8 @@ public final class PoTransaction {
      * ApduRequests containing the PO commands.</li>
      * <li>In case the secure session is active, the "cache" of SAM commands is completed with the
      * corresponding Digest Update commands.</li>
-     * <li>All parsers returned by the prepare command methods are updated with the Apdu responses
-     * from the PO.</li>
+     * <li>All parsers keept by the prepare command methods are updated with the Apdu responses from
+     * the PO and made available with the getCommandParser method.</li>
      * </ul>
      *
      * @return true if all commands are successful
@@ -1660,9 +1668,10 @@ public final class PoTransaction {
             }
         }
 
-        /* clean up global lists */
+        /* clear command list and set processed flag to handle next commands if any */
         poCommandBuilderList.clear();
-        poResponseParserList.clear();
+        preparedCommandsProcessed = true;
+
         return poProcessSuccess;
     }
 
@@ -1671,8 +1680,8 @@ public final class PoTransaction {
      * <ul>
      * <li>The ratification is handled according to the communication mode.</li>
      * <li>The logical channel can be left open or closed.</li>
-     * <li>All parsers returned by the prepare command methods are updated with the Apdu responses
-     * from the PO.</li>
+     * <li>All parsers keept by the prepare command methods are updated with the Apdu responses from
+     * the PO and made available with the getCommandParser method.</li>
      * </ul>
      *
      * @param transmissionMode the communication mode. If the communication mode is CONTACTLESS, a
@@ -1787,9 +1796,10 @@ public final class PoTransaction {
             poProcessSuccess = false;
         }
 
-        /* clean up global lists */
+        /* clear command list and set processed flag to handle next commands if any */
         poCommandBuilderList.clear();
-        poResponseParserList.clear();
+        preparedCommandsProcessed = true;
+
         return poProcessSuccess;
     }
 
@@ -1829,9 +1839,9 @@ public final class PoTransaction {
 
         logger.debug("processCancel => POSERESPONSE = {}", poSeResponse);
 
-        /* clean up global lists */
+        /* clear command list and set processed flag to handle next commands if any */
         poCommandBuilderList.clear();
-        poResponseParserList.clear();
+        preparedCommandsProcessed = true;
 
         /*
          * session is now considered closed regardless the previous state or the result of the abort
@@ -1919,6 +1929,72 @@ public final class PoTransaction {
     }
 
     /**
+     * Manage the builders and parsers lists.
+     * <p>
+     * Handle the clearing of the lists.
+     */
+    private int storeBuildersAndParsers(PoSendableInSession commandBuilder,
+            AbstractApduResponseParser commandParser) {
+        /* reset the list when preparing the first command after last processing */
+        if (preparedCommandsProcessed) {
+            poCommandBuilderList.clear();
+            poResponseParserList.clear();
+            preparedCommandsProcessed = false;
+            preparedCommandIndex = 0;
+        }
+        poCommandBuilderList.add(commandBuilder);
+        poResponseParserList.add(commandParser);
+        /* return and post-increment index */
+        preparedCommandIndex++;
+        return (preparedCommandIndex - 1);
+    }
+
+    /**
+     * Prepare a select file ApduRequest to be executed following the selection.
+     * <p>
+     *
+     * @param path path from the CURRENT_DF (CURRENT_DF identifier excluded)
+     * @param extraInfo extra information included in the logs (can be null or empty)
+     * @return the command index (input order, starting at 0)
+     */
+    public int prepareSelectFileCmd(byte[] path, String extraInfo) {
+
+        if (logger.isTraceEnabled()) {
+            logger.trace("Select File: PATH = {}", ByteArrayUtils.toHex(path));
+        }
+
+        /*
+         * keep the builder and parser, return the command index
+         */
+
+        return storeBuildersAndParsers(new SelectFileCmdBuild(calypsoPo.getPoClass(), path),
+                new SelectFileRespPars());
+    }
+
+    /**
+     * Prepare a select file ApduRequest to be executed following the selection.
+     * <p>
+     *
+     * @param selectControl provides the navigation case: FIRST, NEXT or CURRENT
+     * @param extraInfo extra information included in the logs (can be null or empty)
+     * @return the command index (input order, starting at 0)
+     */
+    public int prepareSelectFileCmd(SelectFileCmdBuild.SelectControl selectControl,
+            String extraInfo) {
+        if (logger.isTraceEnabled()) {
+            logger.trace("Navigate: CONTROL = {}", selectControl);
+        }
+
+        /*
+         * keep the builder and parser, return the command index
+         */
+
+        return storeBuildersAndParsers(
+                new SelectFileCmdBuild(calypsoPo.getPoClass(), selectControl),
+                new SelectFileRespPars());
+    }
+
+    /**
      * Internal method to handle expectedLength checks in public variants
      * 
      * @param sfi the sfi top select
@@ -1927,13 +2003,12 @@ public final class PoTransaction {
      *        several records)
      * @param expectedLength the expected length of the record(s)
      * @param extraInfo extra information included in the logs (can be null or empty)
-     * @return ReadRecordsRespPars the ReadRecords command response parser
+     * @return the command index (input order, starting at 0)
      * @throws java.lang.IllegalArgumentException - if record number &lt; 1
      * @throws java.lang.IllegalArgumentException - if the request is inconsistent
      */
-    private ReadRecordsRespPars prepareReadRecordsCmdInternal(byte sfi,
-            ReadDataStructure readDataStructureEnum, byte firstRecordNumber, int expectedLength,
-            String extraInfo) {
+    private int prepareReadRecordsCmdInternal(byte sfi, ReadDataStructure readDataStructureEnum,
+            byte firstRecordNumber, int expectedLength, String extraInfo) {
 
         /*
          * the readJustOneRecord flag is set to false only in case of multiple read records, in all
@@ -1942,15 +2017,14 @@ public final class PoTransaction {
         boolean readJustOneRecord =
                 !(readDataStructureEnum == readDataStructureEnum.MULTIPLE_RECORD_DATA);
 
-        poCommandBuilderList.add(new ReadRecordsCmdBuild(calypsoPo.getPoClass(), sfi,
-                firstRecordNumber, readJustOneRecord, (byte) expectedLength, extraInfo));
+        /*
+         * keep the builder and parser, return the command index
+         */
 
-        ReadRecordsRespPars poResponseParser =
-                new ReadRecordsRespPars(firstRecordNumber, readDataStructureEnum);
-
-        poResponseParserList.add(poResponseParser);
-
-        return poResponseParser;
+        return storeBuildersAndParsers(
+                new ReadRecordsCmdBuild(calypsoPo.getPoClass(), sfi, firstRecordNumber,
+                        readJustOneRecord, (byte) expectedLength, extraInfo),
+                new ReadRecordsRespPars(firstRecordNumber, readDataStructureEnum));
     }
 
     /**
@@ -1967,13 +2041,12 @@ public final class PoTransaction {
      *        several records)
      * @param expectedLength the expected length of the record(s)
      * @param extraInfo extra information included in the logs (can be null or empty)
-     * @return ReadRecordsRespPars the ReadRecords command response parser
+     * @return the command index (input order, starting at 0)
      * @throws java.lang.IllegalArgumentException - if record number &lt; 1
      * @throws java.lang.IllegalArgumentException - if the request is inconsistent
      */
-    public ReadRecordsRespPars prepareReadRecordsCmd(byte sfi,
-            ReadDataStructure readDataStructureEnum, byte firstRecordNumber, int expectedLength,
-            String extraInfo) {
+    public int prepareReadRecordsCmd(byte sfi, ReadDataStructure readDataStructureEnum,
+            byte firstRecordNumber, int expectedLength, String extraInfo) {
         if (expectedLength < 1 || expectedLength > 250) {
             throw new IllegalArgumentException("Bad length.");
         }
@@ -1993,12 +2066,12 @@ public final class PoTransaction {
      * @param firstRecordNumber the record number to read (or first record to read in case of
      *        several records)
      * @param extraInfo extra information included in the logs (can be null or empty)
-     * @return ReadRecordsRespPars the ReadRecords command response parser
+     * @return the command index (input order, starting at 0)
      * @throws java.lang.IllegalArgumentException - if record number &lt; 1
      * @throws java.lang.IllegalArgumentException - if the request is inconsistent
      */
-    public ReadRecordsRespPars prepareReadRecordsCmd(byte sfi,
-            ReadDataStructure readDataStructureEnum, byte firstRecordNumber, String extraInfo) {
+    public int prepareReadRecordsCmd(byte sfi, ReadDataStructure readDataStructureEnum,
+            byte firstRecordNumber, String extraInfo) {
         if (poReader.getTransmissionMode() == TransmissionMode.CONTACTS) {
             throw new IllegalArgumentException(
                     "In contacts mode, the expected length must be specified.");
@@ -2016,19 +2089,17 @@ public final class PoTransaction {
      * @param sfi the sfi to select
      * @param newRecordData the new record data to write
      * @param extraInfo extra information included in the logs (can be null or empty)
-     * @return AppendRecordRespPars the AppendRecord command response parser
+     * @return the command index (input order, starting at 0)
      * @throws java.lang.IllegalArgumentException - if the command is inconsistent
      */
-    public AppendRecordRespPars prepareAppendRecordCmd(byte sfi, byte[] newRecordData,
-            String extraInfo) {
-        poCommandBuilderList.add(
-                new AppendRecordCmdBuild(calypsoPo.getPoClass(), sfi, newRecordData, extraInfo));
+    public int prepareAppendRecordCmd(byte sfi, byte[] newRecordData, String extraInfo) {
+        /*
+         * keep the builder and parser, return the command index
+         */
 
-        AppendRecordRespPars poResponseParser = new AppendRecordRespPars();
-
-        poResponseParserList.add(poResponseParser);
-
-        return poResponseParser;
+        return storeBuildersAndParsers(
+                new AppendRecordCmdBuild(calypsoPo.getPoClass(), sfi, newRecordData, extraInfo),
+                new AppendRecordRespPars());
     }
 
     /**
@@ -2041,20 +2112,18 @@ public final class PoTransaction {
      * @param recordNumber the record number to update
      * @param newRecordData the new record data to write
      * @param extraInfo extra information included in the logs (can be null or empty)
-     * @return UpdateRecordRespPars the UpdateRecord command response parser
+     * @return the command index (input order, starting at 0)
      * @throws java.lang.IllegalArgumentException - if record number is &lt; 1
      * @throws java.lang.IllegalArgumentException - if the request is inconsistent
      */
-    public UpdateRecordRespPars prepareUpdateRecordCmd(byte sfi, byte recordNumber,
-            byte[] newRecordData, String extraInfo) {
-        poCommandBuilderList.add(new UpdateRecordCmdBuild(calypsoPo.getPoClass(), sfi, recordNumber,
-                newRecordData, extraInfo));
+    public int prepareUpdateRecordCmd(byte sfi, byte recordNumber, byte[] newRecordData,
+            String extraInfo) {
+        /*
+         * keep the builder and parser, return the command index
+         */
 
-        UpdateRecordRespPars poResponseParser = new UpdateRecordRespPars();
-
-        poResponseParserList.add(poResponseParser);
-
-        return poResponseParser;
+        return storeBuildersAndParsers(new UpdateRecordCmdBuild(calypsoPo.getPoClass(), sfi,
+                recordNumber, newRecordData, extraInfo), new UpdateRecordRespPars());
     }
 
     /**
@@ -2069,20 +2138,18 @@ public final class PoTransaction {
      * @param incValue Value to add to the counter (defined as a positive int &lt;= 16777215
      *        [FFFFFFh])
      * @param extraInfo extra information included in the logs (can be null or empty)
-     * @return IncreaseRespPars the Increase command response parser
+     * @return the command index (input order, starting at 0)
      * @throws java.lang.IllegalArgumentException - if the decrement value is out of range
      * @throws java.lang.IllegalArgumentException - if the command is inconsistent
      */
-    public IncreaseRespPars prepareIncreaseCmd(byte sfi, byte counterNumber, int incValue,
-            String extraInfo) {
-        poCommandBuilderList.add(new IncreaseCmdBuild(calypsoPo.getPoClass(), sfi, counterNumber,
-                incValue, extraInfo));
+    public int prepareIncreaseCmd(byte sfi, byte counterNumber, int incValue, String extraInfo) {
 
-        IncreaseRespPars poResponseParser = new IncreaseRespPars();
+        /*
+         * keep the builder and parser, return the command index
+         */
 
-        poResponseParserList.add(poResponseParser);
-
-        return poResponseParser;
+        return storeBuildersAndParsers(new IncreaseCmdBuild(calypsoPo.getPoClass(), sfi,
+                counterNumber, incValue, extraInfo), new IncreaseRespPars());
     }
 
     /**
@@ -2097,18 +2164,32 @@ public final class PoTransaction {
      * @param decValue Value to subtract to the counter (defined as a positive int &lt;= 16777215
      *        [FFFFFFh])
      * @param extraInfo extra information included in the logs (can be null or empty)
-     * @return DecreaseRespPars the Decrease command response parser
+     * @return the command index (input order, starting at 0)
      * @throws java.lang.IllegalArgumentException - if the decrement value is out of range
      * @throws java.lang.IllegalArgumentException - if the command is inconsistent
      */
-    public DecreaseRespPars prepareDecreaseCmd(byte sfi, byte counterNumber, int decValue,
-            String extraInfo) {
-        poCommandBuilderList.add(new DecreaseCmdBuild(calypsoPo.getPoClass(), sfi, counterNumber,
-                decValue, extraInfo));
-        DecreaseRespPars poResponseParser = new DecreaseRespPars();
+    public int prepareDecreaseCmd(byte sfi, byte counterNumber, int decValue, String extraInfo) {
 
-        poResponseParserList.add(poResponseParser);
+        /*
+         * keep the builder and parser, return the command index
+         */
 
-        return poResponseParser;
+        return storeBuildersAndParsers(new DecreaseCmdBuild(calypsoPo.getPoClass(), sfi,
+                counterNumber, decValue, extraInfo), new DecreaseRespPars());
+    }
+
+    /**
+     * Get the response parser matching the prepared command for which the index is provided
+     * 
+     * @param commandIndex
+     * @return
+     */
+    public AbstractApduResponseParser getResponseParser(int commandIndex) {
+        if (commandIndex >= poResponseParserList.size()) {
+            throw new IllegalArgumentException(
+                    String.format("Bad command index: index = %d, number of commands = %d",
+                            commandIndex, poResponseParserList.size()));
+        }
+        return poResponseParserList.get(commandIndex);
     }
 }

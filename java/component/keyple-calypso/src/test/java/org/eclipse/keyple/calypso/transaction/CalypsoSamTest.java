@@ -33,11 +33,11 @@ public class CalypsoSamTest {
         SeSelector seSelector = new SeSelector(null, null, "Dummy SeSelector");
         SamSelectionRequest samSelectionRequest = new SamSelectionRequest(seSelector,
                 ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4);
-        CalypsoSam calypsoSam = new CalypsoSam(samSelectionRequest);
         SelectionStatus selectionStatus = new SelectionStatus(
                 new AnswerToReset(ByteArrayUtils.fromHex("3B001122805A0180D002030411223344829000")),
                 null, true);
-        calypsoSam.setSelectionResponse(new SeResponse(true, selectionStatus, null));
+        CalypsoSam calypsoSam = new CalypsoSam(new SeResponse(true, true, selectionStatus, null),
+                "Dummy SeSlector");
         assertEquals(S1D, calypsoSam.getSamRevision());
         assertEquals((byte) 0x80, calypsoSam.getApplicationType());
         assertEquals((byte) 0xD0, calypsoSam.getApplicationSubType());
@@ -54,11 +54,11 @@ public class CalypsoSamTest {
         SeSelector seSelector = new SeSelector(null, null, "Dummy SeSelector");
         SamSelectionRequest samSelectionRequest = new SamSelectionRequest(seSelector,
                 ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4);
-        CalypsoSam calypsoSam = new CalypsoSam(samSelectionRequest);
         SelectionStatus selectionStatus = new SelectionStatus(
                 new AnswerToReset(ByteArrayUtils.fromHex("3B001122805A0180D102030411223344829000")),
                 null, true);
-        calypsoSam.setSelectionResponse(new SeResponse(true, selectionStatus, null));
+        CalypsoSam calypsoSam = new CalypsoSam(new SeResponse(true, true, selectionStatus, null),
+                "Dummy SeSlector");
         assertEquals(S1D, calypsoSam.getSamRevision());
         assertEquals((byte) 0xD1, calypsoSam.getApplicationSubType());
     }
@@ -69,11 +69,11 @@ public class CalypsoSamTest {
         SeSelector seSelector = new SeSelector(null, null, "Dummy SeSelector");
         SamSelectionRequest samSelectionRequest = new SamSelectionRequest(seSelector,
                 ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4);
-        CalypsoSam calypsoSam = new CalypsoSam(samSelectionRequest);
         SelectionStatus selectionStatus = new SelectionStatus(
                 new AnswerToReset(ByteArrayUtils.fromHex("3B001122805A0180D202030411223344829000")),
                 null, true);
-        calypsoSam.setSelectionResponse(new SeResponse(true, selectionStatus, null));
+        CalypsoSam calypsoSam = new CalypsoSam(new SeResponse(true, true, selectionStatus, null),
+                "Dummy SeSlector");
         assertEquals(S1D, calypsoSam.getSamRevision());
         assertEquals((byte) 0xD2, calypsoSam.getApplicationSubType());
     }
@@ -84,11 +84,11 @@ public class CalypsoSamTest {
         SeSelector seSelector = new SeSelector(null, null, "Dummy SeSelector");
         SamSelectionRequest samSelectionRequest = new SamSelectionRequest(seSelector,
                 ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4);
-        CalypsoSam calypsoSam = new CalypsoSam(samSelectionRequest);
         SelectionStatus selectionStatus = new SelectionStatus(
                 new AnswerToReset(ByteArrayUtils.fromHex("3B001122805A0180C102030411223344829000")),
                 null, true);
-        calypsoSam.setSelectionResponse(new SeResponse(true, selectionStatus, null));
+        CalypsoSam calypsoSam = new CalypsoSam(new SeResponse(true, true, selectionStatus, null),
+                "Dummy SeSlector");
         assertEquals(C1, calypsoSam.getSamRevision());
         assertEquals((byte) 0xC1, calypsoSam.getApplicationSubType());
     }
@@ -99,11 +99,11 @@ public class CalypsoSamTest {
         SeSelector seSelector = new SeSelector(null, null, "Dummy SeSelector");
         SamSelectionRequest samSelectionRequest = new SamSelectionRequest(seSelector,
                 ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4);
-        CalypsoSam calypsoSam = new CalypsoSam(samSelectionRequest);
         SelectionStatus selectionStatus = new SelectionStatus(
                 new AnswerToReset(ByteArrayUtils.fromHex("3B001122805A0180E102030411223344829000")),
                 null, true);
-        calypsoSam.setSelectionResponse(new SeResponse(true, selectionStatus, null));
+        CalypsoSam calypsoSam = new CalypsoSam(new SeResponse(true, true, selectionStatus, null),
+                "Dummy SeSlector");
         assertEquals(S1E, calypsoSam.getSamRevision());
         assertEquals((byte) 0xE1, calypsoSam.getApplicationSubType());
     }
@@ -114,11 +114,11 @@ public class CalypsoSamTest {
         SeSelector seSelector = new SeSelector(null, null, "Dummy SeSelector");
         SamSelectionRequest samSelectionRequest = new SamSelectionRequest(seSelector,
                 ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4);
-        CalypsoSam calypsoSam = new CalypsoSam(samSelectionRequest);
         SelectionStatus selectionStatus = new SelectionStatus(
                 new AnswerToReset(ByteArrayUtils.fromHex("3B001122805A0180E202030411223344829000")),
                 null, true);
-        calypsoSam.setSelectionResponse(new SeResponse(true, selectionStatus, null));
+        CalypsoSam calypsoSam = new CalypsoSam(new SeResponse(true, true, selectionStatus, null),
+                "Dummy SeSlector");
     }
 
     /* Bad Calypso SAM ATR (0000 instead of 9000) */
@@ -127,11 +127,11 @@ public class CalypsoSamTest {
         SeSelector seSelector = new SeSelector(null, null, "Dummy SeSelector");
         SamSelectionRequest samSelectionRequest = new SamSelectionRequest(seSelector,
                 ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4);
-        CalypsoSam calypsoSam = new CalypsoSam(samSelectionRequest);
         SelectionStatus selectionStatus = new SelectionStatus(
                 new AnswerToReset(ByteArrayUtils.fromHex("3B001122805A0180E202030411223344820000")),
                 null, true);
-        calypsoSam.setSelectionResponse(new SeResponse(true, selectionStatus, null));
+        CalypsoSam calypsoSam = new CalypsoSam(new SeResponse(true, true, selectionStatus, null),
+                "Dummy SeSlector");
     }
 
     /* Bad Calypso SAM ATR (empty array) */
@@ -140,9 +140,9 @@ public class CalypsoSamTest {
         SeSelector seSelector = new SeSelector(null, null, "Dummy SeSelector");
         SamSelectionRequest samSelectionRequest = new SamSelectionRequest(seSelector,
                 ChannelState.KEEP_OPEN, ContactlessProtocols.PROTOCOL_ISO14443_4);
-        CalypsoSam calypsoSam = new CalypsoSam(samSelectionRequest);
         SelectionStatus selectionStatus =
                 new SelectionStatus(new AnswerToReset(ByteArrayUtils.fromHex("")), null, true);
-        calypsoSam.setSelectionResponse(new SeResponse(true, selectionStatus, null));
+        CalypsoSam calypsoSam = new CalypsoSam(new SeResponse(true, true, selectionStatus, null),
+                "Dummy SeSlector");
     }
 }

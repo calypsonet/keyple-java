@@ -152,8 +152,9 @@ public class SeSelector {
          * @return a string
          */
         public String toString() {
-            return String.format("AID:%s",
-                    aidToSelect == null ? "null" : ByteArrayUtils.toHex(aidToSelect));
+            return String.format("AID:%s, OCCURRENCE:%s",
+                    aidToSelect == null ? "null" : ByteArrayUtils.toHex(aidToSelect),
+                    fileOccurrence);
         }
     }
 

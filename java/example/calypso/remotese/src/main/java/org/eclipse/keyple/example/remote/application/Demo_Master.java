@@ -38,6 +38,7 @@ import org.eclipse.keyple.seproxy.exception.KeypleReaderNotFoundException;
 import org.eclipse.keyple.seproxy.protocol.ContactlessProtocols;
 import org.eclipse.keyple.transaction.MatchingSe;
 import org.eclipse.keyple.transaction.SeSelection;
+import org.eclipse.keyple.transaction.SelectionsResult;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.eclipse.keyple.util.Observable;
 import org.slf4j.Logger;
@@ -53,7 +54,7 @@ public class Demo_Master implements org.eclipse.keyple.util.Observable.Observer 
     private static final Logger logger = LoggerFactory.getLogger(Demo_Master.class);
     private SeSelection seSelection;
     private VirtualReader poReader;
-    private ReadRecordsRespPars readEnvironmentParser;
+    private int readEnvironmentParserIndex;
 
 
     // DtoNode used as to send and receive KeypleDto to Slaves
@@ -177,7 +178,7 @@ public class Demo_Master implements org.eclipse.keyple.util.Observable.Observer 
                          * Prepare the reading order and keep the associated parser for later use
                          * once the selection has been made.
                          */
-                        readEnvironmentParser = poSelectionRequest.prepareReadRecordsCmd(
+                        readEnvironmentParserIndex = poSelectionRequest.prepareReadRecordsCmd(
                                 CalypsoClassicInfo.SFI_EnvironmentAndHolder,
                                 ReadDataStructure.SINGLE_RECORD_DATA,
                                 CalypsoClassicInfo.RECORD_NUMBER_1,
@@ -231,8 +232,11 @@ public class Demo_Master implements org.eclipse.keyple.util.Observable.Observer 
             switch (event.getEventType()) {
 
                 case SE_MATCHED:
-                    if (seSelection.processDefaultSelection(event.getDefaultSelectionResponse())) {
-                        MatchingSe selectedSe = seSelection.getSelectedSe();
+                    SelectionsResult selectionsResult = seSelection
+                            .processDefaultSelection(event.getDefaultSelectionResponse());
+                    if (selectionsResult.hasActiveSelection()) {
+                        MatchingSe selectedSe =
+                                selectionsResult.getActiveSelection().getMatchingSe();
 
                         logger.info(
                                 "Observer notification: the selection of the PO has succeeded.");
@@ -241,6 +245,10 @@ public class Demo_Master implements org.eclipse.keyple.util.Observable.Observer 
                          * Retrieve the data read from the parser updated during the selection
                          * process
                          */
+                        ReadRecordsRespPars readEnvironmentParser =
+                                (ReadRecordsRespPars) selectionsResult.getActiveSelection()
+                                        .getResponseParser(readEnvironmentParserIndex);
+
                         byte environmentAndHolder[] = (readEnvironmentParser.getRecords())
                                 .get((int) CalypsoClassicInfo.RECORD_NUMBER_1);
 
@@ -263,7 +271,7 @@ public class Demo_Master implements org.eclipse.keyple.util.Observable.Observer 
                          * Prepare the reading order and keep the associated parser for later use
                          * once the transaction has been processed.
                          */
-                        ReadRecordsRespPars readEventLogParser =
+                        int readEventLogParserIndex =
                                 poTransaction.prepareReadRecordsCmd(CalypsoClassicInfo.SFI_EventLog,
                                         ReadDataStructure.SINGLE_RECORD_DATA,
                                         CalypsoClassicInfo.RECORD_NUMBER_1,
@@ -283,6 +291,9 @@ public class Demo_Master implements org.eclipse.keyple.util.Observable.Observer 
                                  * Retrieve the data read from the parser updated during the
                                  * transaction process
                                  */
+                                ReadRecordsRespPars readEventLogParser =
+                                        (ReadRecordsRespPars) poTransaction
+                                                .getResponseParser(readEventLogParserIndex);
                                 byte eventLog[] = (readEventLogParser.getRecords())
                                         .get((int) CalypsoClassicInfo.RECORD_NUMBER_1);
 

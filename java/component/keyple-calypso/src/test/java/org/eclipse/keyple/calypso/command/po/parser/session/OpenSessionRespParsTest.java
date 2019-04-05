@@ -43,7 +43,7 @@ public class OpenSessionRespParsTest {
         List<ApduResponse> apduResponses = new ArrayList<ApduResponse>();
         apduResponses.add(responseMockOpenSecureSession);
 
-        SeResponseSet responseMock = new SeResponseSet(new SeResponse(true,
+        SeResponseSet responseMock = new SeResponseSet(new SeResponse(true, true,
                 new SelectionStatus(null, responseMockOpenSecureSession, true), apduResponses));
         ApduResponse response = responseMock.getSingleResponse().getApduResponses().get(0);
 
@@ -60,7 +60,7 @@ public class OpenSessionRespParsTest {
         List<ApduResponse> apduResponses = new ArrayList<ApduResponse>();
         apduResponses.add(responseMockOpenSecureSession);
 
-        SeResponseSet responseMock = new SeResponseSet(new SeResponse(true,
+        SeResponseSet responseMock = new SeResponseSet(new SeResponse(true, true,
                 new SelectionStatus(null, responseMockOpenSecureSession, true), apduResponses));
         ApduResponse response = responseMock.getSingleResponse().getApduResponses().get(0);
 
@@ -78,7 +78,7 @@ public class OpenSessionRespParsTest {
         List<ApduResponse> apduResponses = new ArrayList<ApduResponse>();
         apduResponses.add(responseMockOpenSecureSession);
 
-        SeResponseSet responseMock = new SeResponseSet(new SeResponse(true,
+        SeResponseSet responseMock = new SeResponseSet(new SeResponse(true, true,
                 new SelectionStatus(null, responseMockOpenSecureSession, true), apduResponses));
         ApduResponse response = responseMock.getSingleResponse().getApduResponses().get(0);
 
@@ -95,7 +95,7 @@ public class OpenSessionRespParsTest {
         List<ApduResponse> apduResponses = new ArrayList<ApduResponse>();
         apduResponses.add(responseMockOpenSecureSession);
 
-        SeResponseSet responseMock = new SeResponseSet(new SeResponse(true,
+        SeResponseSet responseMock = new SeResponseSet(new SeResponse(true, true,
                 new SelectionStatus(null, responseMockOpenSecureSession, true), apduResponses));
         ApduResponse response = responseMock.getSingleResponse().getApduResponses().get(0);
 
@@ -113,7 +113,7 @@ public class OpenSessionRespParsTest {
         List<ApduResponse> apduResponses = new ArrayList<ApduResponse>();
         apduResponses.add(responseMockOpenSecureSession);
 
-        SeResponseSet responseMock = new SeResponseSet(new SeResponse(true,
+        SeResponseSet responseMock = new SeResponseSet(new SeResponse(true, true,
                 new SelectionStatus(null, responseMockOpenSecureSession, true), apduResponses));
         ApduResponse response = responseMock.getSingleResponse().getApduResponses().get(0);
 
@@ -131,7 +131,7 @@ public class OpenSessionRespParsTest {
         List<ApduResponse> apduResponses = new ArrayList<ApduResponse>();
         apduResponses.add(responseMockOpenSecureSession);
 
-        SeResponseSet responseMock = new SeResponseSet(new SeResponse(true,
+        SeResponseSet responseMock = new SeResponseSet(new SeResponse(true, true,
                 new SelectionStatus(null, responseMockOpenSecureSession, true), apduResponses));
         ApduResponse response = responseMock.getSingleResponse().getApduResponses().get(0);
 
@@ -148,7 +148,7 @@ public class OpenSessionRespParsTest {
         List<ApduResponse> apduResponses = new ArrayList<ApduResponse>();
         apduResponses.add(responseMockFci);
 
-        SeResponseSet responseMock = new SeResponseSet(new SeResponse(true,
+        SeResponseSet responseMock = new SeResponseSet(new SeResponse(true, true,
                 new SelectionStatus(null, responseMockFci, true), apduResponses));
         ApduResponse response = responseMock.getSingleResponse().getApduResponses().get(0);
 
@@ -167,7 +167,7 @@ public class OpenSessionRespParsTest {
         List<ApduResponse> apduResponses = new ArrayList<ApduResponse>();
         apduResponses.add(responseMockOS);
 
-        SeResponseSet responseMock = new SeResponseSet(new SeResponse(true,
+        SeResponseSet responseMock = new SeResponseSet(new SeResponse(true, true,
                 new SelectionStatus(null, responseMockFci, true), apduResponses));
         ApduResponse response = responseMock.getSingleResponse().getApduResponses().get(0);
 

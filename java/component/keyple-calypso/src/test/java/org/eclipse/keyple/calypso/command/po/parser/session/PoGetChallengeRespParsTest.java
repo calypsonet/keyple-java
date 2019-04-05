@@ -35,7 +35,7 @@ public class PoGetChallengeRespParsTest {
         ApduResponse apduResponse = new ApduResponse(response, null);
         responses.add(apduResponse);
         SeResponseSet seResponse =
-                new SeResponseSet(new SeResponse(true,
+                new SeResponseSet(new SeResponse(true, true,
                         new SelectionStatus(null,
                                 new ApduResponse(ByteArrayUtils.fromHex("9000"), null), true),
                         responses));

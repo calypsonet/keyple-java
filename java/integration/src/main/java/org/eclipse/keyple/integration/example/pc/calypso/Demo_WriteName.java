@@ -73,7 +73,7 @@ public class Demo_WriteName {
         samSelection.prepareSelection(samSelectionRequest);
 
         try {
-            if (!samSelection.processExplicitSelection(samReader)) {
+            if (!samSelection.processExplicitSelection(samReader).hasActiveSelection()) {
                 System.out.println("Unable to open a logical channel for SAM!");
                 throw new IllegalStateException("SAM channel opening failure");
             }
@@ -107,8 +107,8 @@ public class Demo_WriteName {
             String cdLightAid = "315449432E494341"; // AID of the Rev2.4 PO emulating CDLight
 
             // Add Audit C0 AID to the list
-            CalypsoPo auditC0Se =
-                    (CalypsoPo) seSelection
+            int auditC0SeIndex =
+                    seSelection
                             .prepareSelection(
                                     new PoSelectionRequest(
                                             new SeSelector(new SeSelector.AidSelector(
@@ -118,8 +118,8 @@ public class Demo_WriteName {
                                             ChannelState.KEEP_OPEN, Protocol.ANY));
 
             // Add CLAP AID to the list
-            CalypsoPo clapSe =
-                    (CalypsoPo) seSelection
+            int clapSe =
+                    seSelection
                             .prepareSelection(
                                     new PoSelectionRequest(
                                             new SeSelector(
@@ -131,8 +131,8 @@ public class Demo_WriteName {
                                             ChannelState.KEEP_OPEN, Protocol.ANY));
 
             // Add cdLight AID to the list
-            CalypsoPo cdLightSe =
-                    (CalypsoPo) seSelection
+            int cdLightSe =
+                    seSelection
                             .prepareSelection(new PoSelectionRequest(
                                     new SeSelector(
                                             new SeSelector.AidSelector(ByteArrayUtils
@@ -140,18 +140,19 @@ public class Demo_WriteName {
                                             null, "CDLight"),
                                     ChannelState.KEEP_OPEN, Protocol.ANY));
 
-            if (!seSelection.processExplicitSelection(poReader)) {
+            SelectionsResult selectionsResult = seSelection.processExplicitSelection(poReader);
+            if (!selectionsResult.hasActiveSelection()) {
                 throw new IllegalArgumentException("No recognizable PO detected.");
             }
 
             byte environmentSid = (byte) 0x00;
-
-            if (auditC0Se.isSelected()) {
+            int activeSelectionIndex = selectionsResult.getActiveSelection().getSelectionIndex();
+            if (auditC0SeIndex == auditC0SeIndex) {
                 environmentSid = (byte) 0x07;
-            } else if (clapSe.isSelected()) {
+            } else if (auditC0SeIndex == clapSe) {
                 environmentSid = (byte) 0x14;
 
-            } else if (cdLightSe.isSelected()) {
+            } else if (auditC0SeIndex == cdLightSe) {
                 environmentSid = (byte) 0x07;
             } else {
                 throw new IllegalArgumentException("No recognizable PO detected.");
@@ -163,7 +164,7 @@ public class Demo_WriteName {
              */
             logger.info("The selection of the PO has succeeded.");
 
-            MatchingSe selectedSe = seSelection.getSelectedSe();
+            MatchingSe selectedSe = selectionsResult.getActiveSelection().getMatchingSe();
 
             PoTransaction poTransaction =
                     new PoTransaction(poReader, (CalypsoPo) selectedSe, samReader, null);
