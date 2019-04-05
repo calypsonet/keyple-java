@@ -13,6 +13,7 @@ package org.eclipse.keyple.integration.tools.calypso;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.eclipse.keyple.calypso.KeyReference;
 import org.eclipse.keyple.calypso.command.po.builder.session.ChangeKeyCmdBuild;
 import org.eclipse.keyple.calypso.command.po.builder.session.GetChallengeCmdBuild;
 import org.eclipse.keyple.calypso.command.po.parser.session.GetChallengeRespPars;
@@ -21,8 +22,8 @@ import org.eclipse.keyple.calypso.command.sam.builder.session.CardGenerateKeyCmd
 import org.eclipse.keyple.calypso.command.sam.builder.session.GiveRandomCmdBuild;
 import org.eclipse.keyple.calypso.command.sam.builder.session.SelectDiversifierCmdBuild;
 import org.eclipse.keyple.calypso.command.sam.parser.session.CardGenerateKeyRespPars;
-import org.eclipse.keyple.calypso.transaction.CalypsoPo;
-import org.eclipse.keyple.calypso.transaction.PoSelectionRequest;
+import org.eclipse.keyple.calypso.transaction.*;
+import org.eclipse.keyple.calypso.transaction.sam.CalypsoSam;
 import org.eclipse.keyple.integration.example.pc.calypso.DemoUtilities;
 import org.eclipse.keyple.plugin.pcsc.PcscPlugin;
 import org.eclipse.keyple.plugin.pcsc.PcscProtocolSetting;
@@ -51,29 +52,28 @@ public class Tool_LoadKeys {
 
     /**
      * Load a key
-     * @param poReader
-     * @param samReader
-     * @param calypsoPo
-     * @param keyIndex
-     * @param cipheringKeyKif if null the ciphering key is the null key
-     * @param cipheringKeyKvc if null the ciphering key is the null key
-     * @param sourceKeyKif
-     * @param sourceKeyKvc
+     * 
+     * @param poResource
+     * @param samResource
+     * @param keyIndex the key index (1, 2 or 3)
+     * @param cipheringKeyReference if null the ciphering key is the null key
+     * @param sourceKeyReference the reference of the key to be loaded
      * @return execution status of the change key command
      * @throws KeypleReaderException
      */
-    private static boolean loadKey(ProxyReader poReader, ProxyReader samReader, CalypsoPo calypsoPo,
-            byte keyIndex, Byte cipheringKeyKif, Byte cipheringKeyKvc, byte sourceKeyKif,
-            byte sourceKeyKvc) throws KeypleReaderException {
+    private static boolean loadKey(PoResource poResource, SamResource samResource, int keyIndex,
+            KeyReference cipheringKeyReference, KeyReference sourceKeyReference)
+            throws KeypleReaderException {
         // create an apdu requests list to handle PO and SAM commands
         List<ApduRequest> apduRequests = new ArrayList<ApduRequest>();
 
         // get the challenge from the PO
-        apduRequests.add(new GetChallengeCmdBuild(calypsoPo.getPoClass()).getApduRequest());
+        apduRequests.add(
+                new GetChallengeCmdBuild(poResource.getMatchingSe().getPoClass()).getApduRequest());
 
         SeRequest seRequest = new SeRequest(apduRequests, ChannelState.KEEP_OPEN);
 
-        SeResponse seResponse = poReader.transmit(seRequest);
+        SeResponse seResponse = ((ProxyReader) poResource.getSeReader()).transmit(seRequest);
 
         if (seResponse == null || !seResponse.getApduResponses().get(0).isSuccessful()) {
             throw new IllegalStateException("PO get challenge command failed.");
@@ -88,35 +88,40 @@ public class Tool_LoadKeys {
         apduRequests.clear();
 
         apduRequests.add(new SelectDiversifierCmdBuild(SamRevision.C1,
-                calypsoPo.getApplicationSerialNumber()).getApduRequest());
+                poResource.getMatchingSe().getApplicationSerialNumber()).getApduRequest());
         apduRequests.add(new GiveRandomCmdBuild(SamRevision.C1, poChallenge).getApduRequest());
-        if (cipheringKeyKif == null || cipheringKeyKvc == null) {
-            apduRequests.add(new CardGenerateKeyCmdBuild(SamRevision.C1, sourceKeyKif, sourceKeyKvc)
-                    .getApduRequest());
-        } else {
-            apduRequests.add(new CardGenerateKeyCmdBuild(SamRevision.C1, cipheringKeyKif,
-                    cipheringKeyKvc, sourceKeyKif, sourceKeyKvc).getApduRequest());
-        }
 
-        seResponse = samReader.transmit(seRequest);
+        apduRequests.add(new CardGenerateKeyCmdBuild(SamRevision.C1, cipheringKeyReference,
+                sourceKeyReference).getApduRequest());
+
+        seResponse = ((ProxyReader) samResource.getSeReader()).transmit(seRequest);
 
         if (seResponse == null || !seResponse.getApduResponses().get(2).isSuccessful()) {
-            throw new IllegalStateException("PO get challenge command failed.");
+            throw new IllegalStateException("Card Generate Key command failed.");
         }
 
         CardGenerateKeyRespPars cardGenerateKeyRespPars =
                 new CardGenerateKeyRespPars(seResponse.getApduResponses().get(2));
         byte[] cipheredData = cardGenerateKeyRespPars.getCipheredData();
-
-        logger.info("Ciphered data: {}", ByteArrayUtils.toHex(cipheredData));
+        String keyInfo;
+        if (cipheringKeyReference == null) {
+            keyInfo = String.format("CIPHERING KEY: 00/00, SOURCE KEY: %02X/%02X",
+                    sourceKeyReference.getKif(), sourceKeyReference.getKvc());
+        } else {
+            keyInfo = String.format("CIPHERING KEY: %02X/%02X, SOURCE KEY: %02X/%02X",
+                    cipheringKeyReference.getKif(), cipheringKeyReference.getKvc(),
+                    sourceKeyReference.getKif(), sourceKeyReference.getKvc());
+        }
+        logger.info("LOAD KEY {}, {}, CRYPTOGRAM: {}", keyIndex, keyInfo,
+                ByteArrayUtils.toHex(cipheredData));
 
         // send change key command to the PO
         apduRequests.clear();
 
-        apduRequests.add(new ChangeKeyCmdBuild(calypsoPo.getPoClass(), keyIndex, cipheredData)
-                .getApduRequest());
+        apduRequests.add(new ChangeKeyCmdBuild(poResource.getMatchingSe().getPoClass(),
+                (byte) keyIndex, cipheredData).getApduRequest());
 
-        seResponse = poReader.transmit(seRequest);
+        seResponse = ((ProxyReader) poResource.getSeReader()).transmit(seRequest);
 
         return (seResponse != null && seResponse.getApduResponses().get(0).isSuccessful()) ? true
                 : false;
@@ -124,6 +129,7 @@ public class Tool_LoadKeys {
 
     /**
      * Main entry
+     * 
      * @param args
      * @throws KeypleBaseException
      * @throws NoStackTraceThrowable
@@ -164,15 +170,17 @@ public class Tool_LoadKeys {
 
         SeSelection samSelection = new SeSelection();
 
-        SeSelectionRequest samSelectionRequest = new SeSelectionRequest(
+        SeSelectionRequest samSelectionRequest = new SamSelectionRequest(
                 new SeSelector(null, new SeSelector.AtrFilter(SAM_ATR_REGEX), "SAM Selection"),
                 ChannelState.KEEP_OPEN, Protocol.ANY);
 
         /* Prepare selector, ignore MatchingSe here */
         samSelection.prepareSelection(samSelectionRequest);
 
+        SelectionsResult samSelectionsResult;
         try {
-            if (!samSelection.processExplicitSelection(samReader).hasActiveSelection()) {
+            samSelectionsResult = samSelection.processExplicitSelection(samReader);
+            if (!samSelectionsResult.hasActiveSelection()) {
                 System.out.println("Unable to open a logical channel for SAM!");
                 throw new IllegalStateException("SAM channel opening failure");
             }
@@ -180,10 +188,18 @@ public class Tool_LoadKeys {
             throw new IllegalStateException("Reader exception: " + e.getMessage());
         }
 
+        CalypsoSam calypsoSam =
+                (CalypsoSam) samSelectionsResult.getActiveSelection().getMatchingSe();
+
+        SamResource samResource = new SamResource(samReader, calypsoSam);
+
         // Check if a PO is present in the reader
         if (poReader.isSePresent()) {
-            // do the PO selection
-            byte[] aid = ByteArrayUtils.fromHex("315449432E49434131");
+            // do the PO selection (kif/kvc values below must be adapted accordingly)
+            // byte[] aid = ByteArrayUtils.fromHex("D2760000850101"); // NFC NDEF
+            // byte[] aid = ByteArrayUtils.fromHex("315449432E49434132"); // INTERCODE 2.2
+            // byte[] aid = ByteArrayUtils.fromHex("304554502E494341"); // STORED VALUE
+            byte[] aid = ByteArrayUtils.fromHex("315449432E49434131"); // CD LIGHT/GTML
 
             SeSelection seSelection = new SeSelection();
 
@@ -191,21 +207,58 @@ public class Tool_LoadKeys {
                     new PoSelectionRequest(new SeSelector(new SeSelector.AidSelector(aid, null),
                             null, "Calypso Classic AID"), ChannelState.KEEP_OPEN, Protocol.ANY));
 
-            SelectionsResult selectionsResult = seSelection.processExplicitSelection(poReader);
+            SelectionsResult poSelectionsResult = seSelection.processExplicitSelection(poReader);
 
-            if (selectionsResult == null || !selectionsResult.hasActiveSelection()) {
+            if (poSelectionsResult == null || !poSelectionsResult.hasActiveSelection()) {
                 throw new IllegalStateException("No recognizable PO detected.");
             }
 
             // the selection succeeded, get the CalypsoPo
-            CalypsoPo calypsoPo = (CalypsoPo) selectionsResult.getActiveSelection().getMatchingSe();
+            CalypsoPo calypsoPo =
+                    (CalypsoPo) poSelectionsResult.getActiveSelection().getMatchingSe();
 
-            // load key 21/7E index 1 ciphered by the null key
-            loadKey(poReader, samReader, calypsoPo, (byte) 1, null, null, (byte) 0x21, (byte) 0x7E);
+            PoResource poResource = new PoResource(poReader, calypsoPo);
 
-            // load key 27/7E index 3 ciphered by the 21/7E
-            loadKey(poReader, samReader, calypsoPo, (byte) 3, (byte) 0x21, (byte) 0x7E, (byte) 0x27,
-                    (byte) 0x7E);
+            KeyReference nullKey = new KeyReference((byte) 0x00, (byte) 0x00);
+            KeyReference key1 = new KeyReference((byte) 0x21, (byte) 0x79);
+            KeyReference key2 = new KeyReference((byte) 0x27, (byte) 0x79);
+            KeyReference key3 = new KeyReference((byte) 0x30, (byte) 0x79);
+
+            logger.info("Revert keys to virgin state... (null key)");
+            // load the null key index 3 ciphered by the key 1
+            if (!loadKey(poResource, samResource, 3, key1, nullKey)) {
+                throw new IllegalStateException(
+                        "The loading of the null key #3 ciphered by the key #1 failed!");
+            }
+            // load the null key index 2 ciphered by the key 1
+            if (!loadKey(poResource, samResource, 2, key1, nullKey)) {
+                throw new IllegalStateException(
+                        "The loading of the null key #2 ciphered by the key #1 failed!");
+            }
+            // load the null key index 1 ciphered by the key 1
+            if (!loadKey(poResource, samResource, 1, key1, nullKey)) {
+                throw new IllegalStateException(
+                        "The loading of the null key #1 ciphered by the key #1 failed!");
+            }
+
+            logger.info("Load new keys...");
+            // load key #1 ciphered by the null key
+            if (!loadKey(poResource, samResource, 1, null, key1)) {
+                throw new IllegalStateException(
+                        "The loading of key #1 ciphered by the null key failed!");
+            }
+
+            // load key #2 ciphered by the key #1
+            if (!loadKey(poResource, samResource, 2, key1, key2)) {
+                throw new IllegalStateException(
+                        "The loading of key #2 ciphered by the key #1 failed!");
+            }
+
+            // load key #3 ciphered by the key #1
+            if (!loadKey(poResource, samResource, 3, key1, key3)) {
+                throw new IllegalStateException(
+                        "The loading of key #3 ciphered by the key #1 failed!");
+            }
 
             logger.info(
                     "==================================================================================");
