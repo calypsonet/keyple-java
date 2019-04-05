@@ -9,11 +9,11 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  ********************************************************************************/
-package org.eclipse.keyple.calypso.command.sam.parser;
+package org.eclipse.keyple.calypso.command.po.parser.keys;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.eclipse.keyple.calypso.command.sam.parser.security.DigestInitRespPars;
+import org.eclipse.keyple.calypso.command.po.parser.security.PoGetChallengeRespPars;
 import org.eclipse.keyple.command.AbstractApduResponseParser;
 import org.eclipse.keyple.seproxy.message.ApduResponse;
 import org.eclipse.keyple.seproxy.message.SeResponse;
@@ -26,12 +26,14 @@ import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
-public class DigestInitRespParsTest {
+public class PoGetChallengeRespParsTest {
 
     @Test
-    public void digestInitRespPars() {
+    public void POGetChallengetRespPars() {
+        byte[] response = new byte[] {0x03, 0x0D, 0x0E, (byte) 0xFA, (byte) 0x9C, (byte) 0x8C,
+                (byte) 0xB7, 0x27, (byte) 0x90, 0x00};
         List<ApduResponse> responses = new ArrayList<ApduResponse>();
-        ApduResponse apduResponse = new ApduResponse(new byte[] {(byte) 0x90, 0x00}, null);
+        ApduResponse apduResponse = new ApduResponse(response, null);
         responses.add(apduResponse);
         SeResponseSet seResponse =
                 new SeResponseSet(new SeResponse(true, true,
@@ -39,9 +41,9 @@ public class DigestInitRespParsTest {
                                 new ApduResponse(ByteArrayUtils.fromHex("9000"), null), true),
                         responses));
 
-        AbstractApduResponseParser apduResponseParser =
-                new DigestInitRespPars(seResponse.getSingleResponse().getApduResponses().get(0));
-        Assert.assertArrayEquals(new byte[] {(byte) 0x90, 0x00},
-                apduResponseParser.getApduResponse().getBytes());
+        AbstractApduResponseParser apduResponseParser = new PoGetChallengeRespPars(
+                seResponse.getSingleResponse().getApduResponses().get(0));
+        Assert.assertArrayEquals(response, apduResponseParser.getApduResponse().getBytes());
+        Assert.assertEquals("Success", apduResponseParser.getStatusInformation());
     }
 }

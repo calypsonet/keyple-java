@@ -15,18 +15,18 @@ import java.util.*;
 import org.eclipse.keyple.calypso.command.SendableInSession;
 import org.eclipse.keyple.calypso.command.po.*;
 import org.eclipse.keyple.calypso.command.po.builder.*;
-import org.eclipse.keyple.calypso.command.po.builder.session.AbstractOpenSessionCmdBuild;
-import org.eclipse.keyple.calypso.command.po.builder.session.CloseSessionCmdBuild;
+import org.eclipse.keyple.calypso.command.po.builder.security.AbstractOpenSessionCmdBuild;
+import org.eclipse.keyple.calypso.command.po.builder.security.CloseSessionCmdBuild;
 import org.eclipse.keyple.calypso.command.po.parser.*;
-import org.eclipse.keyple.calypso.command.po.parser.session.AbstractOpenSessionRespPars;
-import org.eclipse.keyple.calypso.command.po.parser.session.CloseSessionRespPars;
+import org.eclipse.keyple.calypso.command.po.parser.security.AbstractOpenSessionRespPars;
+import org.eclipse.keyple.calypso.command.po.parser.security.CloseSessionRespPars;
 import org.eclipse.keyple.calypso.command.sam.SamRevision;
 import org.eclipse.keyple.calypso.command.sam.SamSendableInSession;
-import org.eclipse.keyple.calypso.command.sam.builder.session.DigestAuthenticateCmdBuild;
-import org.eclipse.keyple.calypso.command.sam.builder.session.SelectDiversifierCmdBuild;
-import org.eclipse.keyple.calypso.command.sam.parser.session.DigestAuthenticateRespPars;
-import org.eclipse.keyple.calypso.command.sam.parser.session.DigestCloseRespPars;
-import org.eclipse.keyple.calypso.command.sam.parser.session.SamGetChallengeRespPars;
+import org.eclipse.keyple.calypso.command.sam.builder.security.DigestAuthenticateCmdBuild;
+import org.eclipse.keyple.calypso.command.sam.builder.security.SelectDiversifierCmdBuild;
+import org.eclipse.keyple.calypso.command.sam.parser.security.DigestAuthenticateRespPars;
+import org.eclipse.keyple.calypso.command.sam.parser.security.DigestCloseRespPars;
+import org.eclipse.keyple.calypso.command.sam.parser.security.SamGetChallengeRespPars;
 import org.eclipse.keyple.calypso.transaction.exception.*;
 import org.eclipse.keyple.command.AbstractApduCommandBuilder;
 import org.eclipse.keyple.command.AbstractApduResponseParser;
@@ -323,7 +323,7 @@ public final class PoTransaction {
                 : CHALLENGE_LENGTH_REV_INF_32;
 
         AbstractApduCommandBuilder samGetChallenge =
-                new org.eclipse.keyple.calypso.command.sam.builder.session.SamGetChallengeCmdBuild(
+                new org.eclipse.keyple.calypso.command.sam.builder.security.SamGetChallengeCmdBuild(
                         this.samRevision, challengeLength);
 
         samApduRequestList.add(samGetChallenge.getApduRequest());
@@ -1225,7 +1225,7 @@ public final class PoTransaction {
              * process
              */
             samApduRequestList.add(
-                    new org.eclipse.keyple.calypso.command.sam.builder.session.DigestInitCmdBuild(
+                    new org.eclipse.keyple.calypso.command.sam.builder.security.DigestInitCmdBuild(
                             samRevision, verification, revMode, keyRecordNumber, keyKIF, keyKVC,
                             poDigestDataCache.get(0)).getApduRequest());
 
@@ -1236,7 +1236,7 @@ public final class PoTransaction {
              */
             for (int i = 1; i < poDigestDataCache.size(); i++) {
                 samApduRequestList.add(
-                        new org.eclipse.keyple.calypso.command.sam.builder.session.DigestUpdateCmdBuild(
+                        new org.eclipse.keyple.calypso.command.sam.builder.security.DigestUpdateCmdBuild(
                                 samRevision, encryption, poDigestDataCache.get(i))
                                         .getApduRequest());
             }
@@ -1245,7 +1245,7 @@ public final class PoTransaction {
              * Build and append Digest Close command
              */
             samApduRequestList.add(
-                    (new org.eclipse.keyple.calypso.command.sam.builder.session.DigestCloseCmdBuild(
+                    (new org.eclipse.keyple.calypso.command.sam.builder.security.DigestCloseCmdBuild(
                             samRevision,
                             poRevision.equals(PoRevision.REV3_2) ? SIGNATURE_LENGTH_REV32
                                     : SIGNATURE_LENGTH_REV_INF_32).getApduRequest()));
