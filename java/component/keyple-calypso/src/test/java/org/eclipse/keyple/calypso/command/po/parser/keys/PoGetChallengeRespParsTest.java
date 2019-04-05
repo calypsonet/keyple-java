@@ -13,7 +13,7 @@ package org.eclipse.keyple.calypso.command.po.parser.keys;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.eclipse.keyple.calypso.command.po.parser.session.PoGetChallengeRespPars;
+import org.eclipse.keyple.calypso.command.po.parser.security.PoGetChallengeRespPars;
 import org.eclipse.keyple.command.AbstractApduResponseParser;
 import org.eclipse.keyple.seproxy.message.ApduResponse;
 import org.eclipse.keyple.seproxy.message.SeResponse;
