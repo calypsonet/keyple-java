@@ -18,7 +18,6 @@ import java.io.InputStream;
 import java.util.EnumMap;
 import java.util.Properties;
 import org.eclipse.keyple.calypso.transaction.PoTransaction;
-import org.eclipse.keyple.calypso.transaction.sam.CalypsoSam;
 import org.eclipse.keyple.calypso.transaction.sam.SamSelectionRequest;
 import org.eclipse.keyple.calypso.transaction.sam.SamSelector;
 import org.eclipse.keyple.example.generic.pc.ReaderUtilities;
@@ -128,11 +127,12 @@ public class CalypsoUtilities {
         SamSelector samSelector = new SamSelector(C1, null, "Selection SAM C1");
 
         /* Prepare selector, ignore MatchingSe here */
-        CalypsoSam calypsoSam = (CalypsoSam) samSelection.prepareSelection(
+        samSelection.prepareSelection(
                 new SamSelectionRequest(samSelector, ChannelState.KEEP_OPEN, Protocol.ANY));
 
         try {
-            if (!samSelection.processExplicitSelection(samReader)) {
+            if (!samSelection.processExplicitSelection(samReader).getActiveSelection()
+                    .getMatchingSe().isSelected()) {
                 throw new IllegalStateException("Unable to open a logical channel for SAM!");
             } else {
             }

@@ -34,21 +34,14 @@ public class CalypsoSam extends MatchingSe {
     private byte softwareRevision;
 
     /**
-     * Constructor
+     * Constructor.
      * 
-     * @param samSelectionRequest the SAM selection request
+     * @param selectionResponse the selection response from the SAM
+     * @param extraInfo textual information
      */
-    public CalypsoSam(SamSelectionRequest samSelectionRequest) {
-        super(samSelectionRequest);
-    }
+    public CalypsoSam(SeResponse selectionResponse, String extraInfo) {
+        super(selectionResponse, extraInfo);
 
-    /**
-     * Analyze the ATR contained in the selection status and extract the relevant information.
-     * 
-     * @param selectionResponse the selection SeResponse
-     */
-    @Override
-    public void setSelectionResponse(SeResponse selectionResponse) {
         String atrString =
                 ByteArrayUtils.toHex(selectionResponse.getSelectionStatus().getAtr().getBytes());
         if (atrString.isEmpty()) {
