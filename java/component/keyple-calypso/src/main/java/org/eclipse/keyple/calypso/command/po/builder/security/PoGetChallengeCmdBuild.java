@@ -12,14 +12,16 @@
 package org.eclipse.keyple.calypso.command.po.builder.security;
 
 import org.eclipse.keyple.calypso.command.PoClass;
+import org.eclipse.keyple.calypso.command.po.AbstractPoCommandBuilder;
 import org.eclipse.keyple.calypso.command.po.CalypsoPoCommands;
-import org.eclipse.keyple.calypso.command.po.PoCommandBuilder;
+import org.eclipse.keyple.calypso.command.po.parser.security.PoGetChallengeRespPars;
+import org.eclipse.keyple.seproxy.message.ApduResponse;
 
 /**
  * The Class PoGetChallengeCmdBuild. This class provides the dedicated constructor to build the PO
  * Get Challenge.
  */
-public final class PoGetChallengeCmdBuild extends PoCommandBuilder {
+public final class PoGetChallengeCmdBuild extends AbstractPoCommandBuilder<PoGetChallengeRespPars> {
 
     private static final CalypsoPoCommands command = CalypsoPoCommands.GET_CHALLENGE;
 
@@ -36,5 +38,10 @@ public final class PoGetChallengeCmdBuild extends PoCommandBuilder {
         byte le = (byte) 0x08;
 
         this.request = setApduRequest(poClass.getValue(), command, p1, p2, null, le);
+    }
+
+    @Override
+    public PoGetChallengeRespPars createResponseParser(ApduResponse apduResponse) {
+        return new PoGetChallengeRespPars(apduResponse);
     }
 }

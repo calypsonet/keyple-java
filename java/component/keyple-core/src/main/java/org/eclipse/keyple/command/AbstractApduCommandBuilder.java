@@ -12,8 +12,6 @@
 package org.eclipse.keyple.command;
 
 import org.eclipse.keyple.seproxy.message.ApduRequest;
-import org.eclipse.keyple.seproxy.message.ApduResponse;
-import org.eclipse.keyple.seproxy.message.SeResponse;
 
 /**
  * Generic APDU command builder.
@@ -50,7 +48,6 @@ public abstract class AbstractApduCommandBuilder {
     // public AbstractApduCommandBuilder(CalypsoCommands commandReference, ApduRequest request) {
     public AbstractApduCommandBuilder(CommandsTable commandReference, ApduRequest request) {
         this.name = commandReference.getName();
-        this.commandParserClass = commandReference.getResponseParserClass();
         this.request = request;
         // set APDU name for non null request
         if (request != null) {
@@ -90,23 +87,6 @@ public abstract class AbstractApduCommandBuilder {
     public final String getName() {
         return this.name;
     }
-
-    /**
-     * Gets the apdu response parser class.
-     *
-     * @return the corresponding AbstractApduResponseParser class of the APDU command from the
-     *         CommandsTable information
-     */
-    public final Class<? extends AbstractApduResponseParser> getApduResponseParserClass() {
-        return this.commandParserClass;
-    }
-
-    /**
-     * Create the response parser matching the builder
-     * @param apduResponse the response data from the SE
-     * @return an {@link AbstractApduResponseParser}
-     */
-    public abstract AbstractApduResponseParser createResponseParser(ApduResponse apduResponse);
 
     /**
      * Gets the request.

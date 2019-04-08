@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2018 Calypso Networks Association https://www.calypsonet-asso.org/
+ * Copyright (c) 2019 Calypso Networks Association https://www.calypsonet-asso.org/
  *
  * See the NOTICE file(s) distributed with this work for additional information regarding copyright
  * ownership.
@@ -9,9 +9,16 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  ********************************************************************************/
-package org.eclipse.keyple.calypso.command.po;
+package org.eclipse.keyple.calypso.command;
 
-import org.eclipse.keyple.calypso.command.SendableInSession;
 
-public interface PoSendableInSession extends SendableInSession<PoCommand> {
+import org.eclipse.keyple.command.AbstractApduResponseParser;
+import org.eclipse.keyple.command.AbstractIso7816CommandBuilder;
+
+public interface CalypsoCommand<B extends AbstractIso7816CommandBuilder, P extends AbstractApduResponseParser> {
+    B getCommandBuilder();
+
+    P getResponseParser();
+
+    void setResponseParser(P parser);
 }

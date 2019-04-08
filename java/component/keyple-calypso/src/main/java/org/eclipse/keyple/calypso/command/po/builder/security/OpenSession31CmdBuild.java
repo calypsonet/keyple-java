@@ -15,8 +15,11 @@ package org.eclipse.keyple.calypso.command.po.builder.security;
 import org.eclipse.keyple.calypso.command.PoClass;
 import org.eclipse.keyple.calypso.command.po.CalypsoPoCommands;
 import org.eclipse.keyple.calypso.command.po.PoRevision;
+import org.eclipse.keyple.calypso.command.po.parser.security.OpenSession31RespPars;
+import org.eclipse.keyple.seproxy.message.ApduResponse;
 
-public final class OpenSession31CmdBuild extends AbstractOpenSessionCmdBuild {
+public final class OpenSession31CmdBuild
+        extends AbstractOpenSessionCmdBuild<OpenSession31RespPars> {
     /**
      * Instantiates a new AbstractOpenSessionCmdBuild.
      *
@@ -45,5 +48,10 @@ public final class OpenSession31CmdBuild extends AbstractOpenSessionCmdBuild {
         if (extraInfo != null) {
             this.addSubName(extraInfo);
         }
+    }
+
+    @Override
+    public OpenSession31RespPars createResponseParser(ApduResponse apduResponse) {
+        return new OpenSession31RespPars(apduResponse);
     }
 }

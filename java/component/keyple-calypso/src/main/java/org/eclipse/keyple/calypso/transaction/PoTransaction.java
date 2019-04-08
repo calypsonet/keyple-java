@@ -12,6 +12,7 @@
 package org.eclipse.keyple.calypso.transaction;
 
 import java.util.*;
+import org.eclipse.keyple.calypso.command.CalypsoCommand;
 import org.eclipse.keyple.calypso.command.SendableInSession;
 import org.eclipse.keyple.calypso.command.po.*;
 import org.eclipse.keyple.calypso.command.po.builder.*;
@@ -20,6 +21,7 @@ import org.eclipse.keyple.calypso.command.po.builder.security.CloseSessionCmdBui
 import org.eclipse.keyple.calypso.command.po.parser.*;
 import org.eclipse.keyple.calypso.command.po.parser.security.AbstractOpenSessionRespPars;
 import org.eclipse.keyple.calypso.command.po.parser.security.CloseSessionRespPars;
+import org.eclipse.keyple.calypso.command.sam.AbstractSamCommandBuilder;
 import org.eclipse.keyple.calypso.command.sam.SamRevision;
 import org.eclipse.keyple.calypso.command.sam.SamSendableInSession;
 import org.eclipse.keyple.calypso.command.sam.builder.security.DigestAuthenticateCmdBuild;
@@ -118,11 +120,8 @@ public final class PoTransaction {
     private boolean wasRatified;
     /** The data read at opening */
     private byte[] openRecordDataRead;
-    /** The list to contain the prepared commands */
-    private List<PoSendableInSession> poCommandBuilderList = new ArrayList<PoSendableInSession>();
-    /** The list to contain the parsers associated to the prepared commands */
-    private List<AbstractApduResponseParser> poResponseParserList =
-            new ArrayList<AbstractApduResponseParser>();
+    /** The list to contain the prepared commands and their parsers */
+    private List<PoSendableInSession> poCommandList = new ArrayList<PoSendableInSession>();
     /** The SAM settings status */
     private boolean samSettingsDefined;
     /** List of authorized KVCs */
@@ -275,19 +274,19 @@ public final class PoTransaction {
      * <li>According to the PO responses of Open Session and the PO commands sent inside the
      * session, a "cache" of SAM commands is filled with the corresponding Digest Init &amp; Digest
      * Update commands.</li>
-     * <li>Returns the corresponding PO SeResponse (responses to poCommandsInsideSession).</li>
+     * <li>Returns the corresponding PO SeResponse (responses to poCommands).</li>
      * </ul>
      *
      * @param accessLevel access level of the session (personalization, load or debit).
      * @param openingSfiToSelect SFI of the file to select (0 means no file to select)
      * @param openingRecordNumberToRead number of the record to read
-     * @param poCommandsInsideSession the po commands inside session
+     * @param poCommands the po commands inside session
      * @return SeResponse response to all executed commands including the self generated "Open
      *         Secure Session" command
      * @throws KeypleReaderException the IO reader exception
      */
     private SeResponse processAtomicOpening(SessionAccessLevel accessLevel, byte openingSfiToSelect,
-            byte openingRecordNumberToRead, List<PoSendableInSession> poCommandsInsideSession)
+            byte openingRecordNumberToRead, List<PoSendableInSession> poCommands)
             throws KeypleReaderException {
 
         /*
@@ -322,7 +321,7 @@ public final class PoTransaction {
         byte challengeLength = poRevision.equals(PoRevision.REV3_2) ? CHALLENGE_LENGTH_REV32
                 : CHALLENGE_LENGTH_REV_INF_32;
 
-        AbstractApduCommandBuilder samGetChallenge =
+        AbstractSamCommandBuilder samGetChallenge =
                 new org.eclipse.keyple.calypso.command.sam.builder.security.SamGetChallengeCmdBuild(
                         this.samRevision, challengeLength);
 
@@ -378,9 +377,9 @@ public final class PoTransaction {
         poApduRequestList.add(poOpenSession.getApduRequest());
 
         /* Add all optional PoSendableInSession commands to the PO ApduRequest list */
-        if (poCommandsInsideSession != null) {
+        if (poCommands != null) {
             poApduRequestList.addAll(this.getApduRequestsToSendInSession(
-                    (List<SendableInSession>) (List<?>) poCommandsInsideSession));
+                    (List<SendableInSession>) (List<?>) poCommands));
         }
 
         /* Create a SeRequest from the ApduRequest list, PO AID as Selector, keep channel open */
@@ -424,7 +423,7 @@ public final class PoTransaction {
         }
 
         /* Track Read Records for later use to build anticipated responses. */
-        AnticipatedResponseBuilder.storeCommandResponse(poCommandsInsideSession, poApduRequestList,
+        AnticipatedResponseBuilder.storeCommandResponse(poCommands, poApduRequestList,
                 poApduResponseList, true);
 
         /* Parse the response to Open Secure Session (the first item of poApduResponseList) */
@@ -487,7 +486,7 @@ public final class PoTransaction {
          * open secure session command. This command is not included in the digest computation, so
          * we skip it and start the loop at index 1.
          */
-        if ((poCommandsInsideSession != null) && !poCommandsInsideSession.isEmpty()) {
+        if ((poCommands != null) && !poCommands.isEmpty()) {
 
             for (int i = 1; i < poApduRequestList.size(); i++) { // The loop starts after the Open
                 /*
@@ -513,11 +512,11 @@ public final class PoTransaction {
      * @return the ApduRequest list
      */
     private List<ApduRequest> getApduRequestsToSendInSession(
-            List<SendableInSession> poOrSamCommandsInsideSession) {
+            List<? extends SendableInSession> poOrSamCommandsInsideSession) {
         List<ApduRequest> apduRequestList = new ArrayList<ApduRequest>();
         if (poOrSamCommandsInsideSession != null) {
             for (SendableInSession cmd : poOrSamCommandsInsideSession) {
-                apduRequestList.add(((AbstractApduCommandBuilder) cmd).getApduRequest());
+                apduRequestList.add(((CalypsoCommand) cmd).getCommandBuilder().getApduRequest());
             }
         }
         return apduRequestList;
@@ -546,8 +545,7 @@ public final class PoTransaction {
             ChannelState channelState) throws KeypleReaderException {
 
         // Get PO ApduRequest List from PoSendableInSession List
-        List<ApduRequest> poApduRequestList =
-                this.getApduRequestsToSendInSession((List<SendableInSession>) (List<?>) poCommands);
+        List<ApduRequest> poApduRequestList = this.getApduRequestsToSendInSession(poCommands);
 
         /*
          * Create a SeRequest from the ApduRequest list, PO AID as Selector, manage the logical
@@ -627,8 +625,7 @@ public final class PoTransaction {
             throws KeypleReaderException {
 
         /* Init SAM ApduRequest List - for the first SAM exchange */
-        List<ApduRequest> samApduRequestList = this
-                .getApduRequestsToSendInSession((List<SendableInSession>) (List<?>) samCommands);
+        List<ApduRequest> samApduRequestList = this.getApduRequestsToSendInSession(samCommands);
 
         /* SeRequest from the command list */
         SeRequest samSeRequest = new SeRequest(samApduRequestList, ChannelState.KEEP_OPEN);
@@ -711,7 +708,7 @@ public final class PoTransaction {
      *         communication mode.</li>
      *         </ul>
      */
-    private SeResponse processAtomicClosing(List<PoModificationCommand> poModificationCommands,
+    private SeResponse processAtomicClosing(List<PoSendableInSession> poModificationCommands,
             List<ApduResponse> poAnticipatedResponses, TransmissionMode transmissionMode,
             ChannelState channelState) throws KeypleReaderException {
 
@@ -721,8 +718,8 @@ public final class PoTransaction {
         }
 
         /* Get PO ApduRequest List from PoSendableInSession List - for the first PO exchange */
-        List<ApduRequest> poApduRequestList = this.getApduRequestsToSendInSession(
-                (List<SendableInSession>) (List<?>) poModificationCommands);
+        List<ApduRequest> poApduRequestList =
+                this.getApduRequestsToSendInSession(poModificationCommands);
 
         /* Compute "anticipated" Digest Update (for optional poModificationCommands) */
         if ((poModificationCommands != null) && !poApduRequestList.isEmpty()) {
@@ -957,7 +954,7 @@ public final class PoTransaction {
      * Advanced variant of processAtomicClosing in which the list of expected responses is
      * determined from previous reading operations.
      *
-     * @param poModificationCommands a list of commands that can modify the PO memory content
+     * @param poCommands a list of commands that can modify the PO memory content
      * @param transmissionMode the communication mode. If the communication mode is CONTACTLESS, a
      *        ratification command will be generated and sent to the PO after the Close Session
      *        command; the ratification will not be requested in the Close Session command. On the
@@ -972,13 +969,13 @@ public final class PoTransaction {
      *         communication mode.</li>
      *         </ul>
      */
-    private SeResponse processAtomicClosing(List<PoModificationCommand> poModificationCommands,
+    private SeResponse processAtomicClosing(List<PoSendableInSession> poCommands,
             TransmissionMode transmissionMode, ChannelState channelState)
             throws KeypleReaderException {
         List<ApduResponse> poAnticipatedResponses =
-                AnticipatedResponseBuilder.getResponses(poModificationCommands);
-        return processAtomicClosing(poModificationCommands, poAnticipatedResponses,
-                transmissionMode, channelState);
+                AnticipatedResponseBuilder.getResponses(poCommands);
+        return processAtomicClosing(poCommands, poAnticipatedResponses, transmissionMode,
+                channelState);
     }
 
     /**
@@ -1289,16 +1286,16 @@ public final class PoTransaction {
         /**
          * Store all Read Record exchanges in a Map whose key is the SFI.
          * 
-         * @param poSendableInSessions the list of commands sent to the PO
+         * @param poCommands the list of commands sent to the PO
          * @param apduRequests the sent apduRequests
          * @param apduResponses the received apduResponses
          * @param skipFirstItem a flag to indicate if the first apduRequest/apduResponse pair has to
          *        be ignored or not.
          */
-        static void storeCommandResponse(List<PoSendableInSession> poSendableInSessions,
+        static void storeCommandResponse(List<PoSendableInSession> poCommands,
                 List<ApduRequest> apduRequests, List<ApduResponse> apduResponses,
                 Boolean skipFirstItem) {
-            if (poSendableInSessions != null) {
+            if (poCommands != null) {
                 /*
                  * Store Read Records' requests and responses for later use to build anticipated
                  * responses.
@@ -1311,8 +1308,9 @@ public final class PoTransaction {
                     apduResponseIterator.next();
                 }
                 /* Iterate over the poCommandsInsideSession list */
-                for (PoSendableInSession poSendableInSession : poSendableInSessions) {
-                    if (poSendableInSession instanceof ReadRecordsCmdBuild) {
+                for (SendableInSession poCommand : poCommands) {
+                    if (((CalypsoCommand) poCommand)
+                            .getCommandBuilder() instanceof ReadRecordsCmdBuild) {
                         ApduRequest apduRequest = apduRequestIterator.next();
                         byte sfi = (byte) ((apduRequest.getBytes()[OFFSET_P2] >> 3) & 0x1F);
                         sfiCommandResponseHashMap.put(sfi,
@@ -1338,20 +1336,20 @@ public final class PoTransaction {
          * The SFI field is used to determine which data should be used to extract the needed
          * information.
          *
-         * @param poModificationCommands the modification command list
+         * @param poCommands the modification command list
          * @return the anticipated responses.
          * @throws KeypleCalypsoSecureSessionException if an response can't be determined.
          */
-        public static List<ApduResponse> getResponses(
-                List<PoModificationCommand> poModificationCommands)
+        public static List<ApduResponse> getResponses(List<PoSendableInSession> poCommands)
                 throws KeypleCalypsoSecureSessionException {
             List<ApduResponse> apduResponses = new ArrayList<ApduResponse>();
-            if (poModificationCommands != null) {
-                for (PoModificationCommand poModificationCommand : poModificationCommands) {
-                    if (poModificationCommand instanceof DecreaseCmdBuild
-                            || poModificationCommand instanceof IncreaseCmdBuild) {
+            if (poCommands != null) {
+                for (PoSendableInSession poCommand : poCommands) {
+                    if (((PoCommand) poCommand).getCommandBuilder() instanceof DecreaseCmdBuild
+                            || ((PoCommand) poCommand)
+                                    .getCommandBuilder() instanceof IncreaseCmdBuild) {
                         /* response = NNNNNN9000 */
-                        byte[] modCounterApduRequest = ((PoCommandBuilder) poModificationCommand)
+                        byte[] modCounterApduRequest = (((PoCommand) poCommand).getCommandBuilder())
                                 .getApduRequest().getBytes();
                         /* Retrieve SFI from the current Decrease command */
                         byte sfi = (byte) ((modCounterApduRequest[OFFSET_P2] >> 3) & 0x1F);
@@ -1378,7 +1376,8 @@ public final class PoTransaction {
                             /* Build the response */
                             byte[] response = new byte[5];
                             int newCounterValue;
-                            if (poModificationCommand instanceof DecreaseCmdBuild) {
+                            if (((PoCommand) poCommand)
+                                    .getCommandBuilder() instanceof DecreaseCmdBuild) {
                                 newCounterValue = currentCounterValue - addSubtractValue;
                             } else {
                                 newCounterValue = currentCounterValue + addSubtractValue;
@@ -1392,21 +1391,23 @@ public final class PoTransaction {
                             if (logger.isDebugEnabled()) {
                                 logger.debug(
                                         "Anticipated response. COMMAND = {}, SFI = {}, COUNTERVALUE = {}, DECREMENT = {}, NEWVALUE = {} ",
-                                        (poModificationCommand instanceof DecreaseCmdBuild)
-                                                ? "Decrease"
-                                                : "Increase",
+                                        (((PoCommand) poCommand)
+                                                .getCommandBuilder() instanceof DecreaseCmdBuild)
+                                                        ? "Decrease"
+                                                        : "Increase",
                                         sfi, currentCounterValue, addSubtractValue,
                                         newCounterValue);
                             }
                         } else {
                             throw new KeypleCalypsoSecureSessionException(
-                                    "Anticipated response. COMMAND = "
-                                            + ((poModificationCommand instanceof DecreaseCmdBuild)
+                                    "Anticipated response. COMMAND = " + ((((PoCommand) poCommand)
+                                            .getCommandBuilder() instanceof DecreaseCmdBuild)
                                                     ? "Decrease"
                                                     : "Increase")
                                             + ". Unable to determine anticipated counter value. SFI = "
                                             + sfi,
-                                    ((PoCommandBuilder) poModificationCommand).getApduRequest(),
+                                    ((AbstractPoCommandBuilder) ((PoCommand) poCommand)
+                                            .getCommandBuilder()).getApduRequest(),
                                     null);
                         }
                     } else {
@@ -1464,35 +1465,34 @@ public final class PoTransaction {
         currentAccessLevel = accessLevel;
         byte localOpeningRecordNumberToRead = openingRecordNumberToRead;
         boolean poProcessSuccess = true;
-        /*
-         * Iterator to keep the progress in updating the parsers from the list of prepared commands
-         */
-        Iterator<AbstractApduResponseParser> apduResponseParserIterator =
-                poResponseParserList.iterator();
-        List<PoSendableInSession> poAtomicCommandBuilderList = new ArrayList<PoSendableInSession>();
-        for (PoSendableInSession poCommandBuilderElement : poCommandBuilderList) {
-            if (!(poCommandBuilderElement instanceof PoModificationCommand)) {
+
+        /* create a sublist of PoCommand to be sent atomically */
+        List<PoSendableInSession> poAtomicCommandList = new ArrayList<PoSendableInSession>();
+        for (PoSendableInSession poCommandElement : poCommandList) {
+            if (!(((PoCommand) poCommandElement)
+                    .getCommandBuilder() instanceof PoModificationCommand)) {
                 /* This command does not affect the PO modifications buffer */
-                poAtomicCommandBuilderList.add(poCommandBuilderElement);
+                poAtomicCommandList.add(poCommandElement);
             } else {
                 /* This command affects the PO modifications buffer */
-                if (willOverflowBuffer((PoModificationCommand) poCommandBuilderElement)) {
+                if (willOverflowBuffer((PoModificationCommand) ((PoCommand) poCommandElement)
+                        .getCommandBuilder())) {
                     if (currentModificationMode == ModificationMode.ATOMIC) {
                         throw new IllegalStateException(
                                 "ATOMIC mode error! This command would overflow the PO modifications buffer: "
-                                        + poCommandBuilderElement.toString());
+                                        + ((PoCommand) poCommandElement).getCommandBuilder()
+                                                .toString());
                     }
                     SeResponse seResponseOpening =
                             processAtomicOpening(currentAccessLevel, openingSfiToSelect,
-                                    localOpeningRecordNumberToRead, poAtomicCommandBuilderList);
+                                    localOpeningRecordNumberToRead, poAtomicCommandList);
 
                     /*
                      * inhibit record reading for next round, keep file selection (TODO check this)
                      */
                     localOpeningRecordNumberToRead = (byte) 0x00;
 
-                    if (!updateParsersWithResponses(seResponseOpening,
-                            apduResponseParserIterator)) {
+                    if (!createResponseParsers(seResponseOpening, poCommandList)) {
                         poProcessSuccess = false;
                     }
                     /*
@@ -1505,29 +1505,31 @@ public final class PoTransaction {
                      * Clear the list and add the command that did not fit in the PO modifications
                      * buffer. We also update the usage counter without checking the result.
                      */
-                    poAtomicCommandBuilderList.clear();
-                    poAtomicCommandBuilderList.add(poCommandBuilderElement);
+                    poAtomicCommandList.clear();
+                    poAtomicCommandList.add(poCommandElement);
                     /*
                      * just update modifications buffer usage counter, ignore result (always false)
                      */
-                    willOverflowBuffer((PoModificationCommand) poCommandBuilderElement);
+                    willOverflowBuffer((PoModificationCommand) ((PoCommand) poCommandElement)
+                            .getCommandBuilder());
                 } else {
                     /*
                      * The command fits in the PO modifications buffer, just add it to the list
                      */
-                    poAtomicCommandBuilderList.add(poCommandBuilderElement);
+                    poAtomicCommandList.add(poCommandElement);
                 }
             }
         }
 
         SeResponse seResponseOpening = processAtomicOpening(currentAccessLevel, openingSfiToSelect,
-                localOpeningRecordNumberToRead, poAtomicCommandBuilderList);
-        if (!updateParsersWithResponses(seResponseOpening, apduResponseParserIterator)) {
+                localOpeningRecordNumberToRead, poAtomicCommandList);
+
+        if (!createResponseParsers(seResponseOpening, poAtomicCommandList)) {
             poProcessSuccess = false;
         }
 
         /* clear command list and set processed flag to handle next commands if any */
-        poCommandBuilderList.clear();
+        poCommandList.clear();
         preparedCommandsProcessed = true;
 
         return poProcessSuccess;
@@ -1556,21 +1558,16 @@ public final class PoTransaction {
         }
 
         boolean poProcessSuccess = true;
-        /*
-         * Iterator to keep the progress in updating the parsers from the list of prepared commands
-         */
-        Iterator<AbstractApduResponseParser> abstractApduResponseParserIterator =
-                poResponseParserList.iterator();
-        /* PO commands sent outside a Secure Session. No modifications buffer limitation. */
-        SeResponse seResponsePoCommands =
-                processAtomicPoCommands(poCommandBuilderList, channelState);
 
-        if (!updateParsersWithResponses(seResponsePoCommands, abstractApduResponseParserIterator)) {
+        /* PO commands sent outside a Secure Session. No modifications buffer limitation. */
+        SeResponse seResponsePoCommands = processAtomicPoCommands(poCommandList, channelState);
+
+        if (!createResponseParsers(seResponsePoCommands, poCommandList)) {
             poProcessSuccess = false;
         }
 
         /* clear command list and set processed flag to handle next commands if any */
-        poCommandBuilderList.clear();
+        poCommandList.clear();
         preparedCommandsProcessed = true;
 
         return poProcessSuccess;
@@ -1599,36 +1596,33 @@ public final class PoTransaction {
         }
 
         boolean poProcessSuccess = true;
-        /*
-         * Iterator to keep the progress in updating the parsers from the list of prepared commands
-         */
-        Iterator<AbstractApduResponseParser> abstractApduResponseParserIterator =
-                poResponseParserList.iterator();
 
         /* A session is open, we have to care about the PO modifications buffer */
-        List<PoSendableInSession> poAtomicCommandBuilderList = new ArrayList<PoSendableInSession>();
+        List<PoSendableInSession> poAtomicCommandList = new ArrayList<PoSendableInSession>();
 
-        for (PoSendableInSession poCommandBuilderElement : poCommandBuilderList) {
-            if (!(poCommandBuilderElement instanceof PoModificationCommand)) {
+        for (PoSendableInSession poCommandElement : poCommandList) {
+            if (!(((PoCommand) poCommandElement)
+                    .getCommandBuilder() instanceof PoModificationCommand)) {
                 /* This command does not affect the PO modifications buffer */
-                poAtomicCommandBuilderList.add(poCommandBuilderElement);
+                poAtomicCommandList.add(poCommandElement);
             } else {
                 /* This command affects the PO modifications buffer */
-                if (willOverflowBuffer(((PoModificationCommand) poCommandBuilderElement))) {
+                if (willOverflowBuffer(((PoModificationCommand) ((PoCommand) poCommandElement)
+                        .getCommandBuilder()))) {
                     if (currentModificationMode == ModificationMode.ATOMIC) {
                         throw new IllegalStateException(
                                 "ATOMIC mode error! This command would overflow the PO modifications buffer: "
-                                        + poCommandBuilderElement.toString());
+                                        + ((PoCommand) poCommandElement).getCommandBuilder()
+                                                .toString());
                     }
                     /*
                      * The current command would overflow the modifications buffer in the PO. We
                      * send the current commands and update the parsers. The parsers Iterator is
                      * kept all along the process.
                      */
-                    SeResponse seResponsePoCommands = processAtomicPoCommands(
-                            poAtomicCommandBuilderList, ChannelState.KEEP_OPEN);
-                    if (!updateParsersWithResponses(seResponsePoCommands,
-                            abstractApduResponseParserIterator)) {
+                    SeResponse seResponsePoCommands =
+                            processAtomicPoCommands(poAtomicCommandList, ChannelState.KEEP_OPEN);
+                    if (!createResponseParsers(seResponsePoCommands, poAtomicCommandList)) {
                         poProcessSuccess = false;
                     }
                     /*
@@ -1644,32 +1638,31 @@ public final class PoTransaction {
                      * Clear the list and add the command that did not fit in the PO modifications
                      * buffer. We also update the usage counter without checking the result.
                      */
-                    poAtomicCommandBuilderList.clear();
-                    poAtomicCommandBuilderList.add(poCommandBuilderElement);
+                    poAtomicCommandList.clear();
+                    poAtomicCommandList.add(poCommandElement);
                     /*
                      * just update modifications buffer usage counter, ignore result (always false)
                      */
-                    willOverflowBuffer((PoModificationCommand) poCommandBuilderElement);
+                    willOverflowBuffer((PoModificationCommand) poCommandElement);
                 } else {
                     /*
                      * The command fits in the PO modifications buffer, just add it to the list
                      */
-                    poAtomicCommandBuilderList.add(poCommandBuilderElement);
+                    poAtomicCommandList.add(poCommandElement);
                 }
             }
         }
 
-        if (!poAtomicCommandBuilderList.isEmpty()) {
+        if (!poAtomicCommandList.isEmpty()) {
             SeResponse seResponsePoCommands =
-                    processAtomicPoCommands(poAtomicCommandBuilderList, ChannelState.KEEP_OPEN);
-            if (!updateParsersWithResponses(seResponsePoCommands,
-                    abstractApduResponseParserIterator)) {
+                    processAtomicPoCommands(poAtomicCommandList, ChannelState.KEEP_OPEN);
+            if (!createResponseParsers(seResponsePoCommands, poAtomicCommandList)) {
                 poProcessSuccess = false;
             }
         }
 
         /* clear command list and set processed flag to handle next commands if any */
-        poCommandBuilderList.clear();
+        poCommandList.clear();
         preparedCommandsProcessed = true;
 
         return poProcessSuccess;
@@ -1705,26 +1698,25 @@ public final class PoTransaction {
         boolean sessionPreviouslyClosed = false;
         List<PoModificationCommand> poModificationCommandList =
                 new ArrayList<PoModificationCommand>();
-        Iterator<AbstractApduResponseParser> abstractApduResponseParserIterator =
-                poResponseParserList.iterator();
-        List<PoModificationCommand> poAtomicCommandBuilderList =
-                new ArrayList<PoModificationCommand>();
+        List<PoSendableInSession> poAtomicCommandList = new ArrayList<PoSendableInSession>();
         SeResponse seResponseClosing;
-        for (PoSendableInSession poCommandBuilderElement : poCommandBuilderList) {
-            if (!(poCommandBuilderElement instanceof PoModificationCommand)) {
+        for (PoSendableInSession poCommandElement : poCommandList) {
+            if (!(poCommandElement instanceof PoModificationCommand)) {
                 /*
                  * This command does not affect the PO modifications buffer. We will call
                  * processPoCommands first
                  */
-                poAtomicCommandBuilderList.add((PoModificationCommand) poCommandBuilderElement);
+                poAtomicCommandList.add(poCommandElement);
                 atLeastOneReadCommand = true;
             } else {
                 /* This command affects the PO modifications buffer */
-                if (willOverflowBuffer((PoModificationCommand) poCommandBuilderElement)) {
+                if (willOverflowBuffer((PoModificationCommand) ((PoCommand) poCommandElement)
+                        .getCommandBuilder())) {
                     if (currentModificationMode == ModificationMode.ATOMIC) {
                         throw new IllegalStateException(
                                 "ATOMIC mode error! This command would overflow the PO modifications buffer: "
-                                        + poCommandBuilderElement.toString());
+                                        + ((PoCommand) poCommandElement).getCommandBuilder()
+                                                .toString());
                     }
                     /*
                      * Reopen a session with the same access level if it was previously closed in
@@ -1739,43 +1731,40 @@ public final class PoTransaction {
                      * instead of processAtomicClosing to send the list
                      */
                     if (atLeastOneReadCommand) {
-                        List<PoSendableInSession> poSendableInSessionList =
-                                new ArrayList<PoSendableInSession>();
-                        for (PoModificationCommand command : poAtomicCommandBuilderList) {
-                            poSendableInSessionList.add((PoSendableInSession) command);
+                        List<PoSendableInSession> poCommands = new ArrayList<PoSendableInSession>();
+                        for (PoSendableInSession poCommand : poAtomicCommandList) {
+                            poCommands.add(poCommand);
                         }
-                        seResponseClosing = processAtomicPoCommands(poSendableInSessionList,
-                                ChannelState.KEEP_OPEN);
+                        seResponseClosing =
+                                processAtomicPoCommands(poCommands, ChannelState.KEEP_OPEN);
                         atLeastOneReadCommand = false;
                     } else {
                         /* All commands in the list are 'modifying' */
-                        seResponseClosing = processAtomicClosing(poAtomicCommandBuilderList,
+                        seResponseClosing = processAtomicClosing(poAtomicCommandList,
                                 TransmissionMode.CONTACTS, ChannelState.KEEP_OPEN);
                         resetModificationsBufferCounter();
                         sessionPreviouslyClosed = true;
                     }
 
-                    Iterator<AbstractApduResponseParser> apduResponseParserIterator =
-                            poResponseParserList.iterator();
-                    if (!updateParsersWithResponses(seResponseClosing,
-                            apduResponseParserIterator)) {
+                    if (!createResponseParsers(seResponseClosing, poAtomicCommandList)) {
                         poProcessSuccess = false;
                     }
                     /*
                      * Clear the list and add the command that did not fit in the PO modifications
                      * buffer. We also update the usage counter without checking the result.
                      */
-                    poAtomicCommandBuilderList.clear();
-                    poAtomicCommandBuilderList.add((PoModificationCommand) poCommandBuilderElement);
+                    poAtomicCommandList.clear();
+                    poAtomicCommandList.add(poCommandElement);
                     /*
                      * just update modifications buffer usage counter, ignore result (always false)
                      */
-                    willOverflowBuffer((PoModificationCommand) poCommandBuilderElement);
+                    willOverflowBuffer((PoModificationCommand) ((PoCommand) poCommandElement)
+                            .getCommandBuilder());
                 } else {
                     /*
                      * The command fits in the PO modifications buffer, just add it to the list
                      */
-                    poAtomicCommandBuilderList.add((PoModificationCommand) poCommandBuilderElement);
+                    poAtomicCommandList.add(poCommandElement);
                 }
             }
         }
@@ -1789,15 +1778,15 @@ public final class PoTransaction {
 
         /* Finally, close the session as requested */
         seResponseClosing =
-                processAtomicClosing(poAtomicCommandBuilderList, transmissionMode, channelState);
+                processAtomicClosing(poAtomicCommandList, transmissionMode, channelState);
 
         /* Update parsers */
-        if (!updateParsersWithResponses(seResponseClosing, abstractApduResponseParserIterator)) {
+        if (!createResponseParsers(seResponseClosing, poAtomicCommandList)) {
             poProcessSuccess = false;
         }
 
         /* clear command list and set processed flag to handle next commands if any */
-        poCommandBuilderList.clear();
+        poCommandList.clear();
         preparedCommandsProcessed = true;
 
         return poProcessSuccess;
@@ -1840,7 +1829,7 @@ public final class PoTransaction {
         logger.debug("processCancel => POSERESPONSE = {}", poSeResponse);
 
         /* clear command list and set processed flag to handle next commands if any */
-        poCommandBuilderList.clear();
+        poCommandList.clear();
         preparedCommandsProcessed = true;
 
         /*
@@ -1854,21 +1843,25 @@ public final class PoTransaction {
     }
 
     /**
-     * Loops on the SeResponse and updates the list of parsers pointed out by the provided iterator
+     * Loops on the SeResponse and create the appropriate builders
      * 
      * @param seResponse the seResponse from the PO
-     * @param parserIterator the parser list iterator
+     * @param poCommandList the global command list
      * @return false if one or more of the commands do not succeed
      */
-    private boolean updateParsersWithResponses(SeResponse seResponse,
-            Iterator<AbstractApduResponseParser> parserIterator) {
+    private boolean createResponseParsers(SeResponse seResponse,
+            List<PoSendableInSession> poCommandList) {
         boolean allSuccessfulCommands = true;
+        Iterator<PoSendableInSession> commandIterator = poCommandList.iterator();
         /* double loop to set apdu responses to corresponding parsers */
         for (ApduResponse apduResponse : seResponse.getApduResponses()) {
-            if (!parserIterator.hasNext()) {
-                throw new IllegalStateException("Parsers list and responses list mismatch! ");
+            if (!commandIterator.hasNext()) {
+                throw new IllegalStateException("Commands list and responses list mismatch! ");
             }
-            parserIterator.next().setApduResponse(apduResponse);
+            PoCommand poCommand = (PoCommand) commandIterator.next();
+            poCommand.setResponseParser(
+                    (AbstractPoResponseParser) ((AbstractPoCommandBuilder) poCommand
+                            .getCommandBuilder()).createResponseParser(apduResponse));
             if (!apduResponse.isSuccessful()) {
                 allSuccessfulCommands = false;
             }
@@ -1928,22 +1921,21 @@ public final class PoTransaction {
         modificationsCounter = modificationsCounterMax;
     }
 
+
     /**
      * Manage the builders and parsers lists.
      * <p>
      * Handle the clearing of the lists.
      */
-    private int storeBuildersAndParsers(PoSendableInSession commandBuilder,
-            AbstractApduResponseParser commandParser) {
+    private int createAndStoreCommandBuilder(AbstractPoCommandBuilder commandBuilder) {
         /* reset the list when preparing the first command after last processing */
         if (preparedCommandsProcessed) {
-            poCommandBuilderList.clear();
-            poResponseParserList.clear();
+            poCommandList.clear();
             preparedCommandsProcessed = false;
             preparedCommandIndex = 0;
         }
-        poCommandBuilderList.add(commandBuilder);
-        poResponseParserList.add(commandParser);
+        poCommandList.add((PoSendableInSession) new PoCommand(commandBuilder));
+
         /* return and post-increment index */
         preparedCommandIndex++;
         return (preparedCommandIndex - 1);
@@ -1964,11 +1956,10 @@ public final class PoTransaction {
         }
 
         /*
-         * keep the builder and parser, return the command index
+         * create and keep the PoCommand, return the command index
          */
 
-        return storeBuildersAndParsers(new SelectFileCmdBuild(calypsoPo.getPoClass(), path),
-                new SelectFileRespPars());
+        return createAndStoreCommandBuilder(new SelectFileCmdBuild(calypsoPo.getPoClass(), path));
     }
 
     /**
@@ -1986,12 +1977,11 @@ public final class PoTransaction {
         }
 
         /*
-         * keep the builder and parser, return the command index
+         * create and keep the PoCommand, return the command index
          */
 
-        return storeBuildersAndParsers(
-                new SelectFileCmdBuild(calypsoPo.getPoClass(), selectControl),
-                new SelectFileRespPars());
+        return createAndStoreCommandBuilder(
+                new SelectFileCmdBuild(calypsoPo.getPoClass(), selectControl));
     }
 
     /**
@@ -2018,13 +2008,12 @@ public final class PoTransaction {
                 !(readDataStructureEnum == readDataStructureEnum.MULTIPLE_RECORD_DATA);
 
         /*
-         * keep the builder and parser, return the command index
+         * create and keep the PoCommand, return the command index
          */
 
-        return storeBuildersAndParsers(
-                new ReadRecordsCmdBuild(calypsoPo.getPoClass(), sfi, firstRecordNumber,
-                        readJustOneRecord, (byte) expectedLength, extraInfo),
-                new ReadRecordsRespPars(firstRecordNumber, readDataStructureEnum));
+        return createAndStoreCommandBuilder(
+                new ReadRecordsCmdBuild(calypsoPo.getPoClass(), sfi, readDataStructureEnum,
+                        firstRecordNumber, readJustOneRecord, (byte) expectedLength, extraInfo));
     }
 
     /**
@@ -2094,12 +2083,11 @@ public final class PoTransaction {
      */
     public int prepareAppendRecordCmd(byte sfi, byte[] newRecordData, String extraInfo) {
         /*
-         * keep the builder and parser, return the command index
+         * create and keep the PoCommand, return the command index
          */
 
-        return storeBuildersAndParsers(
-                new AppendRecordCmdBuild(calypsoPo.getPoClass(), sfi, newRecordData, extraInfo),
-                new AppendRecordRespPars());
+        return createAndStoreCommandBuilder(
+                new AppendRecordCmdBuild(calypsoPo.getPoClass(), sfi, newRecordData, extraInfo));
     }
 
     /**
@@ -2119,11 +2107,11 @@ public final class PoTransaction {
     public int prepareUpdateRecordCmd(byte sfi, byte recordNumber, byte[] newRecordData,
             String extraInfo) {
         /*
-         * keep the builder and parser, return the command index
+         * create and keep the PoCommand, return the command index
          */
 
-        return storeBuildersAndParsers(new UpdateRecordCmdBuild(calypsoPo.getPoClass(), sfi,
-                recordNumber, newRecordData, extraInfo), new UpdateRecordRespPars());
+        return createAndStoreCommandBuilder(new UpdateRecordCmdBuild(calypsoPo.getPoClass(), sfi,
+                recordNumber, newRecordData, extraInfo));
     }
 
     /**
@@ -2145,11 +2133,11 @@ public final class PoTransaction {
     public int prepareIncreaseCmd(byte sfi, byte counterNumber, int incValue, String extraInfo) {
 
         /*
-         * keep the builder and parser, return the command index
+         * create and keep the PoCommand, return the command index
          */
 
-        return storeBuildersAndParsers(new IncreaseCmdBuild(calypsoPo.getPoClass(), sfi,
-                counterNumber, incValue, extraInfo), new IncreaseRespPars());
+        return createAndStoreCommandBuilder(new IncreaseCmdBuild(calypsoPo.getPoClass(), sfi,
+                counterNumber, incValue, extraInfo));
     }
 
     /**
@@ -2171,11 +2159,11 @@ public final class PoTransaction {
     public int prepareDecreaseCmd(byte sfi, byte counterNumber, int decValue, String extraInfo) {
 
         /*
-         * keep the builder and parser, return the command index
+         * create and keep the PoCommand, return the command index
          */
 
-        return storeBuildersAndParsers(new DecreaseCmdBuild(calypsoPo.getPoClass(), sfi,
-                counterNumber, decValue, extraInfo), new DecreaseRespPars());
+        return createAndStoreCommandBuilder(new DecreaseCmdBuild(calypsoPo.getPoClass(), sfi,
+                counterNumber, decValue, extraInfo));
     }
 
     /**
@@ -2185,11 +2173,11 @@ public final class PoTransaction {
      * @return
      */
     public AbstractApduResponseParser getResponseParser(int commandIndex) {
-        if (commandIndex >= poResponseParserList.size()) {
+        if (commandIndex >= poCommandList.size()) {
             throw new IllegalArgumentException(
                     String.format("Bad command index: index = %d, number of commands = %d",
-                            commandIndex, poResponseParserList.size()));
+                            commandIndex, poCommandList.size()));
         }
-        return poResponseParserList.get(commandIndex);
+        return ((PoCommand) (poCommandList.get(commandIndex))).getResponseParser();
     }
 }

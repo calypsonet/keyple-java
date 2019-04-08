@@ -11,14 +11,14 @@
  ********************************************************************************/
 package org.eclipse.keyple.calypso.command.sam.builder.security;
 
+import org.eclipse.keyple.calypso.command.sam.AbstractSamCommandBuilder;
 import org.eclipse.keyple.calypso.command.sam.CalypsoSamCommands;
-import org.eclipse.keyple.calypso.command.sam.SamCommandBuilder;
 import org.eclipse.keyple.calypso.command.sam.SamRevision;
 
 /**
  * Builder for the SAM Digest Close APDU command.
  */
-public class DigestCloseCmdBuild extends SamCommandBuilder {
+public class DigestCloseCmdBuild extends AbstractSamCommandBuilder {
 
     /** The command. */
     private static final CalypsoSamCommands command = CalypsoSamCommands.DIGEST_CLOSE;

@@ -13,7 +13,9 @@ package org.eclipse.keyple.calypso.command.po.parser;
 
 import java.util.HashMap;
 import java.util.Map;
+import org.eclipse.keyple.calypso.command.po.AbstractPoResponseParser;
 import org.eclipse.keyple.command.AbstractApduResponseParser;
+import org.eclipse.keyple.seproxy.message.ApduResponse;
 import org.eclipse.keyple.util.ByteArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +26,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * The FCI structure is analyzed and all subfields are made available through as many getters.
  */
-public final class SelectFileRespPars extends AbstractApduResponseParser {
+public final class SelectFileRespPars extends AbstractPoResponseParser {
     private static final Logger logger = LoggerFactory.getLogger(SelectFileRespPars.class);
     private static final Map<Integer, StatusProperties> STATUS_TABLE;
 
@@ -85,8 +87,6 @@ public final class SelectFileRespPars extends AbstractApduResponseParser {
 
     private boolean selectionSuccessful;
 
-    private boolean parsingDone;
-
     /**
      * Method extracting the various fields from the FCI structure returned by the PO.
      * <p>
@@ -98,9 +98,6 @@ public final class SelectFileRespPars extends AbstractApduResponseParser {
     private void parseResponse() {
         byte[] inFileParameters = response.getDataOut();
         int iter = 0;
-
-        // flag saying that we've already been here
-        parsingDone = true;
 
         if (!response.isSuccessful()) {
             // the command was not successful, we stop here
@@ -195,126 +192,76 @@ public final class SelectFileRespPars extends AbstractApduResponseParser {
      * Instantiates a new SelectFileRespPars.
      * <p>
      */
-    public SelectFileRespPars() {
-        parsingDone = false;
+    public SelectFileRespPars(ApduResponse response) {
+        super(response);
+        parseResponse();
     }
 
     public boolean isSelectionSuccessful() {
-        if (!parsingDone) {
-            parseResponse();
-        }
         return selectionSuccessful;
     }
 
     public int getLid() {
-        if (!parsingDone) {
-            parseResponse();
-        }
         return lid;
     }
 
     public byte getSfi() {
-        if (!parsingDone) {
-            parseResponse();
-        }
         return sfi;
     }
 
     public byte getFileType() {
-        if (!parsingDone) {
-            parseResponse();
-        }
         return fileType;
     }
 
     public byte getEfType() {
-        if (!parsingDone) {
-            parseResponse();
-        }
         return efType;
     }
 
     public int getRecSize() {
-        if (!parsingDone) {
-            parseResponse();
-        }
         return recSize;
     }
 
     public byte getNumRec() {
-        if (!parsingDone) {
-            parseResponse();
-        }
         return numRec;
     }
 
     public byte[] getAccessConditions() {
-        if (!parsingDone) {
-            parseResponse();
-        }
         return accessConditions;
     }
 
     public byte[] getKeyIndexes() {
-        if (!parsingDone) {
-            parseResponse();
-        }
         return keyIndexes;
     }
 
     public byte getSimulatedCounterFileSfi() {
-        if (!parsingDone) {
-            parseResponse();
-        }
         return simulatedCounterFileSfi;
     }
 
     public byte getSimulatedCounterNumber() {
-        if (!parsingDone) {
-            parseResponse();
-        }
         return simulatedCounterNumber;
     }
 
     public int getSharedEf() {
-        if (!parsingDone) {
-            parseResponse();
-        }
         return sharedEf;
     }
 
     public byte getDfStatus() {
-        if (!parsingDone) {
-            parseResponse();
-        }
         return dfStatus;
     }
 
     public byte[] getFileBinaryData() {
-        if (!parsingDone) {
-            parseResponse();
-        }
         return fileBinaryData;
     }
 
     public byte[] getRfu() {
-        if (!parsingDone) {
-            parseResponse();
-        }
         return rfu;
     }
 
     public byte[] getKvcInfo() {
-        if (!parsingDone) {
-            parseResponse();
-        }
         return kvcInfo;
     }
 
     public byte[] getKifInfo() {
-        if (!parsingDone) {
-            parseResponse();
-        }
         return kifInfo;
     }
 

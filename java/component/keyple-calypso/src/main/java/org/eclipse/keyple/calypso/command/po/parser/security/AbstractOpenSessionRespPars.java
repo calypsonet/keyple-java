@@ -14,6 +14,7 @@ package org.eclipse.keyple.calypso.command.po.parser.security;
 import java.nio.ByteBuffer;
 import java.util.HashMap;
 import java.util.Map;
+import org.eclipse.keyple.calypso.command.po.AbstractPoResponseParser;
 import org.eclipse.keyple.calypso.command.po.PoRevision;
 import org.eclipse.keyple.command.AbstractApduResponseParser;
 import org.eclipse.keyple.seproxy.message.ApduResponse;
@@ -22,7 +23,7 @@ import org.eclipse.keyple.seproxy.message.ApduResponse;
  * Open session response parser. See specs: Calypso / page 100 / 9.5.1 - Open secure session
  *
  */
-public abstract class AbstractOpenSessionRespPars extends AbstractApduResponseParser {
+public abstract class AbstractOpenSessionRespPars extends AbstractPoResponseParser {
 
     private static final Map<Integer, StatusProperties> STATUS_TABLE;
     static {

@@ -12,14 +12,14 @@
 package org.eclipse.keyple.calypso.command.sam.builder.security;
 
 
+import org.eclipse.keyple.calypso.command.sam.AbstractSamCommandBuilder;
 import org.eclipse.keyple.calypso.command.sam.CalypsoSamCommands;
-import org.eclipse.keyple.calypso.command.sam.SamCommandBuilder;
 import org.eclipse.keyple.calypso.command.sam.SamRevision;
 
 /**
  * Builder for the SAM Digest Init APDU command.
  */
-public class DigestInitCmdBuild extends SamCommandBuilder {
+public class DigestInitCmdBuild extends AbstractSamCommandBuilder {
 
     /**
      * The command.

@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2018 Calypso Networks Association https://www.calypsonet-asso.org/
+ * Copyright (c) 2019 Calypso Networks Association https://www.calypsonet-asso.org/
  *
  * See the NOTICE file(s) distributed with this work for additional information regarding copyright
  * ownership.
@@ -11,7 +11,16 @@
  ********************************************************************************/
 package org.eclipse.keyple.calypso.command.po;
 
-import org.eclipse.keyple.calypso.command.SendableInSession;
+import org.eclipse.keyple.command.AbstractApduResponseParser;
+import org.eclipse.keyple.seproxy.message.ApduResponse;
 
-public interface PoSendableInSession extends SendableInSession<PoCommand> {
+public abstract class AbstractPoResponseParser extends AbstractApduResponseParser {
+    /**
+     * the generic abstract constructor to build a parser of the APDU response.
+     *
+     * @param response response to parse
+     */
+    public AbstractPoResponseParser(ApduResponse response) {
+        super(response);
+    }
 }

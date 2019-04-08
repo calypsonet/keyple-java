@@ -19,11 +19,11 @@ import org.eclipse.keyple.seproxy.message.ApduRequest;
  * <p>
  * Used directly, this class can serve as low level command builder.
  */
-public class SamCommandBuilder extends AbstractIso7816CommandBuilder {
+public abstract class AbstractSamCommandBuilder extends AbstractIso7816CommandBuilder {
 
-    protected org.eclipse.keyple.calypso.command.sam.SamRevision defaultRevision = SamRevision.S1D;// 94
+    protected SamRevision defaultRevision = SamRevision.S1D;// 94
 
-    public SamCommandBuilder(CalypsoSamCommands reference, ApduRequest request) {
+    public AbstractSamCommandBuilder(CalypsoSamCommands reference, ApduRequest request) {
         super(reference, request);
     }
 }
