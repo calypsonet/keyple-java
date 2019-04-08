@@ -66,12 +66,15 @@ public class Demo_Master implements org.eclipse.keyple.util.Observable.Observer 
      * @param transportFactory : type of transport used (websocket, webservice...)
      * @param isServer : is Master the server?
      */
-    public Demo_Master(TransportFactory transportFactory, Boolean isServer) {
+    public Demo_Master(final TransportFactory transportFactory, Boolean isServer,
+            final String clientNodeId) {
 
-        logger.info("*******************");
+
+        logger.info(
+                "*****************************************************************************");
         logger.info("Create DemoMaster  ");
-        logger.info("*******************");
-
+        logger.info(
+                "*****************************************************************************");
         if (isServer) {
             // Master is server, start Server and wait for Slave Clients
             try {
@@ -82,7 +85,7 @@ public class Demo_Master implements org.eclipse.keyple.util.Observable.Observer 
                     @Override
                     public void run() {
                         ((ServerNode) node).start();
-                        logger.info("Waits for remote connections");
+                        logger.info("{} Waits for remote connections", node.getNodeId());
                     }
 
                 }.start();
@@ -90,9 +93,17 @@ public class Demo_Master implements org.eclipse.keyple.util.Observable.Observer 
                 e.printStackTrace();
             }
         } else {
-            // Master is client, connectAReader to Slave Server
-            node = transportFactory.getClient();
+
+            node = transportFactory.getClient(clientNodeId);
+
             ((ClientNode) node).connect(null);
+
+            /*
+             * // start client in a new thread new Thread() {
+             * 
+             * @Override public void run() { // Master is client, connectAReader to Slave Server }
+             * }.start();
+             */
         }
     }
 
@@ -102,22 +113,17 @@ public class Demo_Master implements org.eclipse.keyple.util.Observable.Observer 
     public void boot() {
 
 
-        logger.info("Create VirtualReaderService, start plugin");
+        logger.info("{} Create VirtualReaderService, start plugin", node.getNodeId());
         // Create masterAPI with a DtoSender
         // Dto Sender is required so masterAPI can send KeypleDTO to Slave
         // In this case, node is used as the dtosender (can be client or server)
         MasterAPI masterAPI = new MasterAPI(SeProxyService.getInstance(), node);
 
         // observe remote se plugin for events
-        logger.info("Observe SeRemotePlugin for Plugin Events and Reader Events");
+        logger.info("{} Observe SeRemotePlugin for Plugin Events and Reader Events",
+                node.getNodeId());
         ReaderPlugin rsePlugin = masterAPI.getPlugin();
         ((Observable) rsePlugin).addObserver(this);
-
-        // Binds masterAPI to a DtoNode so masterAPI receives incoming
-        // KeypleDto from Slaves
-        // in this case we binds it to node (can be client or server)
-        // masterAPI.bindDtoEndpoint(node);
-
 
     }
 
@@ -135,8 +141,8 @@ public class Demo_Master implements org.eclipse.keyple.util.Observable.Observer 
         // Receive a PluginEvent
         if (o instanceof PluginEvent) {
             PluginEvent event = (PluginEvent) o;
-            logger.info("UPDATE {} {} {}", event.getEventType(), event.getPluginName(),
-                    event.getReaderNames().first());
+            logger.info("{} UPDATE {} {} {}", node.getNodeId(), event.getEventType(),
+                    event.getPluginName(), event.getReaderNames().first());
             switch (event.getEventType()) {
                 case READER_CONNECTED:
                     // a new virtual reader is connected, let's configure it
@@ -146,7 +152,7 @@ public class Demo_Master implements org.eclipse.keyple.util.Observable.Observer 
                         poReader = (VirtualReader) remoteSEPlugin
                                 .getReader(event.getReaderNames().first());
 
-                        logger.info("Configure SeSelection");
+                        logger.info("{} Configure SeSelection", node.getNodeId());
 
                         /* set default selection request */
                         seSelection = new SeSelection();
@@ -172,7 +178,7 @@ public class Demo_Master implements org.eclipse.keyple.util.Observable.Observer 
                                         ChannelState.KEEP_OPEN,
                                         ContactlessProtocols.PROTOCOL_ISO14443_4);
 
-                        logger.info("Create a PoSelectionRequest");
+                        logger.info("{} Create a PoSelectionRequest", node.getNodeId());
 
                         /*
                          * Prepare the reading order and keep the associated parser for later use
@@ -191,8 +197,8 @@ public class Demo_Master implements org.eclipse.keyple.util.Observable.Observer 
                          */
                         seSelection.prepareSelection(poSelectionRequest);
 
-                        logger.info("setDefaultSelectionRequest for PoReader {}",
-                                poReader.getName());
+                        logger.info("{} setDefaultSelectionRequest for PoReader {}",
+                                node.getNodeId(), poReader.getName());
 
                         /*
                          * Provide the SeReader with the selection operation to be processed when a
@@ -204,8 +210,8 @@ public class Demo_Master implements org.eclipse.keyple.util.Observable.Observer 
 
 
                         // observe reader events
-                        logger.info("Add Master Thread as a Observer of virtual reader {}",
-                                poReader.getName());
+                        logger.info("{} Add Master Thread as a Observer of virtual reader {}",
+                                node.getNodeId(), poReader.getName());
                         poReader.addObserver(masterThread);
 
                     } catch (KeypleReaderNotFoundException e) {
@@ -219,16 +225,17 @@ public class Demo_Master implements org.eclipse.keyple.util.Observable.Observer 
 
                     break;
                 case READER_DISCONNECTED:
-                    logger.info("READER_DISCONNECTED {} {}", event.getPluginName(),
-                            event.getReaderNames().first());
+                    logger.info("{} READER_DISCONNECTED {} {}", node.getNodeId(),
+                            event.getPluginName(), event.getReaderNames().first());
                     break;
             }
         }
         // ReaderEvent
         else if (o instanceof ReaderEvent) {
             ReaderEvent event = (ReaderEvent) o;
-            logger.debug("UPDATE {} {} {} {}", event.getEventType(), event.getPluginName(),
-                    event.getReaderName(), event.getDefaultSelectionResponse());
+            logger.debug("{} UPDATE {} {} {} {}", node.getNodeId(), event.getEventType(),
+                    event.getPluginName(), event.getReaderName(),
+                    event.getDefaultSelectionResponse());
             switch (event.getEventType()) {
 
                 case SE_MATCHED:
@@ -239,7 +246,8 @@ public class Demo_Master implements org.eclipse.keyple.util.Observable.Observer 
                                 selectionsResult.getActiveSelection().getMatchingSe();
 
                         logger.info(
-                                "Observer notification: the selection of the PO has succeeded.");
+                                "{} Observer notification: the selection of the PO has succeeded.",
+                                node.getNodeId());
 
                         /*
                          * Retrieve the data read from the parser updated during the selection
@@ -253,14 +261,15 @@ public class Demo_Master implements org.eclipse.keyple.util.Observable.Observer 
                                 .get((int) CalypsoClassicInfo.RECORD_NUMBER_1);
 
                         /* Log the result */
-                        logger.info("Environment file data: {}",
+                        logger.info("{} Environment file data: {}", node.getNodeId(),
                                 ByteArrayUtils.toHex(environmentAndHolder));
 
                         /* Go on with the reading of the first record of the EventLog file */
                         logger.info(
                                 "==================================================================================");
                         logger.info(
-                                "= 2nd PO exchange: reading transaction of the EventLog file.                     =");
+                                "{} = 2nd PO exchange: reading transaction of the EventLog file.                     =",
+                                node.getNodeId());
                         logger.info(
                                 "==================================================================================");
 
@@ -285,7 +294,8 @@ public class Demo_Master implements org.eclipse.keyple.util.Observable.Observer 
                          */
                         try {
                             if (poTransaction.processPoCommands(ChannelState.CLOSE_AFTER)) {
-                                logger.info("The reading of the EventLog has succeeded.");
+                                logger.info("{} The reading of the EventLog has succeeded.",
+                                        node.getNodeId());
 
                                 /*
                                  * Retrieve the data read from the parser updated during the
@@ -298,7 +308,7 @@ public class Demo_Master implements org.eclipse.keyple.util.Observable.Observer 
                                         .get((int) CalypsoClassicInfo.RECORD_NUMBER_1);
 
                                 /* Log the result */
-                                logger.info("EventLog file data: {}",
+                                logger.info("{} EventLog file data: {} ", node.getNodeId(),
                                         ByteArrayUtils.toHex(eventLog));
                             }
                         } catch (KeypleReaderException e) {
@@ -307,26 +317,31 @@ public class Demo_Master implements org.eclipse.keyple.util.Observable.Observer 
                         logger.info(
                                 "==================================================================================");
                         logger.info(
-                                "= End of the Calypso PO processing.                                              =");
+                                "{} = End of the Calypso PO processing.                                              =",
+                                node.getNodeId());
                         logger.info(
                                 "==================================================================================");
                     } else {
                         logger.error(
-                                "The selection of the PO has failed. Should not have occurred due to the MATCHED_ONLY selection mode.");
+                                "{} The selection of the PO has failed. Should not have occurred due to the MATCHED_ONLY selection mode.",
+                                node.getNodeId());
                     }
                     break;
                 case SE_INSERTED:
-                    logger.info("SE_INSERTED {} {}", event.getPluginName(), event.getReaderName());
+                    logger.info("{} SE_INSERTED {} {}", node.getNodeId(), event.getPluginName(),
+                            event.getReaderName());
 
                     // Transmit a SeRequestSet to native reader
                     // CommandSample.transmit(logger, event.getReaderName());
 
                     break;
                 case SE_REMOVAL:
-                    logger.info("SE_REMOVAL {} {}", event.getPluginName(), event.getReaderName());
+                    logger.info("{} SE_REMOVAL {} {}", node.getNodeId(), event.getPluginName(),
+                            event.getReaderName());
                     break;
                 case IO_ERROR:
-                    logger.info("IO_ERROR {} {}", event.getPluginName(), event.getReaderName());
+                    logger.info("{} IO_ERROR {} {}", node.getNodeId(), event.getPluginName(),
+                            event.getReaderName());
                     break;
             }
         }

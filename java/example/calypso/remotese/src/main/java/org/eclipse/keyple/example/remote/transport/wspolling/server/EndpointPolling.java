@@ -112,7 +112,7 @@ class EndpointPolling implements HttpHandler, DtoNode {
         logger.debug("Using polling to send keypleDTO this action : {}", message.getAction());
         logger.trace("Using polling to send keypleDTO : {}", message);
 
-        PublishQueue keypleDtoQueue = publishQueueManager.get(message.getNodeId());
+        PublishQueue keypleDtoQueue = publishQueueManager.get(message.getTargetNodeId());
         if (keypleDtoQueue == null) {
             throw new IllegalStateException("Keyple Dto Queue is null, what to do?");
         }

@@ -57,7 +57,7 @@ class RmEventExecutor implements RemoteMethodExecutor {
         // } catch (KeypleReaderNotFoundException e) {
         // return transportDto.nextTransportDTO(KeypleDtoHelper.ExceptionDTO(keypleDto.getAction(),
         // e, keypleDto.getSessionId(), keypleDto.getNativeReaderName(),
-        // keypleDto.getVirtualReaderName(), keypleDto.getNodeId()));
+        // keypleDto.getVirtualReaderName(), keypleDto.getRequesterNodeId()));
         // }
 
         return transportDto.nextTransportDTO(KeypleDtoHelper.NoResponse());

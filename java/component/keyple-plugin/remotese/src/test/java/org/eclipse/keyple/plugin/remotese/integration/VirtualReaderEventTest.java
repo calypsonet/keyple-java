@@ -372,6 +372,7 @@ public class VirtualReaderEventTest extends VirtualReaderBaseTest {
 
         // lock thread for 2 seconds max to wait for the event
         lock.await(5, TimeUnit.SECONDS);
+        Assert.assertEquals(0, lock.getCount()); // should be 0 because countDown is called by
 
     }
 

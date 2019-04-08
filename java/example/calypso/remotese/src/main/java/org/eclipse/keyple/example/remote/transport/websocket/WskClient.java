@@ -30,11 +30,13 @@ public class WskClient extends WebSocketClient implements ClientNode {
 
     private static final Logger logger = LoggerFactory.getLogger(WskClient.class);
     private DtoHandler dtoHandler;
-    private final String nodeId;
+    private final String clientNodeId;
+    final private String serverNodeId;
 
-    public WskClient(URI url, String nodeId) {
+    public WskClient(URI url, String clientNodeId, String serverNodeId) {
         super(url);
-        this.nodeId = nodeId;
+        this.clientNodeId = clientNodeId;
+        this.serverNodeId = serverNodeId;
     }
 
     @Override
@@ -99,7 +101,12 @@ public class WskClient extends WebSocketClient implements ClientNode {
 
     @Override
     public String getNodeId() {
-        return nodeId;
+        return clientNodeId;
+    }
+
+    @Override
+    public String getServerNodeId() {
+        return serverNodeId;
     }
 
     @Override
