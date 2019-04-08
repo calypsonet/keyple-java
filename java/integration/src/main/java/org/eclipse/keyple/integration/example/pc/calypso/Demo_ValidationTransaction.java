@@ -350,24 +350,27 @@ public class Demo_ValidationTransaction implements ObservableReader.ReaderObserv
 
             // Depending on the PO detected perform either a Season Pass validation or a MultiTrip
             // validation
-            CalypsoPo auditC0Se = (CalypsoPo) selectionsResult.getMatchingSelection(auditC0SeIndex)
-                    .getMatchingSe();
-            CalypsoPo clapSe =
-                    (CalypsoPo) selectionsResult.getMatchingSelection(clapSeIndex).getMatchingSe();
-            CalypsoPo cdLightSe = (CalypsoPo) selectionsResult.getMatchingSelection(cdLightSeIndex)
-                    .getMatchingSe();
-            if (auditC0Se != null && auditC0Se.isSelected()) {
+            int matchingSelectionIndex = selectionsResult.getActiveSelection().getSelectionIndex();
+
+            if (matchingSelectionIndex == auditC0SeIndex) {
+                CalypsoPo auditC0Se = (CalypsoPo) selectionsResult
+                        .getMatchingSelection(auditC0SeIndex).getMatchingSe();
 
                 PoTransaction poTransaction =
                         new PoTransaction(poReader, auditC0Se, samReader, null);
                 validateAuditC0(poTransaction);
 
-            } else if (clapSe.isSelected()) {
+            } else if (matchingSelectionIndex == clapSeIndex) {
+                CalypsoPo clapSe = (CalypsoPo) selectionsResult.getMatchingSelection(clapSeIndex)
+                        .getMatchingSe();
 
                 PoTransaction poTransaction = new PoTransaction(poReader, clapSe, samReader, null);
                 validateClap(clapSe);
 
-            } else if (cdLightSe.isSelected()) {
+            } else if (matchingSelectionIndex == cdLightSeIndex) {
+
+                CalypsoPo cdLightSe = (CalypsoPo) selectionsResult
+                        .getMatchingSelection(cdLightSeIndex).getMatchingSe();
 
                 PoTransaction poTransaction =
                         new PoTransaction(poReader, cdLightSe, samReader, null);

@@ -20,9 +20,14 @@ package org.eclipse.keyple.plugin.remotese.transport;
 public interface DtoNode extends DtoSender {
 
     /**
-     * Binds a DtoHandler that will process incoming KeypleDto
+     * Binds a {@link DtoHandler} that will process incoming KeypleDto (usually
+     * {@link org.eclipse.keyple.plugin.remotese.pluginse.MasterAPI} or
+     * {@link org.eclipse.keyple.plugin.remotese.nativese.SlaveAPI})
      * 
-     * @param handler
+     * @param handler : process incoming
+     *        {@link org.eclipse.keyple.plugin.remotese.transport.model.KeypleDto}, usually
+     *        {@link org.eclipse.keyple.plugin.remotese.pluginse.MasterAPI} or
+     *        {@link org.eclipse.keyple.plugin.remotese.nativese.SlaveAPI}
      */
     void setDtoHandler(DtoHandler handler);
 

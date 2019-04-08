@@ -43,7 +43,7 @@ public final class VirtualReader extends AbstractObservableReader {
     private static final Logger logger = LoggerFactory.getLogger(VirtualReader.class);
 
     /**
-     * Called by {@link RemoteSePlugin} Creates a new virtual reader
+     * Creates a new virtual reader Called by {@link RemoteSePlugin}
      * 
      * @param session Reader Session that helps communicate with {@link DtoNode}
      * @param nativeReaderName local name of the native reader on slave side
@@ -103,8 +103,9 @@ public final class VirtualReader extends AbstractObservableReader {
     protected SeResponseSet processSeRequestSet(SeRequestSet seRequestSet)
             throws IllegalArgumentException, KeypleReaderException {
 
-        RmTransmitTx transmit = new RmTransmitTx(seRequestSet, session.getSessionId(),
-                this.getNativeReaderName(), this.getName(), session.getSlaveNodeId());
+        RmTransmitTx transmit =
+                new RmTransmitTx(seRequestSet, session.getSessionId(), this.getNativeReaderName(),
+                        this.getName(), session.getMasterNodeId(), session.getSlaveNodeId());
         try {
             rmTxEngine.register(transmit);
             return transmit.get();
@@ -135,12 +136,12 @@ public final class VirtualReader extends AbstractObservableReader {
 
     @Override
     protected void startObservation() {
-
+        logger.trace("startObservation is not used in this plugin");
     }
 
     @Override
     protected void stopObservation() {
-
+        logger.trace("stopObservation is not used in this plugin");
     }
 
 
@@ -199,7 +200,8 @@ public final class VirtualReader extends AbstractObservableReader {
         RmSetDefaultSelectionRequestTx setDefaultSelectionRequest =
                 new RmSetDefaultSelectionRequestTx(defaultSelectionRequest, notificationMode,
                         this.getNativeReaderName(), this.getName(),
-                        this.getSession().getSessionId(), session.getSlaveNodeId());
+                        this.getSession().getSessionId(), session.getSlaveNodeId(),
+                        session.getMasterNodeId());
 
         try {
             rmTxEngine.register(setDefaultSelectionRequest);

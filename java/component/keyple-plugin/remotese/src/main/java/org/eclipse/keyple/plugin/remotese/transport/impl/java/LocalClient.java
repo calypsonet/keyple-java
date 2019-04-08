@@ -21,17 +21,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Client side of the 1 to 1 local transport for unit testing purposes only one server, only one
- * client initied by the {@link LocalTransportFactory}
+ * Client side of the 1 to many local transport for unit testing purposes only one server
  */
 public class LocalClient implements ClientNode {
 
     private static final Logger logger = LoggerFactory.getLogger(LocalClient.class);
     private final LocalServer theServer;
     private DtoHandler dtoHandler;
+    private final String clientNodeId;
 
-    public LocalClient(LocalServer server) {
+    public LocalClient(String clientNodeId, LocalServer server) {
         this.theServer = server;
+        this.clientNodeId = clientNodeId;
     }
 
     public void onLocalMessage(KeypleDto keypleDto) {
@@ -76,7 +77,12 @@ public class LocalClient implements ClientNode {
 
     @Override
     public String getNodeId() {
-        return "localClient1";
+        return clientNodeId;
+    }
+
+    @Override
+    public String getServerNodeId() {
+        return theServer.getNodeId();
     }
 
     /*

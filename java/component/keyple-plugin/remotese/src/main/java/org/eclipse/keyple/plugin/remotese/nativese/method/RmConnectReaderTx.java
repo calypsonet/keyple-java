@@ -31,16 +31,14 @@ public class RmConnectReaderTx extends RemoteMethodTx<String> {
 
 
     private final ProxyReader localReader;
-    private final String clientNodeId;
     private final INativeReaderService slaveAPI;
 
 
     public RmConnectReaderTx(String sessionId, String nativeReaderName, String virtualReaderName,
-            String clientNodeId, ProxyReader localReader, String clientNodeId1,
+            String masterNodeId, ProxyReader localReader, String slaveNodeId,
             INativeReaderService slaveAPI) {
-        super(sessionId, nativeReaderName, virtualReaderName, clientNodeId);
+        super(sessionId, nativeReaderName, virtualReaderName, masterNodeId, slaveNodeId);
         this.localReader = localReader;
-        this.clientNodeId = clientNodeId1;
         this.slaveAPI = slaveAPI;
     }
 
@@ -60,8 +58,9 @@ public class RmConnectReaderTx extends RemoteMethodTx<String> {
         } else {
             // if dto does not contain an exception
             try {
-                // configure slaveAPI to propagate reader events if the reader is
-                // observable
+                /*
+                 * configure slaveAPI to propagate reader events if the reader is observable
+                 */
 
                 // find the local reader by name
                 ProxyReader localReader = (ProxyReader) slaveAPI.findLocalReader(nativeReaderName);
@@ -76,11 +75,9 @@ public class RmConnectReaderTx extends RemoteMethodTx<String> {
                 // retrieve sessionId from keypleDto
                 JsonObject body =
                         JsonParser.getGson().fromJson(keypleDto.getBody(), JsonObject.class);
-                // Integer statusCode = body.get("statusCode").getAsInt();
-                String sessionId = body.get("sessionId").getAsString();
 
                 // sessionId is returned here
-                return sessionId;
+                return body.get("sessionId").getAsString();
 
             } catch (KeypleReaderNotFoundException e) {
                 logger.warn(
@@ -94,6 +91,6 @@ public class RmConnectReaderTx extends RemoteMethodTx<String> {
     @Override
     public KeypleDto dto() {
         return new KeypleDto(RemoteMethod.READER_CONNECT.getName(), "{}", true, null,
-                localReader.getName(), null, clientNodeId);
+                localReader.getName(), null, requesterNodeId, targetNodeId);
     }
 }

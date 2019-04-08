@@ -42,12 +42,12 @@ class RmConnectReaderExecutor implements RemoteMethodExecutor {
 
         // parseResponse msg
         String nativeReaderName = keypleDto.getNativeReaderName();
-        String clientNodeId = keypleDto.getNodeId();
+        String slaveNodeId = keypleDto.getRequesterNodeId();
 
         VirtualReader virtualReader = null;
         try {
             // create a virtual Reader
-            virtualReader = (VirtualReader) this.plugin.createVirtualReader(clientNodeId,
+            virtualReader = (VirtualReader) this.plugin.createVirtualReader(slaveNodeId,
                     nativeReaderName, this.dtoSender);
 
             // create response
@@ -58,7 +58,7 @@ class RmConnectReaderExecutor implements RemoteMethodExecutor {
             // build transport DTO with body
             return transportDto.nextTransportDTO(new KeypleDto(keypleDto.getAction(),
                     respBody.toString(), false, virtualReader.getSession().getSessionId(),
-                    nativeReaderName, virtualReader.getName(), clientNodeId));
+                    nativeReaderName, virtualReader.getName(), slaveNodeId));
 
         } catch (KeypleReaderException e) {
             // virtual reader for remote reader already exists
@@ -66,7 +66,7 @@ class RmConnectReaderExecutor implements RemoteMethodExecutor {
 
             // send the exception inside the dto
             return transportDto.nextTransportDTO(KeypleDtoHelper.ExceptionDTO(keypleDto.getAction(),
-                    e, null, nativeReaderName, null, clientNodeId));
+                    e, null, nativeReaderName, null, slaveNodeId));
 
         }
     }

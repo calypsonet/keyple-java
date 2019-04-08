@@ -23,6 +23,8 @@ public interface ClientNode extends DtoNode {
 
     void disconnect();
 
+    String getServerNodeId();
+
     interface ConnectCallback {
         void onConnectSuccess();
 

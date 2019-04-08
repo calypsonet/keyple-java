@@ -40,16 +40,18 @@ public class WsPClient implements ClientNode {
     final private String keypleDtoEndpoint;
     final private String pollingEndpoint;
     final private String clientNodeId;
+    final private String serverNodeId;
     final private String baseUrl;
 
     private DtoHandler dtoHandler;
 
     public WsPClient(String baseUrl, String keypleDtoEndpoint, String pollingEndpoint,
-            String clientNodeId) {
+            String clientNodeId, String serverNodeId) {
         this.baseUrl = baseUrl;
         this.keypleDtoEndpoint = keypleDtoEndpoint;
         this.pollingEndpoint = pollingEndpoint;
         this.clientNodeId = clientNodeId;
+        this.serverNodeId = serverNodeId;
     }
 
 
@@ -149,6 +151,10 @@ public class WsPClient implements ClientNode {
         return clientNodeId;
     }
 
+    @Override
+    public String getServerNodeId() {
+        return serverNodeId;
+    }
 
     @Override
     public void connect(ConnectCallback connectCallback) {

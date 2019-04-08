@@ -24,20 +24,19 @@ public interface INativeReaderService {
      * Connect Physical Local Reader to Remote SE Creates a Session to exchange data with this
      * Reader with an option to duplex connection
      */
-    String connectReader(ProxyReader localReader, String clientNodeId) throws KeypleReaderException;
+    String connectReader(ProxyReader localReader) throws KeypleReaderException;
 
     /**
      * Disconnect Physical Local Reader from Remote Se Master Server
      */
-    void disconnectReader(String sessionId, String nativeReaderName, String clientNodeId)
-            throws KeypleReaderException;
+    void disconnectReader(String sessionId, String nativeReaderName) throws KeypleReaderException;
 
     /**
-     * Find a local reader accross plugins
+     * Find a local reader across plugins
      * 
-     * @param nativeReaderName
-     * @return
-     * @throws KeypleReaderNotFoundException
+     * @param nativeReaderName : native name of the reader to find
+     * @return SeReader : Se Reader found
+     * @throws KeypleReaderNotFoundException : if none reader was found
      */
     SeReader findLocalReader(String nativeReaderName) throws KeypleReaderNotFoundException;
 
