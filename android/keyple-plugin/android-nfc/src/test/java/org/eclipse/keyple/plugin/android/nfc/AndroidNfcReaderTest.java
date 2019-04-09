@@ -507,7 +507,8 @@ public class AndroidNfcReaderTest {
         String poAid = "A000000291A000000191";
 
         ReadRecordsCmdBuild poReadRecordCmd_T2Env = new ReadRecordsCmdBuild(PoClass.ISO,
-                (byte) 0x14, ReadDataStructure.MULTIPLE_RECORD_DATA, (byte) 0x01, true, (byte) 0x20, "Hoplink EF T2Environment");
+                (byte) 0x14, ReadDataStructure.SINGLE_RECORD_DATA, (byte) 0x01, true, (byte) 0x20, "Hoplink EF " +
+                "T2Environment");
 
         List<ApduRequest> poApduRequestList;
 
