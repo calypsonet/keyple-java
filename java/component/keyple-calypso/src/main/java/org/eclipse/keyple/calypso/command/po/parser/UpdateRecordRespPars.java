@@ -13,7 +13,6 @@ package org.eclipse.keyple.calypso.command.po.parser;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import org.eclipse.keyple.calypso.command.po.AbstractPoResponseParser;
 import org.eclipse.keyple.command.AbstractApduResponseParser;
 import org.eclipse.keyple.seproxy.message.ApduResponse;
