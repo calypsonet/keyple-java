@@ -13,5 +13,5 @@ package org.eclipse.keyple.calypso.command.sam;
 
 import org.eclipse.keyple.calypso.command.SendableInSession;
 
-public interface SamSendableInSession extends SendableInSession<SamCommand> {
+public interface SamSendableInSession extends SendableInSession<AbstractSamCommandBuilder> {
 }
