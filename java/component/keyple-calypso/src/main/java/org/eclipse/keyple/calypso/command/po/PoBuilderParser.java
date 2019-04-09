@@ -11,19 +11,19 @@
  ********************************************************************************/
 package org.eclipse.keyple.calypso.command.po;
 
-import org.eclipse.keyple.calypso.command.CalypsoCommand;
+import org.eclipse.keyple.calypso.command.CalypsoBuilderParser;
 
 /**
- * The PoCommand class contains the builder of a {@link PoSendableInSession} command
+ * The PoBuilderParser class contains the builder of a {@link PoSendableInSession} command
  * <p>
  * A setter allows to associate the parser object.
  */
-public class PoCommand<T>
-        implements CalypsoCommand<AbstractPoCommandBuilder, AbstractPoResponseParser> {
+public class PoBuilderParser<T>
+        implements CalypsoBuilderParser<AbstractPoCommandBuilder, AbstractPoResponseParser> {
     private final AbstractPoCommandBuilder poCommandBuilder;
     private AbstractPoResponseParser poResponseParser;
 
-    public PoCommand(AbstractPoCommandBuilder poCommandBuilder) {
+    public PoBuilderParser(AbstractPoCommandBuilder poCommandBuilder) {
         this.poCommandBuilder = poCommandBuilder;
     }
 

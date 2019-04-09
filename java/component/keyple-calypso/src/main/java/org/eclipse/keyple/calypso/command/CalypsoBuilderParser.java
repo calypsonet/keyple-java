@@ -15,7 +15,7 @@ package org.eclipse.keyple.calypso.command;
 import org.eclipse.keyple.command.AbstractApduResponseParser;
 import org.eclipse.keyple.command.AbstractIso7816CommandBuilder;
 
-public interface CalypsoCommand<B extends AbstractIso7816CommandBuilder, P extends AbstractApduResponseParser> {
+public interface CalypsoBuilderParser<B extends AbstractIso7816CommandBuilder, P extends AbstractApduResponseParser> {
     B getCommandBuilder();
 
     P getResponseParser();

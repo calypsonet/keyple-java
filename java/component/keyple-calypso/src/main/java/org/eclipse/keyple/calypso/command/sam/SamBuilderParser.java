@@ -11,14 +11,14 @@
  ********************************************************************************/
 package org.eclipse.keyple.calypso.command.sam;
 
-import org.eclipse.keyple.calypso.command.CalypsoCommand;
+import org.eclipse.keyple.calypso.command.CalypsoBuilderParser;
 
-public class SamCommand
-        implements CalypsoCommand<AbstractSamCommandBuilder, AbstractSamResponseParser> {
+public class SamBuilderParser
+        implements CalypsoBuilderParser<AbstractSamCommandBuilder, AbstractSamResponseParser> {
     private final AbstractSamCommandBuilder samCommandBuilder;
     private AbstractSamResponseParser samResponseParser;
 
-    public SamCommand(AbstractSamCommandBuilder samCommandBuilder) {
+    public SamBuilderParser(AbstractSamCommandBuilder samCommandBuilder) {
         this.samCommandBuilder = samCommandBuilder;
     }
 
