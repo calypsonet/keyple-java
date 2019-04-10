@@ -100,8 +100,9 @@ public final class PoSelectionRequest extends SeSelectionRequest {
         boolean readJustOneRecord =
                 !(readDataStructureEnum == ReadDataStructure.MULTIPLE_RECORD_DATA);
 
-        addApduRequest(new ReadRecordsCmdBuild(poClass, sfi, firstRecordNumber, readJustOneRecord,
-                (byte) expectedLength, extraInfo).getApduRequest());
+        addApduRequest(
+                new ReadRecordsCmdBuild(poClass, sfi, readDataStructureEnum, firstRecordNumber,
+                        readJustOneRecord, (byte) expectedLength, extraInfo).getApduRequest());
 
         if (logger.isTraceEnabled()) {
             logger.trace("ReadRecords: SFI = {}, RECNUMBER = {}, JUSTONE = {}, EXPECTEDLENGTH = {}",
@@ -266,12 +267,11 @@ public final class PoSelectionRequest extends SeSelectionRequest {
                 parsingClassList.get(commandIndex);
         AbstractApduResponseParser parser;
         if (parsingClass == ReadRecordsRespPars.class) {
-            parser = new ReadRecordsRespPars(readRecordFirstRecordNumberMap.get(commandIndex),
-                    readRecordDataStructureMap.get(commandIndex));
-            parser.setApduResponse(seResponse.getApduResponses().get(commandIndex));
+            parser = new ReadRecordsRespPars(seResponse.getApduResponses().get(commandIndex),
+                    readRecordDataStructureMap.get(commandIndex),
+                    readRecordFirstRecordNumberMap.get(commandIndex));
         } else if (parsingClass == SelectFileRespPars.class) {
-            parser = new SelectFileRespPars();
-            parser.setApduResponse(seResponse.getApduResponses().get(commandIndex));
+            parser = new SelectFileRespPars(seResponse.getApduResponses().get(commandIndex));
         } else {
             throw new IllegalArgumentException("No parser available for this command.");
         }

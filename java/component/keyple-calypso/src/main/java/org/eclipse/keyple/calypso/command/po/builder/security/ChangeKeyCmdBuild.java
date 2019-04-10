@@ -12,10 +12,12 @@
 package org.eclipse.keyple.calypso.command.po.builder.security;
 
 import org.eclipse.keyple.calypso.command.PoClass;
+import org.eclipse.keyple.calypso.command.po.AbstractPoCommandBuilder;
 import org.eclipse.keyple.calypso.command.po.CalypsoPoCommands;
-import org.eclipse.keyple.calypso.command.po.PoCommandBuilder;
+import org.eclipse.keyple.calypso.command.po.parser.security.ChangeKeyRespPars;
+import org.eclipse.keyple.seproxy.message.ApduResponse;
 
-public class ChangeKeyCmdBuild extends PoCommandBuilder {
+public class ChangeKeyCmdBuild extends AbstractPoCommandBuilder<ChangeKeyRespPars> {
     private static final CalypsoPoCommands command = CalypsoPoCommands.CHANGE_KEY;
 
     /**
@@ -38,5 +40,10 @@ public class ChangeKeyCmdBuild extends PoCommandBuilder {
 
         this.request = setApduRequest(cla, command, p1, p2, cryptogram, null);
         this.addSubName("Change Key");
+    }
+
+    @Override
+    public ChangeKeyRespPars createResponseParser(ApduResponse apduResponse) {
+        return new ChangeKeyRespPars(apduResponse);
     }
 }

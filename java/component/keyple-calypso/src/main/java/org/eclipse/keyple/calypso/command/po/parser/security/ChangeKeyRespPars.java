@@ -13,9 +13,11 @@ package org.eclipse.keyple.calypso.command.po.parser.security;
 
 import java.util.HashMap;
 import java.util.Map;
+import org.eclipse.keyple.calypso.command.po.AbstractPoResponseParser;
 import org.eclipse.keyple.command.AbstractApduResponseParser;
+import org.eclipse.keyple.seproxy.message.ApduResponse;
 
-public class ChangeKeyRespPars extends AbstractApduResponseParser {
+public class ChangeKeyRespPars extends AbstractPoResponseParser {
     private static final Map<Integer, StatusProperties> STATUS_TABLE;
 
     static {
@@ -35,6 +37,13 @@ public class ChangeKeyRespPars extends AbstractApduResponseParser {
         m.put(0x6B00, new StatusProperties(false, "Incorrect P1, P2."));
         m.put(0x9000, new StatusProperties(false, "Successful execution."));
         STATUS_TABLE = m;
+    }
+
+    /**
+     * Instantiates a new ChangeKeyRespPars
+     */
+    public ChangeKeyRespPars(ApduResponse response) {
+        super(response);
     }
 
     @Override

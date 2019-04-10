@@ -19,6 +19,7 @@ import java.util.concurrent.TimeUnit;
 import org.eclipse.keyple.calypso.command.PoClass;
 import org.eclipse.keyple.calypso.command.po.builder.IncreaseCmdBuild;
 import org.eclipse.keyple.calypso.command.po.builder.ReadRecordsCmdBuild;
+import org.eclipse.keyple.calypso.command.po.parser.ReadDataStructure;
 import org.eclipse.keyple.seproxy.ChannelState;
 import org.eclipse.keyple.seproxy.SeReader;
 import org.eclipse.keyple.seproxy.SeSelector;
@@ -679,8 +680,9 @@ public class StubReaderTest {
     static public SeRequestSet getRequestIsoDepSetSample() {
         String poAid = "A000000291A000000191";
 
-        ReadRecordsCmdBuild poReadRecordCmd_T2Env = new ReadRecordsCmdBuild(PoClass.ISO,
-                (byte) 0x14, (byte) 0x01, true, (byte) 0x20, "");
+        ReadRecordsCmdBuild poReadRecordCmd_T2Env =
+                new ReadRecordsCmdBuild(PoClass.ISO, (byte) 0x14,
+                        ReadDataStructure.SINGLE_RECORD_DATA, (byte) 0x01, true, (byte) 0x20, "");
 
         List<ApduRequest> poApduRequestList;
 
@@ -720,12 +722,12 @@ public class StubReaderTest {
     static public SeRequestSet getPartialRequestSet(int scenario) {
         String poAid = "A000000291A000000191";
 
-        ReadRecordsCmdBuild poReadRecord1CmdBuild =
-                new ReadRecordsCmdBuild(PoClass.ISO, (byte) 0x14, (byte) 0x01, true, "");
+        ReadRecordsCmdBuild poReadRecord1CmdBuild = new ReadRecordsCmdBuild(PoClass.ISO,
+                (byte) 0x14, ReadDataStructure.SINGLE_RECORD_DATA, (byte) 0x01, true, "");
 
         /* this command doesn't in the PartialSE */
-        ReadRecordsCmdBuild poReadRecord2CmdBuild =
-                new ReadRecordsCmdBuild(PoClass.ISO, (byte) 0x1E, (byte) 0x01, true, "");
+        ReadRecordsCmdBuild poReadRecord2CmdBuild = new ReadRecordsCmdBuild(PoClass.ISO,
+                (byte) 0x1E, ReadDataStructure.SINGLE_RECORD_DATA, (byte) 0x01, true, "");
 
         List<ApduRequest> poApduRequestList1 = new ArrayList<ApduRequest>();
         poApduRequestList1.add(poReadRecord1CmdBuild.getApduRequest());
@@ -795,12 +797,12 @@ public class StubReaderTest {
     static public SeRequest getPartialRequest(int scenario) {
         String poAid = "A000000291A000000191";
 
-        ReadRecordsCmdBuild poReadRecord1CmdBuild =
-                new ReadRecordsCmdBuild(PoClass.ISO, (byte) 0x14, (byte) 0x01, true, "");
+        ReadRecordsCmdBuild poReadRecord1CmdBuild = new ReadRecordsCmdBuild(PoClass.ISO,
+                (byte) 0x14, ReadDataStructure.SINGLE_RECORD_DATA, (byte) 0x01, true, "");
 
         /* this command doesn't in the PartialSE */
-        ReadRecordsCmdBuild poReadRecord2CmdBuild =
-                new ReadRecordsCmdBuild(PoClass.ISO, (byte) 0x1E, (byte) 0x01, true, "");
+        ReadRecordsCmdBuild poReadRecord2CmdBuild = new ReadRecordsCmdBuild(PoClass.ISO,
+                (byte) 0x1E, ReadDataStructure.SINGLE_RECORD_DATA, (byte) 0x01, true, "");
 
         List<ApduRequest> poApduRequestList = new ArrayList<ApduRequest>();
 

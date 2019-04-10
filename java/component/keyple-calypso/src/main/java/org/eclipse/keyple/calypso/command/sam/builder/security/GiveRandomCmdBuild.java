@@ -11,14 +11,14 @@
  ********************************************************************************/
 package org.eclipse.keyple.calypso.command.sam.builder.security;
 
+import org.eclipse.keyple.calypso.command.sam.AbstractSamCommandBuilder;
 import org.eclipse.keyple.calypso.command.sam.CalypsoSamCommands;
-import org.eclipse.keyple.calypso.command.sam.SamCommandBuilder;
 import org.eclipse.keyple.calypso.command.sam.SamRevision;
 
 /**
  * Builder for the SAM Give Random APDU command.
  */
-public class GiveRandomCmdBuild extends SamCommandBuilder {
+public class GiveRandomCmdBuild extends AbstractSamCommandBuilder {
 
     /** The command reference. */
     private static final CalypsoSamCommands command = CalypsoSamCommands.GIVE_RANDOM;

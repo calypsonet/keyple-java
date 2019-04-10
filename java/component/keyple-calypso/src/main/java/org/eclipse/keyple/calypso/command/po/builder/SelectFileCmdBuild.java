@@ -12,15 +12,18 @@
 package org.eclipse.keyple.calypso.command.po.builder;
 
 import org.eclipse.keyple.calypso.command.PoClass;
+import org.eclipse.keyple.calypso.command.po.AbstractPoCommandBuilder;
 import org.eclipse.keyple.calypso.command.po.CalypsoPoCommands;
-import org.eclipse.keyple.calypso.command.po.PoCommandBuilder;
 import org.eclipse.keyple.calypso.command.po.PoSendableInSession;
+import org.eclipse.keyple.calypso.command.po.parser.SelectFileRespPars;
+import org.eclipse.keyple.seproxy.message.ApduResponse;
 
 /**
  * This class provides the dedicated constructor to build the Select File APDU commands.
  *
  */
-public final class SelectFileCmdBuild extends PoCommandBuilder implements PoSendableInSession {
+public final class SelectFileCmdBuild extends AbstractPoCommandBuilder<SelectFileRespPars>
+        implements PoSendableInSession {
 
     private static final CalypsoPoCommands command = CalypsoPoCommands.SELECT_FILE;
 
@@ -72,5 +75,10 @@ public final class SelectFileCmdBuild extends PoCommandBuilder implements PoSend
         super(command, null);
         request = setApduRequest(poClass.getValue(), command, (byte) 0x09, (byte) 0x00,
                 selectionPath, (byte) 0x00);
+    }
+
+    @Override
+    public SelectFileRespPars createResponseParser(ApduResponse apduResponse) {
+        return new SelectFileRespPars(apduResponse);
     }
 }

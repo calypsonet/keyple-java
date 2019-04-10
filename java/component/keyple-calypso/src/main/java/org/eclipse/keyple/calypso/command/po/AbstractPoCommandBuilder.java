@@ -11,15 +11,17 @@
  ********************************************************************************/
 package org.eclipse.keyple.calypso.command.po;
 
+import org.eclipse.keyple.command.AbstractApduResponseParser;
 import org.eclipse.keyple.command.AbstractIso7816CommandBuilder;
 import org.eclipse.keyple.seproxy.message.ApduRequest;
+import org.eclipse.keyple.seproxy.message.ApduResponse;
 
 /**
- * Superclass for all PO command builders.
+ * Abstract class for all PO command builders.
  * <p>
- * Used directly, this class can serve as low level command builder.
  */
-public class PoCommandBuilder extends AbstractIso7816CommandBuilder {
+public abstract class AbstractPoCommandBuilder<T extends AbstractApduResponseParser>
+        extends AbstractIso7816CommandBuilder {
 
     /**
      * Constructor dedicated for the building of referenced Calypso commands
@@ -27,7 +29,15 @@ public class PoCommandBuilder extends AbstractIso7816CommandBuilder {
      * @param reference a command reference from the Calypso command table
      * @param request the ApduRequest (the instruction byte will be overwritten)
      */
-    public PoCommandBuilder(CalypsoPoCommands reference, ApduRequest request) {
+    public AbstractPoCommandBuilder(CalypsoPoCommands reference, ApduRequest request) {
         super(reference, request);
     }
+
+    /**
+     * Create the response parser matching the builder
+     *
+     * @param apduResponse the response data from the SE
+     * @return an {@link AbstractApduResponseParser}
+     */
+    public abstract T createResponseParser(ApduResponse apduResponse);
 }

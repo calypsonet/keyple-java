@@ -13,15 +13,17 @@ package org.eclipse.keyple.calypso.command.po.builder.security;
 
 
 import org.eclipse.keyple.calypso.command.PoClass;
+import org.eclipse.keyple.calypso.command.po.AbstractPoCommandBuilder;
 import org.eclipse.keyple.calypso.command.po.CalypsoPoCommands;
-import org.eclipse.keyple.calypso.command.po.PoCommandBuilder;
+import org.eclipse.keyple.calypso.command.po.parser.security.CloseSessionRespPars;
+import org.eclipse.keyple.seproxy.message.ApduResponse;
 import org.eclipse.keyple.util.ByteArrayUtils;
 
 // TODO: Auto-generated Javadoc
 /**
  * This class provides the dedicated constructor to build the Close Secure Session APDU command.
  */
-public final class CloseSessionCmdBuild extends PoCommandBuilder {
+public final class CloseSessionCmdBuild extends AbstractPoCommandBuilder<CloseSessionRespPars> {
 
     /** The command. */
     private final static CalypsoPoCommands command = CalypsoPoCommands.CLOSE_SESSION;
@@ -71,4 +73,8 @@ public final class CloseSessionCmdBuild extends PoCommandBuilder {
         this.addSubName("Abort session");
     }
 
+    @Override
+    public CloseSessionRespPars createResponseParser(ApduResponse apduResponse) {
+        return new CloseSessionRespPars(apduResponse);
+    }
 }

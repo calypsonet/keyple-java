@@ -13,6 +13,7 @@ package org.eclipse.keyple.calypso.command.po.parser;
 
 import java.util.HashMap;
 import java.util.Map;
+import org.eclipse.keyple.calypso.command.po.AbstractPoResponseParser;
 import org.eclipse.keyple.command.AbstractApduResponseParser;
 import org.eclipse.keyple.seproxy.message.ApduResponse;
 import org.eclipse.keyple.util.ByteArrayUtils;
@@ -26,7 +27,7 @@ import com.sun.jndi.ldap.BerDecoder;
  * <p>
  * Provides getter methods for all relevant information.
  */
-public final class GetDataFciRespPars extends AbstractApduResponseParser {
+public final class GetDataFciRespPars extends AbstractPoResponseParser {
     protected static final Logger logger = LoggerFactory.getLogger(GetDataFciRespPars.class);
 
     private static final Map<Integer, StatusProperties> STATUS_TABLE;
@@ -123,6 +124,8 @@ public final class GetDataFciRespPars extends AbstractApduResponseParser {
      * @param selectApplicationResponse the selectApplicationResponse from Get Data APDU commmand
      */
     public GetDataFciRespPars(ApduResponse selectApplicationResponse) {
+        super(selectApplicationResponse);
+
         final byte[] response = selectApplicationResponse.getBytes();
         byte[] octetString;
         int[] rlen = new int[1];

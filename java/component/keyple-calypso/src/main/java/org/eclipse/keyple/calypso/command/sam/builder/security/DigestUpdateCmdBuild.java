@@ -12,8 +12,8 @@
 package org.eclipse.keyple.calypso.command.sam.builder.security;
 
 
+import org.eclipse.keyple.calypso.command.sam.AbstractSamCommandBuilder;
 import org.eclipse.keyple.calypso.command.sam.CalypsoSamCommands;
-import org.eclipse.keyple.calypso.command.sam.SamCommandBuilder;
 import org.eclipse.keyple.calypso.command.sam.SamRevision;
 
 /**
@@ -21,7 +21,7 @@ import org.eclipse.keyple.calypso.command.sam.SamRevision;
  * command executed during a session. First time for the command sent and second time for the answer
  * received
  */
-public class DigestUpdateCmdBuild extends SamCommandBuilder {
+public class DigestUpdateCmdBuild extends AbstractSamCommandBuilder {
 
     /** The command reference. */
 
