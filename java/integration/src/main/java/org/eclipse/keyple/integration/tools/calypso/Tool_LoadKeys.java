@@ -21,6 +21,7 @@ import org.eclipse.keyple.calypso.command.sam.SamRevision;
 import org.eclipse.keyple.calypso.command.sam.builder.security.CardGenerateKeyCmdBuild;
 import org.eclipse.keyple.calypso.command.sam.builder.security.GiveRandomCmdBuild;
 import org.eclipse.keyple.calypso.command.sam.builder.security.SelectDiversifierCmdBuild;
+import org.eclipse.keyple.calypso.command.sam.builder.security.UnlockCmdBuild;
 import org.eclipse.keyple.calypso.command.sam.parser.security.CardGenerateKeyRespPars;
 import org.eclipse.keyple.calypso.transaction.*;
 import org.eclipse.keyple.calypso.transaction.sam.CalypsoSam;
@@ -128,6 +129,33 @@ public class Tool_LoadKeys {
     }
 
     /**
+     * Unlock the SAM
+     * 
+     * @param samResource
+     * @param unlockData
+     * @return true if the command is successful
+     * @throws KeypleReaderException
+     */
+    private static boolean unlockSam(SamResource samResource, byte[] unlockData)
+            throws KeypleReaderException {
+        // create an apdu requests list to handle SAM command
+        List<ApduRequest> apduRequests = new ArrayList<ApduRequest>();
+
+        // get the challenge from the PO
+        apduRequests.add(new UnlockCmdBuild(SamRevision.C1, unlockData).getApduRequest());
+
+        SeRequest seRequest = new SeRequest(apduRequests, ChannelState.KEEP_OPEN);
+
+        SeResponse seResponse = ((ProxyReader) samResource.getSeReader()).transmit(seRequest);
+
+        if (seResponse == null) {
+            throw new IllegalStateException("Unlock SAM command command failed. Null response");
+        }
+
+        return seResponse.getApduResponses().get(0).isSuccessful();
+    }
+
+    /**
      * Main entry
      * 
      * @param args
@@ -135,6 +163,8 @@ public class Tool_LoadKeys {
      * @throws NoStackTraceThrowable
      */
     public static void main(String[] args) throws KeypleBaseException, NoStackTraceThrowable {
+        // the unlocking data must be set to the expected value
+        final String UNLOCK_DATA = "00112233445566778899AABBCCDDEEFF";
 
         /* Get the instance of the SeProxyService (Singleton pattern) */
         SeProxyService seProxyService = SeProxyService.getInstance();
@@ -192,6 +222,11 @@ public class Tool_LoadKeys {
                 (CalypsoSam) samSelectionsResult.getActiveSelection().getMatchingSe();
 
         SamResource samResource = new SamResource(samReader, calypsoSam);
+
+        // Unlock the SAM before trying to load PO keys
+        if (!unlockSam(samResource, ByteArrayUtils.fromHex(UNLOCK_DATA))) {
+            throw new IllegalStateException("The unlock SAM command failed!");
+        }
 
         // Check if a PO is present in the reader
         if (poReader.isSePresent()) {
